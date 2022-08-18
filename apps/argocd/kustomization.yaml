@@ -9,6 +9,8 @@ resources:
 - base/projects/apps.yaml
 
 - base/core/argocd.yaml
+- base/core/zalando.yaml
+- base/core/tailscale-lb.yaml
 
 - base/apps/vault.yaml
 - base/apps/ha.yaml
@@ -18,7 +20,6 @@ resources:
 - base/drone/drone-runner.yaml
 
 - base/utilities/metrics.yaml
-- base/utilities/zalando.yaml
 - base/utilities/reloader.yaml
 - base/utilities/reflector.yaml
 - base/utilities/kube-clean.yaml
