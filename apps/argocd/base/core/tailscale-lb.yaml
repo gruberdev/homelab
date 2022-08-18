@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: https://clrxbl.github.io/tailscale-svc-lb/
     chart: tailscale-svc-lb
-    targetRevision: tailscale-svc-lb-1.0.0
+    targetRevision: 1.0.0
     helm:
       releaseName: tailscale-lb
   destination:
