@@ -1,0 +1,50 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: reloader
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: cluster
+  source:
+    repoURL: https://stakater.github.io/stakater-charts
+    chart: reloader
+    targetRevision: v0.0.116
+    helm:
+      releaseName: reloader
+      values: |
+        kubernetes:
+          host: https://kubernetes.default
+        reloader:
+          isArgoRollouts: true
+          isOpenshift: false
+          ignoreSecrets: false
+          ignoreConfigMaps: false
+          reloadOnCreate: true
+          reloadStrategy: default
+          ignoreNamespaces: ""
+          logFormat: ""
+          watchGlobally: true
+          readOnlyRootFileSystem: false
+
+  destination:
+    namespace: kube-system
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: true
+    syncOptions:
+    - Validate=false
+    - CreateNamespace=false
+    - PrunePropagationPolicy=foreground
+    - PruneLast=false
+    - ApplyOutOfSyncOnly=false
+    - Prune=true
+    retry:
+      limit: -1
+      backoff:
+        duration: 20s
+        factor: 2
+        maxDuration: 15m

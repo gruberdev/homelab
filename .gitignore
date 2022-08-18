@@ -1,0 +1,52 @@
+.autogit
+.lh
+tilt_modules
+manifests/*.yaml
+config/tls/*.pem
+*-secret.yaml
+apps/argocd/overlay/*.json
+j*.pem
+.DS_Store
+
+# Crash log files
+crash.log
+debug.log
+
+# Terraform files/Misc
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+config/tls/base/tls-secret.yaml
+.vscode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+.terraform.lock.hcl
+terraform/*.terraform
+*.out
+.env
+nohup.out
+
+postgres/*
+!postgres/.gitkeep
+utilities/*
+!utilities/.gitkeep
+
+# CertificatesThank
+*.pem
+config/tls/cert.pem
+config/tls/key.pem
+
+# Project-related folders
+apps/prometheus/kube-prometheus/*
+apps/kwatch/*
+!apps/kwatch/.gitkeep
+apps/argocd/base/secrets/*.yaml
+test/storage/*
+!test/storage/.gitkeep

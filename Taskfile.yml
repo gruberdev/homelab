@@ -1,0 +1,83 @@
+version: '3'
+
+silent: true
+
+includes:
+  argocd: ./tasks/argocd.yaml
+  vault: ./tasks/vault.yaml
+
+vars:
+  CYAN: tput setaf 6
+  RED: tput setaf 1
+  YELLOW: tput setaf 3
+  GREEN: tput setaf 2
+  BLUE: tput setaf 1
+  PURPLE: tput setaf 5
+  BG_B: tput setab 0
+  BOLD: tput bold
+  RESET: tput sgr0
+  CLEAR: tput reset
+  PATH_ERROR: is not installed or correctly configured in PATH.
+
+dotenv: ['.env']
+
+tasks:
+  clear:
+    cmds:
+      - sleep 0.1 && {{.CLEAR}}
+  highlight_bg:
+    cmds:
+      - |
+        sleep 0.1 && \
+        {{.CYAN}} && \
+        {{.BOLD}} && \
+        {{.BG_B}}
+  highlight_normal:
+    cmds:
+      - |
+        sleep 0.1 && \
+        {{.CYAN}} && \
+        {{.BOLD}}
+  reset:
+    cmds:
+      - |
+        sleep 0.1 && \
+        {{.RESET}}
+
+  explain:
+    desc: Explains a certain Task command more in-detail
+    cmds:
+      - task {{.CLI_ARGS}} --summary
+
+  validate:
+    preconditions:
+      - sh: "which kubeval"
+        msg: "kubeval {{.PATH_ERROR}}"
+    desc: Validates your Yaml objects in the repository using Kubeval
+    cmds:
+      # yamllint disable-line rule:line-length
+      - sleep 0.1 && {{.CYAN}} && {{.BOLD}} && {{.BG_B}} && echo -e "\nValidating Yaml files using Kubeval..." && {{.RESET}}
+      - sleep 0.1 && {{.CYAN}} && echo -e "\nService object files" && {{.RESET}}
+      - find . -maxdepth 10 -name \*-svc.yaml -exec kubeval {} \;
+      - sleep 0.1 && {{.CYAN}} && echo -e "\nDeployment object files" && {{.RESET}}
+      - find . -maxdepth 10 -name \*-deployment.yaml -exec kubeval {} \;
+      - sleep 0.1 && {{.CYAN}} && echo -e "\nSecret object files" && {{.RESET}}
+      - find . -maxdepth 10 -name \*-secret.yaml -exec kubeval {} \;
+      - sleep 0.1 && {{.CYAN}} && echo -e "\nconfigMap object files" && {{.RESET}}
+      - find . -maxdepth 10 -name \*-cm.yaml -exec kubeval {} \;
+      - sleep 0.1 && {{.CYAN}} && echo -e "\nPVC object files" && {{.RESET}}
+      - find . -maxdepth 10 -name \*-pvc.yaml -exec kubeval {} \;
+      - sleep 0.1 && {{.CYAN}} && echo -e "\nPV object files" && {{.RESET}}
+      - find . -maxdepth 10 -name \*-pv.yaml -exec kubeval {} \;
+      # yamllint disable-line rule:line-length
+      - sleep 0.1 && {{.CYAN}} && echo -e "\nCustomRoleBinding object files" && {{.RESET}}
+      - find . -maxdepth 10 -name \*-crb.yaml -exec kubeval {} \;
+      - sleep 0.1 && {{.CYAN}} && echo -e "\nRole object files" && {{.RESET}}
+      - find . -maxdepth 10 -name \*-role.yaml -exec kubeval {} \;
+      - sleep 0.1 && {{.CYAN}} && echo -e "\nServiceAccount object files" && {{.RESET}}
+      - find . -maxdepth 10 -name \*-sa.yaml -exec kubeval {} \;
+      - sleep 0.1 && {{.CYAN}} && echo -e "\n ClusterRole object files" && {{.RESET}}
+      - find . -maxdepth 10 -name \*-cr.yaml -exec kubeval {} \;
+      - sleep 0.1 && {{.CYAN}} && echo -e "\nRole Binding object files" && {{.RESET}}
+      - find . -maxdepth 10 -name \*-rb.yaml -exec kubeval {} \;
+    silent: true

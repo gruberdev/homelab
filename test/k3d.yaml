@@ -1,0 +1,66 @@
+apiVersion: k3d.io/v1alpha4
+kind: Simple
+metadata:
+  name: homelab-testing
+servers: 1
+agents: 3
+kubeAPI:
+  host: "k8s.localhost"
+  hostIP: "127.0.0.1"
+  hostPort: "6445"
+image: rancher/k3s:v1.24.3-k3s1
+network: homelab-vpc
+ports:
+  - port: 80:80
+    nodeFilters:
+      - loadbalancer
+  - port: 443:443
+    nodeFilters:
+      - loadbalancer
+registries:
+  create:
+    name: registry.localhost
+    host: "0.0.0.0"
+    hostPort: "5002"
+  config: |
+    mirrors:
+      "registry.localhost":
+        endpoint:
+          - http://registry.local.gd:5002
+
+volumes:
+  - volume: "${PWD}/test/storage:/var/lib/rancher/k3s/storage"
+    nodeFilters:
+      - server:0
+      - agent:*
+
+hostAliases:
+  - ip: 127.0.0.1
+    hostnames:
+      - k8s.localhost
+      - homelab.localhost
+      - argocd.k8s.localhost
+      - vault.k8s.localhost
+      - postgres.k8s.localhost
+      - dbs.k8s.localhost
+options:
+  k3d:
+    wait: true
+    timeout: "360s"
+    disableLoadbalancer: false
+    disableImageVolume: false
+    disableRollback: false
+    loadbalancer:
+      configOverrides:
+        - settings.workerConnections=2048
+  k3s:
+    extraArgs:
+      - arg: --disable=traefik
+        nodeFilters:
+          - server:*
+      - arg: --tls-san=localhost,registry.local.gd,127.0.0.1,registry.localhost,k8s.localhost,vault.k8s.localhost,whoami.k8s.localhost
+        nodeFilters:
+          - server:*
+  kubeconfig:
+    updateDefaultKubeconfig: true
+    switchCurrentContext: true

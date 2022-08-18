@@ -1,0 +1,38 @@
+apiVersion: "acid.zalan.do/v1"
+kind: postgresql
+metadata:
+  name: home-assistant-db
+spec:
+  dockerImage: registry.opensource.zalan.do/acid/spilo-14:2.1-p6
+  teamId: "home-apps"
+  numberOfInstances: 2
+  users:
+    admin:
+    - superuser
+    - createdb
+    homeuser: []
+  databases:
+    homeassistant: admin
+  postgresql:
+    version: "14"
+  # Prevents PostgreSQL 64mb limit
+  enableShmVolume: true
+  enableMasterLoadBalancer: true
+  enableConnectionPooler: true
+  # Load balancers' source ranges for both master and replica services
+  allowedSourceRanges:
+  - 127.0.0.1/32ddddd
+  - 100.100.100.0/32
+  - 192.168.1.0/24
+  - 10.0.0.0/8
+  - 192.168.0.0/24
+  volume:
+    size: 5Gi
+    storageClass: local-path
+  resources:
+    requests:
+      cpu: 10m
+      memory: 100Mi
+    limits:
+      cpu: 500m
+      memory: 500Mi

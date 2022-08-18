@@ -1,0 +1,152 @@
+version: '3'
+vars:
+  CYAN: tput setaf 6
+  RED: tput setaf 1
+  YELLOW: tput setaf 3
+  GREEN: tput setaf 2
+  BLUE: tput setaf 1
+  PURPLE: tput setaf 5
+  BG_B: tput setab 0
+  BOLD: tput bold
+  RESET: tput sgr0
+  CLEAR: tput reset
+
+silent: true
+env:
+  VAULT_ADDR: "https://vault.k8s.localhost"
+  VAULT_SKIP_VERIFY: "true"
+
+tasks:
+  clear:
+    cmds:
+      - sleep 0.1 && {{.CLEAR}}
+  highlight_bg:
+    cmds:
+      - |
+        sleep 0.1 && \
+        {{.CYAN}} && \
+        {{.BOLD}} && \
+        {{.BG_B}}
+  highlight_normal:
+    cmds:
+      - |
+        sleep 0.1 && \
+        {{.CYAN}} && \
+        {{.BOLD}}
+  reset:
+    cmds:
+      - |
+        sleep 0.1 && \
+        {{.RESET}}
+
+  init:
+    preconditions:
+      - sh: 'which jq'
+        msg: 'jq {{.PATH_ERROR}}'
+      - sh: 'which kubectl'
+        msg: 'kubectl {{.PATH_ERROR}}'
+      - sh: 'which Helm'
+        msg: 'helm {{.PATH_ERROR}}'
+    dir: apps/argocd/overlay
+    cmds:
+      - kubectl config set-context --current --namespace=vault --cluster=k3d-demo
+      - kubectl exec vault-argocd-0 -- vault operator init -key-shares=1 -key-threshold=1 -format=json > cluster-keys.json
+      - task: highlight_normal
+      - echo -e "\nVault's Unseal Key:"
+      - task: reset
+      - cat cluster-keys.json | jq -r ".unseal_keys_b64[]"
+      - task: highlight_normal
+      - echo -e "\nVault's Root Token:"
+      - task: reset
+      - cat cluster-keys.json | jq -r ".root_token"
+      - task: unseal
+      - task: set
+      - task: secret
+    ignore_error: true
+
+  set:
+    preconditions:
+      - sh: 'which vault'
+        msg: 'vault {{.PATH_ERROR}}'
+    vars:
+      POSTGRES_PASSWORD:
+        sh: openssl rand -base64 32
+    dir: apps/argocd/overlay
+    cmds:
+      - task: login
+      - vault secrets enable -path=secret/ kv
+      - vault kv put secret/postgres user=admin
+      - vault kv put secret/postgres password={{.POSTGRES_PASSWORD}}
+      - task: read
+    ignore_error: true
+
+  read:
+    preconditions:
+      - sh: 'which vault'
+        msg: 'vault {{.PATH_ERROR}}'
+    dir: apps/argocd/overlay
+    cmds:
+      - vault kv get -format=json secret/postgres
+    ignore_error: true
+
+  login:
+    preconditions:
+      - sh: 'which vault'
+        msg: 'vault {{.PATH_ERROR}}'
+    vars:
+      VAULT_TOKEN:
+        sh: cat cluster-keys.json | jq -r ".root_token"
+    dir: apps/argocd/overlay
+    cmds:
+      - vault login {{.VAULT_TOKEN}}
+    ignore_error: true
+
+  seal:
+    preconditions:
+      - sh: 'which vault'
+        msg: 'vault {{.PATH_ERROR}}'
+    vars:
+      VAULT_TOKEN:
+        sh: cat cluster-keys.json | jq -r ".root_token"
+    dir: apps/argocd/overlay
+    cmds:
+      - vault login {{.VAULT_TOKEN}}
+      - vault operator seal
+    ignore_error: true
+
+  unseal:
+    preconditions:
+      - sh: 'which vault'
+        msg: 'vault {{.PATH_ERROR}}'
+    vars:
+      VAULT_UNSEAL_KEY:
+        sh: echo $(kubectl -n vault get secret vault-unseal-keys --ignore-not-found=true -o jsonpath='{.data.vault-root}' | base64 -d)
+    dir: apps/argocd/overlay
+    cmds:
+      - echo  {{.VAULT_UNSEAL_KEY}}
+      - vault operator unseal {{.VAULT_UNSEAL_KEY}}
+    ignore_error: true
+
+  secret:
+    vars:
+      VAULT_TOKEN:
+        sh: cat cluster-keys.json | jq -r ".root_token"
+    cmds:
+      - rm apps/argocd/base/argocd-vault.yaml
+      - |
+        cat << EOF > apps/argocd/base/argocd-vault.yaml
+        apiVersion: v1
+        data:
+          VAULT_ADDR: $VAULT_ADDR
+          VAULT_TOKEN: {{.VAULT_TOKEN}}
+          AVP_AUTH_TYPE: token
+          AVP_TYPE: token
+        kind: Secret
+        metadata:
+          name: vault-configuration
+          namespace: argocd
+        type: Opaque
+        EOF
+      - kubectl apply -f apps/argocd/base/argocd-vault.yaml --ignore-not-found --grace-period=0
+      - rm apps/argocd/base/argocd-vault.yaml
+    ignore_error: true

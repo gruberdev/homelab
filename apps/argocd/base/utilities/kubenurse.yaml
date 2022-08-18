@@ -1,0 +1,40 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kubenurse
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: cluster
+  source:
+    repoURL: 'https://github.com/postfinance/kubenurse.git'
+    targetRevision: HEAD
+    path: helm/kubenurse
+    helm:
+      releaseName: kubenurse
+      parameters:
+      - name: "ingress.url"
+        value: "nurse.k8s.localhost"
+      - name: "service.name"
+        value: "nurse-svc"
+      - name: "service.port"
+        value: "80"
+  destination:
+    namespace: kube-system
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: true
+    syncOptions:
+    - Validate=true
+    - CreateNamespace=false
+    - PrunePropagationPolicy=foreground
+    - PruneLast=true
+    retry:
+      limit: -1
+      backoff:
+        duration: 60s
+        factor: 2
+        maxDuration: 30m

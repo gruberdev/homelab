@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+bases:
+- github.com/zalando/postgres-operator/manifests
+- github.com/zalando/postgres-operator/ui/manifests
+patchesStrategicMerge:
+- svc-lb.yaml
+namespace: databases

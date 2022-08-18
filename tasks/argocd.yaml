@@ -1,0 +1,98 @@
+version: '3'
+vars:
+  CYAN: tput setaf 6
+  RED: tput setaf 1
+  YELLOW: tput setaf 3
+  GREEN: tput setaf 2
+  BLUE: tput setaf 1
+  PURPLE: tput setaf 5
+  BG_B: tput setab 0
+  BOLD: tput bold
+  RESET: tput sgr0
+  CLEAR: tput reset
+  INT_REGISTRY: registry.localhost
+  PATH_ERROR: is not installed or correctly configured in PATH.
+
+silent: true
+
+tasks:
+  secret:
+    vars:
+      GIT_URI:
+        sh: git config --get remote.origin.url | sed -e 's/:/\//g'| sed -e 's/ssh\/\/\///g'| sed -e 's/git@/https:\/\//g' | sed 's/.git$//'
+    cmds:
+      - rm apps/argocd/base/secrets/repo-creds.yaml
+      - |
+        cat << EOF > apps/argocd/base/secrets/repo-creds.yaml
+        apiVersion: v1
+        kind: Secret
+        metadata:
+          name: private-repo-creds
+          labels:
+            argocd.argoproj.io/secret-type: repo-creds
+        stringData:
+          type: git
+          url: {{.GIT_URI}}
+          password: $GH_PASS
+          username: $GH_USER
+        EOF
+      - kubectl apply -f apps/argocd/base/secrets/repo-creds.yaml -n argocd
+      - rm apps/argocd/base/secrets/repo-creds.yaml
+    ignore_error: true
+
+  repo:
+    vars:
+      GIT_URI:
+        sh: git config --get remote.origin.url | sed -e 's/:/\//g'| sed -e 's/ssh\/\/\///g'| sed -e 's/git@/https:\/\//g' | sed 's/.git$//'
+    cmds:
+      - rm apps/argocd/base/secrets/repo.yaml
+      - |
+        cat << EOF > apps/argocd/base/secrets/repo.yaml
+        apiVersion: v1
+        kind: Secret
+        metadata:
+          name: main-repository
+          namespace: argocd
+          labels:
+            argocd.argoproj.io/secret-type: repository
+        stringData:
+          type: git
+          url: {{.GIT_URI}}
+          password: $GH_PASS
+          username: $GH_USER
+        EOF
+      - kubectl apply -f apps/argocd/base/secrets/repo.yaml -n argocd
+      - rm apps/argocd/base/secrets/repo.yaml
+    ignore_error: true
+
+
+  install:
+    desc: Installs ArgoCD resources manually on the local cluster
+    dir: apps/argocd
+    preconditions:
+      - sh: 'which kustomize'
+        msg: 'kustomize {{.PATH_ERROR}}'
+      - sh: 'which kubectl'
+        msg: 'kubectl {{.PATH_ERROR}}'
+    cmds:
+      - kubectl create namespace argocd
+      - kustomize build | kubectl apply -f -
+      - sleep 10
+      - kustomize build | kubectl apply -f -
+      - kubectl wait deploy/argocd-server -n argocd --for condition=available --timeout=600s
+      - echo ""
+    ignore_error: true
+
+  rm:
+    dir: apps/argocd
+    cmds:
+      - kustomize build | kubectl delete -f -
+    ignore_error: true
+
+  bridge: kubectl port-forward -n argocd svc/argocd-server 8832:80
+
+  password:
+    cmds:
+      - kubectl config set-context --current --namespace=argocd --cluster=k3d-demo
+      - kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
+    ignore_error: true
