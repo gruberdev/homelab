@@ -1,0 +1,37 @@
+version: '3'
+vars:
+  CYAN: tput setaf 6
+  RED: tput setaf 1
+  YELLOW: tput setaf 3
+  GREEN: tput setaf 2
+  BLUE: tput setaf 1
+  PURPLE: tput setaf 5
+  BG_B: tput setab 0
+  BOLD: tput bold
+  RESET: tput sgr0
+  CLEAR: tput reset
+  PATH_ERROR: is not installed or correctly configured in PATH.
+
+silent: true
+
+tasks:
+  secret:
+    cmds:
+      - rm test/tailscale-secret.yaml
+      - |
+        cat << EOF > test/tailscale-secret.yaml
+        apiVersion: v1
+        kind: Secret
+        metadata:
+          name: tailscale-auth
+          namespace: kube-system
+          annotations:
+            reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
+            reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"
+            reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: ""
+        stringData:
+          TS_AUTH_KEY: $TS_KEY
+        EOF
+      - sudo kubectl apply -f test/tailscale-secret.yaml
+      - rm test/tailscale-secret.yaml
+    ignore_error: true
