@@ -7,7 +7,7 @@ metadata:
 spec:
   project: cluster
   source:
-    repoURL: 'https://github.com/gruberdev/local-gitops.git'
+    repoURL: 'https://github.com/gruberdev/homelab.git'
     path: apps/postgres
     targetRevision: main
   destination:
