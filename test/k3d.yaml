@@ -29,7 +29,7 @@ registries:
           - http://registry.local.gd:5002
 
 volumes:
-  - volume: "${PWD}/test/storage:/var/lib/rancher/k3s/storage"
+  - volume: "/home/deck/projects/homelab/test/storage:/var/lib/rancher/k3s/storage"
     nodeFilters:
       - server:0
       - agent:*

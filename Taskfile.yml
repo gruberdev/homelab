@@ -5,6 +5,7 @@ silent: true
 includes:
   argocd: ./tasks/argocd.yaml
   vault: ./tasks/vault.yaml
+  tailscale: ./tasks/tailscale.yaml
 
 vars:
   CYAN: tput setaf 6
@@ -81,3 +82,29 @@ tasks:
       - sleep 0.1 && {{.CYAN}} && echo -e "\nRole Binding object files" && {{.RESET}}
       - find . -maxdepth 10 -name \*-rb.yaml -exec kubeval {} \;
     silent: true
+
+  test:k3d:
+    desc: Starts your local k3d cluster.
+    preconditions:
+      - sh: "which k3d"
+        msg: "k3d {{.PATH_ERROR}}"
+    summary: |
+      Creating a k3d cluster
+
+      This command ensures the cluster on k3d will
+      be created with all the correct parameters, allowing
+      for a declarative setup that requires minimal intervention
+      to work. k3d is configured to automatically create an entry
+      on your KUBECONFIG file and update it to point towards the cluster.
+
+      All commands that create resources also are specific to the cluster
+      name configured on the file ('k3d-demo'), as to avoid creating those
+      resoures on non-local clusters that may be on KUBECONFIG file as well.
+    cmds:
+      - task: clear
+      - sudo k3d cluster delete homelab-testing
+      - sudo k3d cluster create --config test/k3d.yaml
+      - task: highlight_normal
+      - echo -e "\nYour cluster has been created. Type 'k3d cluster list' to confirm."
+      - task: reset
+    ignore_error: true

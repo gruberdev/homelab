@@ -21,9 +21,9 @@ tasks:
       GIT_URI:
         sh: git config --get remote.origin.url | sed -e 's/:/\//g'| sed -e 's/ssh\/\/\///g'| sed -e 's/git@/https:\/\//g' | sed 's/.git$//'
     cmds:
-      - rm apps/argocd/base/secrets/repo-creds.yaml
+      - rm test/repo-creds.yaml
       - |
-        cat << EOF > apps/argocd/base/secrets/repo-creds.yaml
+        cat << EOF > test/repo-creds.yaml
         apiVersion: v1
         kind: Secret
         metadata:
@@ -36,8 +36,8 @@ tasks:
           password: $GH_PASS
           username: $GH_USER
         EOF
-      - kubectl apply -f apps/argocd/base/secrets/repo-creds.yaml -n argocd
-      - rm apps/argocd/base/secrets/repo-creds.yaml
+      - sudo kubectl apply -f test/repo-creds.yaml -n argocd
+      - rm test/repo-creds.yaml
     ignore_error: true
 
   repo:
@@ -75,24 +75,24 @@ tasks:
       - sh: 'which kubectl'
         msg: 'kubectl {{.PATH_ERROR}}'
     cmds:
-      - kubectl create namespace argocd
-      - kustomize build | kubectl apply -f -
+      - sudo  kubectl create namespace argocd
+      - kustomize build | sudo kubectl apply -f -
       - sleep 10
-      - kustomize build | kubectl apply -f -
-      - kubectl wait deploy/argocd-server -n argocd --for condition=available --timeout=600s
+      - kustomize build | sudo kubectl apply -f -
+      - sudo kubectl wait deploy/argocd-server -n argocd --for condition=available --timeout=600s
       - echo ""
     ignore_error: true
 
   rm:
     dir: apps/argocd
     cmds:
-      - kustomize build | kubectl delete -f -
+      - kustomize build | sudo  kubectl delete -f -
     ignore_error: true
 
-  bridge: kubectl port-forward -n argocd svc/argocd-server 8832:80
+  bridge: sudo kubectl port-forward -n argocd svc/argocd-server 8832:80
 
   password:
     cmds:
-      - kubectl config set-context --current --namespace=argocd --cluster=k3d-demo
-      - kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
+      - sudo kubectl config set-context --current --namespace=argocd --cluster=k3d-homelab-testing
+      - sudo kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
     ignore_error: true
