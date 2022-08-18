@@ -7,7 +7,7 @@ metadata:
 spec:
   project: apps
   source:
-    repoURL: 'https://github.com/gruberdev/local-gitops.git'
+    repoURL: 'https://github.com/gruberdev/homelab.git'
     path: apps/ha
     targetRevision: main
   destination:
