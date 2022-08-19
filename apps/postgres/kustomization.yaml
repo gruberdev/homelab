@@ -7,4 +7,5 @@ bases:
 - rb.yaml
 patchesStrategicMerge:
 - deployment.yaml
+- ingress.yaml
 namespace: databases

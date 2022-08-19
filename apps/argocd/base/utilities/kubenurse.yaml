@@ -12,13 +12,6 @@ spec:
     path: helm/kubenurse
     helm:
       releaseName: kubenurse
-      parameters:
-      - name: "ingress.url"
-        value: "nurse.k8s.localhost"
-      - name: "service.name"
-        value: "nurse-svc"
-      - name: "service.port"
-        value: "80"
   destination:
     namespace: kube-system
     name: in-cluster
