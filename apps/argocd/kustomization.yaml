@@ -10,6 +10,7 @@ resources:
 
 - base/core/argocd.yaml
 - base/core/zalando.yaml
+- base/core/tailscale.yaml
 
 - base/apps/vault.yaml
 - base/apps/ha.yaml

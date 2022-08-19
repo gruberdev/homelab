@@ -15,23 +15,51 @@ vars:
 silent: true
 
 tasks:
-  secret:
+  router:
+    vars:
+      SVC_CIDR:
+        sh: echo "$(echo '{"apiVersion":"v1","kind":"Service","metadata":{"name":"tst"},"spec":{"clusterIP":"1.1.1.1","ports":[{"port":443}]}}' | kubectl apply -f - 2>&1 | sed 's/.*valid IPs is //')"
+      POD_CIDR:
+        sh: echo "$(kubectl get nodes -o jsonpath='{.items[*].spec.podCIDR}')"
     cmds:
-      - rm test/tailscale-secret.yaml
+      - rm apps/networking/router/deployment.yaml
       - |
-        cat << EOF > test/tailscale-secret.yaml
+        cat << EOF > apps/networking/router/deployment.yaml
         apiVersion: v1
-        kind: Secret
+        kind: Deployment
         metadata:
-          name: tailscale
-          namespace: kube-system
-          annotations:
-            reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
-            reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"
-            reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: ""
-        stringData:
-          AUTH_KEY: $TS_KEY
+          name: subnet-router
+          labels:
+            app: tailscale
+        spec:
+          selector:
+            matchLabels:
+              app: subnet-router
+          replicas: 1
+          template:
+            metadata:
+              labels:
+                app: subnet-router
+          serviceAccountName: "tailscale"
+          containers:
+          - name: tailscale
+            imagePullPolicy: Always
+            image: "docker.io/grubertech/tailscale:latest"
+            env:
+          - name: TS_HOSTNAME
+            value: "router"
+            - name: USERSPACE
+              value: "true"
+            - name: AUTH_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: tailscale
+                  key: AUTH_KEY
+                  optional: true
+            - name: ROUTES
+              value: "{{.SVC_CIDR}},{{.POD_CIDR}}"
+            securityContext:
+              runAsUser: 1000
+              runAsGroup: 1000
         EOF
-      - sudo kubectl apply -f test/tailscale-secret.yaml
-      - rm test/tailscale-secret.yaml
     ignore_error: true
