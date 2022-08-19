@@ -31,6 +31,3 @@ spec:
         duration: 20s
         factor: 2
         maxDuration: 15m
-    ignoreDifferences:
-    - group: networking.k8s.io
-      kind: Ingress
