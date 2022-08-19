@@ -1,0 +1,39 @@
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "postgres-operator-ui"
+  labels:
+    name: "postgres-operator-ui"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: "postgres-operator-ui"
+  template:
+    metadata:
+      labels:
+        name: "postgres-operator-ui"
+    spec:
+      containers:
+      - name: tailscale
+        imagePullPolicy: Always
+        image: "docker.io/grubertech/tailscale:latest"
+        env:
+        - name: TS_USERSPACE
+          value: "false"
+        - name: TS_AUTH_KEY
+          valueFrom:
+            secretKeyRef:
+              name: tailscale-auth
+              key: AUTH_KEY
+        securityContext:
+          capabilities:
+            add:
+            - NET_ADMIN
+        resources:
+          limits:
+            cpu: "256m"
+            memory: "256Mi"
+          requests:
+            cpu: "100m"
+            memory: "100Mi"

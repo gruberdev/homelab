@@ -3,6 +3,8 @@ kind: Kustomization
 bases:
 - github.com/zalando/postgres-operator/manifests
 - github.com/zalando/postgres-operator/ui/manifests
+- github.com/gruberdev/homelab/apps/networking/tailscale
 patchesStrategicMerge:
-- svc-lb.yaml
+- rb.yaml
+- deployment.yaml
 namespace: kube-system
