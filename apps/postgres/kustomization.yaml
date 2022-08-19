@@ -4,7 +4,7 @@ bases:
 - github.com/zalando/postgres-operator/manifests
 - github.com/zalando/postgres-operator/ui/manifests
 - github.com/gruberdev/homelab/apps/networking/tailscale
+- rb.yaml
 patchesStrategicMerge:
 - deployment.yaml
-- rb.yaml
 namespace: kube-system
