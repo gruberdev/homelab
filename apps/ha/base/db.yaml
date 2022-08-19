@@ -1,10 +1,10 @@
 apiVersion: "acid.zalan.do/v1"
 kind: postgresql
 metadata:
-  name: home-assistant-db
+  name: apps-ha-db
 spec:
   dockerImage: registry.opensource.zalan.do/acid/spilo-14:2.1-p6
-  teamId: "home-apps"
+  teamId: "apps"
   numberOfInstances: 2
   users:
     admin:
