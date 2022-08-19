@@ -7,4 +7,4 @@ bases:
 - rb.yaml
 patchesStrategicMerge:
 - deployment.yaml
-namespace: kube-system
+namespace: databases

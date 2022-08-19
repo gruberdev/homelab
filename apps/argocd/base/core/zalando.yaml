@@ -11,7 +11,7 @@ spec:
     path: apps/postgres
     targetRevision: main
   destination:
-    namespace: kube-system
+    namespace: databases
     name: in-cluster
   syncPolicy:
     automated:
@@ -20,7 +20,7 @@ spec:
       allowEmpty: true
     syncOptions:
     - Validate=false
-    - CreateNamespace=false
+    - CreateNamespace=true
     - PrunePropagationPolicy=foreground
     - PruneLast=true
     - ApplyOutOfSyncOnly=false
