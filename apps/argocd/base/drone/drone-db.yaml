@@ -20,12 +20,6 @@ spec:
   enableMasterLoadBalancer: true
   enableConnectionPooler: true
   # Load balancers' source ranges for both master and replica services
-  allowedSourceRanges:
-  - 127.0.0.1/32ddddd
-  - 100.100.100.0/32
-  - 192.168.1.0/24
-  - 10.0.0.0/8
-  - 192.168.0.0/24
   volume:
     size: 5Gi
     storageClass: local-path
