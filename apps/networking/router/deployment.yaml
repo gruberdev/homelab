@@ -22,7 +22,7 @@ spec:
           key: AUTH_KEY
           optional: true
     - name: ROUTES
-      value: "10.43.0.1/16"
+      value: "10.43.0.0/16"
     securityContext:
       runAsUser: 1000
       runAsGroup: 1000
