@@ -6,6 +6,7 @@ includes:
   argocd: ./tasks/argocd.yaml
   vault: ./tasks/vault.yaml
   tailscale: ./tasks/tailscale.yaml
+  drone: ./tasks/drone.yaml
 
 vars:
   CYAN: tput setaf 6

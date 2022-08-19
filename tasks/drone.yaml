@@ -1,0 +1,37 @@
+version: '3'
+vars:
+  CYAN: tput setaf 6
+  RED: tput setaf 1
+  YELLOW: tput setaf 3
+  GREEN: tput setaf 2
+  BLUE: tput setaf 1
+  PURPLE: tput setaf 5
+  BG_B: tput setab 0
+  BOLD: tput bold
+  RESET: tput sgr0
+  CLEAR: tput reset
+  PATH_ERROR: is not installed or correctly configured in PATH.
+
+silent: true
+
+tasks:
+  secret:
+    cmds:
+      - rm test/drone-secret.yaml
+      - |
+        cat << EOF > test/drone-secret.yaml
+        apiVersion: v1
+        kind: Secret
+        metadata:
+          name: drone-server-vars
+          namespace: drone
+        stringData:
+          DRONE_RPC_SECRET: $DRONE_RPC_SECRET
+          DRONE_DATABASE_DATASOURCE: $DRONE_DATABASE_DATASOURCE
+          DRONE_DATABASE_SECRET: $DRONE_DATABASE_SECRET
+          DRONE_GITHUB_CLIENT_ID: $DRONE_GITHUB_CLIENT_ID
+          DRONE_GITHUB_CLIENT_SECRET: $DRONE_GITHUB_CLIENT_SECRET
+        EOF
+      - sudo kubectl apply -f test/drone-secret.yaml
+      - rm test/drone-secret.yaml
+    ignore_error: true
