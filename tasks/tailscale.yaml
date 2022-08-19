@@ -30,7 +30,7 @@ tasks:
             reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"
             reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: ""
         stringData:
-          TS_AUTH_KEY: $TS_KEY
+          AUTH_KEY: $TS_KEY
         EOF
       - sudo kubectl apply -f test/tailscale-secret.yaml
       - rm test/tailscale-secret.yaml
