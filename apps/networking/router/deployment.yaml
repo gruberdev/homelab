@@ -1,9 +1,9 @@
 apiVersion: v1
-kind: Deployment
+kind: Pod
 metadata:
   name: subnet-router
   labels:
-    app: subnet-router
+    app: tailscale
 spec:
   selector:
     matchLabels:
