@@ -23,7 +23,7 @@ tasks:
         apiVersion: v1
         kind: Secret
         metadata:
-          name: tailscale-auth
+          name: tailscale
           namespace: kube-system
           annotations:
             reflector.v1.k8s.emberstack.com/reflection-allowed: "true"

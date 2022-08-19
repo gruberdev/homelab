@@ -19,14 +19,14 @@ spec:
         imagePullPolicy: Always
         image: grubertech/tailscale:latest
         env:
-        - name: TS_USERSPACE
+        - name: USERSPACE
           value: "false"
         - name: TS_HOSTNAME
           value: "databases"
-        - name: TS_AUTH_KEY
+        - name: AUTH_KEY
           valueFrom:
             secretKeyRef:
-              name: tailscale-auth
+              name: tailscale
               key: AUTH_KEY
         securityContext:
           capabilities:
