@@ -17,10 +17,12 @@ spec:
       containers:
       - name: tailscale
         imagePullPolicy: Always
-        image: "docker.io/grubertech/tailscale:latest"
+        image: grubertech/tailscale:latest
         env:
         - name: TS_USERSPACE
           value: "false"
+        - name: TS_HOSTNAME
+          value: "databases"
         - name: TS_AUTH_KEY
           valueFrom:
             secretKeyRef:
