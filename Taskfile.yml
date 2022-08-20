@@ -3,9 +3,10 @@ version: '3'
 silent: true
 
 includes:
+  postgres: ./tasks/postgres.yaml
+  tailscale: ./tasks/tailscale.yaml
   argocd: ./tasks/argocd.yaml
   vault: ./tasks/vault.yaml
-  tailscale: ./tasks/tailscale.yaml
   drone: ./tasks/drone.yaml
 
 vars:

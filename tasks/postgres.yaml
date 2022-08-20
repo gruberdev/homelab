@@ -1,0 +1,35 @@
+version: '3'
+vars:
+  CYAN: tput setaf 6
+  RED: tput setaf 1
+  YELLOW: tput setaf 3
+  GREEN: tput setaf 2
+  BLUE: tput setaf 1
+  PURPLE: tput setaf 5
+  BG_B: tput setab 0
+  BOLD: tput bold
+  RESET: tput sgr0
+  CLEAR: tput reset
+  PATH_ERROR: is not installed or correctly configured in PATH.
+
+silent: true
+
+tasks:
+  secret:roles:
+    cmds:
+      - rm test/infra-roles-secret.yaml
+      - |
+        cat << EOF > test/infra-roles-secret.yaml
+        apiVersion: v1
+        kind: Secret
+        metadata:
+          name: postgresql-infrastructure-roles-new
+          namespace: databases
+        data:
+          user: $B64_POSTGRES_ADMIN_USER
+          password: $B64_POSTGRES_ADMIN_PASSWORD
+        type: Opaque
+        EOF
+      - sudo kubectl apply -f test/infra-roles-secret.yaml
+      - rm test/infra-roles-secret.yaml
+    ignore_error: true
