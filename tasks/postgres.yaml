@@ -33,3 +33,9 @@ tasks:
       - sudo kubectl apply -f test/infra-roles-secret.yaml
       - rm test/infra-roles-secret.yaml
     ignore_error: true
+
+  decrypt:
+    cmds:
+      - echo -e "usage 'task postgres:decrypt -- {namespace}.{username}.{team}-{clustername}'\n"
+      - echo -e "$(kubectl get secret -n $(echo '{{.CLI_ARGS}}' | cut -d '.' -f 1) {{.CLI_ARGS}}.credentials.postgresql.acid.zalan.do -o 'jsonpath={.data.password}' | base64 -d)"
+    ignore_error: true
