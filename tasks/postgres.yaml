@@ -30,7 +30,7 @@ tasks:
           password: $B64_POSTGRES_ADMIN_PASSWORD
         type: Opaque
         EOF
-      - sudo kubectl apply -f test/infra-roles-secret.yaml
+      - kubectl apply -f test/infra-roles-secret.yaml
       - rm test/infra-roles-secret.yaml
     ignore_error: true
 
@@ -42,6 +42,6 @@ tasks:
 
   known:
     cmds:
-      - echo -e "Drone:\n"
-      - echo "$(kubectl get secret drone.admin.apps-drone-db.credentials.postgresql.acid.zalan.do -o 'jsonpath={.data.password}' | base64 -d)"
+      - echo -e "Home assistant:\n"
+      - echo "$(kubectl get secret -n homeassistant homeuser.apps-ha-db.credentials.postgresql.acid.zalan.do -o 'jsonpath={.data.password}' | base64 -d)"
     ignore_error: true

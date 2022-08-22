@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: home-assistant
+  labels:
+    app: home-assistant
+spec:
+  selector:
+    matchLabels:
+      app: home-assistant
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: home-assistant
+    spec:
+      containers:
+        - name: tailscale
+          imagePullPolicy: Always
+          image: grubertech/tailscale:latest
+          env:
+          - name: USERSPACE
+            valeu: "false"
+          - name: TS_HOSTNAME
+            value: "homeassistant"
+          - name: AUTH_KEY
+            valueFrom:
+              secretKeyRef:
+                name: tailscale
+                key: AUTH_KEY
+          securityContext:
+            capabilities:
+              add:
+              - NET_ADMIN
+          resources:
+            limits:
+              cpu: "256m"
+              memory: "256Mi"
+            requests:
+              cpu: "100m"
+              memory: "100Mi"

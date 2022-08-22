@@ -1,0 +1,42 @@
+version: '3'
+vars:
+  CYAN: tput setaf 6
+  RED: tput setaf 1
+  YELLOW: tput setaf 3
+  GREEN: tput setaf 2
+  BLUE: tput setaf 1
+  PURPLE: tput setaf 5
+  BG_B: tput setab 0
+  BOLD: tput bold
+  RESET: tput sgr0
+  CLEAR: tput reset
+  PATH_ERROR: is not installed or correctly configured in PATH.
+
+silent: true
+
+tasks:
+  secret:
+    cmds:
+      - rm test/vultr-secret.yaml
+      - |
+        cat << EOF > test/vultr-secret.yaml
+        apiVersion: v1
+        kind: Secret
+        metadata:
+          name: vultr-csi
+          annotations:
+            reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
+            reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"
+            reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: ""
+          namespace: kube-system
+        stringData:
+          api-key: $VULTR_API_KEY
+        EOF
+      - kubectl apply -f test/vultr-secret.yaml
+      - rm test/vultr-secret.yaml
+    ignore_error: true
+
+  storage:
+    cmds:
+      - kubectl apply -f https://raw.githubusercontent.com/vultr/vultr-csi/master/docs/releases/latest.yml
+    ignore_error: true
