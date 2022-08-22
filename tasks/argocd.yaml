@@ -36,7 +36,7 @@ tasks:
           password: $GH_PASS
           username: $GH_USER
         EOF
-      - sudo kubectl apply -f test/repo-creds.yaml -n argocd
+      - kubectl apply -f test/repo-creds.yaml -n argocd
       - rm test/repo-creds.yaml
     ignore_error: true
 
@@ -75,11 +75,11 @@ tasks:
       - sh: 'which kubectl'
         msg: 'kubectl {{.PATH_ERROR}}'
     cmds:
-      - sudo  kubectl create namespace argocd
+      - kubectl create namespace argocd
       - kustomize build | sudo kubectl apply -f -
       - sleep 10
       - kustomize build | sudo kubectl apply -f -
-      - sudo kubectl wait deploy/argocd-server -n argocd --for condition=available --timeout=600s
+      - kubectl wait deploy/argocd-server -n argocd --for condition=available --timeout=600s
       - echo ""
     ignore_error: true
 
@@ -93,6 +93,6 @@ tasks:
 
   password:
     cmds:
-      - sudo kubectl config set-context --current --namespace=argocd --cluster=k3d-homelab-testing
-      - sudo kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
+      - kubectl config set-context --current --namespace=argocd --cluster=k3d-homelab-testing
+      - kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
     ignore_error: true

@@ -104,8 +104,8 @@ tasks:
       resoures on non-local clusters that may be on KUBECONFIG file as well.
     cmds:
       - task: clear
-      - sudo k3d cluster delete homelab-testing
-      - sudo k3d cluster create --config test/k3d.yaml
+      - k3d cluster delete homelab-testing
+      - k3d cluster create --config test/k3d.yaml
       - task: highlight_normal
       - echo -e "\nYour cluster has been created. Type 'k3d cluster list' to confirm."
       - task: reset
