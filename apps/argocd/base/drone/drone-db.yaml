@@ -10,7 +10,7 @@ spec:
     admin:
     - superuser
     - createdb
-    homeuser: []
+    ciuser: []
   databases:
     drone: admin
   postgresql:
