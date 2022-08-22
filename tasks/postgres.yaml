@@ -42,6 +42,8 @@ tasks:
 
   known:
     cmds:
-      - echo -e "Home assistant:\n"
+      - echo -e "Home assistant:"
       - echo "$(kubectl get secret -n homeassistant homeuser.apps-ha-db.credentials.postgresql.acid.zalan.do -o 'jsonpath={.data.password}' | base64 -d)"
+      - echo -e "Drone:"
+      - echo "$(kubectl get secret -n drone ciuser.apps-drone-db.credentials.postgresql.acid.zalan.do -o 'jsonpath={.data.password}' | base64 -d)"
     ignore_error: true

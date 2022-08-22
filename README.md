@@ -8,6 +8,7 @@
 
 - Zalando's PostgreSQL Operator
 - Unifi controller
+- Adguard DNS
 - Tailscale <sub>(mostly as sidecars)</sub>
 - Hasicorp's Vault
 
@@ -34,7 +35,6 @@
 #### Storage, security and networking utilities:
 
 - Unifi Poller
-- Adguard DNS
 
 #### Monitoring and k8s utilities:
 

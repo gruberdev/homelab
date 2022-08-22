@@ -9,6 +9,7 @@ includes:
   vault: ./tasks/vault.yaml
   drone: ./tasks/drone.yaml
   vultr: ./tasks/vultr.yaml
+  secrets: ./tasks/secrets.yaml
 
 vars:
   CYAN: tput setaf 6

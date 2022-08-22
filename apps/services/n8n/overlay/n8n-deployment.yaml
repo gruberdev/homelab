@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: n8n-server
+  labels:
+    service: n8n-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: n8n-server
+  template:
+    metadata:
+      labels:
+        service: n8n-server
+    spec:
+      containers:
+        - name: tailscale
+          imagePullPolicy: Always
+          image: grubertech/tailscale:latest
+          env:
+          - name: USERSPACE
+            valeu: "false"
+          - name: TS_HOSTNAME
+            value: "n8n"
+          - name: DEST_PORT
+            value: "5678"
+          - name: AUTH_KEY
+            valueFrom:
+              secretKeyRef:
+                name: tailscale
+                key: AUTH_KEY
+          securityContext:
+            capabilities:
+              add:
+              - NET_ADMIN
+          resources:
+            limits:
+              cpu: "256m"
+              memory: "256Mi"
+            requests:
+              cpu: "100m"
+              memory: "100Mi"
+      serviceAccount: tailscale
