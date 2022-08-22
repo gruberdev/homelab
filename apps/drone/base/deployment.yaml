@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: drone-server
+  labels:
+    app: drone
+spec:
+  selector:
+    matchLabels:
+      app: drone
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: drone
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - envFrom:
+            - configMapRef:
+                name: drone-server
+            - secretRef:
+                name: drone-server-vars
+          image: 'drone/drone:2.12.1'
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+          name: server
+          ports:
+            - containerPort: 80
+              name: http
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+          resources:
+            limits:
+              cpu: 300m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 256Mi
+          volumeMounts:
+            - mountPath: /data
+              name: storage-volume
+      serviceAccountName: drone-server
+      volumes:
+        - name: storage-volume
+          persistentVolumeClaim:
+            claimName: drone-storage

@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: home-assistant
+  name: drone-server
   labels:
-    app: home-assistant
+    app: drone
 spec:
   selector:
     matchLabels:
-      app: home-assistant
+      app: drone
   replicas: 1
   template:
     metadata:
       labels:
-        app: home-assistant
+        app: drone
     spec:
       containers:
         - name: tailscale
@@ -22,9 +22,9 @@ spec:
           - name: USERSPACE
             valeu: "false"
           - name: TS_HOSTNAME
-            value: "homeassistant"
+            value: "drone"
           - name: DEST_PORT
-            value: "8123"
+            value: "80"
           - name: AUTH_KEY
             valueFrom:
               secretKeyRef:

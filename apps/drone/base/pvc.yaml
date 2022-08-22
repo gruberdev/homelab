@@ -1,8 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: drone-server
-  namespace: drone
+  name: drone-storage
 spec:
   accessModes:
     - ReadWriteOnce
