@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: unifi-controller-svc
+  labels:
+    run: unifi-controller
+spec:
+  ports:
+    - port: 80
+      targetPort: 8443
+      name: web-admin-portal
+      protocol: TCP
+    - port: 8080
+      name: device-communication
+      protocol: TCP
+    - port: 8843
+      name: web-guest-portal-https
+      protocol: TCP
+    - port: 8880
+      name: web-guest-portal-http
+      protocol: TCP
+    - port: 6789
+      name: mobile-throughput-test
+      protocol: TCP
+    - port: 3478
+      name: unifi-stun-port
+      protocol: UDP
+    - port: 10001
+      name: ap-discovery
+      protocol: UDP
+    - port: 1900
+      name: discoverable-on-l2-network
+      protocol: UDP
+    - port: 5514
+      name: remote-syslog-port
+      protocol: UDP
+  selector:
+    run: unifi-controller

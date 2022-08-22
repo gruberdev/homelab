@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: unifi-controller
+  labels:
+    app: unifi
+spec:
+  selector:
+    matchLabels:
+      name: unifi-controller
+  template:
+    metadata:
+      labels:
+        name: unifi-controller
+    spec:
+      containers:
+        - name: tailscale
+          imagePullPolicy: Always
+          image: grubertech/tailscale:latest
+          env:
+          - name: USERSPACE
+            valeu: "false"
+          - name: TS_HOSTNAME
+            value: "unifi"
+          - name: DEST_PORT
+            value: "8080"
+          - name: AUTH_KEY
+            valueFrom:
+              secretKeyRef:
+                name: tailscale
+                key: AUTH_KEY
+          securityContext:
+            capabilities:
+              add:
+              - NET_ADMIN
+          resources:
+            limits:
+              cpu: "256m"
+              memory: "256Mi"
+            requests:
+              cpu: "100m"
+              memory: "100Mi"
+      serviceAccount: tailscale

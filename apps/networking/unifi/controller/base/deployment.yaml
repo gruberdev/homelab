@@ -1,0 +1,64 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: unifi-controller
+  labels:
+    app: unifi
+spec:
+  selector:
+    matchLabels:
+      name: unifi-controller
+  template:
+    metadata:
+      labels:
+        name: unifi-controller
+    spec:
+      containers:
+        - name: unifi-controller
+          envFrom:
+            - configMapRef:
+              name: unifi-controller
+          ports:
+            - containerPort: 8443
+              name: ubnt-8443
+              protocol: TCP
+            - containerPort: 3478
+              name: ubnt-3478
+              protocol: UDP
+            - containerPort: 10001
+              name: ubnt-10001
+              protocol: UDP
+            - containerPort: 8080
+              name: ubnt-8080
+              protocol: TCP
+            - containerPort: 1900
+              name: ubnt-1900
+              protocol: UDP
+            - containerPort: 8843
+              name: ubnt-8843
+              protocol: TCP
+            - containerPort: 8880
+              name: ubnt-8880
+              protocol: TCP
+            - containerPort: 6789
+              name: ubnt-6789
+              protocol: TCP
+            - containerPort: 5514
+              name: ubnt-5514
+              protocol: UDP
+          image: lscr.io/linuxserver/unifi-controller:7.2.92
+          volumeMounts:
+            - mountPath: /config
+              name: data
+              subPath: unifi/config
+          resources:
+            limits:
+              cpu: "1000m"
+              memory: "1024Mi"
+            requests:
+              cpu: "300m"
+              memory: "512Mi"
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: unifi-storage

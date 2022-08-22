@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+bases:
+- ./base
+- https://github.com/gruberdev/homelab/apps/networking/tailscale
+patchesStrategicMerge:
+- overlay/controller-deployment.yaml
+
+namespace: unifi
+
+commonAnnotations:
+  reloader.stakater.com/auto: "true"
