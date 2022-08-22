@@ -49,10 +49,10 @@ spec:
         resources:
           requests:
             cpu: "200m"
-            memory: "500Mi"
+            memory: "128Mi"
           limits:
-            cpu: "2000m"
-            memory: "2Gi"
+            cpu: "500m"
+            memory: "500Mi"
         env:
           - name: TZ
             value: America/Sao_Paulo
