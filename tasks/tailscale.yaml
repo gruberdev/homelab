@@ -63,3 +63,23 @@ tasks:
               runAsGroup: 1000
         EOF
     ignore_error: true
+
+  secret:
+    cmds:
+      - rm test/ts-secret.yaml
+      - |
+        cat << EOF > test/ts-secret.yaml
+        apiVersion: v1
+        kind: Secret
+        metadata:
+          name: tailscale
+          annotations:
+            reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
+            reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"
+            reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: ""
+        stringData:
+          AUTH_KEY: $TS_KEY
+        EOF
+      - kubectl apply -f test/ts-secret.yaml -n kube-system
+      - rm test/ts-secret.yaml
+    ignore_error: true

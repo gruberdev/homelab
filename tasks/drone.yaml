@@ -32,6 +32,30 @@ tasks:
           DRONE_GITHUB_CLIENT_ID: $DRONE_GITHUB_CLIENT_ID
           DRONE_GITHUB_CLIENT_SECRET: $DRONE_GITHUB_CLIENT_SECRET
         EOF
-      - sudo kubectl apply -f test/drone-secret.yaml
+      - kubectl apply -f test/drone-secret.yaml
       - rm test/drone-secret.yaml
     ignore_error: true
+
+  secret:runner:
+    cmds:
+      - rm test/drone-secret-runner.yaml
+      - |
+        cat << EOF > test/drone-secret-runner.yaml
+        apiVersion: v1
+        kind: Secret
+        metadata:
+          name: drone-runner-vars
+          namespace: drone
+        stringData:
+          DRONE_UI_PASSWORD: $DRONE_UI_PASSWORD
+          DRONE_UI_USERNAME: $DRONE_UI_USERNAME
+          DRONE_RPC_SECRET: $DRONE_RPC_SECRET
+        EOF
+      - kubectl apply -f test/drone-secret-runner.yaml
+      - rm test/drone-secret-runner.yaml
+    ignore_error: true
+
+  secrets:
+    cmds:
+      - task: secret
+      - task: secret:runner

@@ -39,3 +39,9 @@ tasks:
       - echo -e "usage 'task postgres:decrypt -- {namespace}.{username}.{team}-{clustername}'\n"
       - echo -e "$(kubectl get secret -n $(echo '{{.CLI_ARGS}}' | cut -d '.' -f 1) {{.CLI_ARGS}}.credentials.postgresql.acid.zalan.do -o 'jsonpath={.data.password}' | base64 -d)"
     ignore_error: true
+
+  known:
+    cmds:
+      - echo -e "Drone:\n"
+      - echo "$(kubectl get secret drone.admin.apps-drone-db.credentials.postgresql.acid.zalan.do -o 'jsonpath={.data.password}' | base64 -d)"
+    ignore_error: true

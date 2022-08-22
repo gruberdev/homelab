@@ -76,9 +76,9 @@ tasks:
         msg: 'kubectl {{.PATH_ERROR}}'
     cmds:
       - kubectl create namespace argocd
-      - kustomize build | sudo kubectl apply -f -
+      - kustomize build |  kubectl apply -f -
       - sleep 10
-      - kustomize build | sudo kubectl apply -f -
+      - kustomize build |  kubectl apply -f -
       - kubectl wait deploy/argocd-server -n argocd --for condition=available --timeout=600s
       - echo ""
     ignore_error: true
@@ -86,13 +86,12 @@ tasks:
   rm:
     dir: apps/argocd
     cmds:
-      - kustomize build | sudo  kubectl delete -f -
+      - kustomize build | kubectl delete -f -
     ignore_error: true
 
-  bridge: sudo kubectl port-forward -n argocd svc/argocd-server 8832:80
+  bridge: kubectl port-forward -n argocd svc/argocd-server 8832:80
 
   password:
     cmds:
-      - kubectl config set-context --current --namespace=argocd --cluster=k3d-homelab-testing
       - kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
     ignore_error: true

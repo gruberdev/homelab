@@ -12,6 +12,7 @@ vars:
   CLEAR: tput reset
 
 silent: true
+
 env:
   VAULT_ADDR: "https://vault.k8s.localhost"
   VAULT_SKIP_VERIFY: "true"

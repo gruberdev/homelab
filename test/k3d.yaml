@@ -3,7 +3,7 @@ kind: Simple
 metadata:
   name: homelab-testing
 servers: 1
-agents: 3
+agents: 1
 kubeAPI:
   host: "k8s.localhost"
   hostIP: "127.0.0.1"

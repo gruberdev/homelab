@@ -4,11 +4,12 @@
 - Drone CI
 - ArgoCD
   - argocd-vault-plugin for secret management
+  - argocd-lovely-plugin for Kustomize and Helm custom deployments
 
 #### Storage, security and networking utilities:
 
 - Zalando's PostgreSQL Operator
-- Tailscale | Tailscale k8s LoadBalancer
+- Tailscale <sub>(mostly as sidecar)</sub>
 - Hasicorp's Vault
 
 #### Kubernetes Utilities:

@@ -9,18 +9,68 @@ spec:
   source:
     repoURL: 'https://github.com/drone/charts.git'
     targetRevision: master
-    path: charts/drone
+    path: charts/drone-runner-kube
     helm:
       releaseName: drone-kube-runner
       values: |
-        args:
-          - --namespace=default
-          - --delete-successful-after=5m
-          - --delete-failed-after=120m
-          - --delete-pending-pods-after=60m
-          - --delete-evicted-pods-after=60m
-          - --delete-orphaned-pods-after=60m
-          - --legacy-mode=false
+        image:
+          repository: drone/drone-runner-kube
+          tag: latest
+          pullPolicy: IfNotPresent
+        replicaCount: 1
+        terminationGracePeriodSeconds: 3600
+        nameOverride: ""
+        fullnameOverride: ""
+        podSecurityContext: {}
+        securityContext: {}
+        podAnnotations: {}
+        service:
+          type: ClusterIP
+          port: 3000
+        ingress:
+          enabled: false
+          annotations: {}
+            # kubernetes.io/ingress.class: nginx
+            # kubernetes.io/tls-acme: "true"
+          hosts:
+            - host: chart-example.local
+              paths:
+                - path: /
+                  pathType: Prefix
+          tls: []
+          #  - secretName: chart-example-tls
+          #    hosts:
+          #      - chart-example.local
+        resources:
+          limits:
+            cpu: 500m
+            memory: 256Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+        nodeSelector: {}
+        tolerations: []
+        affinity: {}
+        extraVolumes: []
+        extraVolumeMounts: []
+        extraSecretNamesForEnvFrom:
+          - drone-runner-vars
+        ## Each namespace listed below will be configured such that the runner can run build Pods in
+        ## it. This comes in the form of a Role and a RoleBinding. If you change env.DRONE_NAMESPACE_DEFAULT
+        ## or the other DRONE_NAMESPACE_* variables, make sure to update this list to include all
+        ## namespaces.
+        rbac:
+          buildNamespaces:
+            - drone
+        serviceAccount:
+          annotations: {}
+        env:
+          DRONE_RUNNER_CAPACITY: 20
+          DRONE_NAMESPACE_DEFAULT: drone
+          DRONE_RPC_SKIP_VERIFY: true
+          DRONE_UI_DISABLE: false
+          DRONE_SERVER_HOST: "drone"
+          DRONE_SERVER_PROTO: http
 
   destination:
     namespace: drone
