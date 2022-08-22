@@ -4,7 +4,7 @@ bases:
 - ./base
 - https://github.com/gruberdev/homelab/apps/networking/tailscale
 patchesStrategicMerge:
-- overlay/deployment.yaml
+- overlay/drone-deployment.yaml
 
 namespace: drone
 

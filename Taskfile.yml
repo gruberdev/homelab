@@ -62,28 +62,28 @@ tasks:
       # yamllint disable-line rule:line-length
       - sleep 0.1 && {{.CYAN}} && {{.BOLD}} && {{.BG_B}} && echo -e "\nValidating Yaml files using Kubeval..." && {{.RESET}}
       - sleep 0.1 && {{.CYAN}} && echo -e "\nService object files" && {{.RESET}}
-      - find . -maxdepth 10 -name \*-svc.yaml -exec kubeval {} \;
+      - find . -maxdepth 10 -name \*svc.yaml -exec kubeval {} \;
       - sleep 0.1 && {{.CYAN}} && echo -e "\nDeployment object files" && {{.RESET}}
-      - find . -maxdepth 10 -name \*-deployment.yaml -exec kubeval {} \;
+      - find . -maxdepth 10 -name deployment.yaml -exec kubeval {} \;
       - sleep 0.1 && {{.CYAN}} && echo -e "\nSecret object files" && {{.RESET}}
-      - find . -maxdepth 10 -name \*-secret.yaml -exec kubeval {} \;
+      - find . -maxdepth 10 -name \*secret.yaml -exec kubeval {} \;
       - sleep 0.1 && {{.CYAN}} && echo -e "\nconfigMap object files" && {{.RESET}}
-      - find . -maxdepth 10 -name \*-cm.yaml -exec kubeval {} \;
+      - find . -maxdepth 10 -name cm.yaml -exec kubeval {} \;
       - sleep 0.1 && {{.CYAN}} && echo -e "\nPVC object files" && {{.RESET}}
-      - find . -maxdepth 10 -name \*-pvc.yaml -exec kubeval {} \;
+      - find . -maxdepth 10 -name pvc.yaml -exec kubeval {} \;
       - sleep 0.1 && {{.CYAN}} && echo -e "\nPV object files" && {{.RESET}}
-      - find . -maxdepth 10 -name \*-pv.yaml -exec kubeval {} \;
+      - find . -maxdepth 10 -name pv.yaml -exec kubeval {} \;
       # yamllint disable-line rule:line-length
       - sleep 0.1 && {{.CYAN}} && echo -e "\nCustomRoleBinding object files" && {{.RESET}}
-      - find . -maxdepth 10 -name \*-crb.yaml -exec kubeval {} \;
+      - find . -maxdepth 10 -name crb.yaml -exec kubeval {} \;
       - sleep 0.1 && {{.CYAN}} && echo -e "\nRole object files" && {{.RESET}}
-      - find . -maxdepth 10 -name \*-role.yaml -exec kubeval {} \;
+      - find . -maxdepth 10 -name role.yaml -exec kubeval {} \;
       - sleep 0.1 && {{.CYAN}} && echo -e "\nServiceAccount object files" && {{.RESET}}
-      - find . -maxdepth 10 -name \*-sa.yaml -exec kubeval {} \;
-      - sleep 0.1 && {{.CYAN}} && echo -e "\n ClusterRole object files" && {{.RESET}}
-      - find . -maxdepth 10 -name \*-cr.yaml -exec kubeval {} \;
+      - find . -maxdepth 10 -name sa.yaml -exec kubeval {} \;
+      - sleep 0.1 && {{.CYAN}} && echo -e "\nClusterRole object files" && {{.RESET}}
+      - find . -maxdepth 10 -name cr.yaml -exec kubeval {} \;
       - sleep 0.1 && {{.CYAN}} && echo -e "\nRole Binding object files" && {{.RESET}}
-      - find . -maxdepth 10 -name \*-rb.yaml -exec kubeval {} \;
+      - find . -maxdepth 10 -name rb.yaml -exec kubeval {} \;
     silent: true
 
   test:k3d:
