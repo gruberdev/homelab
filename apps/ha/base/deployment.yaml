@@ -9,11 +9,6 @@ spec:
     matchLabels:
       app: home-assistant
   replicas: 1
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 2
-      maxUnavailable: 1
   template:
     metadata:
       labels:
