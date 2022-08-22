@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: adguard
+  labels:
+    service: adguard-home
+spec:
+  type: ClusterIP
+  selector:
+    service: adguard-home
+  ports:
+    - name: admin
+      port: 3000
+      targetPort: 3000
+      protocol: TCP
+    - name: web
+      port: 80
+      targetPort: 80
+      protocol: TCP
+    - name: dns
+      port: 53
+      targetPort: 53
+      protocol: UDP

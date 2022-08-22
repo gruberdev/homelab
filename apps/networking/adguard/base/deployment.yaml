@@ -1,0 +1,88 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adguard-home
+  labels:
+    service: adguard-home
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 0
+  selector:
+    matchLabels:
+      service: adguard-home
+  template:
+    metadata:
+      labels:
+        service: adguard-home
+    spec:
+      hostNetwork: true
+      initContainers:
+        - name: copy-configmap
+          image: busybox
+          imagePullPolicy: IfNotPresent
+          command:
+            - "sh"
+            - "-c"
+            - "mkdir -p /opt/adguardhome/conf && cp /tmp/AdGuardHome.yaml /opt/adguardhome/conf/AdGuardHome.yaml"
+          volumeMounts:
+            - name: adguard-home-configmap
+              mountPath: /tmp
+            - name: adguard-home-config
+              mountPath: /opt/adguardhome/conf
+          securityContext:
+            runAsUser: 0
+      containers:
+        - name: adguard-home
+          image: adguard/adguardhome:v0.107.11
+          env:
+            - name: TZ
+              value: "America/Sao_Paulo"
+          args:
+            - "-c"
+            - "/opt/adguardhome/conf/AdGuardHome.yaml"
+            - "--work-dir"
+            - "/opt/adguardhome/work"
+            - "--no-check-update"
+          securityContext:
+            privileged: false
+            allowPrivilegeEscalation: false
+          ports:
+            - name: web
+              containerPort: 3000
+              protocol: TCP
+            - name: dns
+              containerPort: 53
+              protocol: UDP
+            - name: dns-tcp
+              containerPort: 853
+              protocol: TCP
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "200m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+          volumeMounts:
+            - name: adguard-home-config
+              mountPath: /opt/adguardhome/conf
+            - name: adguard-home-logs
+              mountPath: /opt/adguardhome/work
+      volumes:
+        - name: adguard-home-configmap
+          configMap:
+            name: adguard-home
+            items:
+              - key: AdGuardHome.yaml
+                path: AdGuardHome.yaml
+        - name: adguard-home-config
+          persistentVolumeClaim:
+            claimName: adguard-storage
+        - name: adguard-home-logs
+          persistentVolumeClaim:
+            claimName: adguard-logs

@@ -14,6 +14,7 @@ resources:
 - base/apps/vault.yaml
 - base/apps/ha.yaml
 - base/apps/unifi.yaml
+- base/apps/adguard.yaml
 
 - base/drone/drone-server.yaml
 - base/drone/drone-runner.yaml

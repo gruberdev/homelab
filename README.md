@@ -4,12 +4,11 @@
 - Drone CI
 - ArgoCD
   - argocd-vault-plugin for secret management
-  - argocd-lovely-plugin for Kustomize and Helm custom deployments
-
 #### Storage, security and networking utilities:
 
 - Zalando's PostgreSQL Operator
-- Tailscale <sub>(mostly as sidecar)</sub>
+- Unifi controller
+- Tailscale <sub>(mostly as sidecars)</sub>
 - Hasicorp's Vault
 
 #### Kubernetes Utilities:
@@ -34,7 +33,6 @@
 
 #### Storage, security and networking utilities:
 
-- Unifi controller
 - Unifi Poller
 - Adguard DNS
 
