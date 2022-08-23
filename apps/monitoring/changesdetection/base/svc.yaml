@@ -1,15 +1,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: n8n
+  name: changedetection
   labels:
-    service: n8n-server
+    name: changedetection
 spec:
   type: ClusterIP
   selector:
-    service: n8n-server
+    app: changedetection
   ports:
-    - name: web
-      port: 80
-      targetPort: 5678
-      protocol: TCP
+  - name: http
+    protocol: TCP
+    port: 5000
+    targetPort: 5000

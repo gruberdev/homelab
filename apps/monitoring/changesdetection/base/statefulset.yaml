@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: changedetection
+  labels:
+    app: changedetection
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: changedetection
+  serviceName: "changedetection"
+  template:
+    metadata:
+      labels:
+        app: changedetection
+    spec:
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: changedetection
+        image: dgtlmoon/changedetection.io:latest
+        imagePullPolicy: IfNotPresen
+        ports:
+        - name: http
+          containerPort: 5000
+        resources:
+          limits:
+            memory: "350Mi"
+          requests:
+            memory: "120Mi"
+        volumeMounts:
+        - name: onchange-data
+          readOnly: false
+          mountPath: "/datastore"
+        livenessProbe:
+          exec:
+            command:
+            - ls
+            - /datastore/lost+found
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      volumes:
+      - name: onchange-data
+        persistentVolumeClaim:
+          claimName: onchange-storage

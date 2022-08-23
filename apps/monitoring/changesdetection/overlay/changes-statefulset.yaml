@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: changedetection
+  labels:
+    app: changedetection
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: changedetection
+  serviceName: "changedetection"
+  template:
+    metadata:
+      labels:
+        app: changedetection
+    spec:
+      containers:
+        - name: tailscale
+          imagePullPolicy: Always
+          image: grubertech/tailscale:latest
+          env:
+          - name: USERSPACE
+            valeu: "false"
+          - name: TS_HOSTNAME
+            value: "onchanges"
+          - name: DEST_PORT
+            value: "5000"
+          - name: AUTH_KEY
+            valueFrom:
+              secretKeyRef:
+                name: tailscale
+                key: AUTH_KEY
+          securityContext:
+            capabilities:
+              add:
+              - NET_ADMIN
+          resources:
+            limits:
+              cpu: "256m"
+              memory: "256Mi"
+            requests:
+              cpu: "100m"
+              memory: "100Mi"
+      serviceAccount: tailscale
