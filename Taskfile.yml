@@ -54,6 +54,11 @@ tasks:
     cmds:
       - task {{.CLI_ARGS}} --summary
 
+  local:
+    desc: local-path storage
+    cmds:
+      - kustomize build "github.com/rancher/local-path-provisioner/deploy?ref=v0.0.22" | kubectl apply -f -
+
   validate:
     preconditions:
       - sh: "which kubeval"
