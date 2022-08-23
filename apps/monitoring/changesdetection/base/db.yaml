@@ -1,0 +1,32 @@
+apiVersion: "acid.zalan.do/v1"
+kind: postgresql
+metadata:
+  name: apps-n8n-db
+spec:
+  dockerImage: registry.opensource.zalan.do/acid/spilo-14:2.1-p6
+  teamId: "apps"
+  numberOfInstances: 2
+  users:
+    admin:
+    - superuser
+    - createdb
+    automateuser: []
+  databases:
+    n8n: admin
+  postgresql:
+    version: "14"
+  # Prevents PostgreSQL 64mb limit
+  enableShmVolume: true
+  enableMasterLoadBalancer: true
+  enableConnectionPooler: true
+  # Load balancers' source ranges for both master and replica services
+  volume:
+    size: 5Gi
+    storageClass: local-path
+  resources:
+    requests:
+      cpu: 10m
+      memory: 100Mi
+    limits:
+      cpu: 200m
+      memory: 200Mi
