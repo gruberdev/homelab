@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: adguard
+  name: n8n
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
