@@ -7,6 +7,7 @@ resources:
 - base/projects/monitoring.yaml
 - base/projects/networking.yaml
 - base/projects/apps.yaml
+- base/projects/matrix.yaml
 
 - base/core/argocd.yaml
 - base/core/zalando.yaml

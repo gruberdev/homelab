@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: matrix
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  description: Matrix Project
+  sourceRepos:
+  - '*'
+  destinations:
+  - namespace: matrix
+    server: https://kubernetes.default.svc
+  - namespace: matrix-bots
+    server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  orphanedResources:
+    warn: false
