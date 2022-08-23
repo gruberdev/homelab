@@ -3,6 +3,9 @@ kind: ConfigMap
 metadata:
   name: argocd-cm
 data:
+  url: https://argo-cd-demo.argoproj.io
+  statusbadge.enabled: "true"
+  statusbadge.url: "https://status.argo.gr.wtf/"
   configManagementPlugins: |
     - name: argocd-vault-plugin
       generate:
