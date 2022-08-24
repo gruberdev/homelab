@@ -83,7 +83,7 @@ spec:
           image: grubertech/tailscale:latest
           env:
           - name: USERSPACE
-            valeu: "false"
+            value: "false"
           - name: TS_HOSTNAME
             value: "databases"
           - name: AUTH_KEY

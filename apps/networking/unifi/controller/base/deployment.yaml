@@ -18,9 +18,6 @@ spec:
       containers:
         - name: unifi-controller
           image: lscr.io/linuxserver/unifi-controller:7.2.92
-          envFrom:
-            - configMapRef:
-              name: unifi-controller
           ports:
             - containerPort: 8443
               name: ubnt-8443
@@ -60,6 +57,9 @@ spec:
             requests:
               cpu: "300m"
               memory: "512Mi"
+          envFrom:
+            - configMapRef:
+              name: unifi-controller
       volumes:
         - name: data
           persistentVolumeClaim:

@@ -46,7 +46,6 @@ spec:
           volumeMounts:
             - mountPath: /data
               name: storage-volume
-      serviceAccountName: drone-server
       volumes:
         - name: storage-volume
           persistentVolumeClaim:
