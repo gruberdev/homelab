@@ -20,7 +20,7 @@ spec:
           image: grubertech/tailscale:latest
           env:
           - name: USERSPACE
-            valeu: "false"
+            value: "false"
           - name: TS_HOSTNAME
             value: "n8n"
           - name: DEST_PORT
