@@ -3,8 +3,8 @@ kind: ConfigMap
 metadata:
   name: unifi-controller
 data:
-  TZ: 'America/Sao_Paulo'
-  PUID: '0'
-  PGID: '0'
-  MEM_LIMIT: '1024M'
-  MEM_STARTUP: '1024M'
+  TZ: "America/Sao_Paulo"
+  PUID: "0"
+  PGID: "0"
+  MEM_LIMIT: "1024M"
+  MEM_STARTUP: "1024M"
