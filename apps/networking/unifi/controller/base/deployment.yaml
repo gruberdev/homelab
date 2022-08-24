@@ -1,20 +1,23 @@
-kind: Deployment
+---
 apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: unifi-controller
   labels:
-    app: unifi
+    service: unifi-controller
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      name: unifi-controller
+      service: unifi-controller
   template:
     metadata:
       labels:
-        name: unifi-controller
+        service: unifi-controller
     spec:
       containers:
         - name: unifi-controller
+          image: lscr.io/linuxserver/unifi-controller:7.2.92
           envFrom:
             - configMapRef:
               name: unifi-controller
@@ -46,7 +49,6 @@ spec:
             - containerPort: 5514
               name: ubnt-5514
               protocol: UDP
-          image: lscr.io/linuxserver/unifi-controller:7.2.92
           volumeMounts:
             - mountPath: /config
               name: data

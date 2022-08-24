@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: unifi-controller-svc
   labels:
-    run: unifi-controller
+    service: unifi-controller
 spec:
   ports:
     - port: 80
@@ -35,4 +35,4 @@ spec:
       name: remote-syslog-port
       protocol: UDP
   selector:
-    run: unifi-controller
+    service: unifi-controller

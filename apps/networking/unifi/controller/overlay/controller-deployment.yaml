@@ -1,17 +1,19 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: unifi-controller
   labels:
-    app: unifi
+    service: unifi-controller
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      name: unifi-controller
+      service: unifi-controller
   template:
     metadata:
       labels:
-        name: unifi-controller
+        service: unifi-controller
     spec:
       containers:
         - name: tailscale
