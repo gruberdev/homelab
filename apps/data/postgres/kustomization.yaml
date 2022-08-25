@@ -5,6 +5,27 @@ bases:
 - github.com/zalando/postgres-operator/ui/manifests
 - github.com/gruberdev/homelab/apps/networking/tailscale
 - rb.yaml
+
 patchesStrategicMerge:
 - deployment.yaml
+
 namespace: databases
+
+patches:
+- path: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/tailscale/patch.yaml
+  target:
+    kind: Deployment
+- patch: |-
+    - op: replace
+      path: "/spec/template/spec/containers/0/env/1"
+      value:
+        name: TS_HOSTNAME
+        value: "databases"
+    - op: replace
+      path: "/spec/template/spec/containers/0/env/2"
+      value:
+        name: DEST_PORT
+        value: "80"
+  target:
+    kind: Deployment
+    name: postgres-operator-ui

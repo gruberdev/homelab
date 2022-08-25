@@ -53,5 +53,24 @@ images:
   newName: ghcr.io/argoproj/argocd
   newTag: 2.4.0-dfeacd3e
 
+patches:
+- path: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/tailscale/patch.yaml
+  target:
+    kind: Deployment
+- patch: |-
+    - op: replace
+      path: "/spec/template/spec/containers/0/env/1"
+      value:
+        name: TS_HOSTNAME
+        value: "argocd"
+    - op: replace
+      path: "/spec/template/spec/containers/0/env/2"
+      value:
+        name: DEST_PORT
+        value: "8123"
+  target:
+    kind: Deployment
+    name: argocd-repo-server
+
 commonAnnotations:
   reloader.stakater.com/auto: "true"

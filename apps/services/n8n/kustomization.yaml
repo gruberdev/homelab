@@ -7,7 +7,7 @@ bases:
 namespace: services
 
 patches:
-- path: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/tailscale/patch/deployment.yaml
+- path: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/tailscale/patch.yaml
   target:
     kind: Deployment
 - patch: |-

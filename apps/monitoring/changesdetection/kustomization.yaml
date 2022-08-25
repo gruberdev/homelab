@@ -6,5 +6,24 @@ bases:
 
 namespace: services
 
+patches:
+- path: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/tailscale/patch.yaml
+  target:
+    kind: StatefulSet
+- patch: |-
+    - op: replace
+      path: "/spec/template/spec/containers/0/env/1"
+      value:
+        name: TS_HOSTNAME
+        value: "onchanges"
+    - op: replace
+      path: "/spec/template/spec/containers/0/env/2"
+      value:
+        name: DEST_PORT
+        value: "5000"
+  target:
+    kind: StatefulSet
+    name: changedetection
+
 commonAnnotations:
   reloader.stakater.com/auto: "true"

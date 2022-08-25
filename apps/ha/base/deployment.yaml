@@ -14,36 +14,9 @@ spec:
       labels:
         app: home-assistant
     spec:
-      serviceAccount: tailscale
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
       containers:
-        - name: tailscale
-          imagePullPolicy: Always
-          image: grubertech/tailscale:latest
-          env:
-          - name: USERSPACE
-            valeu: "false"
-          - name: TS_HOSTNAME
-            value: "homeassistant"
-          - name: DEST_PORT
-            value: "8123"
-          - name: AUTH_KEY
-            valueFrom:
-              secretKeyRef:
-                name: tailscale
-                key: AUTH_KEY
-          securityContext:
-            capabilities:
-              add:
-              - NET_ADMIN
-          resources:
-            limits:
-              cpu: "256m"
-              memory: "256Mi"
-            requests:
-              cpu: "100m"
-              memory: "100Mi"
         - name: home-assistant
           image: docker.io/homeassistant/home-assistant:2022.8
           imagePullPolicy: IfNotPresent

@@ -7,7 +7,7 @@ bases:
 namespace: unifi
 
 patches:
-- path: https://raw.githubusercontent.com/gruberdev/homelab/apps/networking/tailscale/patch.yaml
+- path: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/tailscale/patch.yaml
   target:
     kind: Deployment
 - patch: |-

@@ -16,7 +16,6 @@ spec:
         app: changedetection
     spec:
       restartPolicy: Always
-      serviceAccount: tailscale
       terminationGracePeriodSeconds: 10
       containers:
         - name: tailscale
