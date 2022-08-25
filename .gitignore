@@ -7,7 +7,6 @@ config/tls/*.pem
 apps/argocd/overlay/*.json
 j*.pem
 .DS_Store
-apps/networking/adguard/base/cm.yaml
 
 # Crash log files
 crash.log
