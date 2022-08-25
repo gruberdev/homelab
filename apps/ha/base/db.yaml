@@ -1,10 +1,11 @@
 apiVersion: "acid.zalan.do/v1"
 kind: postgresql
 metadata:
-  name: apps-ha-db
+  name: db-ha
+  team: db
 spec:
   dockerImage: registry.opensource.zalan.do/acid/spilo-14:2.1-p6
-  teamId: "apps"
+  teamId: "db"
   numberOfInstances: 1
   users:
     admin:
@@ -12,7 +13,7 @@ spec:
       - createdb
     homeuser: []
   databases:
-    homeassistant: admin
+    homeassistant: homeuser
   postgresql:
     version: "14"
   # Prevents PostgreSQL 64mb limit

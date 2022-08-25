@@ -5,10 +5,12 @@ metadata:
   labels:
     app: drone
 spec:
+  replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: drone
-  replicas: 1
   template:
     metadata:
       labels:
@@ -45,7 +47,7 @@ spec:
               memory: "100Mi"
         - envFrom:
             - configMapRef:
-                name: drone-server
+                name: drone-cm
             - secretRef:
                 name: drone-server-vars
           image: 'drone/drone:2.12.1'

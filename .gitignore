@@ -11,6 +11,7 @@ j*.pem
 # Crash log files
 crash.log
 debug.log
+apps/monitoring/uptime-kuma
 
 # Terraform files/Misc
 override.tf

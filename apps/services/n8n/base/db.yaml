@@ -1,10 +1,12 @@
 apiVersion: "acid.zalan.do/v1"
 kind: postgresql
 metadata:
-  name: apps-n8n-db
+  name: db-n8n
+  labels:
+    team: db
 spec:
   dockerImage: registry.opensource.zalan.do/acid/spilo-14:2.1-p6
-  teamId: "apps"
+  teamId: "db"
   numberOfInstances: 1
   users:
     admin:
@@ -12,7 +14,7 @@ spec:
     - createdb
     automateuser: []
   databases:
-    n8n: admin
+    n8n: automateuser
   postgresql:
     version: "14"
   # Prevents PostgreSQL 64mb limit

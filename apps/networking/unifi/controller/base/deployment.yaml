@@ -7,6 +7,8 @@ metadata:
     app: unifi-controller
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: unifi-controller
@@ -18,7 +20,10 @@ spec:
       serviceAccount: tailscale
       containers:
         - name: unifi-controller
-          image: lscr.io/linuxserver/unifi-controller:7.2.92
+          image: jacobalberty/unifi:v7.2.92
+          envFrom:
+            - configMapRef:
+                name: unifi-controller-cm
           ports:
             - containerPort: 8443
               name: ubnt-8443
@@ -48,9 +53,12 @@ spec:
               name: ubnt-5514
               protocol: UDP
           volumeMounts:
-            - mountPath: /config
+            - mountPath: /unifi/data
               name: data
-              subPath: unifi/config
+            - mountPath: /unifi/log
+              name: logs
+            - mountPath: /unifi/cert
+              name: certs
           resources:
             limits:
               cpu: "1000m"
@@ -58,9 +66,6 @@ spec:
             requests:
               cpu: "300m"
               memory: "512Mi"
-          envFrom:
-            - configMapRef:
-              name: unifi-controller
         - name: tailscale
           imagePullPolicy: Always
           image: grubertech/tailscale:latest
@@ -70,7 +75,7 @@ spec:
             - name: TS_HOSTNAME
               value: "unifi"
             - name: DEST_PORT
-              value: "8080"
+              value: "8443"
             - name: AUTH_KEY
               valueFrom:
                 secretKeyRef:
@@ -91,3 +96,9 @@ spec:
         - name: data
           persistentVolumeClaim:
             claimName: unifi-storage
+        - name: logs
+          persistentVolumeClaim:
+            claimName: unifi-logs
+        - name: certs
+          persistentVolumeClaim:
+            claimName: unifi-certificates

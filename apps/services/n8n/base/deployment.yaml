@@ -7,6 +7,8 @@ metadata:
     app: n8n-server
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: n8n-server

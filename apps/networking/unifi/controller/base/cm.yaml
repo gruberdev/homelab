@@ -1,10 +1,11 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: unifi-controller
+  name: unifi-controller-cm
 data:
   TZ: "America/Sao_Paulo"
   PUID: "0"
   PGID: "0"
-  MEM_LIMIT: "1024M"
-  MEM_STARTUP: "1024M"
+  JVM_MAX_THREAD_STACK_SIZE: "1280k"
+  JVM_INIT_HEAP_SIZE: "1024M"
+  JVM_MAX_HEAP_SIZE: "1024M"

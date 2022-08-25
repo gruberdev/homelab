@@ -40,30 +40,24 @@ spec:
         config:
           publicBaseurl: 'https://matrix.gr.wtf'
           reportStats: false
-        
           ## Protect registration with recaptcha. (optional)
           ##
           # recaptcha:
           #   publicKey: ''
           #   privateKey: ''
-        
           ## URIs and secret key for TURN servers to use to help establish 1:1 WebRTC
           ## calls.
           ##
           # turnUris: []
           # turnSecret: ''
-        
           ## Registration configuration, note that registration with the
           ## container-internal register_new_matrix_user tool is always possible.
           ##
           # enableRegistration: false
-        
           ## NB; this value will default to a random string if not specified.
           # registrationSharedSecret: ''
-        
           ## NB; Strongly recommended to set this to a secure value.
           # macaroonSecretKey: ''
-        
           ## A set of trusted servers to contact if another server doesn't respond to a
           ## signing key request.
           ##
@@ -71,14 +65,12 @@ spec:
             - server_name: matrix.org
           #   verify_keys:
           #     "ed25519:auto": "Noi6WqcDj0QmPxCNQqgezwTlBKrfqehY1u2FyWP9uYw"
-        
           ## Extra listeners to configure.
           ##
           extraListeners: []
           #  - port: 9000
           #    bind_addresses: ['::']
           #    type: manhole
-        
         ## Specify arbitrary Synapse configuration here;
         ## Ref: https://github.com/matrix-org/synapse/blob/develop/docs/sample_config.yaml
         ##
@@ -92,7 +84,6 @@ spec:
         #    - nyc.example.com
         #    - syd.example.com
         #  dynamic_thumbnails: true
-        
         ## Specify arbitrary - secret - Synapse configuration here;
         ## These values will be stored in secrets instead of configmaps
         ## Ref: https://github.com/matrix-org/synapse/blob/develop/docs/sample_config.yaml
@@ -100,7 +91,6 @@ spec:
         extraSecrets: {}
         #  password_config:
         #    pepper: ''
-        
         ## Configuration to apply to the main Synapse pod.
         ##
         synapse:
@@ -514,7 +504,6 @@ spec:
             csPaths:
               - "/_matrix/client/(api/v1|r0|v3|unstable)/keys/upload"
             # - "/_matrix/client/(api/v1|r0|v3|unstable)/presence/[^/]+/status"
-        
         ## This will set up a Lighttpd server to respond to any
         ## /.well-known/matrix/server requests, to make federation possible without
         ## adding SRV-records to DNS.
@@ -522,22 +511,18 @@ spec:
         wellknown:
           enabled: false
           replicaCount: 1
-        
           # Lighttpd does not bind on IPv6 by default, although this is required in
           # Ipv6-only clusters.
           useIpv6: false
-        
           ## The host and port combo to serve on .well-known/matrix/server.
           ##
           server: {}
           #  m.server: matrix.example.com:443
-        
           ## Data to serve on .well-known/matrix/client.
           ##
           client: {}
           #  m.homeserver:
           #    base_url: https://matrix.example.com
-        
           ## Extra data objects to serve under .well-known/matrix/<data>
           ## Dictionaries will be JSON converted, plain strings will be served as they are
           ##
@@ -549,32 +534,27 @@ spec:
             #       email_address: 'admin@example.com'
             #       role: 'admin'
             #   support_page: 'https://example.com/support'
-        
           ## A custom htdocs path, useful when running another image.
           ##
           htdocsPath: /var/www/localhost/htdocs
-        
           ## The lighttpd image to run.
           ##
           image:
             repository: m4rcu5/lighttpd
             tag: latest
             pullPolicy: Always
-        
             ## Optionally specify an array of imagePullSecrets.
             ## Secrets must be manually created in the namespace.
             ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
             ##
             # pullSecrets:
             #   - myRegistryKeySecretName
-        
           ## Configuration for the pod security policy.
           ##
           podSecurityContext: {}
           #  fsGroup: 101
           #  runAsGroup: 101
           #  runAsUser: 100
-        
           ## Configuration for the container security policy.
           ##
           securityContext: {}
@@ -584,7 +564,6 @@ spec:
           #  readOnlyRootFilesystem: true
           #  runAsNonRoot: true
           #  runAsUser: 100
-        
           ## Resource configuration to apply to the well-known server.
           ##
           resources: {}
@@ -613,29 +592,22 @@ spec:
         ##
         postgresql:
           enabled: true
-        
           # XXX Change me!
           postgresqlPassword: synapse
-        
           ## Or use existing secret with "postgresql-password" key
           ## instead of static password
           ##
           # existingSecret: postgresql-secret
-        
           postgresqlUsername: synapse
           postgresqlDatabase: synapse
-        
           postgresqlInitdbArgs: "--lc-collate=C --lc-ctype=C"
-        
           persistence:
             # storageClass: "-"
             size: 16Gi
-        
           ## Extra arguments for the database connection
           ## ref: https://github.com/matrix-org/synapse/blob/develop/docs/postgres.md#synapse-config
           ##
           extraArgs: {}
-        
         ## An externally configured Postgres server to use for Synapse's database, note
         ## that the database needs to have both COLLATE and CTYPE set to "C".
         ##
@@ -644,38 +616,30 @@ spec:
           port: 5432
           username: synapse
           # password: synapse
-        
           ## The name of an existing secret with postgresql credentials
           #existingSecret: postgres-secrets
-        
           ## Password key to be retrieved from existing secret
           #existingSecretPasswordKey: postgres-password
-        
           database: synapse
           # sslmode: prefer
-        
           ## Extra arguments for the database connection
           ## ref: https://github.com/matrix-org/synapse/blob/develop/docs/postgres.md#synapse-config
           ##
           extraArgs: {}
-        
         ## This configuration is for the internal Redis that's deployed for use with
         ## workers/sharding, for an external Redis server you want to set enabled to
         ## false and configure the externalRedis block.
         ##
         redis:
           enabled: true
-        
           auth:
             enabled: true
             # XXX Change me!
             password: synapse
-        
             ## Or use existing secret with "redis-password" key
             ## instead of static password
             ##
             # existingSecret: redis-secret
-        
           architecture: standalone
           master:
             persistence:
@@ -687,20 +651,16 @@ spec:
               port: 6379
             statefulset:
               updateStrategy: RollingUpdate
-        
         ## An externally configured Redis server to use for workers/sharding.
         ##
         externalRedis:
           # host: redis
           port: 6379
           # password: synapse
-        
           ## The name of an existing secret with redis credentials
           #existingSecret: redis-secrets
-        
           ## Password key to be retrieved from existing secret
           #existingSecretPasswordKey: redis-password
-        
         ## Persistence configuration for the media repository function.
         ## This PVC will be mounted in either Synapse or a media_repo worker.
         ##
@@ -710,37 +670,30 @@ spec:
         persistence:
           enabled: true
           # existingClaim: synapse-data
-        
           # storageClass: "-"
           accessMode: ReadWriteOnce
           size: 10Gi
-        
         ## Set up an init container to chown the mounted media if necessary.
         ##
         volumePermissions:
           enabled: false
-        
           uid: 666
           gid: 666
-        
           image:
             repository: alpine
             tag: latest
             pullPolicy: Always
-        
             ## Optionally specify an array of imagePullSecrets.
             ## Secrets must be manually created in the namespace.
             ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
             ##
             # pullSecrets:
             #   - myRegistryKeySecretName
-        
           resources: {}
           # resources:
           #   requests:
           #     memory: 128Mi
           #     cpu: 100m
-        
         ## Configuration for the main Synapse service.
         ## To use TLS inside Synapse itself, add an TLS listener, and change the ports
         ## configured in here.
@@ -749,7 +702,6 @@ spec:
           type: ClusterIP
           port: 8008
           targetPort: http
-        
         ## The K8s ingress configuration, this will be quite heavily used in order to
         ## set up all routing necessary for use with a sharded Synapse instance.
         ## If you're not using a Ingress compatible K8s ingress, you will need to set up
@@ -757,11 +709,9 @@ spec:
         ##
         ingress:
           enabled: true
-        
           ## Generate traefik-compatible regex paths instead of nginx-compatible ones.
           ##
           traefikPaths: false
-        
           ## Annotations to apply to the created ingress resource.
           ##
           annotations: {}
@@ -770,7 +720,6 @@ spec:
           #  nginx.ingress.kubernetes.io/proxy-body-size: 10m
           #  kubernetes.io/ingress.class: nginx
           #  kubernetes.io/tls-acme: "true"
-        
           ## Hosts to add to the ingress configuration for handling Client-to-Server
           ## API request paths.
           ##
@@ -778,7 +727,6 @@ spec:
           ##
           csHosts: []
           #  - matrix.example.com
-        
           ## Additional hosts to add to the ingress configuration for handling
           ## Server-to-Server API requests.
           ##
@@ -786,7 +734,6 @@ spec:
           ##
           hosts: []
           #  - example.com
-        
           ## Additional hosts to add to the ingress configuration for handling
           ## well-known requests.
           ##
@@ -794,7 +741,6 @@ spec:
           ##
           wkHosts: []
           #  - example.com
-        
           ## Additional paths to add to the Server-to-Server ingress blocks, will be
           ## inserted before the /_matrix catch-all path.
           ##
@@ -811,7 +757,6 @@ spec:
           #    backend:
           #      serviceName: matrix-media-repo
           #      servicePort: 8000
-        
           ## Additional paths to add to the Client-to-Server ingress blocks, will be
           ## inserted before the /_matrix and /_synapse catch-all paths.
           ##
@@ -829,17 +774,14 @@ spec:
           #    backend:
           #      serviceName: matrix-media-repo
           #      servicePort: 8000
-        
           ## Should the /_synapse path be included in the ingress, admin APIs are
           ## provided under this path.
           ##
           includeUnderscoreSynapse: true
-        
           ## Should config.serverName be included in the list of ingress paths, can be
           ## set to false if the main domain is managed in some external way.
           ##
           includeServerName: true
-        
           ## TLS configuration to include in the ingress configuration
           ##
           tls: []
@@ -847,7 +789,6 @@ spec:
           #    hosts:
           #      - example.com
           #      - matrix.example.com
-        
           ## Set the name of the IngressClass cluster resource (optional)
           ## https://kubernetes.io/docs/reference/kubernetes-api/service-resources/ingress-v1/#IngressSpec
           # className: can-be-anything

@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: drone-server
+  name: drone-cm
 data:
   DRONE_DATABASE_DRIVER: "postgres"
   DRONE_GIT_ALWAYS_AUTH: "false"
