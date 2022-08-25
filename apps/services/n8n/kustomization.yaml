@@ -3,8 +3,6 @@ kind: Kustomization
 bases:
 - ./base
 - https://github.com/gruberdev/homelab/apps/networking/tailscale
-patchesStrategicMerge:
-- overlay/n8n-deployment.yaml
 
 namespace: services
 

@@ -5,7 +5,7 @@ metadata:
 spec:
   dockerImage: registry.opensource.zalan.do/acid/spilo-14:2.1-p6
   teamId: "apps"
-  numberOfInstances: 2
+  numberOfInstances: 1
   users:
     admin:
     - superuser

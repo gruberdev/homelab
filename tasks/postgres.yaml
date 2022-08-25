@@ -46,4 +46,6 @@ tasks:
       - echo "$(kubectl get secret -n homeassistant homeuser.apps-ha-db.credentials.postgresql.acid.zalan.do -o 'jsonpath={.data.password}' | base64 -d)"
       - echo -e "Drone:"
       - echo "$(kubectl get secret -n drone ciuser.apps-drone-db.credentials.postgresql.acid.zalan.do -o 'jsonpath={.data.password}' | base64 -d)"
+      - echo -e "n8n:"
+      - echo "$(kubectl get secret -n services automateuser.apps-n8n-db.credentials.postgresql.acid.zalan.do -o 'jsonpath={.data.password}' | base64 -d)"
     ignore_error: true
