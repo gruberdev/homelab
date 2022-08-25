@@ -6,5 +6,24 @@ bases:
 
 namespace: services
 
+patches:
+- path: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/tailscale/patch/deployment.yaml
+  target:
+    kind: Deployment
+- patch: |-
+    - op: replace
+      path: "/spec/template/spec/containers/0/env/1"
+      value:
+        name: TS_HOSTNAME
+        value: "n8n"
+    - op: replace
+      path: "/spec/template/spec/containers/0/env/2"
+      value:
+        name: DEST_PORT
+        value: "5678"
+  target:
+    kind: Deployment
+    name: n8n-server
+
 commonAnnotations:
   reloader.stakater.com/auto: "true"

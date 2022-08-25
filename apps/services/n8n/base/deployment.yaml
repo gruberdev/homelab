@@ -17,7 +17,6 @@ spec:
       labels:
         app: n8n-server
     spec:
-      serviceAccount: tailscale
       containers:
         - name: n8n
           image: n8nio/n8n:0.191.1
@@ -40,32 +39,6 @@ spec:
           volumeMounts:
             - name: config-storage
               mountPath: /home/node/.n8n
-        - name: tailscale
-          imagePullPolicy: Always
-          image: grubertech/tailscale:latest
-          env:
-          - name: USERSPACE
-            value: "false"
-          - name: TS_HOSTNAME
-            value: "n8n"
-          - name: DEST_PORT
-            value: "5678"
-          - name: AUTH_KEY
-            valueFrom:
-              secretKeyRef:
-                name: tailscale
-                key: AUTH_KEY
-          securityContext:
-            capabilities:
-              add:
-              - NET_ADMIN
-          resources:
-            limits:
-              cpu: "256m"
-              memory: "256Mi"
-            requests:
-              cpu: "100m"
-              memory: "100Mi"
       volumes:
         - name: config-storage
           persistentVolumeClaim:
