@@ -71,32 +71,6 @@ spec:
               mountPath: /opt/adguardhome/conf
             - name: adguard-home-logs
               mountPath: /opt/adguardhome/work
-        - name: tailscale
-          imagePullPolicy: Always
-          image: grubertech/tailscale:latest
-          env:
-          - name: USERSPACE
-            value: "false"
-          - name: TS_HOSTNAME
-            value: "adguard"
-          - name: DEST_PORT
-            value: "3000"
-          - name: AUTH_KEY
-            valueFrom:
-              secretKeyRef:
-                name: tailscale
-                key: AUTH_KEY
-          securityContext:
-            capabilities:
-              add:
-              - NET_ADMIN
-          resources:
-            limits:
-              cpu: "256m"
-              memory: "256Mi"
-            requests:
-              cpu: "100m"
-              memory: "100Mi"
       volumes:
         - name: adguard-home-configmap
           configMap:

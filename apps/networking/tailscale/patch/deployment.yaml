@@ -10,21 +10,21 @@ spec:
           imagePullPolicy: Always
           image: grubertech/tailscale:latest
           env:
-          - name: USERSPACE
-            value: "false"
-          - name: TS_HOSTNAME
-            value: "adguard"
-          - name: DEST_PORT
-            value: "3000"
-          - name: AUTH_KEY
-            valueFrom:
-              secretKeyRef:
-                name: tailscale
-                key: AUTH_KEY
+            - name: USERSPACE
+              value: "false"
+            - name: TS_HOSTNAME
+              value: "unifi"
+            - name: DEST_PORT
+              value: "8443"
+            - name: AUTH_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: tailscale
+                  key: AUTH_KEY
           securityContext:
             capabilities:
               add:
-                - NET_ADMIN
+              - NET_ADMIN
           resources:
             limits:
               cpu: "256m"

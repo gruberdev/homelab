@@ -6,5 +6,10 @@ bases:
 
 namespace: dns
 
+patches:
+- path: deployment.yaml
+  target:
+    kind: Deployment
+
 commonAnnotations:
   reloader.stakater.com/auto: "true"
