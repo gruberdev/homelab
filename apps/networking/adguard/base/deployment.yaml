@@ -17,7 +17,6 @@ spec:
       labels:
         app: adguard-home
     spec:
-      serviceAccount: tailscale
       hostNetwork: true
       initContainers:
         - name: copy-configmap

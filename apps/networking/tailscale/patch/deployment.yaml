@@ -5,6 +5,7 @@ metadata:
 spec:
   template:
     spec:
+      serviceAccount: tailscale
       containers:
         - name: tailscale
           imagePullPolicy: Always
