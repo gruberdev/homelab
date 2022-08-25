@@ -4,22 +4,18 @@ kind: Deployment
 metadata:
   name: adguard-home
   labels:
-    service: adguard-home
+    app: adguard-home
 spec:
   replicas: 1
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 1
-      maxSurge: 0
   selector:
     matchLabels:
-      service: adguard-home
+      app: adguard-home
   template:
     metadata:
       labels:
-        service: adguard-home
+        app: adguard-home
     spec:
+      serviceAccount: tailscale
       hostNetwork: true
       initContainers:
         - name: copy-configmap
@@ -73,6 +69,32 @@ spec:
               mountPath: /opt/adguardhome/conf
             - name: adguard-home-logs
               mountPath: /opt/adguardhome/work
+        - name: tailscale
+          imagePullPolicy: Always
+          image: grubertech/tailscale:latest
+          env:
+          - name: USERSPACE
+            value: "false"
+          - name: TS_HOSTNAME
+            value: "adguard"
+          - name: DEST_PORT
+            value: "3000"
+          - name: AUTH_KEY
+            valueFrom:
+              secretKeyRef:
+                name: tailscale
+                key: AUTH_KEY
+          securityContext:
+            capabilities:
+              add:
+              - NET_ADMIN
+          resources:
+            limits:
+              cpu: "256m"
+              memory: "256Mi"
+            requests:
+              cpu: "100m"
+              memory: "100Mi"
       volumes:
         - name: adguard-home-configmap
           configMap:

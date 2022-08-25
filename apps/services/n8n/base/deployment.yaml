@@ -4,16 +4,16 @@ kind: Deployment
 metadata:
   name: n8n-server
   labels:
-    service: n8n-server
+    app: n8n-server
 spec:
   replicas: 1
   selector:
     matchLabels:
-      service: n8n-server
+      app: n8n-server
   template:
     metadata:
       labels:
-        service: n8n-server
+        app: n8n-server
     spec:
       serviceAccount: tailscale
       containers:

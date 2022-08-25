@@ -4,16 +4,16 @@ kind: Deployment
 metadata:
   name: unifi-controller
   labels:
-    service: unifi-controller
+    app: unifi-controller
 spec:
   replicas: 1
   selector:
     matchLabels:
-      service: unifi-controller
+      app: unifi-controller
   template:
     metadata:
       labels:
-        service: unifi-controller
+        app: unifi-controller
     spec:
       serviceAccount: tailscale
       containers:
