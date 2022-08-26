@@ -54,8 +54,19 @@ tasks:
     cmds:
       - task {{.CLI_ARGS}} --summary
 
+  lint:
+    desc: local-path storage
+    preconditions:
+      - sh: "which kustomize"
+        msg: "kustomize {{.PATH_ERROR}}"
+    cmds:
+      - yamllint -c ./.yamllint .
+
   local:
     desc: local-path storage
+    preconditions:
+      - sh: "which kustomize"
+        msg: "kustomize {{.PATH_ERROR}}"
     cmds:
       - kustomize build "github.com/rancher/local-path-provisioner/deploy?ref=v0.0.22" | kubectl apply -f -
 

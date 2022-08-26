@@ -1,0 +1,69 @@
+kind: pipeline
+name: Validate
+type: docker
+
+platform:
+  os: linux
+  arch: amd64
+node:
+  server: home
+  arm: no
+  docker: yes
+
+trigger:
+  event:
+    include:
+      - push
+    exclude:
+      - pull_request
+  branch:
+    - main
+
+steps:
+  - name: YAML Linter Validate
+    image: sdesbure/yamllint:latest
+    failure: ignore
+    commands:
+      - yamllint -c ./.yamllint .
+
+
+---
+ignore: |
+  ha/custom_components/
+  ha/blueprints/
+  composers/matrix/
+  ip_bans.yaml
+  composers/networking/blocky/config/
+
+rules:
+  braces: enable
+  brackets: enable
+  colons: enable
+  commas: enable
+  comments:
+    level: warning
+  comments-indentation:
+    level: warning
+  document-end: disable
+  document-start: disable
+  empty-lines: enable
+  empty-values: disable
+  hyphens: enable
+  indentation:
+    spaces: 2
+    indent-sequences: whatever
+    check-multi-line-strings: false
+  key-duplicates: enable
+  key-ordering: disable
+  line-length:
+    level: warning
+    max: 110
+  new-line-at-end-of-file: enable
+  new-lines: enable
+  octal-values: disable
+  quoted-strings: disable
+  trailing-spaces: enable
+  truthy:
+    allowed-values: ['true', 'false', "yes", "no"]
+    level: warning
+    check-keys: true
