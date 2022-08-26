@@ -51,12 +51,13 @@ namespace: argocd
 images:
 - name: quay.io/argoproj/argocd
   newName: ghcr.io/argoproj/argocd
-  newTag: 2.4.0-dfeacd3e
+  newTag: 2.5.0-37ad4337
 
 patches:
 - path: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/tailscale/patch.yaml
   target:
     kind: Deployment
+    name: argocd-repo-server
 - patch: |-
     - op: replace
       path: "/spec/template/spec/containers/0/env/1"
@@ -67,7 +68,7 @@ patches:
       path: "/spec/template/spec/containers/0/env/2"
       value:
         name: DEST_PORT
-        value: "8123"
+        value: "8000"
   target:
     kind: Deployment
     name: argocd-repo-server
