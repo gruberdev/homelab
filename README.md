@@ -12,7 +12,7 @@
 <a href='https://drone.gruber.dev.br' target='_blank'>
 
 <p align="center">
-  <img src="https://img.shields.io/drone/build/gruberdev/homelab?server=https%3A%2F%2Fdrone.gruber.dev.br&logo=drone&labelColor=1F1F1F&logoColor=41dde8&style=flat-square&label=Drone%20CI">
+  <img src="https://img.shields.io/drone/build/gruberdev/homelab/main?server=https%3A%2F%2Fdrone.gruber.dev.br&logo=drone&labelColor=1F1F1F&logoColor=41dde8&style=flat-square&label=Drone%20CI">
 </p></a>
 
 <br>
