@@ -18,35 +18,9 @@ spec:
       restartPolicy: Always
       terminationGracePeriodSeconds: 10
       containers:
-        - name: tailscale
-          imagePullPolicy: Always
-          image: grubertech/tailscale:latest
-          env:
-          - name: USERSPACE
-            value: "false"
-          - name: TS_HOSTNAME
-            value: "onchanges"
-          - name: DEST_PORT
-            value: "5000"
-          - name: AUTH_KEY
-            valueFrom:
-              secretKeyRef:
-                name: tailscale
-                key: AUTH_KEY
-          securityContext:
-            capabilities:
-              add:
-              - NET_ADMIN
-          resources:
-            limits:
-              cpu: "256m"
-              memory: "256Mi"
-            requests:
-              cpu: "100m"
-              memory: "100Mi"
         - name: changedetection
           image: dgtlmoon/changedetection.io:latest
-          imagePullPolicy: IfNotPresen
+          imagePullPolicy: IfNotPresent
           ports:
           - name: http
             containerPort: 5000
@@ -55,6 +29,9 @@ spec:
               memory: "350Mi"
             requests:
               memory: "120Mi"
+          envFrom:
+            - configMapRef:
+                name: onchanges-cm
           volumeMounts:
           - name: onchange-data
             readOnly: false

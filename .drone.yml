@@ -39,73 +39,70 @@ steps:
       - find . -maxdepth 10 -name cr.yaml -exec kubeval --force-color  --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
       - find . -maxdepth 10 -name rb.yaml -exec kubeval --force-color  --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
 
----
+# ---
 
-kind: pipeline
-name: k3d CI
-type: docker
+# kind: pipeline
+# name: k3d CI
+# type: docker
 
-platform:
-  os: linux
-  arch: amd64
-node:
-  server: home
-  arm: no
-  docker: yes
+# platform:
+#   os: linux
+#   arch: amd64
+# node:
+#   server: home
+#   arm: no
+#   docker: yes
 
-depends_on:
-  - Linters
+# depends_on:
+#   - Linters
 
-trigger:
-  event:
-    include:
-      - push
-    exclude:
-      - pull_request
-  branch:
-    - main
+# trigger:
+#   event:
+#     include:
+#       - push
+#     exclude:
+#       - pull_request
+#   branch:
+#     - main
 
-steps:
-  - name: Create Namespaces
-    image: bitnami/kubectl:1.24.4
-    user: root
-    commands:
-      - export KUBECONFIG=kubeconfig-$${DRONE_BUILD_STARTED}.yaml
-      - until test -f $${KUBECONFIG}; do sleep 1s; done
-      - kubectl config view
-      - kubectl get pods --all-namespaces
-      - kubectl create namespace databases
+# steps:
+#   - name: Create Namespaces
+#     image: bitnami/kubectl:1.24.4
+#     user: root
+#     commands:
+#       - export KUBECONFIG=kubeconfig-$${DRONE_BUILD_STARTED}.yaml
+#       - until test -f $${KUBECONFIG}; do sleep 1s; done
+#       - kubectl config view
+#       - kubectl get pods --all-namespaces
+#       - kubectl create namespace databases
 
-  - name: Install PostgreSQL
-    image: bitnami/kubectl:1.24.4
-    user: root
-    commands:
-      - kubectl apply -k ./apps/data/postgres
-    depends_on:
-      - Create Namespaces
+#   - name: Install PostgreSQL
+#     image: bitnami/kubectl:1.24.4
+#     user: root
+#     commands:
+#       - kubectl apply -k ./apps/data/postgres
+#     depends_on:
+#       - Create Namespaces
 
-  - name: Finalize
-    image: rancher/k3d:5.3.0-dind
-    volumes:
-    - name: dockersock
-      path: /var/run/docker.sock
-    privileged: true
-    user: root
-    commands:
-      - k3d cluster delete --config test/k3d.yaml
-    depends_on:
-      - Create Namespaces
-      - Install PostgreSQL
+#   - name: Finalize
+#     image: rancher/k3d:5.3.0-dind
+#     privileged: true
+#     user: root
+#     commands:
+#       - k3d cluster delete --config test/k3d.yaml
+#     depends_on:
+#       - Create Namespaces
+#       - Install PostgreSQL
 
-services:
-  - name: k3dsvc
-    image: rancher/k3d:5.3.0-dind
-    privileged: true
-    commands:
-      - nohup dockerd-entrypoint.sh &
-      - until docker ps 2>&1 > /dev/null; do sleep 1s; done
-      - k3d cluster create --config test/k3d.yaml --api-port k3dsvc:6432
-      - until kubectl get deployment coredns -n kube-system -o go-template='{{.status.availableReplicas}}' | grep -v -e '<no value>'; do sleep 1s; done
-      - k3d kubeconfig get drone > kubeconfig-$${DRONE_BUILD_STARTED}.yaml
-      - printf "\nk3d is ready! \n\n"
-      - tail -f /dev/null
+# services:
+#   - name: k3dsvc
+#     image: rancher/k3d:5.3.0-dind
+#     privileged: true
+#     commands:
+#       - nohup dockerd-entrypoint.sh &
+#       - until docker ps 2>&1 > /dev/null; do sleep 1s; done
+#       - k3d cluster create --config test/k3d.yaml --api-port k3dsvc:6432
+#       - until kubectl get deployment coredns -n kube-system -o go-template='{{.status.availableReplicas}}' | grep -v -e '<no value>'; do sleep 1s; done
+#       - k3d kubeconfig get drone > kubeconfig-$${DRONE_BUILD_STARTED}.yaml
+#       - printf "\nk3d is ready! \n\n"
+#       - tail -f /dev/null

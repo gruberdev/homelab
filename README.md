@@ -1,4 +1,26 @@
-## Implemented tools
+<p align="center">
+  <img width="220" height="100" src="https://cncf-branding.netlify.app/img/projects/k3s/icon/white/k3s-icon-white.svg">
+</p>
+
+<h3 align="center">Homelab</h3>
+
+<p align="center">
+  <sub>Gitops managed k3s cluster</sub>
+</p>
+
+<br>
+
+---
+
+<details>
+
+<summary> <b>Implemented tools</b> </summary>
+
+>
+> | App | Category | URI
+> |--|--|--|
+> | Drone CI | `CI/CD Tooling` | <sub>[More details](https://github.com/gruberdev/homelab/tree/main/apps/drone)</sub>
+
 
 #### CI Tools:
 - Drone CI
@@ -31,9 +53,14 @@
 
 ---
 
+</details>
+
+
 <details>
 
 <summary> <b>To be implemented</b> </summary>
+
+---
 
 #### Storage, security and networking utilities:
 

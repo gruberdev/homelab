@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kuma-svc
+  labels:
+    name: kuma
+spec:
+  type: ClusterIP
+  selector:
+    app: kuma
+  ports:
+  - name: web
+    protocol: TCP
+    port: 8080
+    targetPort: 3001

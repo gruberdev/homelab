@@ -1,0 +1,59 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kuma
+  labels:
+    app: kuma
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: kuma
+  template:
+    metadata:
+      labels:
+        app: kuma
+    spec:
+      containers:
+        - name: uptime-kuma
+          image: louislam/uptime-kuma:1
+          envFrom:
+            - configMapRef:
+                name: kuma-cm
+            - secretRef:
+                name: kuma-vars
+                optional: true
+          ports:
+            - name: web
+              containerPort: 3001
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /app/data
+              name: kuma-data
+          livenessProbe:
+            exec:
+              command:
+                - node
+                - extra/healthcheck.js
+            initialDelaySeconds: 180
+            periodSeconds: 60
+            timeoutSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3001
+              scheme: HTTP
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "200m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+      volumes:
+        - name: kuma-data
+          persistentVolumeClaim:
+            claimName: kuma-storage
