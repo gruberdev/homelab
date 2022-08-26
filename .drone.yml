@@ -13,18 +13,13 @@ node:
 trigger:
   event:
     include:
-      - push
-    exclude:
       - pull_request
+    exclude:
+      - push
   branch:
     - main
 
 steps:
-  - name: YAML Validate
-    image: sdesbure/yamllint:latest
-    commands:
-      - yamllint -c ./.yamllint .
-
   - name: Kubernetes Resources Validation
     image: deck15/kubeval-tools:latest
     commands:
@@ -38,6 +33,35 @@ steps:
       - find . -maxdepth 10 -name sa.yaml -exec kubeval --force-color  --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
       - find . -maxdepth 10 -name cr.yaml -exec kubeval --force-color  --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
       - find . -maxdepth 10 -name rb.yaml -exec kubeval --force-color  --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
+
+---
+
+kind: pipeline
+name: Linters
+type: docker
+
+platform:
+  os: linux
+  arch: amd64
+node:
+  server: home
+  arm: no
+  docker: yes
+
+trigger:
+  event:
+    include:
+      - push
+    exclude:
+      - pull_request
+  branch:
+    - main
+
+steps:
+  - name: YAML Validate
+    image: sdesbure/yamllint:latest
+    commands:
+      - yamllint -c ./.yamllint .
 
 # ---
 
