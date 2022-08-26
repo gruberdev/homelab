@@ -20,8 +20,14 @@ trigger:
     - main
 
 steps:
-  - name: YAML Linter Validate
+  - name: YAML Validate
     image: sdesbure/yamllint:latest
     failure: ignore
     commands:
       - yamllint -c ./.yamllint .
+
+  - name: k8s Resources Validate
+    image: grubertech/kubeval:latest
+    failure: ignore
+    commands:
+      - task validate
