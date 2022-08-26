@@ -20,6 +20,7 @@ resources:
 - base/utilities/kubenurse.yaml
 
 - base/monitoring/kuma.yaml
+- base/monitoring/flame.yaml
 
 - base/apps/vault.yaml
 - base/apps/ha.yaml

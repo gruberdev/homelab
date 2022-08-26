@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flame
+  labels:
+    app: flame
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: flame
+  template:
+    metadata:
+      labels:
+        app: flame
+    spec:
+      containers:
+        - name: dashboard
+          image: 'pawelmalak/flame:multiarch'
+          ports:
+            - containerPort: 5005
+              name: http
+              protocol: TCP
+          envFrom:
+            - secretRef:
+                name: flame-vars
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            httpGet:
+              port: 5005
+              path: '/'
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            terminationGracePeriodSeconds: 30
+          resources:
+            limits:
+              cpu: 300m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 256Mi
+          volumeMounts:
+            - mountPath: /app/data
+              name: data-volume
+      volumes:
+        - name: data-volume
+          persistentVolumeClaim:
+            claimName: flame-storage

@@ -56,12 +56,6 @@
 - Reflector
 - Reloader
 
-#### Services and applications:
-
-- Home Assistant
-- changedetection.io
-- n8n
-
 ---
 
 </details>
