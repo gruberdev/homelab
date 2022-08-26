@@ -68,17 +68,17 @@ trigger:
 steps:
   - name: Create Namespaces
     image: bitnami/kubectl:1.24.4
-    user: root # the bitnami/kubectl image has a non-root user set by default, which does not work with the shared docker volume which is owned by root
+    user: root
     commands:
       - export KUBECONFIG=kubeconfig-$${DRONE_BUILD_STARTED}.yaml
-      - until test -f $${KUBECONFIG}; do sleep 1s; done # wait for k3d service to write the kubeconfig to the workspace
+      - until test -f $${KUBECONFIG}; do sleep 1s; done
       - kubectl config view
       - kubectl get pods --all-namespaces
       - kubectl create namespace databases
 
   - name: Install PostgreSQL
     image: bitnami/kubectl:1.24.4
-    user: root # the bitnami/kubectl image has a non-root user set by default, which does not work with the shared docker volume which is owned by root
+    user: root
     commands:
       - kubectl apply -k ./apps/data/postgres
     depends_on:
@@ -90,7 +90,7 @@ steps:
     - name: dockersock
       path: /var/run/docker.sock
     privileged: true
-    user: root # the bitnami/kubectl image has a non-root user set by default, which does not work with the shared docker volume which is owned by root
+    user: root
     commands:
       - k3d cluster delete --config test/k3d.yaml
     depends_on:
