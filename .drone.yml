@@ -26,7 +26,7 @@ steps:
       - yamllint -c ./.yamllint .
 
   - name: Kubernetes Resources Validation
-    image: grubertech/kubeval:latest
+    image: deck15/kubeval-tools:latest
     commands:
       - find . -maxdepth 10 -name \*svc.yaml -exec kubeval {} \;
       - find . -maxdepth 10 -name deployment.yaml -exec kubeval {} \;
