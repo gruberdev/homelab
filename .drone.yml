@@ -16,8 +16,6 @@ trigger:
       - pull_request
     exclude:
       - push
-  branch:
-    - main
 
 steps:
   - name: Kubernetes Resources Validation
