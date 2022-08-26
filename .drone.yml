@@ -1,5 +1,5 @@
 kind: pipeline
-name: Linters
+name: Validate
 type: docker
 
 platform:
@@ -37,7 +37,7 @@ steps:
 ---
 
 kind: pipeline
-name: Linters
+name: Lint
 type: docker
 
 platform:
