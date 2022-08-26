@@ -19,14 +19,14 @@ ports:
       - loadbalancer
 registries:
   create:
-    name: registry2.localhost
+    name: registry3.localhost
     host: "0.0.0.0"
-    hostPort: "5005"
+    hostPort: "5063"
   config: |
     mirrors:
-      "registry2.localhost":
+      "registry3.localhost":
         endpoint:
-          - http://registry2.local.gd:5005
+          - http://registry3.local.gd:5063
 
 volumes:
   - volume: "/tmp:/var/lib/rancher/k3s/storage"
