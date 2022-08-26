@@ -24,22 +24,23 @@
 <summary> <b>Implemented tools</b> </summary>
 <br>
 
-|             **Application**            |   **Category**  |                       **URIs**                      |     **Deployment Status**    |
-|:--------------------------------------:|:---------------:|:---------------------------------------------------:|:----------------------------:|
-|          [Drone CI][drone-uri]         | `CI/CD Tooling` |       <sub>[More details][homelab-drone]</sub>      |       ![][argocd-drone]      |
-|          [ArgoCD][argocd-uri]          | `CI/CD Tooling` |      <sub>[More details][homelab-argocd]</sub>      |       ![][argocd-core]       |
-| <sub>Zalando PostgreSQL Operator</sub> |   `Databases`   |      <sub>[More details][homelab-zalando]</sub>     |      ![][argocd-zalando]     |
-|             Redis Operator             |   `Databases`   |       <sub>[More details][homelab-redis]</sub>      |       ![][argocd-redis]      |
-|                Tailscale               |   `Networking`  |     <sub>[More details][homelab-tailscale]</sub>    |     ![][argocd-tailscale]    |
-|            Unifi Controller            |   `Networking`  | <sub>[More details][homelab-unifi-controller]</sub> | ![][argocd-unifi-controller] |
-|               AdGuard DNS              |   `Networking`  |      <sub>[More details][homelab-adguard]</sub>     |      ![][argocd-adguard]     |
-|             Home Assistant             |   `Monitoring`  |        <sub>[More details][homelab-ha]</sub>        |        ![][argocd-ha]        |
-|           Changedetection.io           |   `Monitoring`  |  <sub>[More details][homelab-changedetection]</sub> |  ![][argocd-changedetection] |
-|                   n8n                  |    `Services`   |        <sub>[More details][homelab-n8n]</sub>       |        ![][argocd-n8n]       |
-|            Hashicorp's Vault           |    `Security`   |       <sub>[Chart Values][homelab-vault]</sub>      |       ![][argocd-vault]      |
-|                                        |                 |                                                     |                              |
-|                                        |                 |                                                     |                              |
-|                                        |                 |                                                     |                              |
+> |             **Application**            |   **Category**  |                       **URIs**                      |     **Deployment Status**    |
+> |:--------------------------------------:|:---------------:|:---------------------------------------------------:|:----------------------------:|
+> |          [Drone CI][drone-uri]         | `CI/CD Tooling` |       <sub>[More details][homelab-drone]</sub>      |       ![][argocd-drone]      |
+> |          [ArgoCD][argocd-uri]          | `CI/CD Tooling` |      <sub>[More details][homelab-argocd]</sub>      |       ![][argocd-core]       |
+> | <sub>Zalando PostgreSQL Operator</sub> |   `Databases`   |      <sub>[More details][homelab-zalando]</sub>     |      ![][argocd-zalando]     |
+> |             Redis Operator             |   `Databases`   |       <sub>[More details][homelab-redis]</sub>      |       ![][argocd-redis]      |
+> |                Tailscale               |   `Networking`  |     <sub>[More details][homelab-tailscale]</sub>    |     ![][argocd-tailscale]    |
+> |            Unifi Controller            |   `Networking`  | <sub>[More details][homelab-unifi-controller]</sub> | ![][argocd-unifi-controller] |
+> |               AdGuard DNS              |   `Networking`  |      <sub>[More details][homelab-adguard]</sub>     |      ![][argocd-adguard]     |
+> |             Home Assistant             |   `Monitoring`  |        <sub>[More details][homelab-ha]</sub>        |        ![][argocd-ha]        |
+> |           Changedetection.io           |   `Monitoring`  |  <sub>[More details][homelab-changedetection]</sub> |  ![][argocd-changedetection] |
+> |                   n8n                  |    `Services`   |        <sub>[More details][homelab-n8n]</sub>       |        ![][argocd-n8n]       |
+> |            Hashicorp's Vault           |    `Security`   |       <sub>[Chart Values][homelab-vault]</sub>      |       ![][argocd-vault]      |
+> |                                        |                 |                                                     |                              |
+> |                                        |                 |                                                     |                              |
+> |                                        |                 |                                                     |                              |
+
 </details>
 
 <details>
