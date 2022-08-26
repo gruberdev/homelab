@@ -4,4 +4,3 @@ resources:
 - deployment.yaml
 - svc.yaml
 - pvc.yaml
-
