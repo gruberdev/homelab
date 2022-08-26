@@ -105,13 +105,13 @@ services:
       path: /var/run/docker.sock
     privileged: true
     commands:
-      - nohup dockerd-entrypoint.sh & # start docker in the background
-      - until docker ps 2>&1 > /dev/null; do sleep 1s; done # wait for docker to be ready before proceeding
-      - k3d cluster create --config test/k3d.yaml --api-port k3dsvc:6445 # create k3d cluster from config file
-      - until kubectl get deployment coredns -n kube-system -o go-template='{{.status.availableReplicas}}' | grep -v -e '<no value>'; do sleep 1s; done # wait for coredns to be up and running
+      - nohup dockerd-entrypoint.sh &
+      - until docker ps 2>&1 > /dev/null; do sleep 1s; done
+      - k3d cluster create --config test/k3d.yaml --api-port k3dsvc:6445
+      - until kubectl get deployment coredns -n kube-system -o go-template='{{.status.availableReplicas}}' | grep -v -e '<no value>'; do sleep 1s; done
       - k3d kubeconfig get drone > kubeconfig-$${DRONE_BUILD_STARTED}.yaml
       - printf "\nk3d is ready! \n\n"
-      - tail -f /dev/null # chill around while the steps do their work
+      - tail -f /dev/null
 
 volumes:
 - name: dockersock
