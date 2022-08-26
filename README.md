@@ -1,3 +1,4 @@
+<br>
 <p align="center">
   <img width="220" height="100" src="https://cncf-branding.netlify.app/img/projects/k3s/icon/white/k3s-icon-white.svg">
 </p>
@@ -7,6 +8,12 @@
 <p align="center">
   <sub>Gitops managed k3s cluster</sub>
 </p>
+
+<a href='https://drone.gruber.dev.br' target='_blank'>
+
+<p align="center">
+  <img src="https://img.shields.io/drone/build/gruberdev/homelab?server=https%3A%2F%2Fdrone.gruber.dev.br&logo=drone&labelColor=1F1F1F&logoColor=41dde8&style=flat-square&label=Drone%20CI">
+</p></a>
 
 <br>
 
@@ -95,3 +102,7 @@
 - Flame dashboard
 
 </details>
+
+<!-- Images URLs -->
+
+[drone-img]: https://img.shields.io/drone/build/gruberdev/homelab?server=https%3A%2F%2Fdrone.gruber.dev.br&logo=drone&labelColor=1F1F1F&logoColor=41dde8&style=flat-square&label=Drone%20CI
