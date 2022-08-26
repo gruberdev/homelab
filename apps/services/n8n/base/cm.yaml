@@ -19,4 +19,3 @@ data:
   DB_TYPE: "postgresdb"
   N8N_METRICS: "true"
   N8N_METRICS_PREFIX: "n8n_"
-

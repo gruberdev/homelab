@@ -20,7 +20,7 @@ rules:
   key-ordering: disable
   line-length:
     level: warning
-    max: 110
+    max: 250
   new-line-at-end-of-file: enable
   new-lines: enable
   octal-values: disable

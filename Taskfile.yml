@@ -91,8 +91,8 @@ tasks:
       - sleep 0.1 && {{.CYAN}} && echo -e "\nPV object files" && {{.RESET}}
       - find . -maxdepth 10 -name pv.yaml -exec kubeval {} \;
       # yamllint disable-line rule:line-length
-      #- sleep 0.1 && {{.CYAN}} && echo -e "\nCustomRoleBinding object files" && {{.RESET}}
-      #- find . -maxdepth 10 -name crb.yaml -exec kubeval {} \;
+      # - sleep 0.1 && {{.CYAN}} && echo -e "\nCustomRoleBinding object files" && {{.RESET}}
+      # - find . -maxdepth 10 -name crb.yaml -exec kubeval {} \;
       - sleep 0.1 && {{.CYAN}} && echo -e "\nRole object files" && {{.RESET}}
       - find . -maxdepth 10 -name role.yaml -exec kubeval {} \;
       - sleep 0.1 && {{.CYAN}} && echo -e "\nServiceAccount object files" && {{.RESET}}
