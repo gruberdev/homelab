@@ -32,11 +32,6 @@ steps:
       - find . -maxdepth 10 -name cr.yaml -exec kubeval --force-color  --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
       - find . -maxdepth 10 -name rb.yaml -exec kubeval --force-color  --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
 
-  - name: Link Check
-    image: ghcr.io/tcort/markdown-link-check:stable
-    commands:
-      - find . -maxdepth 10 -name \*.md -exec markdown-link-check
-
 ---
 
 kind: pipeline
@@ -65,6 +60,11 @@ steps:
     image: sdesbure/yamllint:latest
     commands:
       - yamllint -c ./.yamllint .
+
+  - name: Link Check
+    image: ghcr.io/tcort/markdown-link-check:stable
+    commands:
+      - find . -maxdepth 10 -name \*.md -exec markdown-link-check
 
 # ---
 
