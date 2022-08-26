@@ -1,15 +1,15 @@
 apiVersion: k3d.io/v1alpha4
 kind: Simple
 metadata:
-  name: homelab-testing
+  name: homelab-testing2
 servers: 1
 agents: 1
 kubeAPI:
   host: "k8s.localhost"
   hostIP: "127.0.0.1"
-  hostPort: "6445"
+  hostPort: "6447"
 image: rancher/k3s:v1.24.3-k3s1
-network: homelab-vpc
+network: homelab-vpc2
 ports:
   - port: 80:80
     nodeFilters:
@@ -19,17 +19,17 @@ ports:
       - loadbalancer
 registries:
   create:
-    name: registry.localhost
+    name: registry2.localhost
     host: "0.0.0.0"
-    hostPort: "5002"
+    hostPort: "5005"
   config: |
     mirrors:
-      "registry.localhost":
+      "registry2.localhost":
         endpoint:
-          - http://registry.local.gd:5002
+          - http://registry2.local.gd:5005
 
 volumes:
-  - volume: "/home/deck/projects/homelab/test/storage:/var/lib/rancher/k3s/storage"
+  - volume: "$(pwd)/test/storage:/var/lib/rancher/k3s/storage"
     nodeFilters:
       - server:0
       - agent:*
