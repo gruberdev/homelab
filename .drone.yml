@@ -28,16 +28,16 @@ steps:
   - name: Kubernetes Resources Validation
     image: deck15/kubeval-tools:latest
     commands:
-      - find . -maxdepth 10 -name \*svc.yaml -exec kubeval {} \;
-      - find . -maxdepth 10 -name deployment.yaml -exec kubeval {} \;
-      - find . -maxdepth 10 -name \*secret.yaml -exec kubeval {} \;
-      - find . -maxdepth 10 -name cm.yaml -exec kubeval {} \;
-      - find . -maxdepth 10 -name pvc.yaml -exec kubeval {} \;
-      - find . -maxdepth 10 -name pv.yaml -exec kubeval {} \;
-      - find . -maxdepth 10 -name role.yaml -exec kubeval {} \;
-      - find . -maxdepth 10 -name sa.yaml -exec kubeval {} \;
-      - find . -maxdepth 10 -name cr.yaml -exec kubeval {} \;
-      - find . -maxdepth 10 -name rb.yaml -exec kubeval {} \;
+      - find . -maxdepth 10 -name \*svc.yaml -exec kubeval -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
+      - find . -maxdepth 10 -name deployment.yaml -exec kubeval -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
+      - find . -maxdepth 10 -name \*secret.yaml -exec kubeval -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
+      - find . -maxdepth 10 -name cm.yaml -exec kubeval -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
+      - find . -maxdepth 10 -name pvc.yaml -exec kubeval -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
+      - find . -maxdepth 10 -name pv.yaml -exec kubeval -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
+      - find . -maxdepth 10 -name role.yaml -exec kubeval -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
+      - find . -maxdepth 10 -name sa.yaml -exec kubeval -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
+      - find . -maxdepth 10 -name cr.yaml -exec kubeval -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
+      - find . -maxdepth 10 -name rb.yaml -exec kubeval -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
 
 ---
 

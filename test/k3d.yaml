@@ -8,7 +8,7 @@ kubeAPI:
   host: "k8s.localhost"
   hostIP: "127.0.0.1"
   hostPort: "6447"
-image: rancher/k3s:v1.24.3-k3s1
+image: rancher/k3s:v1.24.4-k3s1
 network: homelab-vpc2
 ports:
   - port: 80:80
