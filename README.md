@@ -22,28 +22,32 @@
 <details>
 
 <summary> <b>Implemented tools</b> </summary>
+<br>
 
->
-> | App | Category | URI
-> |--|--|--|
-> | Drone CI | `CI/CD Tooling` | <sub>[More details](https://github.com/gruberdev/homelab/tree/main/apps/drone)</sub>
+|             **Application**            |   **Category**  |                       **URIs**                      |     **Deployment Status**    |
+|:--------------------------------------:|:---------------:|:---------------------------------------------------:|:----------------------------:|
+|          [Drone CI][drone-uri]         | `CI/CD Tooling` |       <sub>[More details][homelab-drone]</sub>      |       ![][argocd-drone]      |
+|          [ArgoCD][argocd-uri]          | `CI/CD Tooling` |      <sub>[More details][homelab-argocd]</sub>      |       ![][argocd-core]       |
+| <sub>Zalando PostgreSQL Operator</sub> |   `Databases`   |      <sub>[More details][homelab-zalando]</sub>     |      ![][argocd-zalando]     |
+|             Redis Operator             |   `Databases`   |       <sub>[More details][homelab-redis]</sub>      |       ![][argocd-redis]      |
+|                Tailscale               |   `Networking`  |     <sub>[More details][homelab-tailscale]</sub>    |     ![][argocd-tailscale]    |
+|            Unifi Controller            |   `Networking`  | <sub>[More details][homelab-unifi-controller]</sub> | ![][argocd-unifi-controller] |
+|               AdGuard DNS              |   `Networking`  |      <sub>[More details][homelab-adguard]</sub>     |      ![][argocd-adguard]     |
+|             Home Assistant             |   `Monitoring`  |        <sub>[More details][homelab-ha]</sub>        |        ![][argocd-ha]        |
+|           Changedetection.io           |   `Monitoring`  |  <sub>[More details][homelab-changedetection]</sub> |  ![][argocd-changedetection] |
+|                   n8n                  |    `Services`   |        <sub>[More details][homelab-n8n]</sub>       |        ![][argocd-n8n]       |
+|            Hashicorp's Vault           |    `Security`   |       <sub>[Chart Values][homelab-vault]</sub>      |       ![][argocd-vault]      |
+|                                        |                 |                                                     |                              |
+|                                        |                 |                                                     |                              |
+|                                        |                 |                                                     |                              |
+</details>
 
+<details>
 
-#### CI Tools:
-- Drone CI
-  - kube-drone-runner (Agent for Kubernetes)
-- ArgoCD
-  - argocd-vault-plugin (for secret management)
-#### Storage, security and networking utilities:
+<summary> <b>Cluster Utilities</b>
+</summary>
 
-- Zalando's PostgreSQL Operator
-- Redis operator
-- Unifi controller
-- Adguard DNS
-- Tailscale <sub>(mostly as sidecars)</sub>
-- Hasicorp's Vault
-
-#### Kubernetes Utilities:
+<br>
 
 - Descheduler
 - kube-cleaner
@@ -63,11 +67,10 @@
 </details>
 
 
+
 <details>
 
 <summary> <b>To be implemented</b> </summary>
-
----
 
 #### Storage, security and networking utilities:
 
@@ -103,6 +106,45 @@
 
 </details>
 
-<!-- Images URLs -->
+<!-- Tech tools URIs -->
+
+[drone-uri]: https://www.drone.io/
+[argocd-uri]: https://argoproj.github.io/cd/
+[homeassistant-uri]: https://www.home-assistant.io/
+[adguard-uri]: https://adguard.com/en/adguard-home/overview.html
+[kuma-uri]: https://github.com/louislam/uptime-kuma
+
+<!-- Shield Badges -->
 
 [drone-img]: https://img.shields.io/drone/build/gruberdev/homelab?server=https%3A%2F%2Fdrone.gruber.dev.br&logo=drone&labelColor=1F1F1F&logoColor=41dde8&style=flat-square&label=Drone%20CI
+
+<!-- Project Folders -->
+
+[homelab-argocd]: https://github.com/gruberdev/homelab/tree/main/apps/argocd
+[homelab-drone]: https://github.com/gruberdev/homelab/tree/main/apps/drone
+[homelab-ha]: https://github.com/gruberdev/homelab/tree/main/apps/ha
+[homelab-kuma]: https://github.com/gruberdev/homelab/tree/main/apps/monitoring/uptime-kuma
+[homelab-adguard]: https://github.com/gruberdev/homelab/tree/main/apps/networking/adguard
+[homelab-unifi-controller]: https://github.com/gruberdev/homelab/tree/main/apps/networking/unifi/controller
+[homelab-zalando]: https://github.com/gruberdev/homelab/tree/main/apps/data/postgres
+[homelab-redis]: https://github.com/gruberdev/homelab/tree/main/apps/data/redis
+[homelab-tailscale]: https://github.com/gruberdev/homelab/tree/main/apps/networking/tailscale
+[homelab-changedetection]: https://github.com/gruberdev/homelab/tree/main/apps/monitoring/changesdetection
+[homelab-vault]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/apps/vault.yaml
+[homelab-n8n]: https://github.com/gruberdev/homelab/tree/main/apps/services/n8n
+
+<!-- ArgoCD Status Badges -->
+
+[argocd-drone]: https://argo.gr.wtf/api/badge?name=drone
+[argocd-ha]: https://argo.gr.wtf/api/badge?name=homeassistant
+[argocd-kuma]: https://argo.gr.wtf/api/badge?name=uptime-kuma
+[argocd-adguard]:https://argo.gr.wtf/api/badge?name=adguard
+[argocd-unifi-controller]: https://argo.gr.wtf/api/badge?name=unifi-controller
+[argocd-core]: https://argo.gr.wtf/api/badge?name=argocd
+[argocd-n8n]: https://argo.gr.wtf/api/badge?name=n8n
+[argocd-vault]: https://argo.gr.wtf/api/badge?name=vault
+[argocd-ha]: https://argo.gr.wtf/api/badge?name=homeassistant
+[argocd-redis]: https://argo.gr.wtf/api/badge?name=redis
+[argocd-zalando]: https://argo.gr.wtf/api/badge?name=zalando
+[argocd-changedetection]: https://argo.gr.wtf/api/badge?name=changedetection
+[argocd-tailscale]: https://argo.gr.wtf/api/badge?name=tailscale
