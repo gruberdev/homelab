@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: gr-wtf-certificate
+spec:
+  dnsNames:
+  - gr.wtf
+  - "*.gr.wtf"
+  secretName: cf-gr-wtf-tls
+  issuerRef:
+    name: letsencrypt
+    kind: ClusterIssuer
+  keySize: 4096
