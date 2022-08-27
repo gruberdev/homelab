@@ -17,7 +17,29 @@ trigger:
     exclude:
       - push
 
+clone:
+  disable: true
+
 steps:
+  - name: clone
+    image: alpine/git
+    commands:
+    - git clone https://github.com/gruberdev/homelab.git .
+    - git checkout $DRONE_COMMIT
+
+  - name: skip
+    image: ghcr.io/joshdk/drone-skip-pipeline:v0.2.0
+    failure: ignore
+    environment:
+      GITHUB_TOKEN:
+        from_secret: github_token
+    settings:
+      rules:
+      - apps/
+      touch: .skip-pipeline
+    depends_on:
+      - clone
+
   - name: k8s-resources
     image: deck15/kubeval-tools:latest
     commands:
@@ -31,6 +53,8 @@ steps:
       - find . -maxdepth 10 -name sa.yaml -exec kubeval --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
       - find . -maxdepth 10 -name cr.yaml -exec kubeval --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
       - find . -maxdepth 10 -name rb.yaml -exec kubeval --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
+    depends_on:
+      - skip
 
   - name: Successful Step GH Comment
     image: ghcr.io/joshdk/drone-github-comment:v0.1.0
