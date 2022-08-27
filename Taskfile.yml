@@ -122,9 +122,75 @@ tasks:
       resoures on non-local clusters that may be on KUBECONFIG file as well.
     cmds:
       - task: clear
-      - k3d cluster delete homelab-testing
+      - k3d cluster delete --config test/k3d.yaml
       - k3d cluster create --config test/k3d.yaml
       - task: highlight_normal
       - echo -e "\nYour cluster has been created. Type 'k3d cluster list' to confirm."
       - task: reset
     ignore_error: true
+
+  test:k3d:destroy:
+    desc: Destroys your local k3d cluster.
+    preconditions:
+      - sh: "which k3d"
+        msg: "k3d {{.PATH_ERROR}}"
+    cmds:
+      - task: clear
+      - k3d cluster delete --config test/k3d.yaml
+      - task: highlight_normal
+      - echo -e "\nYour cluster has been destroyed."
+      - task: reset
+    ignore_error: true
+
+  repos:
+    desc: Adds and updates all the required Helm repositories locally.
+    preconditions:
+      - sh: "which helm"
+        msg: "helm {{.PATH_ERROR}}"
+    cmds:
+      - task: clear
+      - task: highlight_bg
+      - echo -e "This will add new repositories to your local Helm\n"
+      - task: reset
+      - helm repo add chaos-mesh https://charts.chaos-mesh.org
+      - helm repo add hashicorp https://helm.releases.hashicorp.com
+      - helm repo add bitnami https://charts.bitnami.com/bitnami
+      - helm repo add external-dns https://kubernetes-sigs.github.io/external-dns/
+      - helm repo add nginx-stable https://helm.nginx.com/stable
+      - helm repo add lwolf-charts http://charts.lwolf.org
+      - helm repo add emberstack https://emberstack.github.io/helm-charts
+      - helm repo add keyporttech https://keyporttech.github.io/helm-charts/
+      - helm repo add agones https://agones.dev/chart/stable
+      - helm repo add drone https://charts.drone.io
+      - helm repo add botkube https://charts.botkube.io
+      - helm repo add stakater https://stakater.github.io/stakater-charts
+      - helm repo add ananace-charts https://ananace.gitlab.io/charts
+      - helm repo add sealed-secrets https://bitnami-labs.github.io/sealed-secrets
+      - helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+      - task: clear
+      - echo -e "This will add new repositories to your local Helm\n"
+      - task: highlight_normal
+      - echo -e "Finished adding repositories. Updating them now.\n"
+      - task: reset
+      - helm repo update
+    ignore_error: true
+
+  dns:
+    desc: Creates the DNS entry required for the local domain to work.
+    preconditions:
+      - sh: "which hostctl"
+        msg: "hostctl {{.PATH_ERROR}}"
+    summary: |
+      Configuring Local DNS configuration through hostctl
+      This command uses hostctl to manage entries on /etc/hosts on a
+      a cross operational system compatible way. This command should work
+      on all MacOS, Windows and Linux. It adds all the '*.k8s.localhost'
+      domains to your local DNS hosts file. It also makes it easy for the
+      user to reverse those changes, avoiding pollution on your hosts
+      (or equivalent) file.
+    cmds:
+      - task: clear
+      - sleep 0.01 && {{if eq OS "windows"}}hostctl add k8s -q < test/.etchosts{{else}}sudo hostctl add k8s -q < test/.etchosts{{end}}
+      - task: highlight_normal
+      - echo -e "Added 'k8s.localhost' and related domains to your hosts file!"
+      - task: reset
