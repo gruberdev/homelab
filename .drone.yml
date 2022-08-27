@@ -1,5 +1,5 @@
 kind: pipeline
-name: Validate
+name: validate
 type: docker
 
 platform:
@@ -18,7 +18,7 @@ trigger:
       - push
 
 steps:
-  - name: Kubernetes Resources Validation
+  - name: k8s-resources
     image: deck15/kubeval-tools:latest
     commands:
       - find . -maxdepth 10 -name \*svc.yaml -exec kubeval --force-color  --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
@@ -35,14 +35,14 @@ steps:
   - name: Github Comment Push
     image: ghcr.io/joshdk/drone-github-comment:v0.1.0
     settings:
-      step: Validate/Kubernetes Resources Validation
+      step: validate/k8s-resources
     environment:
       DRONE_TOKEN:
         from_secret: drone_token
       GITHUB_TOKEN:
         from_secret: github_token
     depends_on:
-      - Kubernetes Resources Validation
+      - k8s-resources
 
 ---
 
