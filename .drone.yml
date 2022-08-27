@@ -32,6 +32,18 @@ steps:
       - find . -maxdepth 10 -name cr.yaml -exec kubeval --force-color  --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
       - find . -maxdepth 10 -name rb.yaml -exec kubeval --force-color  --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
 
+  - name: Github Comment Push
+    image: ghcr.io/joshdk/drone-github-comment:v0.1.0
+    settings:
+      step: Kubernetes Resources Validation
+    environment:
+      DRONE_TOKEN:
+        from_secret: drone_token
+      GITHUB_TOKEN:
+        from_secret: github_token
+    depends_on:
+      - Kubernetes Resources Validation
+
 ---
 
 kind: pipeline
