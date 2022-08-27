@@ -55,10 +55,6 @@ spec:
         extraVolumeMounts: []
         extraSecretNamesForEnvFrom:
           - drone-runner-vars
-        ## Each namespace listed below will be configured such that the runner can run build Pods in
-        ## it. This comes in the form of a Role and a RoleBinding. If you change env.DRONE_NAMESPACE_DEFAULT
-        ## or the other DRONE_NAMESPACE_* variables, make sure to update this list to include all
-        ## namespaces.
         rbac:
           buildNamespaces:
             - drone
@@ -66,11 +62,15 @@ spec:
           annotations: {}
         env:
           DRONE_RUNNER_CAPACITY: 20
-          DRONE_NAMESPACE_DEFAULT: drone
+          DRONE_NAMESPACE_DEFAULT: "drone"
           DRONE_RPC_SKIP_VERIFY: true
           DRONE_UI_DISABLE: false
           DRONE_SERVER_HOST: "drone"
-          DRONE_SERVER_PROTO: http
+          DRONE_SERVER_PROTO: "http"
+          DRONE_ANNOTATIONS_DEFAULT="server:home,arm:no,docker:no,kubernetes:yes"
+          AWS_DEFAULT_REGION: "us-east-1"
+          AWS_REGION: "us-east-1"
+          DRONE_S3_BUCKET: "drone-storage"
 
   destination:
     namespace: drone

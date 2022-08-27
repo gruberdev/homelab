@@ -26,11 +26,13 @@ tasks:
           name: drone-server-vars
           namespace: drone
         stringData:
-          DRONE_RPC_SECRET: $DRONE_RPC_SECRET
-          DRONE_DATABASE_DATASOURCE: $DRONE_DATABASE_DATASOURCE
-          DRONE_DATABASE_SECRET: $DRONE_DATABASE_SECRET
-          DRONE_GITHUB_CLIENT_ID: $DRONE_GITHUB_CLIENT_ID
-          DRONE_GITHUB_CLIENT_SECRET: $DRONE_GITHUB_CLIENT_SECRET
+          DRONE_RPC_SECRET: "$DRONE_RPC_SECRET"
+          DRONE_DATABASE_DATASOURCE: "$DRONE_DATABASE_DATASOURCE"
+          DRONE_DATABASE_SECRET: "$DRONE_DATABASE_SECRET"
+          DRONE_GITHUB_CLIENT_ID: "$DRONE_GITHUB_CLIENT_ID"
+          DRONE_GITHUB_CLIENT_SECRET: "$DRONE_GITHUB_CLIENT_SECRET"
+          AWS_ACCESS_KEY_ID: "$AWS_ACCESS_KEY_ID"
+          AWS_SECRET_ACCESS_KEY: "$AWS_SECRET_ACCESS_KEY"
         EOF
       - kubectl apply -f test/drone-secret.yaml
       - rm test/drone-secret.yaml
@@ -47,9 +49,13 @@ tasks:
           name: drone-runner-vars
           namespace: drone
         stringData:
-          DRONE_UI_PASSWORD: $DRONE_UI_PASSWORD
-          DRONE_UI_USERNAME: $DRONE_UI_USERNAME
-          DRONE_RPC_SECRET: $DRONE_RPC_SECRET
+          DRONE_UI_PASSWORD: "$DRONE_UI_PASSWORD"
+          DRONE_UI_USERNAME: "$DRONE_UI_USERNAME"
+          DRONE_RPC_SECRET: "$DRONE_RPC_SECRET"
+          DRONE_SECRET_PLUGIN_TOKEN: "$DRONE_SECRET_PLUGIN_TOKEN"
+          DRONE_REGISTRY_PLUGIN_TOKEN: "$DRONE_REGISTRY_PLUGIN_TOKEN"
+          AWS_ACCESS_KEY_ID: "$AWS_ACCESS_KEY_ID"
+          AWS_SECRET_ACCESS_KEY: "$AWS_SECRET_ACCESS_KEY"
         EOF
       - kubectl apply -f test/drone-secret-runner.yaml
       - rm test/drone-secret-runner.yaml
