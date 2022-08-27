@@ -68,6 +68,9 @@ spec:
           DRONE_SERVER_HOST: "drone"
           DRONE_SERVER_PROTO: "http"
           DRONE_ANNOTATIONS_DEFAULT="server:home,arm:no,docker:no,kubernetes:yes"
+          AWS_DEFAULT_REGION: "us-east-1"
+          AWS_REGION: "us-east-1"
+          DRONE_S3_BUCKET: "drone-storage"
 
   destination:
     namespace: drone
