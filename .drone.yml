@@ -21,16 +21,16 @@ steps:
   - name: k8s-resources
     image: deck15/kubeval-tools:latest
     commands:
-      - find . -maxdepth 10 -name \*svc.yaml -exec kubeval --force-color  --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
-      - find . -maxdepth 10 -name deployment.yaml -exec kubeval --force-color  --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
-      - find . -maxdepth 10 -name \*secret.yaml -exec kubeval --force-color  --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
-      - find . -maxdepth 10 -name cm.yaml -exec kubeval --force-color  --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
-      - find . -maxdepth 10 -name pvc.yaml -exec kubeval --force-color  --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
-      - find . -maxdepth 10 -name pv.yaml -exec kubeval --force-color  --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
-      - find . -maxdepth 10 -name role.yaml -exec kubeval --force-color  --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
-      - find . -maxdepth 10 -name sa.yaml -exec kubeval --force-color  --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
-      - find . -maxdepth 10 -name cr.yaml -exec kubeval --force-color  --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
-      - find . -maxdepth 10 -name rb.yaml -exec kubeval --force-color  --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
+      - find . -maxdepth 10 -name \*svc.yaml -exec kubeval --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
+      - find . -maxdepth 10 -name deployment.yaml -exec kubeval --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
+      - find . -maxdepth 10 -name \*secret.yaml -exec kubeval --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
+      - find . -maxdepth 10 -name cm.yaml -exec kubeval --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
+      - find . -maxdepth 10 -name pvc.yaml -exec kubeval --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
+      - find . -maxdepth 10 -name pv.yaml -exec kubeval --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
+      - find . -maxdepth 10 -name role.yaml -exec kubeval --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
+      - find . -maxdepth 10 -name sa.yaml -exec kubeval --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
+      - find . -maxdepth 10 -name cr.yaml -exec kubeval --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
+      - find . -maxdepth 10 -name rb.yaml -exec kubeval --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
 
   - name: Github Comment Push
     image: ghcr.io/joshdk/drone-github-comment:v0.1.0
