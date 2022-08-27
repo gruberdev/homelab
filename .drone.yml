@@ -35,8 +35,9 @@ steps:
   - name: Github Comment Push
     image: ghcr.io/joshdk/drone-github-comment:v0.1.0
     settings:
-      step: validate/k8s-resources
+      step: k8s-resources
     environment:
+      PLUGIN_STAGE: validate
       DRONE_TOKEN:
         from_secret: drone_token
       GITHUB_TOKEN:
