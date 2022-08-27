@@ -38,9 +38,6 @@ spec:
                 - path: /
                   pathType: Prefix
           tls: []
-          #  - secretName: chart-example-tls
-          #    hosts:
-          #      - chart-example.local
         resources:
           limits:
             cpu: 250m
