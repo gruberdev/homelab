@@ -1,0 +1,48 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: unifi-poller
+  labels:
+    app: unifi-poller
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: unifi-poller
+  template:
+    metadata:
+      labels:
+        app: unifi-poller
+    spec:
+      containers:
+        - name: unifi-poller
+          image: golift/unifi-poller:2.1
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: unifi-poller-cm
+            - secretRef:
+                name: unifi-poller-vars
+          ports:
+          - name: metrics
+            containerPort: 9130
+            protocol: TCP
+          - name: web
+            containerPort: 37288
+          volumeMounts:
+          - name: poller-data
+            mountPath: /config
+          resources:
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+            requests:
+              cpu: "250m"
+              memory: "256Mi"
+      volumes:
+        - name: poller-data
+          persistentVolumeClaim:
+            claimName: unifi-poller-storage

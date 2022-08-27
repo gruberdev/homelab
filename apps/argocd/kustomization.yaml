@@ -19,13 +19,14 @@ resources:
 - base/utilities/descheduler.yaml
 - base/utilities/kubenurse.yaml
 
-- base/monitoring/kuma.yaml
-- base/monitoring/flame.yaml
-
 - base/apps/vault.yaml
 - base/apps/ha.yaml
 - base/apps/unifi.yaml
 - base/apps/adguard.yaml
+
+- base/monitoring/kuma.yaml
+- base/monitoring/flame.yaml
+- base/monitoring/unifi-poller.yaml
 
 - base/drone/drone-server.yaml
 - base/drone/drone-runner.yaml
