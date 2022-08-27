@@ -37,7 +37,7 @@
 > |           Changedetection.io           |   `Monitoring`  |  <sub>[More details][homelab-changedetection]</sub> |  ![][argocd-changedetection] |
 > |                   n8n                  |    `Services`   |        <sub>[More details][homelab-n8n]</sub>       |        ![][argocd-n8n]       |
 > |            Hashicorp's Vault           |    `Security`   |       <sub>[Chart Values][homelab-vault]</sub>      |       ![][argocd-vault]      |
-> |                                        |                 |                                                     |                              |
+> |             Flame Dashboard            |    `Services`   |       <sub>[More details][homelab-flame]</sub>      |       ![][argocd-flame]      |
 > |                                        |                 |                                                     |                              |
 > |                                        |                 |                                                     |                              |
 
@@ -61,8 +61,6 @@
 
 </details>
 
-
-
 <details>
 
 <summary> <b>To be implemented</b> </summary>
@@ -75,7 +73,6 @@
 
 - Prometheus/Grafana metrics
 - Chaos Mesh for Chaos engineering
-- Uptime Kuma
 - Healthchecks
 
 #### Services and applications:
@@ -97,7 +94,6 @@
 - RSS Feeds (multiple)
 - Wyze bridge
 - Frigate for Home Assistant
-- Flame dashboard
 
 </details>
 
@@ -127,6 +123,8 @@
 [homelab-changedetection]: https://github.com/gruberdev/homelab/tree/main/apps/monitoring/changesdetection
 [homelab-vault]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/apps/vault.yaml
 [homelab-n8n]: https://github.com/gruberdev/homelab/tree/main/apps/services/n8n
+[homelab-flame]: https://github.com/gruberdev/homelab/tree/main/apps/monitoring/flame
+
 
 <!-- ArgoCD Status Badges -->
 
@@ -143,3 +141,4 @@
 [argocd-zalando]: https://argo.gr.wtf/api/badge?name=zalando
 [argocd-changedetection]: https://argo.gr.wtf/api/badge?name=changedetection
 [argocd-tailscale]: https://argo.gr.wtf/api/badge?name=tailscale
+[argocd-flame]: https://argo.gr.wtf/api/badge?name=flame
