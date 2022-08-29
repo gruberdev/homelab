@@ -11,9 +11,6 @@ resources:
 
 - base/core/argocd.yaml
 - base/core/zalando.yaml
-- base/core/cloudflared.yaml
-- base/core/cert-manager.yaml
-- base/core/certificates.yaml
 
 - base/utilities/metrics.yaml
 - base/utilities/reloader.yaml
