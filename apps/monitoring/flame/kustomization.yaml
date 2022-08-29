@@ -3,6 +3,10 @@ kind: Kustomization
 bases:
 - ./base
 - https://github.com/gruberdev/homelab/apps/networking/tailscale
+- https://github.com/gruberdev/homelab/apps/networking/cloudflared
+
+patchesStrategicMerge:
+- overlay/cloudflared-cm.yaml
 
 namespace: monitoring
 
@@ -24,6 +28,13 @@ patches:
   target:
     kind: Deployment
     name: flame
+- patch: |-
+    - op: replace
+      path: "/spec/template/spec/volumes/0/secret/secretName"
+      value: "flame-tunnel"
+  target:
+    kind: Deployment
+    name: cloudflared
 
 commonAnnotations:
   reloader.stakater.com/auto: "true"
