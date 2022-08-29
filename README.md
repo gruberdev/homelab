@@ -30,7 +30,7 @@
 > |          [ArgoCD][argocd-uri]          | `CI/CD Tooling` |      <sub>[More details][homelab-argocd]</sub>      |       ![][argocd-core]       |
 > | <sub>Zalando PostgreSQL Operator</sub> |   `Databases`   |      <sub>[More details][homelab-zalando]</sub>     |      ![][argocd-zalando]     |
 > |             Redis Operator             |   `Databases`   |       <sub>[More details][homelab-redis]</sub>      |       ![][argocd-redis]      |
-> |                Tailscale               |   `Networking`  |     <sub>[More details][homelab-tailscale]</sub>    |     ![][argocd-tailscale]    |
+> |   Tailscale <sub>(as sidecars)</sub>   |   `Networking`  |     <sub>[More details][homelab-tailscale]</sub>    |     ![][argocd-tailscale]    |
 > |            Unifi Controller            |   `Networking`  | <sub>[More details][homelab-unifi-controller]</sub> | ![][argocd-unifi-controller] |
 > |               AdGuard DNS              |   `Networking`  |      <sub>[More details][homelab-adguard]</sub>     |      ![][argocd-adguard]     |
 > |             Home Assistant             |   `Monitoring`  |        <sub>[More details][homelab-ha]</sub>        |        ![][argocd-ha]        |
@@ -39,6 +39,7 @@
 > |            Hashicorp's Vault           |    `Security`   |       <sub>[Chart Values][homelab-vault]</sub>      |       ![][argocd-vault]      |
 > |             Flame Dashboard            |    `Services`   |       <sub>[More details][homelab-flame]</sub>      |       ![][argocd-flame]      |
 > |              Unifi Poller              |   `Monitoring`  |      <sub>[More details][homelab-poller]</sub>      |      ![][argocd-poller]      |
+> |   Cloudflared <sub>(as proxies)</sub>     |   `Networking`  | <sub>[More details][homelab-cloudflared]</sub>      |                              |
 > |                                        |                 |                                                     |                              |
 
 </details>
@@ -142,6 +143,7 @@
 [homelab-n8n]: https://github.com/gruberdev/homelab/tree/main/apps/services/n8n
 [homelab-flame]: https://github.com/gruberdev/homelab/tree/main/apps/monitoring/flame
 [homelab-poller]: https://github.com/gruberdev/homelab/tree/main/apps/monitoring/unifi-poller
+[homelab-cloudflared]: https://github.com/gruberdev/homelab/tree/main/apps/networking/cloudflared
 
 <!-- ArgoCD Status Badges -->
 

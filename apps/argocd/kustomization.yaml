@@ -33,6 +33,9 @@ resources:
 
 - base/services/n8n.yaml
 
+- https://github.com/gruberdev/homelab/apps/networking/tailscale
+- https://github.com/gruberdev/homelab/apps/networking/cloudflared
+
 - https://raw.githubusercontent.com/argoproj/argo-cd/master/manifests/install.yaml
 
 components:
@@ -42,6 +45,7 @@ patchesStrategicMerge:
 - overlay/argocd-svc.yaml
 - overlay/argocd-deployment.yaml
 - overlay/argocd-cm.yaml
+- overlay/cloudflared-cm.yaml
 
 patchesJson6902:
 - path: overlay/deploy-command.yaml
@@ -76,6 +80,13 @@ patches:
   target:
     kind: Deployment
     name: argocd-repo-server
+- patch: |-
+    - op: replace
+      path: "/spec/template/spec/volumes/0/secret/secretName"
+      value: "argo-tunnel"
+  target:
+    kind: Deployment
+    name: cloudflared
 
 commonAnnotations:
   reloader.stakater.com/auto: "true"
