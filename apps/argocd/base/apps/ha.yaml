@@ -8,7 +8,7 @@ spec:
   project: apps
   source:
     repoURL: 'https://github.com/gruberdev/homelab.git'
-    path: apps/ha
+    path: apps/home/ha
     targetRevision: main
   destination:
     namespace: homeassistant
