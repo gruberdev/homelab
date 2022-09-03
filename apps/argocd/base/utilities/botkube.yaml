@@ -1,0 +1,286 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: botkube
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: monitoring
+  source:
+    repoURL: https://charts.botkube.io
+    chart: botkube
+    targetRevision: v0.12.4
+    helm:
+      releaseName: botkube
+      values: |
+        ## BotKube image configuration.
+        image:
+          registry: ghcr.io
+          repository: kubeshop/botkube
+          pullPolicy: IfNotPresent
+          tag: v0.12.4
+        podSecurityPolicy:
+          enabled: false
+        securityContext:
+          runAsUser: 101
+          runAsGroup: 101
+        containerSecurityContext:
+          privileged: false
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+        kubeconfig:
+          enabled: true
+          existingSecret: "botkube-kubeconfig"
+        sources:
+          'k8s-events':
+            kubernetes:
+              recommendations:
+                pod:
+                  noLatestImageTag: true
+                  labelsSet: true
+                ingress:
+                  backendServiceValid: true
+                  # -- If true, notifies about Ingress resources with invalid TLS secret reference.
+                  tlsSecretValid: true
+              namespaces:
+                include:
+                  - ".*"
+                # exclude: []
+              resources:
+                - name: v1/pods             # Name of the resource. Resource name must be in group/version/resource (G/V/R) format
+                                            # resource name should be plural (e.g apps/v1/deployments, v1/pods)
+                  events:                   # List of lifecycle events you want to receive, e.g create, update, delete, error OR all
+                    - create
+                    - delete
+                    - error
+                - name: v1/services
+                  events:
+                    - create
+                    - delete
+                    - error
+                - name: apps/v1/deployments
+                  events:
+                    - create
+                    - update
+                    - delete
+                    - error
+                  updateSetting:
+                    includeDiff: true
+                    fields:
+                      - spec.template.spec.containers[*].image
+                      - status.availableReplicas
+                - name: apps/v1/statefulsets
+                  events:
+                    - create
+                    - update
+                    - delete
+                    - error
+                  updateSetting:
+                    includeDiff: true
+                    fields:
+                      - spec.template.spec.containers[*].image
+                      - status.readyReplicas
+                - name: networking.k8s.io/v1/ingresses
+                  events:
+                    - create
+                    - delete
+                    - error
+                - name: v1/nodes
+                  events:
+                    - create
+                    - delete
+                    - error
+                - name: v1/namespaces
+                  events:
+                    - create
+                    - delete
+                    - error
+                - name: v1/persistentvolumes
+                  events:
+                    - create
+                    - delete
+                    - error
+                - name: v1/persistentvolumeclaims
+                  events:
+                    - create
+                    - delete
+                    - error
+                - name: v1/configmaps
+                  events:
+                    - create
+                    - delete
+                    - error
+                - name: apps/v1/daemonsets
+                  events:
+                    - create
+                    - update
+                    - delete
+                    - error
+                  updateSetting:
+                    includeDiff: true
+                    fields:
+                      - spec.template.spec.containers[*].image
+                      - status.numberReady
+                - name: batch/v1/jobs
+                  events:
+                    - create
+                    - update
+                    - delete
+                    - error
+                  updateSetting:
+                    includeDiff: true
+                    fields:
+                      - spec.template.spec.containers[*].image
+                      - status.conditions[*].type
+                - name: rbac.authorization.k8s.io/v1/roles
+                  events:
+                    - create
+                    - delete
+                    - error
+                - name: rbac.authorization.k8s.io/v1/rolebindings
+                  events:
+                    - create
+                    - delete
+                    - error
+                - name: rbac.authorization.k8s.io/v1/clusterrolebindings
+                  events:
+                    - create
+                    - delete
+                    - error
+                - name: rbac.authorization.k8s.io/v1/clusterroles
+                  events:
+                    - create
+                    - delete
+                    - error
+        executors:
+          'kubectl-read-only':
+            ## Kubectl executor configuration.
+            kubectl:
+              namespaces:
+                include:
+                  - ".*"
+                exclude: []
+              enabled: false
+              commands:
+                verbs: ["api-resources", "api-versions", "cluster-info", "describe", "diff", "explain", "get", "logs", "top", "auth"]
+                resources: ["deployments", "pods", "namespaces", "daemonsets", "statefulsets", "storageclasses", "nodes", "configmaps"]
+              defaultNamespace: default
+              restrictAccess: false
+        existingCommunicationsSecretName: "botkube-vars"
+        ## Global BotKube configuration.
+        settings:
+          clusterName: not-configured
+          configWatcher: true
+          upgradeNotifier: true
+          log:
+            level: info
+            disableColors: false
+        ## For using custom SSL certificates.
+        ssl:
+          enabled: false
+          existingSecretName: ""
+          cert: ""
+        service:
+          name: metrics
+          port: 2112
+          targetPort: 2112
+        ingress:
+          create: false
+          annotations:
+            kubernetes.io/ingress.class: nginx
+          host: 'HOST'
+          tls:
+            enabled: false
+            secretName: ''
+        serviceMonitor:
+          enabled: true
+          interval: 10s
+          path: /metrics
+          port: metrics
+          labels: {}
+        deployment:
+          annotations: {}
+        replicaCount: 1
+        extraAnnotations: {}
+        extraLabels: {}
+        priorityClassName: ""
+        nameOverride: ""
+        fullnameOverride: ""
+        resources:
+          limits:
+            cpu: 100m
+            memory: 128Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+        extraEnv: []
+        #  - name: <key>
+        #    valueFrom:
+        #      configMapKeyRef:
+        #        name: configmap-name
+        #        key: value_key
+        #  - name: <key>
+        #    value: value
+        extraVolumes: []
+        ## For CSI e.g. Vault:
+        # - name: secrets-store-inline
+        #   csi:
+        #     driver: secrets-store.csi.k8s.io
+        #     readOnly: true
+        #     volumeAttributes:
+        #       secretProviderClass: "vault-database"
+        # -- Extra volume mounts to pass to the BotKube container.
+        # [Ref docs](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#volumes-1).
+        extraVolumeMounts: []
+        # - name: extra-volume-0
+        #   mountPath: /mnt/volume0
+        #   readOnly: true
+        # - name: extra-volume-1
+        #   mountPath: /mnt/volume1
+        #   readOnly: true
+        # - name: secret-files
+        #   mountPath: /etc/secrets
+        #   subPath: ""
+        #
+        ## For CSI e.g. Vault:
+        # - name: secrets-store-inline
+        #   mountPath: "/mnt/secrets-store"
+        #   readOnly: true
+        nodeSelector: {}
+        tolerations: []
+        affinity: {}
+        rbac:
+          create: true
+          rules:
+            - apiGroups: ["*"]
+              resources: ["*"]
+              verbs: ["get", "watch", "list"]
+        serviceAccount:
+          create: true
+          name: ""
+          annotations: {}
+        extraObjects: []
+        analytics:
+          disable: true
+
+  destination:
+    namespace: monitoring
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: true
+    syncOptions:
+    - Validate=false
+    - CreateNamespace=false
+    - PrunePropagationPolicy=foreground
+    - PruneLast=false
+    - ApplyOutOfSyncOnly=false
+    - Prune=true
+    retry:
+      limit: -1
+      backoff:
+        duration: 20s
+        factor: 2
+        maxDuration: 15m
