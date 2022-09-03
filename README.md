@@ -39,8 +39,7 @@
 > |            Hashicorp's Vault           |    `Security`   |       <sub>[Chart Values][homelab-vault]</sub>      |       ![][argocd-vault]      |
 > |             Flame Dashboard            |    `Services`   |       <sub>[More details][homelab-flame]</sub>      |       ![][argocd-flame]      |
 > |              Unifi Poller              |   `Monitoring`  |      <sub>[More details][homelab-poller]</sub>      |      ![][argocd-poller]      |
-> |   Cloudflared <sub>(as proxies)</sub>     |   `Networking`  | <sub>[More details][homelab-cloudflared]</sub>      |                              |
-> |                                        |                 |                                                     |                              |
+> |   Cloudflared <sub>(as proxies)</sub>  |   `Networking`  | <sub>[More details][homelab-cloudflared]</sub>   |                              |
 
 </details>
 
@@ -57,6 +56,7 @@
 - kubenurse
 - reflector
 - reloader
+- botkube
 
 </details>
 
@@ -83,7 +83,6 @@
 
 - Prometheus/Grafana metrics
 - Chaos Mesh for Chaos engineering
-- Healthchecks
 
 #### Services and applications:
 

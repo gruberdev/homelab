@@ -18,6 +18,7 @@ resources:
 - base/utilities/kube-clean.yaml
 - base/utilities/descheduler.yaml
 - base/utilities/kubenurse.yaml
+- base/utilities/botkube.yaml
 
 - base/apps/vault.yaml
 - base/apps/ha.yaml
