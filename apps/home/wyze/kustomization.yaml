@@ -15,15 +15,15 @@ patches:
       path: "/spec/template/spec/containers/0/env/1"
       value:
         name: TS_HOSTNAME
-        value: "homeassistant"
+        value: "wyze"
     - op: replace
       path: "/spec/template/spec/containers/0/env/2"
       value:
         name: DEST_PORT
-        value: "8123"
+        value: "8888"
   target:
     kind: Deployment
-    name: home-assistant
+    name: wyze-bridge
 
 commonAnnotations:
   reloader.stakater.com/auto: "true"

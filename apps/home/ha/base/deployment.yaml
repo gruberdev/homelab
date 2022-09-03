@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: home-assistant
+  name: home-assistant
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: home-assistant
+  template:
+    metadata:
+      labels:
+        app: home-assistant
+    spec:
+      containers:
+        - env:
+            - name: TZ
+              value: America/Sao_Paulo
+            - name: PYTHONWARNINGS
+              value: ignore:Unverified HTTPS request
+          image: docker.io/homeassistant/home-assistant:2022.8
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 5
+            httpGet:
+              path: /
+              port: api
+            initialDelaySeconds: 30
+            timeoutSeconds: 5
+          name: home-assistant
+          ports:
+            - containerPort: 8123
+              name: api
+              protocol: TCP
+          readinessProbe:
+            failureThreshold: 5
+            httpGet:
+              path: /
+              port: api
+            initialDelaySeconds: 30
+            timeoutSeconds: 5
+          resources:
+            limits:
+              cpu: 500m
+              memory: 500Mi
+            requests:
+              cpu: 200m
+              memory: 128Mi
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - mountPath: /config
+              name: config-volume
+            - mountPath: /dev/ttyUSB0
+              name: dev-usb-00
+            - mountPath: /dev/ttyUSB1
+              name: dev-usb-01
+            - mountPath: /dev/serial/by-id/usb-Silicon_Labs_HubZ_Smart_Home_Controller_C130205F-if00-port0
+              name: zigbee-00
+            - mountPath: /dev/serial/by-id/usb-Silicon_Labs_HubZ_Smart_Home_Controller_C130205F-if01-port0
+              name: zigbee-01
+      dnsPolicy: ClusterFirstWithHostNet
+      hostNetwork: true
+      restartPolicy: Always
+      volumes:
+        - name: config-volume
+          persistentVolumeClaim:
+            claimName: home-assisstant-pvc
+        - hostPath:
+            path: /dev/serial/by-id/usb-Silicon_Labs_HubZ_Smart_Home_Controller_C130205F-if00-port0
+          name: zigbee-00
+        - hostPath:
+            path: /dev/serial/by-id/usb-Silicon_Labs_HubZ_Smart_Home_Controller_C130205F-if01-port0
+          name: zigbee-01
+        - hostPath:
+            path: /dev/ttyUSB0
+          name: dev-usb-00
+        - hostPath:
+            path: /dev/ttyUSB1
+          name: dev-usb-01

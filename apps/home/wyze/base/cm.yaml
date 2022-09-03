@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: wyze-cm
+data:
+  NET_MODE: "ANY"
+  TZ: "America/Sao_Paulo"
+  ENABLE_AUDIO: "True"
+  SNAPSHOT: "RTSP30"
+  IMG_DIR: "/img/"
+  IMG_TYPE: "png"
+  RECORD_ALL: "True"
+  CONNECT_TIMEOUT: "60"

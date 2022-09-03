@@ -34,6 +34,7 @@
 > |            Unifi Controller            |   `Networking`  | <sub>[More details][homelab-unifi-controller]</sub> | ![][argocd-unifi-controller] |
 > |               AdGuard DNS              |   `Networking`  |      <sub>[More details][homelab-adguard]</sub>     |      ![][argocd-adguard]     |
 > |             Home Assistant             |   `Monitoring`  |        <sub>[More details][homelab-ha]</sub>        |        ![][argocd-ha]        |
+> |             Wyze API Bridge            |   `Monitoring`  |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-wyze]      |
 > |           Changedetection.io           |   `Monitoring`  |  <sub>[More details][homelab-changedetection]</sub> |  ![][argocd-changedetection] |
 > |                   n8n                  |    `Services`   |        <sub>[More details][homelab-n8n]</sub>       |        ![][argocd-n8n]       |
 > |            Hashicorp's Vault           |    `Security`   |       <sub>[Chart Values][homelab-vault]</sub>      |       ![][argocd-vault]      |
@@ -135,7 +136,8 @@
 
 [homelab-argocd]: https://github.com/gruberdev/homelab/tree/main/apps/argocd
 [homelab-drone]: https://github.com/gruberdev/homelab/tree/main/apps/drone
-[homelab-ha]: https://github.com/gruberdev/homelab/tree/main/apps/ha
+[homelab-ha]: https://github.com/gruberdev/homelab/tree/main/apps/home/ha
+[homelab-wyze]: https://github.com/gruberdev/homelab/tree/main/apps/home/wyze
 [homelab-kuma]: https://github.com/gruberdev/homelab/tree/main/apps/monitoring/uptime-kuma
 [homelab-adguard]: https://github.com/gruberdev/homelab/tree/main/apps/networking/adguard
 [homelab-unifi-controller]: https://github.com/gruberdev/homelab/tree/main/apps/networking/unifi/controller
@@ -164,6 +166,7 @@
 [argocd-n8n]: https://argo.gr.wtf/api/badge?name=n8n
 [argocd-vault]: https://argo.gr.wtf/api/badge?name=vault
 [argocd-ha]: https://argo.gr.wtf/api/badge?name=homeassistant
+[argocd-wyze]: https://argo.gr.wtf/api/badge?name=wyze-bridge
 [argocd-redis]: https://argo.gr.wtf/api/badge?name=redis
 [argocd-zalando]: https://argo.gr.wtf/api/badge?name=zalando
 [argocd-changedetection]: https://argo.gr.wtf/api/badge?name=changedetection
