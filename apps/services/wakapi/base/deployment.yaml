@@ -1,0 +1,45 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wakapi-server
+  labels:
+    app: wakapi-server
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: wakapi-server
+  template:
+    metadata:
+      labels:
+        app: wakapi-server
+    spec:
+      containers:
+        - name: n8n
+          image: ghcr.io/muety/wakapi:latest
+          envFrom:
+            - configMapRef:
+                name: wakapi-cm
+            - secretRef:
+                name: wakapi-vars
+          ports:
+            - name: web
+              containerPort: 3000
+              protocol: TCP
+          resources:
+            requests:
+              cpu: "300m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "1512Mi"
+          volumeMounts:
+            - name: config-storage
+              mountPath: /data
+      volumes:
+        - name: config-storage
+          persistentVolumeClaim:
+            claimName: wakapi-storage

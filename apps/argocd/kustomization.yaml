@@ -33,6 +33,7 @@ resources:
 - base/drone/drone-runner.yaml
 
 - base/services/n8n.yaml
+- base/services/wakapi.yaml
 
 - https://github.com/gruberdev/homelab/apps/networking/tailscale
 - https://github.com/gruberdev/homelab/apps/networking/cloudflared
