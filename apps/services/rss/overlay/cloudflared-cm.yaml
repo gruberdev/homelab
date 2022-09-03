@@ -13,6 +13,4 @@ data:
       service: http://rss-gen:3000
     - hostname: hub.rss.gr.wtf
       service: http://rss-hub:3001
-    - hostname: bridge.rss.gr.wtf
-      service: http://rss-bridge:3002
     - service: http_status:404
