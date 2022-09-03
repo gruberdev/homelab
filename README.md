@@ -39,7 +39,9 @@
 > |            Hashicorp's Vault           |    `Security`   |       <sub>[Chart Values][homelab-vault]</sub>      |       ![][argocd-vault]      |
 > |             Flame Dashboard            |    `Services`   |       <sub>[More details][homelab-flame]</sub>      |       ![][argocd-flame]      |
 > |              Unifi Poller              |   `Monitoring`  |      <sub>[More details][homelab-poller]</sub>      |      ![][argocd-poller]      |
-> |   Cloudflared <sub>(as proxies)</sub>  |   `Networking`  | <sub>[More details][homelab-cloudflared]</sub>   |                              |
+> |   Cloudflared <sub>(as proxies)</sub>  |   `Networking`  | <sub>[More details][homelab-cloudflared]</sub>      |                              |
+> |                   Wakapi               |    `Services`   |        <sub>[More details][homelab-wakapi]</sub>    |        ![][argocd-wakapi]    |
+
 
 </details>
 
@@ -143,6 +145,8 @@
 [homelab-flame]: https://github.com/gruberdev/homelab/tree/main/apps/monitoring/flame
 [homelab-poller]: https://github.com/gruberdev/homelab/tree/main/apps/monitoring/unifi-poller
 [homelab-cloudflared]: https://github.com/gruberdev/homelab/tree/main/apps/networking/cloudflared
+[homelab-wakapi]: https://github.com/gruberdev/homelab/tree/main/apps/services/wakapi
+
 
 <!-- ArgoCD Status Badges -->
 
@@ -161,3 +165,5 @@
 [argocd-tailscale]: https://argo.gr.wtf/api/badge?name=tailscale
 [argocd-flame]: https://argo.gr.wtf/api/badge?name=flame
 [argocd-poller]: https://argo.gr.wtf/api/badge?name=unifi-poller
+[argocd-wakapi]: https://argo.gr.wtf/api/badge?name=unifi-poller
+
