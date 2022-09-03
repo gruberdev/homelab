@@ -34,6 +34,7 @@ resources:
 
 - base/services/n8n.yaml
 - base/services/wakapi.yaml
+- base/services/rss.yaml
 
 - https://github.com/gruberdev/homelab/apps/networking/tailscale
 - https://github.com/gruberdev/homelab/apps/networking/cloudflared

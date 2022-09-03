@@ -24,6 +24,3 @@ patches:
   target:
     kind: Deployment
     name: rss-gen
-
-commonAnnotations:
-  reloader.stakater.com/auto: "true"
