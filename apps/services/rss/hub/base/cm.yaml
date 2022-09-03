@@ -15,3 +15,5 @@ data:
   REDIS_URL: "redis://127.0.0.1:6379"
   PUPPETEER_WS_ENDPOINT: "ws://127.0.0.1:3000"
   ALLOW_LOCALHOST: "true"
+  DISALLOW_ROBOT: "true"
+  SCIHUB_HOST: "https://sci-hub.se"
