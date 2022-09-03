@@ -1,0 +1,51 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rss-gen
+  labels:
+    app: rss-gen
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: rss-gen
+  template:
+    metadata:
+      labels:
+        app: rss-gen
+    spec:
+      containers:
+        - name: rss-gen
+          image: damoeb/rss-proxy:2.0.0-beta
+          envFrom:
+            - configMapRef:
+                name: rssgen-cm
+            - secretRef:
+                name: rssgen-vars
+          ports:
+            - name: web
+              containerPort: 8080
+              protocol: TCP
+          resources:
+            requests:
+              cpu: "64m"
+              memory: "128Mi"
+            limits:
+              cpu: "128m"
+              memory: "256Mi"
+        - name: richpuppeteer
+          image: damoeb/rich-rss:puppeteer-0.1
+          ports:
+            - name: richpuppeteer
+              containerPort: 3000
+              protocol: TCP
+          resources:
+            requests:
+              cpu: "64m"
+              memory: "128Mi"
+            limits:
+              cpu: "128m"
+              memory: "256Mi"

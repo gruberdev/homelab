@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rsshub-cm
+data:
+  NODE_ENV: "production"
+  TZ: "America/Sao_Paulo"
+  PORT: "1200"
+  REQUEST_RETRY: "5"
+  UA: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36"
+  ALLOW_ORIGIN: "*"
+  CACHE_TYPE: "redis"
+  CACHE_EXPIRE: "5*60"
+  MEMORY_MAX: "256"
+  REDIS_URL: "redis://127.0.0.1:6379"
+  PUPPETEER_WS_ENDPOINT: "ws://127.0.0.1:3000"
+  ALLOW_LOCALHOST: "true"
+  DISALLOW_ROBOT: "true"
+  SCIHUB_HOST: "https://sci-hub.se"

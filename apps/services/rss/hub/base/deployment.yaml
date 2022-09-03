@@ -1,0 +1,64 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rss-hub
+  labels:
+    app: rss-hub
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: rss-hub
+  template:
+    metadata:
+      labels:
+        app: rss-hub
+    spec:
+      containers:
+        - name: rss-hub
+          image: diygod/rsshub:latest
+          envFrom:
+            - configMapRef:
+                name: rsshub-cm
+            - secretRef:
+                name: rsshub-vars
+          ports:
+            - name: web
+              containerPort: 1200
+              protocol: TCP
+          resources:
+            requests:
+              cpu: "64m"
+              memory: "128Mi"
+            limits:
+              cpu: "128m"
+              memory: "256Mi"
+        - name: puppeteer
+          image: browserless/chrome
+          ports:
+            - name: richpuppeteer
+              containerPort: 3000
+              protocol: TCP
+          resources:
+            requests:
+              cpu: "64m"
+              memory: "128Mi"
+            limits:
+              cpu: "128m"
+              memory: "512Mi"
+        - name: redis
+          image: redis:alpine
+          ports:
+            - name: cache
+              containerPort: 6379
+              protocol: TCP
+          resources:
+            requests:
+              cpu: "64m"
+              memory: "128Mi"
+            limits:
+              cpu: "128m"
+              memory: "256Mi"

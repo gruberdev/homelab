@@ -41,6 +41,9 @@
 > |              Unifi Poller              |   `Monitoring`  |      <sub>[More details][homelab-poller]</sub>      |      ![][argocd-poller]      |
 > |   Cloudflared <sub>(as proxies)</sub>  |   `Networking`  | <sub>[More details][homelab-cloudflared]</sub>      |                              |
 > |                   Wakapi               |    `Services`   |        <sub>[More details][homelab-wakapi]</sub>    |        ![][argocd-wakapi]    |
+> | [RSS Gen/Proxy][service-rssgen]           |    `Services`   |        <sub>[More details][homelab-rssgen]</sub>    |        ![][argocd-rss]       |
+> |    [RSS Hub][service-rsshub]           |    `Services`   |        <sub>[More details][homelab-rsshub]</sub>    |        ![][argocd-rss]       |
+
 
 
 </details>
@@ -101,7 +104,6 @@
 - Monica
 - Mango
 - Wallabag
-- RSS Feeds (multiple)
 - Wyze bridge
 - Frigate for Home Assistant
 
@@ -114,6 +116,8 @@
 [homeassistant-uri]: https://www.home-assistant.io/
 [adguard-uri]: https://adguard.com/en/adguard-home/overview.html
 [kuma-uri]: https://github.com/louislam/uptime-kuma
+[service-rssgen]: https://github.com/damoeb/rss-proxy
+[service-rsshub]: https://github.com/DIYgod/RSSHub
 
 <!-- Shield Badges -->
 
@@ -145,6 +149,8 @@
 [homelab-poller]: https://github.com/gruberdev/homelab/tree/main/apps/monitoring/unifi-poller
 [homelab-cloudflared]: https://github.com/gruberdev/homelab/tree/main/apps/networking/cloudflared
 [homelab-wakapi]: https://github.com/gruberdev/homelab/tree/main/apps/services/wakapi
+[homelab-rssgen]: https://github.com/gruberdev/homelab/tree/main/apps/services/rss/gen
+[homelab-rsshub]: https://github.com/gruberdev/homelab/tree/main/apps/services/rss/hub
 
 
 <!-- ArgoCD Status Badges -->
@@ -165,4 +171,4 @@
 [argocd-flame]: https://argo.gr.wtf/api/badge?name=flame
 [argocd-poller]: https://argo.gr.wtf/api/badge?name=unifi-poller
 [argocd-wakapi]: https://argo.gr.wtf/api/badge?name=unifi-poller
-
+[argocd-rss]: https://argo.gr.wtf/api/badge?name=rss
