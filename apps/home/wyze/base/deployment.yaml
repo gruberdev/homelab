@@ -1,0 +1,86 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wyze-bridge
+  labels:
+    app: wyze-bridge
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: wyze-bridge
+  template:
+    metadata:
+      labels:
+        app: wyze-bridge
+    spec:
+      containers:
+        - name: wyze-bridge
+          image: mrlt8/wyze-bridge:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: wyze-cm
+            - secretRef:
+                name: wyze-vars
+          ports:
+            - name: rtmp
+              protocol: TCP
+              containerPort: 1935
+            - name: rtsp
+              protocol: TCP
+              containerPort: 8554
+            - name: web
+              protocol: TCP
+              containerPort: 8888
+          startupProbe:
+            tcpSocket:
+              port: rtsp
+            initialDelaySeconds: 15
+            timeoutSeconds: 1
+            periodSeconds: 5
+            successThreshold: 1
+            failureThreshold: 30
+          livenessProbe:
+            tcpSocket:
+              port: rtsp
+            initialDelaySeconds: 15
+            timeoutSeconds: 1
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          readinessProbe:
+            tcpSocket:
+              port: rtsp
+            initialDelaySeconds: 15
+            timeoutSeconds: 1
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "1024Mi"
+          volumeMounts:
+            - mountPath: /tokens
+              name: config
+            - mountPath: /img
+              name: snapshots
+            - mountPath: /record
+              name: recordings
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: wyze-storage
+        - name: snapshots
+          persistentVolumeClaim:
+            claimName: wyze-snapshots
+        - name: recordings
+          persistentVolumeClaim:
+            claimName: wyze-recordings
