@@ -6,7 +6,7 @@ platform:
   os: linux
   arch: amd64
 node:
-  server: home
+  server: remote
   arm: no
   docker: yes
 
@@ -98,7 +98,7 @@ platform:
   os: linux
   arch: amd64
 node:
-  server: home
+  server: remote
   arm: no
   docker: yes
 

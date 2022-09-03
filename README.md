@@ -100,7 +100,6 @@
 - Domainmod
 - Monica
 - Mango
-- Wakapi
 - Wallabag
 - RSS Feeds (multiple)
 - Wyze bridge

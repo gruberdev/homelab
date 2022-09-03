@@ -35,7 +35,7 @@ spec:
               memory: "256Mi"
             limits:
               cpu: "500m"
-              memory: "1512Mi"
+              memory: "512Mi"
           volumeMounts:
             - name: config-storage
               mountPath: /data
