@@ -1,0 +1,53 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: beets
+  labels:
+    app: beets
+spec:
+  replicas: 1
+  strategy:
+    type: recreate
+  selector:
+    matchLabels:
+      app: beets
+  template:
+    metadata:
+      labels:
+        app: beets
+    spec:
+      containers:
+        - name: beets
+          image: linuxserver/beets:latest
+          envFrom:
+            - configMapRef:
+                name: beets-cm
+          ports:
+            - name: web
+              containerPort: 8337
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 250m
+              memory: 256Mi
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: library
+              mountPath: /music
+            - name: downloads
+              mountPath: /downloads
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: beets-storage
+        - name: library
+          persistentVolumeClaim:
+            claimName: music-storage
+        - name: downloads
+          persistentVolumeClaim:
+            claimName: music-downloads
