@@ -24,9 +24,12 @@ spec:
           httpGet:
             path: /ready
             port: 2000
-          failureThreshold: 1
-          initialDelaySeconds: 10
+          failureThreshold: 5
+          initialDelaySeconds: 30
           periodSeconds: 10
+        envFrom:
+          - configMapRef:
+              name: cf-configs
         volumeMounts:
         - name: config
           mountPath: /etc/cloudflared/config
@@ -36,11 +39,11 @@ spec:
           readOnly: true
         resources:
           limits:
-            cpu: 100m
-            memory: 230Mi
+            cpu: 200m
+            memory: 400Mi
           requests:
-            cpu: 25m
-            memory: 64Mi
+            cpu: 75m
+            memory: 128Mi
       volumes:
       - name: creds
         secret:
