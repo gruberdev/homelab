@@ -46,6 +46,8 @@
 > |    [RSS Hub][service-rsshub]           |    `Services`   |        <sub>[More details][homelab-rsshub]</sub>    |        ![][argocd-rss]       |
 > |           [Beets][service-beets]                        |   `Media`  |  <sub>[More details][homelab-beets]</sub> |  ![][argocd-beets] |
 > |           [Lidarr][service-lidarr]                       |   `Media`  |  <sub>[More details][homelab-lidarr]</sub> |  ![][argocd-lidarr] |
+> |             [Metabase][service-metabase]             |   `Analytics`   |       <sub>[More details][homelab-metabase]</sub>      |       ![][argocd-metabase]      |
+
 
 
 
@@ -123,6 +125,7 @@
 [service-rsshub]: https://github.com/DIYgod/RSSHub
 [service-beets]: https://github.com/beetbox/beets
 [service-lidarr]: https://github.com/Lidarr/Lidarr
+[service-metabase]: https://www.metabase.com/
 
 <!-- Shield Badges -->
 
@@ -159,6 +162,7 @@
 [homelab-rsshub]: https://github.com/gruberdev/homelab/tree/main/apps/services/rss/hub
 [homelab-beets]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/beets
 [homelab-lidarr]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/lidarr
+[homelab-metabase]: https://github.com/gruberdev/homelab/tree/main/apps/data/metabase
 
 <!-- ArgoCD Status Badges -->
 
@@ -182,3 +186,4 @@
 [argocd-rss]: https://argo.gr.wtf/api/badge?name=rss
 [argocd-beets]: https://argo.gr.wtf/api/badge?name=beets
 [argocd-lidarr]: https://argo.gr.wtf/api/badge?name=lidarr
+[argocd-metabase]: https://argo.gr.wtf/api/badge?name=metabase
