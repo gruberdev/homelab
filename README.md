@@ -44,6 +44,9 @@
 > |                   Wakapi               |    `Services`   |        <sub>[More details][homelab-wakapi]</sub>    |        ![][argocd-wakapi]    |
 > | [RSS Gen/Proxy][service-rssgen]           |    `Services`   |        <sub>[More details][homelab-rssgen]</sub>    |        ![][argocd-rss]       |
 > |    [RSS Hub][service-rsshub]           |    `Services`   |        <sub>[More details][homelab-rsshub]</sub>    |        ![][argocd-rss]       |
+> |           [Beets][service-beets]                        |   `Media`  |  <sub>[More details][homelab-beets]</sub> |  ![][argocd-beets] |
+> |           [Lidarr][service-lidarr]                       |   `Media`  |  <sub>[More details][homelab-lidarr]</sub> |  ![][argocd-lidarr] |
+
 
 
 
@@ -105,7 +108,6 @@
 - Monica
 - Mango
 - Wallabag
-- Wyze bridge
 - Frigate for Home Assistant
 
 </details>
@@ -119,6 +121,8 @@
 [kuma-uri]: https://github.com/louislam/uptime-kuma
 [service-rssgen]: https://github.com/damoeb/rss-proxy
 [service-rsshub]: https://github.com/DIYgod/RSSHub
+[service-beets]: https://github.com/beetbox/beets
+[service-lidarr]: https://github.com/Lidarr/Lidarr
 
 <!-- Shield Badges -->
 
@@ -153,7 +157,8 @@
 [homelab-wakapi]: https://github.com/gruberdev/homelab/tree/main/apps/services/wakapi
 [homelab-rssgen]: https://github.com/gruberdev/homelab/tree/main/apps/services/rss/gen
 [homelab-rsshub]: https://github.com/gruberdev/homelab/tree/main/apps/services/rss/hub
-
+[homelab-beets]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/beets
+[homelab-lidarr]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/lidarr
 
 <!-- ArgoCD Status Badges -->
 
@@ -175,3 +180,5 @@
 [argocd-poller]: https://argo.gr.wtf/api/badge?name=unifi-poller
 [argocd-wakapi]: https://argo.gr.wtf/api/badge?name=unifi-poller
 [argocd-rss]: https://argo.gr.wtf/api/badge?name=rss
+[argocd-beets]: https://argo.gr.wtf/api/badge?name=beets
+[argocd-lidarr]: https://argo.gr.wtf/api/badge?name=lidarr

@@ -6,10 +6,9 @@ platform:
   os: linux
   arch: amd64
 node:
-  server: remote
+  server: vps
   arm: no
   docker: yes
-
 trigger:
   event:
     include:
@@ -98,7 +97,7 @@ platform:
   os: linux
   arch: amd64
 node:
-  server: remote
+  server: vps
   arm: no
   docker: yes
 

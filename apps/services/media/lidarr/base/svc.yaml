@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: lidarr
+  labels:
+    app: lidarr
+spec:
+  type: ClusterIP
+  selector:
+    app: lidarr
+  ports:
+    - name: web
+      port: 80
+      targetPort: 8686
+      protocol: TCP
