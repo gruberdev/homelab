@@ -20,26 +20,26 @@ resources:
 - base/utilities/kubenurse.yaml
 - base/utilities/botkube.yaml
 
-- base/apps/vault.yaml
+#- base/apps/vault.yaml
 - base/apps/ha.yaml
-- base/apps/wyze.yaml
+#- base/apps/wyze.yaml
 - base/apps/unifi.yaml
-- base/apps/adguard.yaml
+#- base/apps/adguard.yaml
 
 - base/monitoring/kuma.yaml
-- base/monitoring/flame.yaml
-- base/monitoring/unifi-poller.yaml
+#- base/monitoring/flame.yaml
+#- base/monitoring/unifi-poller.yaml
 
 - base/drone/drone-server.yaml
 - base/drone/drone-runner.yaml
 
 - base/services/n8n.yaml
-- base/services/wakapi.yaml
-- base/services/rss.yaml
-- base/services/metabase.yaml
+#- base/services/wakapi.yaml
+#- base/services/rss.yaml
+#- base/services/metabase.yaml
 
-- base/services/media/beets.yaml
-- base/services/media/lidarr.yaml
+#- base/services/media/beets.yaml
+#- base/services/media/lidarr.yaml
 
 - https://github.com/gruberdev/homelab/apps/networking/tailscale
 - https://github.com/gruberdev/homelab/apps/networking/cloudflared
