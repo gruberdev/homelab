@@ -37,7 +37,7 @@ spec:
           image:
             repository: "hashicorp/vault-k8s"
             tag: "0.17.0"
-            pullPolicy: Always
+            pullPolicy: IfNotPresent
           agentImage:
             repository: "hashicorp/vault"
             tag: "1.11.2"

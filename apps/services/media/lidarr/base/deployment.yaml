@@ -8,7 +8,7 @@ metadata:
 spec:
   replicas: 1
   strategy:
-    type: recreate
+    type: Recreate
   selector:
     matchLabels:
       app: lidarr
@@ -20,6 +20,7 @@ spec:
       containers:
         - name: lidarr
           image: lscr.io/linuxserver/lidarr:latest
+          restartPolicy: Always
           envFrom:
             - configMapRef:
                 name: lidarr-cm

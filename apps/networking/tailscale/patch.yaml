@@ -8,7 +8,7 @@ spec:
       serviceAccount: tailscale
       containers:
         - name: tailscale
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           image: grubertech/tailscale:latest
           env:
             - name: USERSPACE

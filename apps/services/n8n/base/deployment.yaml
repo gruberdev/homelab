@@ -20,6 +20,7 @@ spec:
       containers:
         - name: n8n
           image: n8nio/n8n:0.191.1
+          restartPolicy: Always
           envFrom:
             - configMapRef:
                 name: n8n-cm
@@ -34,8 +35,8 @@ spec:
               cpu: "300m"
               memory: "512Mi"
             limits:
-              cpu: "800m"
-              memory: "1024Mi"
+              cpu: "600m"
+              memory: "720Mi"
           volumeMounts:
             - name: config-storage
               mountPath: /home/node/.n8n

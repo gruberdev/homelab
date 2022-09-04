@@ -76,9 +76,9 @@ tasks:
         msg: 'kubectl {{.PATH_ERROR}}'
     cmds:
       - kubectl create namespace argocd
-      - kustomize build |  kubectl apply -f -
+      - kustomize build | kubectl apply -f -
       - sleep 10
-      - kustomize build |  kubectl apply -f -
+      - kustomize build | kubectl apply -f -
       - kubectl wait deploy/argocd-server -n argocd --for condition=available --timeout=600s
       - echo ""
     ignore_error: true

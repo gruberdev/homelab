@@ -18,7 +18,7 @@ spec:
         app: wakapi-server
     spec:
       containers:
-        - name: n8n
+        - name: wakapi
           image: ghcr.io/muety/wakapi:latest
           envFrom:
             - configMapRef:

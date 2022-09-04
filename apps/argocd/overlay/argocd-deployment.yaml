@@ -7,6 +7,20 @@ spec:
     spec:
       containers:
       - name: argocd-repo-server
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/os
+                  operator: In
+                  values:
+                  - linux
+              - matchExpressions:
+                - key: kubernetes.io/arch
+                  operator: In
+                  values:
+                  - amd64
         volumeMounts:
         - name: custom-tools
           mountPath: /usr/local/bin/argocd-vault-plugin

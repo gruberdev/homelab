@@ -24,33 +24,29 @@
 <summary> <b>Implemented tools</b> </summary>
 <br>
 
-> |             **Application**            |   **Category**  |                       **URIs**                      |     **Deployment Status**    |
-> |:--------------------------------------:|:---------------:|:---------------------------------------------------:|:----------------------------:|
-> |          [Drone CI][drone-uri]         | `CI/CD Tooling` |       <sub>[More details][homelab-drone]</sub>      |       ![][argocd-drone]      |
-> |          [ArgoCD][argocd-uri]          | `CI/CD Tooling` |      <sub>[More details][homelab-argocd]</sub>      |       ![][argocd-core]       |
-> | <sub>Zalando PostgreSQL Operator</sub> |   `Databases`   |      <sub>[More details][homelab-zalando]</sub>     |      ![][argocd-zalando]     |
-> |             Redis Operator             |   `Databases`   |       <sub>[More details][homelab-redis]</sub>      |       ![][argocd-redis]      |
-> |   Tailscale <sub>(as sidecars)</sub>   |   `Networking`  |     <sub>[More details][homelab-tailscale]</sub>    |     ![][argocd-tailscale]    |
-> |            Unifi Controller            |   `Networking`  | <sub>[More details][homelab-unifi-controller]</sub> | ![][argocd-unifi-controller] |
-> |               AdGuard DNS              |   `Networking`  |      <sub>[More details][homelab-adguard]</sub>     |      ![][argocd-adguard]     |
-> |             Home Assistant             |   `Monitoring`  |        <sub>[More details][homelab-ha]</sub>        |        ![][argocd-ha]        |
-> |             Wyze API Bridge            |   `Monitoring`  |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-wyze]      |
-> |           Changedetection.io           |   `Monitoring`  |  <sub>[More details][homelab-changedetection]</sub> |  ![][argocd-changedetection] |
-> |                   n8n                  |    `Services`   |        <sub>[More details][homelab-n8n]</sub>       |        ![][argocd-n8n]       |
-> |            Hashicorp's Vault           |    `Security`   |       <sub>[Chart Values][homelab-vault]</sub>      |       ![][argocd-vault]      |
-> |             Flame Dashboard            |    `Services`   |       <sub>[More details][homelab-flame]</sub>      |       ![][argocd-flame]      |
-> |              Unifi Poller              |   `Monitoring`  |      <sub>[More details][homelab-poller]</sub>      |      ![][argocd-poller]      |
-> |   Cloudflared <sub>(as proxies)</sub>  |   `Networking`  | <sub>[More details][homelab-cloudflared]</sub>      |                              |
-> |                   Wakapi               |    `Services`   |        <sub>[More details][homelab-wakapi]</sub>    |        ![][argocd-wakapi]    |
-> | [RSS Gen/Proxy][service-rssgen]           |    `Services`   |        <sub>[More details][homelab-rssgen]</sub>    |        ![][argocd-rss]       |
-> |    [RSS Hub][service-rsshub]           |    `Services`   |        <sub>[More details][homelab-rsshub]</sub>    |        ![][argocd-rss]       |
-> |           [Beets][service-beets]                        |   `Media`  |  <sub>[More details][homelab-beets]</sub> |  ![][argocd-beets] |
-> |           [Lidarr][service-lidarr]                       |   `Media`  |  <sub>[More details][homelab-lidarr]</sub> |  ![][argocd-lidarr] |
-> |             [Metabase][service-metabase]             |   `Analytics`   |       <sub>[More details][homelab-metabase]</sub>      |       ![][argocd-metabase]      |
-
-
-
-
+> |             **Application**            |   **Category**  |                       **Info**                      |     **Deployment Status**    | **Image Name:Tag**
+> |:--------------------------------------:|:---------------:|:---------------------------------------------------:|:----------------------------:|:----------------------:|
+> |          [Drone CI][drone-uri]         | `CI/CD Tooling` |       <sub>[More details][homelab-drone]</sub>      |       ![][argocd-drone]      |                     |
+> |          [ArgoCD][argocd-uri]          | `CI/CD Tooling` |      <sub>[More details][homelab-argocd]</sub>      |       ![][argocd-core]       |                     |
+> | <sub>Zalando PostgreSQL Operator</sub> |   `Databases`   |      <sub>[More details][homelab-zalando]</sub>     |      ![][argocd-zalando]     |                     |
+> |             Redis Operator             |   `Databases`   |       <sub>[More details][homelab-redis]</sub>      |       ![][argocd-redis]      |                     |
+> |   Tailscale <sub>(as sidecars)</sub>   |   `Networking`  |     <sub>[More details][homelab-tailscale]</sub>    |     ![][argocd-tailscale]    |                     |
+> |            Unifi Controller            |   `Networking`  | <sub>[More details][homelab-unifi-controller]</sub> | ![][argocd-unifi-controller] |                     |
+> |               AdGuard DNS              |   `Networking`  |      <sub>[More details][homelab-adguard]</sub>     |      ![][argocd-adguard]     |                     |
+> |             Home Assistant             |   `Monitoring`  |        <sub>[More details][homelab-ha]</sub>        |        ![][argocd-ha]        |                     |
+> |             Wyze API Bridge            |   `Monitoring`  |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-wyze]      |                     |
+> |           Changedetection.io           |   `Monitoring`  |  <sub>[More details][homelab-changedetection]</sub> |  ![][argocd-changedetection] |                     |
+> |                   n8n                  |    `Services`   |        <sub>[More details][homelab-n8n]</sub>       |        ![][argocd-n8n]       |                      |
+> |            Hashicorp's Vault           |    `Security`   |       <sub>[Chart Values][homelab-vault]</sub>      |       ![][argocd-vault]      |                     |
+> |             Flame Dashboard            |    `Services`   |       <sub>[More details][homelab-flame]</sub>      |       ![][argocd-flame]      |                     |
+> |              Unifi Poller              |   `Monitoring`  |      <sub>[More details][homelab-poller]</sub>      |      ![][argocd-poller]      |                     |
+> |   Cloudflared <sub>(as proxies)</sub>  |   `Networking`  | <sub>[More details][homelab-cloudflared]</sub>      |                              |                     |
+> |                   Wakapi               |    `Services`   |        <sub>[More details][homelab-wakapi]</sub>    |        ![][argocd-wakapi]    |                     |
+> | [RSS Gen/Proxy][service-rssgen]           |    `Services`   |        <sub>[More details][homelab-rssgen]</sub>    |        ![][argocd-rss]    |                     |
+> |    [RSS Hub][service-rsshub]           |    `Services`   |        <sub>[More details][homelab-rsshub]</sub>    |        ![][argocd-rss]       |                      |
+> |           [Beets][service-beets]                        |   `Media`  |  <sub>[More details][homelab-beets]</sub> |  ![][argocd-beets]        |                      |
+> |           [Lidarr][service-lidarr]                       |   `Media`  |  <sub>[More details][homelab-lidarr]</sub> |  ![][argocd-lidarr]      |                     |
+> |             [Metabase][service-metabase]             |   `Analytics`   |       <sub>[More details][homelab-metabase]</sub> |       ![][argocd-metabase] |  |
 
 </details>
 
