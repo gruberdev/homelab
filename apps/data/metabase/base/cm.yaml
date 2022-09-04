@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: metabase-cm
+data:
+  JAVA_TIMEZONE: "America/Sao_Paulo"
+  TZ: "America/Sao_Paulo"
+  MB_APPLICATION_DB_MAX_CONNECTION_POOL_SIZE: "15"
+  MB_ANON_TRACKING_ENABLED: "false"
+  MB_APPLICATION_FONT: "Inter"
+  MB_COLORIZE_LOGS: "true"
+  MB_SITE_NAME: "Gruber Internal Analytics"
+  MB_APPLICATION_NAME: "Gruber Analytics"
+  MB_DB_TYPE: "postgres"
+  MB_EMAIL_FROM_NAME: "Internal Metabase"
+  MB_EMAIL_REPLY_TO: "noreply@metabase.org"
+  MB_EMAIL_SMTP_SECURITY: "starttls"
+  MB_ENABLE_EMBEDDING: "true"
+  MB_ENABLE_NESTED_QUERIES: "true"
+  MB_ENABLE_PASSWORD_LOGIN: "true"
+  MB_ENABLE_PUBLIC_SHARING: "true"
