@@ -1,0 +1,53 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lidarr
+  labels:
+    app: lidarr
+spec:
+  replicas: 1
+  strategy:
+    type: recreate
+  selector:
+    matchLabels:
+      app: lidarr
+  template:
+    metadata:
+      labels:
+        app: lidarr
+    spec:
+      containers:
+        - name: lidarr
+          image: lscr.io/linuxserver/lidarr:latest
+          envFrom:
+            - configMapRef:
+                name: lidarr-cm
+          ports:
+            - name: web
+              containerPort: 8686
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 250m
+              memory: 256Mi
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: library
+              mountPath: /music
+            - name: downloads
+              mountPath: /downloads
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: lidarr-storage
+        - name: library
+          persistentVolumeClaim:
+            claimName: music-storage
+        - name: downloads
+          persistentVolumeClaim:
+            claimName: music-downloads
