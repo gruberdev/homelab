@@ -43,7 +43,7 @@ tasks:
           serviceAccountName: "tailscale"
           containers:
           - name: tailscale
-            imagePullPolicy: Always
+            imagePullPolicy: IfNotPresent
             image: "docker.io/grubertech/tailscale:latest"
             env:
           - name: TS_HOSTNAME
