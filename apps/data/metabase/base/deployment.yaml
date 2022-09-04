@@ -1,0 +1,45 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: metabase-server
+  labels:
+    app: metabase-server
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: metabase-server
+  template:
+    metadata:
+      labels:
+        app: metabase-server
+    spec:
+      containers:
+        - name: metabase
+          image: metabase/metabase:latest
+          envFrom:
+            - configMapRef:
+                name: metabase-cm
+            - secretRef:
+                name: metabase-vars
+          ports:
+            - name: web
+              containerPort: 3000
+              protocol: TCP
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "512Mi"
+            limits:
+              cpu: "800m"
+              memory: "1024Mi"
+          volumeMounts:
+            - name: data
+              mountPath: /metabase-data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: metabase-storage

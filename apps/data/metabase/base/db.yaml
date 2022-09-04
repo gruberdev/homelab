@@ -1,0 +1,34 @@
+apiVersion: "acid.zalan.do/v1"
+kind: postgresql
+metadata:
+  name: db-metabase
+  labels:
+    team: db
+spec:
+  dockerImage: registry.opensource.zalan.do/acid/spilo-14:2.1-p6
+  teamId: "db"
+  numberOfInstances: 1
+  users:
+    admin:
+    - superuser
+    - createdb
+    datuser: []
+  databases:
+    metabase: datauser
+  postgresql:
+    version: "14"
+  # Prevents PostgreSQL 64mb limit
+  enableShmVolume: true
+  enableMasterLoadBalancer: true
+  enableConnectionPooler: true
+  # Load balancers' source ranges for both master and replica services
+  volume:
+    size: 5Gi
+    storageClass: local-path
+  resources:
+    requests:
+      cpu: 10m
+      memory: 100Mi
+    limits:
+      cpu: 200m
+      memory: 200Mi
