@@ -20,6 +20,7 @@ spec:
       containers:
         - name: rss-gen
           image: damoeb/rss-proxy:2.0.0-beta
+          restartPolicy: Always
           envFrom:
             - configMapRef:
                 name: rssgen-cm

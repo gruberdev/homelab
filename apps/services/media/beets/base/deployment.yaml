@@ -20,6 +20,7 @@ spec:
       containers:
         - name: beets
           image: linuxserver/beets:latest
+          restartPolicy: Always
           envFrom:
             - configMapRef:
                 name: beets-cm
