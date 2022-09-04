@@ -37,6 +37,9 @@ resources:
 - base/services/wakapi.yaml
 - base/services/rss.yaml
 
+- base/services/media/beets.yaml
+- base/services/media/lidarr.yaml
+
 - https://github.com/gruberdev/homelab/apps/networking/tailscale
 - https://github.com/gruberdev/homelab/apps/networking/cloudflared
 
