@@ -103,6 +103,14 @@ tasks:
       - find . -maxdepth 10 -name rb.yaml -exec kubeval --force-color  --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
     silent: true
 
+  calc:
+    preconditions:
+      - sh: "which kuota-calc"
+        msg: "kuota-calc {{.PATH_ERROR}}"
+    cmds:
+      - find . -maxdepth 10 -name deployment.yaml -exec cat {} \; | kuota-calc --detailed
+      - find . -maxdepth 10 -name statefulset.yaml -exec cat {} \; | kuota-calc --detailed
+
   test:k3d:
     desc: Starts your local k3d cluster.
     preconditions:
