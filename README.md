@@ -61,7 +61,6 @@
 <br>
 
 - descheduler
-- kube-cleaner
 - kube-fledged
 - kubenurse
 - reflector

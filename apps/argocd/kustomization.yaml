@@ -12,10 +12,8 @@ resources:
 - base/core/argocd.yaml
 - base/core/zalando.yaml
 
-- base/utilities/metrics.yaml
 - base/utilities/reloader.yaml
 - base/utilities/reflector.yaml
-- base/utilities/kube-clean.yaml
 - base/utilities/descheduler.yaml
 - base/utilities/kubenurse.yaml
 - base/utilities/botkube.yaml
@@ -45,9 +43,6 @@ resources:
 - https://github.com/gruberdev/homelab/apps/networking/cloudflared
 
 - https://raw.githubusercontent.com/argoproj/argo-cd/v2.4.11/manifests/install.yaml
-
-components:
-- https://github.com/argoproj-labs/argocd-extensions/manifests
 
 patchesStrategicMerge:
 - overlay/argocd-svc.yaml
