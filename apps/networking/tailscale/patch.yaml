@@ -9,7 +9,7 @@ spec:
       containers:
         - name: tailscale
           imagePullPolicy: IfNotPresent
-          image: grubertech/tailscale:latest
+          image: grubertech/tailscale:v1.30.0
           env:
             - name: USERSPACE
               value: "false"
