@@ -1,31 +1,28 @@
-apiVersion: acid.zalan.do/v1
+apiVersion: "acid.zalan.do/v1"
 kind: postgresql
 metadata:
   name: db-ha
   team: db
 spec:
-  databases:
-    homeassistant: homeuser
   dockerImage: registry.opensource.zalan.do/acid/spilo-14:2.1-p6
-  enableConnectionPooler: true
-  enableMasterLoadBalancer: true
-  enableShmVolume: true
+  teamId: "db"
   numberOfInstances: 1
-  postgresql:
-    version: '14'
-  resources:
-    limits:
-      cpu: 200m
-      memory: 200Mi
-    requests:
-      cpu: 10m
-      memory: 100Mi
-  teamId: db
   users:
     admin:
       - superuser
       - createdb
     homeuser: []
+  databases:
+    homeassistant: homeuser
+  postgresql:
+    version: "14"
   volume:
     size: 5Gi
     storageClass: local-path
+  resources:
+    requests:
+      cpu: 10m
+      memory: 100Mi
+    limits:
+      cpu: 200m
+      memory: 200Mi

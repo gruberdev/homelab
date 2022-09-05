@@ -16,11 +16,6 @@ spec:
     drone: ciuser
   postgresql:
     version: "14"
-  # Prevents PostgreSQL 64mb limit
-  enableShmVolume: true
-  enableMasterLoadBalancer: true
-  enableConnectionPooler: true
-  # Load balancers' source ranges for both master and replica services
   volume:
     size: 5Gi
     storageClass: local-path
