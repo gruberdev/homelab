@@ -44,7 +44,7 @@ resources:
 - https://github.com/gruberdev/homelab/apps/networking/tailscale
 - https://github.com/gruberdev/homelab/apps/networking/cloudflared
 
-- https://raw.githubusercontent.com/argoproj/argo-cd/master/manifests/install.yaml
+- https://raw.githubusercontent.com/argoproj/argo-cd/v2.4.11/manifests/ha/install.yaml
 
 components:
 - https://github.com/argoproj-labs/argocd-extensions/manifests
@@ -66,8 +66,7 @@ patchesJson6902:
 namespace: argocd
 images:
 - name: quay.io/argoproj/argocd
-  newName: ghcr.io/argoproj/argocd
-  newTag: 2.5.0-37ad4337
+  newTag: v2.4.11
 
 patches:
 - path: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/tailscale/patch.yaml
