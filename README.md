@@ -9,19 +9,18 @@
   <sub>Gitops managed k3s cluster</sub>
 </p>
 
-<a href='https://drone.gruber.dev.br' target='_blank'>
+
 
 <p align="center">
-  <img src="https://img.shields.io/drone/build/gruberdev/homelab/main?server=https%3A%2F%2Fdrone.gruber.dev.br&logo=drone&labelColor=1F1F1F&logoColor=41dde8&style=flat-square&label=Drone%20CI">
-</p></a>
+  <a href='https://drone.gruber.dev.br' target='_blank'><img src="https://img.shields.io/drone/build/gruberdev/homelab/main?server=https%3A%2F%2Fdrone.gruber.dev.br&logo=drone&labelColor=1F1F1F&logoColor=41dde8&style=flat-square&label=CI%20Status"></a> &nbsp;
+  <img src="https://img.shields.io/github/last-commit/gruberdev/homelab?color=black&labelColor=black&label=last%20commit&logo=github&logoColor=cyan&style=flat-square">
+</p>
 
 <br>
 
 ---
 
 <details>
-
-
 
 <summary> <b>Implemented applications</b> </summary>
 <br>
@@ -75,7 +74,7 @@
 
 <details>
 
-<summary> <b>Repository & CI Utilities</b>
+<summary> <b>Repository & CI Tooling</b>
 </summary>
 
 <br>
@@ -94,6 +93,7 @@
 
 <summary> <b>To be implemented</b> </summary>
 
+&nbsp;
 
 #### Monitoring and k8s utilities:
 
@@ -114,6 +114,16 @@
 - Monica
 - Wallabag
 - Frigate for Home Assistant
+
+</details>
+
+<details>
+
+<summary> <b>Repository Stats</b> </summary>
+
+<br>
+
+![Alt](https://repobeats.axiom.co/api/embed/576d4457404c7c5ba81a07cecd2b440163eebd63.svg "Repobeats analytics image")
 
 </details>
 
