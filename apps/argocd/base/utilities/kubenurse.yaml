@@ -12,6 +12,47 @@ spec:
     path: helm/kubenurse
     helm:
       releaseName: kubenurse
+      values: |
+        daemonset:
+          image:
+            repository: postfinance/kubenurse
+            tag: v1.6.0
+          extraEnvs: []
+          podLabels: {}
+          podAnnotations: {}
+          podSecurityContext: {}
+          containerSecurityContext: {}
+          tolerations:
+          - effect: NoSchedule
+            key: node-role.kubernetes.io/master
+            operator: Equal
+          - effect: NoSchedule
+            key: node-role.kubernetes.io/control-plane
+            operator: Equal
+          - key: kubernetes.io/arch
+            operator: "Equal"
+            value: "arm64"
+            effect: NoSchedule
+          - key: kubernetes.io/arch
+            operator: "Equal"
+            value: "arm"
+            effect: NoSchedule
+        serviceMonitor:
+          enabled: false
+          labels: {}
+        namespace: kube-system
+        serviceAccount:
+          name: kubenurse
+        service:
+          name: 8080-8080
+          port: 8080
+          labels: {}
+        ingress:
+          enabled: false
+        rbac:
+          allow_unschedulable:
+            enabled: true
+
   destination:
     namespace: kube-system
     name: in-cluster

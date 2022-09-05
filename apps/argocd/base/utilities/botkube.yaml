@@ -40,16 +40,14 @@ spec:
                   labelsSet: true
                 ingress:
                   backendServiceValid: true
-                  # -- If true, notifies about Ingress resources with invalid TLS secret reference.
                   tlsSecretValid: true
               namespaces:
                 include:
                   - ".*"
                 # exclude: []
               resources:
-                - name: v1/pods             # Name of the resource. Resource name must be in group/version/resource (G/V/R) format
-                                            # resource name should be plural (e.g apps/v1/deployments, v1/pods)
-                  events:                   # List of lifecycle events you want to receive, e.g create, update, delete, error OR all
+                - name: v1/pods
+                  events:
                     - create
                     - delete
                     - error

@@ -14,11 +14,10 @@ spec:
       releaseName: kube-clean-operator
       values: |
         args:
-          - --namespace=default
           - --delete-successful-after=5m
-          - --delete-failed-after=120m
-          - --delete-pending-pods-after=60m
-          - --delete-evicted-pods-after=60m
+          - --delete-failed-after=60m
+          - --delete-pending-pods-after=30m
+          - --delete-evicted-pods-after=10m
           - --delete-orphaned-pods-after=60m
           - --legacy-mode=false
 
