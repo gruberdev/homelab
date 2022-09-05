@@ -5,6 +5,8 @@ metadata:
   name: rss-gen
   labels:
     app: rss-gen
+  annotations:
+    link.argocd.argoproj.io/external-link: http://gen.rss
 spec:
   replicas: 1
   strategy:

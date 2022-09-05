@@ -5,6 +5,8 @@ metadata:
   name: unifi-controller
   labels:
     app: unifi-controller
+  annotations:
+    link.argocd.argoproj.io/external-link: http://unifi
 spec:
   replicas: 1
   strategy:

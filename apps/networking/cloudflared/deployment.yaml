@@ -12,6 +12,20 @@ spec:
       labels:
         app: cloudflared
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/os
+                operator: In
+                values:
+                - linux
+            - matchExpressions:
+              - key: kubernetes.io/arch
+                operator: In
+                values:
+                - amd64
       containers:
       - name: cloudflared
         image: cloudflare/cloudflared:2022.8.4-amd64
@@ -27,20 +41,6 @@ spec:
           failureThreshold: 5
           initialDelaySeconds: 30
           periodSeconds: 10
-        affinity:
-          nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-              nodeSelectorTerms:
-              - matchExpressions:
-                - key: kubernetes.io/os
-                  operator: In
-                  values:
-                  - linux
-              - matchExpressions:
-                - key: kubernetes.io/arch
-                  operator: In
-                  values:
-                  - amd64
         envFrom:
           - configMapRef:
               name: cf-configs

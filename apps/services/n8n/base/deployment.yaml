@@ -5,6 +5,8 @@ metadata:
   name: n8n-server
   labels:
     app: n8n-server
+  annotations:
+    link.argocd.argoproj.io/external-link: http://n8n
 spec:
   replicas: 1
   strategy:

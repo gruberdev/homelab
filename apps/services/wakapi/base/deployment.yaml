@@ -5,6 +5,8 @@ metadata:
   name: wakapi-server
   labels:
     app: wakapi-server
+  annotations:
+    link.argocd.argoproj.io/external-link: http://wakapi
 spec:
   replicas: 1
   strategy:

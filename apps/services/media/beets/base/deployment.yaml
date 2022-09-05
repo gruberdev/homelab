@@ -5,6 +5,8 @@ metadata:
   name: beets
   labels:
     app: beets
+  annotations:
+    link.argocd.argoproj.io/external-link: http://media.beets
 spec:
   replicas: 1
   strategy:

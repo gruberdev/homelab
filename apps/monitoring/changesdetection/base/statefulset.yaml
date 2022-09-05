@@ -4,6 +4,8 @@ metadata:
   name: changedetection
   labels:
     app: changedetection
+  annotations:
+    link.argocd.argoproj.io/external-link: http://onchanges
 spec:
   replicas: 1
   selector:

@@ -5,6 +5,8 @@ metadata:
   name: lidarr
   labels:
     app: lidarr
+  annotations:
+    link.argocd.argoproj.io/external-link: http://media.lidarr
 spec:
   replicas: 1
   strategy:
