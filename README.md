@@ -21,21 +21,23 @@
 
 <details>
 
-<summary> <b>Implemented tools</b> </summary>
+
+
+<summary> <b>Implemented applications</b> </summary>
 <br>
 
-> |             **Application**            |   **Category**  |                       **Info**                      |     **Deployment Status**    | **Image Name:Tag**
+> |             **Application**            |   **Category**  |                       **Info**                      |     **Deployment Status**    | **Latest Release**
 > |:--------------------------------------:|:---------------:|:---------------------------------------------------:|:----------------------------:|:----------------------:|
-> |          [Drone CI][drone-uri]         | `CI/CD Tooling` |       <sub>[More details][homelab-drone]</sub>      |       ![][argocd-drone]      |                     |
-> |          [ArgoCD][argocd-uri]          | `CI/CD Tooling` |      <sub>[More details][homelab-argocd]</sub>      |       ![][argocd-core]       |                     |
-> | <sub>Zalando PostgreSQL Operator</sub> |   `Databases`   |      <sub>[More details][homelab-zalando]</sub>     |      ![][argocd-zalando]     |                     |
-> |             Redis Operator             |   `Databases`   |       <sub>[More details][homelab-redis]</sub>      |       ![][argocd-redis]      |                     |
-> |   Tailscale <sub>(as sidecars)</sub>   |   `Networking`  |     <sub>[More details][homelab-tailscale]</sub>    |     ![][argocd-tailscale]    |                     |
-> |            Unifi Controller            |   `Networking`  | <sub>[More details][homelab-unifi-controller]</sub> | ![][argocd-unifi-controller] |                     |
-> |               AdGuard DNS              |   `Networking`  |      <sub>[More details][homelab-adguard]</sub>     |      ![][argocd-adguard]     |                     |
-> |             Home Assistant             |   `Monitoring`  |        <sub>[More details][homelab-ha]</sub>        |        ![][argocd-ha]        |                     |
-> |             Wyze API Bridge            |   `Monitoring`  |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-wyze]      |                     |
-> |           Changedetection.io           |   `Monitoring`  |  <sub>[More details][homelab-changedetection]</sub> |  ![][argocd-changedetection] |                     |
+> |          [Drone CI][drone-uri]         | `CI/CD Tooling` |       <sub>[More details][homelab-drone]</sub>      |       ![][argocd-drone]      | ![][drone-badge]    |
+> |          [ArgoCD][argocd-uri]          | `CI/CD Tooling` |      <sub>[More details][homelab-argocd]</sub>      |       ![][argocd-core]       | ![][argo-badge]     |
+> | [<sub>Zalando PostgreSQL Operator</sub>][p-uri] |   `Databases`   |      <sub>[More details][homelab-zalando]</sub>     |      ![][argocd-zalando]     | ![][zalando-badge]  |
+> |       [Redis Operator][redis-uri]      |   `Databases`   |       <sub>[More details][homelab-redis]</sub>      |       ![][argocd-redis]      |  ![][redis-badge]   |
+> |[Tailscale <sub>(as sidecars)</sub>][tail-uri]| `Networking`  | <sub>[More details][homelab-tailscale]</sub>    |     ![][argocd-tailscale]    |![][tailscale-badge] |
+> |  [Unifi Controller][service-unifi]     |   `Networking`  | <sub>[More details][homelab-unifi-controller]</sub> | ![][argocd-unifi-controller] | ![][unifi-badge]    |
+> |    [AdGuard DNS][service-adguard]      |   `Networking`  |      <sub>[More details][homelab-adguard]</sub>     |      ![][argocd-adguard]     | ![][adguard-badge]  |
+> |      [Home Assistant][service-ha]      |   `Monitoring`  |        <sub>[More details][homelab-ha]</sub>        |        ![][argocd-ha]        |    ![][ha-badge]    |
+> |   [Wyze API Bridge][service-wyze]      |   `Monitoring`  |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-wyze]      |  ![][wyze-badge]    |
+> |  [Changedetection.io][change-uri]      |   `Monitoring`  |  <sub>[More details][homelab-changedetection]</sub> |  ![][argocd-changedetection] | ![][change-badge]  |
 > |                   n8n                  |    `Services`   |        <sub>[More details][homelab-n8n]</sub>       |        ![][argocd-n8n]       |                      |
 > |            Hashicorp's Vault           |    `Security`   |       <sub>[Chart Values][homelab-vault]</sub>      |       ![][argocd-vault]      |                     |
 > |             Flame Dashboard            |    `Services`   |       <sub>[More details][homelab-flame]</sub>      |       ![][argocd-flame]      |                     |
@@ -46,7 +48,9 @@
 > |    [RSS Hub][service-rsshub]           |    `Services`   |        <sub>[More details][homelab-rsshub]</sub>    |        ![][argocd-rss]       |                      |
 > |           [Beets][service-beets]                        |   `Media`  |  <sub>[More details][homelab-beets]</sub> |  ![][argocd-beets]        |                      |
 > |           [Lidarr][service-lidarr]                       |   `Media`  |  <sub>[More details][homelab-lidarr]</sub> |  ![][argocd-lidarr]      |                     |
-> |             [Metabase][service-metabase]             |   `Analytics`   |       <sub>[More details][homelab-metabase]</sub> |       ![][argocd-metabase] |  |
+> |         [Metabase][service-metabase]             |   `Analytics`   |       <sub>[More details][homelab-metabase]</sub> |       ![][argocd-metabase] |  |
+
+---
 
 </details>
 
@@ -65,6 +69,8 @@
 - reloader
 - botkube
 
+---
+
 </details>
 
 <details>
@@ -77,7 +83,9 @@
 > - [drone-skip-pipeline][drone-skip-pipeline-uri] <sub>(*Skip Drone CI steps based on files changes*)</sub>
 > - [drone-github-comment][drone-github-uri] <sub>(*It takes the output of a step and comments on a Github pull request. [Example.][github-comment-example]*)</sub>
 > - [yamllint][yamllint-uri] <sub>(*A linter for YAML files*)</sub>
- > - [markdown-link-check][markdown-link-check-uri] <sub>(*Checks if markdown links are responding correctly*)</sub>
+> - [markdown-link-check][markdown-link-check-uri] <sub>(*Checks if markdown links are responding correctly*)</sub>
+
+---
 
 </details>
 
@@ -85,6 +93,7 @@
 <details>
 
 <summary> <b>To be implemented</b> </summary>
+
 
 #### Monitoring and k8s utilities:
 
@@ -101,10 +110,8 @@
   - Radarr
   - Sonarr
 - qBittorrent
-- Maloja
 - Domainmod
 - Monica
-- Mango
 - Wallabag
 - Frigate for Home Assistant
 
@@ -122,6 +129,15 @@
 [service-beets]: https://github.com/beetbox/beets
 [service-lidarr]: https://github.com/Lidarr/Lidarr
 [service-metabase]: https://www.metabase.com/
+[service-ha]: https://www.home-assistant.io/
+[service-adguard]: https://adguard.com/en/adguard-home/overview.html
+[service-unifi]: https://github.com/linuxserver/docker-unifi-controller
+[tail-uri]: https://tailscale.com/kb/1151/what-is-tailscale/
+[service-n8n]: https://n8n.io/
+[p-uri]: https://github.com/zalando/postgres-operator
+[service-wyze]: https://github.com/mrlt8/docker-wyze-bridge
+[change-uri]: https://github.com/dgtlmoon/changedetection.io
+[redis-uri]: https://github.com/spotahome/redis-operator
 
 <!-- Shield Badges -->
 
@@ -183,3 +199,18 @@
 [argocd-beets]: https://argo.gr.wtf/api/badge?name=beets
 [argocd-lidarr]: https://argo.gr.wtf/api/badge?name=lidarr
 [argocd-metabase]: https://argo.gr.wtf/api/badge?name=metabase
+
+
+<!-- Badge Images -->
+
+[drone-badge]: https://img.shields.io/github/v/release/harness/drone?label=Github&logo=github&style=flat-square
+[argo-badge]: https://img.shields.io/github/v/release/argoproj/argo-cd?label=Github&logo=github&style=flat-square
+[argo-badge]: https://img.shields.io/github/v/release/argoproj/argo-cd?label=Github&logo=github&style=flat-square
+[zalando-badge]: https://img.shields.io/github/v/tag/zalando/postgres-operator?label=Github&logo=github&style=flat-square
+[redis-badge]: https://img.shields.io/github/v/tag/spotahome/redis-operator?label=Github&logo=github&style=flat-square
+[tailscale-badge]: https://img.shields.io/github/v/release/tailscale/tailscale?label=Github&logo=github&style=flat-square
+[unifi-badge]: https://img.shields.io/docker/v/linuxserver/unifi-controller?label=Docker&sort=semver&logo=docker&style=flat-square
+[adguard-badge]: https://img.shields.io/docker/v/adguard/adguardhome?label=Docker&color=blue&logo=docker&sort=semver&style=flat-square
+[ha-badge]: https://img.shields.io/github/v/release/home-assistant/core?label=Github&logo=github&style=flat-square
+[wyze-badge]: https://img.shields.io/github/v/release/mrlt8/docker-wyze-bridge?label=Github&logo=github&style=flat-square
+[change-badge]: https://img.shields.io/github/v/release/dgtlmoon/changedetection.io?label=Github&logo=github&style=flat-square
