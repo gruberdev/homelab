@@ -5,6 +5,8 @@ metadata:
   name: adguard-home
   labels:
     app: adguard-home
+  annotations:
+    link.argocd.argoproj.io/external-link: http://adguard
 spec:
   replicas: 1
   strategy:

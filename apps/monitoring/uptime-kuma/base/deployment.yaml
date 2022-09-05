@@ -5,6 +5,8 @@ metadata:
   name: kuma
   labels:
     app: kuma
+  annotations:
+    link.argocd.argoproj.io/external-link: http://kuma
 spec:
   replicas: 1
   strategy:

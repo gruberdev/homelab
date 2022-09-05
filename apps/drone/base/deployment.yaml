@@ -4,6 +4,8 @@ metadata:
   name: drone-server
   labels:
     app: drone
+  annotations:
+    link.argocd.argoproj.io/external-link: http://drone
 spec:
   replicas: 1
   strategy:

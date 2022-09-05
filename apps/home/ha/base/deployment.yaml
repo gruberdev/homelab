@@ -1,9 +1,11 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: home-assistant
   labels:
     app: home-assistant
-  name: home-assistant
+  annotations:
+    link.argocd.argoproj.io/external-link: http://homeassistant
 spec:
   replicas: 1
   selector:

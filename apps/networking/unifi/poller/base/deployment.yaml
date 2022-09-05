@@ -5,6 +5,8 @@ metadata:
   name: unifi-poller
   labels:
     app: unifi-poller
+  annotations:
+    link.argocd.argoproj.io/external-link: http://unifi-poller
 spec:
   replicas: 1
   strategy:

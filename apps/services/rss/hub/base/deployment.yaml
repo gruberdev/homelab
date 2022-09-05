@@ -5,6 +5,8 @@ metadata:
   name: rss-hub
   labels:
     app: rss-hub
+  annotations:
+    link.argocd.argoproj.io/external-link: http://hub.rss
 spec:
   replicas: 1
   strategy:
