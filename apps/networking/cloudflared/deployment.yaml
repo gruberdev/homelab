@@ -12,23 +12,9 @@ spec:
       labels:
         app: cloudflared
     spec:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: kubernetes.io/os
-                operator: In
-                values:
-                - linux
-            - matchExpressions:
-              - key: kubernetes.io/arch
-                operator: In
-                values:
-                - amd64
       containers:
       - name: cloudflared
-        image: cloudflare/cloudflared:2022.8.4-amd64
+        image: erisamoe/cloudflared:2022.8.2
         args:
         - tunnel
         - --config
