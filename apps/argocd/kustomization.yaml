@@ -44,7 +44,7 @@ resources:
 - https://github.com/gruberdev/homelab/apps/networking/tailscale
 - https://github.com/gruberdev/homelab/apps/networking/cloudflared
 
-- https://raw.githubusercontent.com/argoproj/argo-cd/v2.4.11/manifests/ha/install.yaml
+- https://raw.githubusercontent.com/argoproj/argo-cd/v2.4.11/manifests/install.yaml
 
 components:
 - https://github.com/argoproj-labs/argocd-extensions/manifests
