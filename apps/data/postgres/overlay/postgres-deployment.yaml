@@ -18,6 +18,20 @@ spec:
       labels:
         name: "postgres-operator-ui"
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/os
+                operator: In
+                values:
+                - linux
+            - matchExpressions:
+              - key: kubernetes.io/arch
+                operator: In
+                values:
+                - amd64
       containers:
         - name: "service"
           image: registry.opensource.zalan.do/acid/postgres-operator-ui:v1.8.1
