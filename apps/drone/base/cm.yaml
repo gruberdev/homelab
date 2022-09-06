@@ -14,3 +14,5 @@ data:
   AWS_DEFAULT_REGION: "us-east-1"
   AWS_REGION: "us-east-1"
   DRONE_S3_BUCKET: "drone-storage"
+  DRONE_USER_CREATE: "username:gruberdev,admin:true"
+  DRONE_USER_FILTER: "gruberdev"
