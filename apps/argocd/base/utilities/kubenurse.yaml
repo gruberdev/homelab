@@ -29,11 +29,11 @@ spec:
           - effect: NoSchedule
             key: node-role.kubernetes.io/control-plane
             operator: Equal
-          - key: kubernetes.io/arch
+          - key: beta.kubernetes.io/arch
             operator: "Equal"
             value: "arm64"
             effect: NoSchedule
-          - key: kubernetes.io/arch
+          - key: beta.kubernetes.io/arch
             operator: "Equal"
             value: "arm"
             effect: NoSchedule
