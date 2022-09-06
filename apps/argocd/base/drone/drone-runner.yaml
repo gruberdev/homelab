@@ -45,7 +45,8 @@ spec:
           requests:
             cpu: 80m
             memory: 128Mi
-        nodeSelector: {}
+        nodeSelector:
+          beta.kubernetes.io/arch: amd64
         tolerations: []
         affinity: {}
         extraVolumes: []
