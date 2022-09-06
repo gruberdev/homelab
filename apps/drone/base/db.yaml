@@ -2,9 +2,6 @@ apiVersion: "acid.zalan.do/v1"
 kind: postgresql
 metadata:
   name: db-drone
-  team: db
-  annotations:
-    argocd.argoproj.io/compare-options: IgnoreExtraneous
 spec:
   dockerImage: registry.opensource.zalan.do/acid/spilo-14:2.1-p6
   teamId: "db"
