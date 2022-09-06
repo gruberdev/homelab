@@ -46,7 +46,7 @@ spec:
         nodeSelector:
           beta.kubernetes.io/arch: "amd64"
         extraSecretNamesForEnvFrom:
-        - drone-runner-vars
+          - drone-runner-vars
         rbac:
           buildNamespaces:
             - drone
@@ -59,7 +59,7 @@ spec:
           DRONE_UI_DISABLE: "false"
           DRONE_SERVER_HOST: "drone"
           DRONE_SERVER_PROTO: "http"
-          DRONE_ANNOTATIONS_DEFAULT="server:home,arm:no,docker:no,kubernetes:yes"
+          DRONE_ANNOTATIONS_DEFAULT: "server:home,arm:no,docker:no,kubernetes:yes"
           AWS_DEFAULT_REGION: "us-east-1"
           AWS_REGION: "us-east-1"
           DRONE_S3_BUCKET: "drone-storage"
