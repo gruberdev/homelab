@@ -7,8 +7,9 @@ bases:
 - base/rb.yaml
 
 patchesStrategicMerge:
-- overlay/postgres-deployment.yaml
-- overlay/postgres-ingress.yaml
+- overlay/ui-deployment.yaml
+- overlay/ui-ingress.yaml
+- overlay/operator-deployment.yaml
 
 namespace: databases
 
