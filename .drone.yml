@@ -6,9 +6,11 @@ platform:
   os: linux
   arch: amd64
 node:
-  server: vps
+  server: home
   arm: no
-  docker: yes
+  docker: no
+  kubernetes: yes
+
 trigger:
   event:
     include:
@@ -96,10 +98,12 @@ type: docker
 platform:
   os: linux
   arch: amd64
+
 node:
-  server: vps
+  server: home
   arm: no
-  docker: yes
+  docker: no
+  kubernetes: yes
 
 trigger:
   event:
