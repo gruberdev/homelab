@@ -69,7 +69,7 @@ patches:
 - path: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/tailscale/patch.yaml
   target:
     kind: Deployment
-    name: argocd-repo-server
+    name: argocd-server
 - patch: |-
     - op: replace
       path: "/spec/template/spec/containers/0/env/1"
