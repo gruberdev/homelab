@@ -51,6 +51,7 @@ patchesStrategicMerge:
 - overlay/argocd-cm.yaml
 - overlay/cloudflared-cm.yaml
 - overlay/argocd-rbac.yaml
+- overlay/tailscale-rb.yaml
 
 namespace: argocd
 images:
@@ -73,6 +74,13 @@ patches:
       value:
         name: DEST_PORT
         value: "8080"
+    - op: add
+      path: "/spec/strategy"
+      value:
+        type: "Recreate"
+    - op: replace
+      path: "/spec/template/spec/serviceAccountName"
+      value: "argocd-server"
   target:
     kind: Deployment
     name: argocd-server

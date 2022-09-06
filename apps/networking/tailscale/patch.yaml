@@ -5,7 +5,7 @@ metadata:
 spec:
   template:
     spec:
-      serviceAccount: tailscale
+      serviceAccountName: "tailscale"
       containers:
         - name: tailscale
           imagePullPolicy: IfNotPresent

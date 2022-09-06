@@ -4,6 +4,9 @@ metadata:
   name: argocd-repo-server
   annotations:
     link.argocd.argoproj.io/external-link: http://argocd
+  labels:
+    app.kubernetes.io/name: argocd-repo-server
+    app.kubernetes.io/part-of: argocd
 spec:
   template:
     spec:
