@@ -5,7 +5,7 @@ metadata:
   labels:
     app: drone
   annotations:
-    link.argocd.argoproj.io/external-link: http://drone
+    link.argocd.argoproj.io/external-link: "https://drone.gr.wtf"
 spec:
   replicas: 1
   strategy:
@@ -24,7 +24,7 @@ spec:
                 name: drone-cm
             - secretRef:
                 name: drone-server-vars
-          image: docker.io/drone/drone:2
+          image: drone/drone:2
           imagePullPolicy: IfNotPresent
           livenessProbe:
             httpGet:
