@@ -31,23 +31,23 @@
 > |          [ArgoCD][argocd-uri]          | `CI/CD Tooling` |      <sub>[More details][homelab-argocd]</sub>      |       ![][argocd-core]       | ![][argo-badge]     |
 > | [<sub>Zalando PostgreSQL Operator</sub>][p-uri] |   `Databases`   |      <sub>[More details][homelab-zalando]</sub>     |      ![][argocd-zalando]     | ![][zalando-badge]  |
 > |       [Redis Operator][redis-uri]      |   `Databases`   |       <sub>[More details][homelab-redis]</sub>      |       ![][argocd-redis]      |  ![][redis-badge]   |
-> |[Tailscale <sub>(as sidecars)</sub>][tail-uri]| `Networking`  | <sub>[More details][homelab-tailscale]</sub>    |     ![][argocd-tailscale]    |![][tailscale-badge] |
+> |[Tailscale <sub>(as sidecars)</sub>][tail-uri]| `Networking`  | <sub>[More details][homelab-tailscale]</sub>    |                              |![][tailscale-badge] |
 > |  [Unifi Controller][service-unifi]     |   `Networking`  | <sub>[More details][homelab-unifi-controller]</sub> | ![][argocd-unifi-controller] | ![][unifi-badge]    |
 > |    [AdGuard DNS][service-adguard]      |   `Networking`  |      <sub>[More details][homelab-adguard]</sub>     |      ![][argocd-adguard]     | ![][adguard-badge]  |
 > |      [Home Assistant][service-ha]      |   `Monitoring`  |        <sub>[More details][homelab-ha]</sub>        |        ![][argocd-ha]        |    ![][ha-badge]    |
 > |   [Wyze API Bridge][service-wyze]      |   `Monitoring`  |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-wyze]      |  ![][wyze-badge]    |
 > |  [Changedetection.io][change-uri]      |   `Monitoring`  |  <sub>[More details][homelab-changedetection]</sub> |  ![][argocd-changedetection] | ![][change-badge]  |
-> |                   n8n                  |    `Services`   |        <sub>[More details][homelab-n8n]</sub>       |        ![][argocd-n8n]       |                      |
-> |            Hashicorp's Vault           |    `Security`   |       <sub>[Chart Values][homelab-vault]</sub>      |       ![][argocd-vault]      |                     |
-> |             Flame Dashboard            |    `Services`   |       <sub>[More details][homelab-flame]</sub>      |       ![][argocd-flame]      |                     |
-> |              Unifi Poller              |   `Monitoring`  |      <sub>[More details][homelab-poller]</sub>      |      ![][argocd-poller]      |                     |
-> |   Cloudflared <sub>(as proxies)</sub>  |   `Networking`  | <sub>[More details][homelab-cloudflared]</sub>      |                              |                     |
-> |                   Wakapi               |    `Services`   |        <sub>[More details][homelab-wakapi]</sub>    |        ![][argocd-wakapi]    |                     |
-> | [RSS Gen/Proxy][service-rssgen]           |    `Services`   |        <sub>[More details][homelab-rssgen]</sub>    |        ![][argocd-rss]    |                     |
-> |    [RSS Hub][service-rsshub]           |    `Services`   |        <sub>[More details][homelab-rsshub]</sub>    |        ![][argocd-rss]       |                      |
-> |           [Beets][service-beets]                        |   `Media`  |  <sub>[More details][homelab-beets]</sub> |  ![][argocd-beets]        |                      |
-> |           [Lidarr][service-lidarr]                       |   `Media`  |  <sub>[More details][homelab-lidarr]</sub> |  ![][argocd-lidarr]      |                     |
-> |         [Metabase][service-metabase]             |   `Analytics`   |       <sub>[More details][homelab-metabase]</sub> |       ![][argocd-metabase] |  |
+> |            [n8n][n8n-uri]              |    `Services`   |        <sub>[More details][homelab-n8n]</sub>       |        ![][argocd-n8n]       |  ![][n8n-badge]     |
+> |            Hashicorp's Vault           |    `Security`   |       <sub>[Chart Values][homelab-vault]</sub>      |       ![][argocd-vault]      |  ![][vault-badge]   |
+> |             Flame Dashboard            |    `Services`   |       <sub>[More details][homelab-flame]</sub>      |       ![][argocd-flame]      | ![][flame-badge]    |
+> |              Unifi Poller              |   `Monitoring`  |      <sub>[More details][homelab-poller]</sub>      |      ![][argocd-poller]      | ![][poller-badge]  |
+> |   Cloudflared <sub>(as proxies)</sub>  |   `Networking`  | <sub>[More details][homelab-cloudflared]</sub>      |                              |   ![][cfd-badge]   |
+> |                   Wakapi               |    `Services`   |        <sub>[More details][homelab-wakapi]</sub>    |        ![][argocd-wakapi]    | ![][wakapi-badge]   |
+> | [RSS Gen/Proxy][service-rssgen]           |    `Services`   |        <sub>[More details][homelab-rssgen]</sub>    |        ![][argocd-rss]    |  ![][rssgen-badge]   |
+> |    [RSS Hub][service-rsshub]           |    `Services`   |        <sub>[More details][homelab-rsshub]</sub>    |        ![][argocd-rss]       | ![][rsshub-badge]   |
+> |           [Beets][service-beets]                        |   `Media`  |  <sub>[More details][homelab-beets]</sub> |  ![][argocd-beets]        |   ![][beets-badge]   |
+> |           [Lidarr][service-lidarr]                       |   `Media`  |  <sub>[More details][homelab-lidarr]</sub> |  ![][argocd-lidarr]      |  ![][lidarr-badge]   |
+> |         [Metabase][service-metabase]             |   `Analytics`   |       <sub>[More details][homelab-metabase]</sub> |       ![][argocd-metabase] | ![][metabase-badge] |
 
 ---
 
@@ -147,6 +147,7 @@
 [service-wyze]: https://github.com/mrlt8/docker-wyze-bridge
 [change-uri]: https://github.com/dgtlmoon/changedetection.io
 [redis-uri]: https://github.com/spotahome/redis-operator
+[n8n-uri]: https://n8n.io/
 
 <!-- Shield Badges -->
 
@@ -187,7 +188,7 @@
 
 <!-- ArgoCD Status Badges -->
 
-[argocd-drone]: https://argo.gr.wtf/api/badge?name=drone
+[argocd-drone]: https://argo.gr.wtf/api/badge?name=drone-server
 [argocd-ha]: https://argo.gr.wtf/api/badge?name=homeassistant
 [argocd-kuma]: https://argo.gr.wtf/api/badge?name=uptime-kuma
 [argocd-adguard]:https://argo.gr.wtf/api/badge?name=adguard
@@ -198,7 +199,7 @@
 [argocd-ha]: https://argo.gr.wtf/api/badge?name=homeassistant
 [argocd-wyze]: https://argo.gr.wtf/api/badge?name=wyze-bridge
 [argocd-redis]: https://argo.gr.wtf/api/badge?name=redis
-[argocd-zalando]: https://argo.gr.wtf/api/badge?name=zalando
+[argocd-zalando]: https://argo.gr.wtf/api/badge?name=postgres
 [argocd-changedetection]: https://argo.gr.wtf/api/badge?name=changedetection
 [argocd-tailscale]: https://argo.gr.wtf/api/badge?name=tailscale
 [argocd-flame]: https://argo.gr.wtf/api/badge?name=flame
@@ -208,7 +209,6 @@
 [argocd-beets]: https://argo.gr.wtf/api/badge?name=beets
 [argocd-lidarr]: https://argo.gr.wtf/api/badge?name=lidarr
 [argocd-metabase]: https://argo.gr.wtf/api/badge?name=metabase
-
 
 <!-- Badge Images -->
 
@@ -223,3 +223,14 @@
 [ha-badge]: https://img.shields.io/github/v/release/home-assistant/core?label=Github&logo=github&style=flat-square
 [wyze-badge]: https://img.shields.io/github/v/release/mrlt8/docker-wyze-bridge?label=Github&logo=github&style=flat-square
 [change-badge]: https://img.shields.io/github/v/release/dgtlmoon/changedetection.io?label=Github&logo=github&style=flat-square
+[n8n-badge]: https://img.shields.io/docker/v/n8nio/n8n?label=Docker&color=blue&logo=docker&sort=semver&style=flat-square
+[vault-badge]: https://img.shields.io/github/v/release/hashicorp/vault?label=Github&logo=github&style=flat-square
+[flame-badge]: https://img.shields.io/github/v/release/pawelmalak/flame?label=Github&logo=github&sort=semver&style=flat-square
+[poller-badge]: https://img.shields.io/github/v/release/unpoller/unpoller?label=Github&logo=github&sort=semver&style=flat-square
+[cfd-badge]: https://img.shields.io/docker/v/erisamoe/cloudflared?label=Docker&color=blue&logo=docker&sort=semver&style=flat-square
+[wakapi-badge]: https://img.shields.io/github/v/tag/muety/wakapi?label=Github&logo=github&style=flat-square
+[rssgen-badge]: https://img.shields.io/github/v/tag/damoeb/rss-proxy?label=Github&logo=github&style=flat-square
+[beets-badge]: https://img.shields.io/github/v/tag/beetbox/beets?label=Github&logo=github&style=flat-square
+[lidarr-badge]: https://img.shields.io/github/v/release/lidarr/lidarr?label=Github&color=blue&logo=github&sort=semver&style=flat-square
+[metabase-badge]: https://img.shields.io/docker/v/metabase/metabase?label=Docker&color=blue&logo=docker&sort=semver&style=flat-square
+[rsshub-badge]: https://img.shields.io/static/v1?label=No&message=version%20provided&color=gray&labelColor=gray&style=flat-square
