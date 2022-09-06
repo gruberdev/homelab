@@ -19,8 +19,6 @@ spec:
           pullPolicy: IfNotPresent
         replicaCount: 1
         terminationGracePeriodSeconds: 3600
-        nameOverride: ""
-        fullnameOverride: ""
         podSecurityContext: {}
         securityContext: {}
         podAnnotations: {}
@@ -46,11 +44,7 @@ spec:
             cpu: 80m
             memory: 128Mi
         nodeSelector:
-          beta.kubernetes.io/arch: amd64
-        tolerations: []
-        affinity: {}
-        extraVolumes: []
-        extraVolumeMounts: []
+          beta.kubernetes.io/arch: "amd64"
         extraSecretNamesForEnvFrom:
           - drone-runner-vars
         rbac:
