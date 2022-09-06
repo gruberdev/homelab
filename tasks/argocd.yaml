@@ -45,9 +45,9 @@ tasks:
       GIT_URI:
         sh: git config --get remote.origin.url | sed -e 's/:/\//g'| sed -e 's/ssh\/\/\///g'| sed -e 's/git@/https:\/\//g' | sed 's/.git$//'
     cmds:
-      - rm apps/argocd/base/secrets/repo.yaml
+      - rm test/repo.yaml
       - |
-        cat << EOF > apps/argocd/base/secrets/repo.yaml
+        cat << EOF > test/repo.yaml
         apiVersion: v1
         kind: Secret
         metadata:
@@ -61,8 +61,8 @@ tasks:
           password: $GH_PASS
           username: $GH_USER
         EOF
-      - kubectl apply -f apps/argocd/base/secrets/repo.yaml -n argocd
-      - rm apps/argocd/base/secrets/repo.yaml
+      - kubectl apply -f test/repo.yaml
+      - rm test/repo.yaml
     ignore_error: true
 
 
