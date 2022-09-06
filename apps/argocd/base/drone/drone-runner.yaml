@@ -46,7 +46,7 @@ spec:
         nodeSelector:
           beta.kubernetes.io/arch: "amd64"
         extraSecretNamesForEnvFrom:
-          - drone-runner-vars
+        - drone-runner-vars
         rbac:
           buildNamespaces:
             - drone
