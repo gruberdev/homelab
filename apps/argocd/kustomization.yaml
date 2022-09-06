@@ -72,7 +72,7 @@ patches:
       path: "/spec/template/spec/containers/0/env/2"
       value:
         name: DEST_PORT
-        value: "8000"
+        value: "443"
   target:
     kind: Deployment
     name: argocd-server
