@@ -83,7 +83,7 @@ patches:
         value: "8000"
   target:
     kind: Deployment
-    name: argocd-repo-server
+    name: argocd-server
 - patch: |-
     - op: replace
       path: "/spec/template/spec/volumes/0/secret/secretName"
