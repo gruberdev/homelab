@@ -59,10 +59,10 @@ spec:
         serviceAccount:
           annotations: {}
         env:
-          DRONE_RUNNER_CAPACITY: 20
+          DRONE_RUNNER_CAPACITY: "20"
           DRONE_NAMESPACE_DEFAULT: "drone"
-          DRONE_RPC_SKIP_VERIFY: true
-          DRONE_UI_DISABLE: false
+          DRONE_RPC_SKIP_VERIFY: "true"
+          DRONE_UI_DISABLE: "false"
           DRONE_SERVER_HOST: "drone"
           DRONE_SERVER_PROTO: "http"
           DRONE_ANNOTATIONS_DEFAULT="server:home,arm:no,docker:no,kubernetes:yes"
