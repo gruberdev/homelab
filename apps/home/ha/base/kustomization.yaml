@@ -4,5 +4,4 @@ resources:
   - db.yaml
   - deployment.yaml
   - svc.yaml
-  - node-svc.yaml
   - pvc.yaml
