@@ -25,7 +25,7 @@ spec:
                 name: drone-cm
             - secretRef:
                 name: drone-server-vars
-          image: 'drone/drone:2.12.1'
+          image: drone/drone:2.12.1
           imagePullPolicy: IfNotPresent
           restartPolicy: Always
           livenessProbe:
