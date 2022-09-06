@@ -23,7 +23,6 @@ spec:
         - name: unifi-poller
           image: golift/unifi-poller:2.1
           imagePullPolicy: IfNotPresent
-          restartPolicy: Always
           envFrom:
             - configMapRef:
                 name: unifi-poller-cm

@@ -20,7 +20,6 @@ spec:
       containers:
         - image: quay.io/spotahome/redis-operator:v1.1.0
           imagePullPolicy: IfNotPresent
-          restartPolicy: Always
           name: app
           securityContext:
             readOnlyRootFilesystem: true
@@ -33,4 +32,3 @@ spec:
             requests:
               cpu: 10m
               memory: 50Mi
-      restartPolicy: Always

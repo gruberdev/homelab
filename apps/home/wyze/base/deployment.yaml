@@ -21,7 +21,6 @@ spec:
         - name: wyze-bridge
           image: mrlt8/wyze-bridge:latest
           imagePullPolicy: IfNotPresent
-          restartPolicy: Always
           envFrom:
             - configMapRef:
                 name: wyze-cm

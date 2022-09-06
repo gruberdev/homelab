@@ -27,7 +27,6 @@ spec:
                 name: drone-server-vars
           image: drone/drone:2.12.1
           imagePullPolicy: IfNotPresent
-          restartPolicy: Always
           livenessProbe:
             httpGet:
               path: /healthz
