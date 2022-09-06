@@ -57,6 +57,8 @@ spec:
           DRONE_NAMESPACE_DEFAULT: "drone"
           DRONE_RPC_SKIP_VERIFY: "true"
           DRONE_UI_DISABLE: "false"
+          DRONE_RPC_HOST: "drone.gr.wtf"
+          DRONE_RPC_PROTO: "https"
           DRONE_SERVER_HOST: "drone.gr.wtf"
           DRONE_SERVER_PROTO: "https"
           DRONE_ANNOTATIONS_DEFAULT: "server:home,arm:no,docker:no,kubernetes:yes"
