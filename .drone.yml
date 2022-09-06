@@ -2,12 +2,8 @@ kind: pipeline
 name: validate
 type: kubernetes
 
-trigger:
-  event:
-    include:
-      - pull_request
-    exclude:
-      - push
+node:
+  kubernetes: yes
 
 clone:
   disable: true
@@ -87,9 +83,6 @@ name: Lint
 type: kubernetes
 
 node:
-  server: home
-  arm: no
-  docker: no
   kubernetes: yes
 
 steps:
