@@ -1,10 +1,11 @@
 kind: pipeline
 name: validate
-type: docker
+type: kubernetes
 
 platform:
   os: linux
   arch: amd64
+
 node:
   server: home
   arm: no
@@ -93,7 +94,7 @@ steps:
 
 kind: pipeline
 name: Lint
-type: docker
+type: kubernetes
 
 platform:
   os: linux
