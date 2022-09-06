@@ -2,16 +2,6 @@ kind: pipeline
 name: validate
 type: kubernetes
 
-platform:
-  os: linux
-  arch: amd64
-
-node:
-  server: home
-  arm: no
-  docker: no
-  kubernetes: yes
-
 trigger:
   event:
     include:
@@ -96,24 +86,11 @@ kind: pipeline
 name: Lint
 type: kubernetes
 
-platform:
-  os: linux
-  arch: amd64
-
 node:
   server: home
   arm: no
   docker: no
   kubernetes: yes
-
-trigger:
-  event:
-    include:
-      - push
-    exclude:
-      - pull_request
-  branch:
-    - main
 
 steps:
   - name: YAML Validate
