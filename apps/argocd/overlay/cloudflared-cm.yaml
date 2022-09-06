@@ -10,5 +10,5 @@ data:
     no-autoupdate: true
     ingress:
     - hostname: argo.gr.wtf
-      service: http://argocd-server:5005
+      service: http://argocd-server:80
     - service: http_status:404
