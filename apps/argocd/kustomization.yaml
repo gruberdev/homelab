@@ -11,6 +11,7 @@ resources:
 
 - base/core/argocd.yaml
 - base/core/zalando.yaml
+- base/core/redis.yaml
 
 - base/utilities/reloader.yaml
 - base/utilities/reflector.yaml
