@@ -2,39 +2,13 @@ kind: pipeline
 name: validate
 type: kubernetes
 
-node:
-  kubernetes: yes
-
 trigger:
   branch:
     - main
   event:
     - push
 
-clone:
-  disable: true
-
 steps:
-  - name: clone
-    image: alpine/git
-    commands:
-    - git clone https://github.com/gruberdev/homelab.git .
-    - git checkout $DRONE_COMMIT
-
-  - name: skip
-    image: ghcr.io/joshdk/drone-skip-pipeline:v0.2.0
-    failure: ignore
-    environment:
-      GITHUB_TOKEN:
-        from_secret: github_token
-    settings:
-      rules:
-      - apps/
-      - .drone.yml
-      touch: .skip-pipeline
-    depends_on:
-      - clone
-
   - name: k8s-resources
     image: deck15/kubeval-tools:latest
     commands:
@@ -48,8 +22,14 @@ steps:
       - find . -maxdepth 10 -name sa.yaml -exec kubeval --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
       - find . -maxdepth 10 -name cr.yaml -exec kubeval --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
       - find . -maxdepth 10 -name rb.yaml -exec kubeval --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
-    depends_on:
-      - skip
+
+  - name: YAML Validate
+    image: sdesbure/yamllint:latest
+    commands:
+      - yamllint -c ./.yamllint .
+
+  - name: Link Check
+    image: ghcr.io/tcort/markdown-link-check:stable
 
   - name: Successful Step GH Comment
     image: ghcr.io/joshdk/drone-github-comment:v0.1.0
@@ -63,6 +43,8 @@ steps:
         from_secret: github_token
     depends_on:
       - k8s-resources
+      - YAML Validate
+      - Link Check
     when:
       status:
         - success
@@ -79,17 +61,11 @@ steps:
         from_secret: github_token
     depends_on:
       - k8s-resources
+      - YAML Validate
+      - Link Check
     when:
       status:
         - failure
-
-  - name: YAML Validate
-    image: sdesbure/yamllint:latest
-    commands:
-      - yamllint -c ./.yamllint .
-
-  - name: Link Check
-    image: ghcr.io/tcort/markdown-link-check:stable
 
 # ---
 
