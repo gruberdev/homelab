@@ -24,7 +24,7 @@ spec:
                 name: drone-cm
             - secretRef:
                 name: drone-server-vars
-          image: drone/drone:2.12.1
+          image: docker.io/drone/drone:2
           imagePullPolicy: IfNotPresent
           livenessProbe:
             httpGet:
