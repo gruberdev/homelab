@@ -1,0 +1,1 @@
+## Adguard Home DNS
