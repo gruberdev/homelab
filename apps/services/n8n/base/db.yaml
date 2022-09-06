@@ -4,6 +4,8 @@ metadata:
   name: db-n8n
   labels:
     team: db
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   dockerImage: registry.opensource.zalan.do/acid/spilo-14:2.1-p6
   teamId: "db"
