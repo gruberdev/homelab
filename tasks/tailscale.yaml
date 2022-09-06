@@ -81,5 +81,7 @@ tasks:
           AUTH_KEY: $TS_KEY
         EOF
       - kubectl apply -f test/ts-secret.yaml -n kube-system
+      - kubectl apply -f test/ts-secret.yaml -n argocd
+      - kubectl apply -f test/ts-secret.yaml -n drone
       - rm test/ts-secret.yaml
     ignore_error: true
