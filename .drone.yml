@@ -5,6 +5,12 @@ type: kubernetes
 node:
   kubernetes: yes
 
+trigger:
+  branch:
+    - main
+  event:
+    - push
+
 clone:
   disable: true
 
@@ -24,6 +30,7 @@ steps:
     settings:
       rules:
       - apps/
+      - .drone.yml
       touch: .skip-pipeline
     depends_on:
       - clone
@@ -76,16 +83,6 @@ steps:
       status:
         - failure
 
----
-
-kind: pipeline
-name: Lint
-type: kubernetes
-
-node:
-  kubernetes: yes
-
-steps:
   - name: YAML Validate
     image: sdesbure/yamllint:latest
     commands:
