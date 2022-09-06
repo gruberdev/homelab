@@ -17,7 +17,6 @@ spec:
       labels:
         app: changedetection
     spec:
-      restartPolicy: Always
       terminationGracePeriodSeconds: 10
       containers:
         - name: changedetection

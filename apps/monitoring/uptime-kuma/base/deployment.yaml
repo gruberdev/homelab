@@ -22,7 +22,6 @@ spec:
       containers:
         - name: uptime-kuma
           image: louislam/uptime-kuma:1
-          restartPolicy: Always
           envFrom:
             - configMapRef:
                 name: kuma-cm

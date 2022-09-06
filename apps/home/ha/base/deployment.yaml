@@ -81,7 +81,6 @@ spec:
               name: zigbee-01
       dnsPolicy: ClusterFirstWithHostNet
       hostNetwork: true
-      restartPolicy: Always
       volumes:
         - name: config-volume
           persistentVolumeClaim:

@@ -27,7 +27,6 @@ spec:
             - secretRef:
                 name: flame-vars
           imagePullPolicy: IfNotPresent
-          restartPolicy: Always
           livenessProbe:
             httpGet:
               port: 5005

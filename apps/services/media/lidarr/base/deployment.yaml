@@ -22,7 +22,6 @@ spec:
       containers:
         - name: lidarr
           image: lscr.io/linuxserver/lidarr:latest
-          restartPolicy: Always
           envFrom:
             - configMapRef:
                 name: lidarr-cm
