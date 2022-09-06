@@ -43,12 +43,14 @@ resources:
 - https://github.com/gruberdev/homelab/apps/networking/cloudflared
 
 - https://raw.githubusercontent.com/argoproj/argo-cd/v2.4.11/manifests/install.yaml
+- https://github.com/argoproj-labs/argocd-image-updater/manifests/base
 
 patchesStrategicMerge:
 - overlay/argocd-svc.yaml
 - overlay/argocd-deployment.yaml
 - overlay/argocd-cm.yaml
 - overlay/cloudflared-cm.yaml
+- overlay/argocd-rbac.yaml
 
 patchesJson6902:
 - path: overlay/deploy-command.yaml

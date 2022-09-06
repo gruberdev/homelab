@@ -22,6 +22,7 @@ spec:
       containers:
         - name: unifi-controller
           image: jacobalberty/unifi:v7.2.92
+          restartPolicy: Always
           envFrom:
             - configMapRef:
                 name: unifi-controller-cm

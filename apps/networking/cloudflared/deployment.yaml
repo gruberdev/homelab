@@ -3,10 +3,12 @@ kind: Deployment
 metadata:
   name: cloudflared
 spec:
+  replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: cloudflared
-  replicas: 1
   template:
     metadata:
       labels:
@@ -15,6 +17,7 @@ spec:
       containers:
       - name: cloudflared
         image: erisamoe/cloudflared:2022.8.2
+        restartPolicy: Always
         args:
         - tunnel
         - --config

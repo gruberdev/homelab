@@ -3,6 +3,7 @@ kind: ConfigMap
 metadata:
   name: argocd-cm
 data:
+  accounts.image-updater: apiKey
   url: https://argocd.gr.wtf
   statusbadge.enabled: "true"
   statusbadge.url: "https://status.argo.gr.wtf/"
