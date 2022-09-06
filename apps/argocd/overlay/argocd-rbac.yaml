@@ -1,0 +1,17 @@
+# Official documentation is insufficient
+# https://argocd-image-updater.readthedocs.io/en/stable/install/installation/
+# See below for further explanation
+# https://github.com/argoproj-labs/argocd-image-updater/issues/267#issuecomment-931423091
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/name: argocd-rbac-cm
+    app.kubernetes.io/part-of: argocd
+  name: argocd-rbac-cm
+data:
+  policy.default: role:readonly
+  policy.csv: |
+    p, role:image-updater, applications, get, */*, allow
+    p, role:image-updater, applications, update, */*, allow
+    g, image-updater, role:image-updater
