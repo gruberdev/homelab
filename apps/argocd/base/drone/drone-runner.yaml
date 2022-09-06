@@ -61,9 +61,6 @@ spec:
           DRONE_RPC_PROTO: "https"
           DRONE_SERVER_HOST: "drone.gr.wtf"
           DRONE_SERVER_PROTO: "https"
-          AWS_DEFAULT_REGION: "us-east-1"
-          AWS_REGION: "us-east-1"
-          DRONE_S3_BUCKET: "drone-storage"
 
   destination:
     namespace: drone
