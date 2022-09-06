@@ -4,10 +4,11 @@ bases:
 - github.com/zalando/postgres-operator/manifests
 - github.com/zalando/postgres-operator/ui/manifests
 - github.com/gruberdev/homelab/apps/networking/tailscale
-- rb.yaml
+- base/rb.yaml
 
 patchesStrategicMerge:
-- deployment.yaml
+- overlay/postgres-deployment.yaml
+- overlay/postgres-ingress.yaml
 
 namespace: databases
 
