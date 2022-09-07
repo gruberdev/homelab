@@ -1,0 +1,46 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: router
+  labels:
+    app: router
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: router
+  template:
+    metadata:
+      labels:
+        app: router
+    spec:
+      serviceAccountName: "tailscale"
+      containers:
+        - name: router
+          imagePullPolicy: IfNotPresent
+          image: grubertech/tailscale:v1.30.0
+          env:
+            - name: USERSPACE
+              value: "false"
+            - name: TS_HOSTNAME
+              value: "unifi"
+            - name: TS_ROUTES
+              value: "10.43.0.0/16,10.42.0.0/24"
+            - name: AUTH_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: tailscale
+                  key: AUTH_KEY
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+          resources:
+            limits:
+              cpu: "256m"
+              memory: "256Mi"
+            requests:
+              cpu: "100m"
+              memory: "100Mi"
