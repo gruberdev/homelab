@@ -20,11 +20,13 @@ spec:
       serviceAccountName: "tailscale"
       containers:
         - name: router
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           image: grubertech/tailscale:v1.30.0
           env:
             - name: USERSPACE
               value: "false"
+            - name: KUBERNETES_SERVICE_HOST
+              value: "true"
             - name: TS_HOSTNAME
               value: "router"
             - name: TS_ROUTES
