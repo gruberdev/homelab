@@ -32,21 +32,37 @@ spec:
                 operator: In
                 values:
                 - amd64
+      initContainers:
+        - name: git-clone
+          image: alpine/git
+          args:
+            - clone
+            - --single-branch
+            - --
+            - https://github.com/gruberdev/homeassistant.git
+            - /repo
+          securityContext:
+            runAsUser: 65535
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - mountPath: /repo
+              name: config-volume
       containers:
         - env:
             - name: TZ
               value: America/Sao_Paulo
             - name: PYTHONWARNINGS
               value: ignore:Unverified HTTPS request
-          image: docker.io/homeassistant/home-assistant:2022.8
+          image: homeassistant/home-assistant:2022.8
           imagePullPolicy: IfNotPresent
           livenessProbe:
-            failureThreshold: 5
-            httpGet:
-              path: /
-              port: api
-            initialDelaySeconds: 30
-            timeoutSeconds: 5
+            failureThreshold: 3
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            tcpSocket:
+              port: 8123
+            timeoutSeconds: 3
           name: home-assistant
           ports:
             - containerPort: 8123
@@ -61,14 +77,17 @@ spec:
             timeoutSeconds: 5
           resources:
             limits:
-              cpu: 500m
-              memory: 500Mi
+              cpu: 750m
+              memory: 1000Mi
             requests:
               cpu: 200m
               memory: 128Mi
           securityContext:
             privileged: true
           volumeMounts:
+            - name: ha-secrets
+              mountPath: /config/secrets.yaml
+              subPath: secrets.yaml
             - mountPath: /config
               name: config-volume
             - mountPath: /dev/ttyUSB0
@@ -82,6 +101,12 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       hostNetwork: true
       volumes:
+        - name: ha-secrets
+          secret:
+            secretName: ha-secrets
+            items:
+            - key: all
+              path: secrets.yaml
         - name: config-volume
           persistentVolumeClaim:
             claimName: home-assisstant-pvc
