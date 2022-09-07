@@ -36,11 +36,9 @@ spec:
         - name: git-clone
           image: alpine/git
           args:
-            - clone
-            - --single-branch
-            - --
-            - https://github.com/gruberdev/homeassistant.git
-            - /repo
+            - cd /repo;
+              git fetch --all;
+              git reset --hard origin/main
           securityContext:
             runAsUser: 65535
             allowPrivilegeEscalation: false
