@@ -118,7 +118,7 @@ spec:
           # If deployment is on OpenShift, the following block is ignored.
           # In order to expose the service, use the route section below
           ingress:
-            enabled: true
+            enabled: false
             labels: {}
             annotations: {}
             ingressClassName: "nginx"
@@ -179,11 +179,38 @@ spec:
             #       mountPath: /usr/local/libexec/vault
 
           # extraContainers is a list of sidecar containers. Specified as a YAML list.
-          extraContainers: null
+          extraContainers:
+            - name: tailscale
+              imagePullPolicy: IfNotPresent
+              image: grubertech/tailscale:v1.30.0
+              env:
+                - name: USERSPACE
+                  value: "false"
+                - name: TS_HOSTNAME
+                  value: "vault"
+                - name: DEST_PORT
+                  value: "8200"
+                - name: AUTH_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: tailscale
+                      key: AUTH_KEY
+              securityContext:
+                capabilities:
+                  add:
+                  - NET_ADMIN
+              resources:
+                limits:
+                  cpu: "256m"
+                  memory: "256Mi"
+                requests:
+                  cpu: "100m"
+                  memory: "100Mi"
+
 
           # shareProcessNamespace enables process namespace sharing between Vault and the extraContainers
           # This is useful if Vault must be signaled, e.g. to send a SIGHUP for log rotation
-          shareProcessNamespace: false
+          shareProcessNamespace: true
 
           # extraArgs is a string containing additional Vault server arguments.
           extraArgs: ""
@@ -493,10 +520,10 @@ spec:
           # Kubernetes tokens.
           serviceAccount:
             # Specifies whether a service account should be created
-            create: true
+            create: false
             # The name of the service account to use.
             # If not set and create is true, a name is generated using the fullname template
-            name: ""
+            name: "vault-operator"
             # Extra annotations for the serviceAccount definition. This can either be
             # YAML or a YAML-formatted multi-line templated string map of the
             # annotations to apply to the serviceAccount.
@@ -516,7 +543,7 @@ spec:
           # serviceType can be used to control the type of service created. For
           # example, setting this to "LoadBalancer" will create an external load
           # balancer (for supported K8S installations) to access the UI.
-          enabled: false
+          enabled: true
           publishNotReadyAddresses: true
           # The service should only contain selectors for active Vault pod
           activeVaultPodOnly: false
@@ -633,15 +660,15 @@ spec:
           # Used to configure livenessProbe for the pods.
           livenessProbe:
             # When a probe fails, Kubernetes will try failureThreshold times before giving up
-            failureThreshold: 2
+            failureThreshold: 3
             # Number of seconds after the container has started before probe initiates
-            initialDelaySeconds: 5
+            initialDelaySeconds: 10
             # How often (in seconds) to perform the probe
-            periodSeconds: 5
+            periodSeconds: 10
             # Minimum consecutive successes for the probe to be considered successful after having failed
             successThreshold: 1
             # Number of seconds after which the probe times out.
-            timeoutSeconds: 3
+            timeoutSeconds: 5
 
           # Enables debug logging.
           debug: false
@@ -659,7 +686,7 @@ spec:
       allowEmpty: true
     syncOptions:
     - Validate=false
-    - CreateNamespace=true
+    - CreateNamespace=false
     - PrunePropagationPolicy=foreground
     - PruneLast=true
     - ApplyOutOfSyncOnly=true
