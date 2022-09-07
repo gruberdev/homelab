@@ -179,34 +179,7 @@ spec:
             #       mountPath: /usr/local/libexec/vault
 
           # extraContainers is a list of sidecar containers. Specified as a YAML list.
-          extraContainers:
-            - name: tailscale
-              imagePullPolicy: IfNotPresent
-              image: grubertech/tailscale:v1.30.0
-              env:
-                - name: USERSPACE
-                  value: "false"
-                - name: TS_HOSTNAME
-                  value: "vault"
-                - name: DEST_PORT
-                  value: "8200"
-                - name: AUTH_KEY
-                  valueFrom:
-                    secretKeyRef:
-                      name: tailscale
-                      key: AUTH_KEY
-              securityContext:
-                capabilities:
-                  add:
-                  - NET_ADMIN
-              resources:
-                limits:
-                  cpu: "256m"
-                  memory: "256Mi"
-                requests:
-                  cpu: "100m"
-                  memory: "100Mi"
-
+          extraContainers: []
 
           # shareProcessNamespace enables process namespace sharing between Vault and the extraContainers
           # This is useful if Vault must be signaled, e.g. to send a SIGHUP for log rotation
@@ -686,7 +659,7 @@ spec:
       allowEmpty: true
     syncOptions:
     - Validate=false
-    - CreateNamespace=false
+    - CreateNamespace=true
     - PrunePropagationPolicy=foreground
     - PruneLast=true
     - ApplyOutOfSyncOnly=true

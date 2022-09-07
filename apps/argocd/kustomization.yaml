@@ -19,7 +19,6 @@ resources:
 - base/utilities/kubenurse.yaml
 - base/utilities/botkube.yaml
 
-- base/apps/vault-ts.yaml
 - base/apps/vault.yaml
 - base/apps/ha.yaml
 # - base/apps/wyze.yaml
