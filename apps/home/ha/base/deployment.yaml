@@ -104,9 +104,6 @@ spec:
         - name: ha-secrets
           secret:
             secretName: ha-secrets
-            items:
-            - key: all
-              path: secrets.yaml
         - name: config-volume
           persistentVolumeClaim:
             claimName: home-assisstant-pvc
