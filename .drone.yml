@@ -12,6 +12,16 @@ trigger:
 clone:
   disable: true
 
+tolerations:
+- key: beta.kubernetes.io/arch
+  operator: "Equal"
+  value: "arm64"
+  effect: NoSchedule
+- key: beta.kubernetes.io/arch
+  operator: "Equal"
+  value: "arm"
+  effect: NoSchedule
+
 steps:
   - name: clone
     image: alpine/git
@@ -86,6 +96,16 @@ kind: pipeline
 name: Lint
 type: kubernetes
 
+tolerations:
+- key: beta.kubernetes.io/arch
+  operator: "Equal"
+  value: "arm64"
+  effect: NoSchedule
+- key: beta.kubernetes.io/arch
+  operator: "Equal"
+  value: "arm"
+  effect: NoSchedule
+
 trigger:
   event:
     include:
@@ -101,8 +121,11 @@ steps:
     commands:
       - yamllint -c ./.yamllint .
 
-  - name: Link Check
-    image: ghcr.io/tcort/markdown-link-check:stable
+  - name: Check Markdowkn Links
+    image: node:lts
+    commands:
+      - npm i -g markdown-link-check
+      - find . -name "*.md" | xargs -n1 markdown-link-check
 
 # ---
 
