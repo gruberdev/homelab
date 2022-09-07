@@ -57,13 +57,15 @@
 </summary>
 
 <br>
-
-- descheduler
-- kube-fledged
-- kubenurse
-- reflector
-- reloader
-- botkube
+  
+  - [argocd-notifications][argocd-notifications-uri] &nbsp; <sub>Alerts the cluster administrator through multiple channels about events related to ArgoCD applications and deployments.</sub>
+- [argocd-image-updater][argocd-updater-uri] &nbsp; <sub>Used to automatically update a deployment's image version tag and write it back to the Github repository without human intervention. [Example.][argocd-updater-ex]</sub>
+- [descheduler][descheduler-uri] &nbsp; <sub>Monitors if workloads are evenly distributed through nodes and cleans failed pods that remained as orphans/stuck.</sub>
+- [kube-fledged][kube-fledged-uri] &nbsp; <sub>Allows for image caching on every node in the cluster, in order to speed up deployments of already existing applications.</sub>
+- [kubenurse][kubenurse-uri] &nbsp; <sub>Allows for image caching on every node in the cluster, in order to speed up deployments of already existing applications.</sub>
+- [reflector][reflector-uri] &nbsp; <sub>Monitors networking conditions inside the cluster and exposes its collected data metrics to Prometheus.</sub>
+- [reloader][reloader-uri] &nbsp; <sub>Everytime a `configMap` or a `Secret` resource is created or edited, every resource that uses them is reloaded to include them automatically.</sub>
+- [botkube][botkube-uri] &nbsp; <sub>Monitors cluster events and sends a message through Discord or Slack, capable of alerting for every kind of cluster-related issue.</sub>
 
 ---
 
@@ -151,7 +153,19 @@
 
 [drone-img]: https://img.shields.io/drone/build/gruberdev/homelab?server=https%3A%2F%2Fdrone.gruber.dev.br&logo=drone&labelColor=1F1F1F&logoColor=41dde8&style=flat-square&label=Drone%20CI
 
-<!-- Repository Utilities -->
+<!-- Cluster Utilities/Internal Tooling -->
+
+[argocd-updater-ex]: https://github.com/gruberdev/homelab/commit/75c00de5eba89b9978ed241e67e638e4d838fae4
+[argocd-updater-uri]: https://argocd-image-updater.readthedocs.io/en/stable/
+[descheduler-uri]: https://github.com/kubernetes-sigs/descheduler
+[kube-fledged-uri]: https://github.com/senthilrch/kube-fledged
+[kubenurse-uri]: https://github.com/postfinance/kubenurse
+[reflector-uri]: https://github.com/emberstack/kubernetes-reflector
+[reloader-uri]: https://github.com/stakater/Reloader
+[botkube-uri]: https://botkube.io/
+[argocd-notifications-uri]: https://argocd-notifications.readthedocs.io/en/stable/
+
+<!-- Repository/CI Utilities -->
 
 [drone-skip-pipeline-uri]: https://github.com/joshdk/drone-skip-pipeline
 [drone-github-uri]: https://github.com/joshdk/drone-github-comment
