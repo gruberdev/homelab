@@ -2,8 +2,12 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: homeassistant
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd-image-updater.argoproj.io/write-back-method: git
+    argocd-image-updater.argoproj.io/write-back-target: kustomization
+    argocd-image-updater.argoproj.io/git-branch: main
+    argocd-image-updater.argoproj.io/image-list: ha=homeassistant/home-assistant
+    argocd-image-updater.argoproj.io/ha.platforms: linux/amd64
 spec:
   project: apps
   source:
