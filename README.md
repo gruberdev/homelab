@@ -23,7 +23,7 @@
 <summary> <b>Implemented applications</b> </summary>
 <br>
 
-<sub>*(Some of the applications may not be online, still, their resources are present in this repository if is listed below.)*</sub>
+<sub>*(Some of the applications listed here may not be online, still, their resources are present in the repository if is listed below.)*</sub>
 > |             **Application**            |   **Category**  |                       **Info**                      |     **Deployment Status**    | **Latest Release**
 > |:--------------------------------------:|:---------------:|:---------------------------------------------------:|:----------------------------:|:----------------------:|
 > |          [Drone CI][drone-uri]         | `CI/CD Tooling` |       <sub>[More details][homelab-drone]</sub>      |       ![][argocd-drone]      | ![][drone-badge]    |

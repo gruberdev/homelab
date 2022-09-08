@@ -11,9 +11,9 @@ spec:
     path: apps/monitoring/kube-prometheus
     targetRevision: main
     directory:
-          jsonnet:
-            libs:
-              - vendored
+      jsonnet:
+        libs:
+          - vendored
   destination:
     namespace: monitoring
     name: in-cluster
