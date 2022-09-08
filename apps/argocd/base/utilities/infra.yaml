@@ -25,7 +25,6 @@ spec:
           envFrom:
             - secretRef:
                 name: infra-admin-credentials
-
   destination:
     namespace: kube-system
     name: in-cluster
