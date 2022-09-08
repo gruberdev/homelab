@@ -25,8 +25,8 @@ spec:
           image: alpine/git
           command: ["/bin/sh", "-c"]
           args:
-            - cd /repo;
-              git fetch --all;
+            - cd /repo &&
+              git fetch --all &&
               git reset --hard origin/main
           securityContext:
             runAsUser: 65535
