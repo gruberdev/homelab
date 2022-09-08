@@ -27,4 +27,4 @@ patches:
     name: home-assistant
 images:
 - name: homeassistant/home-assistant
-  newTag: "2022.9"
+  newTag: 2022.9.0
