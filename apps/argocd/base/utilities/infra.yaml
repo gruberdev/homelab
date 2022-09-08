@@ -13,6 +13,12 @@ spec:
     helm:
       releaseName: infra
       values: |
+        connector:
+          config:
+            accessKey: env:ACCESS_KEY
+            server: env:CLUSTER_IP
+            name: main
+            skipTLSVerify: true
         server:
           config:
             users:
