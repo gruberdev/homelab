@@ -62,9 +62,9 @@
 > - [argocd-image-updater][argocd-updater-uri] &nbsp; <sub>Automatically update a deployment's image version tag and write it back to the Github repository without human intervention. [Example.][argocd-updater-ex]</sub>
 > - [descheduler][descheduler-uri] &nbsp; <sub>Monitors if workloads are evenly distributed through nodes and cleans failed pods that remained as orphans/stuck.</sub>
 > - [kube-fledged][kube-fledged-uri] &nbsp; <sub>Allows for image caching on every node in the cluster, in order to speed up deployments of already existing applications.</sub>
-> - [kubenurse][kubenurse-uri] &nbsp; <sub>Allows for image caching on every node in the cluster, in order to speed up deployments of already existing applications.</sub>
+ > - [kured][kured-uri] &nbsp; <sub>All the cluster's nodes will be properly drained before rebootin a node and cordoned back automatically.</sub>
 > - [reflector][reflector-uri] &nbsp; <sub>Monitors networking conditions inside the cluster and exposes its collected data metrics to Prometheus.</sub>
-> - [reloader][reloader-uri] &nbsp; <sub>Everytime a `configMap` or a `Secret` resource is created or edited, every resource that uses them is reloaded to include them automatically.</sub>
+> - [reloader][reloader-uri] &nbsp; <sub>Everytime a `configMap` or a `Secret` resource is created or edited, every resource that uses them is reloaded to include them without restarting manually.</sub>
 > - [botkube][botkube-uri] &nbsp; <sub>Monitors cluster events and sends a message through Discord or Slack, capable of alerting for every kind of cluster-related issue.</sub>
 > - [node-problem-detector][node-problem-uri] &nbsp; <sub>Detects if a node has been affected by an issue such as faulty hardware or kernel deadlocks, preventing scheduling.</sub>
 > - [node-feature-discovery][feature-discovery-uri] &nbsp; <sub>Detects hardware information, changes and other data and uses that to increase efficiency of the cluster.</sub>
@@ -166,7 +166,7 @@
 [argocd-updater-uri]: https://argocd-image-updater.readthedocs.io/en/stable/
 [descheduler-uri]: https://github.com/kubernetes-sigs/descheduler
 [kube-fledged-uri]: https://github.com/senthilrch/kube-fledged
-[kubenurse-uri]: https://github.com/postfinance/kubenurse
+[kured-uri]: https://github.com/weaveworks/kured/tree/main/charts/kured
 [reflector-uri]: https://github.com/emberstack/kubernetes-reflector
 [reloader-uri]: https://github.com/stakater/Reloader
 [botkube-uri]: https://botkube.io/

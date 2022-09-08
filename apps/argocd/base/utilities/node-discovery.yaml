@@ -22,7 +22,7 @@ spec:
           imagePullSecrets: []
           nameOverride: ""
           fullnameOverride: ""
-          namespaceOverride: ""
+          namespaceOverride: "kube-system"
           nodeFeatureRule:
             createCRD: true
           master:
