@@ -23,6 +23,7 @@
 <summary> <b>Implemented applications</b> </summary>
 <br>
 
+<sub>*(Some of the applications may not be online, still, their resources are present in this repository if is listed below.)*</sub>
 > |             **Application**            |   **Category**  |                       **Info**                      |     **Deployment Status**    | **Latest Release**
 > |:--------------------------------------:|:---------------:|:---------------------------------------------------:|:----------------------------:|:----------------------:|
 > |          [Drone CI][drone-uri]         | `CI/CD Tooling` |       <sub>[More details][homelab-drone]</sub>      |       ![][argocd-drone]      | ![][drone-badge]    |
@@ -96,26 +97,25 @@
 
 &nbsp;
 
-#### Monitoring and k8s utilities:
-
-- Prometheus/Grafana metrics
-- Chaos Mesh for Chaos engineering
-
-#### Services and applications:
-
-- Matrix
-  - Matrix bridges and double-puppets
-- Jellyfin
-  - Prowlarr
-  - Bazarr
-  - Radarr
-  - Sonarr
-- qBittorrent
-- Domainmod
-- Monica
-- Wallabag
-- Frigate for Home Assistant
-
+> #### Monitoring and k8s utilities:
+> 
+> - Chaos Mesh for Chaos engineering
+> 
+> #### Services and applications:
+> 
+> - Matrix
+>   - Matrix bridges and double-puppets
+> - Jellyfin
+>   - Prowlarr
+>   - Bazarr
+>   - Radarr
+>   - Sonarr
+> - qBittorrent
+> - Domainmod
+> - Monica
+> - Wallabag
+> - Frigate for Home Assistant
+> 
 </details>
 
 <details>
