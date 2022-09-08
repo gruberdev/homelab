@@ -26,7 +26,7 @@ spec:
           podAnnotations: {}
           env: []
           envFrom:
-            - secretRef:
+          - secretRef:
               name: infra-admin-credentials
         # Default server configurations
         server:
@@ -85,10 +85,6 @@ spec:
             initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 1
-          volumes:
-          - name: secret-volume
-            secret:
-              secretName: infra-admin-credentials
           ## Additioanl volume mounts to attach to the server container
           volumeMounts: []
           service:
@@ -361,9 +357,8 @@ spec:
           # - name: "image-pull-secret"
           labels: {}
           envFrom:
-            - secretRef:
+            secretRef:
               name: infra-admin-credentials
-
           ## Infra ui service account configurations
           serviceAccount:
             ## Create the service account
@@ -431,17 +426,6 @@ spec:
             timeoutSeconds: 3
 
           ## Additional volumes to attach to the ui pod
-          volumes:
-          - name: secret-volume
-            secret:
-              secretName: infra-admin-credentials
-
-          ## Additioanl volume mounts to attach to the ui container
-          volumeMounts:
-          - name: secret-volume
-            mountPath: /mnt/secret
-            readOnly: true
-
           ## Infra server service configurations
           service:
             ## Service type
@@ -792,7 +776,7 @@ spec:
           ## Ref: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/
           envFrom:
           - secretRef:
-            name: infra-admin-credentials
+              name: infra-admin-credentials
           serviceAccount:
 
             ## Create the service account
