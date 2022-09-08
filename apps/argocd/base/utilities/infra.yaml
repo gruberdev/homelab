@@ -164,7 +164,7 @@ spec:
             ## Ingress annotations
             annotations: {}
             ## Name of the ingress controller that will implement this resource
-            className: ""
+            className: "local-path"
             ## Hostnames to apply this ingress to
             ## Must not be empty if `ingress.enabled` is `true`
             hosts: []
@@ -921,7 +921,7 @@ spec:
 
             ## Persistence annotations
             annotations: {}
-            className: ""
+            className: "local-path"
             resources:
               requests:
                 storage: 2Gi
