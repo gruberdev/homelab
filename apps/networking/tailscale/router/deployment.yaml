@@ -39,6 +39,9 @@ spec:
           securityContext:
             runAsUser: 1000
             runAsGroup: 1000
+            capabilities:
+              add:
+              - NET_ADMIN
           resources:
             limits:
               cpu: "256m"
