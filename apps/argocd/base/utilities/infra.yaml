@@ -13,17 +13,951 @@ spec:
     helm:
       releaseName: infra
       values: |
-        connector:
-          config:
-            accessKey: env:INFRA_ACCESS_KEY
-            server: 192.168.1.10:80
-            name: main
-            skipTLSVerify: true
+        nameOverride: ""
+        fullnameOverride: ""
+        global:
+          image:
+            repository: infrahq/infra
+            tag: ""
+            pullPolicy: IfNotPresent
+          imagePullSecrets: []
+          labels: {}
+          podLabels: {}
+          podAnnotations: {}
+          env: []
+          envFrom:
+            - secretRef:
+              name: infra-admin-credentials
+        # Default server configurations
         server:
+          enabled: true
+          componentName: server
+          replicas: 1
+          image:
+            repository: infrahq/infra
+            tag: ""
+            pullPolicy: IfNotPresent
+          imagePullSecrets: []
+          # - name: "image-pull-secret"
+          labels: {}
+          ## Environment variables to pass to the server container
+          env: []
+          # - name: "INFRA_LOG_LEVEL"
+          #   value: "info"
+          ## ConfigMap or Secret references containing environment variables to pass to the server container
+          ## Ref: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/
+          envFrom:
+          - secretRef:
+              name: infra-admin-credentials
+          ## Infra server service account configurations
+          serviceAccount:
+            ## Create the service account
+            create: true
+            ## Name of the service account to use instead of the default templated fullname
+            name: ""
+            ## Annotations to apply to the service account
+            annotations: {}
+            ## Automount service account API credentials
+            automountServiceAccountToken: true
+          ## Labels to apply to the server pod
+          podLabels: {}
+          ## Annotations to apply to the server pod
+          podAnnotations: {}
+          ## Security context for the server pod
+          podSecurityContext:
+            fsGroup: 1000
+          ## Security context for the server container
+          securityContext:
+            readOnlyRootFilesystem: true
+            runAsUser: 1000
+            runAsGroup: 1000
+          ## Liveness probe for the default backend
+          ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#configure-probes
+          livenessProbe:
+            successThreshold: 1
+            failureThreshold: 3
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 1
+          readinessProbe:
+            successThreshold: 1
+            failureThreshold: 3
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 1
+          volumes:
+          - name: secret-volume
+            secret:
+              secretName: infra-admin-credentials
+          ## Additioanl volume mounts to attach to the server container
+          volumeMounts: []
+          service:
+            ## Service type
+            ## Ref: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
+            type: LoadBalancer
+            ## Service labels
+            labels: {}
+            ## Service annotations
+            annotations: {}
+            ## HTTP service port
+            port: 80
+            ## HTTP service port name
+            portName: http
+            ## HTTP service node port
+            ## No effect unless `server.service.type` is `NodePort`
+            nodePort: 30080
+            ## HTTPS service port
+            securePort: 443
+            ## HTTPS service port name
+            securePortName: https
+            ## HTTPS service node port
+            ## No effect unless `server.service.type` is `NodePort`
+            secureNodePort: 30443
+            ## IP of the load balancer to create
+            ## No effect unless `server.service.type` is `LoadBalancer`
+            loadBalancerIP: ""
+            ## Source IP ranges that can access the service
+            loadBalancerSourceRanges: []
+            ## External IPs that can be used to access the service
+            externalIPs: []
+            ## Control how traffic from external sources are routed
+            ## Supports `Cluster` or `Local`
+            externalTrafficPolicy: ""
+            ## Control session-based routing of client connections
+            ## Supports `ClientIP` or `None`
+            sessionAffinity: ""
+          metrics:
+            enabled: false
+            service:
+              labels: {}
+              annotations: {}
+              port: 9090
+              portName: metrics
+            serviceMonitor:
+              enabled: false
+              labels: {}
+              annotations: {}
+              interval: 30s
+              relabelings: []
+              metricRelabelings: []
+            prometheusRule:
+              enabled: false
+              labels: {}
+              annotations: {}
+              additionalRuleLabels: {}
+              additionalRuleAnnotations: {}
+              ## Additional alerting or recording rules
+              additionalRules: []
+                # - alert: InstanceDown
+                #   expr: absent(up == 1)
+                #   labels: {}
+                #   annotations: {}
+                #   for: 5m
+                # - record: count:up1
+                #   expr: count(up == 1)
+
+          ## Infra server ingress configurations
+          ingress:
+            enabled: false
+            ## Ingress labels
+            labels: {}
+            ## Ingress annotations
+            annotations: {}
+            ## Name of the ingress controller that will implement this resource
+            className: ""
+            ## Hostnames to apply this ingress to
+            ## Must not be empty if `ingress.enabled` is `true`
+            hosts: []
+            # - infra.example.com
+
+            ## Paths to apply this ingress to
+            paths:
+              - /
+
+            ## Type of path
+            ## One of `Exact`, `Prefix`, or `ImplementationSpecific`
+            pathType: Prefix
+
+            ## Additional paths to attach to the ingress
+            additionalPaths: []
+            # Kubernetes <1.19, using `networking.k8s.io/v1beta1`
+            # - path: /*
+            #   backend:
+            #     serviceName: ssl-redirect
+            #     servicePort: use-annotation
+            # Kubernetes >=1.19, using `networking.k8s.io/v1`
+            # - path: /*
+            #   pathType: Prefix
+            #   backend:
+            #     service:
+            #       name: ssl-redirect
+            #       port:
+            #         name: use-annotation
+
+            ## Ingress TLS configurations
+            tls: []
+            # - secretName: infra-tls-certificate
+            #   hosts:
+            #     - infra.example.com
+          resources:
+            requests:
+              cpu: 150m
+              memory: 128Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
+          autoscaling:
+            ## Enable server autoscaling
+            enabled: false
+
+            ## Minimum number of server pods to run
+            minReplicas: 1
+
+            ## Maximum number of server pods to run
+            maxReplicas: 3
+
+            ## Target average CPU utilization percentage
+            # targetCPUUtilizationPercentage: 50
+
+            ## Target average memory utilization percentage
+            # targetMemoryUtilizationPercentage: 50
+
+          ## Infra server node selector configurations
+          nodeSelector: {}
+
+          ## Infra server tolerations configurations
+          tolerations: []
+
+          ## Infra server affinity configurations
+          affinity: {}
+
+          ## Primary server configuration
           config:
+
+            ## Server container service ports
+            addr:
+              http: 8080
+              https: 8443
+              metrics: 9090
+
+            ## Database name
+            # dbName: ""
+
+            ## Database host
+            # dbHost: ""
+
+            ## Database port
+            # dbPort: 0
+
+            ## Database username
+            # dbUsername: ""
+
+            ## Database password. Use `file:` or `env:` to reference a file or environment variable
+            ## Ref: https://github.com/infrahq/infra/blob/main/docs/install/configure/secrets.md
+            # dbPassword: ""
+
+            ## Extra database parameters
+            ## For PostgresQL: see https://www.postgresql.org/docs/current/libpq-connect.html#LIBPQ-CONNSTRING
+            # dbParameters: ""
+
+            ## Path on the filesystem to store the database encryption key
+            # dbEncryptionKey: ""
+
+            ## Enable service telemetry
+            # enableTelemetry: true
+
+            ## Server UI configurations
+            ui: {}
+            ## Proxy ui requests to this url
+            # proxyURL: ""
+
+            ## Duration of a user session
+            # sessionDuration: 720h0m0s # 30 days
+
+            ## How frequently a user must use session for it to remain active
+            # sessionExtensionDeadline: 72h0m0s # once every 3 days
+
+            ## Additional secret providers to configure
+            secrets:
+            - kind: "env"  # required, kind of secret provider. one of ['plaintext', 'env', 'file', 'kubernetes', 'vault', 'awssecretmanager', 'awsssm']
+            - name: kubernetes
+              kind: kubernetes
+              config:
+                namespace: "kube-system"
+            # Configure Vault as a secret provider
+            # - name: vault                           # optional, used when referencing secrets, e.g. vault:infra-secret, where 'infra-secret' is the name of the secret in Vault
+            #   kind: vault                           # required
+            #   config:
+            #     address: https://vault.example.com  # required
+            #     token: env:VAULT_TOKEN              # required
+            #     namespace: ""                       # optional
+            #     transitMount: ""                    # optional, default '/transit'
+            #     secretMount: ""                     # optional, default '/secret'
+
+            # Configure base64-encoded environment variable as a secret provider
+            # - name: based64env  # required to differentiate betweent built-in plaintext 'env' secret provider
+            #   kind: env         # required
+            #   config:
+            #     base64: true    # required
+
+            ## Additional identity providers to configure
+            providers: []
+            # - name: ""          # required, to be referenced when creating grants
+            #   url: ""           # required
+            #   clientID: ""      # required
+            #   clientSecret: ""  # required
+
+            ## Example
+            # Configure Okta as an identity provider
+            # - name: Okta
+            #   url: example.okta.com
+            #   clientID: myoktaclientid
+            #   clientSecret: env:OKTA_CLIENT_SECRET
+
+            ## Additional grants to configure
+            grants: []
+            # - user: ""      # one of ['user', 'group'] is required
+            #   group: ""     # one of ['user', 'group'] is required
+            #   resource: ""  # required, resource being granted access
+            #   provider: ""  # required, references the name given to the provider
+            #   role: ""      # optional, if omitted, Infra will only grant authentication to the resource
+
+            ## Example
+            # Grant user 'admin@example.com' Infra admin
+            # - user: admin@example.com
+            #   role: admin
+            #   resource: infra
+
+            # Grant user 'admin@example.com' edit to Kubernetes cluster 'docker-desktop'
+            # - user: admin@example.com
+            #   role: edit
+            #   resource: kubernetes.docker-desktop
+
+            # Grant group 'Everyone' view to Kubernetes cluster 'docker-desktop', namespace 'default'
+            # - group: Everyone
+            #   role: view
+            #   resource: kubernetes.docker-desktop.default
+
+            ## Additional users to configure
             users:
-              - name: infra@gruber.dev.br
+              - name: env:INFRA_ADMIN_USERNAME
                 password: env:INFRA_ADMIN_PASSWORD
+                accessKey: env:INFRA_ADMIN_KEY
+
+            # TLS configuration for the API server. Defaults to generating a self-signed CA and
+            # generating certificates from that CA.
+            tls: {}
+
+            # Configure a CA and private key using files
+            # ca: /path/to/ca.crt
+            # caPrivateKey: file:/path/to/ca.key
+
+            # Configure a TLS certificate and private key using files
+            # certificate: /path/to/server.crt
+            # privateKey: file:/path/to/server.key
+        ui:
+          ## Deploy the ui
+          enabled: true
+          componentName: ui
+          replicas: 1
+
+          ## Infra ui image configurations
+          image:
+            ## The image repository to use for the ui deployment
+            repository: infrahq/ui
+
+            ## The image tag to use instead of the default {{ .Chart.AppVersion }}
+            tag: ""
+
+            ## The pull policy to use when pulling (downloading) the ui image
+            ## Ref: https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy
+            pullPolicy: IfNotPresent
+
+          ## One or more Secret to use when pulling the ui image
+          ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+          imagePullSecrets: []
+          # - name: "image-pull-secret"
+          labels: {}
+          env: []
+          envFrom:
+          - secretRef:
+              name: infra-admin-credentials
+
+          ## Infra ui service account configurations
+          serviceAccount:
+            ## Create the service account
+            create: true
+
+            ## Name of the service account to use instead of the default templated fullname
+            name: ""
+
+            ## Annotations to apply to the service account
+            annotations: {}
+
+            ## Automount service account API credentials
+            automountServiceAccountToken: true
+
+          ## Labels to apply to the ui pod
+          podLabels: {}
+
+          ## Annotations to apply to the ui pod
+          podAnnotations: {}
+
+          ## Security context for the ui pod
+          podSecurityContext: {}
+          #   fsGroup: 2000
+
+          ## Security context for the ui container
+          securityContext: {}
+          #   runAsUser: 999
+          #   runAsGroup: 999
+          #   readOnlyRootFilesystem: true
+
+          ## Liveness probe for the default backend
+          ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#configure-probes
+          livenessProbe:
+            ## Minimum number of consecutive successes before the probe is considered successful
+            successThreshold: 1
+
+            ## Minimum number of consecutive failures before the probe is considered failed
+            failureThreshold: 3
+
+            ## Seconds after container starts before the probe is initialized
+            initialDelaySeconds: 2
+
+            ## Seconds between consecutive probes
+            periodSeconds: 5
+
+            ## Seconds before the probe times out
+            timeoutSeconds: 1
+
+          ## Readiness probe for the default backend
+          ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#configure-probes
+          readinessProbe:
+            ## Minimum number of consecutive successes before the probe is considered successful
+            successThreshold: 1
+
+            ## Minimum number of consecutive failures before the probe is considered failed
+            failureThreshold: 5
+
+            ## Seconds after container starts before the probe is initialized
+            initialDelaySeconds: 5
+
+            ## Seconds between consecutive probes
+            periodSeconds: 10
+
+            ## Seconds before the probe times out
+            timeoutSeconds: 3
+
+          ## Additional volumes to attach to the ui pod
+          volumes:
+          - name: secret-volume
+            secret:
+              secretName: infra-admin-credentials
+
+          ## Additioanl volume mounts to attach to the ui container
+          volumeMounts:
+          - name: secret-volume
+            mountPath: /mnt/secret
+            readOnly: true
+
+          ## Infra server service configurations
+          service:
+            ## Service type
+            ## Ref: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
+            type: ClusterIP
+
+            ## Service labels
+            labels: {}
+
+            ## Service annotations
+            annotations: {}
+
+            ## HTTP service port
+            port: 3000
+
+            ## HTTP service port name
+            portName: http
+
+            ## HTTP service node port
+            ## No effect unless `ui.service.type` is `NodePort`
+            nodePort: 30080
+
+            ## IP of the load balancer to create
+            ## No effect unless `ui.service.type` is `LoadBalancer`
+            loadBalancerIP: ""
+
+            ## Source IP ranges that can access the service
+            loadBalancerSourceRanges: []
+
+            ## External IPs that can be used to access the service
+            externalIPs: []
+
+            ## Control how traffic from external sources are routed
+            ## Supports `Cluster` or `Local`
+            externalTrafficPolicy: ""
+
+            ## Control session-based routing of client connections
+            ## Supports `ClientIP` or `None`
+            sessionAffinity: ""
+          resources:
+            requests:
+              cpu: 200m
+              memory: 128Mi
+            limits:
+              cpu: 350m
+              memory: 256Mi
+          autoscaling:
+            ## Enable ui autoscaling
+            enabled: false
+
+            ## Minimum number of ui pods to run
+            minReplicas: 1
+
+            ## Maximum number of ui pods to run
+            maxReplicas: 3
+
+            ## Target average CPU utilization percentage
+            targetCPUUtilizationPercentage: 50
+
+            ## Target average memory utilization percentage
+            targetMemoryUtilizationPercentage: 50
+
+          ## Infra ui node selector configurations
+          nodeSelector: {}
+
+          ## Infra ui tolerations configurations
+          tolerations: []
+
+          ## Infra ui affinity configurations
+          affinity: {}
+
+        ## Default connector configurations
+        connector:
+          ## Deploy the connector
+          enabled: false
+          componentName: connector
+
+          ## Number of connector pods to run
+          ## No effect unless `autoscaling.enabled` is `false`
+          replicas: 1
+
+          ## Infra connector image configurations
+          image:
+            ## The image repository to use for the connector deployment
+            repository: infrahq/infra
+
+            ## The image tag to use instead of the default {{ .Chart.AppVersion }}
+            tag: ""
+
+            ## The pull policy to use when pulling (downloading) the connector image
+            ## Ref: https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy
+            pullPolicy: IfNotPresent
+
+          ## One or more Secret to use when pulling the connector image
+          ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+          imagePullSecrets: []
+          # - name: "image-pull-secret"
+
+          ## Additional labels to apply to all resources
+          ## Global values will be merged into local values
+          labels: {}
+
+          ## Environment variables to pass to the connector container
+          env: []
+          # - name: "INFRA_LOG_LEVEL"
+          #   value: "info"
+          envFrom:
+          - secretRef:
+              name: infra-admin-credentials
+
+          ## Infra connector service account configurations
+          serviceAccount:
+            ## Create the service account
+            create: true
+
+            ## Name of the service account to use instead of the default templated fullname
+            name: ""
+
+            ## Annotations to apply to the service account
+            annotations: {}
+
+            ## Automount service account API credentials
+            automountServiceAccountToken: true
+
+          ## Labels to apply to the connector pod
+          podLabels: {}
+
+          ## Annotations to apply to the connector pod
+          podAnnotations: {}
+
+          ## Security context for the connector pod
+          podSecurityContext: {}
+          #   fsGroup: 2000
+
+          ## Security context for the connector container
+          securityContext:
+            readOnlyRootFilesystem: true
+            # runAsUser: 999
+
+          ## Liveness probe for the default backend
+          ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#configure-probes
+          livenessProbe:
+            ## Minimum number of consecutive successes before the probe is considered successful
+            successThreshold: 1
+
+            ## Minimum number of consecutive failures before the probe is considered failed
+            failureThreshold: 5
+
+            ## Seconds after container starts before the probe is initialized
+            initialDelaySeconds: 20
+
+            ## Seconds between consecutive probes
+            periodSeconds: 15
+
+            ## Seconds before the probe times out
+            timeoutSeconds: 3
+
+          ## Readiness probe for the default backend
+          ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#configure-probes
+          readinessProbe:
+            ## Minimum number of consecutive successes before the probe is considered successful
+            successThreshold: 1
+
+            ## Minimum number of consecutive failures before the probe is considered failed
+            failureThreshold: 3
+
+            ## Seconds after container starts before the probe is initialized
+            initialDelaySeconds: 10
+
+            ## Seconds between consecutive probes
+            periodSeconds: 10
+
+            ## Seconds before the probe times out
+            timeoutSeconds: 1
+          volumes:
+          - name: secret-volume
+            secret:
+              secretName: infra-admin-credentials
+          volumeMounts:
+          - name: secret-volume
+            mountPath: /mnt/secret
+            readOnly: true
+
+          ## Infra connector service configurations
+          service:
+            ## Service type
+            ## Ref: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
+            type: LoadBalancer
+
+            ## Service labels
+            labels: {}
+
+            ## Service annotations
+            annotations: {}
+
+            ## HTTP service port
+            port: 80
+
+            ## HTTP service port name
+            portName: http
+
+            ## HTTP service node port
+            ## No effect unless `connector.service.type` is `NodePort`
+            nodePort: 30080
+
+            ## HTTPS service port
+            securePort: 8443
+
+            ## HTTPS service port name
+            securePortName: https
+
+            ## HTTPS service node port
+            ## No effect unless `connector.service.type` is `NodePort`
+            secureNodePort: 30443
+
+            ## IP of the load balancer to create
+            ## No effect unless `connector.service.type` is `LoadBalancer`
+            loadBalancerIP: ""
+
+            ## Source IP ranges that can access the service
+            loadBalancerSourceRanges: []
+
+            ## External IPs that can be used to access the service
+            externalIPs: []
+
+            ## Control how traffic from external sources are routed
+            ## Supports `Cluster` or `Local`
+            externalTrafficPolicy: ""
+
+            ## Control session-based routing of client connections
+            ## Supports `ClientIP` or `None`
+            sessionAffinity: ""
+
+          ## Metrics configurations
+          metrics:
+            ## Enable connector metrics
+            enabled: false
+
+            ## Metrics service configurations
+            service:
+              ## Metrics service labels
+              labels: {}
+
+              ## Metrics service annotations
+              annotations: {}
+
+              ## Metrics service port
+              port: 9090
+
+              ## Metrics service port name
+              portName: metrics
+
+            ## Service monitor configurations
+            serviceMonitor:
+              ## Enable service monitor
+              enabled: false
+
+              ## Service monitor labels
+              labels: {}
+
+              ## Service monitor annotations
+              annotations: {}
+
+              ## Service monitor scrape interval
+              interval: 30s
+
+              ## Prometheus relabel configs to apply to samples before scraping
+              relabelings: []
+
+              ## Prometheus metric relabel configs to apply to samples before ingesting
+              metricRelabelings: []
+
+            ## Prometheus rule configurations
+            prometheusRule:
+
+              ## Enable Prometheus rule
+              enabled: false
+
+              ## Prometheus rule labels
+              labels: {}
+
+              ## Prometheus rule annotations
+              annotations: {}
+
+              ## Additional labels for default rules
+              additionalRuleLabels: {}
+
+              ## Additional annotations for default rules
+              additionalRuleAnnotations: {}
+
+              ## Additional alerting or recording rules
+              additionalRules: []
+                # - alert: InstanceDown
+                #   expr: absent(up == 1)
+                #   labels: {}
+                #   annotations: {}
+                #   for: 5m
+                # - record: count:up1
+                #   expr: count(up == 1)
+
+          ## Resource requests and limits for the connector pod
+          resources:
+            requests:
+              cpu: 200m
+              memory: 128Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
+
+          ## Infra connector autoscaling configurations
+          autoscaling:
+            ## Enable connector autoscaling
+            enabled: false
+
+            ## Minimum number of connector pods to run
+            minReplicas: 1
+            maxReplicas: 3
+            targetCPUUtilizationPercentage: 50
+            targetMemoryUtilizationPercentage: 50
+          nodeSelector: {}
+          tolerations: []
+          affinity: {}
+          config:
+            addr:
+              https: 9443
+              metrics: 9091
+          ## Infra server access key
+          #   accessKey: ""
+          ## Infra server address
+          #   server: ""
+
+          ## Destination name
+          #   name: ""
+        postgres:
+
+          ## Deploy postgres
+          enabled: true
+          componentName: postgres
+          replicas: 1
+          image:
+            repository: postgres
+            tag: 14-alpine
+            pullPolicy: IfNotPresent
+          imagePullSecrets: []
+          labels: {}
+          env: []
+          ## ConfigMap or Secret references containing environment variables to pass to the postgres container
+          ## Ref: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/
+          envFrom:
+          - secretRef:
+            name: infra-admin-credentials
+          serviceAccount:
+
+            ## Create the service account
+            create: true
+
+            ## Name of the service account to use instead of the default templated fullname
+            name: ""
+
+            ## Annotations to apply to the service account
+            annotations: {}
+
+            ## Automount service account API credentials
+            automountServiceAccountToken: true
+
+          ## Labels to apply to the postgres pod
+          podLabels: {}
+
+          ## Annotations to apply to the postgres pod
+          podAnnotations: {}
+
+          ## Security context for the postgres pod
+          podSecurityContext: {}
+          #   fsGroup: 2000
+
+          ## Security context for the postgres container
+          securityContext: {}
+          #   runAsUser: 999
+          #   runAsGroup: 999
+          #   readOnlyRootFilesystem: true
+
+          ## Liveness probe for the default backend
+          ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#configure-probes
+          livenessProbe:
+
+            ## Minimum number of consecutive successes before the probe is considered successful
+            successThreshold: 1
+
+            ## Minimum number of consecutive failures before the probe is considered failed
+            failureThreshold: 3
+
+            ## Seconds after container starts before the probe is initialized
+            initialDelaySeconds: 10
+
+            ## Seconds between consecutive probes
+            periodSeconds: 10
+
+            ## Seconds before the probe times out
+            timeoutSeconds: 1
+
+          ## Readiness probe for the default backend
+          ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#configure-probes
+          readinessProbe:
+
+            ## Minimum number of consecutive successes before the probe is considered successful
+            successThreshold: 1
+
+            ## Minimum number of consecutive failures before the probe is considered failed
+            failureThreshold: 3
+
+            ## Seconds after container starts before the probe is initialized
+            initialDelaySeconds: 10
+
+            ## Seconds between consecutive probes
+            periodSeconds: 10
+
+            ## Seconds before the probe times out
+            timeoutSeconds: 1
+
+          ## Additional volumes to attach to the postgres pod
+          volumes:
+          - name: secret-volume
+            secret:
+              secretName: infra-admin-credentials
+          volumeMounts:
+          - name: secret-volume
+            mountPath: /mnt/secret
+            readOnly: true
+          ## Postgres service configurations
+          service:
+            ## Service type
+            ## Ref: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
+            type: ClusterIP
+
+            ## Service labels
+            labels: {}
+
+            ## Service annotations
+            annotations: {}
+
+            ## Postgres service port
+            port: 5432
+
+            ## HTTP service port name
+            portName: postgres
+
+            ## HTTP service node port
+            ## No effect unless `postgres.service.type` is `NodePort`
+            nodePort: 35432
+
+            ## IP of the load balancer to create
+            ## No effect unless `postgres.service.type` is `LoadBalancer`
+            loadBalancerIP: ""
+
+            ## Source IP ranges that can access the service
+            loadBalancerSourceRanges: []
+
+            ## External IPs that can be used to access the service
+            externalIPs: []
+
+            ## Control how traffic from external sources are routed
+            ## Supports `Cluster` or `Local`
+            externalTrafficPolicy: ""
+
+            ## Control session-based routing of client connections
+            ## Supports `ClientIP` or `None`
+            sessionAffinity: ""
+
+          ## Postgres persistence configurations
+          persistence:
+
+            ## Enable postgres persistence
+            enabled: true
+
+            ## Persistence labels
+            labels: {}
+
+            ## Persistence annotations
+            annotations: {}
+            className: ""
+            resources:
+              requests:
+                storage: 2Gi
+          resources:
+            requests:
+              cpu: 250m
+              memory: 128Mi
+            limits:
+              cpu: 350m
+              memory: 256Mi
+          nodeSelector: {}
+          tolerations: []
+          affinity: {}
+          dbName: infra
+          dbUsername: infra
+          dbPasswordSecret: ""
+        server:
             grants:
               - user: infra@gruber.dev.br
                 role: admin
