@@ -15,8 +15,8 @@ spec:
       values: |
         connector:
           config:
-            accessKey: env:ACCESS_KEY
-            server: env:CLUSTER_IP
+            accessKey: env:INFRA_ACCESS_KEY
+            server: env:INFRA_CLUSTER_IP
             name: main
             skipTLSVerify: true
         server:
