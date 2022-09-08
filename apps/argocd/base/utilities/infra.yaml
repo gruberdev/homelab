@@ -944,13 +944,6 @@ spec:
             resources:
               requests:
                 storage: 2Gi
-          resources:
-            requests:
-              cpu: 250m
-              memory: 128Mi
-            limits:
-              cpu: 350m
-              memory: 256Mi
           nodeSelector: {}
           tolerations: []
           affinity: {}
