@@ -36,12 +36,12 @@
 > |   [Wyze API Bridge][service-wyze]      |   `Monitoring`  |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-wyze]      |  ![][wyze-badge]    |
 > |  [Changedetection.io][change-uri]      |   `Monitoring`  |  <sub>[More details][homelab-changedetection]</sub> |  ![][argocd-changedetection] | ![][change-badge]  |
 > |            [n8n][n8n-uri]              |    `Services`   |        <sub>[More details][homelab-n8n]</sub>       |        ![][argocd-n8n]       |  ![][n8n-badge]     |
-> |            Hashicorp's Vault           |    `Security`   |       <sub>[Chart Values][homelab-vault]</sub>      |       ![][argocd-vault]      |  ![][vault-badge]   |
-> |             Flame Dashboard            |    `Services`   |       <sub>[More details][homelab-flame]</sub>      |       ![][argocd-flame]      | ![][flame-badge]    |
-> |              Unifi Poller              |   `Monitoring`  |      <sub>[More details][homelab-poller]</sub>      |      ![][argocd-poller]      | ![][poller-badge]  |
-> |   Cloudflared <sub>(as proxies)</sub>  |   `Networking`  | <sub>[More details][homelab-cloudflared]</sub>      |                              |   ![][cfd-badge]   |
-> |                   Wakapi               |    `Services`   |        <sub>[More details][homelab-wakapi]</sub>    |        ![][argocd-wakapi]    | ![][wakapi-badge]   |
-> | [RSS Gen/Proxy][service-rssgen]           |    `Services`   |        <sub>[More details][homelab-rssgen]</sub>    |        ![][argocd-rss]    |  ![][rssgen-badge]   |
+> |     [Hashicorp's Vault][vault-uri]     |    `Security`   |       <sub>[Chart Values][homelab-vault]</sub>      |       ![][argocd-vault]      |  ![][vault-badge]   |
+> |       [Flame Dashboard][flame-uri]     |    `Services`   |       <sub>[More details][homelab-flame]</sub>      |       ![][argocd-flame]      | ![][flame-badge]    |
+> |     [Unifi Poller][poller-uri]         |   `Monitoring`  |      <sub>[More details][homelab-poller]</sub>      |      ![][argocd-poller]      | ![][poller-badge]  |
+> |   [Cloudflared <sub>(as proxies)</sub>][cf-uri]  |   `Networking`  | <sub>[More details][homelab-cloudflared]</sub>  |                        |   ![][cfd-badge]   |
+> |         [Wakapi][wakapi-uri]           |    `Services`   |        <sub>[More details][homelab-wakapi]</sub>    |        ![][argocd-wakapi]    | ![][wakapi-badge]   |
+> | [RSS Gen/Proxy][service-rssgen]        |    `Services`   |        <sub>[More details][homelab-rssgen]</sub>    |        ![][argocd-rss]       |  ![][rssgen-badge]   |
 > |    [RSS Hub][service-rsshub]           |    `Services`   |        <sub>[More details][homelab-rsshub]</sub>    |        ![][argocd-rss]       | ![][rsshub-badge]   |
 > |           [Beets][service-beets]                        |   `Media`  |  <sub>[More details][homelab-beets]</sub> |  ![][argocd-beets]        |   ![][beets-badge]   |
 > |           [Lidarr][service-lidarr]                       |   `Media`  |  <sub>[More details][homelab-lidarr]</sub> |  ![][argocd-lidarr]      |  ![][lidarr-badge]   |
@@ -57,15 +57,17 @@
 </summary>
 
 <br>
-  
-  - [argocd-notifications][argocd-notifications-uri] &nbsp; <sub>Alerts the cluster administrator through multiple channels about events related to ArgoCD applications and deployments.</sub>
-- [argocd-image-updater][argocd-updater-uri] &nbsp; <sub>Used to automatically update a deployment's image version tag and write it back to the Github repository without human intervention. [Example.][argocd-updater-ex]</sub>
-- [descheduler][descheduler-uri] &nbsp; <sub>Monitors if workloads are evenly distributed through nodes and cleans failed pods that remained as orphans/stuck.</sub>
-- [kube-fledged][kube-fledged-uri] &nbsp; <sub>Allows for image caching on every node in the cluster, in order to speed up deployments of already existing applications.</sub>
-- [kubenurse][kubenurse-uri] &nbsp; <sub>Allows for image caching on every node in the cluster, in order to speed up deployments of already existing applications.</sub>
-- [reflector][reflector-uri] &nbsp; <sub>Monitors networking conditions inside the cluster and exposes its collected data metrics to Prometheus.</sub>
-- [reloader][reloader-uri] &nbsp; <sub>Everytime a `configMap` or a `Secret` resource is created or edited, every resource that uses them is reloaded to include them automatically.</sub>
-- [botkube][botkube-uri] &nbsp; <sub>Monitors cluster events and sends a message through Discord or Slack, capable of alerting for every kind of cluster-related issue.</sub>
+
+> - [argocd-notifications][argocd-notifications-uri] &nbsp; <sub>Alerts the cluster administrator through multiple channels about events related to ArgoCD applications and deployments.</sub>
+> - [argocd-image-updater][argocd-updater-uri] &nbsp; <sub>Automatically update a deployment's image version tag and write it back to the Github repository without human intervention. [Example.][argocd-updater-ex]</sub>
+> - [descheduler][descheduler-uri] &nbsp; <sub>Monitors if workloads are evenly distributed through nodes and cleans failed pods that remained as orphans/stuck.</sub>
+> - [kube-fledged][kube-fledged-uri] &nbsp; <sub>Allows for image caching on every node in the cluster, in order to speed up deployments of already existing applications.</sub>
+> - [kubenurse][kubenurse-uri] &nbsp; <sub>Allows for image caching on every node in the cluster, in order to speed up deployments of already existing applications.</sub>
+> - [reflector][reflector-uri] &nbsp; <sub>Monitors networking conditions inside the cluster and exposes its collected data metrics to Prometheus.</sub>
+> - [reloader][reloader-uri] &nbsp; <sub>Everytime a `configMap` or a `Secret` resource is created or edited, every resource that uses them is reloaded to include them automatically.</sub>
+> - [botkube][botkube-uri] &nbsp; <sub>Monitors cluster events and sends a message through Discord or Slack, capable of alerting for every kind of cluster-related issue.</sub>
+> - [node-problem-detector][node-problem-uri] &nbsp; <sub>Detects if a node has been affected by an issue such as faulty hardware or kernel deadlocks, preventing scheduling.</sub>
+> - [node-feature-discovery][feature-discovery-uri] &nbsp; <sub>Detects hardware information, changes and other data and uses that to increase efficiency of the cluster.</sub>
 
 ---
 
@@ -78,10 +80,10 @@
 
 <br>
 
-> - [drone-skip-pipeline][drone-skip-pipeline-uri] <sub>(*Skip Drone CI steps based on files changes*)</sub>
-> - [drone-github-comment][drone-github-uri] <sub>(*It takes the output of a step and comments on a Github pull request. [Example.][github-comment-example]*)</sub>
-> - [yamllint][yamllint-uri] <sub>(*A linter for YAML files*)</sub>
-> - [markdown-link-check][markdown-link-check-uri] <sub>(*Checks if markdown links are responding correctly*)</sub>
+> - [drone-skip-pipeline][drone-skip-pipeline-uri] &nbsp; <sub>Skip Drone CI steps based on files changes</sub>
+> - [drone-github-comment][drone-github-uri] &nbsp; <sub>It takes the output of a step and comments on a Github pull request. [Example.][github-comment-example]</sub>
+> - [yamllint][yamllint-uri] &nbsp; <sub>A linter for YAML files</sub>
+> - [markdown-link-check][markdown-link-check-uri] &nbsp; <sub>Checks if markdown links are responding correctly</sub>
 
 ---
 
@@ -140,7 +142,7 @@
 [service-metabase]: https://www.metabase.com/
 [service-ha]: https://www.home-assistant.io/
 [service-adguard]: https://adguard.com/en/adguard-home/overview.html
-[service-unifi]: https://github.com/linuxserver/docker-unifi-controller
+[service-unifi]: https://github.com/jacobalberty/unifi-docker
 [tail-uri]: https://tailscale.com/kb/1151/what-is-tailscale/
 [service-n8n]: https://n8n.io/
 [p-uri]: https://github.com/zalando/postgres-operator
@@ -148,6 +150,11 @@
 [change-uri]: https://github.com/dgtlmoon/changedetection.io
 [redis-uri]: https://github.com/spotahome/redis-operator
 [n8n-uri]: https://n8n.io/
+[vault-uri]: https://github.com/hashicorp/vault
+[flame-uri]: https://github.com/pawelmalak/flame
+[poller-uri]: hhttps://github.com/unpoller/unpoller
+[cf-uri]: https://github.com/cloudflare/cloudflared
+[wakapi-uri]: https://github.com/muety/wakapi
 
 <!-- Shield Badges -->
 
@@ -164,6 +171,8 @@
 [reloader-uri]: https://github.com/stakater/Reloader
 [botkube-uri]: https://botkube.io/
 [argocd-notifications-uri]: https://argocd-notifications.readthedocs.io/en/stable/
+[node-problem-uri]: https://github.com/kubernetes/node-problem-detector
+[feature-discovery-uri]: https://github.com/kubernetes-sigs/node-feature-discovery
 
 <!-- Repository/CI Utilities -->
 

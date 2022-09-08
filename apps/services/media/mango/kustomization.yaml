@@ -1,30 +1,29 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
 bases:
 - ./base
 - https://github.com/gruberdev/homelab/apps/networking/tailscale
-commonAnnotations:
-  reloader.stakater.com/auto: 'true'
-kind: Kustomization
-namespace: homeassistant
+
+namespace: services
+
 patches:
 - path: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/tailscale/patch.yaml
   target:
     kind: Deployment
-    name: home-assistant
 - patch: |-
     - op: replace
       path: "/spec/template/spec/containers/0/env/1"
       value:
         name: TS_HOSTNAME
-        value: "homeassistant"
+        value: "manga.media"
     - op: replace
       path: "/spec/template/spec/containers/0/env/2"
       value:
         name: DEST_PORT
-        value: "8123"
+        value: "9000"
   target:
     kind: Deployment
-    name: home-assistant
-images:
-- name: homeassistant/home-assistant
-  newTag: "2022.9"
+    name: mango-server
+
+commonAnnotations:
+  reloader.stakater.com/auto: "true"

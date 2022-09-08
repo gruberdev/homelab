@@ -1,0 +1,48 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: infra
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: cluster
+  source:
+    repoURL: https://helm.infrahq.com
+    chart: infra
+    targetRevision: 0.20.1
+    helm:
+      releaseName: infra
+      values: |
+        server:
+          config:
+            users:
+              - name: infra@gruber.dev.br
+                password: env:INFRA_ADMIN_PASSWORD
+            grants:
+              - user: infra@gruber.dev.br
+                role: admin
+                resource: infra
+          envFrom:
+            - secretRef:
+                name: infra-admin-credentials
+  destination:
+    namespace: kube-system
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: true
+    syncOptions:
+    - Validate=false
+    - CreateNamespace=false
+    - PrunePropagationPolicy=foreground
+    - PruneLast=false
+    - ApplyOutOfSyncOnly=false
+    - Prune=true
+    retry:
+      limit: -1
+      backoff:
+        duration: 20s
+        factor: 2
+        maxDuration: 15m
