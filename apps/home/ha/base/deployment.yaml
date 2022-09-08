@@ -23,6 +23,7 @@ spec:
       initContainers:
         - name: git-clone
           image: alpine/git
+          command: ["/bin/sh", "-c"]
           args:
             - cd /repo;
               git fetch --all;
