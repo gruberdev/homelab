@@ -74,9 +74,14 @@ spec:
         podSecurityPolicy:
           create: false
         containerSecurityContext:
-          privileged: true  # Give permission to nsenter /proc/1/ns/mnt
-          allowPrivilegeEscalation: true
-        resources: {}
+          privileged: true
+        resources:
+          limits:
+            cpu: 350m
+            memory: 350Mi
+          requests:
+            cpu: 15m
+            memory: 128Mi
         metrics:
           create: false
           namespace: ""
