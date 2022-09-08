@@ -315,28 +315,10 @@ spec:
             #   clientSecret: env:OKTA_CLIENT_SECRET
 
             ## Additional grants to configure
-            grants: []
-            # - user: ""      # one of ['user', 'group'] is required
-            #   group: ""     # one of ['user', 'group'] is required
-            #   resource: ""  # required, resource being granted access
-            #   provider: ""  # required, references the name given to the provider
-            #   role: ""      # optional, if omitted, Infra will only grant authentication to the resource
-
-            ## Example
-            # Grant user 'admin@example.com' Infra admin
-            # - user: admin@example.com
-            #   role: admin
-            #   resource: infra
-
-            # Grant user 'admin@example.com' edit to Kubernetes cluster 'docker-desktop'
-            # - user: admin@example.com
-            #   role: edit
-            #   resource: kubernetes.docker-desktop
-
-            # Grant group 'Everyone' view to Kubernetes cluster 'docker-desktop', namespace 'default'
-            # - group: Everyone
-            #   role: view
-            #   resource: kubernetes.docker-desktop.default
+            grants:
+              - user: env:INFRA_ADMIN_USERNAME
+                role: admin
+                resource: infra
 
             ## Additional users to configure
             users:
@@ -950,14 +932,6 @@ spec:
           dbName: infra
           dbUsername: infra
           dbPasswordSecret: ""
-        server:
-            grants:
-              - user: infra@gruber.dev.br
-                role: admin
-                resource: infra
-          envFrom:
-            - secretRef:
-                name: infra-admin-credentials
   destination:
     namespace: kube-system
     name: in-cluster
