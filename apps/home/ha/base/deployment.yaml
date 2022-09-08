@@ -21,20 +21,21 @@ spec:
       nodeSelector:
         beta.kubernetes.io/arch: amd64
       initContainers:
-        - name: git-clone
-          image: alpine/git
-          command: ["/bin/sh", "-c"]
-          args:
-            - cd /repo &&
-              git fetch --all &&
-              git reset --hard origin/main
-          securityContext:
-            runAsUser: 65535
-            allowPrivilegeEscalation: false
-            readOnlyRootFilesystem: true
+        - name: git-sync
+          image: k8s.gcr.io/git-sync/git-sync:v3.3.4
+          imagePullPolicy: IfNotPresent
           volumeMounts:
-            - mountPath: /repo
-              name: config-volume
+          - name: config-volume
+            mountPath: /tmp/repository
+          env:
+          - name: GIT_SYNC_REPO
+            value: https://github.com/gruberdev/homeassistant
+          - name: GIT_SYNC_ROOT
+            value: /tmp/repository
+          - name: GIT_SYNC_PERMISSIONS
+            value: "0777"
+          - name: GIT_SYNC_ONE_TIME
+            value: "true"
       containers:
         - env:
             - name: TZ
