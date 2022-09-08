@@ -43,18 +43,18 @@ steps:
       - clone
 
   - name: k8s-resources
-    image: deck15/kubeval-tools:latest
+    image: ghcr.io/yannh/kubeconform:v0.4.14
     commands:
-      - find . -maxdepth 10 -name \*svc.yaml -exec kubeval --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
-      - find . -maxdepth 10 -name deployment.yaml -exec kubeval --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
-      - find . -maxdepth 10 -name \*secret.yaml -exec kubeval --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
-      - find . -maxdepth 10 -name cm.yaml -exec kubeval --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
-      - find . -maxdepth 10 -name pvc.yaml -exec kubeval --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
-      - find . -maxdepth 10 -name pv.yaml -exec kubeval --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
-      - find . -maxdepth 10 -name role.yaml -exec kubeval --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
-      - find . -maxdepth 10 -name sa.yaml -exec kubeval --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
-      - find . -maxdepth 10 -name cr.yaml -exec kubeval --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
-      - find . -maxdepth 10 -name rb.yaml -exec kubeval --exit-on-error -v 1.24.4 -s https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/ {} \;
+      - find . -maxdepth 10 -name \*svc.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "1.24.4" -schema-location default {} \;
+      - find . -maxdepth 10 -name deployment.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "1.24.4" -schema-location default {} \;
+      - find . -maxdepth 10 -name \*secret.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "1.24.4" -schema-location default {} \;
+      - find . -maxdepth 10 -name cm.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "1.24.4" -schema-location default {} \;
+      - find . -maxdepth 10 -name pvc.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "1.24.4" -schema-location default {} \;
+      - find . -maxdepth 10 -name pv.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "1.24.4" -schema-location default {} \;
+      - find . -maxdepth 10 -name role.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "1.24.4" -schema-location default {} \;
+      - find . -maxdepth 10 -name sa.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "1.24.4" -schema-location default {} \;
+      - find . -maxdepth 10 -name cr.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "1.24.4" -schema-location default {} \;
+      - find . -maxdepth 10 -name rb.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "1.24.4" -schema-location default {} \;
     depends_on:
       - skip
 
@@ -117,7 +117,7 @@ trigger:
 
 steps:
   - name: YAML Validate
-    image: sdesbure/yamllint:latest
+    image: pipelinecomponents/yamllint
     commands:
       - yamllint -c ./.yamllint .
 
