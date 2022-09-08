@@ -42,6 +42,7 @@ resources:
 
 # - base/services/media/beets.yaml
 # - base/services/media/lidarr.yaml
+# - base/services/media/mango.yaml
 
 - https://github.com/gruberdev/homelab/apps/networking/tailscale
 - https://github.com/gruberdev/homelab/apps/networking/cloudflared
