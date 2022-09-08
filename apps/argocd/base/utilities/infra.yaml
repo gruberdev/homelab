@@ -360,9 +360,8 @@ spec:
           imagePullSecrets: []
           # - name: "image-pull-secret"
           labels: {}
-          env: []
           envFrom:
-          - secretRef:
+            - secretRef:
               name: infra-admin-credentials
 
           ## Infra ui service account configurations
