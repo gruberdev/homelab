@@ -54,6 +54,11 @@ spec:
               port: 8123
             timeoutSeconds: 3
           name: home-assistant
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  ['/bin/sh', '-c', 'cp -rf /config/homeassistant/* /config']
           ports:
             - containerPort: 8123
               name: api
