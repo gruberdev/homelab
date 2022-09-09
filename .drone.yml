@@ -121,12 +121,6 @@ steps:
     commands:
       - yamllint -c ./.yamllint .
 
-  - name: Check Markdowkn Links
-    image: node:lts
-    commands:
-      - npm i -g markdown-link-check
-      - find . -name "*.md" | xargs -n1 markdown-link-check
-
 # ---
 
 # kind: pipeline
