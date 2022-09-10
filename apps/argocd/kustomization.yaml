@@ -13,6 +13,7 @@ resources:
 - base/core/zalando.yaml
 - base/core/redis.yaml
 # - base/core/router.yaml
+# - base/core/mysql.yaml
 
 - base/utilities/reloader.yaml
 - base/utilities/reflector.yaml
@@ -40,10 +41,14 @@ resources:
 # - base/services/rss.yaml
 # - base/services/metabase.yaml
 
+# - base/matrix/synapee.yaml
+# - base/matrix/element.yaml
+
 # - base/services/media/beets.yaml
 # - base/services/media/lidarr.yaml
 # - base/services/media/mango.yaml
 # - base/services/media/jellyfin.yaml
+# - base/services/media/qbittorrent.yaml
 
 - https://github.com/gruberdev/homelab/apps/networking/tailscale
 - https://github.com/gruberdev/homelab/apps/networking/cloudflared

@@ -1,0 +1,54 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: element
+  labels:
+    app: element
+  annotations:
+    link.argocd.argoproj.io/external-link: https://chat.gr.wtf
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: element
+  template:
+    metadata:
+      labels:
+        app: element
+    spec:
+      containers:
+        - name: element
+          image: vectorim/element-web:v1.11.4
+          envFrom:
+            - configMapRef:
+                name: element-cm
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          volumeMounts:
+            - name: ui-config
+              mountPath: /app/config.json
+              subPath: config.json
+          resources:
+            requests:
+              cpu: "300m"
+              memory: "512Mi"
+            limits:
+              cpu: "600m"
+              memory: "720Mi"
+      volumes:
+        - name: ui-config
+          configMap:
+            name: element-cm
