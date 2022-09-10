@@ -1,0 +1,84 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jellyfin
+  labels:
+    app: jellyfin
+  annotations:
+    link.argocd.argoproj.io/external-link: http://media.tv
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: jellyfin
+  template:
+    metadata:
+      labels:
+        app: jellyfin
+    spec:
+      nodeSelector:
+        kubernetes.io/arch: amd64
+        kubernetes.io/hostname: node-one
+      containers:
+        - name: beets
+          image: linuxserver/jellyfin:amd64-version-10.8.4-1
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8096
+            initialDelaySeconds: 60
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 3
+            periodSeconds: 30
+          envFrom:
+            - configMapRef:
+                name: jellyfin-cm
+          ports:
+            - name: http
+              containerPort: 8096
+              protocol: TCP
+            - name: https
+              containerPort: 8920
+              protocol: TCP
+            - name: discovery
+              containerPort: 7359
+              protocol: UDP
+            - name: dnla
+              containerPort: 1900
+              protocol: UDP
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 1024Mi
+            requests:
+              cpu: 400m
+              memory: 512Mi
+          volumeMounts:
+            - name: dev-dri
+              mountPath: /dev/dri
+            - name: movies
+              mountPath: /movies
+            - name: anime
+              mountPath: /anime
+            - name: config
+              mountPath: /config
+          securityContext:
+            privileged: true
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: jellyfin-storage
+        - name: movies
+          persistentVolumeClaim:
+            claimName: movies-storage
+        - name: anime
+          persistentVolumeClaim:
+            claimName: anime-storage
+        - name: dev-dri
+          hostPath:
+            path: /dev/dri

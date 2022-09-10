@@ -23,9 +23,9 @@ resources:
 
 - base/apps/vault.yaml
 - base/apps/ha.yaml
-# - base/apps/wyze.yaml
 - base/apps/unifi.yaml
 # - base/apps/adguard.yaml
+# - base/apps/wyze.yaml
 
 - base/monitoring/kuma.yaml
 # - base/monitoring/flame.yaml
@@ -43,6 +43,7 @@ resources:
 # - base/services/media/beets.yaml
 # - base/services/media/lidarr.yaml
 # - base/services/media/mango.yaml
+# - base/services/media/jellyfin.yaml
 
 - https://github.com/gruberdev/homelab/apps/networking/tailscale
 - https://github.com/gruberdev/homelab/apps/networking/cloudflared
