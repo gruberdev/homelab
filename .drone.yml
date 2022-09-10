@@ -21,6 +21,14 @@ tolerations:
   operator: "Equal"
   value: "arm"
   effect: NoSchedule
+- key: kubernetes.io/arch
+  operator: "Equal"
+  value: "arm64"
+  effect: NoSchedule
+- key: kubernetes.io/arch
+  operator: "Equal"
+  value: "arm"
+  effect: NoSchedule
 
 steps:
   - name: clone
@@ -102,6 +110,14 @@ tolerations:
   value: "arm64"
   effect: NoSchedule
 - key: beta.kubernetes.io/arch
+  operator: "Equal"
+  value: "arm"
+  effect: NoSchedule
+- key: kubernetes.io/arch
+  operator: "Equal"
+  value: "arm64"
+  effect: NoSchedule
+- key: kubernetes.io/arch
   operator: "Equal"
   value: "arm"
   effect: NoSchedule
