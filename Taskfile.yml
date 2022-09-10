@@ -9,6 +9,7 @@ includes:
   vault: ./tasks/vault.yaml
   drone: ./tasks/drone.yaml
   vultr: ./tasks/vultr.yaml
+  terraform: ./tasks/terraform.yaml
   secrets: ./tasks/secrets.yaml
 
 vars:
@@ -61,6 +62,15 @@ tasks:
         msg: "kustomize {{.PATH_ERROR}}"
     cmds:
       - yamllint -c ./.yamllint .
+
+  docs:gen:
+    preconditions:
+      - sh: 'which terraform-docs'
+        msg: 'terraform-docs {{.PATH_ERROR}}'
+    dir: terraform
+    desc: Build documentation using Terraform-docs
+    cmds:
+      - terraform-docs markdown -c .terraform-docs.yaml . --output-file README.md
 
   local:
     desc: local-path storage

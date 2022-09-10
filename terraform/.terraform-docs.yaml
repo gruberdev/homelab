@@ -1,0 +1,29 @@
+formatter: markdown
+
+sections:
+  show:
+    - inputs
+    - outputs
+    - modules
+
+output:
+  file: README.md
+  mode: inject
+  template: |-
+    <!-- BEGIN_TF_DOCS -->
+    {{ .Content }}
+    <!-- END_TF_DOCS -->
+sort:
+  enabled: true
+  by: name
+
+settings:
+  anchor: false
+  indent: 3
+  color: true
+  html: true
+  escape: true
+  default: true
+  required: false
+  type: true
+  sensitive: true
