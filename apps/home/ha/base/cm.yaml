@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: git-ha-cm
+data:
+  GIT_SYNC_REPO: "https://github.com/gruberdev/homeassistant"
+  GIT_SYNC_ROOT: "/tmp/repository"
+  GIT_SYNC_PERMISSIONS: "0777"
+  GIT_SYNC_ONE_TIME: "true"
+  GIT_SYNC_BRANCH: "main"
