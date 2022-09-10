@@ -13,12 +13,12 @@ crash.log
 debug.log
 
 # Terraform files/Misc
-override.tf
-override.tf.json
+terraform/override.tf
+terraform/override.tf.json
 *_override.tf
 *_override.tf.json
-.terraformrc
-terraform.rc
+terraform/.terraformrc
+terraform/terraform.rc
 config/tls/base/tls-secret.yaml
 .vscode
 .vscode/*
@@ -27,11 +27,13 @@ config/tls/base/tls-secret.yaml
 !.vscode/launch.json
 !.vscode/extensions.json
 *.code-workspace
-.terraform.lock.hcl
-terraform/*.terraform
-*.out
+terraform/.terraform.lock.hcl
+terraform/terraform/*.terraform
+terraform/*.out
 .env
 nohup.out
+terraform/secrets/*
+!terraform/secrets/.gitkeep
 
 postgres/*
 !postgres/.gitkeep
