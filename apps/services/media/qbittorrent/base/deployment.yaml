@@ -2,83 +2,82 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: jellyfin
+  name: torrent
   labels:
-    app: jellyfin
+    app: torrent
   annotations:
-    link.argocd.argoproj.io/external-link: http://media.tv
+    link.argocd.argoproj.io/external-link: http://media.downloads
 spec:
   replicas: 1
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      app: jellyfin
+      app: torrent
   template:
     metadata:
       labels:
-        app: jellyfin
+        app: torrent
     spec:
-      nodeSelector:
-        kubernetes.io/arch: amd64
-        kubernetes.io/hostname: node-one
       containers:
-        - name: jellyfin
-          image: linuxserver/jellyfin:amd64-version-10.8.4-1
+        - name: torrent
+          image: linuxserver/qbittorrent:4.4.5
           imagePullPolicy: IfNotPresent
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+              scheme: HTTP
+            periodSeconds: 10
+            failureThreshold: 3
           livenessProbe:
             httpGet:
               path: /
-              port: 8096
+              port: http
+              scheme: HTTP
             initialDelaySeconds: 60
-            timeoutSeconds: 5
-            successThreshold: 1
-            failureThreshold: 3
-            periodSeconds: 30
+            periodSeconds: 10
+            failureThreshold: 5
           envFrom:
             - configMapRef:
-                name: jellyfin-cm
+                name: torrent-cm
           ports:
-            - name: http
-              containerPort: 8096
+            - name: ui
+              containerPort: 8080
               protocol: TCP
-            - name: https
-              containerPort: 8920
+            - name: connection-tcp
+              containerPort: 6881
               protocol: TCP
-            - name: discovery
-              containerPort: 7359
+            - name: connection-udp
+              containerPort: 6881
               protocol: UDP
-            - name: dnla
-              containerPort: 1900
+            - name: bt-tcp
+              containerPort: 31136
+              protocol: TCP
+            - name: bt-udp
+              containerPort: 31136
               protocol: UDP
           resources:
             limits:
-              cpu: 1000m
-              memory: 1024Mi
-            requests:
               cpu: 400m
               memory: 512Mi
+            requests:
+              cpu: 200m
+              memory: 256Mi
           volumeMounts:
-            - name: dev-dri
-              mountPath: /dev/dri
             - name: movies
               mountPath: /movies
             - name: anime
               mountPath: /anime
             - name: config
               mountPath: /config
-          securityContext:
-            privileged: true
       volumes:
         - name: config
           persistentVolumeClaim:
-            claimName: jellyfin-storage
+            claimName: torrent-storage
         - name: movies
           persistentVolumeClaim:
             claimName: movies-storage
         - name: anime
           persistentVolumeClaim:
             claimName: anime-storage
-        - name: dev-dri
-          hostPath:
-            path: /dev/dri

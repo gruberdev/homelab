@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: torrent-svc
+  labels:
+    app: torrent
+spec:
+  type: ClusterIP
+  selector:
+    app: torrent
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+      protocol: TCP
