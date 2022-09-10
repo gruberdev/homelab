@@ -28,6 +28,7 @@
 > |:--------------------------------------:|:---------------:|:---------------------------------------------------:|:----------------------------:|:----------------------:|
 > |          [Drone CI][drone-uri]         | `CI/CD Tooling` |       <sub>[More details][homelab-drone]</sub>      |       ![][argocd-drone]      | ![][drone-badge]    |
 > |          [ArgoCD][argocd-uri]          | `CI/CD Tooling` |      <sub>[More details][homelab-argocd]</sub>      |       ![][argocd-core]       | ![][argo-badge]     |
+> | [MySQL Operator][mysql-uri] |   `Databases`   |      <sub>[More details][homelab-mysql]</sub>     |      ![][argocd-mysql]     | ![][mysql-badge]  |
 > | [<sub>Zalando PostgreSQL Operator</sub>][p-uri] |   `Databases`   |      <sub>[More details][homelab-zalando]</sub>     |      ![][argocd-zalando]     | ![][zalando-badge]  |
 > |       [Redis Operator][redis-uri]      |   `Databases`   |       <sub>[More details][homelab-redis]</sub>      |       ![][argocd-redis]      |  ![][redis-badge]   |
 > |[Tailscale <sub>(as sidecars)</sub>][tail-uri]| `Networking`  | <sub>[More details][homelab-tailscale]</sub>    |                              |![][tailscale-badge] |
@@ -49,6 +50,24 @@
 > |           [Mango][service-mango]       |   `Media`  |  <sub>[More details][homelab-mango]</sub> |  ![][argocd-mango]        |  ![][mango-badge]   |
 > |           [Jellyfin][service-jellyfin]   |   `Media`  |  <sub>[More details][homelab-jellyfin]</sub> |  ![][argocd-jellyfin]        |  ![][jellyfin-badge]   |
 > |         [Metabase][service-metabase]             |   `Analytics`   |       <sub>[More details][homelab-metabase]</sub> |   ![][argocd-metabase] | ![][metabase-badge] |
+
+#### Matrix utilities
+> |         **Name**        | **Info** | **Kind** | **Deployment Status**| **Latest Semver**  |
+> |:-----------------------:|:--------:|:--------:|:-----------------:|:---------------------:|
+> |         Elements        |          |   `UI`   |                   |                       |
+> |      mautrix-slack      |          |          |                   |                       |
+> |  matrix-discord-bridge  |          |          |                   |                       |
+> |     mautrix-facebook    |          |          |                   |                       |
+> |     mautrix-whatsapp    |          |          |                   |                       |
+> |     mautrix-telegram    |          |          |                   |                       |
+> |      mautrix-signal     |          |          |                   |                       |
+> |    mautrix-instagram    |          |          |                   |                       |
+> | mautrix-puppet-hangouts |          |          |                   |                       |
+> |     mautrix-twitter     |          |          |                   |                       |
+> |     go-skype-bridge     |          |          |                   |                       |
+> |     mx-puppet-steam     |          |          |                   |                       |
+> |     linkedin-bridge     |          |          |                   |                       |
+> |         botdarr         |          |          |                   |                       |
 
 ---
 
@@ -102,7 +121,6 @@
 > #### Monitoring and k8s utilities:
 >
 > - Chaos Mesh for Chaos engineering
-> - MySQL Database Operator
 > - Finish implementing `kube-prometheus`
 >
 > #### Services and applications:
@@ -110,7 +128,6 @@
 > - Matrix
 >   - Matrix bridges and double-puppets
 > - Media related services
->   - Jellyfin
 >   - Prowlarr
 >   - Bazarr
 >   - Radarr
@@ -162,6 +179,7 @@
 [wakapi-uri]: https://github.com/muety/wakapi
 [service-mango]: https://github.com/getmango/Mango
 [service-jellyfin]: https://github.com/jellyfin/jellyfin
+[mysql-uri]: https://github.com/jellyfin/jellyfin
 
 <!-- Shield Badges -->
 
@@ -215,6 +233,7 @@
 [homelab-metabase]: https://github.com/gruberdev/homelab/tree/main/apps/data/metabase
 [homelab-mango]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/mango
 [homelab-jellyfin]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/jellyfin
+[homelab-mysql]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/core/mysql.yaml
 
 <!-- ArgoCD Status Badges -->
 
@@ -241,6 +260,7 @@
 [argocd-metabase]: https://argo.gr.wtf/api/badge?name=metabase
 [argocd-mango]: https://argo.gr.wtf/api/badge?name=mango
 [argocd-jellyfin]: https://argo.gr.wtf/api/badge?name=jellyfin
+[argocd-mysql]: https://argo.gr.wtf/api/badge?name=mysql-operator
 
 <!-- Badge Images -->
 
@@ -268,3 +288,4 @@
 [rsshub-badge]: https://img.shields.io/static/v1?label=No&message=version%20provided&color=gray&labelColor=gray&style=flat-square
 [mango-badge]: https://img.shields.io/github/v/release/getmango/mango?label=Github&logo=github&style=flat-square
 [jellyfin-badge]: https://img.shields.io/github/v/release/jellyfin/jellyfin?label=Github&logo=github&style=flat-square
+[mysql-badge]: https://img.shields.io/github/v/release/bitpoke/mysql-operator?label=Github&logo=github&style=flat-square
