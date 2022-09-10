@@ -55,7 +55,7 @@ variable "vault_username" {
   default     = "gruber"
   description = "<sub>Vault plaintext username to login.</sub>"
   validation {
-    condition     = can(regex("^[a-z0-9][-a-z0-9]*[a-z0-9]$", var.vault_github_org))
+    condition     = can(regex("^[a-z0-9][-a-z0-9]*[a-z0-9]$", var.vault_username))
     error_message = "Error: Your Vault username contains invalid characters."
   }
 }

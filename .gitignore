@@ -30,6 +30,7 @@ config/tls/base/tls-secret.yaml
 terraform/.terraform.lock.hcl
 terraform/terraform/*.terraform
 terraform/*.out
+terraform/.terraform
 .env
 nohup.out
 terraform/secrets/*

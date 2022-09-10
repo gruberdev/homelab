@@ -1,12 +1,12 @@
 terraform {
   required_version = ">= 0.13"
   required_providers {
-    google = {
+    vault = {
       source  = "hashicorp/vault"
       version = "3.8.2"
     }
-    google-beta = {
-      source  = " paultyng/unifi"
+    unifi = {
+      source  = "paultyng/unifi"
       version = "0.34.1"
     }
   }

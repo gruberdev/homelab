@@ -22,7 +22,6 @@ No modules.
 
 | Name | Description | Type | Default |
 |------|-------------|------|---------|
-| aws\_default\_region | <sub>(Optional) See all available values for the parameter at [Predefined ACL's on GCS Permissions](https://cloud.google.com/storage/docs/access-control/lists#predefined-acl)<br><br>  Options:<br>  - australiasoutheast<br>  - australiaeast<br>  - australiacentral1<br>  - australiacentral2</sub> | `string` | `"us-east-1"` |
 | unifi\_api\_url | <sub>Provides a connection URI to bridge Terraform with Unifi's controller. [Reference](https://registry.terraform.io/providers/paultyng/unifi/latest/docs#api_url)</sub> | `string` | `""` |
 | unifi\_insecure | <sub>Skip TLS verification when trying to access the API. [Reference](https://registry.terraform.io/providers/paultyng/unifi/latest/docs#allow_insecure)</sub> | `string` | `""` |
 | unifi\_password | <sub>Providers a password for your Unifi controller. [Reference](https://registry.terraform.io/providers/paultyng/unifi/latest/docs#password)</sub> | `string` | `""` |
