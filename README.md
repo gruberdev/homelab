@@ -23,8 +23,8 @@
 <summary> <b>Implemented applications</b> </summary>
 <br>
 
-<sub>*(Some of the applications listed here may not be online, still, their resources are present in the repository if is listed below.)*</sub>
-> |             **Application**            |   **Category**  |                       **Info**                      |     **Deployment Status**    | **Latest Release**
+<sub>*(Some of the applications listed here may not be online, still, their resources are present in this repository if listed below.)*</sub>
+> |             **Application**            |   **Category**  |                       **Info**                      |     **Deployment Status**    | **Latest Semver**
 > |:--------------------------------------:|:---------------:|:---------------------------------------------------:|:----------------------------:|:----------------------:|
 > |          [Drone CI][drone-uri]         | `CI/CD Tooling` |       <sub>[More details][homelab-drone]</sub>      |       ![][argocd-drone]      | ![][drone-badge]    |
 > |          [ArgoCD][argocd-uri]          | `CI/CD Tooling` |      <sub>[More details][homelab-argocd]</sub>      |       ![][argocd-core]       | ![][argo-badge]     |
@@ -44,9 +44,10 @@
 > |         [Wakapi][wakapi-uri]           |    `Services`   |        <sub>[More details][homelab-wakapi]</sub>    |        ![][argocd-wakapi]    | ![][wakapi-badge]   |
 > | [RSS Gen/Proxy][service-rssgen]        |    `Services`   |        <sub>[More details][homelab-rssgen]</sub>    |        ![][argocd-rss]       |  ![][rssgen-badge]   |
 > |    [RSS Hub][service-rsshub]           |    `Services`   |        <sub>[More details][homelab-rsshub]</sub>    |        ![][argocd-rss]       | ![][rsshub-badge]   |
-> |           [Beets][service-beets]                        |   `Media`  |  <sub>[More details][homelab-beets]</sub> |  ![][argocd-beets]        |   ![][beets-badge]   |
-> |           [Lidarr][service-lidarr]                       |   `Media`  |  <sub>[More details][homelab-lidarr]</sub> |  ![][argocd-lidarr]      |  ![][lidarr-badge]   |
-> |         [Metabase][service-metabase]             |   `Analytics`   |       <sub>[More details][homelab-metabase]</sub> |       ![][argocd-metabase] | ![][metabase-badge] |
+ > |           [Beets][service-beets]       |   `Media`  |  <sub>[More details][homelab-beets]</sub>               |       ![][argocd-beets]      |   ![][beets-badge]   |
+> |           [Lidarr][service-lidarr]     |   `Media`  |  <sub>[More details][homelab-lidarr]</sub> |  ![][argocd-lidarr]      |  ![][lidarr-badge]   |
+> |           [Mango][service-mango]       |   `Media`  |  <sub>[More details][homelab-mango]</sub> |  ![][argocd-mango]        |  ![][mango-badge]   |
+> |         [Metabase][service-metabase]             |   `Analytics`   |       <sub>[More details][homelab-metabase]</sub> |   ![][argocd-metabase] | ![][metabase-badge] |
 
 ---
 
@@ -60,12 +61,12 @@
 <br>
 
 > - [argocd-notifications][argocd-notifications-uri] &nbsp; <sub>Alerts the cluster administrator through multiple channels about events related to ArgoCD applications and deployments.</sub>
-> - [argocd-image-updater][argocd-updater-uri] &nbsp; <sub>Automatically update a deployment's image version tag and write it back to the Github repository without human intervention. [Example.][argocd-updater-ex]</sub>
+> - [argocd-image-updater][argocd-updater-uri] &nbsp; <sub>Automatically update a deployment's image version tag and write it back to a Github repository. [Example.][argocd-updater-ex]</sub>
+> - [reflector][reflector-uri] &nbsp; <sub>Replicate a `Secret` or `configMap` between namespaces automatically.</sub>
 > - [descheduler][descheduler-uri] &nbsp; <sub>Monitors if workloads are evenly distributed through nodes and cleans failed pods that remained as orphans/stuck.</sub>
 > - [kube-fledged][kube-fledged-uri] &nbsp; <sub>Allows for image caching on every node in the cluster, in order to speed up deployments of already existing applications.</sub>
- > - [kured][kured-uri] &nbsp; <sub>All the cluster's nodes will be properly drained before rebootin a node and cordoned back automatically.</sub>
-> - [reflector][reflector-uri] &nbsp; <sub>Monitors networking conditions inside the cluster and exposes its collected data metrics to Prometheus.</sub>
-> - [reloader][reloader-uri] &nbsp; <sub>Everytime a `configMap` or a `Secret` resource is created or edited, every resource that uses them is reloaded to include them without restarting manually.</sub>
+> - [kured][kured-uri] &nbsp; <sub>All the cluster's nodes will be properly drained before rebooting cordoned back once they're online.</sub>
+> - [reloader][reloader-uri] &nbsp; <sub>Everytime a `configMap` or a `Secret` resource is created or changed, the pods that use them will be reloaded.</sub>
 > - [botkube][botkube-uri] &nbsp; <sub>Monitors cluster events and sends a message through Discord or Slack, capable of alerting for every kind of cluster-related issue.</sub>
 > - [node-problem-detector][node-problem-uri] &nbsp; <sub>Detects if a node has been affected by an issue such as faulty hardware or kernel deadlocks, preventing scheduling.</sub>
 > - [node-feature-discovery][feature-discovery-uri] &nbsp; <sub>Detects hardware information, changes and other data and uses that to increase efficiency of the cluster.</sub>
@@ -98,14 +99,17 @@
 &nbsp;
 
 > #### Monitoring and k8s utilities:
-> 
+>
 > - Chaos Mesh for Chaos engineering
-> 
+> - MySQL Database Operator
+> - Finish implementing `kube-prometheus`
+>
 > #### Services and applications:
-> 
+>
 > - Matrix
 >   - Matrix bridges and double-puppets
-> - Jellyfin
+> - Media related services
+>   - Jellyfin
 >   - Prowlarr
 >   - Bazarr
 >   - Radarr
@@ -115,7 +119,7 @@
 > - Monica
 > - Wallabag
 > - Frigate for Home Assistant
-> 
+>
 </details>
 
 <details>
@@ -155,6 +159,8 @@
 [poller-uri]: hhttps://github.com/unpoller/unpoller
 [cf-uri]: https://github.com/cloudflare/cloudflared
 [wakapi-uri]: https://github.com/muety/wakapi
+[service-mango]: https://github.com/getmango/Mango
+
 
 <!-- Shield Badges -->
 
@@ -206,6 +212,7 @@
 [homelab-beets]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/beets
 [homelab-lidarr]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/lidarr
 [homelab-metabase]: https://github.com/gruberdev/homelab/tree/main/apps/data/metabase
+[homelab-mango]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/mango
 
 <!-- ArgoCD Status Badges -->
 
@@ -230,6 +237,8 @@
 [argocd-beets]: https://argo.gr.wtf/api/badge?name=beets
 [argocd-lidarr]: https://argo.gr.wtf/api/badge?name=lidarr
 [argocd-metabase]: https://argo.gr.wtf/api/badge?name=metabase
+[argocd-mango]: https://argo.gr.wtf/api/badge?name=mango
+
 
 <!-- Badge Images -->
 
@@ -255,3 +264,4 @@
 [lidarr-badge]: https://img.shields.io/github/v/release/lidarr/lidarr?label=Github&color=blue&logo=github&sort=semver&style=flat-square
 [metabase-badge]: https://img.shields.io/docker/v/metabase/metabase?label=Docker&color=blue&logo=docker&sort=semver&style=flat-square
 [rsshub-badge]: https://img.shields.io/static/v1?label=No&message=version%20provided&color=gray&labelColor=gray&style=flat-square
+[mango-badge]: https://img.shields.io/github/v/release/getmango/mango?label=Github&logo=github&style=flat-square
