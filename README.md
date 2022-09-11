@@ -82,6 +82,7 @@
 
 > - [argocd-notifications][argocd-notifications-uri] &nbsp; <sub>Alerts the cluster administrator through multiple channels about events related to ArgoCD applications and deployments.</sub>
 > - [argocd-image-updater][argocd-updater-uri] &nbsp; <sub>Automatically update a deployment's image version tag and write it back to a Github repository. [Example.][argocd-updater-ex]</sub>
+> - [argocd-commenter][argocd-commenter-uri] &nbsp; <sub>Notify ArgoCD Application status via Pull Request comment or GitHub Deployment.</sub>
 > - [reflector][reflector-uri] &nbsp; <sub>Replicate a `Secret` or `configMap` between namespaces automatically.</sub>
 > - [descheduler][descheduler-uri] &nbsp; <sub>Monitors if workloads are evenly distributed through nodes and cleans failed pods that remained as orphans/stuck.</sub>
 > - [kube-fledged][kube-fledged-uri] &nbsp; <sub>Allows for image caching on every node in the cluster, in order to speed up deployments of already existing applications.</sub>
@@ -132,7 +133,6 @@
 >   - Bazarr
 >   - Radarr
 >   - Sonarr
-> - qBittorrent
 > - Domainmod
 > - Monica
 > - Wallabag
@@ -189,6 +189,7 @@
 
 [argocd-updater-ex]: https://github.com/gruberdev/homelab/commit/75c00de5eba89b9978ed241e67e638e4d838fae4
 [argocd-updater-uri]: https://argocd-image-updater.readthedocs.io/en/stable/
+[argocd-commenter-uri]: https://github.com/int128/argocd-commenter
 [descheduler-uri]: https://github.com/kubernetes-sigs/descheduler
 [kube-fledged-uri]: https://github.com/senthilrch/kube-fledged
 [kured-uri]: https://github.com/weaveworks/kured/tree/main/charts/kured

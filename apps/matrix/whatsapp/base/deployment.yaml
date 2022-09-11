@@ -1,0 +1,80 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: whatsapp-bridge
+  labels:
+    app: whatsapp-bridge
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: whatsapp-bridge
+  template:
+    metadata:
+      labels:
+        app: whatsapp-bridge
+    spec:
+      initContainers:
+        - name: generate-config
+          image: dock.mau.dev/mautrix/whatsapp:v0.6.1
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: initial-file
+              mountPath: /tmp/config.yaml
+            - name: registration-storage
+              mountPath: /bridges
+            - name: bridge-storage
+              mountPath: /data
+          command: ["mautrix-whatsapp"]
+          args: ["-g", "-c", "/data/config.yaml", "-r", "/bridges/whatsapp.yaml"]
+      containers:
+        - name: bridge
+          image: dock.mau.dev/mautrix/whatsapp:v0.6.1
+          command: ["mautrix-whatsapp"]
+          args: ["-c", "/data/config.yaml"]
+          ports:
+            - name: bridge
+              containerPort: 29318
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /_matrix/mau/live
+              port: http
+            initialDelaySeconds: 60
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /_matrix/mau/ready
+              port: http
+            initialDelaySeconds: 60
+            periodSeconds: 5
+          startupProbe:
+            httpGet:
+              path: /_matrix/mau/live
+              port: http
+            initialDelaySeconds: 60
+            failureThreshold: 3
+            periodSeconds: 15
+          volumeMounts:
+            - name: bridge-storage
+              mountPath: /data
+          resources:
+            requests:
+              cpu: "200m"
+              memory: "256Mi"
+            limits:
+              cpu: "400m"
+              memory: "512Mi"
+      volumes:
+        - name: bridge-storage
+          persistentVolumeClaim:
+            claimName: whatsapp-data
+        - name: registration-storage
+          persistentVolumeClaim:
+            claimName: bridges-appservice
+        - name: initial-file
+          secret:
+            secretName: whatsapp-config

@@ -1,0 +1,27 @@
+apiVersion: "acid.zalan.do/v1"
+kind: postgresql
+metadata:
+  name: db-whats
+spec:
+  dockerImage: registry.opensource.zalan.do/acid/spilo-14:2.1-p6
+  teamId: "db"
+  numberOfInstances: 1
+  users:
+    admin:
+      - superuser
+      - createdb
+    matrixuser: []
+  databases:
+    whatsapp: matrixuser
+  postgresql:
+    version: "14"
+  volume:
+    size: 10Gi
+    storageClass: local-path
+  resources:
+    requests:
+      cpu: 250m
+      memory: 250Mi
+    limits:
+      cpu: 350m
+      memory: 400Mi

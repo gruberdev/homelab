@@ -43,6 +43,8 @@ resources:
 
 # - base/matrix/synapee.yaml
 # - base/matrix/element.yaml
+# - base/matrix/utilities.yaml
+# - base/matrix/whatsapp.yaml
 
 # - base/services/media/beets.yaml
 # - base/services/media/lidarr.yaml
@@ -55,6 +57,7 @@ resources:
 
 - https://raw.githubusercontent.com/argoproj/argo-cd/v2.4.11/manifests/install.yaml
 - https://github.com/argoproj-labs/argocd-image-updater/manifests/base
+- https://github.com/int128/argocd-commenter/releases/download/v1.10.0/argocd-commenter.yaml
 
 patchesStrategicMerge:
 - overlay/argocd-svc.yaml
