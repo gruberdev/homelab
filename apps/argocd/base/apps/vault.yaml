@@ -42,7 +42,7 @@ spec:
             repository: "hashicorp/vault"
             tag: "1.11.2"
           agentDefaults:
-            cpuLimit: "500m"
+            cpuLimit: "350m"
             cpuRequest: "250m"
             memLimit: "128Mi"
             memRequest: "64Mi"
@@ -111,7 +111,7 @@ spec:
               cpu: 250m
             limits:
               memory: 512Mi
-              cpu: 500m
+              cpu: 350m
 
           # Ingress allows ingress services to be created to allow external access
           # from Kubernetes to access Vault pods.

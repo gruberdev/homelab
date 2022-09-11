@@ -47,6 +47,7 @@
  > |           [Beets][service-beets]       |   `Media`  |  <sub>[More details][homelab-beets]</sub>               |       ![][argocd-beets]      |   ![][beets-badge]   |
 > |           [Lidarr][service-lidarr]     |   `Media`  |  <sub>[More details][homelab-lidarr]</sub> |  ![][argocd-lidarr]      |  ![][lidarr-badge]   |
 > |           [Mango][service-mango]       |   `Media`  |  <sub>[More details][homelab-mango]</sub> |  ![][argocd-mango]        |  ![][mango-badge]   |
+> |           [Jellyfin][service-jellyfin]   |   `Media`  |  <sub>[More details][homelab-jellyfin]</sub> |  ![][argocd-jellyfin]        |  ![][jellyfin-badge]   |
 > |         [Metabase][service-metabase]             |   `Analytics`   |       <sub>[More details][homelab-metabase]</sub> |   ![][argocd-metabase] | ![][metabase-badge] |
 
 ---
@@ -160,7 +161,7 @@
 [cf-uri]: https://github.com/cloudflare/cloudflared
 [wakapi-uri]: https://github.com/muety/wakapi
 [service-mango]: https://github.com/getmango/Mango
-
+[service-jellyfin]: https://github.com/jellyfin/jellyfin
 
 <!-- Shield Badges -->
 
@@ -213,6 +214,7 @@
 [homelab-lidarr]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/lidarr
 [homelab-metabase]: https://github.com/gruberdev/homelab/tree/main/apps/data/metabase
 [homelab-mango]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/mango
+[homelab-jellyfin]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/jellyfin
 
 <!-- ArgoCD Status Badges -->
 
@@ -238,7 +240,7 @@
 [argocd-lidarr]: https://argo.gr.wtf/api/badge?name=lidarr
 [argocd-metabase]: https://argo.gr.wtf/api/badge?name=metabase
 [argocd-mango]: https://argo.gr.wtf/api/badge?name=mango
-
+[argocd-jellyfin]: https://argo.gr.wtf/api/badge?name=jellyfin
 
 <!-- Badge Images -->
 
@@ -265,3 +267,4 @@
 [metabase-badge]: https://img.shields.io/docker/v/metabase/metabase?label=Docker&color=blue&logo=docker&sort=semver&style=flat-square
 [rsshub-badge]: https://img.shields.io/static/v1?label=No&message=version%20provided&color=gray&labelColor=gray&style=flat-square
 [mango-badge]: https://img.shields.io/github/v/release/getmango/mango?label=Github&logo=github&style=flat-square
+[jellyfin-badge]: https://img.shields.io/github/v/release/jellyfin/jellyfin?label=Github&logo=github&style=flat-square

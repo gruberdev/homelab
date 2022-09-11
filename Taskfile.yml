@@ -212,3 +212,29 @@ tasks:
       - task: highlight_normal
       - echo -e "Added 'k8s.localhost' and related domains to your hosts file!"
       - task: reset
+
+  metallb:
+    cmds:
+      - rm test/bgpconfig.yaml
+      - |
+        cat << EOF > test/bgpconfig.yaml
+        apiVersion: v1
+        kind: ConfigMap
+        metadata:
+          namespace: metallb-system
+          name: metallb-config
+        data:
+          config: |
+            address-pools:
+            - name: bgp-range
+              protocol: bgp
+              addresses:
+              - 192.168.2.2-192.168.2.254
+            peers:
+              - peer-address: 192.168.1.1
+                peer-asn: 64501
+                my-asn: 64500
+        EOF
+      - kubectl apply -f test/bgpconfig.yaml
+      - rm test/bgpconfig.yaml
+    ignore_error: true
