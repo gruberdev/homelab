@@ -12,6 +12,7 @@ resources:
 - base/core/argocd.yaml
 - base/core/zalando.yaml
 - base/core/redis.yaml
+- base/core/metallb.yaml
 # - base/core/router.yaml
 # - base/core/mysql.yaml
 
