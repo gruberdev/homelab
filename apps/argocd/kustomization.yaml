@@ -23,7 +23,7 @@ resources:
 
 - base/apps/vault.yaml
 - base/apps/ha.yaml
-- base/apps/unifi.yaml
+#- base/apps/unifi.yaml
 # - base/apps/adguard.yaml
 # - base/apps/wyze.yaml
 
