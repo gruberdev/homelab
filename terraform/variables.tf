@@ -1,11 +1,6 @@
 variable "unifi_site_name" {
   type        = string
   default     = "main"
-  description = "<sub>Defines [a name for your controller](https://registry.terraform.io/providers/paultyng/unifi/latest/docs/resources/site#name) site name.</sub>"
-  validation {
-    condition     = can(regex("^[a-z0-9][-a-z0-9]*[a-z0-9]$", var.unifi_site_name))
-    error_message = "Error: Your Unifi site name contains invalid characters."
-  }
 }
 
 variable "unifi_username" {
@@ -37,6 +32,13 @@ variable "unifi_insecure" {
   type        = string
   description = "<sub>Skip TLS verification when trying to access the API. [Reference](https://registry.terraform.io/providers/paultyng/unifi/latest/docs#allow_insecure)</sub>"
   default     = ""
+  sensitive   = true
+}
+
+variable "unifi_upstream_dns" {
+  type        = list
+  description = "<sub>Skip TLS verification when trying to access the API. [Reference](https://registry.terraform.io/providers/paultyng/unifi/latest/docs#allow_insecure)</sub>"
+  default     = ["8.8.8.8", "1.1.1.1"]
   sensitive   = true
 }
 

@@ -31,6 +31,7 @@ terraform/.terraform.lock.hcl
 terraform/terraform/*.terraform
 terraform/*.out
 terraform/.terraform
+terraform/unifi/users.csv
 .env
 nohup.out
 terraform/secrets/*
