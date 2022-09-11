@@ -112,10 +112,10 @@ spec:
           logLevel: info
           image:
             repository: quay.io/metallb/controller
-            tag:
-            pullPolicy:
+            tag: v0.13.5
+            pullPolicy: IfNotPresent
           strategy:
-            type: Recreate
+            type: RollingUpdate
           serviceAccount:
             # Specifies whether a ServiceAccount should be created
             create: true
@@ -141,10 +141,10 @@ spec:
           livenessProbe:
             enabled: true
             failureThreshold: 3
-            initialDelaySeconds: 10
-            periodSeconds: 10
+            initialDelaySeconds: 30
+            periodSeconds: 20
             successThreshold: 1
-            timeoutSeconds: 1
+            timeoutSeconds: 3
           readinessProbe:
             enabled: true
             failureThreshold: 3
@@ -163,8 +163,8 @@ spec:
             mlBindPort: 7946
           image:
             repository: quay.io/metallb/speaker
-            tag:
-            pullPolicy:
+            tag: v0.13.5
+            pullPolicy: IfNotPresent
           updateStrategy:
             ## StrategyType
             ## Can be set to RollingUpdate or OnDelete
