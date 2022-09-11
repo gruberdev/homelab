@@ -9,6 +9,10 @@ trigger:
     exclude:
       - push
 
+platform:
+  os: linux
+  arch: amd64
+
 clone:
   disable: true
 
@@ -103,24 +107,6 @@ steps:
 kind: pipeline
 name: Lint
 type: kubernetes
-
-tolerations:
-- key: beta.kubernetes.io/arch
-  operator: "Equal"
-  value: "arm64"
-  effect: NoSchedule
-- key: beta.kubernetes.io/arch
-  operator: "Equal"
-  value: "arm"
-  effect: NoSchedule
-- key: kubernetes.io/arch
-  operator: "Equal"
-  value: "arm64"
-  effect: NoSchedule
-- key: kubernetes.io/arch
-  operator: "Equal"
-  value: "arm"
-  effect: NoSchedule
 
 trigger:
   event:
