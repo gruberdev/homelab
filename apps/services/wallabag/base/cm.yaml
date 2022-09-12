@@ -8,3 +8,5 @@ data:
   SYMFONY__ENV__DOMAIN_NAME: "http://wallabag"
   SYMFONY__ENV__SERVER_NAME: "Wallbag Homeserver"
   SYMFONY__ENV__REDIS_HOST: "rfr-wallabag.services.svc.cluster.local"
+  SYMFONY__ENV__FOSUSER_REGISTRATION: "False"
+  SYMFONY__ENV__FOSUSER_CONFIRMATION: "True"

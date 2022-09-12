@@ -27,6 +27,27 @@ spec:
                 name: wallabag-cm
             - secretRef:
                 name: wallabag-vars
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 150
+            periodSeconds: 10
+            timeoutSeconds: 5
+          startupProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 180
+            failureThreshold: 3
+            periodSeconds: 15
           ports:
             - name: web
               containerPort: 80
@@ -41,7 +62,12 @@ spec:
           volumeMounts:
             - name: media
               mountPath: /var/www/wallabag/web/assets/images
+            - name: data
+              mountPath: /var/www/wallabag/data
       volumes:
         - name: media
+          persistentVolumeClaim:
+            claimName: wallabag-media
+        - name: data
           persistentVolumeClaim:
             claimName: wallabag-storage
