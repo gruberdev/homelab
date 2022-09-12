@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: wallabag-cm
+data:
+  TZ: "America/Sao_Paulo"
+  SYMFONY__ENV__DATABASE_DRIVER: "pdo_pgsql"
+  SYMFONY__ENV__DOMAIN_NAME: "http://wallabag"
+  SYMFONY__ENV__SERVER_NAME: "Wallbag Homeserver"
+  SYMFONY__ENV__REDIS_HOST: "rfr-wallabag.services.svc.cluster.local"

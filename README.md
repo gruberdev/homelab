@@ -43,6 +43,7 @@
 > |     [Unifi Poller][poller-uri]         |   `Monitoring`  |      <sub>[More details][homelab-poller]</sub>      |      ![][argocd-poller]      | ![][poller-badge]  |
 > |   [Cloudflared <sub>(as proxies)</sub>][cf-uri]  |   `Networking`  | <sub>[More details][homelab-cloudflared]</sub>  |                        |   ![][cfd-badge]   |
 > |         [Wakapi][wakapi-uri]           |    `Services`   |        <sub>[More details][homelab-wakapi]</sub>    |        ![][argocd-wakapi]    | ![][wakapi-badge]   |
+> |         [Wallabag][service-wallabag]           |    `Services`   |        <sub>[More details][homelab-wallabag]</sub>    |        ![][argocd-wallabag]    | ![][wallabag-badge]   |
 > | [RSS Gen/Proxy][service-rssgen]        |    `Services`   |        <sub>[More details][homelab-rssgen]</sub>    |        ![][argocd-rss]       |  ![][rssgen-badge]   |
 > |    [RSS Hub][service-rsshub]           |    `Services`   |        <sub>[More details][homelab-rsshub]</sub>    |        ![][argocd-rss]       | ![][rsshub-badge]   |
  > |           [Beets][service-beets]       |   `Media`  |  <sub>[More details][homelab-beets]</sub>               |       ![][argocd-beets]      |   ![][beets-badge]   |
@@ -135,7 +136,6 @@
 >   - Sonarr
 > - Domainmod
 > - Monica
-> - Wallabag
 > - Frigate for Home Assistant
 >
 </details>
@@ -179,6 +179,7 @@
 [wakapi-uri]: https://github.com/muety/wakapi
 [service-mango]: https://github.com/getmango/Mango
 [service-jellyfin]: https://github.com/jellyfin/jellyfin
+[service-wallabag]: https://github.com/wallabag/wallabag
 [mysql-uri]: https://github.com/jellyfin/jellyfin
 
 <!-- Shield Badges -->
@@ -235,6 +236,7 @@
 [homelab-mango]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/mango
 [homelab-jellyfin]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/jellyfin
 [homelab-mysql]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/core/mysql.yaml
+[homelab-wallabag]: https://github.com/gruberdev/homelab/blob/main/apps/services/wallabag
 
 <!-- ArgoCD Status Badges -->
 
@@ -262,6 +264,7 @@
 [argocd-mango]: https://argo.gr.wtf/api/badge?name=mango
 [argocd-jellyfin]: https://argo.gr.wtf/api/badge?name=jellyfin
 [argocd-mysql]: https://argo.gr.wtf/api/badge?name=mysql-operator
+[argocd-wallabag]: https://argo.gr.wtf/api/badge?name=wallabag
 
 <!-- Badge Images -->
 
@@ -290,3 +293,4 @@
 [mango-badge]: https://img.shields.io/github/v/release/getmango/mango?label=Github&logo=github&style=flat-square
 [jellyfin-badge]: https://img.shields.io/github/v/release/jellyfin/jellyfin?label=Github&logo=github&style=flat-square
 [mysql-badge]: https://img.shields.io/github/v/release/bitpoke/mysql-operator?label=Github&logo=github&style=flat-square
+[wallabag-badge]: https://img.shields.io/docker/v/wallabag/wallabag?label=Docker&color=blue&logo=docker&sort=semver&style=flat-square

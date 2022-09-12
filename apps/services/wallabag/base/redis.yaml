@@ -1,0 +1,21 @@
+apiVersion: databases.spotahome.com/v1
+kind: RedisFailover
+metadata:
+  name: wallabag
+spec:
+  sentinel:
+    replicas: 1
+    resources:
+      requests:
+        cpu: 100m
+      limits:
+        memory: 100Mi
+  redis:
+    replicas: 1
+    resources:
+      requests:
+        cpu: 100m
+        memory: 100Mi
+      limits:
+        cpu: 100m
+        memory: 100Mi

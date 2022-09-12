@@ -40,6 +40,7 @@ resources:
 # - base/services/wakapi.yaml
 # - base/services/rss.yaml
 # - base/services/metabase.yaml
+# - base/services/wallabag.yaml
 
 # - base/matrix/synapee.yaml
 # - base/matrix/element.yaml

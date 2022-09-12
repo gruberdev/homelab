@@ -1,0 +1,47 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wallabag
+  labels:
+    app: wallabag
+  annotations:
+    link.argocd.argoproj.io/external-link: http://wallabag
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: wallabag
+  template:
+    metadata:
+      labels:
+        app: wallabag
+    spec:
+      containers:
+        - name: server
+          image: wallabag/wallabag:2.5.1
+          envFrom:
+            - configMapRef:
+                name: wallabag-cm
+            - secretRef:
+                name: wallabag-vars
+          ports:
+            - name: web
+              containerPort: 80
+              protocol: TCP
+          resources:
+            requests:
+              cpu: "200m"
+              memory: "256Mi"
+            limits:
+              cpu: "400m"
+              memory: "512Mi"
+          volumeMounts:
+            - name: media
+              mountPath: /var/www/wallabag/web/assets/images
+      volumes:
+        - name: media
+          persistentVolumeClaim:
+            claimName: wallabag-storage
