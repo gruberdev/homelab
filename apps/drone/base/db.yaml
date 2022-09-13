@@ -3,7 +3,7 @@ kind: postgresql
 metadata:
   name: db-drone
 spec:
-  dockerImage: docker.io/lrengineering/spilo-postgres:14-2.1-p6
+  dockerImage: registry.opensource.zalan.do/acid/spilo-14:2.1-p6
   teamId: "db"
   numberOfInstances: 1
   users:
