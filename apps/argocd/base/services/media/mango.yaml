@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: beets
+  name: mango
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: apps
   source:
     repoURL: 'https://github.com/gruberdev/homelab.git'
-    path: apps/services/media/beets
+    path: apps/services/media/mango
     targetRevision: main
   destination:
     namespace: media
@@ -20,7 +20,7 @@ spec:
       allowEmpty: true
     syncOptions:
     - Validate=false
-    - CreateNamespace=true
+    - CreateNamespace=false
     - PrunePropagationPolicy=foreground
     - PruneLast=true
     - ApplyOutOfSyncOnly=false

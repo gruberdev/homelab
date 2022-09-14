@@ -25,6 +25,8 @@ spec:
     server: https://kubernetes.default.svc
   - namespace: services
     server: https://kubernetes.default.svc
+  - namespace: media
+    server: https://kubernetes.default.svc
   clusterResourceWhitelist:
   - group: '*'
     kind: '*'
