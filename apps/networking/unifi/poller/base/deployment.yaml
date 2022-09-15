@@ -48,13 +48,13 @@ spec:
             httpGet:
               path: /metrics
               port: metrics
-            periodSeconds: 10
+            periodSeconds: 20
             failureThreshold: 3
           livenessProbe:
             httpGet:
               path: /metrics
               port: metrics
-            initialDelaySeconds: 30
+            initialDelaySeconds: 120
             periodSeconds: 10
             failureThreshold: 5
       volumes:
