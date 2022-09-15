@@ -137,6 +137,27 @@ steps:
     commands:
       - yamllint -c ./.yamllint .
 
+  - name: Deploy ACL
+    image: ghcr.io/gruberdev/tailscale-gitops:latest
+    commands:
+      - ~/go/bin/gitops-pusher --policy-file ./config/policy.hujson apply
+    environment:
+      TS_API_KEY:
+        from_secret: ts_api_key
+      TS_TAILNET:
+        from_secret: ts_tailnet
+
+  - name: Test ACL
+    image: ghcr.io/gruberdev/tailscale-gitops:latest
+    commands:
+      - ~/go/bin/gitops-pusher --policy-file ./config/policy.hujson test
+    environment:
+      TS_API_KEY:
+        from_secret: ts_api_key
+      TS_TAILNET:
+        from_secret: ts_tailnet
+
+
 # ---
 
 # kind: pipeline
