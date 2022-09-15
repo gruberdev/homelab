@@ -18,7 +18,7 @@ resources:
 - base/utilities/reflector.yaml
 - base/utilities/descheduler.yaml
 - base/utilities/kured.yaml
-#- base/utilities/botkube.yaml
+# - base/utilities/botkube.yaml
 - base/utilities/node-discovery.yaml
 
 - base/apps/vault.yaml
@@ -28,7 +28,7 @@ resources:
 - base/apps/wyze.yaml
 
 - base/monitoring/kuma.yaml
-#- base/monitoring/flame.yaml
+# - base/monitoring/flame.yaml
 - base/monitoring/unifi-poller.yaml
 - base/monitoring/kube-prometheus.yaml
 
@@ -38,12 +38,12 @@ resources:
 - base/services/n8n.yaml
 - base/services/wakapi.yaml
 - base/services/rss.yaml
-#- base/services/metabase.yaml
+# - base/services/metabase.yaml
 
-#- base/services/media/beets.yaml
-#- base/services/media/lidarr.yaml
-#- base/services/media/mango.yaml
-#- base/services/media/jellyfin.yaml
+# - base/services/media/beets.yaml
+# - base/services/media/lidarr.yaml
+# - base/services/media/mango.yaml
+# - base/services/media/jellyfin.yaml
 
 - https://github.com/gruberdev/homelab/apps/networking/tailscale
 - https://github.com/gruberdev/homelab/apps/networking/cloudflared
