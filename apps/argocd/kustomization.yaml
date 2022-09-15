@@ -38,7 +38,9 @@ resources:
 
 - base/services/n8n.yaml
 - base/services/wakapi.yaml
-- base/services/rss.yaml
+- base/services/rss-gen.yaml
+- base/services/rss-hub.yaml
+
 # - base/services/metabase.yaml
 
 - base/services/media/beets.yaml

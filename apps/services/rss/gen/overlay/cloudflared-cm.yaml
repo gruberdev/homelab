@@ -9,8 +9,6 @@ data:
     metrics: 0.0.0.0:2000
     no-autoupdate: true
     ingress:
-    - hostname: gen.rss.gr.wtf
+    - hostname: rss.gr.wtf
       service: http://rss-gen:3000
-    - hostname: hub.rss.gr.wtf
-      service: http://rss-hub:3001
     - service: http_status:404
