@@ -19,6 +19,8 @@ spec:
     server: https://kubernetes.default.svc
   - namespace: vault
     server: https://kubernetes.default.svc
+  - namespace: unifi
+    server: https://kubernetes.default.svc
   clusterResourceWhitelist:
   - group: '*'
     kind: '*'

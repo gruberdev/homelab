@@ -22,6 +22,11 @@ spec:
       containers:
         - name: wakapi
           image: ghcr.io/muety/wakapi:latest
+          env:
+            - name: WAKAPI_DB_USER
+              valueFrom: { secretKeyRef: { name: trackinguser.db-wakapi.credentials.postgresql.acid.zalan.do, key: username } }
+            - name: WAKAPI_DB_PASSWORD
+              valueFrom: { secretKeyRef: { name: trackinguser.db-wakapi.credentials.postgresql.acid.zalan.do, key: password } }
           envFrom:
             - configMapRef:
                 name: wakapi-cm

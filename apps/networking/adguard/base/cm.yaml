@@ -39,7 +39,6 @@ data:
       refuse_any: true
       upstream_dns:
       - https://dns10.quad9.net/dns-query
-      - "[/${SECRET_DOMAIN}/]192.168.1.220"
       upstream_dns_file: ""
       bootstrap_dns:
       - 9.9.9.10

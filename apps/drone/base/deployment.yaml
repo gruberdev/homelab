@@ -24,6 +24,13 @@ spec:
                 name: drone-cm
             - secretRef:
                 name: drone-server-vars
+          env:
+            - name: DB_USERNAME
+              valueFrom: { secretKeyRef: { name: ciuser.db-drone.credentials.postgresql.acid.zalan.do, key: username } }
+            - name: DB_PASSWORD
+              valueFrom: { secretKeyRef: { name: ciuser.db-drone.credentials.postgresql.acid.zalan.do, key: password } }
+            - name: DRONE_DATABASE_DATASOURCE
+              value: "postgres://$(DB_USERNAME):$(DB_PASSWORD)@db-drone.drone.svc.cluster.local:5432/drone?sslmode=require"
           image: drone/drone:2
           imagePullPolicy: IfNotPresent
           livenessProbe:

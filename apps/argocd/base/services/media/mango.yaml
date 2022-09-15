@@ -1,21 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: unifi-controller
-  annotations:
-    argocd-image-updater.argoproj.io/write-back-method: git
-    argocd-image-updater.argoproj.io/write-back-target: kustomization
-    argocd-image-updater.argoproj.io/git-branch: main
-    argocd-image-updater.argoproj.io/image-list: unifi=jacobalberty/unifi
-    argocd-image-updater.argoproj.io/unifi.platforms: linux/arm64,linux/amd64
+  name: mango
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: apps
   source:
     repoURL: 'https://github.com/gruberdev/homelab.git'
-    path: apps/networking/unifi/controller
+    path: apps/services/media/mango
     targetRevision: main
   destination:
-    namespace: unifi
+    namespace: media
     name: in-cluster
   syncPolicy:
     automated:
@@ -24,14 +20,14 @@ spec:
       allowEmpty: true
     syncOptions:
     - Validate=false
-    - CreateNamespace=true
+    - CreateNamespace=false
     - PrunePropagationPolicy=foreground
     - PruneLast=true
     - ApplyOutOfSyncOnly=false
     - Prune=true
     retry:
-      limit: 10
+      limit: -1
       backoff:
-        duration: 60s
+        duration: 20s
         factor: 2
         maxDuration: 15m
