@@ -95,14 +95,14 @@ patches:
     name: argocd-server
 - patch: |-
     - op: add
-      path: "/spec/template/nodeSelector"
+      path: "/spec/template/spec/nodeSelector"
       value:
         kubernetes.io/hostname=node2
   target:
     kind: Deployment
 - patch: |-
     - op: add
-      path: "/spec/template/nodeSelector"
+      path: "/spec/template/spec/nodeSelector"
       value:
         kubernetes.io/hostname=node2
   target:

@@ -26,7 +26,7 @@ patches:
     name: changedetection
 - patch: |-
     - op: add
-      path: "/spec/template/nodeSelector"
+      path: "/spec/template/spec/nodeSelector"
       value:
         kubernetes.io/hostname=node2
   target:
