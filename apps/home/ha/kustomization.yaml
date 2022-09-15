@@ -25,6 +25,15 @@ patches:
   target:
     kind: Deployment
     name: home-assistant
+- patch: |-
+    - op: add
+      path: "/spec/template/spec/nodeSelector"
+      value:
+        kubernetes.io/hostname: node-one
+        kubernetes.io/arch: amd64
+  target:
+    kind: Deployment
+
 images:
 - name: homeassistant/home-assistant
   newTag: "2022.9"

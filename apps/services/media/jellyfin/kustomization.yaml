@@ -24,6 +24,13 @@ patches:
   target:
     kind: Deployment
     name: jellyfin
+- patch: |-
+    - op: add
+      path: "/spec/template/spec/nodeSelector"
+      value:
+        kubernetes.io/hostname: "node2"
+  target:
+    kind: Deployment
 
 commonAnnotations:
   reloader.stakater.com/auto: "true"
