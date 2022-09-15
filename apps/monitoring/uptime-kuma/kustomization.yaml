@@ -29,7 +29,7 @@ patches:
     - op: add
       path: "/spec/template/spec/nodeSelector"
       value:
-        kubernetes.io/hostname=node2
+        kubernetes.io/hostname: "node2"
   target:
     kind: Deployment
 commonAnnotations:

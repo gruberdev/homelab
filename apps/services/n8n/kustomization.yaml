@@ -3,7 +3,23 @@ kind: Kustomization
 bases:
 - ./base
 - https://github.com/gruberdev/homelab/apps/networking/tailscale
+
 namespace: services
+
+patchesStrategicMerge:
+- |-
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: deploy
+  spec:
+    template:
+      spec:
+        containers:
+        - name: nginx
+          $patch: delete
+  EOF
+
 patches:
 - path: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/tailscale/patch.yaml
   target:
@@ -27,7 +43,7 @@ patches:
     - op: add
       path: "/spec/template/spec/nodeSelector"
       value:
-        kubernetes.io/hostname=node2
+        kubernetes.io/hostname: "node2"
   target:
     kind: Deployment
 commonAnnotations:
