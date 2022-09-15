@@ -2,7 +2,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 bases:
 - ./base
-- https://github.com/gruberdev/homelab/apps/networking/tailscale
 
 namespace: unifi
 
@@ -10,6 +9,7 @@ patches:
 - path: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/tailscale/patch.yaml
   target:
     kind: Deployment
+    name: unifi-poller
 - patch: |-
     - op: replace
       path: "/spec/template/spec/containers/0/env/1"
