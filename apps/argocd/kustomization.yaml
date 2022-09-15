@@ -31,6 +31,7 @@ resources:
 # - base/monitoring/flame.yaml
 - base/monitoring/unifi-poller.yaml
 - base/monitoring/kube-prometheus.yaml
+- base/monitoring/changedetection.yaml
 
 - base/drone/drone-server.yaml
 - base/drone/drone-runner.yaml
@@ -40,10 +41,10 @@ resources:
 - base/services/rss.yaml
 # - base/services/metabase.yaml
 
-# - base/services/media/beets.yaml
-# - base/services/media/lidarr.yaml
-# - base/services/media/mango.yaml
-# - base/services/media/jellyfin.yaml
+- base/services/media/beets.yaml
+- base/services/media/lidarr.yaml
+- base/services/media/mango.yaml
+- base/services/media/jellyfin.yaml
 
 - https://github.com/gruberdev/homelab/apps/networking/tailscale
 - https://github.com/gruberdev/homelab/apps/networking/cloudflared
