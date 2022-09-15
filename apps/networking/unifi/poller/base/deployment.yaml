@@ -44,6 +44,19 @@ spec:
             requests:
               cpu: "250m"
               memory: "256Mi"
+          readinessProbe:
+            httpGet:
+              path: /metrics
+              port: metrics
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /metrics
+              port: metrics
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 5
       volumes:
         - name: poller-data
           persistentVolumeClaim:
