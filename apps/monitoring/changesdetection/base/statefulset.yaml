@@ -42,7 +42,7 @@ spec:
               command:
               - ls
               - /datastore/lost+found
-            initialDelaySeconds: 5
+            initialDelaySeconds: 20
             periodSeconds: 5
       volumes:
       - name: onchange-data

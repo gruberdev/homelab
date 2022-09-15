@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: wyze-config
+  name: wyze-storage
 spec:
   accessModes:
     - ReadWriteOnce

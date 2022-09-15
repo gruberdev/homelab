@@ -28,31 +28,31 @@ spec:
                 name: unifi-controller-cm
           ports:
             - containerPort: 8443
-              name: ubnt-8443
+              name: web-admin-portal
               protocol: TCP
-            - containerPort: 3478
-              name: ubnt-3478
-              protocol: UDP
-            - containerPort: 10001
-              name: ubnt-10001
-              protocol: UDP
             - containerPort: 8080
-              name: ubnt-8080
+              name: device-communication
               protocol: TCP
-            - containerPort: 1900
-              name: ubnt-1900
-              protocol: UDP
             - containerPort: 8843
-              name: ubnt-8843
+              name: web-guest-portal-https
               protocol: TCP
             - containerPort: 8880
-              name: ubnt-8880
+              name: web-guest-portal-http
               protocol: TCP
             - containerPort: 6789
-              name: ubnt-6789
+              name: mobile-throughput-test
               protocol: TCP
+            - containerPort: 3478
+              name: unifi-stun-port
+              protocol: UDP
+            - containerPort: 10001
+              name: ap-discovery
+              protocol: UDP
+            - containerPort: 1900
+              name: discoverable-on-l2-network
+              protocol: UDP
             - containerPort: 5514
-              name: ubnt-5514
+              name: remote-syslog-port
               protocol: UDP
           volumeMounts:
             - mountPath: /unifi/data
