@@ -24,6 +24,12 @@ patches:
   target:
     kind: StatefulSet
     name: changedetection
-
+- patch: |-
+    - op: add
+      path: "/spec/template/nodeSelector"
+      value:
+        kubernetes.io/hostname=node2
+  target:
+    kind: StatefulSet
 commonAnnotations:
   reloader.stakater.com/auto: "true"

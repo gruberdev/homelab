@@ -23,6 +23,13 @@ patches:
   target:
     kind: Deployment
     name: n8n-server
+- patch: |-
+    - op: add
+      path: "/spec/template/nodeSelector"
+      value:
+        kubernetes.io/hostname=node2
+  target:
+    kind: Deployment
 commonAnnotations:
   reloader.stakater.com/auto: "true"
 images:

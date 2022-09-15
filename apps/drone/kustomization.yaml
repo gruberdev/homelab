@@ -27,6 +27,13 @@ patches:
     kind: Deployment
     name: drone-server
 - patch: |-
+    - op: add
+      path: "/spec/template/nodeSelector"
+      value:
+        kubernetes.io/hostname=node2
+  target:
+    kind: Deployment
+- patch: |-
     - op: replace
       path: "/spec/template/spec/volumes/0/secret/secretName"
       value: "drone-tunnel"

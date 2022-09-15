@@ -94,6 +94,20 @@ patches:
     kind: Deployment
     name: argocd-server
 - patch: |-
+    - op: add
+      path: "/spec/template/nodeSelector"
+      value:
+        kubernetes.io/hostname=node2
+  target:
+    kind: Deployment
+- patch: |-
+    - op: add
+      path: "/spec/template/nodeSelector"
+      value:
+        kubernetes.io/hostname=node2
+  target:
+    kind: StatefulSet
+- patch: |-
     - op: replace
       path: "/spec/template/spec/volumes/0/secret/secretName"
       value: "argo-tunnel"
