@@ -19,9 +19,6 @@ spec:
       labels:
         app: jellyfin
     spec:
-      nodeSelector:
-        kubernetes.io/arch: amd64
-        kubernetes.io/hostname: node-one
       containers:
         - name: beets
           image: linuxserver/jellyfin:amd64-version-10.8.4-1

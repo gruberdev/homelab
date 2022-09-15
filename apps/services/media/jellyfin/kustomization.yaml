@@ -12,12 +12,12 @@ patches:
     name: jellyfin
 - patch: |-
     - op: replace
-      path: "/spec/template/spec/containers/0/env/1"
+      path: "/spec/template/spec/containers/0/env/2"
       value:
         name: TS_HOSTNAME
         value: "media.tv"
     - op: replace
-      path: "/spec/template/spec/containers/0/env/2"
+      path: "/spec/template/spec/containers/0/env/3"
       value:
         name: DEST_PORT
         value: "8096"
@@ -28,7 +28,8 @@ patches:
     - op: add
       path: "/spec/template/spec/nodeSelector"
       value:
-        kubernetes.io/hostname: "node2"
+        kubernetes.io/arch: amd64
+        kubernetes.io/hostname: node-one
   target:
     kind: Deployment
 
