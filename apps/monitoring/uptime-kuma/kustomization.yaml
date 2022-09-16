@@ -32,5 +32,7 @@ patches:
         kubernetes.io/hostname: node2
   target:
     kind: Deployment
+    name: kuma
+
 commonAnnotations:
   reloader.stakater.com/auto: "true"
