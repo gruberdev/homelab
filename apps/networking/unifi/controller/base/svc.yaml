@@ -36,3 +36,23 @@ spec:
       protocol: UDP
   selector:
     app: unifi-controller
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: unifi-nodeports
+  labels:
+    app: unifi-controller
+spec:
+  selector:
+    app: unifi-controller
+  ports:
+  - port: 8443
+    nodePort: 32321
+    protocol: TCP
+    name: web-http
+  - port: 8080
+    nodePort: 32322
+    protocol: TCP
+    name: devices
+  type: NodePort
