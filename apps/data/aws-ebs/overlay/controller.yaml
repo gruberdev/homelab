@@ -33,7 +33,7 @@ spec:
         runAsUser: 1000
       containers:
         - name: ebs-plugin
-          image: k8s.gcr.io/provider-aws/aws-ebs-csi-driver
+          image: ghcr.io/kubernetes-sigs/aws-ebs-csi-driver/aws-ebs-csi-driver:v1.11.3
           imagePullPolicy: IfNotPresent
           args:
             # - {all,controller,node} # specify the driver mode
@@ -102,7 +102,7 @@ spec:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
         - name: csi-provisioner
-          image: k8s.gcr.io/sig-storage/csi-provisioner
+          image: k8s.gcr.io/sig-storage/csi-provisioner:v3.2.1
           imagePullPolicy: IfNotPresent
           args:
             - --csi-address=$(ADDRESS)
@@ -131,7 +131,7 @@ spec:
               cpu: 100m
               memory: 128Mi
         - name: csi-attacher
-          image: k8s.gcr.io/sig-storage/csi-attacher
+          image: registry.k8s.io/sig-storage/csi-attacher:v4.0.0
           imagePullPolicy: IfNotPresent
           args:
             - --csi-address=$(ADDRESS)
@@ -157,7 +157,7 @@ spec:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
         - name: csi-snapshotter
-          image: k8s.gcr.io/sig-storage/csi-snapshotter
+          image: k8s.gcr.io/sig-storage/csi-snapshotter:v6.0.1
           imagePullPolicy: IfNotPresent
           args:
             - --csi-address=$(ADDRESS)
@@ -182,7 +182,7 @@ spec:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
         - name: csi-resizer
-          image: k8s.gcr.io/sig-storage/csi-resizer
+          image: k8s.gcr.io/sig-storage/csi-resizer:v1.6.0
           imagePullPolicy: IfNotPresent
           args:
             - --csi-address=$(ADDRESS)
@@ -208,7 +208,7 @@ spec:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
         - name: liveness-probe
-          image: k8s.gcr.io/sig-storage/livenessprobe
+          image: registry.k8s.io/sig-storage/livenessprobe:v2.7.0
           imagePullPolicy: IfNotPresent
           args:
             - --csi-address=/csi/csi.sock

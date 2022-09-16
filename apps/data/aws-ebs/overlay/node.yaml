@@ -41,7 +41,7 @@ spec:
         runAsUser: 0
       containers:
         - name: ebs-plugin
-          image: k8s.gcr.io/provider-aws/aws-ebs-csi-driver
+          image: k8s.gcr.io/provider-aws/aws-ebs-csi-driver:v1.11.3
           imagePullPolicy: IfNotPresent
           args:
             - node
@@ -89,7 +89,7 @@ spec:
             privileged: true
             readOnlyRootFilesystem: true
         - name: node-driver-registrar
-          image: k8s.gcr.io/sig-storage/csi-node-driver-registrar
+          image: k8s.gcr.io/sig-storage/csi-node-driver-registrar:v2.5.1
           imagePullPolicy: IfNotPresent
           args:
             - --csi-address=$(ADDRESS)
@@ -119,7 +119,7 @@ spec:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
         - name: liveness-probe
-          image: k8s.gcr.io/sig-storage/livenessprobe
+          image: registry.k8s.io/sig-storage/livenessprobe:v2.7.0
           imagePullPolicy: IfNotPresent
           args:
             - --csi-address=/csi/csi.sock
