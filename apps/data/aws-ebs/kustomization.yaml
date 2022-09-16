@@ -3,30 +3,13 @@ kind: Kustomization
 
 resources:
 - github.com/kubernetes-sigs/aws-ebs-csi-driver/deploy/kubernetes/overlays/stable/?ref=release-1.11
+- base/cm.yaml
 
 patchesStrategicMerge:
-- ./overlay/controller.yaml
+- overlay/controller.yaml
+- overlay/node.yaml
 
 namespace: kube-system
-patches:
-- patch: |-
-    - op: add
-      path: "/spec/template/spec/containers/0/env/2"
-      value:
-        name: AWS_REGION
-        value: "sa-east-1"
-  target:
-    kind: DaemonSet
-    name: ebs-csi-node
-- patch: |-
-    - op: add
-      path: "/spec/template/spec/containers/0/env/5"
-      value:
-        name: AWS_REGION
-        value: "sa-east-1"
-  target:
-    kind: Deployment
-    name: ebs-csi-controller
 
 commonAnnotations:
   reloader.stakater.com/auto: "true"
