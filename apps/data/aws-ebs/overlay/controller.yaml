@@ -132,7 +132,7 @@ spec:
               memory: 128Mi
         - name: csi-attacher
           image: docker.io/grubertech/csi-attacher:v4.0.0
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           args:
             - --csi-address=$(ADDRESS)
             - --v=2
