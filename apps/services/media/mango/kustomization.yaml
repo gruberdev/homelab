@@ -4,7 +4,7 @@ bases:
 - ./base
 - https://github.com/gruberdev/homelab/apps/networking/tailscale
 
-namespace: services
+namespace: media
 
 patches:
 - path: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/tailscale/patch.yaml
