@@ -131,7 +131,7 @@ spec:
               cpu: 100m
               memory: 128Mi
         - name: csi-attacher
-          image: docker.io/grubertech/csi-attacher:v4.0.0
+          image: quay.io/k8scsi/csi-attacher:canary
           imagePullPolicy: Always
           args:
             - --csi-address=$(ADDRESS)
