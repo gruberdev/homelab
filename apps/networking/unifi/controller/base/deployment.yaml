@@ -63,11 +63,11 @@ spec:
               name: certs
           resources:
             limits:
-              cpu: "1000m"
-              memory: "1024Mi"
+              cpu: "600m"
+              memory: "1500Mi"
             requests:
               cpu: "300m"
-              memory: "512Mi"
+              memory: "1024Mi"
           readinessProbe:
             tcpSocket:
               port: 8080
