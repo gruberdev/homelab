@@ -1,0 +1,95 @@
+kind: DaemonSet
+apiVersion: apps/v1
+metadata:
+  name: csi-vultr-node
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      app: csi-vultr-node
+  template:
+    metadata:
+      labels:
+        app: csi-vultr-node
+        role: csi-vultr
+    spec:
+      serviceAccountName: csi-vultr-node-sa
+      hostNetwork: true
+      containers:
+        - name: driver-registrar
+          image: k8s.gcr.io/sig-storage/csi-node-driver-registrar:v2.5.0
+          args:
+            - "--v=5"
+            - "--csi-address=$(ADDRESS)"
+            - "--kubelet-registration-path=$(DRIVER_REG_SOCK_PATH)"
+          env:
+            - name: ADDRESS
+              value: /csi/csi.sock
+            - name: DRIVER_REG_SOCK_PATH
+              value: /var/lib/kubelet/plugins/block.csi.vultr.com/csi.sock
+            - name: KUBE_NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+          volumeMounts:
+            - name: plugin-dir
+              mountPath: /csi/
+            - name: registration-dir
+              mountPath: /registration/
+        - name: csi-vultr-plugin
+          image: vultr/vultr-csi:v0.7.0
+          args:
+            - "--endpoint=$(CSI_ENDPOINT)"
+          env:
+            - name: CSI_ENDPOINT
+              value: unix:///csi/csi.sock
+          imagePullPolicy: "Always"
+          securityContext:
+            privileged: true
+            capabilities:
+              add: [ "SYS_ADMIN" ]
+            allowPrivilegeEscalation: true
+          volumeMounts:
+            - name: plugin-dir
+              mountPath: /csi
+            - name: pods-mount-dir
+              mountPath: /var/lib/kubelet
+              mountPropagation: "Bidirectional"
+            - mountPath: /dev
+              name: device-dir
+      volumes:
+        - name: registration-dir
+          hostPath:
+            path: /var/lib/kubelet/plugins_registry/
+            type: DirectoryOrCreate
+        - name: kubelet-dir
+          hostPath:
+            path: /var/lib/kubelet
+            type: Directory
+        - name: plugin-dir
+          hostPath:
+            path: /var/lib/kubelet/plugins/block.csi.vultr.com
+            type: DirectoryOrCreate
+        - name: pods-mount-dir
+          hostPath:
+            path: /var/lib/kubelet
+            type: Directory
+        - name: device-dir
+          hostPath:
+            path: /dev
+        - name: udev-rules-etc
+          hostPath:
+            path: /etc/udev
+            type: Directory
+        - name: udev-rules-lib
+          hostPath:
+            path: /lib/udev
+            type: Directory
+        - name: udev-socket
+          hostPath:
+            path: /run/udev
+            type: Directory
+        - name: sys
+          hostPath:
+            path: /sys
+            type: Directory

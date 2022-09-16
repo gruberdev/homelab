@@ -1,0 +1,67 @@
+kind: StatefulSet
+apiVersion: apps/v1
+metadata:
+  name: csi-vultr-controller
+  namespace: kube-system
+spec:
+  serviceName: "csi-vultr"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: csi-vultr-controller
+  template:
+    metadata:
+      labels:
+        app: csi-vultr-controller
+        role: csi-vultr
+    spec:
+      hostNetwork: true
+      serviceAccountName: csi-vultr-controller-sa
+      containers:
+        - name: csi-provisioner
+          image: k8s.gcr.io/sig-storage/csi-provisioner:v3.1.0
+          args:
+            - "--volume-name-prefix=pvc"
+            - "--volume-name-uuid-length=16"
+            - "--csi-address=$(ADDRESS)"
+            - "--v=5"
+            - "--default-fstype=ext4"
+          env:
+            - name: ADDRESS
+              value: /var/lib/csi/sockets/pluginproxy/csi.sock
+          imagePullPolicy: "Always"
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /var/lib/csi/sockets/pluginproxy/
+        - name: csi-attacher
+          image: k8s.gcr.io/sig-storage/csi-attacher:v3.4.0
+          args:
+            - "--v=5"
+            - "--csi-address=$(ADDRESS)"
+          env:
+            - name: ADDRESS
+              value: /var/lib/csi/sockets/pluginproxy/csi.sock
+          imagePullPolicy: "Always"
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /var/lib/csi/sockets/pluginproxy/
+        - name: csi-vultr-plugin
+          image: vultr/vultr-csi:v0.7.0
+          args:
+            - "--endpoint=$(CSI_ENDPOINT)"
+            - "--token=$(VULTR_API_KEY)"
+          env:
+            - name: CSI_ENDPOINT
+              value: unix:///var/lib/csi/sockets/pluginproxy/csi.sock
+            - name: VULTR_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: vultr-csi
+                  key: api-key
+          imagePullPolicy: "Always"
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /var/lib/csi/sockets/pluginproxy/
+      volumes:
+        - name: socket-dir
+          emptyDir: { }
