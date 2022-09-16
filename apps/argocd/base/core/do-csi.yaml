@@ -1,30 +1,32 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: aws-ebs-csi
+  name: digitalocean-csi
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: cluster
   source:
     repoURL: 'https://github.com/gruberdev/homelab.git'
-    path: apps/data/aws-ebs
+    path: apps/data/do-csi
     targetRevision: main
   destination:
     namespace: kube-system
     name: in-cluster
   syncPolicy:
     automated:
-      prune: false
+      prune: true
       selfHeal: true
       allowEmpty: true
     syncOptions:
-    - Validate=false
+    - Validate=true
     - CreateNamespace=false
     - PrunePropagationPolicy=foreground
-    - PruneLast=false
-    - ApplyOutOfSyncOnly=true
-    - Prune=false
+    - PruneLast=true
+    - ApplyOutOfSyncOnly=false
+    - Prune=true
     retry:
-      limit: 10
+      limit: 5
       backoff:
         duration: 20s
         factor: 2

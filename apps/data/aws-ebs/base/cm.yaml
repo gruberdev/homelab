@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: aws-csi-cm
-data:
-  AWS_DEFAULT_REGION: "sa-east-1"
-  AWS_REGION: "sa-east-1"
