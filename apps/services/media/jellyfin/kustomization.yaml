@@ -29,9 +29,10 @@ patches:
       path: "/spec/template/spec/nodeSelector"
       value:
         kubernetes.io/arch: amd64
-        kubernetes.io/hostname: node2
+        kubernetes.io/hostname: node-one
   target:
     kind: Deployment
+    name: jellyfin
 
 commonAnnotations:
   reloader.stakater.com/auto: "true"

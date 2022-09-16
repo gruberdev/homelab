@@ -32,6 +32,8 @@ patches:
         kubernetes.io/hostname: node2
   target:
     kind: Deployment
+    name: n8n-server
+
 commonAnnotations:
   reloader.stakater.com/auto: "true"
 images:

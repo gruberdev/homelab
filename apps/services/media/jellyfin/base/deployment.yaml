@@ -50,11 +50,11 @@ spec:
               protocol: UDP
           resources:
             limits:
-              cpu: 1000m
-              memory: 1024Mi
+              cpu: 300m
+              memory: 400Mi
             requests:
-              cpu: 400m
-              memory: 512Mi
+              cpu: 150m
+              memory: 200Mi
           volumeMounts:
             - name: dev-dri
               mountPath: /dev/dri
