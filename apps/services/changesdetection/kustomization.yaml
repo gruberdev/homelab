@@ -28,7 +28,9 @@ patches:
       path: "/spec/template/spec/nodeSelector"
       value:
         kubernetes.io/hostname: node2
+        value: "5000"
   target:
     kind: StatefulSet
+    name: changedetection
 commonAnnotations:
   reloader.stakater.com/auto: "true"

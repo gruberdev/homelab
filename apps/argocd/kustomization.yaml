@@ -31,7 +31,6 @@ resources:
 # - base/monitoring/flame.yaml
 - base/monitoring/unifi-poller.yaml
 - base/monitoring/kube-prometheus.yaml
-- base/monitoring/changedetection.yaml
 
 - base/drone/drone-server.yaml
 - base/drone/drone-runner.yaml
@@ -40,6 +39,7 @@ resources:
 - base/services/wakapi.yaml
 - base/services/rss-gen.yaml
 - base/services/rss-hub.yaml
+- base/services/changedetection.yaml
 
 # - base/services/metabase.yaml
 
