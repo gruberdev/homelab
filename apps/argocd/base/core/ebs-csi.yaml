@@ -2,31 +2,29 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: aws-ebs-csi
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
 spec:
   project: cluster
   source:
-    repoURL: 'https://github.com/kubernetes-sigs/aws-ebs-csi-driver.git'
-    path: deploy/kubernetes/overlays/stable
-    targetRevision: release-1.11
+    repoURL: 'https://github.com/gruberdev/homelab.git'
+    path: apps/data/aws-ebs
+    targetRevision: main
   destination:
     namespace: kube-system
     name: in-cluster
   syncPolicy:
     automated:
-      prune: true
+      prune: false
       selfHeal: true
       allowEmpty: true
     syncOptions:
-    - Validate=true
+    - Validate=false
     - CreateNamespace=false
     - PrunePropagationPolicy=foreground
-    - PruneLast=true
-    - ApplyOutOfSyncOnly=false
-    - Prune=true
+    - PruneLast=false
+    - ApplyOutOfSyncOnly=true
+    - Prune=false
     retry:
-      limit: -1
+      limit: 10
       backoff:
         duration: 20s
         factor: 2
