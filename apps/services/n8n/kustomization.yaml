@@ -6,20 +6,6 @@ bases:
 
 namespace: services
 
-patchesStrategicMerge:
-- |-
-  apiVersion: apps/v1
-  kind: Deployment
-  metadata:
-    name: deploy
-  spec:
-    template:
-      spec:
-        containers:
-        - name: nginx
-          $patch: delete
-  EOF
-
 patches:
 - path: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/tailscale/patch.yaml
   target:
