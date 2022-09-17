@@ -28,13 +28,6 @@ spec:
             capabilities:
               add:
               - NET_ADMIN
-          ports:
-            - containerPort: 3478
-              name: stun
-              protocol: UDP
-            - containerPort: 41641
-              name: wireguard
-              protocol: UDP
           resources:
             limits:
               cpu: "256m"
@@ -42,21 +35,3 @@ spec:
             requests:
               cpu: "100m"
               memory: "100Mi"
-          livenessProbe:
-            exec:
-              command:
-              - tailscale
-              - --socket=/tmp/tailscaled.sock
-              - status
-            initialDelaySeconds: 15
-            periodSeconds: 5
-            failureThreshold: 24
-          startupProbe:
-            exec:
-              command:
-              - tailscale
-              - --socket=/tmp/tailscaled.sock
-              - status
-            initialDelaySeconds: 35
-            periodSeconds: 30
-            failureThreshold: 1
