@@ -1,0 +1,187 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: longhorn
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: cluster
+  source:
+    repoURL: 'https://github.com/longhorn/longhorn.git'
+    targetRevision: longhorn-1.3.1
+    path: chart
+    helm:
+      releaseName: longhorn
+      values: |
+          global:
+            cattle:
+              systemDefaultRegistry: ""
+              windowsCluster:
+                enabled: false
+          image:
+            longhorn:
+              engine:
+                repository: longhornio/longhorn-engine
+                tag: v1.3.1
+              manager:
+                repository: longhornio/longhorn-manager
+                tag: v1.3.1
+              ui:
+                repository: longhornio/longhorn-ui
+                tag: v1.3.1
+              instanceManager:
+                repository: longhornio/longhorn-instance-manager
+                tag: v1_20220808
+              shareManager:
+                repository: longhornio/longhorn-share-manager
+                tag: v1_20220808
+              backingImageManager:
+                repository: longhornio/backing-image-manager
+                tag: v3_20220808
+            csi:
+              attacher:
+                repository: longhornio/csi-attacher
+                tag: v3.4.0
+              provisioner:
+                repository: longhornio/csi-provisioner
+                tag: v2.1.2
+              nodeDriverRegistrar:
+                repository: longhornio/csi-node-driver-registrar
+                tag: v2.5.0
+              resizer:
+                repository: longhornio/csi-resizer
+                tag: v1.2.0
+              snapshotter:
+                repository: longhornio/csi-snapshotter
+                tag: v3.0.3
+            pullPolicy: IfNotPresent
+          service:
+            ui:
+              type: ClusterIP
+            manager:
+              type: ClusterIP
+              loadBalancerIP: ""
+              loadBalancerSourceRanges: ""
+          persistence:
+            defaultClass: true
+            defaultFsType: ext4
+            defaultClassReplicaCount: 3
+            defaultDataLocality: disabled # best-effort otherwise
+            reclaimPolicy: Delete
+            migratable: false
+            recurringJobSelector:
+              enable: false
+            backingImage:
+              enable: false
+          csi:
+            kubeletRootDir: ~
+            attacherReplicaCount: ~
+            provisionerReplicaCount: ~
+            resizerReplicaCount: ~
+            snapshotterReplicaCount: ~
+          defaultSettings:
+            backupTarget: ~
+            backupTargetCredentialSecret: ~
+            allowRecurringJobWhileVolumeDetached: ~
+            createDefaultDiskLabeledNodes: ~
+            defaultDataPath: /home/longhorn/data
+            defaultDataLocality: ~
+            replicaSoftAntiAffinity: ~
+            replicaAutoBalance: ~
+            storageOverProvisioningPercentage: ~
+            storageMinimalAvailablePercentage: 10
+            upgradeChecker: ~
+            defaultReplicaCount: 2
+            defaultLonghornStaticStorageClass: ~
+            backupstorePollInterval: ~
+            taintToleration: ~
+            systemManagedComponentsNodeSelector: ~
+            priorityClass: ~
+            autoSalvage: ~
+            autoDeletePodWhenVolumeDetachedUnexpectedly: ~
+            disableSchedulingOnCordonedNode: ~
+            replicaZoneSoftAntiAffinity: ~
+            nodeDownPodDeletionPolicy: ~
+            allowNodeDrainWithLastHealthyReplica: ~
+            mkfsExt4Parameters: ~
+            disableReplicaRebuild: ~
+            replicaReplenishmentWaitInterval: ~
+            concurrentReplicaRebuildPerNodeLimit: ~
+            disableRevisionCounter: ~
+            systemManagedPodsImagePullPolicy: ~
+            allowVolumeCreationWithDegradedAvailability: ~
+            autoCleanupSystemGeneratedSnapshot: ~
+            concurrentAutomaticEngineUpgradePerNodeLimit: ~
+            backingImageCleanupWaitInterval: ~
+            backingImageRecoveryWaitInterval: ~
+            guaranteedEngineManagerCPU: ~
+            guaranteedReplicaManagerCPU: ~
+            kubernetesClusterAutoscalerEnabled: ~
+            orphanAutoDeletion: ~
+            storageNetwork: ~
+          privateRegistry:
+            createSecret: ~
+            registryUrl: ~
+            registryUser: ~
+            registryPasswd: ~
+            registrySecret: ~
+          longhornManager:
+            log:
+              format: plain
+            priorityClass: ~
+            tolerations: []
+            nodeSelector: {}
+            serviceAnnotations: {}
+          longhornDriver:
+            priorityClass: ~
+            tolerations: []
+            nodeSelector: {}
+          longhornUI:
+            replicas: 1
+            priorityClass: ~
+            tolerations: []
+            nodeSelector: {}
+          resources:
+            limits:
+              cpu: 100m
+              memory: 128Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          ingress:
+            enabled: false
+            ingressClassName: ~
+            host: sslip.io
+            tls: false
+            secureBackends: false
+            tlsSecret: longhorn.local-tls
+            path: /
+            annotations:
+            secrets:
+          enablePSP: true
+          namespaceOverride: "longhorn-system"
+          annotations: {}
+          serviceAccount:
+            annotations: {}
+
+  destination:
+    namespace: longhorn-system
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: true
+    syncOptions:
+    - Validate=false
+    - CreateNamespace=true
+    - PrunePropagationPolicy=background
+    - PruneLast=true
+    - ApplyOutOfSyncOnly=false
+    - Prune=true
+    retry:
+      limit: -1
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m

@@ -4,8 +4,10 @@ bases:
 - ./base
 - https://github.com/gruberdev/homelab/apps/networking/tailscale
 - https://github.com/gruberdev/homelab/apps/networking/cloudflared
+
 patchesStrategicMerge:
 - overlay/cloudflared-cm.yaml
+
 namespace: drone
 patches:
 - path: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/tailscale/patch.yaml
