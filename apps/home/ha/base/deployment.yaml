@@ -18,9 +18,6 @@ spec:
       labels:
         app: home-assistant
     spec:
-      nodeSelector:
-        kubernetes.io/arch: amd64
-        kubernetes.io/hostname: node-one
       initContainers:
         - name: git-sync
           image: k8s.gcr.io/git-sync/git-sync:v3.3.4
@@ -72,10 +69,10 @@ spec:
           resources:
             limits:
               cpu: 500m
-              memory: 750Mi
+              memory: 850Mi
             requests:
               cpu: 200m
-              memory: 128Mi
+              memory: 500Mi
           securityContext:
             privileged: true
           volumeMounts:

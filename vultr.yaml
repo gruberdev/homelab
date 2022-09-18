@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: jellyfin-storage
+  name: test-pvc
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: local-path
   resources:
     requests:
-      storage: 10Gi
+      storage: 40Gi
+  storageClassName: vultr-block-storage-hdd

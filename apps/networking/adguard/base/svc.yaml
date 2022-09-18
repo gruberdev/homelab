@@ -10,11 +10,11 @@ spec:
     app: adguard-home
   ports:
     - name: admin
-      port: 3000
+      port: 3321
       targetPort: 3000
       protocol: TCP
     - name: web
-      port: 80
+      port: 3322
       targetPort: 80
       protocol: TCP
     - name: dns

@@ -14,18 +14,25 @@ patches:
     name: drone-server
 - patch: |-
     - op: replace
-      path: "/spec/template/spec/containers/0/env/1"
+      path: "/spec/template/spec/containers/0/env/2"
       value:
         name: TS_HOSTNAME
         value: "drone"
     - op: replace
-      path: "/spec/template/spec/containers/0/env/2"
+      path: "/spec/template/spec/containers/0/env/3"
       value:
         name: DEST_PORT
         value: "80"
   target:
     kind: Deployment
     name: drone-server
+- patch: |-
+    - op: add
+      path: "/spec/template/spec/nodeSelector"
+      value:
+        kubernetes.io/hostname: node2
+  target:
+    kind: Deployment
 - patch: |-
     - op: replace
       path: "/spec/template/spec/volumes/0/secret/secretName"

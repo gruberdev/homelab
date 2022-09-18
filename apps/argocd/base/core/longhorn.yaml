@@ -1,32 +1,30 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: rss
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
+  name: longhorn
 spec:
-  project: apps
+  project: cluster
   source:
     repoURL: 'https://github.com/gruberdev/homelab.git'
-    path: apps/services/rss
+    path: apps/data/longhorn
     targetRevision: main
   destination:
-    namespace: rss
+    namespace: longhorn-system
     name: in-cluster
   syncPolicy:
     automated:
-      prune: true
+      prune: false
       selfHeal: true
       allowEmpty: true
     syncOptions:
     - Validate=false
     - CreateNamespace=true
     - PrunePropagationPolicy=foreground
-    - PruneLast=true
-    - ApplyOutOfSyncOnly=false
-    - Prune=true
+    - PruneLast=false
+    - ApplyOutOfSyncOnly=true
+    - Prune=false
     retry:
-      limit: -1
+      limit: 10
       backoff:
         duration: 20s
         factor: 2

@@ -1,17 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: uptime-kuma
+  name: rss-hub
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: monitoring
+  project: apps
   source:
     repoURL: 'https://github.com/gruberdev/homelab.git'
-    path: apps/monitoring/uptime-kuma
+    path: apps/services/rss/hub
     targetRevision: main
   destination:
-    namespace: monitoring
+    namespace: rss
     name: in-cluster
   syncPolicy:
     automated:

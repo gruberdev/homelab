@@ -19,9 +19,6 @@ spec:
       labels:
         app: jellyfin
     spec:
-      nodeSelector:
-        kubernetes.io/arch: amd64
-        kubernetes.io/hostname: node-one
       containers:
         - name: jellyfin
           image: linuxserver/jellyfin:amd64-version-10.8.4-1
@@ -53,11 +50,11 @@ spec:
               protocol: UDP
           resources:
             limits:
-              cpu: 1000m
-              memory: 1024Mi
+              cpu: 300m
+              memory: 400Mi
             requests:
-              cpu: 400m
-              memory: 512Mi
+              cpu: 150m
+              memory: 200Mi
           volumeMounts:
             - name: dev-dri
               mountPath: /dev/dri

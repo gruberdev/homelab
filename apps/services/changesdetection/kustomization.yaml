@@ -2,7 +2,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 bases:
 - ./base
-- https://github.com/gruberdev/homelab/apps/networking/tailscale
 
 namespace: services
 
@@ -12,18 +11,26 @@ patches:
     kind: StatefulSet
 - patch: |-
     - op: replace
-      path: "/spec/template/spec/containers/0/env/1"
+      path: "/spec/template/spec/containers/0/env/2"
       value:
         name: TS_HOSTNAME
         value: "onchanges"
     - op: replace
-      path: "/spec/template/spec/containers/0/env/2"
+      path: "/spec/template/spec/containers/0/env/3"
       value:
         name: DEST_PORT
         value: "5000"
   target:
     kind: StatefulSet
     name: changedetection
-
+- patch: |-
+    - op: add
+      path: "/spec/template/spec/nodeSelector"
+      value:
+        kubernetes.io/hostname: node2
+        value: "5000"
+  target:
+    kind: StatefulSet
+    name: changedetection
 commonAnnotations:
   reloader.stakater.com/auto: "true"

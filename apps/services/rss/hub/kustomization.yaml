@@ -4,3 +4,23 @@ bases:
 - ./base
 
 namespace: rss
+
+patches:
+- path: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/tailscale/patch.yaml
+  target:
+    kind: Deployment
+    name: rss-hub
+- patch: |-
+    - op: replace
+      path: "/spec/template/spec/containers/0/env/2"
+      value:
+        name: TS_HOSTNAME
+        value: "hub.rss"
+    - op: replace
+      path: "/spec/template/spec/containers/0/env/3"
+      value:
+        name: DEST_PORT
+        value: "1200"
+  target:
+    kind: Deployment
+    name: rss-hub

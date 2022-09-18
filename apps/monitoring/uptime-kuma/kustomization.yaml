@@ -13,15 +13,23 @@ patches:
     name: kuma
 - patch: |-
     - op: replace
-      path: "/spec/template/spec/containers/0/env/1"
+      path: "/spec/template/spec/containers/0/env/2"
       value:
         name: TS_HOSTNAME
         value: "kuma"
     - op: replace
-      path: "/spec/template/spec/containers/0/env/2"
+      path: "/spec/template/spec/containers/0/env/3"
       value:
         name: DEST_PORT
         value: "3001"
+  target:
+    kind: Deployment
+    name: kuma
+- patch: |-
+    - op: add
+      path: "/spec/template/spec/nodeSelector"
+      value:
+        kubernetes.io/hostname: node2
   target:
     kind: Deployment
     name: kuma

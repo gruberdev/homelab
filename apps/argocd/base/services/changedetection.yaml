@@ -5,10 +5,10 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: monitoring
+  project: apps
   source:
     repoURL: 'https://github.com/gruberdev/homelab.git'
-    path: apps/monitoring/changesdetection
+    path: apps/services/changesdetection
     targetRevision: main
   destination:
     namespace: services
@@ -20,13 +20,13 @@ spec:
       allowEmpty: true
     syncOptions:
     - Validate=false
-    - CreateNamespace=true
+    - CreateNamespace=false
     - PrunePropagationPolicy=foreground
     - PruneLast=true
     - ApplyOutOfSyncOnly=false
     - Prune=true
     retry:
-      limit: -1
+      limit: 10
       backoff:
         duration: 20s
         factor: 2

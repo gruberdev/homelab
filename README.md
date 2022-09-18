@@ -257,7 +257,8 @@
 [argocd-flame]: https://argo.gr.wtf/api/badge?name=flame
 [argocd-poller]: https://argo.gr.wtf/api/badge?name=unifi-poller
 [argocd-wakapi]: https://argo.gr.wtf/api/badge?name=unifi-poller
-[argocd-rss]: https://argo.gr.wtf/api/badge?name=rss
+[argocd-rss-gen]: https://argo.gr.wtf/api/badge?name=rss-gen
+[argocd-rss-hub]: https://argo.gr.wtf/api/badge?name=rss-hub
 [argocd-beets]: https://argo.gr.wtf/api/badge?name=beets
 [argocd-lidarr]: https://argo.gr.wtf/api/badge?name=lidarr
 [argocd-metabase]: https://argo.gr.wtf/api/badge?name=metabase
