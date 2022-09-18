@@ -60,13 +60,11 @@ spec:
               type: ClusterIP
             manager:
               type: ClusterIP
-              loadBalancerIP: ""
-              loadBalancerSourceRanges: ""
           persistence:
             defaultClass: true
             defaultFsType: ext4
-            defaultClassReplicaCount: 3
-            defaultDataLocality: disabled # best-effort otherwise
+            defaultClassReplicaCount: 2
+            defaultDataLocality: best-effort
             reclaimPolicy: Delete
             migratable: false
             recurringJobSelector:
@@ -150,14 +148,6 @@ spec:
               memory: 128Mi
           ingress:
             enabled: false
-            ingressClassName: ~
-            host: sslip.io
-            tls: false
-            secureBackends: false
-            tlsSecret: longhorn.local-tls
-            path: /
-            annotations:
-            secrets:
           enablePSP: true
           namespaceOverride: "longhorn-system"
           annotations: {}
