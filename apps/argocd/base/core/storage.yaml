@@ -1,32 +1,28 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: adguard
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
+  name: storage
 spec:
   project: cluster
   source:
     repoURL: 'https://github.com/gruberdev/homelab.git'
-    path: apps/networking/adguard
+    path: apps/data/storage
     targetRevision: main
   destination:
-    namespace: dns
     name: in-cluster
   syncPolicy:
     automated:
-      prune: true
-      selfHeal: true
+      prune: false
+      selfHeal: false
       allowEmpty: true
     syncOptions:
     - Validate=false
-    - CreateNamespace=true
     - PrunePropagationPolicy=foreground
-    - PruneLast=true
-    - ApplyOutOfSyncOnly=false
-    - Prune=true
+    - PruneLast=false
+    - ApplyOutOfSyncOnly=true
+    - Prune=false
     retry:
-      limit: 10
+      limit: 1
       backoff:
         duration: 20s
         factor: 2
