@@ -4,7 +4,7 @@ metadata:
   name: drone-data
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   storageClassName: longhorn
   resources:
     requests:
