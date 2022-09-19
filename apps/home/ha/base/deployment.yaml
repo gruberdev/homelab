@@ -28,6 +28,9 @@ spec:
           envFrom:
             - configMapRef:
                 name: git-ha-cm
+            - secretRef:
+                name: git-vars
+                optional: true
       containers:
         - env:
             - name: TZ
