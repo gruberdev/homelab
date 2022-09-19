@@ -42,6 +42,7 @@ patches:
   target:
     kind: Deployment
     name: cloudflared
+
 commonAnnotations:
   reloader.stakater.com/auto: "true"
 images:

@@ -35,6 +35,14 @@ patches:
   target:
     kind: Deployment
     name: cloudflared
+- patch: |-
+    - op: add
+      path: "/spec/template/spec/nodeSelector"
+      value:
+        kubernetes.io/hostname: node2
+  target:
+    kind: Deployment
+    name: wakapi-server
 
 commonAnnotations:
   reloader.stakater.com/auto: "true"

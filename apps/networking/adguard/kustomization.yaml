@@ -3,6 +3,8 @@ kind: Kustomization
 bases:
 - ./base
 
+
+
 namespace: dns
 
 commonAnnotations:
