@@ -33,7 +33,7 @@ spec:
             - secretRef:
                 name: wakapi-vars
           ports:
-            - name: web
+            - name: http
               containerPort: 3000
               protocol: TCP
           livenessProbe:
