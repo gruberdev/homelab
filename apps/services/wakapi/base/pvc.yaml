@@ -4,7 +4,7 @@ metadata:
   name: wakapi-storage
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   storageClassName: longhorn
   resources:
     requests:
