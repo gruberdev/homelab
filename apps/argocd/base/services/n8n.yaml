@@ -33,7 +33,7 @@ spec:
     - Prune=true
     - Replace=true
     retry:
-      limit: -1
+      limit: 10
       backoff:
         duration: 20s
         factor: 2
