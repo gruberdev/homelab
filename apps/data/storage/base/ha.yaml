@@ -1,11 +1,12 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: flame-storage
+  name: ha-storage
+  namespace: homeassistant
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: longhorn
   resources:
     requests:
-      storage: 1Gi
+      storage: 5Gi
+  storageClassName: longhorn
