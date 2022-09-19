@@ -8,7 +8,8 @@ namespace: services
 patches:
 - path: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/tailscale/patch.yaml
   target:
-    kind: StatefulSet
+    kind: Deployment
+    name: changedetection
 - patch: |-
     - op: replace
       path: "/spec/template/spec/containers/0/env/2"
@@ -21,7 +22,7 @@ patches:
         name: DEST_PORT
         value: "5000"
   target:
-    kind: StatefulSet
+    kind: Deployment
     name: changedetection
 - patch: |-
     - op: add
@@ -29,7 +30,7 @@ patches:
       value:
         kubernetes.io/hostname: node2
   target:
-    kind: StatefulSet
+    kind: Deployment
     name: changedetection
 
 commonAnnotations:
