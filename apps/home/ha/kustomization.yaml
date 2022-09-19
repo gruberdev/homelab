@@ -1,13 +1,12 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
 bases:
 - ./base
 - https://github.com/gruberdev/homelab/apps/networking/tailscale
-commonAnnotations:
-  reloader.stakater.com/auto: 'true'
-kind: Kustomization
-namespace: homeassistant
-patches:
 
+namespace: homeassistant
+
+patches:
 - path: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/tailscale/patch.yaml
   target:
     kind: Deployment
@@ -38,3 +37,6 @@ patches:
 images:
 - name: homeassistant/home-assistant
   newTag: "2022.9"
+
+commonAnnotations:
+  reloader.stakater.com/auto: 'true'
