@@ -17,7 +17,6 @@ spec:
       labels:
         app: changedetection
     spec:
-      terminationGracePeriodSeconds: 10
       containers:
         - name: changedetection
           image: dgtlmoon/changedetection.io:latest
@@ -26,10 +25,12 @@ spec:
           - name: http
             containerPort: 5000
           resources:
-            limits:
-              memory: "350Mi"
             requests:
-              memory: "120Mi"
+              cpu: "150m"
+              memory: "128Mi"
+            limits:
+              cpu: "300m"
+              memory: "256Mi"
           envFrom:
             - configMapRef:
                 name: onchanges-cm
@@ -37,13 +38,6 @@ spec:
           - name: onchange-data
             readOnly: false
             mountPath: "/datastore"
-          livenessProbe:
-            exec:
-              command:
-              - ls
-              - /datastore/lost+found
-            initialDelaySeconds: 20
-            periodSeconds: 5
       volumes:
       - name: onchange-data
         persistentVolumeClaim:
