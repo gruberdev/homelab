@@ -29,31 +29,31 @@ spec:
           livenessProbe:
             tcpSocket:
               port: 5000
-            initialDelaySeconds: 0
+            initialDelaySeconds: 30
             failureThreshold: 3
-            timeoutSeconds: 1
-            periodSeconds: 10
+            timeoutSeconds: 3
+            periodSeconds: 15
           readinessProbe:
             tcpSocket:
               port: 5000
-            initialDelaySeconds: 0
+            initialDelaySeconds: 10
             failureThreshold: 3
             timeoutSeconds: 1
             periodSeconds: 10
           startupProbe:
             tcpSocket:
               port: 5000
-            initialDelaySeconds: 0
+            initialDelaySeconds: 60
             failureThreshold: 30
-            timeoutSeconds: 1
+            timeoutSeconds: 3
             periodSeconds: 5
           resources:
             requests:
-              cpu: "150m"
-              memory: "128Mi"
-            limits:
-              cpu: "300m"
+              cpu: "200m"
               memory: "256Mi"
+            limits:
+              cpu: "400m"
+              memory: "600Mi"
           envFrom:
             - configMapRef:
                 name: onchanges-cm
