@@ -36,7 +36,6 @@ spec:
                 name: onchanges-cm
           volumeMounts:
           - name: onchange-data
-            readOnly: false
             mountPath: "/datastore"
       volumes:
       - name: onchange-data
