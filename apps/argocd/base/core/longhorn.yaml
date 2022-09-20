@@ -64,7 +64,7 @@ spec:
             defaultClass: true
             defaultFsType: ext4
             defaultClassReplicaCount: 2
-            defaultDataLocality: best-effort
+            defaultDataLocality: ~
             reclaimPolicy: Delete
             migratable: false
             recurringJobSelector:
@@ -128,12 +128,14 @@ spec:
               format: plain
             priorityClass: ~
             tolerations: []
-            nodeSelector: {}
+            nodeSelector:
+              kubernetes.io/hostname: node2
             serviceAnnotations: {}
           longhornDriver:
             priorityClass: ~
             tolerations: []
-            nodeSelector: {}
+            nodeSelector:
+              kubernetes.io/hostname: node2
           longhornUI:
             replicas: 1
             priorityClass: ~
@@ -141,8 +143,8 @@ spec:
             nodeSelector: {}
           resources:
             limits:
-              cpu: 100m
-              memory: 128Mi
+              cpu: 200m
+              memory: 256Mi
             requests:
               cpu: 100m
               memory: 128Mi
@@ -170,7 +172,7 @@ spec:
     - ApplyOutOfSyncOnly=false
     - Prune=true
     retry:
-      limit: -1
+      limit: 10
       backoff:
         duration: 5s
         factor: 2
