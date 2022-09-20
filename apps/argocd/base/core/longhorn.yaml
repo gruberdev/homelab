@@ -128,14 +128,12 @@ spec:
               format: plain
             priorityClass: ~
             tolerations: []
-            nodeSelector:
-              kubernetes.io/hostname: node2
+            nodeSelector: {}
             serviceAnnotations: {}
           longhornDriver:
             priorityClass: ~
             tolerations: []
-            nodeSelector:
-              kubernetes.io/hostname: node2
+            nodeSelector: {}
           longhornUI:
             replicas: 1
             priorityClass: ~
