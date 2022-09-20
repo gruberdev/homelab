@@ -4,7 +4,7 @@ metadata:
   name: adguard-storage
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   storageClassName: longhorn
   resources:
     requests:
@@ -16,7 +16,7 @@ metadata:
   name: adguard-logs
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   storageClassName: longhorn
   resources:
     requests:

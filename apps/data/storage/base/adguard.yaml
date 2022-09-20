@@ -5,7 +5,7 @@ metadata:
   namespace: dns
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   storageClassName: longhorn
   resources:
     requests:
@@ -18,7 +18,7 @@ metadata:
   namespace: dns
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   storageClassName: longhorn
   resources:
     requests:

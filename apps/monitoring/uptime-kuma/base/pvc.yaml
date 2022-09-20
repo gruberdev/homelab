@@ -4,7 +4,7 @@ metadata:
   name: kuma-storage
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   storageClassName: longhorn
   resources:
     requests:
