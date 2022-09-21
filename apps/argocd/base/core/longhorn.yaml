@@ -81,15 +81,15 @@ spec:
             backupTarget: ~
             backupTargetCredentialSecret: ~
             allowRecurringJobWhileVolumeDetached: ~
-            createDefaultDiskLabeledNodes: ~
+            createDefaultDiskLabeledNodes: true
             defaultDataPath: /home/longhorn/data
-            defaultDataLocality: ~
+            defaultDataLocality: best-effort
             replicaSoftAntiAffinity: ~
             replicaAutoBalance: ~
             storageOverProvisioningPercentage: ~
             storageMinimalAvailablePercentage: 10
             upgradeChecker: ~
-            defaultReplicaCount: 1
+            defaultReplicaCount: 2
             defaultLonghornStaticStorageClass: ~
             backupstorePollInterval: ~
             taintToleration: ~
@@ -99,7 +99,7 @@ spec:
             autoDeletePodWhenVolumeDetachedUnexpectedly: ~
             disableSchedulingOnCordonedNode: ~
             replicaZoneSoftAntiAffinity: ~
-            nodeDownPodDeletionPolicy: ~
+            nodeDownPodDeletionPolicy: delete-both-statefulset-and-deployment-pod
             allowNodeDrainWithLastHealthyReplica: ~
             mkfsExt4Parameters: ~
             disableReplicaRebuild: ~
