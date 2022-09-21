@@ -98,14 +98,14 @@ patches:
     - op: add
       path: "/spec/template/spec/nodeSelector"
       value:
-        kubernetes.io/hostname: node2
+        kubernetes.io/hostname: node-two
   target:
     kind: Deployment
 - patch: |-
     - op: add
       path: "/spec/template/spec/nodeSelector"
       value:
-        kubernetes.io/hostname: node2
+        kubernetes.io/hostname: node-two
   target:
     kind: StatefulSet
 - patch: |-

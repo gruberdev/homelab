@@ -65,7 +65,6 @@ tasks:
       - rm test/repo.yaml
     ignore_error: true
 
-
   install:
     desc: Installs ArgoCD resources manually on the local cluster
     dir: apps/argocd
