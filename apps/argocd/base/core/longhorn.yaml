@@ -63,7 +63,7 @@ spec:
           persistence:
             defaultClass: true
             defaultFsType: ext4
-            defaultClassReplicaCount: 2
+            defaultClassReplicaCount: 1
             defaultDataLocality: best-effort
             reclaimPolicy: Delete
             migratable: false
@@ -81,9 +81,9 @@ spec:
             backupTarget: ~
             backupTargetCredentialSecret: ~
             allowRecurringJobWhileVolumeDetached: ~
-            createDefaultDiskLabeledNodes: ~
+            createDefaultDiskLabeledNodes: false
             defaultDataPath: /home/longhorn/data
-            defaultDataLocality: ~
+            defaultDataLocality: best-effort
             replicaSoftAntiAffinity: ~
             replicaAutoBalance: ~
             storageOverProvisioningPercentage: ~
@@ -99,7 +99,7 @@ spec:
             autoDeletePodWhenVolumeDetachedUnexpectedly: ~
             disableSchedulingOnCordonedNode: ~
             replicaZoneSoftAntiAffinity: ~
-            nodeDownPodDeletionPolicy: ~
+            nodeDownPodDeletionPolicy: delete-both-statefulset-and-deployment-pod
             allowNodeDrainWithLastHealthyReplica: ~
             mkfsExt4Parameters: ~
             disableReplicaRebuild: ~
