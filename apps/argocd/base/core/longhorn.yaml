@@ -8,7 +8,7 @@ spec:
   project: cluster
   source:
     repoURL: 'https://github.com/longhorn/longhorn.git'
-    targetRevision: v1.3.1
+    targetRevision: v1.2.5
     path: chart
     helm:
       releaseName: longhorn
@@ -17,37 +17,51 @@ spec:
             cattle:
               systemDefaultRegistry: ""
               windowsCluster:
+                # Enable this to allow Longhorn to run on the Rancher deployed Windows cluster
                 enabled: false
+                # Tolerate Linux node taint
+                tolerations:
+                - key: "cattle.io/os"
+                  value: "linux"
+                  effect: "NoSchedule"
+                  operator: "Equal"
+                # Select Linux nodes
+                nodeSelector:
+                  kubernetes.io/os: "linux"
+                # Recognize toleration and node selector for Longhorn run-time created components
+                defaultSetting:
+                  taintToleration: cattle.io/os=linux:NoSchedule
+                  systemManagedComponentsNodeSelector: kubernetes.io/os:linux
           image:
             longhorn:
               engine:
                 repository: longhornio/longhorn-engine
-                tag: v1.3.1
+                tag: v1.2.5
               manager:
                 repository: longhornio/longhorn-manager
-                tag: v1.3.1
+                tag: v1.2.5
               ui:
                 repository: longhornio/longhorn-ui
-                tag: v1.3.1
+                tag: v1.2.5
               instanceManager:
                 repository: longhornio/longhorn-instance-manager
-                tag: v1_20220808
+                tag: v1_20220303_patch1
               shareManager:
                 repository: longhornio/longhorn-share-manager
-                tag: v1_20220808
+                tag: v1_20211020_patch1
               backingImageManager:
                 repository: longhornio/backing-image-manager
-                tag: v3_20220808
+                tag: v2_20210820_patch1
             csi:
               attacher:
                 repository: longhornio/csi-attacher
-                tag: v3.4.0
+                tag: v3.2.1
               provisioner:
                 repository: longhornio/csi-provisioner
                 tag: v2.1.2
               nodeDriverRegistrar:
                 repository: longhornio/csi-node-driver-registrar
-                tag: v2.5.0
+                tag: v2.3.0
               resizer:
                 repository: longhornio/csi-resizer
                 tag: v1.2.0
@@ -58,19 +72,25 @@ spec:
           service:
             ui:
               type: ClusterIP
+              nodePort: null
             manager:
               type: ClusterIP
+              nodePort: ""
           persistence:
             defaultClass: true
             defaultFsType: ext4
-            defaultClassReplicaCount: 1
-            defaultDataLocality: best-effort
+            defaultClassReplicaCount: 3
             reclaimPolicy: Delete
             migratable: false
             recurringJobSelector:
               enable: false
+              jobList: []
             backingImage:
               enable: false
+              name: ~
+              dataSourceType: ~
+              dataSourceParameters: ~
+              expectedChecksum: ~
           csi:
             kubeletRootDir: ~
             attacherReplicaCount: ~
@@ -83,15 +103,16 @@ spec:
             allowRecurringJobWhileVolumeDetached: ~
             createDefaultDiskLabeledNodes: ~
             defaultDataPath: /home/longhorn/data
-            defaultDataLocality: best-effort
+            defaultDataLocality: ~
             replicaSoftAntiAffinity: ~
             replicaAutoBalance: ~
             storageOverProvisioningPercentage: ~
-            storageMinimalAvailablePercentage: 10
+            storageMinimalAvailablePercentage: ~
             upgradeChecker: ~
             defaultReplicaCount: 2
             defaultLonghornStaticStorageClass: ~
             backupstorePollInterval: ~
+            failedBackupTTL: ~
             taintToleration: ~
             systemManagedComponentsNodeSelector: ~
             priorityClass: ~
@@ -99,7 +120,7 @@ spec:
             autoDeletePodWhenVolumeDetachedUnexpectedly: ~
             disableSchedulingOnCordonedNode: ~
             replicaZoneSoftAntiAffinity: ~
-            nodeDownPodDeletionPolicy: delete-both-statefulset-and-deployment-pod
+            nodeDownPodDeletionPolicy: ~
             allowNodeDrainWithLastHealthyReplica: ~
             mkfsExt4Parameters: ~
             disableReplicaRebuild: ~
@@ -114,44 +135,64 @@ spec:
             backingImageRecoveryWaitInterval: ~
             guaranteedEngineManagerCPU: ~
             guaranteedReplicaManagerCPU: ~
-            kubernetesClusterAutoscalerEnabled: ~
-            orphanAutoDeletion: ~
-            storageNetwork: ~
           privateRegistry:
-            createSecret: ~
             registryUrl: ~
             registryUser: ~
             registryPasswd: ~
             registrySecret: ~
           longhornManager:
-            log:
-              format: plain
             priorityClass: ~
             tolerations: []
-            nodeSelector: {}
-            serviceAnnotations: {}
+            nodeSelector:
+              kubernetes.io/hostname: node-two
           longhornDriver:
             priorityClass: ~
             tolerations: []
-            nodeSelector: {}
+            nodeSelector:
+              kubernetes.io/hostname: node-two
           longhornUI:
-            replicas: 1
             priorityClass: ~
             tolerations: []
-            nodeSelector: {}
+            nodeSelector:
+              kubernetes.io/hostname: node-two
           resources:
             limits:
-              cpu: 200m
-              memory: 256Mi
+              cpu: 100m
+              memory: 128Mi
             requests:
               cpu: 100m
               memory: 128Mi
           ingress:
+            ## Set to true to enable ingress record generation
             enabled: false
+            ingressClassName: ~
+            host: sslip.io
+            tls: false
+            tlsSecret: longhorn.local-tls
+            #  kubernetes.io/ingress.class: nginx
+            #  kubernetes.io/tls-acme: true
+            secrets:
+            ## If you're providing your own certificates, please use this to add the certificates as secrets
+            ## key and certificate should start with -----BEGIN CERTIFICATE----- or
+            ## -----BEGIN RSA PRIVATE KEY-----
+            ##
+            ## name should line up with a tlsSecret set further up
+            ## If you're using kube-lego, this is unneeded, as it will create the secret for you if it is not set
+            ##
+            ## It is also possible to create and manage the certificates outside of this helm chart
+            ## Please see README.md for more information
+            # - name: longhorn.local-tls
+            #   key:
+            #   certificate:
+
+          # Configure a pod security policy in the Longhorn namespace to allow privileged pods
           enablePSP: true
           namespaceOverride: "longhorn-system"
+          # Annotations to add to the Longhorn Manager DaemonSet Pods. Optional.
           annotations: {}
+
           serviceAccount:
+            # Annotations to add to the service account
             annotations: {}
 
   destination:
