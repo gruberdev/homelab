@@ -81,7 +81,7 @@ spec:
             backupTarget: ~
             backupTargetCredentialSecret: ~
             allowRecurringJobWhileVolumeDetached: ~
-            createDefaultDiskLabeledNodes: false
+            createDefaultDiskLabeledNodes: ~
             defaultDataPath: /home/longhorn/data
             defaultDataLocality: best-effort
             replicaSoftAntiAffinity: ~
