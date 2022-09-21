@@ -64,7 +64,7 @@ spec:
             defaultClass: true
             defaultFsType: ext4
             defaultClassReplicaCount: 2
-            defaultDataLocality: ~
+            defaultDataLocality: best-effort
             reclaimPolicy: Delete
             migratable: false
             recurringJobSelector:
