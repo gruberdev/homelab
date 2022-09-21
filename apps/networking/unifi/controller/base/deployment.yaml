@@ -19,7 +19,7 @@ spec:
       labels:
         app: unifi-controller
     spec:
-      terminationGracePeriodSeconds: 60
+      terminationGracePeriodSeconds: 10
       containers:
         - name: unifi-controller
           image: jacobalberty/unifi:v7.2.92
@@ -76,8 +76,13 @@ spec:
           livenessProbe:
             tcpSocket:
               port: 8080
-            initialDelaySeconds: 100
-            periodSeconds: 20
+            initialDelaySeconds: 30
+            periodSeconds: 15
+          startupProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 120
+            periodSeconds: 15
       volumes:
         - name: data
           persistentVolumeClaim:
