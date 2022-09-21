@@ -51,7 +51,7 @@ tasks:
     dir: apps/argocd/overlay
     cmds:
       - kubectl config set-context --current --namespace=vault --cluster=k3d-demo
-      - kubectl exec vault-argocd-0 -- vault operator init -key-shares=1 -key-threshold=1 -format=json > cluster-keys.json
+      - kubectl exec vault-0 -- vault operator init -key-shares=1 -key-threshold=1 -format=json > cluster-keys.json
       - task: highlight_normal
       - echo -e "\nVault's Unseal Key:"
       - task: reset

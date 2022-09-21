@@ -19,6 +19,13 @@ terraform/override.tf.json
 *_override.tf.json
 terraform/.terraformrc
 terraform/terraform.rc
+terraform/**/.terraform.lock.hcl
+terraform/**/*.terraform
+terraform/**/*.out
+terraform/**/.terraform
+terraform/**/terraform.tfstate
+terraform/**/terraform.tfstate.backup
+
 config/tls/base/tls-secret.yaml
 .vscode
 .vscode/*
@@ -34,7 +41,6 @@ terraform/.terraform
 terraform/unifi/users.csv
 .env
 nohup.out
-terraform/secrets/*
 !terraform/secrets/.gitkeep
 
 postgres/*
@@ -55,3 +61,6 @@ apps/kwatch/*
 apps/argocd/base/secrets/*.yaml
 test/storage/*
 !test/storage/.gitkeep
+terraform/vault/secrets/*
+!terraform/vault/secrets/test/example.json
+

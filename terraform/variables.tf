@@ -42,16 +42,6 @@ variable "unifi_upstream_dns" {
   sensitive   = true
 }
 
-variable "vault_github_org" {
-  type        = string
-  default     = "takeru-org"
-  description = "<sub>[Provide a Github organization name to authorize users inside Vault.](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/github_auth_backend#organization)</sub>"
-  validation {
-    condition     = can(regex("^[a-z0-9][-a-z0-9]*[a-z0-9]$", var.vault_github_org))
-    error_message = "Error: Your Github organization name contains invalid characters."
-  }
-}
-
 variable "vault_username" {
   type        = string
   default     = "gruber"
@@ -62,19 +52,9 @@ variable "vault_username" {
   }
 }
 
-variable "vault_userdata" {
-  description = "<sub>Mock variable required by Vault userpass login method.</sub>"
-}
-
 variable "vault_password" {
   type        = string
   description = "<sub>Vault password for the main user, used for login purposes.</sub>"
   default     = ""
   sensitive   = true
-}
-
-variable "vault_path" {
-  type        = string
-  description = "<sub>Vault password for the main user, used for login purposes.</sub>"
-  default     = ""
 }

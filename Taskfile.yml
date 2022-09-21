@@ -9,7 +9,7 @@ includes:
   vault: ./tasks/vault.yaml
   drone: ./tasks/drone.yaml
   vultr: ./tasks/vultr.yaml
-  terraform: ./tasks/terraform.yaml
+  tf: ./tasks/terraform.yaml
   secrets: ./tasks/secrets.yaml
 
 vars:

@@ -23,3 +23,9 @@ tasks:
     dir: terraform
     cmds:
       - terraform plan
+
+  docs:
+    cmds:
+      - terraform-docs markdown -c ./terraform/.terraform-docs.yaml . --output-file README.md
+      - terraform-docs markdown -c ./terraform/.terraform-docs.yaml ./terraform/modules/vault --output-file README.md
+      - terraform-docs markdown -c ./terraform/.terraform-docs.yaml ./terraform/modules/unifi --output-file README.md
