@@ -63,7 +63,7 @@ spec:
           persistence:
             defaultClass: true
             defaultFsType: ext4
-            defaultClassReplicaCount: 2
+            defaultClassReplicaCount: 1
             defaultDataLocality: best-effort
             reclaimPolicy: Delete
             migratable: false
@@ -89,7 +89,7 @@ spec:
             storageOverProvisioningPercentage: ~
             storageMinimalAvailablePercentage: 10
             upgradeChecker: ~
-            defaultReplicaCount: 2
+            defaultReplicaCount: 1
             defaultLonghornStaticStorageClass: ~
             backupstorePollInterval: ~
             taintToleration: ~

@@ -4,7 +4,7 @@ metadata:
   name: metabase-storage
 spec:
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   storageClassName: longhorn
   resources:
     requests:

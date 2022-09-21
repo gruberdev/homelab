@@ -665,13 +665,13 @@ spec:
         ## This PVC will be mounted in either Synapse or a media_repo worker.
         ##
         ## NB; If you want to be able to scale this, you will have to set the
-        ## accessMode to RWX/ReadWriteMany.
+        ## accessMode to RWX/ReadWriteOnce.
         ##
         persistence:
           enabled: true
           # existingClaim: synapse-data
           # storageClass: "-"
-          accessMode: ReadWriteMany
+          accessMode: ReadWriteOnce
           size: 10Gi
         ## Set up an init container to chown the mounted media if necessary.
         ##
