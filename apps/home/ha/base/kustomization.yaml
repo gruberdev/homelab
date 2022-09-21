@@ -5,4 +5,3 @@ resources:
   - db.yaml
   - deployment.yaml
   - svc.yaml
-  - pvc.yaml

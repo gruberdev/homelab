@@ -4,8 +4,8 @@ metadata:
   name: metabase-storage
 spec:
   accessModes:
-    - ReadWriteOnce
-  storageClassName: local-path
+    - ReadWriteMany
+  storageClassName: longhorn
   resources:
     requests:
       storage: 5Gi

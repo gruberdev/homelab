@@ -90,13 +90,14 @@ spec:
           service:
             annotations: {}
           podDisruptionBudget: {}
-          strategy: {}
+        strategy:
+          type: Recreate
         server:
           enabled: true
           image:
             repository: "hashicorp/vault"
             tag: "1.11.2"
-            pullPolicy: Always
+            pullPolicy: IfNotPresent
 
           updateStrategyType: "OnDelete"
           logLevel: ""
@@ -197,31 +198,31 @@ spec:
             # When a probe fails, Kubernetes will try failureThreshold times before giving up
             failureThreshold: 2
             # Number of seconds after the container has started before probe initiates
-            initialDelaySeconds: 5
+            initialDelaySeconds: 30
             # How often (in seconds) to perform the probe
-            periodSeconds: 5
+            periodSeconds: 15
             # Minimum consecutive successes for the probe to be considered successful after having failed
             successThreshold: 1
             # Number of seconds after which the probe times out.
-            timeoutSeconds: 3
+            timeoutSeconds: 5
           # Used to enable a livenessProbe for the pods
           livenessProbe:
             enabled: false
             path: "/v1/sys/health?standbyok=true"
             # When a probe fails, Kubernetes will try failureThreshold times before giving up
-            failureThreshold: 2
+            failureThreshold: 3
             # Number of seconds after the container has started before probe initiates
-            initialDelaySeconds: 60
+            initialDelaySeconds: 120
             # How often (in seconds) to perform the probe
-            periodSeconds: 5
+            periodSeconds: 10
             # Minimum consecutive successes for the probe to be considered successful after having failed
             successThreshold: 1
             # Number of seconds after which the probe times out.
-            timeoutSeconds: 3
+            timeoutSeconds: 5
 
           # Optional duration in seconds the pod needs to terminate gracefully.
           # See: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/
-          terminationGracePeriodSeconds: 10
+          terminationGracePeriodSeconds: 60
 
           # Used to set the sleep time during the preStop step
           preStopSleepSeconds: 5
@@ -316,38 +317,22 @@ spec:
           # Enables a headless service to be used by the Vault Statefulset
           service:
             enabled: true
-            # clusterIP controls whether a Cluster IP address is attached to the
-            # Vault service within Kubernetes.  By default the Vault service will
-            # be given a Cluster IP address, set to None to disable.  When disabled
-            # Kubernetes will create a "headless" service.  Headless services can be
-            # used to communicate with pods directly through DNS instead of a round robin
-            # load balancer.
-            # clusterIP: None
-
-            # Configures the service type for the main Vault service.  Can be ClusterIP
-            # or NodePort.
-            #type: ClusterIP
+            type: ClusterIP
 
             # The externalTrafficPolicy can be set to either Cluster or Local
             # and is only valid for LoadBalancer and NodePort service types.
             # The default value is Cluster.
             # ref: https://kubernetes.io/docs/concepts/services-networking/service/#external-traffic-policy
             externalTrafficPolicy: Cluster
-
-            # If type is set to "NodePort", a specific nodePort value can be configured,
-            # will be random if left blank.
-            #nodePort: 30000
-
             port: 8200
             targetPort: 8200
             annotations: {}
-
           dataStorage:
             enabled: true
-            size: 10Gi
+            size: 5Gi
             mountPath: "/vault/data"
-            storageClass: local-path
-            accessMode: ReadWriteOnce
+            storageClass: longhorn
+            accessMode: ReadWriteMany
             annotations: {}
 
           # This configures the Vault Statefulset to create a PVC for audit
@@ -358,14 +343,14 @@ spec:
           auditStorage:
             enabled: false
             # Size of the PVC created
-            size: 10Gi
+            size: 1Gi
             # Location where the PVC will be mounted.
             mountPath: "/vault/audit"
             # Name of the storage class to use.  If null it will use the
             # configured default Storage Class.
             storageClass: null
             # Access Mode of the storage device being used for the PVC
-            accessMode: ReadWriteOnce
+            accessMode: ReadWriteMany
             # Annotations to apply to the PVC
             annotations: {}
 
@@ -511,20 +496,13 @@ spec:
 
         # Vault UI
         ui:
-          # True if you want to create a Service entry for the Vault UI.
-          #
-          # serviceType can be used to control the type of service created. For
-          # example, setting this to "LoadBalancer" will create an external load
-          # balancer (for supported K8S installations) to access the UI.
           enabled: true
           publishNotReadyAddresses: true
-          # The service should only contain selectors for active Vault pod
           activeVaultPodOnly: false
           serviceType: "ClusterIP"
           serviceNodePort: null
           externalPort: 8200
           targetPort: 8200
-
           # The externalTrafficPolicy can be set to either Cluster or Local
           # and is only valid for LoadBalancer and NodePort service types.
           # The default value is Cluster.
@@ -623,7 +601,7 @@ spec:
             # When a probe fails, Kubernetes will try failureThreshold times before giving up
             failureThreshold: 2
             # Number of seconds after the container has started before probe initiates
-            initialDelaySeconds: 5
+            initialDelaySeconds: 15
             # How often (in seconds) to perform the probe
             periodSeconds: 5
             # Minimum consecutive successes for the probe to be considered successful after having failed
@@ -635,9 +613,9 @@ spec:
             # When a probe fails, Kubernetes will try failureThreshold times before giving up
             failureThreshold: 3
             # Number of seconds after the container has started before probe initiates
-            initialDelaySeconds: 10
+            initialDelaySeconds: 60
             # How often (in seconds) to perform the probe
-            periodSeconds: 10
+            periodSeconds: 15
             # Minimum consecutive successes for the probe to be considered successful after having failed
             successThreshold: 1
             # Number of seconds after which the probe times out.
@@ -655,14 +633,14 @@ spec:
   syncPolicy:
     automated:
       prune: true
-      selfHeal: true
+      selfHeal: false
       allowEmpty: true
     syncOptions:
     - Validate=false
     - CreateNamespace=true
     - PrunePropagationPolicy=foreground
     - PruneLast=true
-    - ApplyOutOfSyncOnly=true
+    - ApplyOutOfSyncOnly=false
     - Prune=true
     retry:
       limit: 5

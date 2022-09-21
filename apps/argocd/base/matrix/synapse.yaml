@@ -671,7 +671,7 @@ spec:
           enabled: true
           # existingClaim: synapse-data
           # storageClass: "-"
-          accessMode: ReadWriteOnce
+          accessMode: ReadWriteMany
           size: 10Gi
         ## Set up an init container to chown the mounted media if necessary.
         ##

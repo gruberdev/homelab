@@ -5,7 +5,7 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: services
+  project: apps
   source:
     repoURL: 'https://github.com/gruberdev/homelab.git'
     path: apps/services/media/lidarr
@@ -25,6 +25,7 @@ spec:
     - PruneLast=true
     - ApplyOutOfSyncOnly=false
     - Prune=true
+    - Replace=true
     retry:
       limit: -1
       backoff:

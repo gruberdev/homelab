@@ -19,6 +19,7 @@ spec:
       labels:
         app: unifi-controller
     spec:
+      terminationGracePeriodSeconds: 60
       containers:
         - name: unifi-controller
           image: jacobalberty/unifi:v7.2.92
@@ -27,31 +28,31 @@ spec:
                 name: unifi-controller-cm
           ports:
             - containerPort: 8443
-              name: ubnt-8443
+              name: web-http
               protocol: TCP
-            - containerPort: 3478
-              name: ubnt-3478
-              protocol: UDP
-            - containerPort: 10001
-              name: ubnt-10001
-              protocol: UDP
             - containerPort: 8080
-              name: ubnt-8080
+              name: devices
               protocol: TCP
-            - containerPort: 1900
-              name: ubnt-1900
-              protocol: UDP
             - containerPort: 8843
-              name: ubnt-8843
+              name: guest-https
               protocol: TCP
             - containerPort: 8880
-              name: ubnt-8880
+              name: guest-http
               protocol: TCP
             - containerPort: 6789
-              name: ubnt-6789
+              name: mobile-test
               protocol: TCP
+            - containerPort: 3478
+              name: stun
+              protocol: UDP
+            - containerPort: 10001
+              name: discovery
+              protocol: UDP
+            - containerPort: 1900
+              name: ddiscoveryl2
+              protocol: UDP
             - containerPort: 5514
-              name: ubnt-5514
+              name: syslog
               protocol: UDP
           volumeMounts:
             - mountPath: /unifi/data
@@ -62,11 +63,21 @@ spec:
               name: certs
           resources:
             limits:
-              cpu: "1000m"
-              memory: "1024Mi"
+              cpu: "600m"
+              memory: "1500Mi"
             requests:
               cpu: "300m"
-              memory: "512Mi"
+              memory: "1024Mi"
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 100
+            periodSeconds: 20
       volumes:
         - name: data
           persistentVolumeClaim:

@@ -8,7 +8,7 @@ spec:
   project: cluster
   source:
     repoURL: 'https://github.com/kubernetes-sigs/descheduler.git'
-    targetRevision: HEAD
+    targetRevision: v0.24.1
     path: kubernetes/deployment/
   destination:
     namespace: kube-system

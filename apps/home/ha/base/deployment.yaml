@@ -18,12 +18,9 @@ spec:
       labels:
         app: home-assistant
     spec:
-      nodeSelector:
-        kubernetes.io/arch: amd64
-        kubernetes.io/hostname: node-one
       initContainers:
         - name: git-sync
-          image: k8s.gcr.io/git-sync/git-sync:v3.3.4
+          image: k8s.gcr.io/git-sync/git-sync:v3.6.1
           imagePullPolicy: IfNotPresent
           volumeMounts:
           - name: config-volume
@@ -31,21 +28,23 @@ spec:
           envFrom:
             - configMapRef:
                 name: git-ha-cm
+            - secretRef:
+                name: git-vars
+                optional: true
       containers:
         - env:
             - name: TZ
               value: America/Sao_Paulo
             - name: PYTHONWARNINGS
               value: ignore:Unverified HTTPS request
-          image: homeassistant/home-assistant:2022.8
+            - name: DB_USERNAME
+              valueFrom: { secretKeyRef: { name: homeuser.db-ha.credentials.postgresql.acid.zalan.do, key: username } }
+            - name: DB_PASSWORD
+              valueFrom: { secretKeyRef: { name: homeuser.db-ha.credentials.postgresql.acid.zalan.do, key: password } }
+            - name: DB_STRING
+              value: "postgresql://$(DB_USERNAME):$(DB_PASSWORD)@db-ha.homeassistant.svc.cluster.local:5432/homeassistant?sslmode=require"
+          image: homeassistant/home-assistant:2022.9
           imagePullPolicy: IfNotPresent
-          livenessProbe:
-            failureThreshold: 3
-            initialDelaySeconds: 15
-            periodSeconds: 10
-            tcpSocket:
-              port: 8123
-            timeoutSeconds: 3
           name: home-assistant
           lifecycle:
             postStart:
@@ -56,20 +55,35 @@ spec:
             - containerPort: 8123
               name: api
               protocol: TCP
-          readinessProbe:
-            failureThreshold: 5
-            httpGet:
-              path: /
-              port: api
-            initialDelaySeconds: 30
-            timeoutSeconds: 5
           resources:
             limits:
               cpu: 500m
-              memory: 750Mi
+              memory: 850Mi
             requests:
               cpu: 200m
-              memory: 128Mi
+              memory: 500Mi
+          livenessProbe:
+            tcpSocket:
+              port: 8123
+            timeoutSeconds: 1
+            periodSeconds: 10
+            initialDelaySeconds: 60
+            failureThreshold: 3
+          readinessProbe:
+            tcpSocket:
+              port: 8123
+            timeoutSeconds: 1
+            periodSeconds: 10
+            initialDelaySeconds: 3
+            failureThreshold: 3
+          startupProbe:
+            tcpSocket:
+              port: 8123
+            timeoutSeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            initialDelaySeconds: 60
+            failureThreshold: 30
           securityContext:
             privileged: true
           volumeMounts:
@@ -94,7 +108,7 @@ spec:
             secretName: ha-secrets
         - name: config-volume
           persistentVolumeClaim:
-            claimName: home-assisstant-pvc
+            claimName: ha-storage
         - hostPath:
             path: /dev/serial/by-id/usb-Silicon_Labs_HubZ_Smart_Home_Controller_C130205F-if00-port0
           name: zigbee-00

@@ -41,6 +41,7 @@ postgres/*
 !postgres/.gitkeep
 utilities/*
 !utilities/.gitkeep
+cluster-keys.json
 
 # CertificatesThank
 *.pem

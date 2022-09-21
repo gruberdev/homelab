@@ -1,11 +1,12 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: unifi-poller-storage
+  name: n8n-storage
+  namespace: services
 spec:
   accessModes:
-    - ReadWriteOnce
-  storageClassName: local-path
+    - ReadWriteMany
+  storageClassName: longhorn
   resources:
     requests:
       storage: 2Gi

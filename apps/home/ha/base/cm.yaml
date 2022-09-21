@@ -3,8 +3,13 @@ kind: ConfigMap
 metadata:
   name: git-ha-cm
 data:
-  GIT_SYNC_REPO: "https://github.com/gruberdev/homeassistant"
-  GIT_SYNC_ROOT: "/tmp/repository"
-  GIT_SYNC_PERMISSIONS: "0777"
+  GIT_SYNC_REPO: "git@github.com:gruberdev/homeassistant.git"
+  GIT_SYNC_ROOT: "/git"
   GIT_SYNC_ONE_TIME: "true"
   GIT_SYNC_BRANCH: "main"
+  GIT_SYNC_SSH: "true"
+  GIT_SYNC_PERIOD: "60s"
+  GIT_SYNC_WAIT: "60"
+  GIT_SYNC_MAX_FAILURES: "5"
+  GIT_SYNC_DEPTH: "1"
+  GIT_SYNC_CREDENTIALS_SECRET: "git-vars"

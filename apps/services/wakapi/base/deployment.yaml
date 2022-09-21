@@ -22,15 +22,38 @@ spec:
       containers:
         - name: wakapi
           image: ghcr.io/muety/wakapi:latest
+          env:
+            - name: WAKAPI_DB_USER
+              valueFrom: { secretKeyRef: { name: trackinguser.db-wakapi.credentials.postgresql.acid.zalan.do, key: username } }
+            - name: WAKAPI_DB_PASSWORD
+              valueFrom: { secretKeyRef: { name: trackinguser.db-wakapi.credentials.postgresql.acid.zalan.do, key: password } }
           envFrom:
             - configMapRef:
                 name: wakapi-cm
             - secretRef:
                 name: wakapi-vars
           ports:
-            - name: web
+            - name: http
               containerPort: 3000
               protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: http
+            initialDelaySeconds: 60
+            periodSeconds: 20
+          startupProbe:
+            httpGet:
+              path: /api/health
+              port: http
+            initialDelaySeconds: 120
+            periodSeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 5
           resources:
             requests:
               cpu: "300m"

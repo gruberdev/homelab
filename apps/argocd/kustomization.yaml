@@ -12,32 +12,36 @@ resources:
 - base/core/argocd.yaml
 - base/core/zalando.yaml
 - base/core/redis.yaml
+- base/core/longhorn.yaml
+- base/core/storage.yaml
 # - base/core/router.yaml
 
 - base/utilities/reloader.yaml
 - base/utilities/reflector.yaml
 - base/utilities/descheduler.yaml
 - base/utilities/kured.yaml
-- base/utilities/botkube.yaml
+# - base/utilities/botkube.yaml
 - base/utilities/node-discovery.yaml
 
 - base/apps/vault.yaml
-- base/apps/ha.yaml
-#- base/apps/unifi.yaml
+# - base/apps/ha.yaml
+# - base/apps/unifi.yaml
 # - base/apps/adguard.yaml
 # - base/apps/wyze.yaml
 
-- base/monitoring/kuma.yaml
+# - base/monitoring/kuma.yaml
 # - base/monitoring/flame.yaml
-# - base/monitoring/unifi-poller.yaml
+- base/monitoring/unifi-poller.yaml
 # - base/monitoring/kube-prometheus.yaml
 
-- base/drone/drone-server.yaml
-- base/drone/drone-runner.yaml
+#- base/drone/drone-server.yaml
+#- base/drone/drone-runner.yaml
 
-# - base/services/n8n.yaml
-# - base/services/wakapi.yaml
-# - base/services/rss.yaml
+#- base/services/n8n.yaml
+#- base/services/wakapi.yaml
+#- base/services/rss-gen.yaml
+#- base/services/rss-hub.yaml
+
 # - base/services/metabase.yaml
 
 # - base/services/media/beets.yaml
@@ -71,12 +75,12 @@ patches:
     name: argocd-server
 - patch: |-
     - op: replace
-      path: "/spec/template/spec/containers/0/env/1"
+      path: "/spec/template/spec/containers/0/env/2"
       value:
         name: TS_HOSTNAME
         value: "argocd"
     - op: replace
-      path: "/spec/template/spec/containers/0/env/2"
+      path: "/spec/template/spec/containers/0/env/3"
       value:
         name: DEST_PORT
         value: "8080"
@@ -90,6 +94,20 @@ patches:
   target:
     kind: Deployment
     name: argocd-server
+- patch: |-
+    - op: add
+      path: "/spec/template/spec/nodeSelector"
+      value:
+        kubernetes.io/hostname: node-two
+  target:
+    kind: Deployment
+- patch: |-
+    - op: add
+      path: "/spec/template/spec/nodeSelector"
+      value:
+        kubernetes.io/hostname: node-two
+  target:
+    kind: StatefulSet
 - patch: |-
     - op: replace
       path: "/spec/template/spec/volumes/0/secret/secretName"

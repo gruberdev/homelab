@@ -42,8 +42,8 @@
 > |     [Unifi Poller][poller-uri]         |   `Monitoring`  |      <sub>[More details][homelab-poller]</sub>      |      ![][argocd-poller]      | ![][poller-badge]  |
 > |   [Cloudflared <sub>(as proxies)</sub>][cf-uri]  |   `Networking`  | <sub>[More details][homelab-cloudflared]</sub>  |                        |   ![][cfd-badge]   |
 > |         [Wakapi][wakapi-uri]           |    `Services`   |        <sub>[More details][homelab-wakapi]</sub>    |        ![][argocd-wakapi]    | ![][wakapi-badge]   |
-> | [RSS Gen/Proxy][service-rssgen]        |    `Services`   |        <sub>[More details][homelab-rssgen]</sub>    |        ![][argocd-rss]       |  ![][rssgen-badge]   |
-> |    [RSS Hub][service-rsshub]           |    `Services`   |        <sub>[More details][homelab-rsshub]</sub>    |        ![][argocd-rss]       | ![][rsshub-badge]   |
+> | [RSS Gen/Proxy][service-rssgen]        |    `Services`   |        <sub>[More details][homelab-rssgen]</sub>    |        ![][argocd-rss-gen]       |  ![][rssgen-badge]   |
+> |    [RSS Hub][service-rsshub]           |    `Services`   |        <sub>[More details][homelab-rsshub]</sub>    |        ![][argocd-rss-hub]       | ![][rsshub-badge]   |
  > |           [Beets][service-beets]       |   `Media`  |  <sub>[More details][homelab-beets]</sub>               |       ![][argocd-beets]      |   ![][beets-badge]   |
 > |           [Lidarr][service-lidarr]     |   `Media`  |  <sub>[More details][homelab-lidarr]</sub> |  ![][argocd-lidarr]      |  ![][lidarr-badge]   |
 > |           [Mango][service-mango]       |   `Media`  |  <sub>[More details][homelab-mango]</sub> |  ![][argocd-mango]        |  ![][mango-badge]   |
@@ -235,7 +235,8 @@
 [argocd-flame]: https://argo.gr.wtf/api/badge?name=flame
 [argocd-poller]: https://argo.gr.wtf/api/badge?name=unifi-poller
 [argocd-wakapi]: https://argo.gr.wtf/api/badge?name=unifi-poller
-[argocd-rss]: https://argo.gr.wtf/api/badge?name=rss
+[argocd-rss-gen]: https://argo.gr.wtf/api/badge?name=rss-gen
+[argocd-rss-hub]: https://argo.gr.wtf/api/badge?name=rss-hub
 [argocd-beets]: https://argo.gr.wtf/api/badge?name=beets
 [argocd-lidarr]: https://argo.gr.wtf/api/badge?name=lidarr
 [argocd-metabase]: https://argo.gr.wtf/api/badge?name=metabase

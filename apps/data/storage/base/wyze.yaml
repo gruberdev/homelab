@@ -1,11 +1,12 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: wyze-config
+  name: wyze-storage
+  namespace: homeassistant
 spec:
   accessModes:
-    - ReadWriteOnce
-  storageClassName: local-path
+    - ReadWriteMany
+  storageClassName: longhorn
   resources:
     requests:
       storage: 1Gi
@@ -14,10 +15,11 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: wyze-recordings
+  namespace: homeassistant
 spec:
   accessModes:
-    - ReadWriteOnce
-  storageClassName: local-path
+    - ReadWriteMany
+  storageClassName: longhorn
   resources:
     requests:
       storage: 50Gi
@@ -26,10 +28,11 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: wyze-snapshots
+  namespace: homeassistant
 spec:
   accessModes:
-    - ReadWriteOnce
-  storageClassName: local-path
+    - ReadWriteMany
+  storageClassName: longhorn
   resources:
     requests:
       storage: 15Gi

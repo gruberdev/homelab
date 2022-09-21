@@ -4,7 +4,7 @@ bases:
 - ./base
 - https://github.com/gruberdev/homelab/apps/networking/tailscale
 
-namespace: services
+namespace: media
 
 patches:
 - path: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/tailscale/patch.yaml
@@ -12,15 +12,23 @@ patches:
     kind: Deployment
 - patch: |-
     - op: replace
-      path: "/spec/template/spec/containers/0/env/1"
+      path: "/spec/template/spec/containers/0/env/2"
       value:
         name: TS_HOSTNAME
         value: "manga.media"
     - op: replace
-      path: "/spec/template/spec/containers/0/env/2"
+      path: "/spec/template/spec/containers/0/env/3"
       value:
         name: DEST_PORT
         value: "9000"
+  target:
+    kind: Deployment
+    name: mango-server
+- patch: |-
+    - op: add
+      path: "/spec/template/spec/nodeSelector"
+      value:
+        kubernetes.io/hostname: node-two
   target:
     kind: Deployment
     name: mango-server

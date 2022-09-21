@@ -8,31 +8,51 @@ spec:
   ports:
     - port: 80
       targetPort: 8443
-      name: web-admin-portal
+      name: web-http
       protocol: TCP
     - port: 8080
-      name: device-communication
+      name: devices
       protocol: TCP
     - port: 8843
-      name: web-guest-portal-https
+      name: guest-https
       protocol: TCP
     - port: 8880
-      name: web-guest-portal-http
+      name: guest-http
       protocol: TCP
     - port: 6789
-      name: mobile-throughput-test
+      name: mobile-test
       protocol: TCP
     - port: 3478
-      name: unifi-stun-port
+      name: stun
       protocol: UDP
     - port: 10001
-      name: ap-discovery
+      name: discovery
       protocol: UDP
     - port: 1900
-      name: discoverable-on-l2-network
+      name: discoveryl2
       protocol: UDP
     - port: 5514
-      name: remote-syslog-port
+      name: syslog
       protocol: UDP
   selector:
     app: unifi-controller
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: unifi-nodeports
+  labels:
+    app: unifi-controller
+spec:
+  selector:
+    app: unifi-controller
+  ports:
+  - port: 8443
+    nodePort: 32321
+    protocol: TCP
+    name: web-http
+  - port: 8080
+    nodePort: 32322
+    protocol: TCP
+    name: devices
+  type: NodePort

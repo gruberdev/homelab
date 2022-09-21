@@ -1,11 +1,12 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: drone-storage
+  name: kuma-storage
+  namespace: monitoring
 spec:
   accessModes:
-    - ReadWriteOnce
-  storageClassName: local-path
+    - ReadWriteMany
+  storageClassName: longhorn
   resources:
     requests:
       storage: 1Gi

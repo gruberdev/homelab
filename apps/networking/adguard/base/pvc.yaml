@@ -4,8 +4,8 @@ metadata:
   name: adguard-storage
 spec:
   accessModes:
-    - ReadWriteOnce
-  storageClassName: local-path
+    - ReadWriteMany
+  storageClassName: longhorn
   resources:
     requests:
       storage: 1Gi
@@ -16,8 +16,8 @@ metadata:
   name: adguard-logs
 spec:
   accessModes:
-    - ReadWriteOnce
-  storageClassName: local-path
+    - ReadWriteMany
+  storageClassName: longhorn
   resources:
     requests:
-      storage: 10Gi
+      storage: 1Gi

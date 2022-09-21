@@ -39,7 +39,7 @@ spec:
               cpu: "128m"
               memory: "256Mi"
         - name: puppeteer
-          image: browserless/chrome
+          image: browserless/chrome:latest
           ports:
             - name: richpuppeteer
               containerPort: 3000
