@@ -10,6 +10,7 @@ includes:
   drone: ./tasks/drone.yaml
   vultr: ./tasks/vultr.yaml
   secrets: ./tasks/secrets.yaml
+  longhorn: ./tasks/longhorn.yaml
 
 vars:
   CYAN: tput setaf 6
