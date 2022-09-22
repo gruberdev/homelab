@@ -28,7 +28,7 @@ patches:
     - op: add
       path: "/spec/template/spec/nodeSelector"
       value:
-        kubernetes.io/hostname: node-two
+        kubernetes.io/hostname: node-four
   target:
     kind: Deployment
     name: beets

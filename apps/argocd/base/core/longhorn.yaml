@@ -8,11 +8,15 @@ spec:
   project: cluster
   source:
     repoURL: 'https://github.com/longhorn/longhorn.git'
-    targetRevision: v1.2.5
+    targetRevision: v1.3.1
     path: chart
     helm:
       releaseName: longhorn
       values: |
+          global:
+          # Default values for longhorn.
+          # This is a YAML-formatted file.
+          # Declare variables to be passed into your templates.
           global:
             cattle:
               systemDefaultRegistry: ""
@@ -36,32 +40,32 @@ spec:
             longhorn:
               engine:
                 repository: longhornio/longhorn-engine
-                tag: v1.2.5
+                tag: v1.3.1
               manager:
                 repository: longhornio/longhorn-manager
-                tag: v1.2.5
+                tag: v1.3.1
               ui:
                 repository: longhornio/longhorn-ui
-                tag: v1.2.5
+                tag: v1.3.1
               instanceManager:
                 repository: longhornio/longhorn-instance-manager
-                tag: v1_20220303_patch1
+                tag: v1_20220808
               shareManager:
                 repository: longhornio/longhorn-share-manager
-                tag: v1_20211020_patch1
+                tag: v1_20220808
               backingImageManager:
                 repository: longhornio/backing-image-manager
-                tag: v2_20210820_patch1
+                tag: v3_20220808
             csi:
               attacher:
                 repository: longhornio/csi-attacher
-                tag: v3.2.1
+                tag: v3.4.0
               provisioner:
                 repository: longhornio/csi-provisioner
                 tag: v2.1.2
               nodeDriverRegistrar:
                 repository: longhornio/csi-node-driver-registrar
-                tag: v2.3.0
+                tag: v2.5.0
               resizer:
                 repository: longhornio/csi-resizer
                 tag: v1.2.0
@@ -69,6 +73,7 @@ spec:
                 repository: longhornio/csi-snapshotter
                 tag: v3.0.3
             pullPolicy: IfNotPresent
+
           service:
             ui:
               type: ClusterIP
@@ -97,6 +102,7 @@ spec:
             provisionerReplicaCount: ~
             resizerReplicaCount: ~
             snapshotterReplicaCount: ~
+
           defaultSettings:
             backupTarget: ~
             backupTargetCredentialSecret: ~
@@ -109,10 +115,9 @@ spec:
             storageOverProvisioningPercentage: ~
             storageMinimalAvailablePercentage: ~
             upgradeChecker: ~
-            defaultReplicaCount: 2
+            defaultReplicaCount: ~
             defaultLonghornStaticStorageClass: ~
             backupstorePollInterval: ~
-            failedBackupTTL: ~
             taintToleration: ~
             systemManagedComponentsNodeSelector: ~
             priorityClass: ~
@@ -135,45 +140,45 @@ spec:
             backingImageRecoveryWaitInterval: ~
             guaranteedEngineManagerCPU: ~
             guaranteedReplicaManagerCPU: ~
+            kubernetesClusterAutoscalerEnabled: ~
+            orphanAutoDeletion: ~
+            storageNetwork: ~
           privateRegistry:
+            createSecret: ~
             registryUrl: ~
             registryUser: ~
             registryPasswd: ~
             registrySecret: ~
+
           longhornManager:
             priorityClass: ~
             tolerations: []
-            nodeSelector: {}
+            nodeSelector:
+              kubernetes.io/hostname: node-four
           longhornDriver:
             priorityClass: ~
             tolerations: []
-            nodeSelector:
+            nodeSelector: {}
           longhornUI:
+            replicas: 1
             priorityClass: ~
             tolerations: []
-            nodeSelector: {}
+            nodeSelector:
+              kubernetes.io/hostname: node-four
           resources:
             limits:
-              cpu: 100m
-              memory: 128Mi
+              cpu: 200m
+              memory: 256Mi
             requests:
               cpu: 100m
               memory: 128Mi
           ingress:
-            ## Set to true to enable ingress record generation
             enabled: false
-            ingressClassName: ~
-            host: sslip.io
-            tls: false
-            tlsSecret: longhorn.local-tls
-          # Configure a pod security policy in the Longhorn namespace to allow privileged pods
           enablePSP: true
           namespaceOverride: "longhorn-system"
           # Annotations to add to the Longhorn Manager DaemonSet Pods. Optional.
           annotations: {}
-
           serviceAccount:
-            # Annotations to add to the service account
             annotations: {}
 
   destination:
