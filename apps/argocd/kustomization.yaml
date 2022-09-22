@@ -12,7 +12,7 @@ resources:
 - base/core/argocd.yaml
 - base/core/zalando.yaml
 - base/core/redis.yaml
-#- base/core/longhorn.yaml
+- base/core/longhorn.yaml
 # - base/core/storage.yaml
 # - base/core/router.yaml
 
