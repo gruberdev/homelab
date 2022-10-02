@@ -1,6 +1,7 @@
 .autogit
 .lh
 id_ed25519
+known_hosts
 id_ed25519.pub
 tilt_modules
 manifests/*.yaml
