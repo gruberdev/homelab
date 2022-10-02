@@ -24,9 +24,9 @@ resources:
 - base/utilities/node-discovery.yaml
 
 - base/apps/vault.yaml
-# - base/apps/ha.yaml
+ - base/apps/ha.yaml
 - base/apps/unifi.yaml
-# - base/apps/adguard.yaml
+ - base/apps/adguard.yaml
 # - base/apps/wyze.yaml
 
 # - base/monitoring/kuma.yaml
@@ -34,13 +34,13 @@ resources:
 - base/monitoring/unifi-poller.yaml
 # - base/monitoring/kube-prometheus.yaml
 
-#- base/drone/drone-server.yaml
-#- base/drone/drone-runner.yaml
+- base/drone/drone-server.yaml
+- base/drone/drone-runner.yaml
 
-#- base/services/n8n.yaml
-#- base/services/wakapi.yaml
-#- base/services/rss-gen.yaml
-#- base/services/rss-hub.yaml
+# - base/services/n8n.yaml
+# - base/services/wakapi.yaml
+# - base/services/rss-gen.yaml
+# - base/services/rss-hub.yaml
 
 # - base/services/metabase.yaml
 
