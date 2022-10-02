@@ -25,6 +25,8 @@ spec:
           volumeMounts:
           - name: config-volume
             mountPath: /tmp/repository
+          - name: ssh-key
+            mountPath: /etc/git-secret/ssh
           envFrom:
             - configMapRef:
                 name: git-ha-cm
@@ -102,7 +104,11 @@ spec:
               name: zigbee-01
       dnsPolicy: ClusterFirstWithHostNet
       hostNetwork: true
-      volumes:
+      volumes:      
+        - name: ssh-key
+          secret:
+            secretName: ssh-key
+            defaultMode: 256
         - name: ha-secrets
           secret:
             secretName: ha-secrets
