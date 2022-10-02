@@ -4,10 +4,8 @@ bases:
 - ./base
 - https://github.com/gruberdev/homelab/apps/networking/tailscale
 - https://github.com/gruberdev/homelab/apps/networking/cloudflared
-
 patchesStrategicMerge:
 - overlay/cloudflared-cm.yaml
-
 namespace: drone
 patches:
 - path: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/tailscale/patch.yaml
@@ -42,9 +40,8 @@ patches:
   target:
     kind: Deployment
     name: cloudflared
-
 commonAnnotations:
   reloader.stakater.com/auto: "true"
 images:
 - name: drone/drone
-  newTag: 2.12.1
+  newTag: 2.13.0
