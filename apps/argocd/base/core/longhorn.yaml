@@ -84,7 +84,7 @@ spec:
           persistence:
             defaultClass: true
             defaultFsType: ext4
-            defaultClassReplicaCount: 3
+            defaultClassReplicaCount: 2
             reclaimPolicy: Delete
             migratable: false
             recurringJobSelector:
@@ -108,7 +108,7 @@ spec:
             backupTargetCredentialSecret: ~
             allowRecurringJobWhileVolumeDetached: ~
             createDefaultDiskLabeledNodes: ~
-            defaultDataPath: /home/longhorn/data
+            defaultDataPath: ~
             defaultDataLocality: ~
             replicaSoftAntiAffinity: ~
             replicaAutoBalance: ~
@@ -154,7 +154,7 @@ spec:
             priorityClass: ~
             tolerations: []
             nodeSelector:
-              kubernetes.io/hostname: node-four
+              kubernetes.io/hostname: node-two
           longhornDriver:
             priorityClass: ~
             tolerations: []
@@ -164,7 +164,7 @@ spec:
             priorityClass: ~
             tolerations: []
             nodeSelector:
-              kubernetes.io/hostname: node-four
+              kubernetes.io/hostname: node-two
           resources:
             limits:
               cpu: 200m
