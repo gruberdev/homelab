@@ -107,7 +107,7 @@ spec:
             backupTarget: ~
             backupTargetCredentialSecret: ~
             allowRecurringJobWhileVolumeDetached: ~
-            createDefaultDiskLabeledNodes: ~
+            createDefaultDiskLabeledNodes: true
             defaultDataPath: ~
             defaultDataLocality: ~
             replicaSoftAntiAffinity: ~
@@ -153,8 +153,6 @@ spec:
           longhornManager:
             priorityClass: ~
             tolerations: []
-            nodeSelector:
-              kubernetes.io/hostname: node-two
           longhornDriver:
             priorityClass: ~
             tolerations: []
