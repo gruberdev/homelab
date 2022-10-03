@@ -23,7 +23,7 @@ spec:
           image: k8s.gcr.io/git-sync/git-sync:v3.6.1
           imagePullPolicy: IfNotPresent
           volumeMounts:
-          - name: config-volume
+          - name: temp-config
             mountPath: /tmp/git
           - name: ssh-key
             mountPath: /etc/git-secret/ssh
@@ -54,7 +54,7 @@ spec:
             postStart:
               exec:
                 command:
-                  ['/bin/sh', '-c', 'cp -rf /config/homeassistant/* /config']
+                  ['/bin/sh', '-c', 'cp -rf /tmp/git/homeassistant/* /config']
           ports:
             - containerPort: 8123
               name: api
@@ -96,6 +96,8 @@ spec:
               subPath: secrets.yaml
             - mountPath: /config
               name: config-volume
+            - name: temp-config
+              mountPath: /tmp/git
             - mountPath: /dev/ttyUSB0
               name: dev-usb-00
             - mountPath: /dev/ttyUSB1
@@ -133,3 +135,5 @@ spec:
         - hostPath:
             path: /dev/ttyUSB1
           name: dev-usb-01
+        - name: temp-config
+          emptyDir: {}
