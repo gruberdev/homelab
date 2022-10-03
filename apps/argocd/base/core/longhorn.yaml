@@ -14,10 +14,28 @@ spec:
       releaseName: longhorn
       values: |
           global:
+          # Default values for longhorn.
+          # This is a YAML-formatted file.
+          # Declare variables to be passed into your templates.
+          global:
             cattle:
               systemDefaultRegistry: ""
               windowsCluster:
+                # Enable this to allow Longhorn to run on the Rancher deployed Windows cluster
                 enabled: false
+                # Tolerate Linux node taint
+                tolerations:
+                - key: "cattle.io/os"
+                  value: "linux"
+                  effect: "NoSchedule"
+                  operator: "Equal"
+                # Select Linux nodes
+                nodeSelector:
+                  kubernetes.io/os: "linux"
+                # Recognize toleration and node selector for Longhorn run-time created components
+                defaultSetting:
+                  taintToleration: cattle.io/os=linux:NoSchedule
+                  systemManagedComponentsNodeSelector: kubernetes.io/os:linux
           image:
             longhorn:
               engine:
@@ -55,41 +73,49 @@ spec:
                 repository: longhornio/csi-snapshotter
                 tag: v3.0.3
             pullPolicy: IfNotPresent
+
           service:
             ui:
               type: ClusterIP
+              nodePort: null
             manager:
               type: ClusterIP
+              nodePort: ""
           persistence:
             defaultClass: true
             defaultFsType: ext4
-            defaultClassReplicaCount: 1
-            defaultDataLocality: best-effort
+            defaultClassReplicaCount: 2
             reclaimPolicy: Delete
             migratable: false
             recurringJobSelector:
               enable: false
+              jobList: []
             backingImage:
               enable: false
+              name: ~
+              dataSourceType: ~
+              dataSourceParameters: ~
+              expectedChecksum: ~
           csi:
             kubeletRootDir: ~
             attacherReplicaCount: ~
             provisionerReplicaCount: ~
             resizerReplicaCount: ~
             snapshotterReplicaCount: ~
+
           defaultSettings:
             backupTarget: ~
             backupTargetCredentialSecret: ~
             allowRecurringJobWhileVolumeDetached: ~
-            createDefaultDiskLabeledNodes: false
-            defaultDataPath: /home/longhorn/data
-            defaultDataLocality: best-effort
+            createDefaultDiskLabeledNodes: true
+            defaultDataPath: ~
+            defaultDataLocality: ~
             replicaSoftAntiAffinity: ~
             replicaAutoBalance: ~
             storageOverProvisioningPercentage: ~
-            storageMinimalAvailablePercentage: 10
+            storageMinimalAvailablePercentage: ~
             upgradeChecker: ~
-            defaultReplicaCount: 2
+            defaultReplicaCount: ~
             defaultLonghornStaticStorageClass: ~
             backupstorePollInterval: ~
             taintToleration: ~
@@ -99,7 +125,7 @@ spec:
             autoDeletePodWhenVolumeDetachedUnexpectedly: ~
             disableSchedulingOnCordonedNode: ~
             replicaZoneSoftAntiAffinity: ~
-            nodeDownPodDeletionPolicy: delete-both-statefulset-and-deployment-pod
+            nodeDownPodDeletionPolicy: ~
             allowNodeDrainWithLastHealthyReplica: ~
             mkfsExt4Parameters: ~
             disableReplicaRebuild: ~
@@ -123,13 +149,10 @@ spec:
             registryUser: ~
             registryPasswd: ~
             registrySecret: ~
+
           longhornManager:
-            log:
-              format: plain
             priorityClass: ~
             tolerations: []
-            nodeSelector: {}
-            serviceAnnotations: {}
           longhornDriver:
             priorityClass: ~
             tolerations: []
@@ -138,7 +161,8 @@ spec:
             replicas: 1
             priorityClass: ~
             tolerations: []
-            nodeSelector: {}
+            nodeSelector:
+              kubernetes.io/hostname: node-two
           resources:
             limits:
               cpu: 200m
@@ -150,6 +174,7 @@ spec:
             enabled: false
           enablePSP: true
           namespaceOverride: "longhorn-system"
+          # Annotations to add to the Longhorn Manager DaemonSet Pods. Optional.
           annotations: {}
           serviceAccount:
             annotations: {}

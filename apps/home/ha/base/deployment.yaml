@@ -22,9 +22,15 @@ spec:
         - name: git-sync
           image: k8s.gcr.io/git-sync/git-sync:v3.6.1
           imagePullPolicy: IfNotPresent
+          securityContext:
+            runAsUser: 65533
           volumeMounts:
-          - name: config-volume
-            mountPath: /tmp/repository
+          - name: temp-config
+            mountPath: /tmp/git
+          - name: ssh-key
+            mountPath: /etc/git-secret/ssh
+          - name: known-hosts
+            mountPath: /etc/git-secret/known_hosts
           envFrom:
             - configMapRef:
                 name: git-ha-cm
@@ -50,7 +56,7 @@ spec:
             postStart:
               exec:
                 command:
-                  ['/bin/sh', '-c', 'cp -rf /config/homeassistant/* /config']
+                  ['/bin/sh', '-c', 'cp -rf /src/homeassistant/* /config']
           ports:
             - containerPort: 8123
               name: api
@@ -92,6 +98,8 @@ spec:
               subPath: secrets.yaml
             - mountPath: /config
               name: config-volume
+            - mountPath: /src
+              name: temp-config
             - mountPath: /dev/ttyUSB0
               name: dev-usb-00
             - mountPath: /dev/ttyUSB1
@@ -102,7 +110,15 @@ spec:
               name: zigbee-01
       dnsPolicy: ClusterFirstWithHostNet
       hostNetwork: true
-      volumes:
+      volumes:      
+        - name: ssh-key
+          secret:
+            secretName: ssh-key
+            defaultMode: 256
+        - name: known-hosts
+          secret:
+            secretName: known-hosts
+            defaultMode: 256
         - name: ha-secrets
           secret:
             secretName: ha-secrets
@@ -121,3 +137,5 @@ spec:
         - hostPath:
             path: /dev/ttyUSB1
           name: dev-usb-01
+        - name: temp-config
+          emptyDir: {}

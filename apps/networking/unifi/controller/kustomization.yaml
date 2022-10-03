@@ -3,9 +3,7 @@ kind: Kustomization
 bases:
 - ./base
 - https://github.com/gruberdev/homelab/apps/networking/tailscale
-
 namespace: unifi
-
 patches:
 - path: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/tailscale/patch.yaml
   target:
@@ -33,6 +31,8 @@ patches:
   target:
     kind: Deployment
     name: unifi-controller
-
 commonAnnotations:
   reloader.stakater.com/auto: "true"
+images:
+- name: jacobalberty/unifi
+  newTag: v7.2.94
