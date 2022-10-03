@@ -24,7 +24,7 @@ spec:
           imagePullPolicy: IfNotPresent
           volumeMounts:
           - name: config-volume
-            mountPath: /tmp/repository
+            mountPath: /tmp/git
           - name: ssh-key
             mountPath: /etc/git-secret/ssh
           - name: known-hosts
