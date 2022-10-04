@@ -84,7 +84,7 @@ spec:
           persistence:
             defaultClass: true
             defaultFsType: ext4
-            defaultClassReplicaCount: 2
+            defaultClassReplicaCount: 1
             reclaimPolicy: Delete
             migratable: false
             recurringJobSelector:
