@@ -69,23 +69,20 @@ spec:
               cpu: "300m"
               memory: "1024Mi"
           livenessProbe:
-            httpGet:
-              path: /status
-              port: web-https
-              scheme: HTTPS
-            initialDelaySeconds: 30
+            tcpSocket:
+              port: 8443
+            initialDelaySeconds: 60
+            periodSeconds: 15
           startupProbe:
-            httpGet:
-              path: /status
-              port: web-https
-              scheme: HTTPS
-            initialDelaySeconds: 90
+            tcpSocket:
+              port: 8443
+            initialDelaySeconds: 300
+            periodSeconds: 30
           readinessProbe:
-            httpGet:
-              path: /status
-              port: web-https
-              scheme: HTTPS
+            tcpSocket:
+              port: 8443
             initialDelaySeconds: 15
+            reriodSeconds: 5
       volumes:
         - name: data
           persistentVolumeClaim:
