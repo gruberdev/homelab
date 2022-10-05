@@ -20,13 +20,13 @@ resources:
 - base/utilities/reflector.yaml
 - base/utilities/descheduler.yaml
 - base/utilities/kured.yaml
-# - base/utilities/botkube.yaml
+- base/utilities/botkube.yaml
 - base/utilities/node-discovery.yaml
 
 - base/apps/vault.yaml
 - base/apps/ha.yaml
 - base/apps/unifi.yaml
-- base/apps/adguard.yaml
+# - base/apps/adguard.yaml
 # - base/apps/wyze.yaml
 
 # - base/monitoring/kuma.yaml

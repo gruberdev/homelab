@@ -12,6 +12,7 @@ includes:
   tf: ./tasks/terraform.yaml
   secrets: ./tasks/secrets.yaml
   longhorn: ./tasks/longhorn.yaml
+  cluster: ./tasks/cluster.yaml
 
 vars:
   CYAN: tput setaf 6

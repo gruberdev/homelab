@@ -1,0 +1,46 @@
+version: '3'
+vars:
+  CYAN: tput setaf 6
+  RED: tput setaf 1
+  YELLOW: tput setaf 3
+  GREEN: tput setaf 2
+  BLUE: tput setaf 1
+  PURPLE: tput setaf 5
+  BG_B: tput setab 0
+  BOLD: tput bold
+  RESET: tput sgr0
+  CLEAR: tput reset
+  PATH_ERROR: is not installed or correctly configured in PATH.
+  SVC_CIDR: 10.43.0.0/16
+  POD_CIDR: 10.42.0.0/16
+  HA_DB_NAME: k3s
+  KUBECONFIG_MODE: 0777
+  DISABLE_K3S: traefik,localstorage
+  RESOLV_FILE: /etc/resolv.conf
+  FLANNEL_INTERFACE: tailscale0
+silent: true
+
+tasks:
+  server:
+    cmds:
+      - |
+        sudo curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--node-ip=${NODE_SERVER_IP} \
+        --service-cidr={{.SVC_CIDR}} \
+        --cluster-cidr={{.POD_CIDR}} \
+        --flannel-iface={{.FLANNEL_INTERFACE}}" sh -s - server \
+        --token "${K3S_NODE_TOKEN}" \
+        --datastore-endpoint "postgres://${HA_DB_USER}:${HA_DB_PASSWORD}@${BASTION_IPV4}/{{.HA_DB_NAME}}?sslmode=disable" \
+        --write-kubeconfig "${KUBECONFIG_PATH}" \
+        --write-kubeconfig-mode "{{.KUBECONFIG_MODE}}" \
+        --disable "{{.DISABLE_K3S}}" \
+        --resolv-conf "{{.RESOLV_FILE}}"
+    ignore_error: true
+
+  agent:
+    cmds:
+      - |
+        sudo curl -sfL https://get.k3s.io | sh -s - agent \
+        --token "${K3S_NODE_TOKEN}" \
+        --server ${NODE_SERVER_IP} \
+        --resolv-conf "{{.RESOLV_FILE}}"
+    ignore_error: true
