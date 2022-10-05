@@ -82,7 +82,7 @@ spec:
             tcpSocket:
               port: 8443
             initialDelaySeconds: 15
-            reriodSeconds: 5
+            periodSeconds: 5
       volumes:
         - name: data
           persistentVolumeClaim:
