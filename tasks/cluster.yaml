@@ -24,16 +24,7 @@ tasks:
   server:
     cmds:
       - |
-        sudo curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--node-ip=${NODE_SERVER_IP} \
-        --service-cidr={{.SVC_CIDR}} \
-        --cluster-cidr={{.POD_CIDR}} \
-        --flannel-iface={{.FLANNEL_INTERFACE}}" sh -s - server \
-        --token "${K3S_NODE_TOKEN}" \
-        --datastore-endpoint "postgres://${HA_DB_USER}:${HA_DB_PASSWORD}@${BASTION_IPV4}/{{.HA_DB_NAME}}?sslmode=disable" \
-        --write-kubeconfig "${KUBECONFIG_PATH}" \
-        --write-kubeconfig-mode "{{.KUBECONFIG_MODE}}" \
-        --disable "{{.DISABLE_K3S}}" \
-        --resolv-conf "{{.RESOLV_FILE}}"
+        sudo curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server" sh -s - -c config/k3s/node-one.yaml
     ignore_error: true
 
   agent:
@@ -43,4 +34,47 @@ tasks:
         --token "${K3S_NODE_TOKEN}" \
         --server ${NODE_SERVER_IP} \
         --resolv-conf "{{.RESOLV_FILE}}"
+    ignore_error: true
+
+
+  # Debian fix 
+  # https://docs.k3s.io/advanced#additional-os-preparations
+  fwd:fix:
+    cmds:
+      - sudo iptables -F
+      - sudo update-alternatives --set iptables /usr/sbin/iptables-legacy
+      - sudo update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
+      - echo "Reboot your machine."
+    ignore_error: true
+
+  fwd:replace:
+    cmds:
+      - sudo apt remove iptables nftables -y
+      - echo "Reboot your machine."
+      - Add to your startup script or terminal "'export PATH='/var/lib/rancher/k3s/data/current/bin/:/var/lib/rancher/k3s/data/current/bin/aux:$PATH'"
+    ignore_error: true
+
+  gen:node:
+    cmds:
+      - rm config/k3s/node-one.yaml
+      - |
+        cat << EOF > config/k3s/node-one.yaml
+        node-name: "node-one"
+        write-kubeconfig-mode: "{{.KUBECONFIG_MODE}}"
+        flannel-iface: "{{.FLANNEL_INTERFACE}}"
+        write-kubeconfig: "${KUBECONFIG_PATH}" 
+        token: "${K3S_NODE_TOKEN}"
+        cluster-cidr: "{{.POD_CIDR}}"
+        service-cidr: "{{.SVC_CIDR}}"
+        node-ip: "${NODE_SERVER_IP}"
+        external-node-ip: "${NODE_SERVER_IP}"
+        server: "https://${TAILSCALE_IPV4}:6443"
+        disable-network-policy: true
+        resolv-conf: "{{.RESOLV_FILE}}"
+        datastore-endpoint: "postgres://${HA_DB_USER}:${HA_DB_PASSWORD}@${BASTION_IPV4}/{{.HA_DB_NAME}}?sslmode=disable"
+        disable:
+          - traefik
+          - local-storage
+          - metrics-server
+        EOF
     ignore_error: true

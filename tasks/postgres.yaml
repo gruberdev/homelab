@@ -17,9 +17,9 @@ silent: true
 tasks:
   secret:roles:
     cmds:
-      - rm test/infra-roles-secret.yaml
+      - rm config/infra-roles-secret.yaml
       - |
-        cat << EOF > test/infra-roles-secret.yaml
+        cat << EOF > config/infra-roles-secret.yaml
         apiVersion: v1
         kind: Secret
         metadata:
@@ -30,8 +30,8 @@ tasks:
           password: $B64_POSTGRES_ADMIN_PASSWORD
         type: Opaque
         EOF
-      - kubectl apply -f test/infra-roles-secret.yaml
-      - rm test/infra-roles-secret.yaml
+      - kubectl apply -f config/infra-roles-secret.yaml
+      - rm config/infra-roles-secret.yaml
     ignore_error: true
 
   decrypt:

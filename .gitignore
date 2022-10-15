@@ -54,5 +54,9 @@ apps/prometheus/kube-prometheus/*
 apps/kwatch/*
 !apps/kwatch/.gitkeep
 apps/argocd/base/secrets/*.yaml
-test/storage/*
-!test/storage/.gitkeep
+config/storage/*
+!config/storage/.gitkeep
+
+# k3s config files
+config/k3s/*.yaml
+!config/k3s/.gitkeep

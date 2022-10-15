@@ -380,7 +380,7 @@ spec:
               - "/_matrix/client/(r0|v3|unstable)/user_directory/search"
 
               ## Worker event streams
-              ## See https://matrix-org.github.io/synapse/latest/workers.html#stream-writers
+              ## See https://matrix-org.github.io/synapse/laconfig/workers.html#stream-writers
               ##
 
               ## The typing event stream
