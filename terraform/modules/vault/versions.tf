@@ -9,4 +9,6 @@ terraform {
 }
 
 provider "vault" {
+  address = var.api_url
+  token   = var.root_token
 }

@@ -17,6 +17,19 @@ variable "admin_password" {
   sensitive   = true
 }
 
+variable "api_url" {
+  type        = string
+  description = "<sub>Vault password for the main user, used for login purposes.</sub>"
+  default     = "http://localhost:8200/"
+  sensitive   = true
+}
+
+variable "root_token" {
+  type        = string
+  description = "<sub>Vault password for the main user, used for login purposes.</sub>"
+  sensitive   = true
+}
+
 variable "endpoint_path" {
   type        = string
   description = "<sub>Vault password for the main user, used for login purposes.</sub>"

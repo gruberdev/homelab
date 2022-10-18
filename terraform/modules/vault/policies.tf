@@ -17,7 +17,7 @@ data "vault_policy_document" "audit_access" {
 
 resource "vault_policy" "admin_policy" {
   name   = "admin_policy"
-  policy = file("policies/admin.hcl")
+  policy = file("${path.module}/policies/admin.hcl")
 }
 
 resource "vault_policy" "audit" {

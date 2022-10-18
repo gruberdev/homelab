@@ -3,7 +3,7 @@ variable "site_name" {
   default     = "main"
   description = "<sub>Defines [a name for your controller](https://registry.terraform.io/providers/paultyng/unifi/latest/docs/resources/site#name) site name.</sub>"
   validation {
-    condition     = can(regex("^[a-z0-9][-a-z0-9]*[a-z0-9]$", var.controller_site_name))
+    condition     = can(regex("^[a-z0-9][-a-z0-9]*[a-z0-9]$", var.site_name))
     error_message = "Error: Your Unifi site name contains invalid characters."
   }
 }
@@ -14,7 +14,7 @@ variable "admin_username" {
   default     = "example"
   sensitive   = true
   validation {
-    condition     = can(regex("^[a-z0-9][-a-z0-9]*[a-z0-9]$", var.controller_username))
+    condition     = can(regex("^[a-z0-9][-a-z0-9]*[a-z0-9]$", var.admin_username))
     error_message = "Error: unifi_username value only allows characters a-z, A-Z and 0-9 to be used."
   }
 }

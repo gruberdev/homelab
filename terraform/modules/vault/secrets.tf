@@ -10,5 +10,5 @@ resource "vault_generic_secret" "secrets" {
   depends_on = [vault_mount.kv]
   for_each   = fileset("secrets/", "**")
   path       = "kv/${dirname(each.key)}"
-  data_json  = file("secrets/${each.key}")
+  data_json  = file("${path.module}/secrets/${each.key}")
 }

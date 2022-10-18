@@ -9,9 +9,9 @@ terraform {
 }
 
 provider "unifi" {
-  username = var.controller_username
-  password = var.controller_password
-  api_url  = var.controller_api_url
-  allow_insecure = var.controller_insecure
-  site = var.controller_site_name
+  username       = var.admin_username
+  password       = var.admin_password
+  api_url        = var.api_url
+  allow_insecure = var.controller_sec
+  site           = var.site_name
 }
