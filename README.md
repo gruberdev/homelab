@@ -269,17 +269,3 @@
 [rsshub-badge]: https://img.shields.io/static/v1?label=No&message=version%20provided&color=gray&labelColor=gray&style=flat-square
 [mango-badge]: https://img.shields.io/github/v/release/getmango/mango?label=Github&logo=github&style=flat-square
 [jellyfin-badge]: https://img.shields.io/github/v/release/jellyfin/jellyfin?label=Github&logo=github&style=flat-square
-
-<!-- BEGIN_TF_DOCS -->
-### Modules
-
-No modules.
-
-### Inputs
-
-No inputs.
-
-### Outputs
-
-No outputs.
-<!-- END_TF_DOCS -->
