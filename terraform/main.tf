@@ -10,6 +10,9 @@ module "unifi" {
 
 module "vault" {
   source         = "./modules/vault"
+  api_url = var.vault_api_url
+  root_token = var.vault_token
   admin_username = var.vault_username
   admin_password = var.vault_password
+
 }

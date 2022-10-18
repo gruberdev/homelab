@@ -16,22 +16,22 @@ resource "unifi_user_group" "guests" {
 
 }
 
-resource "unifi_user" "user" {
-  for_each = local.users
+# resource "unifi_user" "user" {
+#   for_each = local.users
 
-  mac             = each.key
-  name            = each.value.name
-  dev_id_override = each.value.dev_id_override
-  fixed_ip        = each.value.fixed_ip
-  network_id      = unifi.network.vlan.id
-  site            = unifi_site.homelab.name
-  note            = trimspace("managed by TF")
+#   mac             = each.key
+#   name            = each.value.name
+#   dev_id_override = each.value.dev_id_override
+#   fixed_ip        = each.value.fixed_ip
+#   network_id      = unifi.network.vlan.id
+#   site            = unifi_site.homelab.name
+#   note            = trimspace("managed by TF")
 
-  allow_existing         = true
-  skip_forget_on_destroy = true
-  blocked                = false
+#   allow_existing         = true
+#   skip_forget_on_destroy = true
+#   blocked                = false
 
-  depends_on = [
-   unifi_network.wan
-  ]
-}
+#   depends_on = [
+#    unifi_network.wan
+#   ]
+# }

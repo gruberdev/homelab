@@ -52,6 +52,16 @@ variable "vault_username" {
   }
 }
 
+variable "vault_api_url" {
+  type      = string
+  sensitive = true
+}
+
+variable "vault_token" {
+  type      = string
+  sensitive = true
+}
+
 variable "vault_password" {
   type        = string
   description = "<sub>Vault password for the main user, used for login purposes.</sub>"

@@ -21,4 +21,4 @@ resource "unifi_network" "wan" {
   wan_ip           = "192.168.1.1"
   site             = unifi_site.homelab.name
   wan_dns          = var.upstream_dns
-}
+} 
