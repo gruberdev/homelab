@@ -37,7 +37,7 @@ tasks:
     ignore_error: true
 
 
-  # Debian fix 
+  # Debian fix
   # https://docs.k3s.io/advanced#additional-os-preparations
   fwd:fix:
     cmds:
@@ -62,7 +62,7 @@ tasks:
         node-name: "node-one"
         write-kubeconfig-mode: "{{.KUBECONFIG_MODE}}"
         flannel-iface: "{{.FLANNEL_INTERFACE}}"
-        write-kubeconfig: "${KUBECONFIG_PATH}" 
+        write-kubeconfig: "${KUBECONFIG_PATH}"
         token: "${K3S_NODE_TOKEN}"
         cluster-cidr: "{{.POD_CIDR}}"
         service-cidr: "{{.SVC_CIDR}}"
