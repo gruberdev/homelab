@@ -87,8 +87,8 @@ spec:
           tls: []
         resources:
           limits:
-            cpu: 100m
-            memory: 128Mi
+            cpu: 350m
+            memory: 512Mi
           requests:
             cpu: 100m
             memory: 128Mi
@@ -98,7 +98,8 @@ spec:
           maxReplicas: 100
           targetCPUUtilizationPercentage: 80
           # targetMemoryUtilizationPercentage: 80
-        nodeSelector: {}
+        nodeSelector:
+          kubernetes.io/hostname: node-two
         tolerations: []
         affinity: {}
         extraSecretNamesForEnvFrom:
