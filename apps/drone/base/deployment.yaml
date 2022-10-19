@@ -59,4 +59,4 @@ spec:
       volumes:
         - name: storage-volume
           persistentVolumeClaim:
-            claimName: drone-storage
+            claimName: drone-data

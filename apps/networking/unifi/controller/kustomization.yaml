@@ -2,29 +2,20 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 bases:
 - ./base
-- https://github.com/gruberdev/homelab/apps/networking/tailscale
 
 namespace: unifi
 
 patches:
-- path: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/tailscale/patch.yaml
-  target:
-    kind: Deployment
-    name: unifi-controller
 - patch: |-
-    - op: replace
-      path: "/spec/template/spec/containers/0/env/2"
+    - op: add
+      path: "/spec/template/spec/nodeSelector"
       value:
-        name: TS_HOSTNAME
-        value: "unifi"
-    - op: replace
-      path: "/spec/template/spec/containers/0/env/3"
-      value:
-        name: DEST_PORT
-        value: "8443"
+        kubernetes.io/hostname: node-one
   target:
     kind: Deployment
     name: unifi-controller
-
 commonAnnotations:
   reloader.stakater.com/auto: "true"
+images:
+- name: jacobalberty/unifi
+  newTag: v7.2.94

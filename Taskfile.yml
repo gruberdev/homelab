@@ -11,6 +11,8 @@ includes:
   vultr: ./tasks/vultr.yaml
   secrets: ./tasks/secrets.yaml
   matrix: ./tasks/matrix.yaml
+  longhorn: ./tasks/longhorn.yaml
+  cluster: ./tasks/cluster.yaml
 
 vars:
   CYAN: tput setaf 6
@@ -112,45 +114,6 @@ tasks:
       - find . -maxdepth 10 -name deployment.yaml -exec cat {} \; | kuota-calc --detailed
       - find . -maxdepth 10 -name statefulset.yaml -exec cat {} \; | kuota-calc --detailed
 
-  test:k3d:
-    desc: Starts your local k3d cluster.
-    preconditions:
-      - sh: "which k3d"
-        msg: "k3d {{.PATH_ERROR}}"
-    summary: |
-      Creating a k3d cluster
-
-      This command ensures the cluster on k3d will
-      be created with all the correct parameters, allowing
-      for a declarative setup that requires minimal intervention
-      to work. k3d is configured to automatically create an entry
-      on your KUBECONFIG file and update it to point towards the cluster.
-
-      All commands that create resources also are specific to the cluster
-      name configured on the file ('k3d-demo'), as to avoid creating those
-      resoures on non-local clusters that may be on KUBECONFIG file as well.
-    cmds:
-      - task: clear
-      - k3d cluster delete --config test/k3d.yaml
-      - k3d cluster create --config test/k3d.yaml
-      - task: highlight_normal
-      - echo -e "\nYour cluster has been created. Type 'k3d cluster list' to confirm."
-      - task: reset
-    ignore_error: true
-
-  test:k3d:destroy:
-    desc: Destroys your local k3d cluster.
-    preconditions:
-      - sh: "which k3d"
-        msg: "k3d {{.PATH_ERROR}}"
-    cmds:
-      - task: clear
-      - k3d cluster delete --config test/k3d.yaml
-      - task: highlight_normal
-      - echo -e "\nYour cluster has been destroyed."
-      - task: reset
-    ignore_error: true
-
   repos:
     desc: Adds and updates all the required Helm repositories locally.
     preconditions:
@@ -196,10 +159,9 @@ tasks:
       on all MacOS, Windows and Linux. It adds all the '*.k8s.localhost'
       domains to your local DNS hosts file. It also makes it easy for the
       user to reverse those changes, avoiding pollution on your hosts
-      (or equivalent) file.
-    cmds:
+      (or equivalent) test/    cmds:
       - task: clear
-      - sleep 0.01 && {{if eq OS "windows"}}hostctl add k8s -q < test/.etchosts{{else}}sudo hostctl add k8s -q < test/.etchosts{{end}}
+      - sletest/ && {{if eq OS "windows"}}hostctl add k8s -q < config/.etchosts{{else}}sudo hostctl add k8s -q < config/.etchosts{{end}}
       - task: highlight_normal
       - echo -e "Added 'k8s.localhost' and related domains to your hosts file!"
       - task: reset

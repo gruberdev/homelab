@@ -8,7 +8,7 @@ spec:
   ports:
     - port: 80
       targetPort: 8443
-      name: web-http
+      name: web-https
       protocol: TCP
     - port: 8080
       name: devices
@@ -50,7 +50,7 @@ spec:
   - port: 8443
     nodePort: 32321
     protocol: TCP
-    name: web-http
+    name: web-https
   - port: 8080
     nodePort: 32322
     protocol: TCP

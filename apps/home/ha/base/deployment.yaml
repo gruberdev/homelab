@@ -20,14 +20,23 @@ spec:
     spec:
       initContainers:
         - name: git-sync
-          image: k8s.gcr.io/git-sync/git-sync:v3.3.4
+          image: k8s.gcr.io/git-sync/git-sync:v3.6.1
           imagePullPolicy: IfNotPresent
+          securityContext:
+            runAsUser: 65533
           volumeMounts:
-          - name: config-volume
-            mountPath: /tmp/repository
+          - name: temp-config
+            mountPath: /tmp/git
+          - name: ssh-key
+            mountPath: /etc/git-secret/ssh
+          - name: known-hosts
+            mountPath: /etc/git-secret/known_hosts
           envFrom:
             - configMapRef:
                 name: git-ha-cm
+            - secretRef:
+                name: git-vars
+                optional: true
       containers:
         - env:
             - name: TZ
@@ -40,32 +49,18 @@ spec:
               valueFrom: { secretKeyRef: { name: homeuser.db-ha.credentials.postgresql.acid.zalan.do, key: password } }
             - name: DB_STRING
               value: "postgresql://$(DB_USERNAME):$(DB_PASSWORD)@db-ha.homeassistant.svc.cluster.local:5432/homeassistant?sslmode=require"
-          image: homeassistant/home-assistant:2022.8
+          image: homeassistant/home-assistant:2022.9
           imagePullPolicy: IfNotPresent
-          livenessProbe:
-            failureThreshold: 3
-            initialDelaySeconds: 15
-            periodSeconds: 10
-            tcpSocket:
-              port: 8123
-            timeoutSeconds: 3
           name: home-assistant
           lifecycle:
             postStart:
               exec:
                 command:
-                  ['/bin/sh', '-c', 'cp -rf /config/homeassistant/* /config']
+                  ['/bin/sh', '-c', 'cp -rf /src/homeassistant/* /config']
           ports:
             - containerPort: 8123
               name: api
               protocol: TCP
-          readinessProbe:
-            failureThreshold: 5
-            httpGet:
-              path: /
-              port: api
-            initialDelaySeconds: 30
-            timeoutSeconds: 5
           resources:
             limits:
               cpu: 500m
@@ -73,6 +68,28 @@ spec:
             requests:
               cpu: 200m
               memory: 500Mi
+          livenessProbe:
+            tcpSocket:
+              port: 8123
+            timeoutSeconds: 1
+            periodSeconds: 10
+            initialDelaySeconds: 60
+            failureThreshold: 3
+          readinessProbe:
+            tcpSocket:
+              port: 8123
+            timeoutSeconds: 1
+            periodSeconds: 10
+            initialDelaySeconds: 3
+            failureThreshold: 3
+          startupProbe:
+            tcpSocket:
+              port: 8123
+            timeoutSeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            initialDelaySeconds: 60
+            failureThreshold: 30
           securityContext:
             privileged: true
           volumeMounts:
@@ -81,6 +98,8 @@ spec:
               subPath: secrets.yaml
             - mountPath: /config
               name: config-volume
+            - mountPath: /src
+              name: temp-config
             - mountPath: /dev/ttyUSB0
               name: dev-usb-00
             - mountPath: /dev/ttyUSB1
@@ -91,13 +110,21 @@ spec:
               name: zigbee-01
       dnsPolicy: ClusterFirstWithHostNet
       hostNetwork: true
-      volumes:
+      volumes:      
+        - name: ssh-key
+          secret:
+            secretName: ssh-key
+            defaultMode: 256
+        - name: known-hosts
+          secret:
+            secretName: known-hosts
+            defaultMode: 256
         - name: ha-secrets
           secret:
             secretName: ha-secrets
         - name: config-volume
           persistentVolumeClaim:
-            claimName: home-assisstant-pvc
+            claimName: ha-storage
         - hostPath:
             path: /dev/serial/by-id/usb-Silicon_Labs_HubZ_Smart_Home_Controller_C130205F-if00-port0
           name: zigbee-00
@@ -110,3 +137,5 @@ spec:
         - hostPath:
             path: /dev/ttyUSB1
           name: dev-usb-01
+        - name: temp-config
+          emptyDir: {}

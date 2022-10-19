@@ -1,11 +1,12 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: home-assisstant-pvc
+  name: unifi-poller-storage
+  namespace: unifi
 spec:
   accessModes:
     - ReadWriteOnce
+  storageClassName: longhorn
   resources:
     requests:
-      storage: 5Gi
-  storageClassName: local-path
+      storage: 2Gi

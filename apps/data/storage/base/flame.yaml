@@ -1,11 +1,12 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: test-pvc
+  name: flame-storage
+  namespace: monitoring
 spec:
   accessModes:
     - ReadWriteOnce
+  storageClassName: longhorn
   resources:
     requests:
-      storage: 40Gi
-  storageClassName: vultr-block-storage-hdd
+      storage: 1Gi

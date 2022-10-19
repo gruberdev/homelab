@@ -2,30 +2,201 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: longhorn
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: cluster
   source:
-    repoURL: 'https://github.com/gruberdev/homelab.git'
-    path: apps/data/longhorn
-    targetRevision: main
+    repoURL: 'https://github.com/longhorn/longhorn.git'
+    targetRevision: v1.3.1
+    path: chart
+    helm:
+      releaseName: longhorn
+      values: |
+          global:
+          # Default values for longhorn.
+          # This is a YAML-formatted file.
+          # Declare variables to be passed into your templates.
+          global:
+            cattle:
+              systemDefaultRegistry: ""
+              windowsCluster:
+                # Enable this to allow Longhorn to run on the Rancher deployed Windows cluster
+                enabled: false
+                # Tolerate Linux node taint
+                tolerations:
+                - key: "cattle.io/os"
+                  value: "linux"
+                  effect: "NoSchedule"
+                  operator: "Equal"
+                # Select Linux nodes
+                nodeSelector:
+                  kubernetes.io/os: "linux"
+                # Recognize toleration and node selector for Longhorn run-time created components
+                defaultSetting:
+                  taintToleration: cattle.io/os=linux:NoSchedule
+                  systemManagedComponentsNodeSelector: kubernetes.io/os:linux
+          image:
+            longhorn:
+              engine:
+                repository: longhornio/longhorn-engine
+                tag: v1.3.1
+              manager:
+                repository: longhornio/longhorn-manager
+                tag: v1.3.1
+              ui:
+                repository: longhornio/longhorn-ui
+                tag: v1.3.1
+              instanceManager:
+                repository: longhornio/longhorn-instance-manager
+                tag: v1_20220808
+              shareManager:
+                repository: longhornio/longhorn-share-manager
+                tag: v1_20220808
+              backingImageManager:
+                repository: longhornio/backing-image-manager
+                tag: v3_20220808
+            csi:
+              attacher:
+                repository: longhornio/csi-attacher
+                tag: v3.4.0
+              provisioner:
+                repository: longhornio/csi-provisioner
+                tag: v2.1.2
+              nodeDriverRegistrar:
+                repository: longhornio/csi-node-driver-registrar
+                tag: v2.5.0
+              resizer:
+                repository: longhornio/csi-resizer
+                tag: v1.2.0
+              snapshotter:
+                repository: longhornio/csi-snapshotter
+                tag: v3.0.3
+            pullPolicy: IfNotPresent
+
+          service:
+            ui:
+              type: ClusterIP
+              nodePort: null
+            manager:
+              type: ClusterIP
+              nodePort: ""
+          persistence:
+            defaultClass: true
+            defaultFsType: ext4
+            defaultClassReplicaCount: 1
+            reclaimPolicy: Delete
+            migratable: false
+            recurringJobSelector:
+              enable: false
+              jobList: []
+            backingImage:
+              enable: false
+              name: ~
+              dataSourceType: ~
+              dataSourceParameters: ~
+              expectedChecksum: ~
+          csi:
+            kubeletRootDir: ~
+            attacherReplicaCount: ~
+            provisionerReplicaCount: ~
+            resizerReplicaCount: ~
+            snapshotterReplicaCount: ~
+
+          defaultSettings:
+            backupTarget: ~
+            backupTargetCredentialSecret: ~
+            allowRecurringJobWhileVolumeDetached: ~
+            createDefaultDiskLabeledNodes: true
+            defaultDataPath: ~
+            defaultDataLocality: ~
+            replicaSoftAntiAffinity: ~
+            replicaAutoBalance: ~
+            storageOverProvisioningPercentage: ~
+            storageMinimalAvailablePercentage: ~
+            upgradeChecker: ~
+            defaultReplicaCount: ~
+            defaultLonghornStaticStorageClass: ~
+            backupstorePollInterval: ~
+            taintToleration: ~
+            systemManagedComponentsNodeSelector: ~
+            priorityClass: ~
+            autoSalvage: ~
+            autoDeletePodWhenVolumeDetachedUnexpectedly: ~
+            disableSchedulingOnCordonedNode: ~
+            replicaZoneSoftAntiAffinity: ~
+            nodeDownPodDeletionPolicy: ~
+            allowNodeDrainWithLastHealthyReplica: ~
+            mkfsExt4Parameters: ~
+            disableReplicaRebuild: ~
+            replicaReplenishmentWaitInterval: ~
+            concurrentReplicaRebuildPerNodeLimit: ~
+            disableRevisionCounter: ~
+            systemManagedPodsImagePullPolicy: ~
+            allowVolumeCreationWithDegradedAvailability: ~
+            autoCleanupSystemGeneratedSnapshot: ~
+            concurrentAutomaticEngineUpgradePerNodeLimit: ~
+            backingImageCleanupWaitInterval: ~
+            backingImageRecoveryWaitInterval: ~
+            guaranteedEngineManagerCPU: ~
+            guaranteedReplicaManagerCPU: ~
+            kubernetesClusterAutoscalerEnabled: ~
+            orphanAutoDeletion: ~
+            storageNetwork: ~
+          privateRegistry:
+            createSecret: ~
+            registryUrl: ~
+            registryUser: ~
+            registryPasswd: ~
+            registrySecret: ~
+
+          longhornManager:
+            priorityClass: ~
+            tolerations: []
+          longhornDriver:
+            priorityClass: ~
+            tolerations: []
+            nodeSelector: {}
+          longhornUI:
+            replicas: 1
+            priorityClass: ~
+            tolerations: []
+            nodeSelector:
+              kubernetes.io/hostname: node-two
+          resources:
+            limits:
+              cpu: 200m
+              memory: 256Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          ingress:
+            enabled: false
+          enablePSP: true
+          namespaceOverride: "longhorn-system"
+          # Annotations to add to the Longhorn Manager DaemonSet Pods. Optional.
+          annotations: {}
+          serviceAccount:
+            annotations: {}
+
   destination:
     namespace: longhorn-system
     name: in-cluster
   syncPolicy:
     automated:
-      prune: false
+      prune: true
       selfHeal: true
       allowEmpty: true
     syncOptions:
     - Validate=false
     - CreateNamespace=true
-    - PrunePropagationPolicy=foreground
-    - PruneLast=false
-    - ApplyOutOfSyncOnly=true
-    - Prune=false
+    - PrunePropagationPolicy=background
+    - PruneLast=true
+    - ApplyOutOfSyncOnly=false
+    - Prune=true
     retry:
       limit: 10
       backoff:
-        duration: 20s
+        duration: 5s
         factor: 2
-        maxDuration: 15m
+        maxDuration: 3m

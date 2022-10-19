@@ -25,14 +25,6 @@ patches:
   target:
     kind: Deployment
     name: kuma
-- patch: |-
-    - op: add
-      path: "/spec/template/spec/nodeSelector"
-      value:
-        kubernetes.io/hostname: node2
-  target:
-    kind: Deployment
-    name: kuma
 
 commonAnnotations:
   reloader.stakater.com/auto: "true"

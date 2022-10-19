@@ -30,7 +30,7 @@ patches:
     - op: add
       path: "/spec/template/spec/nodeSelector"
       value:
-        kubernetes.io/hostname: node2
+        kubernetes.io/hostname: node-two
   target:
     kind: Deployment
 - patch: |-
@@ -44,4 +44,4 @@ commonAnnotations:
   reloader.stakater.com/auto: "true"
 images:
 - name: drone/drone
-  newTag: 2.12.1
+  newTag: 2.13.0

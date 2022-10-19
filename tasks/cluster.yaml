@@ -1,0 +1,80 @@
+version: '3'
+vars:
+  CYAN: tput setaf 6
+  RED: tput setaf 1
+  YELLOW: tput setaf 3
+  GREEN: tput setaf 2
+  BLUE: tput setaf 1
+  PURPLE: tput setaf 5
+  BG_B: tput setab 0
+  BOLD: tput bold
+  RESET: tput sgr0
+  CLEAR: tput reset
+  PATH_ERROR: is not installed or correctly configured in PATH.
+  SVC_CIDR: 10.43.0.0/16
+  POD_CIDR: 10.42.0.0/16
+  HA_DB_NAME: k3s
+  KUBECONFIG_MODE: 0777
+  DISABLE_K3S: traefik,localstorage
+  RESOLV_FILE: /etc/resolv.conf
+  FLANNEL_INTERFACE: tailscale0
+silent: true
+
+tasks:
+  server:
+    cmds:
+      - |
+        sudo curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server" sh -s - -c config/k3s/node-one.yaml
+    ignore_error: true
+
+  agent:
+    cmds:
+      - |
+        sudo curl -sfL https://get.k3s.io | sh -s - agent \
+        --token "${K3S_NODE_TOKEN}" \
+        --server ${NODE_SERVER_IP} \
+        --resolv-conf "{{.RESOLV_FILE}}"
+    ignore_error: true
+
+
+  # Debian fix
+  # https://docs.k3s.io/advanced#additional-os-preparations
+  fwd:fix:
+    cmds:
+      - sudo iptables -F
+      - sudo update-alternatives --set iptables /usr/sbin/iptables-legacy
+      - sudo update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
+      - echo "Reboot your machine."
+    ignore_error: true
+
+  fwd:replace:
+    cmds:
+      - sudo apt remove iptables nftables -y
+      - echo "Reboot your machine."
+      - Add to your startup script or terminal "'export PATH='/var/lib/rancher/k3s/data/current/bin/:/var/lib/rancher/k3s/data/current/bin/aux:$PATH'"
+    ignore_error: true
+
+  gen:node:
+    cmds:
+      - rm config/k3s/node-one.yaml
+      - |
+        cat << EOF > config/k3s/node-one.yaml
+        node-name: "node-one"
+        write-kubeconfig-mode: "{{.KUBECONFIG_MODE}}"
+        flannel-iface: "{{.FLANNEL_INTERFACE}}"
+        write-kubeconfig: "${KUBECONFIG_PATH}"
+        token: "${K3S_NODE_TOKEN}"
+        cluster-cidr: "{{.POD_CIDR}}"
+        service-cidr: "{{.SVC_CIDR}}"
+        node-ip: "${NODE_SERVER_IP}"
+        external-node-ip: "${NODE_SERVER_IP}"
+        server: "https://${TAILSCALE_IPV4}:6443"
+        disable-network-policy: true
+        resolv-conf: "{{.RESOLV_FILE}}"
+        datastore-endpoint: "postgres://${HA_DB_USER}:${HA_DB_PASSWORD}@${BASTION_IPV4}/{{.HA_DB_NAME}}?sslmode=disable"
+        disable:
+          - traefik
+          - local-storage
+          - metrics-server
+        EOF
+    ignore_error: true

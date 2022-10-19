@@ -24,9 +24,10 @@ spec:
     - PrunePropagationPolicy=foreground
     - PruneLast=true
     - ApplyOutOfSyncOnly=false
+    - Replace=true
     - Prune=true
     retry:
-      limit: -1
+      limit: 10
       backoff:
         duration: 20s
         factor: 2

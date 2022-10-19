@@ -2,12 +2,8 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: drone-server
-  annotations:
-    argocd-image-updater.argoproj.io/write-back-method: git
-    argocd-image-updater.argoproj.io/write-back-target: kustomization
-    argocd-image-updater.argoproj.io/git-branch: main
-    argocd-image-updater.argoproj.io/image-list: drone=drone/drone
-    argocd-image-updater.argoproj.io/drone.platforms: linux/arm64,linux/amd64
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: core
   source:
@@ -29,6 +25,7 @@ spec:
     - PruneLast=true
     - ApplyOutOfSyncOnly=false
     - Prune=true
+    - Replace=true
     retry:
       limit: -1
       backoff:

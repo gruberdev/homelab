@@ -1,32 +1,28 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: changedetection
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
+  name: storage
 spec:
-  project: apps
+  project: cluster
   source:
     repoURL: 'https://github.com/gruberdev/homelab.git'
-    path: apps/services/changesdetection
+    path: apps/data/storage
     targetRevision: main
   destination:
-    namespace: services
     name: in-cluster
   syncPolicy:
     automated:
-      prune: true
-      selfHeal: true
+      prune: false
+      selfHeal: false
       allowEmpty: true
     syncOptions:
     - Validate=false
-    - CreateNamespace=false
     - PrunePropagationPolicy=foreground
-    - PruneLast=true
-    - ApplyOutOfSyncOnly=false
-    - Prune=true
+    - PruneLast=false
+    - ApplyOutOfSyncOnly=true
+    - Prune=false
     retry:
-      limit: 10
+      limit: 1
       backoff:
         duration: 20s
         factor: 2

@@ -1,0 +1,89 @@
+version: '3'
+vars:
+  CYAN: tput setaf 6
+  RED: tput setaf 1
+  YELLOW: tput setaf 3
+  GREEN: tput setaf 2
+  BLUE: tput setaf 1
+  PURPLE: tput setaf 5
+  BG_B: tput setab 0
+  BOLD: tput bold
+  RESET: tput sgr0
+  CLEAR: tput reset
+  PATH_ERROR: is not installed or correctly configured in PATH.
+env:
+  VERSION: "1.3.1"
+
+silent: true
+
+# Thanks https://avasdream.engineer/kubernetes-longhorn-stuck-terminating
+
+tasks:
+
+  uninstall:yaml:
+    cmds:
+      - kubectl delete -f https://raw.githubusercontent.com/longhorn/longhorn/v${VERSION}/deploy/longhorn.yaml
+
+  uninstall:helm:
+    cmds:
+      - helm uninstall longhorn -n longhorn-system
+
+  uninstall:deploy:
+    cmds:
+      - kubectl create -f https://raw.githubusercontent.com/longhorn/longhorn/v${VERSION}/uninstall/uninstall.yaml
+
+  uninstall:remove:
+    cmds:
+      - kubectl delete -f https://raw.githubusercontent.com/longhorn/longhorn/v${VERSION}/uninstall/uninstall.yaml
+
+  delete:crds:
+    cmds:
+      - bash
+      - |
+        for crd in $(kubectl get crd -o jsonpath={.items[*].metadata.name} | tr ' ' '\n' | grep longhorn.rancher.io); do
+        kubectl -n ${NAMESPACE} get $crd -o yaml | sed "s/\- longhorn.rancher.io//g" | kubectl apply -f -
+        kubectl -n ${NAMESPACE} delete $crd --all
+        kubectl delete crd/$crd
+        done
+
+  list:resources:
+    cmds:
+      - kubectl api-resources --verbs=list --namespaced -o name | xargs -n 1 kubectl get --show-kind --ignore-not-found -n longhorn-system
+
+  patch:resources:
+    cmds:
+      - for crd in $(kubectl get crd -o name | grep longhorn); do kubectl patch $crd -p '{"metadata":{"finalizers":[]}}' --type=merge; done;
+
+  destroy:all:
+    cmds:
+      - knsk --delete-all --force
+
+  install:helm:
+    cmds:
+      - |
+        cat << EOF > config/values.yaml
+        defaultSettings:
+          createDefaultDiskLabeledNodes: true
+          defaultDataPath: /var/lib/longhorn/
+          storageOverProvisioningPercentage: 600
+          storageMinimalAvailablePercentage: 15
+          defaultReplicaCount: 2
+          defaultDataLocality: disabled
+          backupstorePollInterval: 500
+          autoSalvage: false
+          disableSchedulingOnCordonedNode: false
+          guaranteed-engine-manager-cpu: 15
+          guaranteed-replica-manager-cpu: 15
+          orphan-auto-deletion: false
+        EOF
+      - |
+        helm install longhorn longhorn/longhorn \
+        --namespace longhorn-system --create-namespace \
+        --values config/values.yaml --version "1.3.1"
+      - rm config/values.yaml
+
+  clean:all:
+    cmds:
+      - kubectl delete mutatingwebhookconfiguration.admissionregistration.k8s.io/longhorn-webhook-mutator
+      - kubectl delete validatingwebhookconfiguration.admissionregistration.k8s.io/longhorn-webhook-validator
+      - kubectl delete storageclass.storage.k8s.io/longhorn

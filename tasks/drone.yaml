@@ -17,9 +17,9 @@ silent: true
 tasks:
   secret:
     cmds:
-      - rm test/drone-secret.yaml
+      - rm config/drone-secret.yaml
       - |
-        cat << EOF > test/drone-secret.yaml
+        cat << EOF > config/drone-secret.yaml
         apiVersion: v1
         kind: Secret
         metadata:
@@ -37,15 +37,15 @@ tasks:
           DRONE_VALIDATE_PLUGIN_SECRET: "$DRONE_VALIDATE_PLUGIN_SECRET"
           DRONE_CONVERT_PLUGIN_SECRET: "$DRONE_CONVERT_PLUGIN_SECRET"
         EOF
-      - kubectl apply -f test/drone-secret.yaml
-      - rm test/drone-secret.yaml
+      - kubectl apply -f config/drone-secret.yaml
+      - rm config/drone-secret.yaml
     ignore_error: true
 
   secret:runner:
     cmds:
-      - rm test/drone-secret-runner.yaml
+      - rm config/drone-secret-runner.yaml
       - |
-        cat << EOF > test/drone-secret-runner.yaml
+        cat << EOF > config/drone-secret-runner.yaml
         apiVersion: v1
         kind: Secret
         metadata:
@@ -63,8 +63,8 @@ tasks:
           DRONE_CONVERT_PLUGIN_SECRET: "$DRONE_CONVERT_PLUGIN_SECRET"
           DRONE_REGISTRY_PLUGIN_TOKEN: "$DRONE_REGISTRY_PLUGIN_TOKEN"
         EOF
-      - kubectl apply -f test/drone-secret-runner.yaml
-      - rm test/drone-secret-runner.yaml
+      - kubectl apply -f config/drone-secret-runner.yaml
+      - rm config/drone-secret-runner.yaml
     ignore_error: true
 
   secrets:

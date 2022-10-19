@@ -19,7 +19,7 @@ spec:
       labels:
         app: unifi-controller
     spec:
-      terminationGracePeriodSeconds: 60
+      terminationGracePeriodSeconds: 10
       containers:
         - name: unifi-controller
           image: jacobalberty/unifi:v7.2.92
@@ -28,7 +28,7 @@ spec:
                 name: unifi-controller-cm
           ports:
             - containerPort: 8443
-              name: web-http
+              name: web-https
               protocol: TCP
             - containerPort: 8080
               name: devices
@@ -68,16 +68,21 @@ spec:
             requests:
               cpu: "300m"
               memory: "1024Mi"
-          readinessProbe:
-            tcpSocket:
-              port: 8080
-            initialDelaySeconds: 15
-            periodSeconds: 10
           livenessProbe:
             tcpSocket:
-              port: 8080
-            initialDelaySeconds: 100
-            periodSeconds: 20
+              port: 8443
+            initialDelaySeconds: 60
+            periodSeconds: 15
+          startupProbe:
+            tcpSocket:
+              port: 8443
+            initialDelaySeconds: 300
+            periodSeconds: 30
+          readinessProbe:
+            tcpSocket:
+              port: 8443
+            initialDelaySeconds: 15
+            periodSeconds: 5
       volumes:
         - name: data
           persistentVolumeClaim:

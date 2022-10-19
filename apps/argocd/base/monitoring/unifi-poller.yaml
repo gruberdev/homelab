@@ -23,6 +23,7 @@ spec:
     - CreateNamespace=false
     - PrunePropagationPolicy=foreground
     - PruneLast=true
+    - Replace=true
     - ApplyOutOfSyncOnly=false
     - Prune=true
     retry:

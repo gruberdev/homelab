@@ -380,7 +380,7 @@ spec:
               - "/_matrix/client/(r0|v3|unstable)/user_directory/search"
 
               ## Worker event streams
-              ## See https://matrix-org.github.io/synapse/latest/workers.html#stream-writers
+              ## See https://matrix-org.github.io/synapse/laconfig/workers.html#stream-writers
               ##
 
               ## The typing event stream
@@ -665,7 +665,7 @@ spec:
         ## This PVC will be mounted in either Synapse or a media_repo worker.
         ##
         ## NB; If you want to be able to scale this, you will have to set the
-        ## accessMode to RWX/ReadWriteMany.
+        ## accessMode to RWX/ReadWriteOnce.
         ##
         persistence:
           enabled: true

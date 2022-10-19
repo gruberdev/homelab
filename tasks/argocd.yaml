@@ -21,9 +21,9 @@ tasks:
       GIT_URI:
         sh: git config --get remote.origin.url | sed -e 's/:/\//g'| sed -e 's/ssh\/\/\///g'| sed -e 's/git@/https:\/\//g' | sed 's/.git$//'
     cmds:
-      - rm test/repo-creds.yaml
+      - rm config/repo-creds.yaml
       - |
-        cat << EOF > test/repo-creds.yaml
+        cat << EOF > config/repo-creds.yaml
         apiVersion: v1
         kind: Secret
         metadata:
@@ -36,8 +36,8 @@ tasks:
           password: $GH_PASS
           username: $GH_USER
         EOF
-      - kubectl apply -f test/repo-creds.yaml -n argocd
-      - rm test/repo-creds.yaml
+      - kubectl apply -f config/repo-creds.yaml -n argocd
+      - rm config/repo-creds.yaml
     ignore_error: true
 
   repo:
@@ -45,9 +45,9 @@ tasks:
       GIT_URI:
         sh: git config --get remote.origin.url | sed -e 's/:/\//g'| sed -e 's/ssh\/\/\///g'| sed -e 's/git@/https:\/\//g' | sed 's/.git$//'
     cmds:
-      - rm test/repo.yaml
+      - rm config/repo.yaml
       - |
-        cat << EOF > test/repo.yaml
+        cat << EOF > config/repo.yaml
         apiVersion: v1
         kind: Secret
         metadata:
@@ -61,10 +61,9 @@ tasks:
           password: $GH_PASS
           username: $GH_USER
         EOF
-      - kubectl apply -f test/repo.yaml
-      - rm test/repo.yaml
+      - kubectl apply -f config/repo.yaml
+      - rm config/repo.yaml
     ignore_error: true
-
 
   install:
     desc: Installs ArgoCD resources manually on the local cluster

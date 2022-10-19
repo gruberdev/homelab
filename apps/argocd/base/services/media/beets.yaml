@@ -25,6 +25,7 @@ spec:
     - PruneLast=true
     - ApplyOutOfSyncOnly=false
     - Prune=true
+    - Replace=true
     retry:
       limit: -1
       backoff:

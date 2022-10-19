@@ -36,6 +36,14 @@ patches:
   target:
     kind: Deployment
     name: rss-gen
+- patch: |-
+    - op: add
+      path: "/spec/template/spec/nodeSelector"
+      value:
+        kubernetes.io/hostname: node-two
+  target:
+    kind: Deployment
+    name: rss-gen
 
 commonAnnotations:
   reloader.stakater.com/auto: "true"
