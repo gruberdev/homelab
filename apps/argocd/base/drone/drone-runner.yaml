@@ -11,7 +11,7 @@ spec:
     targetRevision: master
     path: charts/drone-runner-docker
     helm:
-      releaseName: drone-kube-runner
+      releaseName: drone-runner
       values: |
         hostAliases: []
         # - ip: 10.20.30.40

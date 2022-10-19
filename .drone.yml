@@ -1,6 +1,6 @@
 kind: pipeline
 name: validate
-type: kubernetes
+type: docker
 
 trigger:
   event:
@@ -11,24 +11,6 @@ trigger:
 
 clone:
   disable: true
-
-tolerations:
-- key: beta.kubernetes.io/arch
-  operator: "Equal"
-  value: "arm64"
-  effect: NoSchedule
-- key: beta.kubernetes.io/arch
-  operator: "Equal"
-  value: "arm"
-  effect: NoSchedule
-- key: kubernetes.io/arch
-  operator: "Equal"
-  value: "arm64"
-  effect: NoSchedule
-- key: kubernetes.io/arch
-  operator: "Equal"
-  value: "arm"
-  effect: NoSchedule
 
 steps:
   - name: clone
@@ -102,25 +84,7 @@ steps:
 
 kind: pipeline
 name: Lint
-type: kubernetes
-
-tolerations:
-- key: beta.kubernetes.io/arch
-  operator: "Equal"
-  value: "arm64"
-  effect: NoSchedule
-- key: beta.kubernetes.io/arch
-  operator: "Equal"
-  value: "arm"
-  effect: NoSchedule
-- key: kubernetes.io/arch
-  operator: "Equal"
-  value: "arm64"
-  effect: NoSchedule
-- key: kubernetes.io/arch
-  operator: "Equal"
-  value: "arm"
-  effect: NoSchedule
+type: docker
 
 trigger:
   event:
