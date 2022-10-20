@@ -14,7 +14,6 @@ vars:
 silent: true
 
 env:
-  VAULT_ADDR: "https://vault.k8s.localhost"
   VAULT_SKIP_VERIFY: "true"
 
 tasks:
@@ -137,17 +136,17 @@ tasks:
       - |
         cat << EOF > apps/argocd/base/argocd-vault.yaml
         apiVersion: v1
-        data:
+        stringData:
           VAULT_ADDR: $VAULT_ADDR
           VAULT_TOKEN: {{.VAULT_TOKEN}}
           AVP_AUTH_TYPE: token
-          AVP_TYPE: token
+          AVP_TYPE: vault
         kind: Secret
         metadata:
           name: vault-configuration
           namespace: argocd
         type: Opaque
         EOF
-      - kubectl apply -f apps/argocd/base/argocd-vault.yaml --ignore-not-found --grace-period=0
+      - kubectl apply -f apps/argocd/base/argocd-vault.yaml --grace-period=0
       - rm apps/argocd/base/argocd-vault.yaml
     ignore_error: true
