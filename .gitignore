@@ -22,6 +22,14 @@ terraform/override.tf.json
 *_override.tf.json
 terraform/.terraformrc
 terraform/terraform.rc
+terraform/**/.terraform.lock.hcl
+terraform/**/*.terraform
+terraform/**/*.out
+terraform/**/.terraform
+terraform/**/*.tfvars
+terraform/**/terraform.tfstate
+terraform/**/terraform.tfstate.backup
+
 config/tls/base/tls-secret.yaml
 .vscode
 .vscode/*
@@ -33,9 +41,10 @@ config/tls/base/tls-secret.yaml
 terraform/.terraform.lock.hcl
 terraform/terraform/*.terraform
 terraform/*.out
+terraform/.terraform
+terraform/unifi/users.csv
 .env
 nohup.out
-terraform/secrets/*
 !terraform/secrets/.gitkeep
 
 postgres/*
@@ -54,8 +63,11 @@ apps/prometheus/kube-prometheus/*
 apps/kwatch/*
 !apps/kwatch/.gitkeep
 apps/argocd/base/secrets/*.yaml
-config/storage/*
-!config/storage/.gitkeep
+test/storage/*
+!test/storage/.gitkeep
+terraform/vault/secrets/*
+!terraform/vault/secrets/test/example.json
+terraform/**/secrets.json
 
 # k3s config files
 config/k3s/*.yaml
