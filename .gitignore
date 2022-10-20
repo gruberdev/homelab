@@ -26,6 +26,7 @@ terraform/**/.terraform.lock.hcl
 terraform/**/*.terraform
 terraform/**/*.out
 terraform/**/.terraform
+terraform/**/*.tfvars
 terraform/**/terraform.tfstate
 terraform/**/terraform.tfstate.backup
 
@@ -66,4 +67,4 @@ test/storage/*
 !test/storage/.gitkeep
 terraform/vault/secrets/*
 !terraform/vault/secrets/test/example.json
-
+terraform/**/secrets.json
