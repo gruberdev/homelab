@@ -60,7 +60,7 @@ spec:
             - name: "OPERATOR_UI_CONFIG"
               value: |-
                 {
-                  "docs_link":"https://postgres-operator.readthedocs.io/en/latest/",
+                  "docs_link":"https://postgres-operator.readthedocs.io/en/laconfig/",
                   "dns_format_string": "{1}-{0}.{2}",
                   "databases_visible": true,
                   "master_load_balancer_visible": true,

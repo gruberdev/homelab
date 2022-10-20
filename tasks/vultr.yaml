@@ -17,9 +17,9 @@ silent: true
 tasks:
   secret:
     cmds:
-      - rm test/vultr-secret.yaml
+      - rm config/vultr-secret.yaml
       - |
-        cat << EOF > test/vultr-secret.yaml
+        cat << EOF > config/vultr-secret.yaml
         apiVersion: v1
         kind: Secret
         metadata:
@@ -32,8 +32,8 @@ tasks:
         stringData:
           api-key: $VULTR_API_KEY
         EOF
-      - kubectl apply -f test/vultr-secret.yaml
-      - rm test/vultr-secret.yaml
+      - kubectl apply -f config/vultr-secret.yaml
+      - rm config/vultr-secret.yaml
     ignore_error: true
 
   storage:

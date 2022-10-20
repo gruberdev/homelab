@@ -1,6 +1,6 @@
 kind: pipeline
 name: validate
-type: kubernetes
+type: docker
 
 trigger:
   event:
@@ -11,24 +11,6 @@ trigger:
 
 clone:
   disable: true
-
-tolerations:
-- key: beta.kubernetes.io/arch
-  operator: "Equal"
-  value: "arm64"
-  effect: NoSchedule
-- key: beta.kubernetes.io/arch
-  operator: "Equal"
-  value: "arm"
-  effect: NoSchedule
-- key: kubernetes.io/arch
-  operator: "Equal"
-  value: "arm64"
-  effect: NoSchedule
-- key: kubernetes.io/arch
-  operator: "Equal"
-  value: "arm"
-  effect: NoSchedule
 
 steps:
   - name: clone
@@ -102,25 +84,7 @@ steps:
 
 kind: pipeline
 name: Lint
-type: kubernetes
-
-tolerations:
-- key: beta.kubernetes.io/arch
-  operator: "Equal"
-  value: "arm64"
-  effect: NoSchedule
-- key: beta.kubernetes.io/arch
-  operator: "Equal"
-  value: "arm"
-  effect: NoSchedule
-- key: kubernetes.io/arch
-  operator: "Equal"
-  value: "arm64"
-  effect: NoSchedule
-- key: kubernetes.io/arch
-  operator: "Equal"
-  value: "arm"
-  effect: NoSchedule
+type: docker
 
 trigger:
   event:
@@ -188,7 +152,7 @@ steps:
 #     privileged: true
 #     user: root
 #     commands:
-#       - k3d cluster delete --config test/k3d.yaml
+#       - k3d cluster delete --config config/k3d.yaml
 #     depends_on:
 #       - Create Namespaces
 #       - Install PostgreSQL
@@ -200,7 +164,7 @@ steps:
 #     commands:
 #       - nohup dockerd-entrypoint.sh &
 #       - until docker ps 2>&1 > /dev/null; do sleep 1s; done
-#       - k3d cluster create --config test/k3d.yaml --api-port k3dsvc:6432
+#       - k3d cluster create --config config/k3d.yaml --api-port k3dsvc:6432
 #       - until kubectl get deployment coredns -n kube-system -o go-template='{{.status.availableReplicas}}' | grep -v -e '<no value>'; do sleep 1s; done
 #       - k3d kubeconfig get drone > kubeconfig-$${DRONE_BUILD_STARTED}.yaml
 #       - printf "\nk3d is ready! \n\n"
