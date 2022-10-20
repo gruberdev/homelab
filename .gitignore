@@ -68,3 +68,7 @@ test/storage/*
 terraform/vault/secrets/*
 !terraform/vault/secrets/test/example.json
 terraform/**/secrets.json
+
+# k3s config files
+config/k3s/*.yaml
+!config/k3s/.gitkeep
