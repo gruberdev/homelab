@@ -1,5 +1,5 @@
-data "unifi_ap_group" "default" {
-}
+# data "unifi_ap_group" "default" {
+# }
 
 # resource "unifi_wlan" "main_wifi" {
 #   name       = "myssid"
