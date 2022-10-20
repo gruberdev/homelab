@@ -23,6 +23,8 @@ No modules.
 
 ### Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| site\_id | n/a |
 <!-- END_TF_DOCS -->
 </details>

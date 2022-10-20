@@ -32,7 +32,6 @@ tasks:
     cmds:
       - terraform destroy -auto-approve
 
-
   docs:
     cmds:
       - terraform-docs markdown -c ./terraform/.terraform-docs.yaml . --output-file README.md
