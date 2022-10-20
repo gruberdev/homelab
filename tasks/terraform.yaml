@@ -23,6 +23,15 @@ tasks:
     dir: terraform
     cmds:
       - terraform plan
+  apply:
+    dir: terraform
+    cmds:
+      - terraform apply -auto-approve
+  destroy:
+    dir: terraform
+    cmds:
+      - terraform destroy -auto-approve
+
 
   docs:
     cmds:
