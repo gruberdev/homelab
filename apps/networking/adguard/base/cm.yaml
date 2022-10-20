@@ -38,7 +38,10 @@ data:
       ratelimit_whitelist: []
       refuse_any: true
       upstream_dns:
+      - 1.1.1.1
       - 1.1.1.2
+      - 8.8.8.8
+      - 8.8.4.4
       - https://doh.cleanbrowsing.org/doh/security-filter/
       - 177.71.191.153
       - 185.228.168.9
@@ -139,7 +142,7 @@ data:
     - enabled: true
       url: https://raw.githubusercontent.com/anudeepND/blacklist/master/adservers.txt
       name: anudeepND blocklist
-      id: 9 
+      id: 9
     - enabled: true
       url: https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/stopforumspam_30d.ipset 
       name: StopForumSpam filterlists
@@ -165,7 +168,7 @@ data:
       name: Hate and Junk extended
       id: 15
     - enabled: true
-      url: https://o0.pages.dev/Pro/hosts.txt 
+      url: https://o0.pages.dev/Pro/hosts.txt
       name: Badmojr 1Hosts
       id: 16
     - enabled: true
@@ -173,7 +176,7 @@ data:
       name: SmartTV AGH
       id: 17
     - enabled: true
-      url: https://perflyst.github.io/PiHoleBlocklist/SmartTV.txt 
+      url: https://perflyst.github.io/PiHoleBlocklist/SmartTV.txt
       name: General SmartTV general list
       id: 18
     - enabled: true
