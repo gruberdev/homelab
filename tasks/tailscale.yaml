@@ -66,9 +66,9 @@ tasks:
 
   secret:
     cmds:
-      - rm test/ts-secret.yaml
+      - rm config/ts-secret.yaml
       - |
-        cat << EOF > test/ts-secret.yaml
+        cat << EOF > config/ts-secret.yaml
         apiVersion: v1
         kind: Secret
         metadata:
@@ -80,8 +80,8 @@ tasks:
         stringData:
           AUTH_KEY: $TS_KEY
         EOF
-      - kubectl apply -f test/ts-secret.yaml -n kube-system
-      - kubectl apply -f test/ts-secret.yaml -n argocd
-      - kubectl apply -f test/ts-secret.yaml -n drone
-      - rm test/ts-secret.yaml
+      - kubectl apply -f config/ts-secret.yaml -n kube-system
+      - kubectl apply -f config/ts-secret.yaml -n argocd
+      - kubectl apply -f config/ts-secret.yaml -n drone
+      - rm config/ts-secret.yaml
     ignore_error: true

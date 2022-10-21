@@ -5,5 +5,15 @@ bases:
 
 namespace: dns
 
+patches:
+- patch: |-
+    - op: add
+      path: "/spec/template/spec/nodeSelector"
+      value:
+        kubernetes.io/hostname: node-two
+  target:
+    kind: Deployment
+    name: adguard-home
+
 commonAnnotations:
   reloader.stakater.com/auto: "true"

@@ -10,11 +10,11 @@ vars:
   BOLD: tput bold
   RESET: tput sgr0
   CLEAR: tput reset
+  VAULT_ADDR: "http://vault.vault.svc.cluster.local:8200/"
 
 silent: true
 
 env:
-  VAULT_ADDR: "https://vault.k8s.localhost"
   VAULT_SKIP_VERIFY: "true"
 
 tasks:
@@ -51,7 +51,7 @@ tasks:
     dir: apps/argocd/overlay
     cmds:
       - kubectl config set-context --current --namespace=vault --cluster=k3d-demo
-      - kubectl exec vault-argocd-0 -- vault operator init -key-shares=1 -key-threshold=1 -format=json > cluster-keys.json
+      - kubectl exec vault-0 -- vault operator init -key-shares=1 -key-threshold=1 -format=json > cluster-keys.json
       - task: highlight_normal
       - echo -e "\nVault's Unseal Key:"
       - task: reset
@@ -137,17 +137,17 @@ tasks:
       - |
         cat << EOF > apps/argocd/base/argocd-vault.yaml
         apiVersion: v1
-        data:
-          VAULT_ADDR: $VAULT_ADDR
+        stringData:
+          VAULT_ADDR: {{.VAULT_ADDR}}
           VAULT_TOKEN: {{.VAULT_TOKEN}}
           AVP_AUTH_TYPE: token
-          AVP_TYPE: token
+          AVP_TYPE: vault
         kind: Secret
         metadata:
           name: vault-configuration
           namespace: argocd
         type: Opaque
         EOF
-      - kubectl apply -f apps/argocd/base/argocd-vault.yaml --ignore-not-found --grace-period=0
+      - kubectl apply -f apps/argocd/base/argocd-vault.yaml --grace-period=0
       - rm apps/argocd/base/argocd-vault.yaml
     ignore_error: true

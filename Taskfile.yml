@@ -9,8 +9,10 @@ includes:
   vault: ./tasks/vault.yaml
   drone: ./tasks/drone.yaml
   vultr: ./tasks/vultr.yaml
+  tf: ./tasks/terraform.yaml
   secrets: ./tasks/secrets.yaml
   longhorn: ./tasks/longhorn.yaml
+  cluster: ./tasks/cluster.yaml
 
 vars:
   CYAN: tput setaf 6
@@ -62,6 +64,15 @@ tasks:
         msg: "kustomize {{.PATH_ERROR}}"
     cmds:
       - yamllint -c ./.yamllint .
+
+  docs:gen:
+    preconditions:
+      - sh: 'which terraform-docs'
+        msg: 'terraform-docs {{.PATH_ERROR}}'
+    dir: terraform
+    desc: Build documentation using Terraform-docs
+    cmds:
+      - terraform-docs markdown -c .terraform-docs.yaml . --output-file README.md
 
   local:
     desc: local-path storage
@@ -131,8 +142,8 @@ tasks:
       resoures on non-local clusters that may be on KUBECONFIG file as well.
     cmds:
       - task: clear
-      - k3d cluster delete --config test/k3d.yaml
-      - k3d cluster create --config test/k3d.yaml
+      - k3d cluster delete --config config/k3d.yaml
+      - k3d cluster create --config config/k3d.yaml
       - task: highlight_normal
       - echo -e "\nYour cluster has been created. Type 'k3d cluster list' to confirm."
       - task: reset
@@ -145,7 +156,7 @@ tasks:
         msg: "k3d {{.PATH_ERROR}}"
     cmds:
       - task: clear
-      - k3d cluster delete --config test/k3d.yaml
+      - k3d cluster delete --config config/k3d.yaml
       - task: highlight_normal
       - echo -e "\nYour cluster has been destroyed."
       - task: reset
@@ -199,7 +210,7 @@ tasks:
       (or equivalent) file.
     cmds:
       - task: clear
-      - sleep 0.01 && {{if eq OS "windows"}}hostctl add k8s -q < test/.etchosts{{else}}sudo hostctl add k8s -q < test/.etchosts{{end}}
+      - sleep 0.01 && {{if eq OS "windows"}}hostctl add k8s -q < config/.etchosts{{else}}sudo hostctl add k8s -q < config/.etchosts{{end}}
       - task: highlight_normal
       - echo -e "Added 'k8s.localhost' and related domains to your hosts file!"
       - task: reset

@@ -5,25 +5,5 @@ bases:
 
 namespace: unifi
 
-patches:
-- path: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/tailscale/patch.yaml
-  target:
-    kind: Deployment
-    name: unifi-poller
-- patch: |-
-    - op: replace
-      path: "/spec/template/spec/containers/0/env/2"
-      value:
-        name: TS_HOSTNAME
-        value: "unifi-poller"
-    - op: replace
-      path: "/spec/template/spec/containers/0/env/3"
-      value:
-        name: DEST_PORT
-        value: "37288"
-  target:
-    kind: Deployment
-    name: unifi-poller
-
 commonAnnotations:
   reloader.stakater.com/auto: "true"

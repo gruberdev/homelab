@@ -1,0 +1,39 @@
+version: '3'
+vars:
+  CYAN: tput setaf 6
+  RED: tput setaf 1
+  YELLOW: tput setaf 3
+  GREEN: tput setaf 2
+  BLUE: tput setaf 1
+  PURPLE: tput setaf 5
+  BG_B: tput setab 0
+  BOLD: tput bold
+  RESET: tput sgr0
+  CLEAR: tput reset
+  PATH_ERROR: is not installed or correctly configured in PATH.
+
+silent: true
+
+tasks:
+  init:
+    dir: terraform
+    cmds:
+      - terraform init
+  plan:
+    dir: terraform
+    cmds:
+      - terraform plan
+  apply:
+    dir: terraform
+    cmds:
+      - terraform apply -auto-approve
+  destroy:
+    dir: terraform
+    cmds:
+      - terraform destroy -auto-approve
+
+  docs:
+    cmds:
+      - terraform-docs markdown -c ./terraform/.terraform-docs.yaml . --output-file README.md
+      - terraform-docs markdown -c ./terraform/.terraform-docs.yaml ./terraform/modules/vault --output-file README.md
+      - terraform-docs markdown -c ./terraform/.terraform-docs.yaml ./terraform/modules/unifi --output-file README.md

@@ -1,5 +1,8 @@
 .autogit
 .lh
+id_ed25519
+known_hosts
+id_ed25519.pub
 tilt_modules
 manifests/*.yaml
 config/tls/*.pem
@@ -19,6 +22,14 @@ terraform/override.tf.json
 *_override.tf.json
 terraform/.terraformrc
 terraform/terraform.rc
+terraform/**/.terraform.lock.hcl
+terraform/**/*.terraform
+terraform/**/*.out
+terraform/**/.terraform
+terraform/**/*.tfvars
+terraform/**/terraform.tfstate
+terraform/**/terraform.tfstate.backup
+
 config/tls/base/tls-secret.yaml
 .vscode
 .vscode/*
@@ -30,9 +41,10 @@ config/tls/base/tls-secret.yaml
 terraform/.terraform.lock.hcl
 terraform/terraform/*.terraform
 terraform/*.out
+terraform/.terraform
+terraform/unifi/users.csv
 .env
 nohup.out
-terraform/secrets/*
 !terraform/secrets/.gitkeep
 
 postgres/*
@@ -53,3 +65,11 @@ apps/kwatch/*
 apps/argocd/base/secrets/*.yaml
 test/storage/*
 !test/storage/.gitkeep
+terraform/vault/secrets/*
+!terraform/vault/secrets/test/example.json
+terraform/**/secrets.json
+terraform/**/*.info
+
+# k3s config files
+config/k3s/*.yaml
+!config/k3s/.gitkeep

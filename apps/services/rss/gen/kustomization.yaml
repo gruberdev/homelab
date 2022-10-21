@@ -18,7 +18,7 @@ patches:
 - patch: |-
     - op: replace
       path: "/spec/template/spec/volumes/0/secret/secretName"
-      value: "rss-tunnel"
+      value: "rssgen-tunnel"
   target:
     kind: Deployment
     name: cloudflared
@@ -40,7 +40,7 @@ patches:
     - op: add
       path: "/spec/template/spec/nodeSelector"
       value:
-        kubernetes.io/hostname: node-four
+        kubernetes.io/hostname: node-two
   target:
     kind: Deployment
     name: rss-gen

@@ -38,13 +38,31 @@ data:
       ratelimit_whitelist: []
       refuse_any: true
       upstream_dns:
-      - https://dns10.quad9.net/dns-query
+      - 1.1.1.1
+      - 1.1.1.2
+      - 8.8.8.8
+      - 8.8.4.4
+      - https://doh.cleanbrowsing.org/doh/security-filter/
+      - 177.71.191.153
+      - 185.228.168.9
+      - 185.228.169.9
+      - 185.228.168.168
+      - 1.0.0.2
+      - 9.9.9.9
+      - 149.112.112.112
+      - 2620:fe::fe
+      - 64.6.64.6
+      - https://dns.futuredns.me/dns-query
       upstream_dns_file: ""
       bootstrap_dns:
-      - 9.9.9.10
-      - 149.112.112.10
-      - 2620:fe::10
-      - 2620:fe::fe:10
+      - 8.8.8.8
+      - 8.8.4.4
+      - 1.1.1.1
+      - 1.1.2.2
+      - 2001:4860:4860::8888
+      - 2001:4860:4860::8844
+      - 2606:4700:4700::1111
+      - 2606:4700:4700::1001
       all_servers: false
       fastest_addr: false
       allowed_clients: []
@@ -97,27 +115,103 @@ data:
       url: https://adaway.org/hosts.txt
       name: AdAway
       id: 2
-    - enabled: true
+    - enabled: false
       url: https://easylist.to/easylist/easylist.txt
       name: EasyList
       id: 3
-    - enabled: true
+    - enabled: false
       url: https://secure.fanboy.co.nz/fanboy-cookiemonster.txt
       name: EasyList Cookiemonster
       id: 4
-    - enabled: true
+    - enabled: false
       url: https://easylist.to/easylist/easyprivacy.txt
       name: EasyPrivacy
       id: 5
-    - enabled: true
+    - enabled: false
       url: https://secure.fanboy.co.nz/fanboy-annoyance.txt
       name: Fanboy's Annoyance
       id: 6
-    - enabled: true
+    - enabled: false
       url: https://abp.oisd.nl
       name: oisd full
       id: 7
-    whitelist_filters: []
+    - enabled: true
+      url: https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling/hosts
+      name: Unified Steven Black hosting plus Gambling
+      id: 8
+    - enabled: true
+      url: https://raw.githubusercontent.com/anudeepND/blacklist/master/adservers.txt
+      name: anudeepND blocklist
+      id: 9
+    - enabled: true
+      url: https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/stopforumspam_30d.ipset 
+      name: StopForumSpam filterlists
+      id: 10
+    - enabled: true
+      url: https://www.github.developerdan.com/hosts/lists/tracking-aggressive-extended.txt
+      name: Aggressive Extended
+      id: 11
+    - enabled: true
+      url: https://raw.githubusercontent.com/anudeepND/youtubeadsblacklist/master/hosts.txt
+      name: Youtube Adlist
+      id: 12
+    - enabled: true
+      url: https://raw.githubusercontent.com/kboghdady/youTube_ads_4_pi-hole/master/youtubelist.txt
+      name: Youtube Adlist 2
+      id: 13
+    - enabled: true
+      url: https://raw.githubusercontent.com/arman68/noappleads/main/adguard-blocklist.txt
+      name: Adguard Blocklist
+      id: 14
+    - enabled: true
+      url: https://www.github.developerdan.com/hosts/lists/hate-and-junk-extended.txt
+      name: Hate and Junk extended
+      id: 15
+    - enabled: true
+      url: https://o0.pages.dev/Pro/hosts.txt
+      name: Badmojr 1Hosts
+      id: 16
+    - enabled: true
+      url: https://perflyst.github.io/PiHoleBlocklist/SmartTV-AGH.txt
+      name: SmartTV AGH
+      id: 17
+    - enabled: true
+      url: https://perflyst.github.io/PiHoleBlocklist/SmartTV.txt
+      name: General SmartTV general list
+      id: 18
+    - enabled: true
+      url: https://blocklistproject.github.io/Lists/ads.txt
+      name: Blocklist Project
+      id: 19
+    - enabled: true
+      url: https://raw.githubusercontent.com/bogachenko/fuckfuckadblock/master/fuckfuckadblock.txt
+      name: Fuck anti-Adblock
+      id: 20
+    - enabled: true
+      url: https://raw.githubusercontent.com/bogachenko/fuckfuckadblock/master/fuckfuckadblock.txt
+      name: Fuck anti-Adblock
+      id: 21
+    - enabled: true
+      url: https://raw.githubusercontent.com/badmojr/1Hosts/master/Xtra/hosts.txt
+      name: Xtra Windows Blocklist
+      id: 22
+    - enabled: true
+      url: https://raw.githubusercontent.com/schrebra/Windows.10.DNS.Block.List/main/hosts.txt
+      name: Windows 10 DNS Blocklist
+      id: 23
+    whitelist_filters:
+    - enabled: true
+      url: https://raw.githubusercontent.com/AdguardTeam/HttpsExclusions/master/exclusions/banks.txt
+      name: Banks Whitelist
+      id: 1
+    - enabled: true
+      url: https://raw.githubusercontent.com/AdguardTeam/HttpsExclusions/master/exclusions/banks.txt
+      name: Pihole General Whitelist
+      id: 2
+    - enabled: true
+      url: https://raw.githubusercontent.com/AdguardTeam/HttpsExclusions/master/exclusions/sensitive.txt
+      name: Sensitive DNS SSL Servers provided by Adguard
+      id: 3
     user_rules: []
     dhcp:
       enabled: true

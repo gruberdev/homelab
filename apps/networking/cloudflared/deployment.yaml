@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: cloudflared
-        image: erisamoe/cloudflared:2022.8.2
+        image: erisamoe/cloudflared:2022.10.2
         args:
         - tunnel
         - --config
