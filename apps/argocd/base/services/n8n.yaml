@@ -17,10 +17,7 @@ spec:
     path: apps/services/n8n
     targetRevision: main
     plugin:
-      name: avp
-      env:
-        - name: AVP_SECRET
-          value: vault-configuration
+      name: argocd-vault-plugin-kustomize
   destination:
     namespace: services
     name: in-cluster
