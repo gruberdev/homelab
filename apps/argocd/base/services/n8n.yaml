@@ -17,7 +17,7 @@ spec:
     path: apps/services/n8n
     targetRevision: main
     plugin:
-      name: argocd-vault-plugin-kustomize
+      name: argocd-vault-plugin
   destination:
     namespace: services
     name: in-cluster
