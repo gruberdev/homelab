@@ -38,6 +38,28 @@ spec:
             limits:
               cpu: "128m"
               memory: "256Mi"
+          livenessProbe:
+            tcpSocket:
+              port: 1200
+            timeoutSeconds: 1
+            periodSeconds: 10
+            initialDelaySeconds: 60
+            failureThreshold: 3
+          readinessProbe:
+            tcpSocket:
+              port: 1200
+            timeoutSeconds: 1
+            periodSeconds: 10
+            initialDelaySeconds: 3
+            failureThreshold: 3
+          startupProbe:
+            tcpSocket:
+              port: 1200
+            timeoutSeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            initialDelaySeconds: 60
+            failureThreshold: 30
         - name: puppeteer
           image: browserless/chrome:latest
           ports:

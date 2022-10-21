@@ -44,6 +44,28 @@ spec:
             - name: richpuppeteer
               containerPort: 3000
               protocol: TCP
+          livenessProbe:
+            tcpSocket:
+              port: 3000
+            timeoutSeconds: 1
+            periodSeconds: 10
+            initialDelaySeconds: 60
+            failureThreshold: 3
+          readinessProbe:
+            tcpSocket:
+              port: 3000
+            timeoutSeconds: 1
+            periodSeconds: 10
+            initialDelaySeconds: 3
+            failureThreshold: 3
+          startupProbe:
+            tcpSocket:
+              port: 3000
+            timeoutSeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            initialDelaySeconds: 60
+            failureThreshold: 30
           resources:
             requests:
               cpu: "64m"
