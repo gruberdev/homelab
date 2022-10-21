@@ -37,7 +37,6 @@
 > |   [Wyze API Bridge][service-wyze]      |   `Monitoring`  |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-wyze]      |  ![][wyze-badge]    |
 > |            [n8n][n8n-uri]              |    `Services`   |        <sub>[More details][homelab-n8n]</sub>       |        ![][argocd-n8n]       |  ![][n8n-badge]     |
 > |     [Hashicorp's Vault][vault-uri]     |    `Security`   |       <sub>[Chart Values][homelab-vault]</sub>      |       ![][argocd-vault]      |  ![][vault-badge]   |
-> |       [Flame Dashboard][flame-uri]     |    `Services`   |       <sub>[More details][homelab-flame]</sub>      |       ![][argocd-flame]      | ![][flame-badge]    |
 > |     [Unifi Poller][poller-uri]         |   `Monitoring`  |      <sub>[More details][homelab-poller]</sub>      |      ![][argocd-poller]      | ![][poller-badge]  |
 > |   [Cloudflared <sub>(as proxies)</sub>][cf-uri]  |   `Networking`  | <sub>[More details][homelab-cloudflared]</sub>  |                        |   ![][cfd-badge]   |
 > |         [Wakapi][wakapi-uri]           |    `Services`   |        <sub>[More details][homelab-wakapi]</sub>    |        ![][argocd-wakapi]    | ![][wakapi-badge]   |

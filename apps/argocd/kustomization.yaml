@@ -30,7 +30,6 @@ resources:
 # - base/apps/wyze.yaml
 
 # - base/monitoring/kuma.yaml
-# - base/monitoring/flame.yaml
 - base/monitoring/unifi-poller.yaml
 # - base/monitoring/kube-prometheus.yaml
 
