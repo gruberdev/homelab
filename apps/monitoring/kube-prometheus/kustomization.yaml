@@ -9,4 +9,4 @@ secretGenerator:
   files:
   - grafana.ini
 patchesStrategicMerge:
-- clustere.yaml
+- cluster.yaml
