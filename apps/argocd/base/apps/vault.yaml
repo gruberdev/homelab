@@ -648,3 +648,12 @@ spec:
         duration: 5s
         factor: 2
         maxDuration: 3m
+  ignoreDifferences:
+  - group: admissionregistration.k8s.io
+    kind: MutatingWebhookConfiguration
+    jsonPointers:
+      - /webhooks
+  - group: apps
+    kind: Deployment
+    jsonPointers:
+    - /spec/replicas
