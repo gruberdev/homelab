@@ -1,0 +1,12 @@
+bases:
+- "github.com/prometheus-operator/kube-prometheus?ref=v0.11.0"
+secretGenerator:
+- name: grafana-config
+  namespace: monitoring
+  behavior: replace
+  options:
+      disableNameSuffixHash: true
+  files:
+  - grafana.ini
+patchesStrategicMerge:
+- clustere.yaml
