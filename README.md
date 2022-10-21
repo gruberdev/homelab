@@ -26,7 +26,6 @@
 <sub>*(Some of the applications listed here may not be online, still, their resources are present in this repository if listed below.)*</sub>
 > |             **Application**            |   **Category**  |                       **Info**                      |     **Deployment Status**    | **Latest Semver**
 > |:--------------------------------------:|:---------------:|:---------------------------------------------------:|:----------------------------:|:----------------------:|
-> |          [Drone CI][drone-uri]         | `CI/CD Tooling` |       <sub>[More details][homelab-drone]</sub>      |       ![][argocd-drone]      | ![][drone-badge]    |
 > |          [ArgoCD][argocd-uri]          | `CI/CD Tooling` |      <sub>[More details][homelab-argocd]</sub>      |       ![][argocd-core]       | ![][argo-badge]     |
 > | [<sub>Zalando PostgreSQL Operator</sub>][p-uri] |   `Databases`   |      <sub>[More details][homelab-zalando]</sub>     |      ![][argocd-zalando]     | ![][zalando-badge]  |
 > |       [Redis Operator][redis-uri]      |   `Databases`   |       <sub>[More details][homelab-redis]</sub>      |       ![][argocd-redis]      |  ![][redis-badge]   |
@@ -73,23 +72,6 @@
 ---
 
 </details>
-
-<details>
-
-<summary> <b>Repository & CI Tooling</b>
-</summary>
-
-<br>
-
-> - [drone-skip-pipeline][drone-skip-pipeline-uri] &nbsp; <sub>Skip Drone CI steps based on files changes</sub>
-> - [drone-github-comment][drone-github-uri] &nbsp; <sub>It takes the output of a step and comments on a Github pull request. [Example.][github-comment-example]</sub>
-> - [yamllint][yamllint-uri] &nbsp; <sub>A linter for YAML files</sub>
-> - [markdown-link-check][markdown-link-check-uri] &nbsp; <sub>Checks if markdown links are responding correctly</sub>
-
----
-
-</details>
-
 
 <details>
 
