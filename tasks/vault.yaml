@@ -10,6 +10,7 @@ vars:
   BOLD: tput bold
   RESET: tput sgr0
   CLEAR: tput reset
+  VAULT_ADDR: "http://vault.vault.svc.cluster.local"
 
 silent: true
 
@@ -137,7 +138,7 @@ tasks:
         cat << EOF > apps/argocd/base/argocd-vault.yaml
         apiVersion: v1
         stringData:
-          VAULT_ADDR: $VAULT_ADDR
+          VAULT_ADDR: {{.VAULT_ADDR}}
           VAULT_TOKEN: {{.VAULT_TOKEN}}
           AVP_AUTH_TYPE: token
           AVP_TYPE: vault
