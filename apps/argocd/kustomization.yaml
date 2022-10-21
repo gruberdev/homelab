@@ -54,6 +54,7 @@ resources:
 
 - https://raw.githubusercontent.com/argoproj/argo-cd/v2.4.11/manifests/install.yaml
 - https://github.com/argoproj-labs/argocd-image-updater/manifests/base
+- cmp-plugin.yaml
 
 patchesStrategicMerge:
 - overlay/argocd-svc.yaml
