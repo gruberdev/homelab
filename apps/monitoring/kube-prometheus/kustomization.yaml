@@ -8,5 +8,3 @@ secretGenerator:
       disableNameSuffixHash: true
   files:
   - grafana.ini
-patchesStrategicMerge:
-- cluster.yaml
