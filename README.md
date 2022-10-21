@@ -229,9 +229,8 @@
 [argocd-zalando]: https://argo.gr.wtf/api/badge?name=postgres
 [argocd-changedetection]: https://argo.gr.wtf/api/badge?name=changedetection
 [argocd-tailscale]: https://argo.gr.wtf/api/badge?name=tailscale
-[argocd-flame]: https://argo.gr.wtf/api/badge?name=flame
 [argocd-poller]: https://argo.gr.wtf/api/badge?name=unifi-poller
-[argocd-wakapi]: https://argo.gr.wtf/api/badge?name=unifi-poller
+[argocd-wakapi]: https://argo.gr.wtf/api/badge?name=wakapi
 [argocd-rss-gen]: https://argo.gr.wtf/api/badge?name=rss-gen
 [argocd-rss-hub]: https://argo.gr.wtf/api/badge?name=rss-hub
 [argocd-beets]: https://argo.gr.wtf/api/badge?name=beets
