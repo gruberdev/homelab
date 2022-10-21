@@ -16,6 +16,9 @@ spec:
         - name: custom-tools
           mountPath: /usr/local/bin/argocd-vault-plugin
           subPath: argocd-vault-plugin
+        envFrom:
+          - secretRef:
+              name: vault-plugin-configuration
       volumes:
       - name: custom-tools
         emptyDir: {}

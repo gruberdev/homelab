@@ -144,7 +144,7 @@ tasks:
           AVP_TYPE: vault
         kind: Secret
         metadata:
-          name: vault-configuration
+          name: vault-plugin-configuration
           namespace: argocd
         type: Opaque
         EOF
