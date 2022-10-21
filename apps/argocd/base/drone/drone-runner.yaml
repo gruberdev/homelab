@@ -99,14 +99,11 @@ spec:
         extraSecretNamesForEnvFrom:
           - drone-runner-vars
         env:
-          DRONE_RUNNER_CAPACITY: "20"
-          DRONE_NAMESPACE_DEFAULT: "drone"
+          DRONE_RUNNER_CAPACITY: "10"
           DRONE_RPC_SKIP_VERIFY: "true"
           DRONE_UI_DISABLE: "false"
-          DRONE_RPC_HOST: "drone.gr.wtf"
-          DRONE_RPC_PROTO: "https"
-          DRONE_SERVER_HOST: "drone.gr.wtf"
-          DRONE_SERVER_PROTO: "https"
+          DRONE_RPC_HOST: "drone-server.drone.svc.cluster.local"
+          DRONE_RPC_PROTO: "http"
 
   destination:
     namespace: drone
