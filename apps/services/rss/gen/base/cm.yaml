@@ -3,6 +3,6 @@ kind: ConfigMap
 metadata:
   name: rssgen-cm
 data:
-  APP_PUBLIC_URLE: "https://gen.rss.gr.wtf"
+  APP_PUBLIC_URL: "https://gen.rss.gr.wtf"
   TZ: "America/Sao_Paulo"
   PUPPETEER_HOST: "http://127.0.0.1:3000"
