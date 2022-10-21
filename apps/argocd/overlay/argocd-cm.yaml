@@ -10,3 +10,8 @@ data:
   url: https://argocd.gr.wtf
   statusbadge.enabled: "true"
   statusbadge.url: "https://status.argo.gr.wtf/"
+  configManagementPlugins: |
+    - name: avp
+      generate:
+        command: ["sh", "-c"]
+        args: ["argocd-vault-plugin generate -s vault-configuration ./"]
