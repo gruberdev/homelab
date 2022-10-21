@@ -10,6 +10,8 @@ spec:
     repoURL: 'https://github.com/gruberdev/homelab.git'
     path: apps/networking/unifi/poller
     targetRevision: main
+    plugin:
+      name: argocd-vault-plugin-kustomize
   destination:
     namespace: unifi
     name: in-cluster
