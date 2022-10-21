@@ -35,7 +35,7 @@ spec:
       containers:
       - name: avp-helm
         command: [/var/run/argocd/argocd-cmp-server]
-        image: quay.io/argoproj/argocd:v2.4.11
+        image: docker.io/grubertech/avp:0.13
         securityContext:
           runAsNonRoot: true
           runAsUser: 999
@@ -54,7 +54,7 @@ spec:
             mountPath: /usr/local/bin/argocd-vault-plugin
       - name: avp-kustomize
         command: [/var/run/argocd/argocd-cmp-server]
-        image: quay.io/argoproj/argocd:v2.4.11
+        image: docker.io/grubertech/avp:0.13
         securityContext:
           runAsNonRoot: true
           runAsUser: 999
@@ -73,7 +73,7 @@ spec:
             mountPath: /usr/local/bin/argocd-vault-plugin
       - name: avp
         command: [/var/run/argocd/argocd-cmp-server]
-        image: quay.io/argoproj/argocd:v2.4.11
+        image: docker.io/grubertech/avp:0.13
         securityContext:
           runAsNonRoot: true
           runAsUser: 999
