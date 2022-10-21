@@ -14,4 +14,4 @@ data:
     - name: avp
       generate:
         command: ["sh", "-c"]
-        args: ["argocd-vault-plugin generate -s vault-configuration ./"]
+        args: ["argocd-vault-plugin generate -s ${AVP_SECRET} ./"]

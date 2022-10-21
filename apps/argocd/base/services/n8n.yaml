@@ -16,6 +16,11 @@ spec:
     repoURL: 'https://github.com/gruberdev/homelab.git'
     path: apps/services/n8n
     targetRevision: main
+    plugin:
+      name: avp
+      env:
+        - name: AVP_SECRET
+          value: vault-configuration
   destination:
     namespace: services
     name: in-cluster
