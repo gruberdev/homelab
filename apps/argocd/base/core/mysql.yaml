@@ -1,0 +1,211 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mysql-operator
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: cluster
+  source:
+    repoURL: https://helm-charts.bitpoke.io
+    chart: mysql-operator
+    targetRevision: 0.6.2
+    helm:
+      releaseName: mysql-operator
+      values: |
+        replicaCount: 1
+        image:
+          repository: docker.io/bitpoke/mysql-operator
+          pullPolicy: IfNotPresent
+          tag: ""
+        sidecar57:
+          image:
+            repository: docker.io/bitpoke/mysql-operator-sidecar-5.7
+            tag: ""
+        sidecar80:
+          image:
+            repository: docker.io/bitpoke/mysql-operator-sidecar-8.0
+            tag: ""
+        metricsExporter:
+          image:
+            repository: docker.io/prom/mysqld-exporter
+            tag: "v0.13.0"
+        imagePullSecrets: []
+        nameOverride: ""
+        fullnameOverride: ""
+        extraEnv: []
+        extraArgs: []
+        rbac:
+          create: true
+        serviceAccount:
+          create: true
+          annotations: {}
+          name: ""
+        podAnnotations: {}
+        podSecurityContext:
+          runAsNonRoot: true
+          runAsUser: 65532
+          runAsGroup: 65532
+          fsGroup: 65532
+        securityContext: {}
+          # capabilities:
+          #   drop:
+          #   - ALL
+          # readOnlyRootFilesystem: true
+          # runAsNonRoot: true
+          # runAsUser: 1000
+        podDisruptionBudget:
+          enabled: true
+          maxUnavailable: 1
+        podSecurityPolicy:
+          enabled: false
+          annotations:
+            seccomp.security.alpha.kubernetes.io/allowedProfileNames: 'docker/default'
+            seccomp.security.alpha.kubernetes.io/defaultProfileName:  'docker/default'
+        resources:
+          limits:
+            cpu: 100m
+            memory: 128Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+        nodeSelector:
+          kubernetes.io/hostname: node-two
+        tolerations: []
+        affinity: {}
+        # Insert a pre-stop lifecycle hook and trigger a failover. NOTE: Use this when your cluster network
+        # policy allows to connect across namespaces and the mysql node is able to connecto to operator pod
+        gracefulShutdown:
+          enabled: true
+        # in which namespace to watch for resource, leave empty to watch in all namespaces
+        watchNamespace:
+        # Install a ServiceMonitor for monitoring the operator
+        serviceMonitor:
+          # enabled should be set to true to enable prometheus-operator discovery of this service
+          enabled: false
+          # the Service port.name where prometheus metrics are exposed
+          servicePortName: prometheus
+          # the Service port.port where metrics are exposed
+          servicePort: 9125
+          # interval is the interval at which metrics should be scraped
+          # interval: 30s
+          # scrapeTimeout is the timeout after which the scrape is ended
+          # scrapeTimeout: 10s
+          # additionalLabels is the set of additional labels to add to the ServiceMonitor
+          additionalLabels: {}
+          jobLabel: ""
+          targetLabels: []
+          podTargetLabels: []
+          metricRelabelings: []
+        # The operator will install a ServiceMonitor if you have prometheus-operator installed.
+        mysqlClustersGlobalServiceMonitor:
+          enabled: false
+          ## Additional labels for the serviceMonitor. Useful if you have multiple prometheus operators running to select only specific ServiceMonitors
+          # additionalLabels:
+          #   prometheus: prom-internal
+          interval: 10s
+          scrapeTimeout: 3s
+          # jobLabel:
+          # targetLabels:
+          # podTargetLabels:
+          # metricRelabelings:
+          servicePortName: prometheus
+          namespaceSelector:
+            any: true
+          selector:
+            matchLabels:
+              app.kubernetes.io/managed-by: mysql.presslabs.org
+              app.kubernetes.io/name: mysql
+        orchestrator:
+          image:
+            repository: docker.io/bitpoke/mysql-operator-orchestrator
+            pullPolicy: IfNotPresent
+            # Overrides the image tag whose default is the chart appVersion.
+            tag: ""
+          securityContext: {}
+            # capabilities:
+            #   drop:
+            #   - ALL
+            # readOnlyRootFilesystem: true
+            # runAsNonRoot: true
+            # runAsUser: 1000
+          # secretName:  # specify an existing secret to use for orchestrator topology credentials
+          # if a secret is not specified one will be created for orchestrator user and password used to manage MySQL clusters
+          topologyUser: orchestrator
+          topologyPassword:  # this is empty and will be random generated if not specified
+          resources:
+            limits:
+              cpu: 350m
+              memory: 512Mi
+            requests:
+              cpu: 200m
+              memory: 256Mi
+          service:
+            type: ClusterIP
+            port: 80
+          ingress:
+            enabled: false
+          persistence:
+            enabled: true
+            storageClass: "longhorn"
+            annotations: {}
+            selector:
+              matchLabels: {}
+            accessMode: "ReadWriteOnce"
+            size: 1Gi
+            fsGroupWorkaroundEnabled: false
+          config:
+            Debug: false
+            DiscoverByShowSlaveHosts: false
+            UnseenInstanceForgetHours: 1
+            InstancePollSeconds: 5
+            HostnameResolveMethod: "none"
+            MySQLHostnameResolveMethod: "@@report_host"
+            RemoveTextFromHostnameDisplay: ":3306"
+            DetectClusterAliasQuery: "SELECT CONCAT(SUBSTRING(@@hostname, 1, LENGTH(@@hostname) - 1 - LENGTH(SUBSTRING_INDEX(@@hostname,'-',-2))),'.',SUBSTRING_INDEX(@@report_host,'.',-1))"
+            DetectInstanceAliasQuery: "SELECT @@hostname"
+            SlaveLagQuery: "SELECT TIMESTAMPDIFF(SECOND,ts,UTC_TIMESTAMP()) as drift FROM sys_operator.heartbeat ORDER BY drift ASC LIMIT 1"
+            RecoveryPeriodBlockSeconds: 300
+            RecoveryIgnoreHostnameFilters: []
+            RecoverMasterClusterFilters: ['.*']
+            RecoverIntermediateMasterClusterFilters: ['.*']
+            ApplyMySQLPromotionAfterMasterFailover: true
+            FailMasterPromotionIfSQLThreadNotUpToDate: true
+            DetachLostReplicasAfterMasterFailover: true
+            MasterFailoverLostInstancesDowntimeMinutes: 10
+            ProcessesShellCommand: "sh"
+            OnFailureDetectionProcesses:
+              - "/usr/local/bin/orc-helper event -w '{failureClusterAlias}' 'OrcFailureDetection' 'Failure: {failureType}, failed host: {failedHost}, lost replcas: {lostReplicas}' || true"
+              - "/usr/local/bin/orc-helper failover-in-progress '{failureClusterAlias}' '{failureDescription}' || true"\
+            # PreGracefulTakeoverProcesses:
+            PreFailoverProcesses:
+              - "/usr/local/bin/orc-helper failover-in-progress '{failureClusterAlias}' '{failureDescription}' || true"
+            PostUnsuccessfulFailoverProcesses:
+              - "/usr/local/bin/orc-helper event -w '{failureClusterAlias}' 'OrcPostUnsuccessfulFailover' 'Failure: {failureType}, failed host: {failedHost} with {countSlaves} slaves' || true"
+            PostMasterFailoverProcesses:
+              - "/usr/local/bin/orc-helper event '{failureClusterAlias}' 'OrcPostMasterFailover' 'Failure type: {failureType}, new master: {successorHost}, slaves: {slaveHosts}' || true"
+            PostIntermediateMasterFailoverProcesses:
+              - "/usr/local/bin/orc-helper event '{failureClusterAlias}' 'OrcPostIntermediateMasterFailover' 'Failure type: {failureType}, failed hosts: {failedHost}, slaves: {countSlaves}' || true"
+            # PostGracefulTakeoverProcesses:
+
+  destination:
+    namespace: databases
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: true
+    syncOptions:
+    - Validate=false
+    - CreateNamespace=false
+    - PrunePropagationPolicy=foreground
+    - PruneLast=false
+    - ApplyOutOfSyncOnly=false
+    - Prune=true
+    retry:
+      limit: -1
+      backoff:
+        duration: 20s
+        factor: 2
+        maxDuration: 15m
