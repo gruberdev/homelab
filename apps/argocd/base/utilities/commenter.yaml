@@ -6,4 +6,3 @@ metadata:
     avp.kubernetes.io/path: "kv/data/github"
 stringData:
   GITHUB_TOKEN: "<token>"
-
