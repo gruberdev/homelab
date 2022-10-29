@@ -212,6 +212,10 @@ data:
       url: https://raw.githubusercontent.com/AdguardTeam/HttpsExclusions/master/exclusions/sensitive.txt
       name: Sensitive DNS SSL Servers provided by Adguard
       id: 3
+    - enabled: true
+      url: https://gist.github.com/gruberdev/76f4cbb951baf9463c55cdef76266c6c/raw/4883785b67fe63efdde850bf24aa33065c4789bd/whitelist.txt
+      name: Personal DNS Allowlist
+      id: 4
     user_rules: []
     dhcp:
       enabled: true
