@@ -15,7 +15,7 @@ patches:
       path: "/spec/template/spec/containers/0/env/2"
       value:
         name: TS_HOSTNAME
-        value: "hub.rss"
+        value: "hub-rss"
     - op: replace
       path: "/spec/template/spec/containers/0/env/3"
       value:

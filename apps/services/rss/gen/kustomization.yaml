@@ -27,7 +27,7 @@ patches:
       path: "/spec/template/spec/containers/0/env/2"
       value:
         name: TS_HOSTNAME
-        value: "gen.rss"
+        value: "gen-rss"
     - op: replace
       path: "/spec/template/spec/containers/0/env/3"
       value:
