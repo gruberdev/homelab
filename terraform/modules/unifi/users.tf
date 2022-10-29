@@ -13,7 +13,6 @@ resource "unifi_user_group" "guests" {
   qos_rate_max_down = 50000 # 50mbps
   qos_rate_max_up   = 10000 # 10mbps
   site              = unifi_site.homelab.name
-
 }
 
 # resource "unifi_user" "user" {

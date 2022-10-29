@@ -13,7 +13,10 @@ terraform {
 }
 
 provider "vault" {
+  address = var.vault_api_url
+  token   = var.vault_token
 }
+
 
 provider "unifi" {
   username = var.unifi_username

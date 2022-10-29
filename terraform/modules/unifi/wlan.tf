@@ -1,34 +1,54 @@
-# data "unifi_ap_group" "default" {
-# }
+data "unifi_ap_group" "default" {
+  site = unifi_site.homelab.name
+  name = "homelab"
+}
 
-# resource "unifi_wlan" "main_wifi" {
-#   name       = "myssid"
-#   passphrase = "12345678"
-#   security   = "wpapsk"
+data "unifi_network" "main" {
+  name = "main"
+  site = unifi_site.homelab.name
+}
 
-#   # enable WPA2/WPA3 support
-#   wpa3_support    = true
-#   wpa3_transition = true
-#   pmf_mode        = "optional"
+resource "unifi_wlan" "main_wifi" {
+  name       = var.wlan_ssid
+  passphrase = var.wlan_password
+  security   = "wpapsk"
 
-#   network_id    = unifi_network.vlan.id
-#   ap_group_ids  = [data.unifi_ap_group.default.id]
-#   user_group_id = data.unifi_user_group.unlimited.id
-#   site          = unifi_site.homelab.name
-# }
+  wpa3_support    = true
+  wpa3_transition = true
+  pmf_mode        = "optional"
 
-# resource "unifi_wlan" "guest_wifi" {
-#   name       = "myssid"
-#   passphrase = "12345678"
-#   security   = "wpapsk"
+  network_id    = data.unifi_network.main.id
+  ap_group_ids  = [data.unifi_ap_group.default.id]
+  user_group_id = unifi_user_group.unlimited.id
+  site          = unifi_site.homelab.name
+}
 
-#   # enable WPA2/WPA3 support
-#   wpa3_support    = true
-#   wpa3_transition = true
-#   pmf_mode        = "optional"
+resource "unifi_wlan" "guest_wifi" {
+  name       = var.guest_wlan_ssid
+  passphrase = var.guest_wlan_password
+  security   = "wpapsk"
 
-#   network_id    = unifi_network.vlan.id
-#   ap_group_ids  = [data.unifi_ap_group.default.id]
-#   user_group_id = data.unifi_user_group.guests.id
-#   site          = unifi_site.homelab.name
-# }
+  wpa3_support    = true
+  wpa3_transition = true
+  pmf_mode        = "optional"
+
+  network_id    = data.unifi_network.main.id
+  ap_group_ids  = [data.unifi_ap_group.default.id]
+  user_group_id = unifi_user_group.guests.id
+  site          = unifi_site.homelab.name
+}
+
+resource "unifi_wlan" "smartDevices" {
+  name       = var.smart_wlan_ssid
+  passphrase = var.smart_wlan_password
+  security   = "wpapsk"
+
+  wpa3_support    = true
+  wpa3_transition = true
+  pmf_mode        = "optional"
+
+  network_id    = data.unifi_network.main.id
+  ap_group_ids  = [data.unifi_ap_group.default.id]
+  user_group_id = unifi_user_group.guests.id
+  site          = unifi_site.homelab.name
+}

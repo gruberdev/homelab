@@ -42,7 +42,42 @@ variable "controller_sec" {
 
 variable "upstream_dns" {
   type        = list
-  description = "<sub>Skip TLS verification when trying to access the API. [Reference](https://registry.terraform.io/providers/paultyng/unifi/latest/docs#allow_insecure)</sub>"
+  description = "<sub>Upstream DNS servers, used to configure default networking configuration parameters. [Reference](https://registry.terraform.io/providers/paultyng/unifi/latest/docs#allow_insecure)</sub>"
   default     = ["8.8.8.8", "1.1.1.1"]
+}
+
+variable "wlan_ssid" {
+  type        = string
+  description = "<sub>Main wireless network SSID name. [Reference](https://registry.terraform.io/providers/paultyng/unifi/latest/docs/resources/wlan#name)</sub>"
+  default     = "無線 | Main"
+}
+
+variable "wlan_password" {
+  type        = string
+  description = "<sub>Main WLAN password. [Reference](https://registry.terraform.io/providers/paultyng/unifi/latest/docs/resources/wlan#security)</sub>"
+  sensitive   = true
+}
+
+variable "guest_wlan_ssid" {
+  type        = string
+  description = "<sub>Guest wireless network SSID name. [Reference](https://registry.terraform.io/providers/paultyng/unifi/latest/docs/resources/wlan#name)</sub>"
+  default     = "無線 | Guests"
+}
+
+variable "guest_wlan_password" {
+  type        = string
+  description = "<sub>Guest WLAN password. [Reference](https://registry.terraform.io/providers/paultyng/unifi/latest/docs/resources/wlan#security)</sub>"
+  sensitive   = true
+}
+
+variable "smart_wlan_ssid" {
+  type        = string
+  description = "<sub>Smart Devices-exclusive wireless network SSID name. [Reference](https://registry.terraform.io/providers/paultyng/unifi/latest/docs/resources/wlan#name)</sub>"
+  default     = "無線 | Smart"
+}
+
+variable "smart_wlan_password" {
+  type        = string
+  description = "<sub>Smart Devices-exclusive WLAN password. [Reference](https://registry.terraform.io/providers/paultyng/unifi/latest/docs/resources/wlan#security)</sub>"
   sensitive   = true
 }

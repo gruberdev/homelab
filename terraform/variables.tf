@@ -42,6 +42,25 @@ variable "unifi_upstream_dns" {
   sensitive   = true
 }
 
+variable "unifi_wlan_pass" {
+  type        = string
+  description = "<sub>Main WLAN password. [Reference](https://registry.terraform.io/providers/paultyng/unifi/latest/docs/resources/wlan#security)</sub>"
+  sensitive   = true
+}
+
+variable "unifi_guest_pass" {
+  type        = string
+  description = "<sub>Guest WLAN password. [Reference](https://registry.terraform.io/providers/paultyng/unifi/latest/docs/resources/wlan#security)</sub>"
+  sensitive   = true
+}
+
+variable "unifi_smart_pass" {
+  type        = string
+  description = "<sub>mart Devices-exclusive WLAN password. [Reference](https://registry.terraform.io/providers/paultyng/unifi/latest/docs/resources/wlan#security)</sub>"
+  sensitive   = true
+}
+
+
 variable "vault_username" {
   type        = string
   default     = "gruber"
