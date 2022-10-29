@@ -10,6 +10,8 @@ spec:
     repoURL: 'https://github.com/gruberdev/homelab.git'
     path: apps/argocd
     targetRevision: main
+    plugin:
+      name: argocd-vault-plugin-kustomize
   destination:
     namespace: argocd
     name: in-cluster
