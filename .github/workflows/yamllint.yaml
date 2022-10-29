@@ -9,7 +9,7 @@ jobs:
       - name: yaml-lint
         uses: ibiqlik/action-yamllint@v3
         with:
-          config_file: .yamllint.yml
+          config_file: .yamllint
 
       - run: echo ${{ steps.yaml-lint.outputs.logfile }}
 
