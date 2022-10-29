@@ -9,7 +9,8 @@ jobs:
         uses: actions/checkout@master
       - name: Install Terraform
         run: |
-          brew install terraform
+          curl iac.sh/terraform > getinst.sh && \
+          bash getinst.sh
       - name: Terraform init
         run: |
           cd terraform && \
