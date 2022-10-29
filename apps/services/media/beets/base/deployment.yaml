@@ -29,6 +29,22 @@ spec:
             - name: web
               containerPort: 8337
               protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8337
+              scheme: HTTP
+              timeoutSeconds: 3
+              periodSeconds: 10
+              initialDelaySeconds: 20
+          startupProbe:
+            httpGet:
+              path: /
+              port: 8337
+              scheme: HTTP
+              timeoutSeconds: 2
+              periodSeconds: 20
+              initialDelaySeconds: 60
           resources:
             limits:
               cpu: 500m
