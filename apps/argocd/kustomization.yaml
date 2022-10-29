@@ -21,7 +21,7 @@ resources:
 - base/utilities/descheduler.yaml
 - base/utilities/kured.yaml
 - base/utilities/node-discovery.yaml
-- apps/utilities/commenter.yaml
+- base/utilities/commenter.yaml
 # - base/utilities/botkube.yaml
 
 - base/apps/vault.yaml
