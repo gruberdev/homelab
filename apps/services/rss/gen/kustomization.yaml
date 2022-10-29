@@ -18,7 +18,7 @@ patches:
 - patch: |-
     - op: replace
       path: "/spec/template/spec/volumes/0/secret/secretName"
-      value: "rss-tunnel"
+      value: "rssgen-tunnel"
   target:
     kind: Deployment
     name: cloudflared

@@ -5,3 +5,4 @@ resources:
 - svc.yaml
 - cm.yaml
 - db.yaml
+- secret.yaml

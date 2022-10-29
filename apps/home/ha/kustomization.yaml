@@ -2,29 +2,10 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 bases:
 - ./base
-- https://github.com/gruberdev/homelab/apps/networking/tailscale
 
 namespace: homeassistant
 
 patches:
-- path: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/tailscale/patch.yaml
-  target:
-    kind: Deployment
-    name: home-assistant
-- patch: |-
-    - op: replace
-      path: "/spec/template/spec/containers/0/env/2"
-      value:
-        name: TS_HOSTNAME
-        value: "homeassistant"
-    - op: replace
-      path: "/spec/template/spec/containers/0/env/3"
-      value:
-        name: DEST_PORT
-        value: "8123"
-  target:
-    kind: Deployment
-    name: home-assistant
 - patch: |-
     - op: add
       path: "/spec/template/spec/nodeSelector"
@@ -33,10 +14,11 @@ patches:
         kubernetes.io/arch: amd64
   target:
     kind: Deployment
+    name: home-assistant
 
 images:
 - name: homeassistant/home-assistant
-  newTag: "2022.9"
+  newTag: "2022.10"
 
 commonAnnotations:
   reloader.stakater.com/auto: 'true'

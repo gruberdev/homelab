@@ -14,34 +14,29 @@ resources:
 - base/core/redis.yaml
 - base/core/longhorn.yaml
 - base/core/storage.yaml
-# - base/core/router.yaml
-# - base/core/mysql.yaml
+- base/core/mysql.yaml
 
 - base/utilities/reloader.yaml
 - base/utilities/reflector.yaml
 - base/utilities/descheduler.yaml
 - base/utilities/kured.yaml
+- base/utilities/node-discovery.yaml
 # - base/utilities/botkube.yaml
-# - base/utilities/node-discovery.yaml
 
 - base/apps/vault.yaml
 - base/apps/ha.yaml
 - base/apps/unifi.yaml
 - base/apps/adguard.yaml
-# - base/apps/wyze.yaml
+- base/apps/wyze.yaml
 
-# - base/monitoring/kuma.yaml
-# - base/monitoring/flame.yaml
-# - base/monitoring/unifi-poller.yaml
-# - base/monitoring/kube-prometheus.yaml
-
-- base/drone/drone-server.yaml
-- base/drone/drone-runner.yaml
+- base/monitoring/kuma.yaml
+- base/monitoring/unifi-poller.yaml
+- base/monitoring/kube-prometheus.yaml
 
 - base/services/n8n.yaml
-# - base/services/wakapi.yaml
-# - base/services/rss-gen.yaml
-# - base/services/rss-hub.yaml
+- base/services/wakapi.yaml
+- base/services/rss-gen.yaml
+- base/services/rss-hub.yaml
 
 # - base/services/metabase.yaml
 # - base/services/wallabag.yaml
@@ -74,7 +69,7 @@ patchesStrategicMerge:
 namespace: argocd
 images:
 - name: quay.io/argoproj/argocd
-  newTag: v2.4.11
+  newTag: v2.4.15
 
 patches:
 - path: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/tailscale/patch.yaml

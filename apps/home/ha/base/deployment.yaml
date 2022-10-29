@@ -110,7 +110,7 @@ spec:
               name: zigbee-01
       dnsPolicy: ClusterFirstWithHostNet
       hostNetwork: true
-      volumes:      
+      volumes:
         - name: ssh-key
           secret:
             secretName: ssh-key

@@ -36,6 +36,22 @@ tasks:
         --resolv-conf "{{.RESOLV_FILE}}"
     ignore_error: true
 
+  dns:update:
+    cmds:
+      - |
+        kubectl get cm -n kube-system kubelet-config -o=json | \
+        jq 'del(.metadata.resourceVersion,.metadata.uid,.metadata.selfLink,.metadata.creationTimestamp,.metadata.annotations,.metadata.generation,.metadata.ownerReferences,.status)' | \
+        sed -E 's#resolvConf: [^\n ]*\\n#resolvConf: /etc/kubeadm-resolv.conf\\n#' | \
+        kubectl replace -f -
+    ignore_error: true
+
+  dns:restart:
+    cmds:
+      - kubectl -n kube-system rollout restart daemonset/kube-proxy
+      - kubectl get pod -n kube-system -l k8s-app=kube-dns --no-headers | awk '{print $1}' | xargs -I{} kubectl delete pod -n kube-system {}
+      - kubectl wait deployment -n kube-system coredns --for condition=Available=True --timeout=90s
+      - kubectl logs deployment/coredns -n kube-system -f
+    ignore_error: true
 
   # Debian fix
   # https://docs.k3s.io/advanced#additional-os-preparations

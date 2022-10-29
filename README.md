@@ -10,7 +10,6 @@
 </p>
 
 <p align="center">
-  <a href='https://drone.gr.wtf' target='_blank'><img src="https://img.shields.io/drone/build/gruberdev/homelab/main?server=https%3A%2F%2Fdrone.gr.wtf&logo=drone&labelColor=1F1F1F&logoColor=41dde8&style=flat-square&label=CI%20Status"></a> &nbsp;
   <img src="https://img.shields.io/github/last-commit/gruberdev/homelab?color=black&labelColor=black&label=last%20commit&logo=github&logoColor=cyan&style=flat-square">
 </p>
 
@@ -26,7 +25,6 @@
 <sub>*(Some of the applications listed here may not be online, still, their resources are present in this repository if listed below.)*</sub>
 > |             **Application**            |   **Category**  |                       **Info**                      |     **Deployment Status**    | **Latest Semver**
 > |:--------------------------------------:|:---------------:|:---------------------------------------------------:|:----------------------------:|:----------------------:|
-> |          [Drone CI][drone-uri]         | `CI/CD Tooling` |       <sub>[More details][homelab-drone]</sub>      |       ![][argocd-drone]      | ![][drone-badge]    |
 > |          [ArgoCD][argocd-uri]          | `CI/CD Tooling` |      <sub>[More details][homelab-argocd]</sub>      |       ![][argocd-core]       | ![][argo-badge]     |
 > | [MySQL Operator][mysql-uri] |   `Databases`   |      <sub>[More details][homelab-mysql]</sub>     |      ![][argocd-mysql]     | ![][mysql-badge]  |
 > | [<sub>Zalando PostgreSQL Operator</sub>][p-uri] |   `Databases`   |      <sub>[More details][homelab-zalando]</sub>     |      ![][argocd-zalando]     | ![][zalando-badge]  |
@@ -36,10 +34,8 @@
 > |    [AdGuard DNS][service-adguard]      |   `Networking`  |      <sub>[More details][homelab-adguard]</sub>     |      ![][argocd-adguard]     | ![][adguard-badge]  |
 > |      [Home Assistant][service-ha]      |   `Monitoring`  |        <sub>[More details][homelab-ha]</sub>        |        ![][argocd-ha]        |    ![][ha-badge]    |
 > |   [Wyze API Bridge][service-wyze]      |   `Monitoring`  |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-wyze]      |  ![][wyze-badge]    |
-> |  [Changedetection.io][change-uri]      |   `Monitoring`  |  <sub>[More details][homelab-changedetection]</sub> |  ![][argocd-changedetection] | ![][change-badge]  |
 > |            [n8n][n8n-uri]              |    `Services`   |        <sub>[More details][homelab-n8n]</sub>       |        ![][argocd-n8n]       |  ![][n8n-badge]     |
 > |     [Hashicorp's Vault][vault-uri]     |    `Security`   |       <sub>[Chart Values][homelab-vault]</sub>      |       ![][argocd-vault]      |  ![][vault-badge]   |
-> |       [Flame Dashboard][flame-uri]     |    `Services`   |       <sub>[More details][homelab-flame]</sub>      |       ![][argocd-flame]      | ![][flame-badge]    |
 > |     [Unifi Poller][poller-uri]         |   `Monitoring`  |      <sub>[More details][homelab-poller]</sub>      |      ![][argocd-poller]      | ![][poller-badge]  |
 > |   [Cloudflared <sub>(as proxies)</sub>][cf-uri]  |   `Networking`  | <sub>[More details][homelab-cloudflared]</sub>  |                        |   ![][cfd-badge]   |
 > |         [Wakapi][wakapi-uri]           |    `Services`   |        <sub>[More details][homelab-wakapi]</sub>    |        ![][argocd-wakapi]    | ![][wakapi-badge]   |
@@ -96,23 +92,6 @@
 ---
 
 </details>
-
-<details>
-
-<summary> <b>Repository & CI Tooling</b>
-</summary>
-
-<br>
-
-> - [drone-skip-pipeline][drone-skip-pipeline-uri] &nbsp; <sub>Skip Drone CI steps based on files changes</sub>
-> - [drone-github-comment][drone-github-uri] &nbsp; <sub>It takes the output of a step and comments on a Github pull request. [Example.][github-comment-example]</sub>
-> - [yamllint][yamllint-uri] &nbsp; <sub>A linter for YAML files</sub>
-> - [markdown-link-check][markdown-link-check-uri] &nbsp; <sub>Checks if markdown links are responding correctly</sub>
-
----
-
-</details>
-
 
 <details>
 
@@ -254,9 +233,8 @@
 [argocd-zalando]: https://argo.gr.wtf/api/badge?name=postgres
 [argocd-changedetection]: https://argo.gr.wtf/api/badge?name=changedetection
 [argocd-tailscale]: https://argo.gr.wtf/api/badge?name=tailscale
-[argocd-flame]: https://argo.gr.wtf/api/badge?name=flame
 [argocd-poller]: https://argo.gr.wtf/api/badge?name=unifi-poller
-[argocd-wakapi]: https://argo.gr.wtf/api/badge?name=unifi-poller
+[argocd-wakapi]: https://argo.gr.wtf/api/badge?name=wakapi
 [argocd-rss-gen]: https://argo.gr.wtf/api/badge?name=rss-gen
 [argocd-rss-hub]: https://argo.gr.wtf/api/badge?name=rss-hub
 [argocd-beets]: https://argo.gr.wtf/api/badge?name=beets

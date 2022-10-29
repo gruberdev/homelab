@@ -4,11 +4,11 @@ metadata:
   name: cloudflared
 data:
   config.yaml: |
-    tunnel: rss-tunnel
+    tunnel: rssgen-tunnel
     credentials-file: /etc/cloudflared/creds/credentials.json
     metrics: 0.0.0.0:2000
     no-autoupdate: true
     ingress:
-    - hostname: rss.gr.wtf
-      service: http://rss-gen:3000
+    - hostname: gen.rss.gr.wtf
+      service: http://rss-gen:8080
     - service: http_status:404
