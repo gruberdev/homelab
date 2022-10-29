@@ -5,7 +5,7 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: apps
+  project: monitoring
   source:
     repoURL: https://github.com/prometheus-community/helm-charts.git
     targetRevision: main
