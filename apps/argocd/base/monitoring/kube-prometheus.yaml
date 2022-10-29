@@ -3438,7 +3438,7 @@ spec:
         cleanPrometheusOperatorObjectNames: false
 
   destination:
-    namespace: vault
+    namespace: monitoring
     name: in-cluster
   syncPolicy:
     automated:
@@ -3447,7 +3447,7 @@ spec:
       allowEmpty: true
     syncOptions:
     - Validate=false
-    - CreateNamespace=true
+    - CreateNamespace=false
     - PrunePropagationPolicy=foreground
     - PruneLast=true
     - ApplyOutOfSyncOnly=false
@@ -3458,12 +3458,3 @@ spec:
         duration: 5s
         factor: 2
         maxDuration: 3m
-  ignoreDifferences:
-  - group: admissionregistration.k8s.io
-    kind: MutatingWebhookConfiguration
-    jsonPointers:
-      - /webhooks
-  - group: apps
-    kind: Deployment
-    jsonPointers:
-    - /spec/replicas
