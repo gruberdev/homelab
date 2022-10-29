@@ -98,14 +98,9 @@ spec:
             repository: "hashicorp/vault"
             tag: "1.11.2"
             pullPolicy: IfNotPresent
-
           updateStrategyType: "OnDelete"
           logLevel: ""
-
-          # Configure the logging format for the Vault server.
-          # Supported log formats include: standard, json
           logFormat: ""
-
           resources:
             requests:
               memory: 256Mi
@@ -113,11 +108,6 @@ spec:
             limits:
               memory: 512Mi
               cpu: 350m
-
-          # Ingress allows ingress services to be created to allow external access
-          # from Kubernetes to access Vault pods.
-          # If deployment is on OpenShift, the following block is ignored.
-          # In order to expose the service, use the route section below
           ingress:
             enabled: false
             labels: {}
@@ -153,16 +143,8 @@ spec:
             labels: {}
             annotations: {}
             host: chart-example.local
-
-          # authDelegator enables a cluster role binding to be attached to the service
-          # account.  This cluster role binding can be used to setup Kubernetes auth
-          # method.  https://www.vaultproject.io/docs/auth/kubernetes.html
           authDelegator:
             enabled: true
-
-          # extraInitContainers is a list of init containers. Specified as a YAML list.
-          # This is useful if you need to run a script to provision TLS certificates or
-          # write out configuration files in a dynamic way.
           extraInitContainers: null
             # # This example installs a plugin pulled from github into the /usr/local/libexec/vault/oauthapp folder,
             # # which is defined in the volumes value.
@@ -179,17 +161,9 @@ spec:
             #     - name: plugins
             #       mountPath: /usr/local/libexec/vault
 
-          # extraContainers is a list of sidecar containers. Specified as a YAML list.
           extraContainers: []
-
-          # shareProcessNamespace enables process namespace sharing between Vault and the extraContainers
-          # This is useful if Vault must be signaled, e.g. to send a SIGHUP for log rotation
           shareProcessNamespace: true
-
-          # extraArgs is a string containing additional Vault server arguments.
           extraArgs: ""
-
-          # Used to define custom readinessProbe settings
           readinessProbe:
             enabled: true
             # If you need to use a http path instead of the default exec

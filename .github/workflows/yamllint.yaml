@@ -10,11 +10,4 @@ jobs:
         uses: ibiqlik/action-yamllint@v3
         with:
           config_file: .yamllint
-
       - run: echo ${{ steps.yaml-lint.outputs.logfile }}
-
-      - uses: actions/upload-artifact@v2
-        if: always()
-        with:
-          name: yamllint-logfile
-          path: ${{ steps.yaml-lint.outputs.logfile }}
