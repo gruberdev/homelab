@@ -3,9 +3,7 @@ kind: Kustomization
 bases:
 - ./base
 - https://github.com/gruberdev/homelab/apps/networking/tailscale
-
 namespace: homeassistant
-
 patches:
 - path: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/tailscale/patch.yaml
   target:
@@ -25,6 +23,8 @@ patches:
   target:
     kind: Deployment
     name: wyze-bridge
-
 commonAnnotations:
   reloader.stakater.com/auto: "true"
+images:
+- name: mrlt8/wyze-bridge
+  newTag: 1.8.11
