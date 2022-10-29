@@ -138,7 +138,6 @@
 [flame-uri]: https://github.com/pawelmalak/flame
 [poller-uri]: hhttps://github.com/unpoller/unpoller
 [cf-uri]: https://github.com/cloudflare/cloudflared
-[wakapi-uri]: https://github.com/muety/wakapi
 [service-mango]: https://github.com/getmango/Mango
 [service-jellyfin]: https://github.com/jellyfin/jellyfin
 
@@ -187,7 +186,6 @@
 [homelab-flame]: https://github.com/gruberdev/homelab/tree/main/apps/monitoring/flame
 [homelab-poller]: https://github.com/gruberdev/homelab/tree/main/apps/monitoring/unifi-poller
 [homelab-cloudflared]: https://github.com/gruberdev/homelab/tree/main/apps/networking/cloudflared
-[homelab-wakapi]: https://github.com/gruberdev/homelab/tree/main/apps/services/wakapi
 [homelab-rssgen]: https://github.com/gruberdev/homelab/tree/main/apps/services/rss/gen
 [homelab-rsshub]: https://github.com/gruberdev/homelab/tree/main/apps/services/rss/hub
 [homelab-beets]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/beets
@@ -214,7 +212,6 @@
 [argocd-changedetection]: https://argo.gr.wtf/api/badge?name=changedetection
 [argocd-tailscale]: https://argo.gr.wtf/api/badge?name=tailscale
 [argocd-poller]: https://argo.gr.wtf/api/badge?name=unifi-poller
-[argocd-wakapi]: https://argo.gr.wtf/api/badge?name=wakapi
 [argocd-rss-gen]: https://argo.gr.wtf/api/badge?name=rss-gen
 [argocd-rss-hub]: https://argo.gr.wtf/api/badge?name=rss-hub
 [argocd-beets]: https://argo.gr.wtf/api/badge?name=beets
@@ -241,7 +238,6 @@
 [flame-badge]: https://img.shields.io/github/v/release/pawelmalak/flame?label=Github&logo=github&sort=semver&style=flat-square
 [poller-badge]: https://img.shields.io/github/v/release/unpoller/unpoller?label=Github&logo=github&sort=semver&style=flat-square
 [cfd-badge]: https://img.shields.io/docker/v/erisamoe/cloudflared?label=Docker&color=blue&logo=docker&sort=semver&style=flat-square
-[wakapi-badge]: https://img.shields.io/github/v/tag/muety/wakapi?label=Github&logo=github&style=flat-square
 [rssgen-badge]: https://img.shields.io/github/v/tag/damoeb/rss-proxy?label=Github&logo=github&style=flat-square
 [beets-badge]: https://img.shields.io/github/v/tag/beetbox/beets?label=Github&logo=github&style=flat-square
 [lidarr-badge]: https://img.shields.io/github/v/release/lidarr/lidarr?label=Github&color=blue&logo=github&sort=semver&style=flat-square
