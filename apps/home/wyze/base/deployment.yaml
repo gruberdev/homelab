@@ -38,7 +38,7 @@ spec:
               containerPort: 8888
           startupProbe:
             tcpSocket:
-              port: rtsp
+              port: 8888
             initialDelaySeconds: 15
             timeoutSeconds: 1
             periodSeconds: 5
@@ -46,7 +46,7 @@ spec:
             failureThreshold: 30
           livenessProbe:
             tcpSocket:
-              port: rtsp
+              port: 8888
             initialDelaySeconds: 15
             timeoutSeconds: 1
             periodSeconds: 10
@@ -54,7 +54,7 @@ spec:
             failureThreshold: 3
           readinessProbe:
             tcpSocket:
-              port: rtsp
+              port: 8888
             initialDelaySeconds: 15
             timeoutSeconds: 1
             periodSeconds: 10
