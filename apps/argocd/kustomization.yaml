@@ -14,6 +14,7 @@ resources:
 - base/core/redis.yaml
 - base/core/longhorn.yaml
 - base/core/storage.yaml
+- base/core/mysql.yaml
 
 - base/utilities/reloader.yaml
 - base/utilities/reflector.yaml
@@ -33,7 +34,6 @@ resources:
 - base/monitoring/kube-prometheus.yaml
 
 - base/services/n8n.yaml
-- base/services/wakapi.yaml
 - base/services/rss-gen.yaml
 - base/services/rss-hub.yaml
 

@@ -27,6 +27,7 @@
 > |:--------------------------------------:|:---------------:|:---------------------------------------------------:|:----------------------------:|:----------------------:|
 > |          [ArgoCD][argocd-uri]          | `CI/CD Tooling` |      <sub>[More details][homelab-argocd]</sub>      |       ![][argocd-core]       | ![][argo-badge]     |
 > | [<sub>Zalando PostgreSQL Operator</sub>][p-uri] |   `Databases`   |      <sub>[More details][homelab-zalando]</sub>     |      ![][argocd-zalando]     | ![][zalando-badge]  |
+> |     [MySQL Operator][mysql-uri]        |   `Databases`   |      <sub>[More details][homelab-mysql]</sub>       |      ![][argocd-mysql]       | ![][mysql-badge]  |
 > |       [Redis Operator][redis-uri]      |   `Databases`   |       <sub>[More details][homelab-redis]</sub>      |       ![][argocd-redis]      |  ![][redis-badge]   |
 > |[Tailscale <sub>(as sidecars)</sub>][tail-uri]| `Networking`  | <sub>[More details][homelab-tailscale]</sub>    |                              |![][tailscale-badge] |
 > |  [Unifi Controller][service-unifi]     |   `Networking`  | <sub>[More details][homelab-unifi-controller]</sub> | ![][argocd-unifi-controller] | ![][unifi-badge]    |
@@ -37,10 +38,9 @@
 > |     [Hashicorp's Vault][vault-uri]     |    `Security`   |       <sub>[Chart Values][homelab-vault]</sub>      |       ![][argocd-vault]      |  ![][vault-badge]   |
 > |     [Unifi Poller][poller-uri]         |   `Monitoring`  |      <sub>[More details][homelab-poller]</sub>      |      ![][argocd-poller]      | ![][poller-badge]  |
 > |   [Cloudflared <sub>(as proxies)</sub>][cf-uri]  |   `Networking`  | <sub>[More details][homelab-cloudflared]</sub>  |                        |   ![][cfd-badge]   |
-> |         [Wakapi][wakapi-uri]           |    `Services`   |        <sub>[More details][homelab-wakapi]</sub>    |        ![][argocd-wakapi]    | ![][wakapi-badge]   |
 > | [RSS Gen/Proxy][service-rssgen]        |    `Services`   |        <sub>[More details][homelab-rssgen]</sub>    |        ![][argocd-rss-gen]       |  ![][rssgen-badge]   |
 > |    [RSS Hub][service-rsshub]           |    `Services`   |        <sub>[More details][homelab-rsshub]</sub>    |        ![][argocd-rss-hub]       | ![][rsshub-badge]   |
- > |           [Beets][service-beets]       |   `Media`  |  <sub>[More details][homelab-beets]</sub>               |       ![][argocd-beets]      |   ![][beets-badge]   |
+> |           [Beets][service-beets]       |   `Media`  |  <sub>[More details][homelab-beets]</sub>               |       ![][argocd-beets]      |   ![][beets-badge]   |
 > |           [Lidarr][service-lidarr]     |   `Media`  |  <sub>[More details][homelab-lidarr]</sub> |  ![][argocd-lidarr]      |  ![][lidarr-badge]   |
 > |           [Mango][service-mango]       |   `Media`  |  <sub>[More details][homelab-mango]</sub> |  ![][argocd-mango]        |  ![][mango-badge]   |
 > |           [Jellyfin][service-jellyfin]   |   `Media`  |  <sub>[More details][homelab-jellyfin]</sub> |  ![][argocd-jellyfin]        |  ![][jellyfin-badge]   |
@@ -127,6 +127,7 @@
 [service-adguard]: https://adguard.com/en/adguard-home/overview.html
 [service-unifi]: https://github.com/jacobalberty/unifi-docker
 [tail-uri]: https://tailscale.com/kb/1151/what-is-tailscale/
+[mysql-uri]: https://github.com/bitpoke/mysql-operator
 [service-n8n]: https://n8n.io/
 [p-uri]: https://github.com/zalando/postgres-operator
 [service-wyze]: https://github.com/mrlt8/docker-wyze-bridge
@@ -178,6 +179,7 @@
 [homelab-unifi-controller]: https://github.com/gruberdev/homelab/tree/main/apps/networking/unifi/controller
 [homelab-zalando]: https://github.com/gruberdev/homelab/tree/main/apps/data/postgres
 [homelab-redis]: https://github.com/gruberdev/homelab/tree/main/apps/data/redis
+[homelab-mysql]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/apps/mysql.yaml
 [homelab-tailscale]: https://github.com/gruberdev/homelab/tree/main/apps/networking/tailscale
 [homelab-changedetection]: https://github.com/gruberdev/homelab/tree/main/apps/monitoring/changesdetection
 [homelab-vault]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/apps/vault.yaml
@@ -208,6 +210,7 @@
 [argocd-wyze]: https://argo.gr.wtf/api/badge?name=wyze-bridge
 [argocd-redis]: https://argo.gr.wtf/api/badge?name=redis
 [argocd-zalando]: https://argo.gr.wtf/api/badge?name=postgres
+[argocd-mysql]: https://argo.gr.wtf/api/badge?name=mysql-operator
 [argocd-changedetection]: https://argo.gr.wtf/api/badge?name=changedetection
 [argocd-tailscale]: https://argo.gr.wtf/api/badge?name=tailscale
 [argocd-poller]: https://argo.gr.wtf/api/badge?name=unifi-poller
@@ -224,8 +227,8 @@
 
 [drone-badge]: https://img.shields.io/github/v/release/harness/drone?label=Github&logo=github&style=flat-square
 [argo-badge]: https://img.shields.io/github/v/release/argoproj/argo-cd?label=Github&logo=github&style=flat-square
-[argo-badge]: https://img.shields.io/github/v/release/argoproj/argo-cd?label=Github&logo=github&style=flat-square
 [zalando-badge]: https://img.shields.io/github/v/tag/zalando/postgres-operator?label=Github&logo=github&style=flat-square
+[mysql-badge]: https://img.shields.io/github/v/tag/bitpoke/mysql-operator?label=Github&logo=github&style=flat-square
 [redis-badge]: https://img.shields.io/github/v/tag/spotahome/redis-operator?label=Github&logo=github&style=flat-square
 [tailscale-badge]: https://img.shields.io/github/v/release/tailscale/tailscale?label=Github&logo=github&style=flat-square
 [unifi-badge]: https://img.shields.io/docker/v/linuxserver/unifi-controller?label=Docker&sort=semver&logo=docker&style=flat-square
