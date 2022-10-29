@@ -5,6 +5,6 @@ secretGenerator:
   namespace: monitoring
   behavior: replace
   options:
-      disableNameSuffixHash: true
+    disableNameSuffixHash: true
   files:
   - grafana.ini

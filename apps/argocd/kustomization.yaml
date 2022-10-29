@@ -72,7 +72,7 @@ patches:
     - op: replace
       path: "/spec/template/spec/containers/0/env/2"
       value:
-        name: TS_HOSTNAME 
+        name: TS_HOSTNAME
         value: "argocd"
     - op: replace
       path: "/spec/template/spec/containers/0/env/3"

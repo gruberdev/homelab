@@ -144,7 +144,7 @@ data:
       name: anudeepND blocklist
       id: 9
     - enabled: true
-      url: https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/stopforumspam_30d.ipset 
+      url: https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/stopforumspam_30d.ipset
       name: StopForumSpam filterlists
       id: 10
     - enabled: true
