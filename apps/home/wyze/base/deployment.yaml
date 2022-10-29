@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: wyze-bridge
-          image: mrlt8/wyze-bridge:1.8.7
+          image: mrlt8/wyze-bridge:1.8.11
           imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef:
@@ -33,12 +33,15 @@ spec:
             - name: rtsp
               protocol: TCP
               containerPort: 8554
-            - name: web
+            - name: hls
               protocol: TCP
               containerPort: 8888
+            - name: web
+              protocol: TCP
+              containerPort: 5000
           startupProbe:
             tcpSocket:
-              port: 8888
+              port: 5000
             initialDelaySeconds: 15
             timeoutSeconds: 1
             periodSeconds: 5
@@ -46,7 +49,7 @@ spec:
             failureThreshold: 30
           livenessProbe:
             tcpSocket:
-              port: 8888
+              port: 5000
             initialDelaySeconds: 15
             timeoutSeconds: 1
             periodSeconds: 10
@@ -54,7 +57,7 @@ spec:
             failureThreshold: 3
           readinessProbe:
             tcpSocket:
-              port: 8888
+              port: 5000
             initialDelaySeconds: 15
             timeoutSeconds: 1
             periodSeconds: 10
