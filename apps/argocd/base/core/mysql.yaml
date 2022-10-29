@@ -64,11 +64,11 @@ spec:
             seccomp.security.alpha.kubernetes.io/defaultProfileName:  'docker/default'
         resources:
           limits:
-            cpu: 100m
-            memory: 128Mi
+            cpu: 350m
+            memory: 512Mi
           requests:
-            cpu: 100m
-            memory: 128Mi
+            cpu: 200m
+            memory: 256Mi
         nodeSelector:
           kubernetes.io/hostname: node-two
         tolerations: []

@@ -14,6 +14,7 @@ resources:
 - base/core/redis.yaml
 - base/core/longhorn.yaml
 - base/core/storage.yaml
+- base/core/mysql.yaml
 
 - base/utilities/reloader.yaml
 - base/utilities/reflector.yaml
@@ -33,7 +34,6 @@ resources:
 - base/monitoring/kube-prometheus.yaml
 
 - base/services/n8n.yaml
-- base/services/wakapi.yaml
 - base/services/rss-gen.yaml
 - base/services/rss-hub.yaml
 
@@ -47,7 +47,7 @@ resources:
 - https://github.com/gruberdev/homelab/apps/networking/tailscale
 - https://github.com/gruberdev/homelab/apps/networking/cloudflared
 
-- https://raw.githubusercontent.com/argoproj/argo-cd/v2.4.11/manifests/install.yaml
+- https://raw.githubusercontent.com/argoproj/argo-cd/v2.4.15/manifests/install.yaml
 - https://github.com/argoproj-labs/argocd-image-updater/manifests/base
 
 patchesStrategicMerge:
