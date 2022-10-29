@@ -4,7 +4,6 @@ bases:
 - ./base
 - https://github.com/gruberdev/homelab/apps/networking/tailscale
 
-
 namespace: homeassistant
 
 patches:
