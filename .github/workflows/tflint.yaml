@@ -22,3 +22,5 @@ jobs:
           working_directory: "terraform"
           reporter: github-pr-review
           fail_on_error: "true"
+          flags: "--module"
+          filter_mode: "nofilter"
