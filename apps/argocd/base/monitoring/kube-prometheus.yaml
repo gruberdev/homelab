@@ -547,19 +547,14 @@ spec:
             ##
             retention: 120h
 
-            ## Storage is the definition of how storage will be used by the Alertmanager instances.
-            ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/user-guides/storage.md
-            ##
-            storage: {}
-            # volumeClaimTemplate:
-            #   spec:
-            #     storageClassName: gluster
-            #     accessModes: ["ReadWriteOnce"]
-            #     resources:
-            #       requests:
-            #         storage: 50Gi
-            #     selector: {}
-
+            storage:
+              volumeClaimTemplate:
+                spec:
+                  storageClassName: longhorn
+                  accessModes: ["ReadWriteOnce"]
+                  resources:
+                    requests:
+                      storage: 5Gi
 
             ## The external URL the Alertmanager instances will be available under. This is necessary to generate correct URLs. This is necessary if Alertmanager is not served from root of a DNS name. string  false
             ##
@@ -584,8 +579,10 @@ spec:
             ##
             resources:
               limits:
+                cpu: 400m
                 memory: 512Mi
               requests:
+                cpu: 200m
                 memory: 256Mi
 
             ## Pod anti-affinity can prevent the scheduler from placing Prometheus replicas on the same node.
@@ -652,18 +649,6 @@ spec:
             ## Containers allows injecting additional containers. This is meant to allow adding an authentication proxy to an Alertmanager pod.
             ##
             containers: []
-            # containers:
-            # - name: oauth-proxy
-            #   image: quay.io/oauth2-proxy/oauth2-proxy:v7.3.0
-            #   args:
-            #   - --upstream=http://127.0.0.1:9093
-            #   - --http-address=0.0.0.0:8081
-            #   - ...
-            #   ports:
-            #   - containerPort: 8081
-            #     name: oauth-proxy
-            #     protocol: TCP
-            #   resources: {}
 
             # Additional volumes on the output StatefulSet definition.
             volumes: []
@@ -1630,7 +1615,13 @@ spec:
                 tag: v1.3.0
                 sha: ""
                 pullPolicy: IfNotPresent
-              resources: {}
+              resources:
+                limits:
+                  cpu: 400m
+                  memory: 512Mi
+                requests:
+                  cpu: 200m
+                  memory: 256Mi
               ## Provide a priority class name to the webhook patching job
               ##
               priorityClassName: ""
@@ -1810,15 +1801,13 @@ spec:
             #   replacement: $1
             #   action: replace
 
-          ## Resource limits & requests
-          ##
           resources:
             limits:
-              cpu: 200m
-              memory: 200Mi
+              cpu: 350m
+              memory: 512Mi
             requests:
-              cpu: 100m
-              memory: 100Mi
+              cpu: 200m
+              memory: 256Mi
 
           # Required for use in managed kubernetes clusters (such as AWS EKS) with custom CNI (such as calico),
           # because control-plane managed by AWS cannot communicate with pods' IP CIDR and admission webhooks are not working
@@ -2646,31 +2635,22 @@ spec:
             ## Enable/Disable Grafana dashboards provisioning for prometheus remote write feature
             remoteWriteDashboards: false
 
-            ## Resource limits & requests
-            ##
-            resources: {}
-            # requests:
-            #   memory: 400Mi
+            resources:
+              limits:
+                cpu: 400m
+                memory: 512Mi
+              requests:
+                cpu: 200m
+                memory: 256Mi
 
-            ## Prometheus StorageSpec for persistent data
-            ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/user-guides/storage.md
-            ##
-            storageSpec: {}
-            ## Using PersistentVolumeClaim
-            ##
-            #  volumeClaimTemplate:
-            #    spec:
-            #      storageClassName: gluster
-            #      accessModes: ["ReadWriteOnce"]
-            #      resources:
-            #        requests:
-            #          storage: 50Gi
-            #    selector: {}
-
-            ## Using tmpfs volume
-            ##
-            #  emptyDir:
-            #    medium: Memory
+            storageSpec:
+              volumeClaimTemplate:
+                spec:
+                  storageClassName: longhorn
+                  accessModes: ["ReadWriteOnce"]
+                  resources:
+                    requests:
+                      storage: 5Gi
 
             # Additional volumes on the output StatefulSet definition.
             volumes: []
@@ -2822,18 +2802,6 @@ spec:
             ## Containers allows injecting additional containers. This is meant to allow adding an authentication proxy to a Prometheus pod.
             ## if using proxy extraContainer update targetPort with proxy container port
             containers: []
-            # containers:
-            # - name: oauth-proxy
-            #   image: quay.io/oauth2-proxy/oauth2-proxy:v7.3.0
-            #   args:
-            #   - --upstream=http://127.0.0.1:9093
-            #   - --http-address=0.0.0.0:8081
-            #   - ...
-            #   ports:
-            #   - containerPort: 8081
-            #     name: oauth-proxy
-            #     protocol: TCP
-            #   resources: {}
 
             ## InitContainers allows injecting additional initContainers. This is meant to allow doing some changes
             ## (permissions, dir tree) on mounted volumes before starting prometheus
@@ -3264,15 +3232,14 @@ spec:
             ## Storage is the definition of how storage will be used by the ThanosRuler instances.
             ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/user-guides/storage.md
             ##
-            storage: {}
-            # volumeClaimTemplate:
-            #   spec:
-            #     storageClassName: gluster
-            #     accessModes: ["ReadWriteOnce"]
-            #     resources:
-            #       requests:
-            #         storage: 50Gi
-            #   selector: {}
+            storage:
+              volumeClaimTemplate:
+                spec:
+                  storageClassName: longhorn
+                  accessModes: ["ReadWriteOnce"]
+                  resources:
+                    requests:
+                      storage: 5Gi
 
             ## AlertmanagerConfig define configuration for connecting to alertmanager.
             ## Only available with Thanos v0.10.0 and higher. Maps to the alertmanagers.config Thanos Ruler arg.
@@ -3334,9 +3301,13 @@ spec:
             ## Define resources requests and limits for single Pods.
             ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
             ##
-            resources: {}
-            # requests:
-            #   memory: 400Mi
+            resources:
+              limits:
+                cpu: 400m
+                memory: 512Mi
+              requests:
+                cpu: 200m
+                memory: 256Mi
 
             ## Pod anti-affinity can prevent the scheduler from placing Prometheus replicas on the same node.
             ## The default value "soft" means that the scheduler should *prefer* to not schedule two replica pods onto the same node but no guarantee is provided.
