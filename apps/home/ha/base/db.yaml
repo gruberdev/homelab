@@ -16,8 +16,16 @@ spec:
   postgresql:
     version: "14"
   volume:
-    size: 2Gi
+    size: 1Gi
     storageClass: longhorn
+  additionalVolumes:
+    - name: data
+      mountPath: /home/postgres/pgdata/partitions
+      targetContainers:
+        - postgres
+      volumeSource:
+        PersistentVolumeClaim:
+          claimName: homeassistant-postgres
   resources:
     requests:
       cpu: 150m
@@ -25,3 +33,11 @@ spec:
     limits:
       cpu: 350m
       memory: 600Mi
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: postgres-operator
+              operator: In
+              values:
+                - enabled

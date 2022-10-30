@@ -27,6 +27,10 @@ resources:
 - base/n8n.yaml
 - base/wakapi.yaml
 
+#  Postgres Storage
+- base/postgres/ha.yaml
+- base/postgres/n8n.yaml
+
 # Matrix
 - base/matrix/synapse.yaml
 - base/matrix/bridges.yaml

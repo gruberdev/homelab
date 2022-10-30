@@ -16,8 +16,16 @@ spec:
   postgresql:
     version: "14"
   volume:
-    size: 2Gi
+    size: 1Gi
     storageClass: longhorn
+  additionalVolumes:
+    - name: data
+      mountPath: /home/postgres/pgdata/partitions
+      targetContainers:
+        - postgres
+      volumeSource:
+        PersistentVolumeClaim:
+          claimName: n8n-postgres
   resources:
     requests:
       cpu: 50m
@@ -25,3 +33,11 @@ spec:
     limits:
       cpu: 150m
       memory: 600Mi
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: postgres-operator
+              operator: In
+              values:
+                - enabled
