@@ -9,6 +9,7 @@ spec:
     targetRevision: main
     path: charts/kube-prometheus-stack
     helm:
+      skipCrds: true
       releaseName: kube-prometheus
       values: |
         nameOverride: ""

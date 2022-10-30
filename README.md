@@ -88,12 +88,6 @@
 >
 > - Matrix
 >   - Matrix bridges and double-puppets
-> - Media related services
->   - Prowlarr
->   - Bazarr
->   - Radarr
->   - Sonarr
-> - qBittorrent
 > - Domainmod
 > - Monica
 > - Wallabag
