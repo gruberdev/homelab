@@ -43,7 +43,7 @@ spec:
               memory: 512Mi
             requests:
               cpu: 300m
-              memory: 700Mi
+              memory: 512Mi
           securityContext:
             capabilities:
               drop:
@@ -60,6 +60,13 @@ spec:
               mountPath: /data
             - name: bridges
               mountPath: /bridges
+          resources:
+            limits:
+              cpu: 400m
+              memory: 512Mi
+            requests:
+              cpu: 300m
+              memory: 512Mi
           securityContext:
             capabilities:
               drop:
