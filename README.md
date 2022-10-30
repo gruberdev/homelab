@@ -25,26 +25,30 @@
 <sub>*(Some of the applications listed here may not be online, still, their resources are present in this repository if listed below.)*</sub>
 > |             **Application**            |   **Category**  |                       **Info**                      |     **Deployment Status**    | **Latest Semver**
 > |:--------------------------------------:|:---------------:|:---------------------------------------------------:|:----------------------------:|:----------------------:|
-> |          [ArgoCD][argocd-uri]          | `CI/CD Tooling` |      <sub>[More details][homelab-argocd]</sub>      |       ![][argocd-core]       | ![][argo-badge]     |
+> |          [ArgoCD][argocd-uri]          | `CI/CD Tooling` |      <sub>[More details][homelab-argocd]</sub>      |       ![][argocd-core]       | ![][argo-badge]        |
 > | [<sub>Zalando PostgreSQL Operator</sub>][p-uri] |   `Databases`   |      <sub>[More details][homelab-zalando]</sub>     |      ![][argocd-zalando]     | ![][zalando-badge]  |
-> |     [MySQL Operator][mysql-uri]        |   `Databases`   |      <sub>[More details][homelab-mysql]</sub>       |      ![][argocd-mysql]       | ![][mysql-badge]  |
-> |       [Redis Operator][redis-uri]      |   `Databases`   |       <sub>[More details][homelab-redis]</sub>      |       ![][argocd-redis]      |  ![][redis-badge]   |
-> |[Tailscale <sub>(as sidecars)</sub>][tail-uri]| `Networking`  | <sub>[More details][homelab-tailscale]</sub>    |                              |![][tailscale-badge] |
-> |  [Unifi Controller][service-unifi]     |   `Networking`  | <sub>[More details][homelab-unifi-controller]</sub> | ![][argocd-unifi-controller] | ![][unifi-badge]    |
-> |    [AdGuard DNS][service-adguard]      |   `Networking`  |      <sub>[More details][homelab-adguard]</sub>     |      ![][argocd-adguard]     | ![][adguard-badge]  |
-> |      [Home Assistant][service-ha]      |   `Monitoring`  |        <sub>[More details][homelab-ha]</sub>        |        ![][argocd-ha]        |    ![][ha-badge]    |
-> |   [Wyze API Bridge][service-wyze]      |   `Monitoring`  |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-wyze]      |  ![][wyze-badge]    |
-> |            [n8n][n8n-uri]              |    `Services`   |        <sub>[More details][homelab-n8n]</sub>       |        ![][argocd-n8n]       |  ![][n8n-badge]     |
-> |     [Hashicorp's Vault][vault-uri]     |    `Security`   |       <sub>[Chart Values][homelab-vault]</sub>      |       ![][argocd-vault]      |  ![][vault-badge]   |
-> |     [Unifi Poller][poller-uri]         |   `Monitoring`  |      <sub>[More details][homelab-poller]</sub>      |      ![][argocd-poller]      | ![][poller-badge]  |
-> |   [Cloudflared <sub>(as proxies)</sub>][cf-uri]  |   `Networking`  | <sub>[More details][homelab-cloudflared]</sub>  |                        |   ![][cfd-badge]   |
-> | [RSS Gen/Proxy][service-rssgen]        |    `Services`   |        <sub>[More details][homelab-rssgen]</sub>    |        ![][argocd-rss-gen]       |  ![][rssgen-badge]   |
-> |    [RSS Hub][service-rsshub]           |    `Services`   |        <sub>[More details][homelab-rsshub]</sub>    |        ![][argocd-rss-hub]       | ![][rsshub-badge]   |
-> |           [Beets][service-beets]       |   `Media`  |  <sub>[More details][homelab-beets]</sub>               |       ![][argocd-beets]      |   ![][beets-badge]   |
-> |           [Lidarr][service-lidarr]     |   `Media`  |  <sub>[More details][homelab-lidarr]</sub> |  ![][argocd-lidarr]      |  ![][lidarr-badge]   |
-> |           [Mango][service-mango]       |   `Media`  |  <sub>[More details][homelab-mango]</sub> |  ![][argocd-mango]        |  ![][mango-badge]   |
-> |           [Jellyfin][service-jellyfin]   |   `Media`  |  <sub>[More details][homelab-jellyfin]</sub> |  ![][argocd-jellyfin]        |  ![][jellyfin-badge]   |
-> |         [Metabase][service-metabase]             |   `Analytics`   |       <sub>[More details][homelab-metabase]</sub> |   ![][argocd-metabase] | ![][metabase-badge] |
+> |     [MySQL Operator][mysql-uri]        |   `Databases`   |      <sub>[More details][homelab-mysql]</sub>       |      ![][argocd-mysql]       | ![][mysql-badge]     |
+> |       [Redis Operator][redis-uri]      |   `Databases`   |       <sub>[More details][homelab-redis]</sub>      |       ![][argocd-redis]      |  ![][redis-badge]    |
+> |[Tailscale <sub>(as sidecars)</sub>][tail-uri]| `Networking`  | <sub>[More details][homelab-tailscale]</sub>    |                              |![][tailscale-badge]  |
+> |  [Unifi Controller][service-unifi]     |   `Networking`  | <sub>[More details][homelab-unifi-controller]</sub> | ![][argocd-unifi-controller] | ![][unifi-badge]     |
+> |    [AdGuard DNS][service-adguard]      |   `Networking`  |      <sub>[More details][homelab-adguard]</sub>     |      ![][argocd-adguard]     | ![][adguard-badge]   |
+> |      [Home Assistant][service-ha]      |   `Monitoring`  |        <sub>[More details][homelab-ha]</sub>        |        ![][argocd-ha]        |    ![][ha-badge]     |
+> |   [Wyze API Bridge][service-wyze]      |   `Monitoring`  |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-wyze]      |  ![][wyze-badge]     |
+> |     [kube-prometheus][service-kube]    |   `Monitoring`       |  <sub>[More details][homelab-kube]</sub>       |       ![][argocd-kube]       |   ![][kube-badge]   |
+> |            [n8n][n8n-uri]              |    `Services`   |        <sub>[More details][homelab-n8n]</sub>       |        ![][argocd-n8n]       |  ![][n8n-badge]      |
+> |     [Hashicorp's Vault][vault-uri]     |    `Security`   |       <sub>[Chart Values][homelab-vault]</sub>      |       ![][argocd-vault]      |  ![][vault-badge]    |
+> |     [Unifi Poller][poller-uri]         |   `Monitoring`  |      <sub>[More details][homelab-poller]</sub>      |      ![][argocd-poller]      | ![][poller-badge]    |
+> |   [Cloudflared <sub>(as proxies)</sub>][cf-uri]  |   `Networking`  | <sub>[More details][homelab-cloudflared]</sub>  |                        |   ![][cfd-badge]     |
+> | [RSS Gen/Proxy][service-rssgen]        |    `Services`   |        <sub>[More details][homelab-rssgen]</sub>    |        ![][argocd-rss-gen]   |  ![][rssgen-badge]   |
+> |    [RSS Hub][service-rsshub]           |    `Services`   |        <sub>[More details][homelab-rsshub]</sub>    |        ![][argocd-rss-hub]   | ![][rsshub-badge]    |
+
+<!-- >
+> |           [Beets][service-beets]       |   `Media`       |  <sub>[More details][homelab-beets]</sub>           |       ![][argocd-beets]      |   ![][beets-badge]   |
+> |           [Lidarr][service-lidarr]     |   `Media`       |  <sub>[More details][homelab-lidarr]</sub>          |  ![][argocd-lidarr]          |  ![][lidarr-badge]   |
+> |           [Mango][service-mango]       |   `Media`       |  <sub>[More details][homelab-mango]</sub>           |  ![][argocd-mango]           |  ![][mango-badge]    |
+> |       [Jellyfin][service-jellyfin]     |   `Media`       |  <sub>[More details][homelab-jellyfin]</sub>        |  ![][argocd-jellyfin]        |  ![][jellyfin-badge]   |
+> |    [Metabase][service-metabase]        |   `Analytics`   |       <sub>[More details][homelab-metabase]</sub>   |   ![][argocd-metabase]       | ![][metabase-badge] |
+<-->
 
 ---
 
@@ -117,6 +121,7 @@
 [service-beets]: https://github.com/beetbox/beets
 [service-lidarr]: https://github.com/Lidarr/Lidarr
 [service-metabase]: https://www.metabase.com/
+[service-kube]: https://github.com/prometheus-operator/kube-prometheus
 [service-ha]: https://www.home-assistant.io/
 [service-adguard]: https://adguard.com/en/adguard-home/overview.html
 [service-unifi]: https://github.com/jacobalberty/unifi-docker
@@ -135,10 +140,6 @@
 [service-mango]: https://github.com/getmango/Mango
 [service-jellyfin]: https://github.com/jellyfin/jellyfin
 
-<!-- Shield Badges -->
-
-[drone-img]: https://img.shields.io/drone/build/gruberdev/homelab?server=https%3A%2F%2Fdrone.gruber.dev.br&logo=drone&labelColor=1F1F1F&logoColor=41dde8&style=flat-square&label=Drone%20CI
-
 <!-- Cluster Utilities/Internal Tooling -->
 
 [argocd-updater-ex]: https://github.com/gruberdev/homelab/commit/75c00de5eba89b9978ed241e67e638e4d838fae4
@@ -153,20 +154,13 @@
 [node-problem-uri]: https://github.com/kubernetes/node-problem-detector
 [feature-discovery-uri]: https://github.com/kubernetes-sigs/node-feature-discovery
 
-<!-- Repository/CI Utilities -->
-
-[drone-skip-pipeline-uri]: https://github.com/joshdk/drone-skip-pipeline
-[drone-github-uri]: https://github.com/joshdk/drone-github-comment
-[yamllint-uri]: https://github.com/adrienverge/yamllint
-[markdown-link-check-uri]: https://github.com/tcort/markdown-link-check
-[github-comment-example]: https://github.com/gruberdev/homelab/pull/3#issuecomment-1229131136
-
 <!-- Project Folders -->
 
 [homelab-argocd]: https://github.com/gruberdev/homelab/tree/main/apps/argocd
 [homelab-drone]: https://github.com/gruberdev/homelab/tree/main/apps/drone
 [homelab-ha]: https://github.com/gruberdev/homelab/tree/main/apps/home/ha
 [homelab-wyze]: https://github.com/gruberdev/homelab/tree/main/apps/home/wyze
+[homelab-kube]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/monitoring/kube-prometheus.yaml
 [homelab-kuma]: https://github.com/gruberdev/homelab/tree/main/apps/monitoring/uptime-kuma
 [homelab-adguard]: https://github.com/gruberdev/homelab/tree/main/apps/networking/adguard
 [homelab-unifi-controller]: https://github.com/gruberdev/homelab/tree/main/apps/networking/unifi/controller
@@ -190,7 +184,7 @@
 
 <!-- ArgoCD Status Badges -->
 
-[argocd-drone]: https://argo.gr.wtf/api/badge?name=drone-server
+[argocd-kube]: https://argo.gr.wtf/api/badge?name=kube-prometheus
 [argocd-ha]: https://argo.gr.wtf/api/badge?name=homeassistant
 [argocd-kuma]: https://argo.gr.wtf/api/badge?name=uptime-kuma
 [argocd-adguard]:https://argo.gr.wtf/api/badge?name=adguard
@@ -216,8 +210,8 @@
 
 <!-- Badge Images -->
 
-[drone-badge]: https://img.shields.io/github/v/release/harness/drone?label=Github&logo=github&style=flat-square
 [argo-badge]: https://img.shields.io/github/v/release/argoproj/argo-cd?label=Github&logo=github&style=flat-square
+[kube-badge]: https://img.shields.io/github/v/release/prometheus-operator/kube-prometheus?label=Github&logo=github&style=flat-square
 [zalando-badge]: https://img.shields.io/github/v/tag/zalando/postgres-operator?label=Github&logo=github&style=flat-square
 [mysql-badge]: https://img.shields.io/github/v/tag/bitpoke/mysql-operator?label=Github&logo=github&style=flat-square
 [redis-badge]: https://img.shields.io/github/v/tag/spotahome/redis-operator?label=Github&logo=github&style=flat-square
