@@ -21,7 +21,6 @@ resources:
 - base/utilities/descheduler.yaml
 - base/utilities/kured.yaml
 - base/utilities/node-discovery.yaml
-- base/utilities/commenter.yaml
 # - base/utilities/botkube.yaml
 
 - base/apps/vault.yaml
@@ -50,7 +49,6 @@ resources:
 - https://github.com/gruberdev/homelab/apps/networking/cloudflared
 
 - https://raw.githubusercontent.com/argoproj/argo-cd/v2.4.15/manifests/install.yaml
-- https://github.com/int128/argocd-commenter/releases/download/v1.14.3/argocd-commenter.yaml
 - https://github.com/argoproj-labs/argocd-image-updater/manifests/base
 
 patchesStrategicMerge:
