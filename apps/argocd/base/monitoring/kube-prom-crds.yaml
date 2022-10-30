@@ -6,11 +6,8 @@ spec:
   project: monitoring
   source:
     repoURL: https://github.com/prometheus-community/helm-charts.git
-    targetRevision: main
     path: charts/kube-prometheus-stack/crds/
-    helm:
-      skipCrds: true
-      releaseName: kube-prometheus-crds
+    targetRevision: main
     directory:
       recurse: true
   destination:
