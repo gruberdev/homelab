@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: redis-crds
+  name: redis-crd
 spec:
   project: cluster
   source:
