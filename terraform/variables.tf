@@ -1,5 +1,6 @@
 variable "unifi_site_name" {
   type        = string
+  description = "<sub>Unifi site name. [Reference](https://registry.terraform.io/providers/paultyng/unifi/latest/docs/resources/site#name)</sub>"
   default     = "main"
 }
 
@@ -72,13 +73,15 @@ variable "vault_username" {
 }
 
 variable "vault_api_url" {
-  type      = string
-  sensitive = true
+  type        = string
+  description = "<sub>Vault API URL Address. [Reference](https://registry.terraform.io/providers/hashicorp/vault/latest/docs#address)</sub>"
+  sensitive   = true
 }
 
 variable "vault_token" {
-  type      = string
-  sensitive = true
+  type        = string
+  description = "<sub>Vault root access token. [Reference](https://registry.terraform.io/providers/hashicorp/vault/latest/docs#token_name)</sub>"
+  sensitive   = true
 }
 
 variable "vault_password" {

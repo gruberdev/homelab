@@ -1,0 +1,26 @@
+name: tflint
+on: [pull_request]
+jobs:
+  tflint:
+    name: tflint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@master
+      - name: Install Terraform
+        run: |
+          curl iac.sh/terraform > getinst.sh && \
+          bash getinst.sh
+      - name: Terraform init
+        run: |
+          cd terraform && \
+          terraform init
+      - name: tflint
+        uses: reviewdog/action-tflint@master
+        with:
+          github_token: ${{ secrets.github_token }}
+          working_directory: "terraform"
+          reporter: github-pr-review
+          fail_on_error: "true"
+          flags: "--module"
+          filter_mode: "nofilter"

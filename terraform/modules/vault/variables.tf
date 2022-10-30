@@ -19,14 +19,14 @@ variable "admin_password" {
 
 variable "api_url" {
   type        = string
-  description = "<sub>Vault password for the main user, used for login purposes.</sub>"
+  description = "<sub>Vault API URL Address. [Reference](https://registry.terraform.io/providers/hashicorp/vault/latest/docs#address)</sub>"
   default     = "http://localhost:8200/"
   sensitive   = true
 }
 
 variable "root_token" {
   type        = string
-  description = "<sub>Vault password for the main user, used for login purposes.</sub>"
+  description = "<sub>Vault root access token. [Reference](https://registry.terraform.io/providers/hashicorp/vault/latest/docs#token_name)</sub>"
   sensitive   = true
 }
 
