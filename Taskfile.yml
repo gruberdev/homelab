@@ -13,6 +13,7 @@ includes:
   secrets: ./tasks/secrets.yaml
   longhorn: ./tasks/longhorn.yaml
   cluster: ./tasks/cluster.yaml
+  matrix: ./tasks/matrix.yaml
 
 vars:
   CYAN: tput setaf 6

@@ -21,38 +21,32 @@ data:
       bind_hosts:
       - 0.0.0.0
       port: 53
-      statistics_interval: 7
+      statistics_interval: 60
       querylog_enabled: true
       querylog_file_enabled: true
       querylog_interval: 1
-      querylog_size_memory: 1000
+      querylog_size_memory: 5000
       anonymize_client_ip: false
       protection_enabled: true
       blocking_mode: default
       blocking_ipv4: ""
       blocking_ipv6: ""
-      blocked_response_ttl: 10
+      blocked_response_ttl: 1
       parental_block_host: family-block.dns.adguard.com
       safebrowsing_block_host: standard-block.dns.adguard.com
       ratelimit: 0
       ratelimit_whitelist: []
       refuse_any: true
       upstream_dns:
-      - 1.1.1.1
-      - 1.1.1.2
       - 8.8.8.8
       - 8.8.4.4
+      - 1.1.1.1
+      - 1.1.1.2
       - https://doh.cleanbrowsing.org/doh/security-filter/
       - 177.71.191.153
       - 185.228.168.9
       - 185.228.169.9
       - 185.228.168.168
-      - 1.0.0.2
-      - 9.9.9.9
-      - 149.112.112.112
-      - 2620:fe::fe
-      - 64.6.64.6
-      - https://dns.futuredns.me/dns-query
       upstream_dns_file: ""
       bootstrap_dns:
       - 8.8.8.8
@@ -68,6 +62,9 @@ data:
       allowed_clients: []
       disallowed_clients: []
       blocked_hosts: []
+      trusted_proxies:
+        - 127.0.0.0/8
+        - ::1/128
       cache_size: 4194304
       cache_ttl_min: 0
       cache_ttl_max: 0
@@ -81,6 +78,7 @@ data:
       filters_update_interval: 24
       parental_enabled: false
       safesearch_enabled: false
+      use_private_ptr_resolvers: true
       safebrowsing_enabled: false
       safebrowsing_cache_size: 1048576
       safesearch_cache_size: 1048576

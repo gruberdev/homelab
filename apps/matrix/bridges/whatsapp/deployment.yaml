@@ -1,0 +1,118 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: whats-bridge
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: whats-bridge
+  template:
+    metadata:
+      labels:
+        app: whats-bridge
+    spec:
+      initContainers:
+        - name: load-config
+          image: dock.mau.dev/mautrix/whatsapp:v0.7.1
+          imagePullPolicy: IfNotPresent
+          command: ["sh"]
+          args:
+            - -c
+            - |
+              envsubst -no-empty -i /template/config.yaml.tmpl -o /load/config.yaml \
+              && cp /load/config.yaml /data/config.yaml
+          env:
+            - name: BRIDGE_DB_USERNAME
+              valueFrom: { secretKeyRef: { name: matrix.db-whats-bridge.credentials.postgresql.acid.zalan.do, key: username } }
+            - name: BRIDGE_DB_PASSWORD
+              valueFrom: { secretKeyRef: { name: matrix.db-whats-bridge.credentials.postgresql.acid.zalan.do, key: password } }
+          volumeMounts:
+            - name: config
+              mountPath: /data
+            - name: temp-dir
+              mountPath: /load
+            - name: template
+              mountPath: /template
+              readOnly: true
+          resources:
+            limits:
+              cpu: 400m
+              memory: 512Mi
+            requests:
+              cpu: 300m
+              memory: 700Mi
+          securityContext:
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+        - name: generate-config
+          image: dock.mau.dev/mautrix/whatsapp:v0.7.1
+          imagePullPolicy: IfNotPresent
+          command: ["mautrix-whatsapp"]
+          args: ["-g", "-c", "/data/config.yaml", "-r", "/bridges/whatsapp.yaml"]
+          volumeMounts:
+            - name: config
+              mountPath: /data
+            - name: bridges
+              mountPath: /bridges
+          securityContext:
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+      containers:
+        - name: bridge
+          image: dock.mau.dev/mautrix/whatsapp:v0.7.1
+          imagePullPolicy: IfNotPresent
+          command: ["mautrix-whatsapp"]
+          args: ["-c", "/data/config.yaml"]
+          ports:
+            - name: bridge
+              containerPort: 29318
+              protocol: TCP
+          livenessProbe:
+            tcpSocket:
+              port: 29318
+            periodSeconds: 15
+            initialDelaySeconds: 30
+          readinessProbe:
+            tcpSocket:
+              port: 29318
+            periodSeconds: 5
+            initialDelaySeconds: 10
+          startupProbe:
+            tcpSocket:
+              port: 29318
+            periodSeconds: 30
+            initialDelaySeconds: 120
+          volumeMounts:
+            - name: config
+              mountPath: /data
+          resources:
+            limits:
+              cpu: 400m
+              memory: 512Mi
+            requests:
+              cpu: 300m
+              memory: 256Mi
+      volumes:
+      - name: template
+        configMap:
+          name: whats-bridge-config
+          items:
+          - key: config.yaml.tmpl
+            path: config.yaml.tmpl
+      - name: temp-dir
+        emptyDir: {}
+      - name: config
+        persistentVolumeClaim:
+          claimName: whats-bridge-data
+      - name: bridges
+        persistentVolumeClaim:
+          claimName: bridge-config-storage

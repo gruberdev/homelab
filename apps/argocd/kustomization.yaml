@@ -46,6 +46,9 @@ resources:
 # - base/services/media/mango.yaml
 # - base/services/media/jellyfin.yaml
 
+- base/matrix/whats.yaml
+- base/matrix/dbs.yaml
+
 - https://github.com/gruberdev/homelab/apps/networking/tailscale
 - https://github.com/gruberdev/homelab/apps/networking/cloudflared
 
