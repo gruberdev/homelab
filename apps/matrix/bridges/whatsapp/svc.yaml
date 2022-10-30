@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: whats-bridge
+  labels:
+    app: whats-bridge
+spec:
+  type: ClusterIP
+  selector:
+    app: whats-bridge
+  ports:
+    - name: bridge
+      port: 80
+      targetPort: 29318
+      protocol: TCP

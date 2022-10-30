@@ -74,7 +74,7 @@ spec:
             readOnlyRootFilesystem: true
             allowPrivilegeEscalation: false
       containers:
-        - name: bridge
+        - name: whats
           image: docker.io/grubertech/whats-bridge:v0.7.1
           imagePullPolicy: IfNotPresent
           command: ["mautrix-whatsapp"]
