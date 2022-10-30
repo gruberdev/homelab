@@ -31,6 +31,6 @@ tasks:
     cmds:
       - echo -e "Envsubst:\n"
       - docker run --rm --name whatsapp-bridge -it docker.io/grubertech/whats-bridge:latest /bin/sh -c 'envsubst'
-      - echo -e "Envsubst:\n"
+      - echo -e "Testing bridge command:\n"
       - docker run --rm --name whatsapp-bridge -it docker.io/grubertech/whats-bridge:latest /bin/sh -c 'mautrix-whatsapp'
     ignore_error: true

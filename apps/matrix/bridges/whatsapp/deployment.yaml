@@ -16,7 +16,7 @@ spec:
     spec:
       initContainers:
         - name: load-config
-          image: dock.mau.dev/mautrix/whatsapp:v0.7.1
+          image: docker.io/grubertech/whats-bridge:v0.7.1
           imagePullPolicy: IfNotPresent
           command: ["sh"]
           args:
@@ -51,7 +51,7 @@ spec:
             readOnlyRootFilesystem: true
             allowPrivilegeEscalation: false
         - name: generate-config
-          image: dock.mau.dev/mautrix/whatsapp:v0.7.1
+          image: docker.io/grubertech/whats-bridge:v0.7.1
           imagePullPolicy: IfNotPresent
           command: ["mautrix-whatsapp"]
           args: ["-g", "-c", "/data/config.yaml", "-r", "/bridges/whatsapp.yaml"]
@@ -68,7 +68,7 @@ spec:
             allowPrivilegeEscalation: false
       containers:
         - name: bridge
-          image: dock.mau.dev/mautrix/whatsapp:v0.7.1
+          image: docker.io/grubertech/whats-bridge:v0.7.1
           imagePullPolicy: IfNotPresent
           command: ["mautrix-whatsapp"]
           args: ["-c", "/data/config.yaml"]
