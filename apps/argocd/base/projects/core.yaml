@@ -2,8 +2,6 @@ apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
   name: core
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
 spec:
   description: Core Project
   sourceRepos:

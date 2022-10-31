@@ -2,8 +2,6 @@ apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
   name: networking
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
 spec:
   description: Networking Project
   sourceRepos:
