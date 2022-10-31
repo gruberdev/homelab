@@ -5,54 +5,34 @@ metadata:
 spec:
   project: cluster
   source:
-    repoURL: https://github.com/spotahome/redis-operator.git
-    targetRevision: master
-    path: charts/redisoperator/
+    repoURL: https://github.com/OT-CONTAINER-KIT/helm-charts.git
+    targetRevision: main
+    path: charts/redis-operator/
     helm:
       skipCrds: true
       releaseName: redis-operator
       values: |
-          image:
-            repository: quay.io/spotahome/redis-operator
-            pullPolicy: IfNotPresent
-            tag: v1.2.2
-          imageCredentials:
-            create: false
-          updateStrategy:
-            type: Recreate
-          replicas: 1
-          nameOverride: ""
-          # A name to substitute for the full names of resources.
-          fullnameOverride: ""
-          serviceAccount:
-            create: true
-            annotations: {}
-            name: ""
-          service:
-            type: ClusterIP
-            port: 9710
-          container:
-            port: 9710
-          securityContext:
-            readOnlyRootFilesystem: true
-            runAsNonRoot: true
-            runAsUser: 1000
+          redisOperator:
+            name: redis-operator
+            imageName: quay.io/opstree/redis-operator
+            imageTag: v0.12.0
+            imagePullPolicy: Always
+            podAnnotations:
+              reloader.stakater.com/auto: "true"
+            podLabels: {}
           resources:
-            requests:
-              cpu: 100m
-              memory: 128Mi
             limits:
               cpu: 300m
-              memory: 256Mi
-          monitoring:
-            enabled: false
-            serviceMonitor: false
-            serviceAnnotations: {}
-            prometheus:
-              name: unknown
-          annotations: {}
+              memory: 600Mi
+            requests:
+              cpu: 100m
+              memory: 200Mi
+          replicas: 1
+          serviceAccountName: redis-operator
+          priorityClassName: ""
           nodeSelector:
             kubernetes.io/hostname: node-two
+          tolerateAllTaints: false
           tolerations: []
           affinity: {}
 

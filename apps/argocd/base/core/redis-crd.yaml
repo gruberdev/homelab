@@ -5,9 +5,9 @@ metadata:
 spec:
   project: cluster
   source:
-    repoURL: https://github.com/spotahome/redis-operator.git
-    path: charts/redisoperator/crds/
-    targetRevision: master
+    repoURL: https://github.com/OT-CONTAINER-KIT/helm-charts.git
+    path: charts/redis-operator/crds/
+    targetRevision: main
     directory:
       recurse: true
   destination:
