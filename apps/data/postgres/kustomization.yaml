@@ -10,6 +10,7 @@ patchesStrategicMerge:
 - overlay/ui-deployment.yaml
 - overlay/ui-ingress.yaml
 - overlay/operator-deployment.yaml
+- overlay/cm.yaml
 
 namespace: databases
 
