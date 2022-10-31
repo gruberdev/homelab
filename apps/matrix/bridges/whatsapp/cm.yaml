@@ -17,7 +17,7 @@ data:
       port: 29318
       database:
         type: postgres
-        uri: postgres://${BRIDGE_DB_USERNAME}:${BRIDGE_DB_PASSWORD}@db-whats-bridge.matrix.svc.cluster.local:5432/whats?sslmode=disable
+        uri: postgres://${BRIDGE_DB_USERNAME}:${BRIDGE_DB_PASSWORD}@db-bridges.matrix.svc.cluster.local:5432/whats?sslmode=disable
         max_open_conns: 20
         max_idle_conns: 2
         max_conn_idle_time: null
