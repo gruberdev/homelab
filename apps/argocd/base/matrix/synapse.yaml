@@ -12,374 +12,378 @@ spec:
     path: charts/matrix-synapse
     helm:
       releaseName: synapse
-      values: |
-        image:
-          repository: matrixdotorg/synapse
-          # tag: ''
-          pullPolicy: IfNotPresent
-        serverName: 'matrix.gr.wtf'
-        publicServerName: 'matrix.gr.wtf'
-        signingkey:
-          job:
-            enabled: true
-            generateImage:
+    plugin:
+      name: argocd-vault-plugin-helm
+      env:
+        - name: HELM_VALUES
+          value: |
+            image:
               repository: matrixdotorg/synapse
-              tag: latest
+              # tag: ''
               pullPolicy: IfNotPresent
-            publishImage:
-              repository: bitnami/kubectl
-              tag: latest
-              pullPolicy: IfNotPresent
-          resources:
-            limits:
-              cpu: 100m
-              memory: 250Mi
-            requests:
-              cpu: 100m
-              memory: 250Mi
-        config:
-          publicBaseurl: 'https://matrix.gr.wtf'
-          reportStats: false
-          # enableRegistration: false
-          registrationSharedSecret: '<path:kv/data/synapse#registrationSharedSecret>'
-          macaroonSecretKey: '<path:kv/data/synapse#macaroonSecretKey>'
-          trustedKeyServers:
-            - server_name: matrix.org
-          extraListeners: []
-        extraConfig: {}
-        extraSecrets: {}
-        #  password_config:
-        #    pepper: ''
-        ## Configuration to apply to the main Synapse pod.
-        ##
-        synapse:
-          strategy:
-            type: Recreate
-          annotations:
-            prometheus.io/scrape: "true"
-            prometheus.io/path: /_synapse/metrics
-            prometheus.io/port: 9090
-            reloader.stakater.com/auto: 'true'
-          labels: {}
-          extraEnv: []
-          extraVolumes: []
-          extraVolumeMounts: []
-          extraCommands: []
-
-          podSecurityContext: {}
-          securityContext: {}
-          resources:
-            limits:
-              cpu: 800m
-              memory: 1500Mi
-            requests:
-              cpu: 300m
-              memory: 500Mi
-          livenessProbe:
-            httpGet:
-              path: /health
-              port: http
-            periodSeconds: 15
-            initialDelaySeconds: 45
-          readinessProbe:
-            httpGet:
-              path: /health
-              port: http
-            periodSeconds: 5
-            initialDelaySeconds: 10
-          nodeSelector:
-            kubernetes.io/hostname: node-two
-          tolerations: []
-          affinity: {}
-        workers:
-          default:
-            replicaCount: 1
-            strategy:
-              type: Recreate
-            annotations:
-              prometheus.io/scrape: "true"
-              prometheus.io/path: /_synapse/metrics
-              prometheus.io/port: 9090
-              reloader.stakater.com/auto: "true"
-            extraEnv: []
-            volumes: []
-            volumeMounts: []
-            extraCommands: []
-            podSecurityContext: {}
-            securityContext: {}
-            resources:
-              limits:
-                cpu: 500m
-                memory: 600Mi
-              requests:
-                cpu: 250m
-                memory: 400Mi
-            livenessProbe:
-              httpGet:
-                path: /health
-                port: metrics
-            periodSeconds: 15
-            initialDelaySeconds: 45
-            readinessProbe:
-              httpGet:
-                path: /health
-                port: metrics
-            periodSeconds: 5
-            initialDelaySeconds: 10
-            startupProbe:
-              failureThreshold: 6
-              httpGet:
-                path: /health
-                port: metrics
-            initialDelaySeconds: 120
-            nodeSelector:
-              kubernetes.io/hostname: node-two
-            tolerations: []
-            affinity: {}
-          generic_worker:
-            enabled: false
-            generic: true
-            listeners: [client, federation]
-            csPaths:
-              ## Sync requests
-              # - "/_matrix/client/(r0|v3)/sync$"
-              - "/_matrix/client/(api/v1|r0|v3)/events$"
-              # - "/_matrix/client/(api/v1|r0|v3)/initialSync$"
-              # - "/_matrix/client/(api/v1|r0|v3)/rooms/[^/]+/initialSync$"
-
-              ## Client API requests
-              - "/_matrix/client/(api/v1|r0|v3|unstable)/createRoom$"
-              - "/_matrix/client/(api/v1|r0|v3|unstable)/publicRooms$"
-              - "/_matrix/client/(api/v1|r0|v3|unstable)/rooms/.*/joined_members$"
-              - "/_matrix/client/(api/v1|r0|v3|unstable)/rooms/.*/context/"
-              - "/_matrix/client/(api/v1|r0|v3|unstable)/rooms/.*/members$"
-              - "/_matrix/client/(api/v1|r0|v3|unstable)/rooms/.*/state$"
-              - "/_matrix/client/v1/rooms/.*/hierarchy$"
-              - "/_matrix/client/unstable/org.matrix.msc2716/rooms/.*/batch_send$"
-              - "/_matrix/client/unstable/im.nheko.summary/rooms/.*/summary$"
-              - "/_matrix/client/(r0|v3|unstable)/account/3pid$"
-              - "/_matrix/client/(r0|v3|unstable)/account/whoami$"
-              - "/_matrix/client/(r0|v3|unstable)/devices$"
-              - "/_matrix/client/versions$"
-              - "/_matrix/client/(api/v1|r0|v3|unstable)/voip/turnServer$"
-              - "/_matrix/client/(api/v1|r0|v3|unstable)/rooms/.*/event/"
-              - "/_matrix/client/(api/v1|r0|v3|unstable)/joined_rooms$"
-              - "/_matrix/client/(api/v1|r0|v3|unstable)/search$"
-
-              ## Encryption requests
-              - "/_matrix/client/(r0|v3|unstable)/keys/query$"
-              - "/_matrix/client/(r0|v3|unstable)/keys/changes$"
-              - "/_matrix/client/(r0|v3|unstable)/keys/claim$"
-              - "/_matrix/client/(r0|v3|unstable)/room_keys/"
-
-              ## Registration/login requests
-              - "/_matrix/client/(api/v1|r0|v3|unstable)/login$"
-              - "/_matrix/client/(r0|v3|unstable)/register$"
-              - "/_matrix/client/v1/register/m.login.registration_token/validity$"
-
-              ## Event sending requests
-              - "/_matrix/client/(api/v1|r0|v3|unstable)/rooms/.*/redact"
-              - "/_matrix/client/(api/v1|r0|v3|unstable)/rooms/.*/send"
-              - "/_matrix/client/(api/v1|r0|v3|unstable)/rooms/.*/state/"
-              - "/_matrix/client/(api/v1|r0|v3|unstable)/rooms/.*/(join|invite|leave|ban|unban|kick)$"
-              - "/_matrix/client/(api/v1|r0|v3|unstable)/join/"
-              - "/_matrix/client/(api/v1|r0|v3|unstable)/profile/"
-
-              ## User directory search requests
-              - "/_matrix/client/(r0|v3|unstable)/user_directory/search"
-
-              ## Worker event streams
-              ## See https://matrix-org.github.io/synapse/laconfig/workers.html#stream-writers
-              ##
-
-              ## The typing event stream
-              # - "/_matrix/client/(api/v1|r0|v3|unstable)/rooms/.*/typing"
-
-              ## The to_device event stream
-              # - "/_matrix/client/(r0|v3|unstable)/sendToDevice/"
-
-              ## The account_data event stream
-              # - "/_matrix/client/(r0|v3|unstable)/.*/tags"
-              # - "/_matrix/client/(r0|v3|unstable)/.*/account_data"
-
-              ## The receipts event stream
-              # - "/_matrix/client/(r0|v3|unstable)/rooms/.*/receipt"
-              # - "/_matrix/client/(r0|v3|unstable)/rooms/.*/read_markers"
-            paths:
-              - "/_matrix/federation/v1/event/"
-              - "/_matrix/federation/v1/state/"
-              - "/_matrix/federation/v1/state_ids/"
-              - "/_matrix/federation/v1/backfill/"
-              - "/_matrix/federation/v1/get_missing_events/"
-              - "/_matrix/federation/v1/publicRooms"
-              - "/_matrix/federation/v1/query/"
-              - "/_matrix/federation/v1/make_join/"
-              - "/_matrix/federation/v1/make_leave/"
-              - "/_matrix/federation/(v1|v2)/send_join/"
-              - "/_matrix/federation/(v1|v2)/send_leave/"
-              - "/_matrix/federation/(v1|v2)/invite/"
-              - "/_matrix/federation/v1/event_auth/"
-              - "/_matrix/federation/v1/exchange_third_party_invite/"
-              - "/_matrix/federation/v1/user/devices/"
-              - "/_matrix/key/v2/query"
-              - "/_matrix/federation/v1/hierarchy/"
-              - "/_matrix/federation/v1/send/"
-          pusher:
-            enabled: true
-          appservice:
-            enabled: true
-          federation_sender:
-            enabled: false
-          media_repository:
-            enabled: true
-            listeners: [media]
-            csPaths:
-              - "/_matrix/media/.*"
-              - "/_synapse/admin/v1/purge_media_cache$"
-              - "/_synapse/admin/v1/room/.*/media"
-              - "/_synapse/admin/v1/user/.*/media"
-              - "/_synapse/admin/v1/media/"
-              - "/_synapse/admin/v1/quarantine_media/"
-              - "/_synapse/admin/v1/users/.*/media$"
-            paths:
-              - "/_matrix/media/.*"
-          user_dir:
-            enabled: true
-            listeners: [client]
-            csPaths:
-              - "/_matrix/client/(api/v1|r0|v3|unstable)/user_directory/search$"
-          frontend_proxy:
-            enabled: false
-            listeners: [client]
-            csPaths:
-              - "/_matrix/client/(api/v1|r0|v3|unstable)/keys/upload"
-        wellknown:
-          enabled: true
-          replicaCount: 1
-          # Lighttpd does not bind on IPv6 by default, although this is required in
-          # Ipv6-only clusters.
-          useIpv6: true
-          ## The host and port combo to serve on .well-known/matrix/server.
-          ##
-          server: {}
-          #  m.server: matrix.example.com:443
-          ## Data to serve on .well-known/matrix/client.
-          ##
-          client: {}
-          #  m.homeserver:
-          #    base_url: https://matrix.example.com
-          ## Extra data objects to serve under .well-known/matrix/<data>
-          ## Dictionaries will be JSON converted, plain strings will be served as they are
-          ##
-          extraData: {}
-            ## MSC1929 example;
-            # support:
-            #   admins:
-            #     - matrix_id: '@admin:example.com'
-            #       email_address: 'admin@example.com'
-            #       role: 'admin'
-            #   support_page: 'https://example.com/support'
-          ## A custom htdocs path, useful when running another image.
-          ##
-          htdocsPath: /var/www/localhost/htdocs
-          ## The lighttpd image to run.
-          ##
-          image:
-            repository: m4rcu5/lighttpd
-            tag: latest
-            pullPolicy: IfNotPresent
-            ## Optionally specify an array of imagePullSecrets.
-            ## Secrets must be manually created in the namespace.
-            ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+            serverName: 'matrix.gr.wtf'
+            publicServerName: 'matrix.gr.wtf'
+            signingkey:
+              job:
+                enabled: true
+                generateImage:
+                  repository: matrixdotorg/synapse
+                  tag: latest
+                  pullPolicy: IfNotPresent
+                publishImage:
+                  repository: bitnami/kubectl
+                  tag: latest
+                  pullPolicy: IfNotPresent
+              resources:
+                limits:
+                  cpu: 100m
+                  memory: 250Mi
+                requests:
+                  cpu: 100m
+                  memory: 250Mi
+            config:
+              publicBaseurl: 'https://matrix.gr.wtf'
+              reportStats: false
+              # enableRegistration: false
+              registrationSharedSecret: '<path:kv/data/synapse#registrationSharedSecret>'
+              macaroonSecretKey: '<path:kv/data/synapse#macaroonSecretKey>'
+              trustedKeyServers:
+                - server_name: matrix.org
+              extraListeners: []
+            extraConfig: {}
+            extraSecrets: {}
+            #  password_config:
+            #    pepper: ''
+            ## Configuration to apply to the main Synapse pod.
             ##
-            # pullSecrets:
-            #   - myRegistryKeySecretName
-          ## Configuration for the pod security policy.
-          ##
-          podSecurityContext: {}
-          #  fsGroup: 101
-          #  runAsGroup: 101
-          #  runAsUser: 100
-          ## Configuration for the container security policy.
-          ##
-          securityContext: {}
-          #  capabilities:
-          #    drop:
-          #    - ALL
-          #  readOnlyRootFilesystem: true
-          #  runAsNonRoot: true
-          #  runAsUser: 100
-          ## Resource configuration to apply to the well-known server.
-          ##
-          resources: {}
-          #  limits:
-          #    cpu: 5m
-          #    memory: 15Mi
-          #  requests:
-          #    cpu: 5m
-          #    memory: 15Mi
-          nodeSelector:
-            kubernetes.io/hostname: node-two
-          tolerations: []
-          affinity: {}
-        postgresql:
-          enabled: false
-        externalPostgresql:
-          host: db-synapse.matrix.svc.cluster.local
-          port: 5432
-          user: matrix
-          existingSecret: matrix.db-synapse.credentials.postgresql.acid.zalan.do
-          existingSecretPasswordKey: password
-          database: synapse
-          sslmode: disable
-          extraArgs: {}
-        redis:
-          enabled: false
-        externalRedis:
-          # host: redis
-          port: 6379
-          # password: synapse
-          ## The name of an existing secret with redis credentials
-          #existingSecret: redis-secrets
-          ## Password key to be retrieved from existing secret
-          #existingSecretPasswordKey: redis-password
-        persistence:
-          enabled: true
-          existingClaim: synapse-data
-          storageClass: "longhorn"
-          accessMode: ReadWriteOnce
-          size: 15Gi
-        volumePermissions:
-          enabled: false
-          uid: 666
-          gid: 666
-          image:
-            repository: alpine
-            tag: latest
-            pullPolicy: IfNotPresent
-          resources:
-            limits:
-              cpu: 100m
-              memory: 200Mi
-            requests:
-              cpu: 200m
-              memory: 300Mi
-        service:
-          type: ClusterIP
-          port: 8008
-          targetPort: http
-        ingress:
-          enabled: false
-          traefikPaths: false
-          annotations: {}
-          csHosts: []
-          hosts: []
-          wkHosts: []
-          paths: []
-          csPaths: []
-          includeUnderscoreSynapse: true
-          includeServerName: true
-          tls: []
+            synapse:
+              strategy:
+                type: Recreate
+              annotations:
+                prometheus.io/scrape: "true"
+                prometheus.io/path: /_synapse/metrics
+                prometheus.io/port: 9090
+                reloader.stakater.com/auto: 'true'
+              labels: {}
+              extraEnv: []
+              extraVolumes: []
+              extraVolumeMounts: []
+              extraCommands: []
+
+              podSecurityContext: {}
+              securityContext: {}
+              resources:
+                limits:
+                  cpu: 800m
+                  memory: 1500Mi
+                requests:
+                  cpu: 300m
+                  memory: 500Mi
+              livenessProbe:
+                httpGet:
+                  path: /health
+                  port: http
+                periodSeconds: 15
+                initialDelaySeconds: 45
+              readinessProbe:
+                httpGet:
+                  path: /health
+                  port: http
+                periodSeconds: 5
+                initialDelaySeconds: 10
+              nodeSelector:
+                kubernetes.io/hostname: node-two
+              tolerations: []
+              affinity: {}
+            workers:
+              default:
+                replicaCount: 1
+                strategy:
+                  type: Recreate
+                annotations:
+                  prometheus.io/scrape: "true"
+                  prometheus.io/path: /_synapse/metrics
+                  prometheus.io/port: 9090
+                  reloader.stakater.com/auto: "true"
+                extraEnv: []
+                volumes: []
+                volumeMounts: []
+                extraCommands: []
+                podSecurityContext: {}
+                securityContext: {}
+                resources:
+                  limits:
+                    cpu: 500m
+                    memory: 600Mi
+                  requests:
+                    cpu: 250m
+                    memory: 400Mi
+                livenessProbe:
+                  httpGet:
+                    path: /health
+                    port: metrics
+                periodSeconds: 15
+                initialDelaySeconds: 45
+                readinessProbe:
+                  httpGet:
+                    path: /health
+                    port: metrics
+                periodSeconds: 5
+                initialDelaySeconds: 10
+                startupProbe:
+                  failureThreshold: 6
+                  httpGet:
+                    path: /health
+                    port: metrics
+                initialDelaySeconds: 120
+                nodeSelector:
+                  kubernetes.io/hostname: node-two
+                tolerations: []
+                affinity: {}
+              generic_worker:
+                enabled: false
+                generic: true
+                listeners: [client, federation]
+                csPaths:
+                  ## Sync requests
+                  # - "/_matrix/client/(r0|v3)/sync$"
+                  - "/_matrix/client/(api/v1|r0|v3)/events$"
+                  # - "/_matrix/client/(api/v1|r0|v3)/initialSync$"
+                  # - "/_matrix/client/(api/v1|r0|v3)/rooms/[^/]+/initialSync$"
+
+                  ## Client API requests
+                  - "/_matrix/client/(api/v1|r0|v3|unstable)/createRoom$"
+                  - "/_matrix/client/(api/v1|r0|v3|unstable)/publicRooms$"
+                  - "/_matrix/client/(api/v1|r0|v3|unstable)/rooms/.*/joined_members$"
+                  - "/_matrix/client/(api/v1|r0|v3|unstable)/rooms/.*/context/"
+                  - "/_matrix/client/(api/v1|r0|v3|unstable)/rooms/.*/members$"
+                  - "/_matrix/client/(api/v1|r0|v3|unstable)/rooms/.*/state$"
+                  - "/_matrix/client/v1/rooms/.*/hierarchy$"
+                  - "/_matrix/client/unstable/org.matrix.msc2716/rooms/.*/batch_send$"
+                  - "/_matrix/client/unstable/im.nheko.summary/rooms/.*/summary$"
+                  - "/_matrix/client/(r0|v3|unstable)/account/3pid$"
+                  - "/_matrix/client/(r0|v3|unstable)/account/whoami$"
+                  - "/_matrix/client/(r0|v3|unstable)/devices$"
+                  - "/_matrix/client/versions$"
+                  - "/_matrix/client/(api/v1|r0|v3|unstable)/voip/turnServer$"
+                  - "/_matrix/client/(api/v1|r0|v3|unstable)/rooms/.*/event/"
+                  - "/_matrix/client/(api/v1|r0|v3|unstable)/joined_rooms$"
+                  - "/_matrix/client/(api/v1|r0|v3|unstable)/search$"
+
+                  ## Encryption requests
+                  - "/_matrix/client/(r0|v3|unstable)/keys/query$"
+                  - "/_matrix/client/(r0|v3|unstable)/keys/changes$"
+                  - "/_matrix/client/(r0|v3|unstable)/keys/claim$"
+                  - "/_matrix/client/(r0|v3|unstable)/room_keys/"
+
+                  ## Registration/login requests
+                  - "/_matrix/client/(api/v1|r0|v3|unstable)/login$"
+                  - "/_matrix/client/(r0|v3|unstable)/register$"
+                  - "/_matrix/client/v1/register/m.login.registration_token/validity$"
+
+                  ## Event sending requests
+                  - "/_matrix/client/(api/v1|r0|v3|unstable)/rooms/.*/redact"
+                  - "/_matrix/client/(api/v1|r0|v3|unstable)/rooms/.*/send"
+                  - "/_matrix/client/(api/v1|r0|v3|unstable)/rooms/.*/state/"
+                  - "/_matrix/client/(api/v1|r0|v3|unstable)/rooms/.*/(join|invite|leave|ban|unban|kick)$"
+                  - "/_matrix/client/(api/v1|r0|v3|unstable)/join/"
+                  - "/_matrix/client/(api/v1|r0|v3|unstable)/profile/"
+
+                  ## User directory search requests
+                  - "/_matrix/client/(r0|v3|unstable)/user_directory/search"
+
+                  ## Worker event streams
+                  ## See https://matrix-org.github.io/synapse/laconfig/workers.html#stream-writers
+                  ##
+
+                  ## The typing event stream
+                  # - "/_matrix/client/(api/v1|r0|v3|unstable)/rooms/.*/typing"
+
+                  ## The to_device event stream
+                  # - "/_matrix/client/(r0|v3|unstable)/sendToDevice/"
+
+                  ## The account_data event stream
+                  # - "/_matrix/client/(r0|v3|unstable)/.*/tags"
+                  # - "/_matrix/client/(r0|v3|unstable)/.*/account_data"
+
+                  ## The receipts event stream
+                  # - "/_matrix/client/(r0|v3|unstable)/rooms/.*/receipt"
+                  # - "/_matrix/client/(r0|v3|unstable)/rooms/.*/read_markers"
+                paths:
+                  - "/_matrix/federation/v1/event/"
+                  - "/_matrix/federation/v1/state/"
+                  - "/_matrix/federation/v1/state_ids/"
+                  - "/_matrix/federation/v1/backfill/"
+                  - "/_matrix/federation/v1/get_missing_events/"
+                  - "/_matrix/federation/v1/publicRooms"
+                  - "/_matrix/federation/v1/query/"
+                  - "/_matrix/federation/v1/make_join/"
+                  - "/_matrix/federation/v1/make_leave/"
+                  - "/_matrix/federation/(v1|v2)/send_join/"
+                  - "/_matrix/federation/(v1|v2)/send_leave/"
+                  - "/_matrix/federation/(v1|v2)/invite/"
+                  - "/_matrix/federation/v1/event_auth/"
+                  - "/_matrix/federation/v1/exchange_third_party_invite/"
+                  - "/_matrix/federation/v1/user/devices/"
+                  - "/_matrix/key/v2/query"
+                  - "/_matrix/federation/v1/hierarchy/"
+                  - "/_matrix/federation/v1/send/"
+              pusher:
+                enabled: true
+              appservice:
+                enabled: true
+              federation_sender:
+                enabled: false
+              media_repository:
+                enabled: true
+                listeners: [media]
+                csPaths:
+                  - "/_matrix/media/.*"
+                  - "/_synapse/admin/v1/purge_media_cache$"
+                  - "/_synapse/admin/v1/room/.*/media"
+                  - "/_synapse/admin/v1/user/.*/media"
+                  - "/_synapse/admin/v1/media/"
+                  - "/_synapse/admin/v1/quarantine_media/"
+                  - "/_synapse/admin/v1/users/.*/media$"
+                paths:
+                  - "/_matrix/media/.*"
+              user_dir:
+                enabled: true
+                listeners: [client]
+                csPaths:
+                  - "/_matrix/client/(api/v1|r0|v3|unstable)/user_directory/search$"
+              frontend_proxy:
+                enabled: false
+                listeners: [client]
+                csPaths:
+                  - "/_matrix/client/(api/v1|r0|v3|unstable)/keys/upload"
+            wellknown:
+              enabled: true
+              replicaCount: 1
+              # Lighttpd does not bind on IPv6 by default, although this is required in
+              # Ipv6-only clusters.
+              useIpv6: true
+              ## The host and port combo to serve on .well-known/matrix/server.
+              ##
+              server: {}
+              #  m.server: matrix.example.com:443
+              ## Data to serve on .well-known/matrix/client.
+              ##
+              client: {}
+              #  m.homeserver:
+              #    base_url: https://matrix.example.com
+              ## Extra data objects to serve under .well-known/matrix/<data>
+              ## Dictionaries will be JSON converted, plain strings will be served as they are
+              ##
+              extraData: {}
+                ## MSC1929 example;
+                # support:
+                #   admins:
+                #     - matrix_id: '@admin:example.com'
+                #       email_address: 'admin@example.com'
+                #       role: 'admin'
+                #   support_page: 'https://example.com/support'
+              ## A custom htdocs path, useful when running another image.
+              ##
+              htdocsPath: /var/www/localhost/htdocs
+              ## The lighttpd image to run.
+              ##
+              image:
+                repository: m4rcu5/lighttpd
+                tag: latest
+                pullPolicy: IfNotPresent
+                ## Optionally specify an array of imagePullSecrets.
+                ## Secrets must be manually created in the namespace.
+                ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+                ##
+                # pullSecrets:
+                #   - myRegistryKeySecretName
+              ## Configuration for the pod security policy.
+              ##
+              podSecurityContext: {}
+              #  fsGroup: 101
+              #  runAsGroup: 101
+              #  runAsUser: 100
+              ## Configuration for the container security policy.
+              ##
+              securityContext: {}
+              #  capabilities:
+              #    drop:
+              #    - ALL
+              #  readOnlyRootFilesystem: true
+              #  runAsNonRoot: true
+              #  runAsUser: 100
+              ## Resource configuration to apply to the well-known server.
+              ##
+              resources: {}
+              #  limits:
+              #    cpu: 5m
+              #    memory: 15Mi
+              #  requests:
+              #    cpu: 5m
+              #    memory: 15Mi
+              nodeSelector:
+                kubernetes.io/hostname: node-two
+              tolerations: []
+              affinity: {}
+            postgresql:
+              enabled: false
+            externalPostgresql:
+              host: db-synapse.matrix.svc.cluster.local
+              port: 5432
+              user: matrix
+              existingSecret: matrix.db-synapse.credentials.postgresql.acid.zalan.do
+              existingSecretPasswordKey: password
+              database: synapse
+              sslmode: disable
+              extraArgs: {}
+            redis:
+              enabled: false
+            externalRedis:
+              # host: redis
+              port: 6379
+              # password: synapse
+              ## The name of an existing secret with redis credentials
+              #existingSecret: redis-secrets
+              ## Password key to be retrieved from existing secret
+              #existingSecretPasswordKey: redis-password
+            persistence:
+              enabled: true
+              existingClaim: synapse-data
+              storageClass: "longhorn"
+              accessMode: ReadWriteOnce
+              size: 15Gi
+            volumePermissions:
+              enabled: false
+              uid: 666
+              gid: 666
+              image:
+                repository: alpine
+                tag: latest
+                pullPolicy: IfNotPresent
+              resources:
+                limits:
+                  cpu: 100m
+                  memory: 200Mi
+                requests:
+                  cpu: 200m
+                  memory: 300Mi
+            service:
+              type: ClusterIP
+              port: 8008
+              targetPort: http
+            ingress:
+              enabled: false
+              traefikPaths: false
+              annotations: {}
+              csHosts: []
+              hosts: []
+              wkHosts: []
+              paths: []
+              csPaths: []
+              includeUnderscoreSynapse: true
+              includeServerName: true
+              tls: []
 
   destination:
     namespace: matrix
