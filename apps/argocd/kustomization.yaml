@@ -47,6 +47,7 @@ resources:
 # - base/services/media/jellyfin.yaml
 
 - base/matrix/whats.yaml
+- base/matrix/synapse.yaml
 - base/matrix/dbs.yaml
 
 - https://github.com/gruberdev/homelab/apps/networking/tailscale
