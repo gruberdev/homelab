@@ -35,3 +35,4 @@ resources:
 - base/matrix/synapse.yaml
 - base/matrix/bridges.yaml
 - base/matrix/whats.yaml
+- base/postgres/bridges.yaml

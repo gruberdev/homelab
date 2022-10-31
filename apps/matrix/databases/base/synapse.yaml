@@ -1,22 +1,22 @@
 apiVersion: "acid.zalan.do/v1"
 kind: postgresql
 metadata:
-  name: db-ha
+  name: db-synapse
 spec:
   dockerImage: registry.opensource.zalan.do/acid/spilo-14:2.1-p6
   teamId: "db"
   numberOfInstances: 1
   users:
     admin:
-      - superuser
-      - createdb
-    homeuser: []
+    - superuser
+    - createdb
+    matrix: []
   databases:
-    homeassistant: homeuser
+    synapse: matrix
   postgresql:
     version: "14"
   volume:
-    size: 1Gi
+    size: 2Gi
     storageClass: longhorn
   additionalVolumes:
     - name: data
@@ -25,7 +25,7 @@ spec:
         - postgres
       volumeSource:
         PersistentVolumeClaim:
-          claimName: homeassistant-postgres
+          claimName: synapse-postgres
   nodeAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:
       nodeSelectorTerms:

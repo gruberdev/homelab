@@ -1,23 +1,36 @@
 apiVersion: "acid.zalan.do/v1"
 kind: postgresql
 metadata:
-  name: db-ha
+  name: db-bridges
 spec:
   dockerImage: registry.opensource.zalan.do/acid/spilo-14:2.1-p6
   teamId: "db"
-  numberOfInstances: 1
+  numberOfInstances: 2
   users:
     admin:
-      - superuser
-      - createdb
-    homeuser: []
+    - superuser
+    - createdb
+    matrix: []
   databases:
-    homeassistant: homeuser
+    telegram: matrix
+    skype: matrix
+    whats: matrix
+    messenger: matrix
+    instagram: matrix
+    signal: matrix
+    discord: matrix
   postgresql:
     version: "14"
   volume:
-    size: 1Gi
+    size: 2Gi
     storageClass: longhorn
+  resources:
+    requests:
+      cpu: 300m
+      memory: 500Mi
+    limits:
+      cpu: 600m
+      memory: 1Gi
   additionalVolumes:
     - name: data
       mountPath: /home/postgres/pgdata/partitions
@@ -25,7 +38,7 @@ spec:
         - postgres
       volumeSource:
         PersistentVolumeClaim:
-          claimName: homeassistant-postgres
+          claimName: bridges-postgres
   nodeAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:
       nodeSelectorTerms:

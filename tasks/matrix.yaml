@@ -11,26 +11,24 @@ vars:
   RESET: tput sgr0
   CLEAR: tput reset
   PATH_ERROR: is not installed or correctly configured in PATH.
-  WHATSAPP_VERSION: v0.7.1
+  ENV_VERSION: v1.2.0
 
 silent: true
 
 tasks:
-  build:whats:
+  build:env:
     cmds:
-      - docker build -t docker.io/grubertech/whats-bridge:latest -t docker.io/grubertech/whats-bridge:{{.WHATSAPP_VERSION}} -f apps/matrix/bridges/whatsapp/Dockerfile .
+      - docker build -t docker.io/grubertech/envsubst:latest -t docker.io/grubertech/envsubst:{{.ENV_VERSION}} -f apps/matrix/Dockerfile .
     ignore_error: true
 
-  push:whats:
+  push:env:
     cmds:
-      - docker push docker.io/grubertech/whats-bridge:latest
-      - docker push docker.io/grubertech/whats-bridge:{{.WHATSAPP_VERSION}}
+      - docker push docker.io/grubertech/envsubst:latest
+      - docker push docker.io/grubertech/envsubst:{{.ENV_VERSION}}
     ignore_error: true
 
-  test:whats:
+  test:env:
     cmds:
       - echo -e "Envsubst:\n"
-      - docker run --rm --name whatsapp-bridge -it docker.io/grubertech/whats-bridge:latest /bin/sh -c 'envsubst'
-      - echo -e "Testing bridge command:\n"
-      - docker run --rm --name whatsapp-bridge -it docker.io/grubertech/whats-bridge:latest /bin/sh -c 'mautrix-whatsapp'
+      - docker run --rm --name envsubst -it docker.io/grubertech/envsubst:latest /bin/sh -c 'envsubst'
     ignore_error: true

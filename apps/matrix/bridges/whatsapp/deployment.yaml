@@ -16,7 +16,7 @@ spec:
     spec:
       initContainers:
         - name: load-config
-          image: docker.io/grubertech/whats-bridge:v0.7.1
+          image: docker.io/grubertech/envsubst:v1.2.0
           imagePullPolicy: IfNotPresent
           command: ["sh"]
           args:
@@ -26,9 +26,9 @@ spec:
               && cp /load/config.yaml /data/config.yaml
           env:
             - name: BRIDGE_DB_USERNAME
-              valueFrom: { secretKeyRef: { name: matrix.db-whats-bridge.credentials.postgresql.acid.zalan.do, key: username } }
+              valueFrom: { secretKeyRef: { name: matrix.db-bridges.credentials.postgresql.acid.zalan.do, key: username } }
             - name: BRIDGE_DB_PASSWORD
-              valueFrom: { secretKeyRef: { name: matrix.db-whats-bridge.credentials.postgresql.acid.zalan.do, key: password } }
+              valueFrom: { secretKeyRef: { name: matrix.db-bridges.credentials.postgresql.acid.zalan.do, key: password } }
           volumeMounts:
             - name: config
               mountPath: /data
@@ -51,7 +51,7 @@ spec:
             readOnlyRootFilesystem: true
             allowPrivilegeEscalation: false
         - name: generate-config
-          image: docker.io/grubertech/whats-bridge:v0.7.1
+          image: dock.mau.dev/mautrix/whatsapp:v0.7.1
           imagePullPolicy: IfNotPresent
           command: ["mautrix-whatsapp"]
           args: ["-g", "-c", "/data/config.yaml", "-r", "/bridges/whatsapp.yaml"]
@@ -75,7 +75,7 @@ spec:
             allowPrivilegeEscalation: false
       containers:
         - name: whats
-          image: docker.io/grubertech/whats-bridge:v0.7.1
+          image: dock.mau.dev/mautrix/whatsapp:v0.7.1
           imagePullPolicy: IfNotPresent
           command: ["mautrix-whatsapp"]
           args: ["-c", "/data/config.yaml"]

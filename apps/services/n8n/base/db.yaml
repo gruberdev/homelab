@@ -26,13 +26,6 @@ spec:
       volumeSource:
         PersistentVolumeClaim:
           claimName: n8n-postgres
-  resources:
-    requests:
-      cpu: 50m
-      memory: 350Mi
-    limits:
-      cpu: 150m
-      memory: 600Mi
   nodeAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:
       nodeSelectorTerms:
