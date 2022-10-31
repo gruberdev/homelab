@@ -85,13 +85,11 @@
 > #### Monitoring and k8s utilities:
 >
 > - Chaos Mesh for Chaos engineering
-> - MySQL Database Operator
-> - Finish implementing `kube-prometheus`
->
+
 > #### Services and applications:
 >
 > - Matrix
->   - Matrix bridges and double-puppets
+>   - Matrix bridges and double-puppets (WIP)
 > - Domainmod
 > - Monica
 > - Wallabag
