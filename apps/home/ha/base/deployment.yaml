@@ -48,7 +48,7 @@ spec:
             - name: DB_PASSWORD
               valueFrom: { secretKeyRef: { name: homeuser.db-ha.credentials.postgresql.acid.zalan.do, key: password } }
             - name: DB_STRING
-              value: "postgresql://$(DB_USERNAME):$(DB_PASSWORD)@db-ha.homeassistant.svc.cluster.local:5432/homeassistant?sslmode=require"
+              value: "postgresql://${DB_USERNAME}:${DB_PASSWORD}@db-ha.homeassistant.svc.cluster.local:5432/homeassistant?sslmode=require"
           image: homeassistant/home-assistant:2022.9
           imagePullPolicy: IfNotPresent
           name: home-assistant
