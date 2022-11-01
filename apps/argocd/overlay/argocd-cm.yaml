@@ -18,7 +18,7 @@ data:
     # See: https://github.com/argoproj-labs/argocd-vault-plugin/issues/389
     - name: argocd-vault-plugin-helm
       generate:
-        command: ["sh", "-c"]
+        command: ["bash", "-c"]
         args: ['helm template "$ARGOCD_APP_NAME" -n "$ARGOCD_APP_NAMESPACE" -f <(echo "$ARGOCD_ENV_HELM_VALUES") . | argocd-vault-plugin generate -']
     - name: argocd-vault-plugin-kustomize
       generate:
