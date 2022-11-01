@@ -11,8 +11,8 @@ spec:
   template:
     spec:
       envFrom:
-          - secretRef:
-              name: vault-configuration
+        - secretRef:
+          name: vault-configuration
       automountServiceAccountToken: true
       volumes:
         - configMap:
