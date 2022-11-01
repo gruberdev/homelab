@@ -142,6 +142,10 @@ tasks:
           VAULT_TOKEN: {{.VAULT_TOKEN}}
           AVP_AUTH_TYPE: token
           AVP_TYPE: vault
+          ARGOCD_ENV_VAULT_ADDR: {{.VAULT_ADDR}}
+          ARGOCD_ENV_VAULT_TOKEN: {{.VAULT_TOKEN}}
+          ARGOCD_ENV_AVP_AUTH_TYPE: token
+          ARGOCD_ENV_AVP_TYPE: vault
         kind: Secret
         metadata:
           name: vault-configuration

@@ -50,10 +50,12 @@ resources:
 - base/matrix/synapse.yaml
 - base/matrix/dbs.yaml
 
+- base/cmp-plugin.yaml
+
 - https://github.com/gruberdev/homelab/apps/networking/tailscale
 - https://github.com/gruberdev/homelab/apps/networking/cloudflared
 
-- https://raw.githubusercontent.com/argoproj/argo-cd/v2.4.15/manifests/install.yaml
+- https://raw.githubusercontent.com/argoproj/argo-cd/v2.5.0/manifests/install.yaml
 - https://github.com/argoproj-labs/argocd-image-updater/manifests/base
 
 patchesStrategicMerge:
@@ -67,7 +69,7 @@ patchesStrategicMerge:
 namespace: argocd
 images:
 - name: quay.io/argoproj/argocd
-  newTag: v2.4.15
+  newTag: v2.5.0
 
 patches:
 - path: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/tailscale/patch.yaml
