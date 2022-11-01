@@ -153,8 +153,8 @@ data:
           m.video: <b>{{ .Sender.Displayname }}</b> sent a video
           m.location: <b>{{ .Sender.Displayname }}</b> sent a location
     logging:
-      directory: ./logs
-      file_name_format: '{{.Date}}-{{.Index}}.log'
+      directory: /tmp
+      file_name_format: ""
       file_date_format: '2006-01-02'
       file_mode: 384
       timestamp_format: Jan _2, 2006 15:04:05
