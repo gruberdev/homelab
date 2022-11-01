@@ -7,9 +7,9 @@ metadata:
 spec:
   project: matrix
   source:
-    repoURL: 'https://gitlab.com/ananace/charts.git'
-    targetRevision: master
-    path: charts/matrix-synapse
+    chart: matrix-synapse
+    repoURL: 'https://ananace.gitlab.io/charts'
+    targetRevision: 2.7.6
     plugin:
       name: argocd-vault-plugin-helm
       env:
