@@ -85,14 +85,14 @@ tasks:
   build:sidecar:
     dir: apps/argocd
     cmds:
-      - docker build -t docker.io/grubertech/argocd-sidecar:latest -t docker.io/grubertech/argocd-sidecar:v0.0.1 .
+      - docker build -t docker.io/grubertech/argocd-sidecar:latest -t docker.io/grubertech/argocd-sidecar:v2.5.0 .
     ignore_error: true
 
   push:sidecar:
     dir: apps/argocd
     cmds:
       - docker push docker.io/grubertech/argocd-sidecar:latest
-      - docker push docker.io/grubertech/argocd-sidecar:v0.0.1
+      - docker push docker.io/grubertech/argocd-sidecar:v2.5.0
     ignore_error: true
 
   rm:

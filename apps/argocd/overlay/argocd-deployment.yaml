@@ -10,37 +10,87 @@ metadata:
 spec:
   template:
     spec:
-      containers:
-      - name: argocd-repo-server
-        volumeMounts:
-        - name: custom-tools
-          mountPath: /usr/local/bin/argocd-vault-plugin
-          subPath: argocd-vault-plugin
-        envFrom:
+      envFrom:
           - secretRef:
               name: vault-configuration
+      automountServiceAccountToken: true
       volumes:
-      - name: custom-tools
-        emptyDir: {}
+        - configMap:
+            name: cmp-plugin
+          name: cmp-plugin
+        - name: custom-tools
+          emptyDir: {}
       initContainers:
       - name: download-tools
-        image: alpine:3.8
-        command: [sh, -c]
-
-        # Don't forget to update this to whatever the stable release version is
-        # Note the lack of the `v` prefix unlike the git tag
+        image: registry.access.redhat.com/ubi8
         env:
           - name: AVP_VERSION
-            value: "1.13.0"
+            value: 1.13.0
+        command: [sh, -c]
         args:
           - >-
-            wget -O argocd-vault-plugin
-            https://github.com/argoproj-labs/argocd-vault-plugin/releases/download/v${AVP_VERSION}/argocd-vault-plugin_${AVP_VERSION}_linux_amd64 &&
+            curl -L https://github.com/argoproj-labs/argocd-vault-plugin/releases/download/v$(AVP_VERSION)/argocd-vault-plugin_$(AVP_VERSION)_linux_amd64 -o argocd-vault-plugin &&
             chmod +x argocd-vault-plugin &&
             mv argocd-vault-plugin /custom-tools/
         volumeMounts:
           - mountPath: /custom-tools
             name: custom-tools
-
-      # Not strictly necessary, but required for passing AVP configuration from a secret and for using Kubernetes auth to Hashicorp Vault
-      automountServiceAccountToken: true
+      # argocd-vault-plugin with Helm
+      containers:
+      - name: avp-helm
+        command: [/var/run/argocd/argocd-cmp-server]
+        image: docker.io/grubertech/argocd-sidecar:v2.5.0
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 999
+        volumeMounts:
+          - mountPath: /var/run/argocd
+            name: var-files
+          - mountPath: /home/argocd/cmp-server/plugins
+            name: plugins
+          - mountPath: /tmp
+            name: tmp
+          - mountPath: /home/argocd/cmp-server/config/plugin.yaml
+            subPath: avp-helm.yaml
+            name: cmp-plugin
+          - name: custom-tools
+            subPath: argocd-vault-plugin
+            mountPath: /usr/local/bin/argocd-vault-plugin
+      - name: avp-kustomize
+        command: [/var/run/argocd/argocd-cmp-server]
+        image: docker.io/grubertech/argocd-sidecar:v2.5.0
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 999
+        volumeMounts:
+          - mountPath: /var/run/argocd
+            name: var-files
+          - mountPath: /home/argocd/cmp-server/plugins
+            name: plugins
+          - mountPath: /tmp
+            name: tmp
+          - mountPath: /home/argocd/cmp-server/config/plugin.yaml
+            subPath: avp-kustomize.yaml
+            name: cmp-plugin
+          - name: custom-tools
+            subPath: argocd-vault-plugin
+            mountPath: /usr/local/bin/argocd-vault-plugin
+      - name: avp
+        command: [/var/run/argocd/argocd-cmp-server]
+        image: docker.io/grubertech/argocd-sidecar:v2.5.0
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 999
+        volumeMounts:
+          - mountPath: /var/run/argocd
+            name: var-files
+          - mountPath: /home/argocd/cmp-server/plugins
+            name: plugins
+          - mountPath: /tmp
+            name: tmp
+          - mountPath: /home/argocd/cmp-server/config/plugin.yaml
+            subPath: avp.yaml
+            name: cmp-plugin
+          - name: custom-tools
+            subPath: argocd-vault-plugin
+            mountPath: /usr/local/bin/argocd-vault-plugin
