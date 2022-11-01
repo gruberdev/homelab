@@ -15,15 +15,8 @@ data:
       generate:
         command: ["argocd-vault-plugin"]
         args: ["generate", "./"]
+    # See: https://github.com/argoproj-labs/argocd-vault-plugin/issues/389
     - name: argocd-vault-plugin-helm
-      generate:
-        command: ["bash", "-c"]
-        args: ['helm template "$ARGOCD_APP_NAME" -f <(echo "$HELM_VALUES") . | argocd-vault-plugin generate -']
-    - name: argocd-vault-plugin-helm-with-args
-      generate:
-        command: ["sh", "-c"]
-        args: ['helm template "$ARGOCD_APP_NAME" -n "$ARGOCD_APP_NAMESPACE" ${helm_args} . | argocd-vault-plugin generate -']
-    - name: argocd-vault-plugin-helm-with-values
       generate:
         command: ["bash", "-c"]
         args: ['helm template "$ARGOCD_APP_NAME" -n "$ARGOCD_APP_NAMESPACE" -f <(echo "$ARGOCD_ENV_HELM_VALUES") . | argocd-vault-plugin generate -']
