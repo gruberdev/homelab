@@ -14,6 +14,10 @@ spec:
       labels:
         app: whats-bridge
     spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
       initContainers:
         - name: load-config
           image: docker.io/grubertech/envsubst:v1.2.0
@@ -23,7 +27,7 @@ spec:
             - -c
             - |
               envsubst -no-empty -i /template/config.yaml.tmpl -o /load/config.yaml \
-              && cp /load/config.yaml /data/config.yaml
+              && cp -f /load/config.yaml /data/config.yaml
           env:
             - name: BRIDGE_DB_USERNAME
               valueFrom: { secretKeyRef: { name: matrix.db-bridges.credentials.postgresql.acid.zalan.do, key: username } }
@@ -108,6 +112,12 @@ spec:
             requests:
               cpu: 300m
               memory: 256Mi
+          securityContext:
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
       volumes:
       - name: template
         configMap:
