@@ -82,6 +82,19 @@ tasks:
       - echo ""
     ignore_error: true
 
+  build:sidecar:
+    dir: apps/argocd
+    cmds:
+      - docker build -t docker.io/grubertech/argocd-sidecar:latest -t docker.io/grubertech/argocd-sidecar:v0.0.1 .
+    ignore_error: true
+
+  push:sidecar:
+    dir: apps/argocd
+    cmds:
+      - docker push docker.io/grubertech/argocd-sidecar:latest
+      - docker push docker.io/grubertech/argocd-sidecar:v0.0.1
+    ignore_error: true
+
   rm:
     dir: apps/argocd
     cmds:
