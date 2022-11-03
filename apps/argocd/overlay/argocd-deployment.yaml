@@ -10,9 +10,6 @@ metadata:
 spec:
   template:
     spec:
-      envFrom:
-        - secretRef:
-          name: vault-configuration
       automountServiceAccountToken: true
       volumes:
         - configMap:
@@ -35,8 +32,36 @@ spec:
         volumeMounts:
           - mountPath: /custom-tools
             name: custom-tools
-      # argocd-vault-plugin with Helm
       containers:
+      - image: 'quay.io/argoproj/argocd:v2.5.0'
+        imagePullPolicy: Always
+        startupProbe:
+          failureThreshold: 1
+          httpGet:
+            path: /healthz?full=true
+            port: 8084
+          initialDelaySeconds: 90
+          periodSeconds: 15
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /healthz?full=true
+            port: 8084
+          initialDelaySeconds: 60
+          periodSeconds: 15
+        name: argocd-repo-server
+        ports:
+          - containerPort: 8081
+          - containerPort: 8084
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 8084
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        envFrom:
+        - secretRef:
+            name: vault-configuration
       - name: avp-helm
         command: [/var/run/argocd/argocd-cmp-server]
         image: docker.io/grubertech/argocd-sidecar:v2.5.0
