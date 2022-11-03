@@ -21,7 +21,7 @@ spec:
       containers:
         - name: router
           imagePullPolicy: Always
-          image: grubertech/tailscale:v1.30.0
+          image: grubertech/tailscale:v1.32.2
           env:
             - name: USERSPACE
               value: "false"

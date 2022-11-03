@@ -9,13 +9,13 @@ spec:
       containers:
         - name: tailscale
           imagePullPolicy: Always
-          image: grubertech/tailscale:v1.30.0
+          image: grubertech/tailscale:v1.32.2
           env:
-            - name: USERSPACE
+            - name: TS_USERSPACE
               value: "false"
             - name: KUBERNETES_SERVICE_HOST
               value: "true"
-            - name: TS_HOSTNAME
+            - name: HOSTNAME
               value: "unifi"
             - name: DEST_PORT
               value: "8443"
@@ -30,8 +30,8 @@ spec:
               - NET_ADMIN
           resources:
             limits:
-              cpu: "256m"
+              cpu: "350m"
               memory: "256Mi"
             requests:
-              cpu: "100m"
-              memory: "100Mi"
+              cpu: "50m"
+              memory: "80Mi"

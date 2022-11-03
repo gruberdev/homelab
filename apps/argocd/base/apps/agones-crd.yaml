@@ -1,0 +1,47 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: agones
+spec:
+  project: apps
+  source:
+    repoURL: https://github.com/googleforgames/agones.git
+    targetRevision: v1.27.0
+    path: install/helm/agones/templates/
+    helm:
+      skipCrds: true
+      releaseName: vault
+      values: |
+        global:
+
+
+  destination:
+    namespace: vault
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
+      allowEmpty: true
+    syncOptions:
+    - Validate=false
+    - CreateNamespace=true
+    - PrunePropagationPolicy=foreground
+    - PruneLast=true
+    - ApplyOutOfSyncOnly=false
+    - Prune=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
+  ignoreDifferences:
+  - group: admissionregistration.k8s.io
+    kind: MutatingWebhookConfiguration
+    jsonPointers:
+      - /webhooks
+  - group: apps
+    kind: Deployment
+    jsonPointers:
+    - /spec/replicas
