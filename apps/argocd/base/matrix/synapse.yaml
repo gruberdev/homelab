@@ -331,7 +331,7 @@ spec:
           existingSecret: matrix.db-synapse.credentials.postgresql.acid.zalan.do
           existingSecretPasswordKey: password
           database: synapse
-          sslmode: disable
+          sslmode: require
           extraArgs: {}
         redis:
           enabled: false
