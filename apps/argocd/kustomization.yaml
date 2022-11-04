@@ -51,6 +51,7 @@ resources:
 - base/matrix/dbs.yaml
 
 - base/cmp-plugin.yaml
+- base/repo-rbac.yaml
 
 - https://github.com/gruberdev/homelab/apps/networking/tailscale
 - https://github.com/gruberdev/homelab/apps/networking/cloudflared
