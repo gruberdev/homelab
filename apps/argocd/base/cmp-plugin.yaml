@@ -24,7 +24,7 @@ data:
         command:
           - sh
           - "-c"
-          - "kustomize build . | argocd-vault-plugin generate -"
+          - "kustomize build . | argocd-vault-plugin generate -s vault-configuration -"
       lockRepo: false
   avp-helm.yaml: |
     ---
