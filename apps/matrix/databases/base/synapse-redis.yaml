@@ -7,7 +7,6 @@ metadata:
     prometheus.io/scrape: "true"
     prometheus.io/port: "9121"
 spec:
-  persistenceEnabled: true
   kubernetesConfig:
     image: quay.io/opstree/redis:v7.0.5
     imagePullPolicy: IfNotPresent
