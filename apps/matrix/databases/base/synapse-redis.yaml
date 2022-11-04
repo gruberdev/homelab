@@ -1,14 +1,13 @@
 apiVersion: redis.redis.opstreelabs.in/v1beta1
-kind: RedisCluster
+kind: Redis
 metadata:
   name: synapse
+  annotations:
+    redis.opstreelabs.in: "true"
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "9121"
 spec:
-  clusterSize: 3
-  clusterVersion: v7
   persistenceEnabled: true
-  securityContext:
-    runAsUser: 1000
-    fsGroup: 1000
   kubernetesConfig:
     image: quay.io/opstree/redis:v7.0.5
     imagePullPolicy: IfNotPresent
@@ -17,8 +16,8 @@ spec:
         cpu: 101m
         memory: 128Mi
       limits:
-        cpu: 300m
-        memory: 512Mi
+        cpu: 101m
+        memory: 128Mi
   redisExporter:
     enabled: false
     image: quay.io/opstree/redis-exporter:v1.44.0
@@ -30,6 +29,10 @@ spec:
       limits:
         cpu: 120m
         memory: 256Mi
+  externalService:
+    enabled: true
+    serviceType: ClusterIP
+    port: 6379
   storage:
     volumeClaimTemplate:
       spec:
