@@ -11,7 +11,7 @@ spec:
     targetRevision: master
     path: charts/matrix-synapse
     helm:
-      releaseName: vault
+      releaseName: matrix
       values: |
         image:
           repository: matrixdotorg/synapse
