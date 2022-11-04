@@ -328,7 +328,7 @@ spec:
           host: db-synapse.matrix.svc.cluster.local
           port: 5432
           user: synapse
-          existingSecret: matrix.db-synapse.credentials.postgresql.acid.zalan.do
+          existingSecret: synapse.db-synapse.credentials.postgresql.acid.zalan.do
           existingSecretPasswordKey: password
           database: synapse
           sslmode: require
