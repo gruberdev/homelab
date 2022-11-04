@@ -880,7 +880,7 @@ spec:
           enabled: true
           tlsConfig:
             serverName: kubernetes
-            insecureSkipVerify: false
+            insecureSkipVerify: true
           serviceMonitor:
             ## Scrape interval. If not set, the Prometheus default scrape interval is used.
             ##
@@ -945,7 +945,7 @@ spec:
             ## Enable scraping the kubelet over https. For requirements to enable this see
             ## https://github.com/prometheus-operator/prometheus-operator/issues/926
             ##
-            https: true
+            https: false
 
             ## Enable scraping /metrics/cadvisor from kubelet's service
             ##
@@ -1377,7 +1377,7 @@ spec:
             https: null
 
             ## Skip TLS certificate validation when scraping
-            insecureSkipVerify: null
+            insecureSkipVerify: true
 
             ## Name of the server to use when validating TLS certificate
             serverName: null
@@ -1585,7 +1585,7 @@ spec:
           ## Prometheus-Operator v0.39.0 and later support TLS natively.
           ##
           tls:
-            enabled: true
+            enabled: false
             # Value must match version names from https://golang.org/pkg/crypto/tls/#pkg-constants
             tlsMinVersion: VersionTLS13
             # The default webhook port is 10250 in order to work out-of-the-box in GKE private clusters and avoid adding firewall rules.
