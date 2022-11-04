@@ -336,13 +336,8 @@ spec:
         redis:
           enabled: false
         externalRedis:
-          # host: redis
+          host: synapse.matrix.svc.cluster.local
           port: 6379
-          # password: synapse
-          ## The name of an existing secret with redis credentials
-          #existingSecret: redis-secrets
-          ## Password key to be retrieved from existing secret
-          #existingSecretPasswordKey: redis-password
         persistence:
           enabled: true
           existingClaim: synapse-data
