@@ -21,7 +21,7 @@ spec:
         publicServerName: 'matrix.gr.wtf'
         signingkey:
           job:
-            enabled: false
+            enabled: true
             generateImage:
               repository: matrixdotorg/synapse
               tag: latest
@@ -41,8 +41,8 @@ spec:
           publicBaseurl: 'https://matrix.gr.wtf'
           reportStats: false
           # enableRegistration: false
-          registrationSharedSecret: '<path:kv/data/synapse#registrationSharedSecret>'
-          macaroonSecretKey: '<path:kv/data/synapse#macaroonSecretKey>'
+          registrationSharedSecret: <path:kv/data/synapse#registrationSharedSecret>
+          macaroonSecretKey: <path:kv/data/synapse#macaroonSecretKey>
           trustedKeyServers:
             - server_name: matrix.org
           extraListeners: []
