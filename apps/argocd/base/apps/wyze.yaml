@@ -16,8 +16,6 @@ spec:
     repoURL: 'https://github.com/gruberdev/homelab.git'
     path: apps/home/wyze
     targetRevision: main
-    plugin:
-      name: argocd-vault-plugin-kustomize
   destination:
     namespace: homeassistant
     name: in-cluster
