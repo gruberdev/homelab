@@ -26,6 +26,10 @@ spec:
       volumeSource:
         PersistentVolumeClaim:
           claimName: synapse-postgres
+  patroni:
+    initdb:
+      collate: "C"
+      ctype: "C"
   nodeAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:
       nodeSelectorTerms:
