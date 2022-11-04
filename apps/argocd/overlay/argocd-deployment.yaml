@@ -7,8 +7,8 @@ metadata:
   labels:
     app.kubernetes.io/name: argocd-repo-server
     app.kubernetes.io/part-of: argocd
- spec:
-   template:
+spec:
+  template:
     spec:
       automountServiceAccountToken: true
       volumes:
