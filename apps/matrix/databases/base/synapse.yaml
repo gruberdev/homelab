@@ -10,9 +10,9 @@ spec:
     admin:
     - superuser
     - createdb
-    matrix: []
+    synapse: []
   databases:
-    synapse: matrix
+    synapse: synapse
   postgresql:
     version: "14"
   volume:

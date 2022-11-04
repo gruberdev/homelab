@@ -327,7 +327,7 @@ spec:
         externalPostgresql:
           host: db-synapse.matrix.svc.cluster.local
           port: 5432
-          user: matrix
+          user: synapse
           existingSecret: matrix.db-synapse.credentials.postgresql.acid.zalan.do
           existingSecretPasswordKey: password
           database: synapse
