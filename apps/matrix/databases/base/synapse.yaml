@@ -28,8 +28,8 @@ spec:
           claimName: synapse-postgres
   patroni:
     initdb:
-      collate: "C"
-      ctype: "C"
+      encoding: "UTF8"
+      locale: "C"
   nodeAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:
       nodeSelectorTerms:
