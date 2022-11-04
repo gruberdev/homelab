@@ -6,7 +6,7 @@ rules:
 - apiGroups:
   - ""
   resourceNames:
-  - argocd-repo-server
+  - vault-configuration
   resources:
   - configmaps
   - secrets
