@@ -5,8 +5,6 @@ metadata:
 rules:
 - apiGroups:
   - ""
-  resourceNames:
-  - vault-configuration
   resources:
   - configmaps
   - secrets
