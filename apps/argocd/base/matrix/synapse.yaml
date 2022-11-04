@@ -21,7 +21,7 @@ spec:
         publicServerName: 'matrix.gr.wtf'
         signingkey:
           job:
-            enabled: true
+            enabled: false
             generateImage:
               repository: matrixdotorg/synapse
               tag: latest
@@ -254,7 +254,7 @@ spec:
             csPaths:
               - "/_matrix/client/(api/v1|r0|v3|unstable)/keys/upload"
         wellknown:
-          enabled: true
+          enabled: false
           replicaCount: 1
           # Lighttpd does not bind on IPv6 by default, although this is required in
           # Ipv6-only clusters.
