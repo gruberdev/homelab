@@ -7,9 +7,8 @@ metadata:
 spec:
   project: matrix
   source:
-    chart: matrix-synapse
     repoURL: https://ananace.gitlab.io/charts
-    targetRevision: master
+    targetRevision: main
     path: charts/matrix-synapse
     helm:
       releaseName: vault
