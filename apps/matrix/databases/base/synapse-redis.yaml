@@ -18,7 +18,7 @@ spec:
         cpu: 101m
         memory: 128Mi
   redisExporter:
-    enabled: false
+    enabled: true
     image: quay.io/opstree/redis-exporter:v1.44.0
     imagePullPolicy: Always
     resources:
@@ -32,13 +32,5 @@ spec:
     enabled: true
     serviceType: ClusterIP
     port: 6379
-  storage:
-    volumeClaimTemplate:
-      spec:
-        storageClassName: longhorn
-        accessModes: ["ReadWriteOnce"]
-        resources:
-          requests:
-            storage: 1Gi
   nodeSelector:
     kubernetes.io/hostname: node-two
