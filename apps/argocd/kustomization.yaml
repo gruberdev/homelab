@@ -68,8 +68,9 @@ patchesStrategicMerge:
 
 namespace: argocd
 images:
-- name: quay.io/argoproj/argocd
-  newTag: v2.5.0
+  - name: quay.io/argoproj/argocd
+    newName: docker.io/grubertech/argocd
+    newTag: v2.5.0
 
 patches:
 - path: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/tailscale/patch.yaml
