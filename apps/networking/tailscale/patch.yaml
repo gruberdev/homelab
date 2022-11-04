@@ -10,6 +10,10 @@ spec:
         - name: tailscale
           imagePullPolicy: Always
           image: grubertech/tailscale:v1.32.2
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/sh","-c", "tailscale logout; do sleep 1; done"]
           env:
             - name: TS_USERSPACE
               value: "false"
