@@ -1,6 +1,7 @@
 
 ARG HELM_VERSION=3.10.1
 ARG ALPINE_VERSION=3.16
+ARG ARGOCD_VERSION=2.5.0
 
 FROM alpine/helm:${HELM_VERSION} as helm
 FROM alpine:${ALPINE_VERSION} as temp
@@ -11,7 +12,15 @@ RUN curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/
 RUN curl -L https://github.com/argoproj-labs/argocd-vault-plugin/releases/download/v1.13.0/argocd-vault-plugin_1.13.0_linux_amd64 -o /tmp/argocd-vault-plugin \
     && chmod +x /tmp/argocd-vault-plugin
 
-FROM registry.access.redhat.com/ubi8
+FROM argoproj/argocd:v${ARGOCD_VERSION}
+
+USER root
+
+RUN apt-get update && \
+    apt-get install -y \
+            curl &&\
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 COPY --from=helm /usr/bin/helm /usr/bin/helm
 COPY --from=temp /usr/local/bin/kustomize /usr/bin/kustomize
