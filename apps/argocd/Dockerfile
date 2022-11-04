@@ -1,7 +1,6 @@
 
 ARG HELM_VERSION=3.10.1
 ARG ALPINE_VERSION=3.16
-ARG ARGOCD_VERSION=2.5.0
 
 FROM alpine/helm:${HELM_VERSION} as helm
 FROM alpine:${ALPINE_VERSION} as temp
@@ -12,7 +11,7 @@ RUN curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/
 RUN curl -L https://github.com/argoproj-labs/argocd-vault-plugin/releases/download/v1.13.0/argocd-vault-plugin_1.13.0_linux_amd64 -o /tmp/argocd-vault-plugin \
     && chmod +x /tmp/argocd-vault-plugin
 
-FROM argoproj/argocd:v${ARGOCD_VERSION}
+FROM registry.access.redhat.com/ubi8
 
 COPY --from=helm /usr/bin/helm /usr/bin/helm
 COPY --from=temp /usr/local/bin/kustomize /usr/bin/kustomize
@@ -20,4 +19,4 @@ COPY --from=temp /tmp/argocd-vault-plugin /usr/bin/argocd-vault-plugin
 
 LABEL org.opencontainers.image.source = "https://github.com/gruberdev/homelab.git"
 
-ENTRYPOINT ["bash", "-c"]
+USER 999
