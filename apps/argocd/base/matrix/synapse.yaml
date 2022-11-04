@@ -7,7 +7,7 @@ metadata:
 spec:
   project: matrix
   source:
-    repoURL: https://gitlab.com:ananace/charts.git
+    repoURL: https://gitlab.com/ananace/charts.git
     targetRevision: main
     path: charts/matrix-synapse
     helm:
