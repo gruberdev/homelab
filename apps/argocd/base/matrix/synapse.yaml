@@ -13,6 +13,8 @@ spec:
     helm:
       releaseName: matrix
       values: |
+        app_service_config_files:
+          - /bridges/whatsapp.yaml
         image:
           repository: matrixdotorg/synapse
           # tag: ''
@@ -55,17 +57,21 @@ spec:
         synapse:
           strategy:
             type: Recreate
-          # annotations:
-          #   prometheus.io/scrape: "true"
-          #   prometheus.io/path: /_synapse/metrics
-          #   prometheus.io/port: 9090
-          #   reloader.stakater.com/auto: "true"
+          annotations:
+            prometheus.io/scrape: "true"
+            prometheus.io/path: "/_synapse/metrics"
+            prometheus.io/port: "9090"
+            reloader.stakater.com/auto: "true"
           labels: {}
           extraEnv: []
-          extraVolumes: []
-          extraVolumeMounts: []
+          extraVolumes:
+            - name: bridges
+              persistentVolumeClaim:
+                claimName: bridge-config-storage
+          extraVolumeMounts:
+              - name: bridges
+                mountPath: /bridges
           extraCommands: []
-
           podSecurityContext: {}
           securityContext: {}
           resources:
