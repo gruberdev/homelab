@@ -33,6 +33,8 @@ spec:
               valueFrom: { secretKeyRef: { name: matrix.db-bridges.credentials.postgresql.acid.zalan.do, key: username } }
             - name: BRIDGE_DB_PASSWORD
               valueFrom: { secretKeyRef: { name: matrix.db-bridges.credentials.postgresql.acid.zalan.do, key: password } }
+            - name: SHARED_SECRET
+              valueFrom: { secretKeyRef: { name: synapse-shared, key: SHARED_SECRET } }
           volumeMounts:
             - name: config
               mountPath: /data
