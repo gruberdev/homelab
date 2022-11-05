@@ -8,14 +8,20 @@
 export PATH="$PATH:/tailscale/bin"
 
 AUTH_KEY="${AUTH_KEY:-}"
+DEST_PORT="${DEST_PORT:-}"
+
 TS_ROUTES="${ROUTES:-}"
 TS_DEST_IP="${DEST_IP:-}"
-DEST_PORT="${DEST_PORT:-}"
+TS_STATE_DIR="${TS_STATE_DIR:-}"
+
+TS_TAGS="${TS_TAGS:-}"
+TS_SSH="${TS_SSH:-true}"
+
 TS_ACCEPT_DNS="${TS_ACCEPT_DNS:-false}"
 TS_EXTRA_ARGS="${EXTRA_ARGS:-}"
 TS_USERSPACE="${USERSPACE:-true}"
 TS_KUBE_SECRET="${KUBE_SECRET:-tailscale}"
-HOSTNAME="${HOSTNAME:-}"
+TS_HOSTNAME="${TS_HOSTNAME:-}"
 TS_SOCKET="${TS_SOCKET:-/tmp/tailscaled.sock}"
 
 set -e
@@ -71,12 +77,18 @@ fi
 if [[ ! -z "${AUTH_KEY}" ]]; then
   UP_ARGS="--authkey=${AUTH_KEY} ${UP_ARGS}"
 fi
+if [[ ! -z "${TS_TAGS}" ]]; then
+  UP_ARGS="--advertise-tags=${TS_TAGS} ${UP_ARGS}"
+fi
+if [[ ! -z "${TS_SSH}" ]]; then
+  UP_ARGS="--ssh=${TS_SSH} ${UP_ARGS}"
+fi
 if [[ ! -z "${TS_EXTRA_ARGS}" ]]; then
   UP_ARGS="${UP_ARGS} ${TS_EXTRA_ARGS:-}"
 fi
 
 echo "Running tailscale up"
-tailscale --socket=/tmp/tailscaled.sock up ${UP_ARGS}
+tailscale --socket="${TS_SOCKET}" up ${UP_ARGS} --reset
 
 if [[ ! -z "${TS_DEST_IP}" ]]; then
   echo "Adding iptables rule for DNAT"

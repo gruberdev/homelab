@@ -1,7 +1,5 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 bases:
-- cr.yaml
-- rb.yaml
-- sa.yaml
+- deployment.yaml
 - https://github.com/gruberdev/homelab/apps/networking/tailscale

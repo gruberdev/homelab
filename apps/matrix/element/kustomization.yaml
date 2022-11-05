@@ -3,6 +3,7 @@ kind: Kustomization
 bases:
 - ./base
 - https://github.com/gruberdev/homelab/apps/networking/tailscale
+- https://github.com/gruberdev/homelab/apps/networking/tailscale/proxy
 
 namespace: matrix
 
