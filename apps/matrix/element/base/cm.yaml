@@ -7,8 +7,8 @@ data:
       {
         "default_server_config": {
           "m.homeserver": {
-            "base_url": "https://gr.wtf",
-            "server_name": "gr.wtf"
+            "base_url": "http://matrix-matrix-synapse.services.svc.cluster.local:8008",
+            "server_name": "matrix.gr.wtf"
           },
           "m.identity_server": {
             "base_url": "https://vector.im"
