@@ -87,7 +87,7 @@ data:
         matrix.gr.wtf: http://matrix-matrix-synapse.matrix.svc.cluster.local:8008
       double_puppet_allow_discovery: false
       login_shared_secret_map:
-        example.com: foobar
+        matrix.gr.wtf: ${SHARED_SECRET}
       private_chat_portal_meta: false
       parallel_member_sync: false
       bridge_notices: true
@@ -137,9 +137,8 @@ data:
         shared_secret: ${SHARED_SECRET}
       permissions:
         '*': relay
-        bridge.test: user
-        '@admin:bridge.test': admin
-            # Settings for relay mode
+        'matrix.gr.wtf': user
+        '@gruber:matrix.gr.wtf': admin
       relay:
         enabled: false
         admin_only: true
