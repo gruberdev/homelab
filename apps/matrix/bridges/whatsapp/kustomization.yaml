@@ -4,3 +4,6 @@ resources:
 - cm.yaml
 - deployment.yaml
 - svc.yaml
+
+commonAnnotations:
+  reloader.stakater.com/auto: "true"

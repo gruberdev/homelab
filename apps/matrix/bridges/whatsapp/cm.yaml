@@ -49,7 +49,7 @@ data:
       portal_message_buffer: 128
       history_sync:
         create_portals: true
-        backfill: true
+        backfill: false
         double_puppet_backfill: false
         request_full_sync: true
         media_requests:
