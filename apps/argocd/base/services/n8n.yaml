@@ -14,8 +14,6 @@ spec:
     repoURL: 'https://github.com/gruberdev/homelab.git'
     path: apps/services/n8n
     targetRevision: main
-    plugin:
-      name: argocd-vault-plugin-kustomize
   destination:
     namespace: services
     name: in-cluster
@@ -31,7 +29,6 @@ spec:
     - PruneLast=true
     - ApplyOutOfSyncOnly=false
     - Prune=true
-    - Replace=true
     retry:
       limit: 10
       backoff:
