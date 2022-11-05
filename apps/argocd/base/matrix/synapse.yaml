@@ -42,7 +42,7 @@ spec:
         config:
           publicBaseurl: 'https://matrix.gr.wtf'
           reportStats: false
-          # enableRegistration: false
+          enableRegistration: true
           registrationSharedSecret: <path:kv/data/synapse#registrationSharedSecret>
           macaroonSecretKey: <path:kv/data/synapse#macaroonSecretKey>
           trustedKeyServers:
