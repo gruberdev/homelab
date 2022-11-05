@@ -5,14 +5,14 @@ metadata:
 data:
   config.yaml.tmpl: |
     homeserver:
-      address: https://matrix.gr.wtf
+      address: http://matrix-matrix-synapse.matrix.svc.cluster.local:8008
       domain: matrix.gr.wtf
       software: standard
       status_endpoint: null
       message_send_checkpoint_endpoint: null
       async_media: false
     appservice:
-      address: http://telegram-bridge:29318
+      address: http://whats-bridge.matrix.svc.cluster.local:29318
       hostname: 0.0.0.0
       port: 29318
       database:
@@ -84,7 +84,7 @@ data:
       send_presence_on_typing: false
       force_active_delivery_receipts: false
       double_puppet_server_map:
-        matrix.gr.wtf: http://100.109.36.92:8008
+        matrix.gr.wtf: http://matrix-matrix-synapse.matrix.svc.cluster.local:8008
       double_puppet_allow_discovery: false
       login_shared_secret_map:
         example.com: foobar
