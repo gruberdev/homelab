@@ -84,7 +84,7 @@ spec:
           image: dock.mau.dev/mautrix/whatsapp:v0.7.1
           imagePullPolicy: IfNotPresent
           command: ["mautrix-whatsapp"]
-          args: ["-c", "/data/config.yaml"]
+          args: ["-n", "-c", "/data/config.yaml"]
           ports:
             - name: bridge
               containerPort: 29318
