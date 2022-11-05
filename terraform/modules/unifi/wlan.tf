@@ -14,8 +14,9 @@ resource "unifi_wlan" "main_wifi" {
   security   = "wpapsk"
 
   wpa3_support    = true
-  wpa3_transition = true
-  pmf_mode        = "optional"
+  wpa3_transition = false
+  no2ghz_oui      = true
+  pmf_mode        = "required"
 
   network_id    = data.unifi_network.main.id
   ap_group_ids  = [data.unifi_ap_group.default.id]
@@ -30,6 +31,7 @@ resource "unifi_wlan" "guest_wifi" {
 
   wpa3_support    = true
   wpa3_transition = true
+  l2_isolation    = true
   pmf_mode        = "optional"
 
   network_id    = data.unifi_network.main.id
@@ -43,9 +45,9 @@ resource "unifi_wlan" "smartDevices" {
   passphrase = var.smart_wlan_password
   security   = "wpapsk"
 
-  wpa3_support    = true
-  wpa3_transition = true
-  pmf_mode        = "optional"
+  wpa3_support    = false
+  pmf_mode        = "disabled"
+  no2ghz_oui      = false
 
   network_id    = data.unifi_network.main.id
   ap_group_ids  = [data.unifi_ap_group.default.id]
