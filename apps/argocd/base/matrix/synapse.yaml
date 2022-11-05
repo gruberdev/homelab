@@ -13,8 +13,6 @@ spec:
     helm:
       releaseName: matrix
       values: |
-        app_service_config_files:
-          - /bridges/whatsapp.yaml
         image:
           repository: matrixdotorg/synapse
           # tag: ''
@@ -42,7 +40,7 @@ spec:
         config:
           publicBaseurl: 'https://matrix.gr.wtf'
           reportStats: false
-          enableRegistration: true
+          enableRegistration: false
           registrationSharedSecret: <path:kv/data/synapse#registrationSharedSecret>
           macaroonSecretKey: <path:kv/data/synapse#macaroonSecretKey>
           trustedKeyServers:
@@ -50,6 +48,8 @@ spec:
           extraListeners: []
         extraConfig:
           enable_registration_without_verification: true
+          app_service_config_files:
+            - /bridges/whatsapp.yaml
         extraSecrets: {}
         #  password_config:
         #    pepper: ''
