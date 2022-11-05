@@ -32,8 +32,8 @@ data:
       hs_token: This value is generated when generating the registration
     segment_key: null
     metrics:
-      enabled: false
-      listen: 127.0.0.1:8001
+      enabled: enabled
+      listen: 0.0.0.0:8001
     whatsapp:
       os_name: Mautrix-WhatsApp bridge
       browser_name: unknown
@@ -134,7 +134,7 @@ data:
           messages: 100
       provisioning:
         prefix: /_matrix/provision
-        shared_secret: generate
+        shared_secret: ${SHARED_SECRET}
       permissions:
         '*': relay
         bridge.test: user
