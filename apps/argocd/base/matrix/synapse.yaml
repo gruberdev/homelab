@@ -40,7 +40,6 @@ spec:
               cpu: 100m
               memory: 250Mi
         config:
-          enable_registration_without_verification: true
           publicBaseurl: 'https://matrix.gr.wtf'
           reportStats: false
           enableRegistration: true
@@ -49,7 +48,8 @@ spec:
           trustedKeyServers:
             - server_name: matrix.org
           extraListeners: []
-        extraConfig: {}
+        extraConfig:
+          enable_registration_without_verification: true
         extraSecrets: {}
         #  password_config:
         #    pepper: ''
