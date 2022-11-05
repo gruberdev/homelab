@@ -11,7 +11,7 @@ AUTH_KEY="${AUTH_KEY:-}"
 DEST_PORT="${DEST_PORT:-}"
 
 TS_ROUTES="${ROUTES:-}"
-TS_DEST_IP="${DEST_IP:-}"
+TS_DEST_SVC="${TS_DEST_SVC:-}"
 TS_STATE_DIR="${TS_STATE_DIR:-}"
 
 TS_TAGS="${TS_TAGS:-}"
@@ -90,8 +90,10 @@ fi
 echo "Running tailscale up"
 tailscale --socket="${TS_SOCKET}" up ${UP_ARGS} --reset
 
-if [[ ! -z "${TS_DEST_IP}" ]]; then
-  echo "Adding iptables rule for DNAT"
+if [[ ! -z "${TS_DEST_SVC}" ]]; then
+  echo "Internal SVC found, finding KubeDNS clusterIP and creating iptables rules for DNAT"
+  DEST_IP=$(ping -q -c 1 -t 1 "${TS_DEST_SVC}" | grep PING | sed -e "s/).*//" | sed -e "s/.*(//")
+  echo "Service ClusterIP Address is $DEST_IP"
   iptables -t nat -I PREROUTING -d "$(tailscale --socket=${TS_SOCKET} ip -4)" -j DNAT --to-destination "${DEST_IP}"
   ip6tables -t nat -I PREROUTING -d "$(tailscale --socket=${TS_SOCKET} ip -6)" -j DNAT --to-destination "${DEST_IP}"
 fi

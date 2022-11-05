@@ -34,16 +34,18 @@ spec:
       containers:
         - name: proxy
           imagePullPolicy: IfNotPresent
-          image: grubertech/tailscale:v1.32.2
+          image: grubertech/tailscale:v1.32.2-1
           env:
             - name: TS_USERSPACE
               value: "false"
             - name: KUBERNETES_SERVICE_HOST
               value: "true"
             - name: TS_HOSTNAME
-              value: "unifi"
+              value: "service-hostname"
             - name: DEST_PORT
               value: "8443"
+            - name: TS_DEST_SVC
+              value: "example.svc.cluster.local"
             - name: AUTH_KEY
               valueFrom:
                 secretKeyRef:
