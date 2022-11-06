@@ -70,8 +70,8 @@ spec:
               persistentVolumeClaim:
                 claimName: bridge-config-storage
           extraVolumeMounts:
-              - name: bridges
-                mountPath: /bridges
+            - name: bridges
+              mountPath: /bridges
           extraCommands: []
           podSecurityContext: {}
           securityContext: {}
@@ -114,8 +114,8 @@ spec:
                 persistentVolumeClaim:
                   claimName: bridge-config-storage
             extraVolumeMounts:
-                - name: bridges
-                  mountPath: /bridges
+              - name: bridges
+                mountPath: /bridges
             extraCommands: []
             podSecurityContext: {}
             securityContext: {}
