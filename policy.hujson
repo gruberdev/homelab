@@ -5,6 +5,18 @@
 			"src":    ["*"],
 			"dst":    ["*:*"],
 		},
+   // Admin users can access all groups and tags
+   { "action": "accept", "src": ["group:admins"], "dst": ["*:*"] },
+   // Cluster applications can access all databases
+   { "action": "accept", "src": ["tag:cluster"], "dst": ["tag:databases"] },
+   // Databases can access all the cluster applications
+   { "action": "accept", "src": ["tag:databases"], "dst": ["tag:cluster"] },
+    // All clients can access cluster applications
+   { "action": "accept", "src": ["tag:clients"], "dst": ["tag:cluster"] },
+   // Clients can access all the nodes
+   { "action": "accept", "src": ["tag:clients"], "dst": ["tag:nodes"] },
+	   // Cluster applications can access all databases
+   { "action": "accept", "src": ["tag:cluster"], "dst": ["tag:databases"] },
 	],
 	"groups": {
 		"group:admins": [
@@ -13,11 +25,13 @@
 	},
 	"tagOwners": {
 		"tag:databases": ["group:admins"],
-		"tag:network":    ["group:admins"],
+		"tag:network":   ["group:admins"],
 		"tag:clients":   ["group:admins"],
 		"tag:nodes":     ["group:admins"],
 		"tag:matrix":    ["group:admins"],
 		"tag:cluster":   ["group:admins"],
+		"tag:internal":   ["group:admins"],
+		"tag:external":   ["group:admins"],
 	},
 	"ssh": [
 		{
