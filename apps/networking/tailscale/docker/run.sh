@@ -22,8 +22,7 @@ TS_EXTRA_ARGS="${EXTRA_ARGS:-}"
 TS_USERSPACE="${USERSPACE:-true}"
 TS_KUBE_SECRET="${KUBE_SECRET:-tailscale}"
 TS_SOCKET="${TS_SOCKET:-/tmp/tailscaled.sock}"
-
-HOSTNAME="${HOSTNAME:-}"
+TS_HOSTNAME="${TS_HOSTNAME:${HOSTNAME}}"
 
 set -e
 
@@ -80,6 +79,9 @@ if [[ ! -z "${AUTH_KEY}" ]]; then
 fi
 if [[ ! -z "${TS_TAGS}" ]]; then
   UP_ARGS="--advertise-tags=${TS_TAGS} ${UP_ARGS}"
+fi
+if [[ ! -z "${TS_HOSTNAME}" ]]; then
+  UP_ARGS="--hostname=${TS_HOSTNAME} ${UP_ARGS}"
 fi
 if [[ ! -z "${TS_SSH}" ]]; then
   UP_ARGS="--ssh=${TS_SSH} ${UP_ARGS}"

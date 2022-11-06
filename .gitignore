@@ -66,6 +66,7 @@ apps/argocd/base/secrets/*.yaml
 test/storage/*
 !test/storage/.gitkeep
 terraform/vault/secrets/*
+terraform/**/users.csv
 !terraform/vault/secrets/test/example.json
 terraform/**/secrets.json
 terraform/**/*.info
