@@ -109,8 +109,13 @@ spec:
             #   prometheus.io/port: 9090
             #   reloader.stakater.com/auto: "true"
             extraEnv: []
-            volumes: []
-            volumeMounts: []
+            extraVolumes:
+              - name: bridges
+                persistentVolumeClaim:
+                  claimName: bridge-config-storage
+            extraVolumeMounts:
+                - name: bridges
+                  mountPath: /bridges
             extraCommands: []
             podSecurityContext: {}
             securityContext: {}
