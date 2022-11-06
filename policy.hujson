@@ -15,9 +15,7 @@
    { "action": "accept", "src": ["tag:clients"], "dst": ["tag:cluster"] },
    // Clients can access all the nodes
    { "action": "accept", "src": ["tag:clients"], "dst": ["tag:nodes"] },
-	   // Cluster applications can access all databases
-   { "action": "accept", "src": ["tag:cluster"], "dst": ["tag:databases"] },
-	],
+ ],
 	"groups": {
 		"group:admins": [
 			"rpg.gruber@gmail.com",
