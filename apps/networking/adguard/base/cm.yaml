@@ -42,11 +42,6 @@ data:
       - 8.8.4.4
       - 1.1.1.1
       - 1.1.1.2
-      - https://doh.cleanbrowsing.org/doh/security-filter/
-      - 177.71.191.153
-      - 185.228.168.9
-      - 185.228.169.9
-      - 185.228.168.168
       upstream_dns_file: ""
       bootstrap_dns:
       - 8.8.8.8
@@ -211,7 +206,7 @@ data:
       name: Sensitive DNS SSL Servers provided by Adguard
       id: 3
     - enabled: true
-      url: https://gist.github.com/gruberdev/76f4cbb951baf9463c55cdef76266c6c/raw/4883785b67fe63efdde850bf24aa33065c4789bd/whitelist.txt
+      url: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/Allowlist.txt
       name: Personal DNS Allowlist
       id: 4
     user_rules: []
