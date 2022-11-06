@@ -34,7 +34,7 @@ spec:
       containers:
         - name: proxy
           imagePullPolicy: IfNotPresent
-          image: grubertech/tailscale:v1.32.2-2
+          image: grubertech/tailscale:v1.32.2.-3
           env:
             - name: TS_USERSPACE
               value: "false"
