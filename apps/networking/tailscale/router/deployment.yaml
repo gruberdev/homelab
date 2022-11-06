@@ -27,7 +27,7 @@ spec:
               value: "false"
             - name: KUBERNETES_SERVICE_HOST
               value: "true"
-            - name: TS_HOSTNAME
+            - name: HOSTNAME
               value: "router"
             - name: TS_ROUTES
               value: "10.43.0.0/16,10.42.0.0/24"

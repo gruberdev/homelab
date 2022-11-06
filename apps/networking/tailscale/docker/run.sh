@@ -21,8 +21,9 @@ TS_ACCEPT_DNS="${TS_ACCEPT_DNS:-false}"
 TS_EXTRA_ARGS="${EXTRA_ARGS:-}"
 TS_USERSPACE="${USERSPACE:-true}"
 TS_KUBE_SECRET="${KUBE_SECRET:-tailscale}"
-TS_HOSTNAME="${TS_HOSTNAME:-}"
 TS_SOCKET="${TS_SOCKET:-/tmp/tailscaled.sock}"
+
+HOSTNAME="${HOSTNAME:-}"
 
 set -e
 

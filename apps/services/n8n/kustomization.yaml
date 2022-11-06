@@ -3,7 +3,9 @@ kind: Kustomization
 bases:
 - ./base
 - https://github.com/gruberdev/homelab/apps/networking/tailscale
+
 namespace: services
+
 patches:
 - path: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/tailscale/patch.yaml
   target:
@@ -13,7 +15,7 @@ patches:
     - op: replace
       path: "/spec/template/spec/containers/0/env/2"
       value:
-        name: TS_HOSTNAME
+        name: HOSTNAME
         value: "n8nio"
     - op: replace
       path: "/spec/template/spec/containers/0/env/3"
