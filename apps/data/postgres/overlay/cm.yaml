@@ -4,7 +4,7 @@ metadata:
   name: postgres-operator
 data:
   api_port: "8080"
-  #aws_region: eu-central-1
+  # aws_region: eu-central-1
   cluster_domain: cluster.local
   cluster_labels: application:spilo
   cluster_name_label: cluster-name
