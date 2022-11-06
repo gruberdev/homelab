@@ -10,5 +10,5 @@ data:
     no-autoupdate: true
     ingress:
     - hostname: gen.rss.gr.wtf
-      service: http://rss-gen:8080
+      service: http://rss-gen.rss.svc.cluster.local:3000
     - service: http_status:404
