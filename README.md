@@ -144,7 +144,7 @@
 [argocd-updater-uri]: https://argocd-image-updater.readthedocs.io/en/stable/
 [descheduler-uri]: https://github.com/kubernetes-sigs/descheduler
 [kube-fledged-uri]: https://github.com/senthilrch/kube-fledged
-[kured-uri]: https://github.com/weaveworks/kured/tree/main/charts/kured
+[kured-uri]: https://github.com/kubereboot/charts/tree/main/charts/kured
 [reflector-uri]: https://github.com/emberstack/kubernetes-reflector
 [reloader-uri]: https://github.com/stakater/Reloader
 [botkube-uri]: https://botkube.io/
@@ -163,14 +163,13 @@
 [homelab-adguard]: https://github.com/gruberdev/homelab/tree/main/apps/networking/adguard
 [homelab-unifi-controller]: https://github.com/gruberdev/homelab/tree/main/apps/networking/unifi/controller
 [homelab-zalando]: https://github.com/gruberdev/homelab/tree/main/apps/data/postgres
-[homelab-redis]: https://github.com/gruberdev/homelab/tree/main/apps/data/redis
-[homelab-mysql]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/apps/mysql.yaml
+[homelab-redis]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/core/redis.yaml
+[homelab-mysql]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/core/mysql.yaml
 [homelab-tailscale]: https://github.com/gruberdev/homelab/tree/main/apps/networking/tailscale
-[homelab-changedetection]: https://github.com/gruberdev/homelab/tree/main/apps/monitoring/changesdetection
 [homelab-vault]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/apps/vault.yaml
 [homelab-n8n]: https://github.com/gruberdev/homelab/tree/main/apps/services/n8n
 [homelab-flame]: https://github.com/gruberdev/homelab/tree/main/apps/monitoring/flame
-[homelab-poller]: https://github.com/gruberdev/homelab/tree/main/apps/monitoring/unifi-poller
+[homelab-poller]: https://github.com/gruberdev/homelab/tree/main/apps/networking/unifi/poller
 [homelab-cloudflared]: https://github.com/gruberdev/homelab/tree/main/apps/networking/cloudflared
 [homelab-rssgen]: https://github.com/gruberdev/homelab/tree/main/apps/services/rss/gen
 [homelab-rsshub]: https://github.com/gruberdev/homelab/tree/main/apps/services/rss/hub
