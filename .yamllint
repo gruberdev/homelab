@@ -1,3 +1,6 @@
+ignore: |
+  .github/workflows/*
+
 rules:
   braces: disable
   brackets: enable
