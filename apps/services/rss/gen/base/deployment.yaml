@@ -37,29 +37,25 @@ spec:
             timeoutSeconds: 1
             periodSeconds: 10
             initialDelaySeconds: 60
-            failureThreshold: 3
           readinessProbe:
             tcpSocket:
               port: 8080
             timeoutSeconds: 1
             periodSeconds: 10
             initialDelaySeconds: 3
-            failureThreshold: 3
           startupProbe:
             tcpSocket:
               port: 8080
             timeoutSeconds: 5
             periodSeconds: 10
-            successThreshold: 1
             initialDelaySeconds: 60
-            failureThreshold: 30
           resources:
             requests:
-              cpu: "64m"
-              memory: "128Mi"
-            limits:
-              cpu: "128m"
+              cpu: "150m"
               memory: "256Mi"
+            limits:
+              cpu: "300m"
+              memory: "512Mi"
         - name: richpuppeteer
           image: damoeb/rich-rss:puppeteer-0.1
           ports:
@@ -68,8 +64,8 @@ spec:
               protocol: TCP
           resources:
             requests:
-              cpu: "64m"
+              cpu: "100m"
               memory: "128Mi"
             limits:
-              cpu: "128m"
-              memory: "256Mi"
+              cpu: "300m"
+              memory: "512Mi"

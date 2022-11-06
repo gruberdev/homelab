@@ -3,7 +3,6 @@ kind: Kustomization
 bases:
 - ./base
 - https://github.com/gruberdev/homelab/apps/networking/cloudflared
-- https://github.com/gruberdev/homelab/apps/networking/tailscale
 
 patchesStrategicMerge:
 - overlay/cloudflared-cm.yaml
@@ -22,20 +21,6 @@ patches:
   target:
     kind: Deployment
     name: cloudflared
-- patch: |-
-    - op: replace
-      path: "/spec/template/spec/containers/0/env/2"
-      value:
-        name: TS_HOSTNAME
-        value: "gen-rss"
-    - op: replace
-      path: "/spec/template/spec/containers/0/env/3"
-      value:
-        name: DEST_PORT
-        value: "8080"
-  target:
-    kind: Deployment
-    name: rss-gen
 - patch: |-
     - op: add
       path: "/spec/template/spec/nodeSelector"

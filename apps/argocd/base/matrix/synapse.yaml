@@ -103,20 +103,19 @@ spec:
             replicaCount: 1
             strategy:
               type: Recreate
-            # annotations:
-            #   prometheus.io/scrape: "true"
-            #   prometheus.io/path: /_synapse/metrics
-            #   prometheus.io/port: 9090
-            #   reloader.stakater.com/auto: "true"
+            annotations:
+              prometheus.io/scrape: "true"
+              prometheus.io/path: "/_synapse/metrics"
+              prometheus.io/port: "9090"
+              reloader.stakater.com/auto: "true"
             extraEnv: []
-            extraVolumes:
+            volumes:
               - name: bridges
                 persistentVolumeClaim:
                   claimName: bridge-config-storage
-            extraVolumeMounts:
+            volumeMounts:
               - name: bridges
                 mountPath: /bridges
-            extraCommands: []
             podSecurityContext: {}
             securityContext: {}
             resources:

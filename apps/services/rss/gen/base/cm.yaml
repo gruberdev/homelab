@@ -5,4 +5,4 @@ metadata:
 data:
   APP_PUBLIC_URL: "https://gen.rss.gr.wtf"
   TZ: "America/Sao_Paulo"
-  PUPPETEER_HOST: "http://127.0.0.1:3000"
+  PUPPETEER_HOST: "http://localhost:3000"
