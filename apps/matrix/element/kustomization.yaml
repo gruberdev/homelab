@@ -19,7 +19,7 @@ patches:
     - op: replace
       path: "/spec/template/spec/containers/0/env/2"
       value:
-        name: HOSTNAME
+        name: TS_HOSTNAME
         value: "matrix"
     - op: replace
       path: "/spec/template/spec/containers/0/env/3"

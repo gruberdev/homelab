@@ -11,7 +11,8 @@ vars:
   RESET: tput sgr0
   CLEAR: tput reset
   PATH_ERROR: is not installed or correctly configured in PATH.
-  TAILSCALE_VERSION: "1.3.2"
+  TAILSCALE_VERSION: 1.32.2-2
+#    sh: curl -s "https://api.github.com/repos/tailscale/tailscale/releases" | jq -r ".[0].name"
 
 silent: true
 
@@ -84,7 +85,7 @@ tasks:
       - kubectl apply -f config/ts-secret.yaml -n kube-system
       - kubectl apply -f config/ts-secret.yaml -n argocd
       - kubectl apply -f config/ts-secret.yaml -n services
-      - kubectl apply -f config/ts-secret.yaml -n monitoring
+      - kubectl apply -f config/ts-secret.yaml -n matrix
       - kubectl apply -f config/ts-secret.yaml -n rss
       - rm config/ts-secret.yaml
     ignore_error: true
@@ -102,6 +103,6 @@ tasks:
     dir: apps/networking/tailscale/docker
     cmds:
       - docker push docker.io/grubertech/tailscale:latest
-      - docker push docker.io/grubertech/tailscale:{{.TAILSCALE_VERSION}}
-      - docker push docker.io/grubertech/tailscale-sidecar:{{.TAILSCALE_VERSION}}
+      - docker push docker.io/grubertech/tailscale:v{{.TAILSCALE_VERSION}}
+      - docker push docker.io/grubertech/tailscale-sidecar:v{{.TAILSCALE_VERSION}}
     ignore_error: true

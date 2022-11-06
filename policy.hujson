@@ -12,13 +12,12 @@
 		],
 	},
 	"tagOwners": {
-		"tag:lan":        ["group:admins"],
-		"tag:databases":  ["group:admins"],
-		"tag:services":   ["group:admins"],
-		"tag:networking": ["group:admins"],
-		"tag:internal":   ["group:admins"],
-		"tag:docker":     ["group:admins"],
-		"tag:cluster":    ["group:admins"],
+		"tag:databases": ["group:admins"],
+		"tag:network":    ["group:admins"],
+		"tag:clients":   ["group:admins"],
+		"tag:nodes":     ["group:admins"],
+		"tag:matrix":    ["group:admins"],
+		"tag:cluster":   ["group:admins"],
 	},
 	"ssh": [
 		{

@@ -19,7 +19,7 @@ spec:
               value: "false"
             - name: KUBERNETES_SERVICE_HOST
               value: "true"
-            - name: HOSTNAME
+            - name: TS_HOSTNAME
               value: "unifi"
             - name: DEST_PORT
               value: "8443"
