@@ -206,7 +206,7 @@ data:
       name: Sensitive DNS SSL Servers provided by Adguard
       id: 3
     - enabled: true
-      url: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/Allowlist.txt
+      url: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/adguard/Allowlist.txt
       name: Personal DNS Allowlist
       id: 4
     user_rules: []
