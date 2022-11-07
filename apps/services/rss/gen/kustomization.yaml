@@ -10,10 +10,6 @@ patchesStrategicMerge:
 namespace: rss
 
 patches:
-- path: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/tailscale/patch.yaml
-  target:
-    kind: Deployment
-    name: rss-gen
 - patch: |-
     - op: replace
       path: "/spec/template/spec/volumes/0/secret/secretName"
