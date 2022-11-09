@@ -21,9 +21,9 @@ spec:
         publicServerName: 'matrix.gr.wtf'
         signingkey:
           job:
-            enabled: true
-            existingSecret: matrix-signingkey
-            existingSecretKey: signing.key
+            enabled: false
+            existingSecret: matrix-sign
+            existingSecretKey: signature
         config:
           publicBaseurl: 'https://matrix.gr.wtf'
           reportStats: false
