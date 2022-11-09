@@ -35,5 +35,6 @@ resources:
 - base/matrix/synapse.yaml
 - base/matrix/bridges.yaml
 - base/matrix/whats.yaml
+- base/matrix/telegram.yaml
 - base/postgres/bridges.yaml
 - base/postgres/synapse.yaml

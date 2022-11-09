@@ -47,6 +47,7 @@ resources:
 # - base/services/media/jellyfin.yaml
 
 - base/matrix/whats.yaml
+- base/matrix/telegram.yaml
 - base/matrix/synapse.yaml
 - base/matrix/element.yaml
 - base/matrix/dbs.yaml

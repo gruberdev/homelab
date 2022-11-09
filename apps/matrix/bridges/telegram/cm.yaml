@@ -1,0 +1,264 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: telegram-bridge-config
+data:
+  config.yaml.tmpl: |
+    homeserver:
+      address: http://matrix-matrix-synapse.matrix.svc.cluster.local:8008
+      domain: matrix.gr.wtf
+      verify_ssl: false
+      software: standard
+      http_retry_count: 4
+      status_endpoint: null
+      message_send_checkpoint_endpoint: null
+      async_media: false
+    appservice:
+      address: http://telegram-bridge.matrix.svc.cluster.local:80
+      tls_cert: false
+      tls_key: false
+      hostname: 0.0.0.0
+      port: 29317
+      max_body_size: 1
+      database: postgres://${BRIDGE_DB_USERNAME}:${BRIDGE_DB_PASSWORD}@db-bridges.matrix.svc.cluster.local:5432/telegram?sslmode=require
+      database_opts:
+        min_size: 1
+        max_size: 10
+      public:
+        enabled: false
+        prefix: /public
+        external: https://example.com/public
+      provisioning:
+        enabled: true
+        prefix: /_matrix/provision
+        shared_secret: ${SHARED_SECRET}
+      id: telegram
+      bot_username: telegrambot
+      bot_displayname: Telegram bridge bot
+      bot_avatar: mxc://maunium.net/tJCRmUyJDsgRNgqhOgoiHWbX
+      ephemeral_events: true
+      as_token: This value is generated when generating the registration
+      hs_token: This value is generated when generating the registration
+    metrics:
+      enabled: false
+      listen_port: 8000
+    manhole:
+      enabled: false
+            # The path for the unix socket.
+      path: /var/tmp/mautrix-telegram.manhole
+            # The list of UIDs who can be added to the whitelist.
+      whitelist:
+        - 0
+    bridge:
+      username_template: telegram_{userid}
+      alias_template: telegram_{groupname}
+      displayname_preference:
+        - full name
+        - username
+        - phone number
+      displayname_max_length: 100
+      allow_avatar_remove: false
+      max_initial_member_sync: 100
+      max_member_count: -1
+      sync_channel_members: false
+      skip_deleted_members: true
+      startup_sync: false
+      sync_update_limit: 0
+      sync_create_limit: 15
+      sync_deferred_create_all: false
+      sync_direct_chats: false
+      max_telegram_delete: 10
+      sync_matrix_state: true
+      allow_matrix_login: true
+      public_portals: false
+      sync_with_custom_puppets: false
+      sync_direct_chat_list: false
+      double_puppet_server_map:
+        matrix.gr.wtf: http://matrix-matrix-synapse.matrix.svc.cluster.local:8008
+      double_puppet_allow_discovery: false
+      login_shared_secret_map:
+        matrix.gr.wtf: ${SHARED_SECRET}
+      telegram_link_preview: true
+      invite_link_resolve: false
+      caption_in_message: false
+      image_as_file_size: 10
+      image_as_file_pixels: 16777216
+      parallel_file_transfer: false
+      federate_rooms: true
+      always_custom_emoji_reaction: false
+      animated_sticker:
+        target: gif
+        convert_from_webm: false
+        args:
+          width: 256
+          height: 256
+          fps: 25
+      animated_emoji:
+        target: webp
+        args:
+          width: 64
+          height: 64
+          fps: 25
+      encryption:
+        allow: false
+        default: false
+        appservice: false
+        require: false
+        allow_key_sharing: false
+        verification_levels:
+          receive: unverified
+          send: unverified
+          share: cross-signed-tofu
+        rotation:
+          enable_custom: false
+          milliseconds: 604800000
+          messages: 100
+      private_chat_portal_meta: false
+      delivery_receipts: false
+      delivery_error_reports: false
+      message_status_events: false
+      resend_bridge_info: false
+      mute_bridging: false
+      pinned_tag: null
+      archive_tag: null
+      tag_only_on_create: true
+      bridge_matrix_leave: true
+      kick_on_logout: true
+      always_read_joined_telegram_notice: true
+      create_group_on_invite: true
+      backfill:
+        enable: true
+        msc2716: false
+        double_puppet_backfill: false
+        normal_groups: false
+        unread_hours_threshold: 720
+        forward:
+          initial_limit: 10
+          sync_limit: 100
+        incremental:
+          messages_per_batch: 100
+          post_batch_delay: 20
+          max_batches:
+            user: -1
+            normal_group: -1
+            supergroup: 10
+            channel: -1
+      initial_power_level_overrides:
+        user: {}
+        group: {}
+            # Whether to bridge Telegram bot messages as m.notices or m.texts.
+      bot_messages_as_notices: true
+      bridge_notices:
+        default: false
+        exceptions: []
+      relay_user_distinguishers:
+        - 🟦
+        - 🟣
+        - 🟩
+        - ⭕️
+        - 🔶
+        - ⬛️
+        - �
+        - 🟢
+      message_formats:
+        m.text: '$distinguisher <b>$sender_displayname</b>: $message'
+        m.notice: '$distinguisher <b>$sender_displayname</b>: $message'
+        m.emote: '* $distinguisher <b>$sender_displayname</b> $message'
+        m.file: '$distinguisher <b>$sender_displayname</b> sent a file: $message'
+        m.image: '$distinguisher <b>$sender_displayname</b> sent an image: $message'
+        m.audio: '$distinguisher <b>$sender_displayname</b> sent an audio file: $message'
+        m.video: '$distinguisher <b>$sender_displayname</b> sent a video: $message'
+        m.location: '$distinguisher <b>$sender_displayname</b> sent a location: $message'
+      emote_format: '* $mention $formatted_body'
+      state_event_formats:
+        join: $distinguisher <b>$displayname</b> joined the room.
+        leave: $distinguisher <b>$displayname</b> left the room.
+        name_change: $distinguisher <b>$prev_displayname</b> changed their name to $distinguisher <b>$displayname</b>
+      filter:
+        mode: blacklist
+        list: []
+      command_prefix: '!tg'
+      management_room_text:
+        welcome: Hello, I'm a Telegram bridge bot.
+        welcome_connected: Use `help` for help.
+        welcome_unconnected: Use `help` for help or `login` to log in.
+        additional_help: ''
+      management_room_multiple_messages: false
+      permissions:
+        '*': relaybot
+        matrix.gr.wtf: user
+        '@gruber:matrix.gr.wtf': admin
+      relaybot:
+        private_chat:
+          invite: []
+          state_changes: true
+          message: This is a Matrix bridge relaybot and does not support direct chats
+        group_chat_invite: []
+        ignore_unbridged_group_chat: true
+        authless_portals: true
+        whitelist_group_admins: true
+        ignore_own_incoming_events: true
+        whitelist:
+          - myusername
+          - 12345678
+    telegram:
+      api_id: ${APP_ID}
+      api_hash: ${APP_API_HASH}
+      bot_token: disabled
+      catch_up: true
+      sequential_updates: true
+      exit_on_update_error: false
+      connection:
+        timeout: 120
+        retries: 5
+        retry_delay: 1
+        flood_sleep_threshold: 60
+        request_retries: 5
+      device_info:
+        device_model: mautrix-telegram
+        system_version: auto
+        app_version: auto
+        lang_code: en
+        system_lang_code: en
+      server:
+        enabled: false
+        dc: 2
+        ip: 149.154.167.40
+        port: 80
+      proxy:
+        type: disabled
+        address: 127.0.0.1
+        port: 1080
+        rdns: true
+        username: ''
+        password: ''
+    logging:
+      version: 1
+      formatters:
+        colored:
+          (): mautrix_telegram.util.ColorFormatter
+          format: '[%(asctime)s] [%(levelname)s@%(name)s] %(message)s'
+        normal:
+          format: '[%(asctime)s] [%(levelname)s@%(name)s] %(message)s'
+      handlers:
+        file:
+          class: logging.handlers.RotatingFileHandler
+          formatter: normal
+          filename: ./mautrix-telegram.log
+          maxBytes: 10485760
+          backupCount: 10
+        console:
+          class: logging.StreamHandler
+          formatter: colored
+      loggers:
+        mau:
+          level: DEBUG
+        telethon:
+          level: INFO
+        aiohttp:
+          level: INFO
+      root:
+        level: DEBUG
+        handlers:
+          - file
+          - console
