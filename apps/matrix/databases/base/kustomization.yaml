@@ -4,3 +4,4 @@ resources:
 - bridges.yaml
 - synapse.yaml
 - synapse-redis.yaml
+- secret.yaml

@@ -17,6 +17,9 @@ spec:
       limits:
         cpu: 101m
         memory: 128Mi
+    redisSecret:
+      name: redis-auth
+      key: password
   redisExporter:
     enabled: true
     image: quay.io/opstree/redis-exporter:v1.44.0
