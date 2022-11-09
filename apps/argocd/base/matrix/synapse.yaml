@@ -345,12 +345,24 @@ spec:
           sslmode: require
           extraArgs: {}
         redis:
-          enabled: false
+          enabled: true
+          auth:
+            enabled: true
+            password: synapse
+            existingSecret: redis-auth
+          architecture: standalone
+          master:
+            persistence:
+              enabled: false
+            service:
+              port: 6379
+            statefulset:
+              updateStrategy: Recreate
         externalRedis:
-          host: synapse.matrix.svc.cluster.local
+          # host: redis
           port: 6379
-          existingSecret: redis-auth
-          existingSecretPasswordKey: password
+          # existingSecret: redis-auth
+          # existingSecretPasswordKey: password
         persistence:
           enabled: true
           existingClaim: synapse-data
