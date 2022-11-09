@@ -21,9 +21,22 @@ spec:
         publicServerName: 'matrix.gr.wtf'
         signingkey:
           job:
-            enabled: false
-            existingSecret: matrix-signingkey
-            existingSecretKey: signing.key
+            enabled: true
+            generateImage:
+              repository: matrixdotorg/synapse
+              tag: latest
+              pullPolicy: IfNotPresent
+            publishImage:
+              repository: bitnami/kubectl
+              tag: latest
+              pullPolicy: IfNotPresent
+          resources:
+            limits:
+              cpu: 100m
+              memory: 250Mi
+            requests:
+              cpu: 100m
+              memory: 250Mi
         config:
           publicBaseurl: 'https://matrix.gr.wtf'
           reportStats: false
