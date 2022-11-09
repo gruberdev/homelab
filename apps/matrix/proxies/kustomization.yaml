@@ -3,10 +3,21 @@ kind: Kustomization
 bases:
 - https://github.com/gruberdev/homelab/apps/networking/tailscale/proxy
 - https://github.com/gruberdev/homelab/apps/networking/tailscale
+- https://github.com/gruberdev/homelab/apps/networking/cloudflared
+
+patchesStrategicMerge:
+- overlay/cloudflared-cm.yaml
 
 namespace: matrix
 
 patches:
+- patch: |-
+    - op: replace
+      path: "/spec/template/spec/volumes/0/secret/secretName"
+      value: "matrix-tunnel"
+  target:
+    kind: Deployment
+    name: cloudflared
 - patch: |-
     - op: add
       path: "/spec/template/spec/nodeSelector"
