@@ -347,7 +347,8 @@ spec:
         redis:
           enabled: true
           auth:
-            enabled: false
+            enabled: true
+            password: synapse
           architecture: standalone
           master:
             persistence:
@@ -357,10 +358,7 @@ spec:
             statefulset:
               updateStrategy: Recreate
         externalRedis:
-          # host: redis
           port: 6379
-          # existingSecret: redis-auth
-          # existingSecretPasswordKey: password
         persistence:
           enabled: true
           existingClaim: synapse-data
