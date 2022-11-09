@@ -347,9 +347,7 @@ spec:
         redis:
           enabled: true
           auth:
-            enabled: true
-            password: synapse
-            existingSecret: redis-auth
+            enabled: false
           architecture: standalone
           master:
             persistence:
