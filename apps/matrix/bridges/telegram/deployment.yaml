@@ -64,7 +64,7 @@ spec:
           image: dock.mau.dev/mautrix/telegram:v0.12.1
           imagePullPolicy: IfNotPresent
           command: ["mautrix-telegram"]
-          args: ["-g", "-c", "/data/config.yaml", "-r", "/bridges/whatsapp.yaml"]
+          args: ["-g", "-c", "/data/config.yaml", "-r", "/bridges/telegram.yaml"]
           volumeMounts:
             - name: config
               mountPath: /data
