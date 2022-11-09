@@ -229,7 +229,7 @@ spec:
           federation_sender:
             enabled: false
           media_repository:
-            enabled: true
+            enabled: false
             listeners: [media]
             csPaths:
               - "/_matrix/media/.*"
