@@ -12,7 +12,7 @@ data:
       message_send_checkpoint_endpoint: null
       async_media: false
     appservice:
-      address: http://whats-bridge.matrix.svc.cluster.local:29318
+      address: http://whats-bridge.matrix.svc.cluster.local:80
       hostname: 0.0.0.0
       port: 29318
       database:
