@@ -57,7 +57,7 @@ spec:
             readOnlyRootFilesystem: true
             allowPrivilegeEscalation: false
         - name: generate-config
-          image: registry.gitlab.com/mx-puppet/discord/mx-puppet-discord:v0.1.1
+          image: docker.io/grubertech/discord-bridge:v0.1.1
           imagePullPolicy: IfNotPresent
           env:
             - name: CONFIG_PATH
@@ -84,7 +84,7 @@ spec:
             allowPrivilegeEscalation: false
       containers:
         - name: bridge
-          image: registry.gitlab.com/mx-puppet/discord/mx-puppet-discord:v0.1.1
+          image: docker.io/grubertech/discord-bridge:v0.1.1
           imagePullPolicy: IfNotPresent
           env:
             - name: CONFIG_PATH
