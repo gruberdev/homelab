@@ -63,16 +63,16 @@ spec:
         - name: generate-config
           image: dock.mau.dev/mautrix/telegram:v0.12.1
           imagePullPolicy: IfNotPresent
-          command: ["/bin/sh"]
+          command: ["sh"]
           env:
             - name: MAUTRIX_DIRECT_STARTUP
               value: "true"
           args:
             - -c
             - |
-              "python3 -m mautrix_telegram \
-              -g -c /data/config.yaml \
-              -r /bridges/telegram.yaml"
+              python3 -m mautrix_telegram \
+              -g -c "/data/config.yaml" \
+              -r "/bridges/telegram.yaml"
           volumeMounts:
             - name: config
               mountPath: /data
@@ -95,15 +95,15 @@ spec:
         - name: bridge
           image: dock.mau.dev/mautrix/telegram:v0.12.1
           imagePullPolicy: IfNotPresent
-          command: ["/bin/sh"]
+          command: ["sh"]
           env:
             - name: MAUTRIX_DIRECT_STARTUP
               value: "true"
           args:
             - -c
             - |
-              "python3 -m mautrix_telegram \
-              -n -c /data/config.yaml"
+              python3 -m mautrix_telegram \
+              -n -c "/data/config.yaml"
           ports:
             - name: bridge
               containerPort: 29317
