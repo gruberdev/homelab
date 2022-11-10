@@ -66,9 +66,9 @@ spec:
           command: ["/bin/sh"]
           args:
             - |
-              python3 -m mautrix-telegram \
-              -g -c /data/config.yaml \
-              -r /bridges/telegram.yaml
+              python3 -m mautrix-telegram
+              -g -c "/data/config.yaml"
+              -r "/bridges/telegram.yaml"
           volumeMounts:
             - name: config
               mountPath: /data
@@ -94,8 +94,8 @@ spec:
           command: ["/bin/sh"]
           args:
             - |
-              python3 -m mautrix-telegram \
-              -n -c /data/config.yaml
+              python3 -m mautrix-telegram
+              -n -c "/data/config.yaml"
           ports:
             - name: bridge
               containerPort: 29317
