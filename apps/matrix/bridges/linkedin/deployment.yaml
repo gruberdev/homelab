@@ -63,7 +63,7 @@ spec:
           args:
             - -c
             - |
-              python -m linkedin_matrix \
+              python3 -m linkedin_matrix \
               -g -c "/data/config.yaml" \
               -r "/bridges/linkedin.yaml"
           volumeMounts:
@@ -92,7 +92,7 @@ spec:
           args:
             - -c
             - |
-              python -m linkedin_matrix \
+              python3 -m linkedin_matrix \
               -n -c "/data/config.yaml"
           ports:
             - name: bridge
