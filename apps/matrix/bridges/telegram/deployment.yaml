@@ -64,11 +64,15 @@ spec:
           image: dock.mau.dev/mautrix/telegram:v0.12.1
           imagePullPolicy: IfNotPresent
           command: ["/bin/sh"]
+          env:
+            - name: MAUTRIX_DIRECT_STARTUP
+              value: "true"
           args:
+            - -c
             - |
               python3 -m mautrix_telegram
-              -g -c "/data/config.yaml"
-              -r "/bridges/telegram.yaml"
+              -g -c /data/config.yaml
+              -r /bridges/telegram.yaml
           volumeMounts:
             - name: config
               mountPath: /data
@@ -92,7 +96,11 @@ spec:
           image: dock.mau.dev/mautrix/telegram:v0.12.1
           imagePullPolicy: IfNotPresent
           command: ["/bin/sh"]
+          env:
+            - name: MAUTRIX_DIRECT_STARTUP
+              value: "true"
           args:
+            - -c
             - |
               python3 -m mautrix_telegram
               -n -c "/data/config.yaml"
