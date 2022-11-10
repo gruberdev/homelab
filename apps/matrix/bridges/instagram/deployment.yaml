@@ -68,7 +68,7 @@ spec:
             - |
               python3 -m mautrix_instagram \
               -g -c "/data/config.yaml" \
-              -r "/bridges/telegram.yaml"
+              -r "/bridges/instagram.yaml"
           volumeMounts:
             - name: config
               mountPath: /data
