@@ -58,7 +58,7 @@ spec:
             allowPrivilegeEscalation: false
         - name: generate-config
           image: docker.io/grubertech/discord-bridge:v0.1.1
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: CONFIG_PATH
               value: "/data/config.yaml"
@@ -85,7 +85,7 @@ spec:
       containers:
         - name: bridge
           image: docker.io/grubertech/discord-bridge:v0.1.1
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: CONFIG_PATH
               value: "/data/config.yaml"
