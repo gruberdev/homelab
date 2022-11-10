@@ -41,6 +41,7 @@ spec:
             - /bridges/steam.yaml
             - /bridges/instagram.yaml
             - /bridges/linkedin.yaml
+            - /bridges/discord.yaml
         extraSecrets: {}
         #  password_config:
         #    pepper: ''
