@@ -19,6 +19,7 @@ spec:
     instagram: matrix
     signal: matrix
     discord: matrix
+    linkedin: matrix
   postgresql:
     version: "14"
   volume:
