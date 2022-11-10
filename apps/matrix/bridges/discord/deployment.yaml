@@ -59,7 +59,6 @@ spec:
         - name: generate-config
           image: registry.gitlab.com/mx-puppet/discord/mx-puppet-discord:v0.1.1
           imagePullPolicy: IfNotPresent
-          command: ["sh"]
           env:
             - name: CONFIG_PATH
               value: "/data/config.yaml"
@@ -87,7 +86,6 @@ spec:
         - name: bridge
           image: registry.gitlab.com/mx-puppet/discord/mx-puppet-discord:v0.1.1
           imagePullPolicy: IfNotPresent
-          command: ["sh"]
           env:
             - name: CONFIG_PATH
               value: "/data/config.yaml"
