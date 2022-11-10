@@ -1,0 +1,135 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: instagram-bridge-config
+data:
+  config.yaml.tmpl: |
+    homeserver:
+      address: http://matrix-matrix-synapse.matrix.svc.cluster.local:8008
+      domain: matrix.gr.wtf
+      verify_ssl: false
+      software: standard
+      http_retry_count: 4
+      status_endpoint: null
+      message_send_checkpoint_endpoint: null
+      async_media: false
+    appservice:
+      address:  http://instagram-bridge.matrix.svc.cluster.local:80
+      tls_cert: false
+      tls_key: false
+      hostname: 0.0.0.0
+      port: 29330
+      max_body_size: 1
+      database: postgres://${BRIDGE_DB_USERNAME}:${BRIDGE_DB_PASSWORD}@db-bridges.matrix.svc.cluster.local:5432/instagram?sslmode=require
+      database_opts:
+        min_size: 1
+        max_size: 10
+      id: instagram
+      bot_username: instagrambot
+      bot_displayname: Instagram bridge bot
+      bot_avatar: mxc://maunium.net/JxjlbZUlCPULEeHZSwleUXQv
+      ephemeral_events: true
+      as_token: This value is generated when generating the registration
+      hs_token: This value is generated when generating the registration
+    metrics:
+      enabled: true
+      listen_port: 8000
+    manhole:
+      enabled: false
+      path: /var/tmp/mautrix-instagram.manhole
+      whitelist:
+        - 0
+    instagram:
+      device_seed: generate
+    bridge:
+      username_template: instagram_{userid}
+      displayname_template: '{displayname} (Instagram)'
+      private_chat_name_template: '{displayname}'
+      group_chat_name_template: '{name}'
+      displayname_max_length: 100
+      portal_create_max_age: 259200
+      chat_sync_limit: 20
+      chat_create_limit: 10
+      resync_on_startup: true
+      sync_with_custom_puppets: false
+      sync_direct_chat_list: false
+      double_puppet_allow_discovery: false
+      double_puppet_server_map:
+        matrix.gr.wtf: http://matrix-matrix-synapse.matrix.svc.cluster.local:8008
+      login_shared_secret_map:
+        matrix.gr.wtf: ${SHARED_SECRET}
+      federate_rooms: true
+      backfill:
+        invite_own_puppet: true
+        initial_limit: 0
+        missed_limit: 1000
+        disable_notifications: false
+      periodic_reconnect:
+        interval: -1
+        resync: true
+        always: false
+      get_proxy_api_url: null
+      encryption:
+        allow: false
+        default: false
+        appservice: false
+        require: false
+        allow_key_sharing: false
+        verification_levels:
+          receive: unverified
+          send: unverified
+          share: cross-signed-tofu
+        rotation:
+          enable_custom: false
+          milliseconds: 604800000
+          messages: 100
+      private_chat_portal_meta: false
+      delivery_receipts: true
+      delivery_error_reports: false
+      message_status_events: false
+      resend_bridge_info: false
+      unimportant_bridge_notices: true
+      disable_bridge_notices: false
+      caption_in_message: false
+      bridge_notices: true
+      provisioning:
+        enabled: true
+        prefix: /_matrix/provision/v1
+        shared_secret: ${SHARED_SECRET}
+        segment_key: null
+      command_prefix: '!ig'
+      permissions:
+        '*': relay
+        matrix.gr.wtf: user
+        '@gruber:matrix.gr.wtf': admin
+      relay:
+        enabled: false
+        message_formats:
+          m.text: '$sender_displayname: $message'
+          m.notice: '$sender_displayname: $message'
+          m.emote: '* $sender_displayname $message'
+    logging:
+      version: 1
+      formatters:
+        colored:
+          (): mautrix_instagram.util.ColorFormatter
+          format: '[%(asctime)s] [%(levelname)s@%(name)s] %(message)s'
+        normal:
+          format: '[%(asctime)s] [%(levelname)s@%(name)s] %(message)s'
+      handlers:
+        console:
+          class: logging.StreamHandler
+          formatter: colored
+      loggers:
+        mau:
+          level: DEBUG
+        mauigpapi:
+          level: DEBUG
+        aiohttp:
+          level: INFO
+        paho.mqtt:
+          level: INFO
+      root:
+        level: DEBUG
+        handlers:
+          - console
