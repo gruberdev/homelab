@@ -113,6 +113,8 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /data
+            - name: bridges
+              mountPath: /bridges
           resources:
             limits:
               cpu: 400m
