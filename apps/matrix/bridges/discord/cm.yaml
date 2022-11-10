@@ -28,7 +28,7 @@ data:
       room: :name
       group: :name
     database:
-      connString: "postgres://${BRIDGE_DB_USERNAME}:${BRIDGE_DB_PASSWORD}@db-bridges.matrix.svc.cluster.local:5432/discord?sslmode=disable"
+      filename: /data/database.db
     limits:
       maxAutojoinUsers: 20
       roomUserAutojoinDelay: 1000
