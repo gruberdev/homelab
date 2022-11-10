@@ -39,6 +39,7 @@ spec:
             - /bridges/whatsapp.yaml
             - /bridges/telegram.yaml
             - /bridges/steam.yaml
+            - /bridges/instagram.yaml
         extraSecrets: {}
         #  password_config:
         #    pepper: ''
