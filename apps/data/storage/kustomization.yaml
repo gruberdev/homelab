@@ -35,6 +35,14 @@ resources:
 - base/matrix/synapse.yaml
 - base/matrix/bridges.yaml
 - base/matrix/whats.yaml
+- base/matrix/linkedin.yaml
+- base/matrix/messenger.yaml
+- base/matrix/discord.yaml
+- base/matrix/skype.yaml
+- base/matrix/signal.yaml
+- base/matrix/instagram.yaml
+- base/matrix/steam.yaml
+
 - base/matrix/telegram.yaml
 - base/postgres/bridges.yaml
 - base/postgres/synapse.yaml
