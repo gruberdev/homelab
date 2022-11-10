@@ -53,13 +53,15 @@ spec:
             readOnlyRootFilesystem: true
             allowPrivilegeEscalation: false
         - name: generate-config
-          image: icewind1991/mx-puppet-steam:latest
+          image: grubertech/steam-bridge:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: CONFIG_PATH
               value: "/data/config.yaml"
             - name: REGISTRATION_PATH
               value: "/bridges/steam.yaml"
+            - name: REG_GENERATE
+              value: "true"
           volumeMounts:
             - name: config
               mountPath: /data
@@ -80,7 +82,7 @@ spec:
             allowPrivilegeEscalation: false
       containers:
         - name: bridge
-          image: icewind1991/mx-puppet-steam:latest
+          image: grubertech/steam-bridge:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: CONFIG_PATH
