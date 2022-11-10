@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: discord-bridge
+  labels:
+    app: discord-bridge
+spec:
+  type: ClusterIP
+  selector:
+    app: discord-bridge
+  ports:
+    - name: bridge
+      port: 80
+      targetPort: 29334
+      protocol: TCP

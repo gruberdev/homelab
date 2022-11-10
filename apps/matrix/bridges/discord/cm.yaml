@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: discord-bridge-config
+data:
+  config.yaml.tmpl: |
+    bridge:
+      port: 29334
+      bindAddress: 0.0.0.0
+      domain: matrix.gr.wtf
+      homeserverUrl: http://matrix-matrix-synapse.matrix.svc.cluster.local:8008
+      loginSharedSecretMap:
+        matrix.gr.wtf "${SHARED_SECRET}"
+      displayname: Discord Puppet Bridge
+      enableGroupSync: true
+      presence:
+        enabled: true
+        interval: 500
+    provisioning:
+      whitelist:
+        - "@gruber:matrix.gr.wtf\\.com"
+        - "@.*:matrix.gr.wtf\\.com"
+    homeserverUrlMap:
+      matrix.gr.wtf: http://matrix-matrix-synapse.matrix.svc.cluster.local:8008
+    namePatterns:
+      user: :name
+      userOverride: :displayname
+      room: :name
+      group: :name
+    database:
+      connString: "postgres://${BRIDGE_DB_USERNAME}:${BRIDGE_DB_PASSWORD}@db-bridges.matrix.svc.cluster.local:5432/discord?sslmode=require"
+    limits:
+      maxAutojoinUsers: 20
+      roomUserAutojoinDelay: 1000
+    logging:
+      console: info
+      lineDateFormat: MMM-D HH:mm:ss.SSS
+      files:
+        - file: ""
+          level: info
+          datePattern: YYYY-MM-DD
+          maxFiles: 14d
+          maxSize: 50m
