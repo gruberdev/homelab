@@ -38,6 +38,7 @@ spec:
           app_service_config_files:
             - /bridges/whatsapp.yaml
             - /bridges/telegram.yaml
+            - /bridges/steam.yaml
         extraSecrets: {}
         #  password_config:
         #    pepper: ''
