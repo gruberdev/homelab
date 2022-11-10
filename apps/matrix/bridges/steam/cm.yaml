@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: steam-bridge-config
+data:
+  config.yaml.tmpl: |
+    bridge:
+      port: 6000
+      bindAddress: 0.0.0.0
+      domain: matrix.gr.wtf
+      homeserverUrl: http://matrix-matrix-synapse.matrix.svc.cluster.local:8008
+    provisioning:
+      whitelist:
+        - "@*:matrix.gr.wtf"
+      sharedSecret: ${SHARED_SECRET}
+      apiPrefix: /_matrix/provision
+    presence:
+      enabled: true
+      interval: 5000
