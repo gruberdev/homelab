@@ -54,7 +54,7 @@ spec:
             allowPrivilegeEscalation: false
         - name: generate-config
           image: grubertech/steam-bridge:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: CONFIG_PATH
               value: "/data/config.yaml"
@@ -83,7 +83,7 @@ spec:
       containers:
         - name: bridge
           image: grubertech/steam-bridge:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: CONFIG_PATH
               value: "/data/config.yaml"
