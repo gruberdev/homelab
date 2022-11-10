@@ -55,18 +55,11 @@ spec:
         - name: generate-config
           image: icewind1991/mx-puppet-steam:latest
           imagePullPolicy: IfNotPresent
-          command: ["/usr/local/bin/node"]
           env:
             - name: CONFIG_PATH
               value: "/data/config.yaml"
             - name: REGISTRATION_PATH
               value: "/bridges/steam.yaml"
-          args:
-            - '/opt/mx-puppet-steam/build/index.js'
-            - |
-              -c ${CONFIG_PATH} \
-              -r \
-              -f ${REGISTRATION_PATH}
           volumeMounts:
             - name: config
               mountPath: /data
