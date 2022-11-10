@@ -5,6 +5,7 @@ bases:
 - github.com/zalando/postgres-operator/ui/manifests
 - github.com/gruberdev/homelab/apps/networking/tailscale
 - base/rb.yaml
+- base/cm.yaml
 
 patchesStrategicMerge:
 - overlay/ui-deployment.yaml
