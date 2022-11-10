@@ -63,10 +63,10 @@ spec:
         - name: generate-config
           image: dock.mau.dev/mautrix/telegram:v0.12.1
           imagePullPolicy: IfNotPresent
-          command: ["python3"]
+          command: ["/bin/sh"]
           args:
             - |
-              -m mautrix-telegram \
+              python3 -m mautrix-telegram \
               -g -c /data/config.yaml \
               -r /bridges/telegram.yaml
           volumeMounts:
@@ -91,10 +91,10 @@ spec:
         - name: bridge
           image: dock.mau.dev/mautrix/telegram:v0.12.1
           imagePullPolicy: IfNotPresent
-          command: ["python3"]
+          command: ["/bin/sh"]
           args:
             - |
-              -m mautrix-telegram \
+              python3 -m mautrix-telegram \
               -n -c /data/config.yaml
           ports:
             - name: bridge
