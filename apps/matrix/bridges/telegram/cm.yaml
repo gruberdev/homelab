@@ -244,7 +244,7 @@ data:
         file:
           class: logging.handlers.RotatingFileHandler
           formatter: normal
-          filename: ./mautrix-telegram.log
+          filename: ""
           maxBytes: 10485760
           backupCount: 10
         console:
@@ -260,5 +260,4 @@ data:
       root:
         level: DEBUG
         handlers:
-          - file
           - console
