@@ -1,15 +1,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: steam-bridge
+  name: linkedin-bridge
   labels:
-    app: steam-bridge
+    app: linkedin-bridge
 spec:
   type: ClusterIP
   selector:
-    app: steam-bridge
+    app: linkedin-bridge
   ports:
     - name: bridge
       port: 80
-      targetPort: 6000
+      targetPort: 29319
       protocol: TCP

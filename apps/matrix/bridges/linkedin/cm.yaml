@@ -1,0 +1,121 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: linkedin-bridge-config
+data:
+  config.yaml.tmpl: |
+    homeserver:
+      address: http://matrix-matrix-synapse.matrix.svc.cluster.local:8008
+      domain: matrix.gr.wtf
+      verify_ssl: false
+      asmux: false
+      http_retry_count: 4
+      status_endpoint: null
+      message_send_checkpoint_endpoint: null
+      async_media: false
+    appservice:
+      address: http://linkedin-bridge.matrix.svc.cluster.local:80
+      hostname: 0.0.0.0
+      port: 29319
+      max_body_size: 1
+      database: postgres://${BRIDGE_DB_USERNAME}:${BRIDGE_DB_PASSWORD}@db-bridges.matrix.svc.cluster.local:5432/linkedin?sslmode=require
+      database_opts:
+        min_size: 5
+        max_size: 10
+      provisioning:
+        enabled: true
+        prefix: /_matrix/provision/v1
+        shared_secret: ${SHARED_SECRET}
+      id: linkedin
+      bot_username: linkedinbot
+      bot_displayname: LinkedIn bridge bot
+      bot_avatar: mxc://sumnerevans.com/XMtwdeUBnxYvWNFFrfeTSHqB
+      ephemeral_events: false
+      as_token: This value is generated when generating the registration
+      hs_token: This value is generated when generating the registration
+    metrics:
+      enabled: false
+      listen_port: 8000
+    manhole:
+      enabled: false
+      path: /var/tmp/linkedin-matrix.manhole
+      whitelist:
+        - 0
+    bridge:
+      username_template: linkedin_{userid}
+      community_template: null
+      displayname_template: '{displayname} (LinkedIn)'
+      displayname_preference:
+        - name
+        - first_name
+      set_topic_on_dms: true
+      command_prefix: '!li'
+      initial_chat_sync: 20
+      invite_own_puppet_to_pm: false
+      sync_with_custom_puppets: true
+      sync_direct_chat_list: false
+      double_puppet_server_map:
+        matrix.gr.wtf: http://matrix-matrix-synapse.matrix.svc.cluster.local:8008
+      double_puppet_allow_discovery: false
+      login_shared_secret_map:
+        matrix.gr.wtf: ${SHARED_SECRET}
+      presence: true
+      update_avatar_initial_sync: true
+      federate_rooms: true
+      encryption:
+        allow: false
+        default: false
+        require: false
+        allow_key_sharing: false
+        verification_levels:
+          receive: unverified
+          send: unverified
+          share: cross-signed-tofu
+        rotation:
+          enable_custom: false
+          milliseconds: 604800000
+          messages: 100
+      delivery_receipts: false
+      allow_invites: false
+      backfill:
+        invite_own_puppet: true
+        initial_limit: 0
+        missed_limit: 1000
+        disable_notifications: false
+        unread_hours_threshold: 0
+      periodic_reconnect:
+        interval: -1
+        mode: refresh
+        always: false
+      resync_max_disconnected_time: 5
+      temporary_disconnect_notices: true
+      refresh_on_reconnection_fail: false
+      resend_bridge_info: false
+      mute_bridging: false
+      tag_only_on_create: true
+      permissions:
+        matrix.gr.wtf: user
+        '@gruber:matrix.gr.wtf': admin
+    logging:
+      version: 1
+      formatters:
+        colored:
+          (): mautrix.util.logging.color.ColorFormatter
+          format: '[%(asctime)s] [%(levelname)s@%(name)s] %(message)s'
+        normal:
+          format: '[%(asctime)s] [%(levelname)s@%(name)s] %(message)s'
+      handlers:
+        console:
+          class: logging.StreamHandler
+          formatter: colored
+      loggers:
+        mau:
+          level: DEBUG
+        paho:
+          level: INFO
+        aiohttp:
+          level: INFO
+      root:
+        level: DEBUG
+        handlers:
+          - console
