@@ -3,9 +3,7 @@ kind: Kustomization
 bases:
 - ./base
 - https://github.com/gruberdev/homelab/apps/networking/tailscale
-
 namespace: services
-
 patches:
 - path: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/tailscale/patch.yaml
   target:
@@ -29,4 +27,4 @@ commonAnnotations:
   reloader.stakater.com/auto: "true"
 images:
 - name: n8nio/n8n
-  newTag: 0.201.0
+  newTag: 0.202.0
