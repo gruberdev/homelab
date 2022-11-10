@@ -48,6 +48,7 @@ resources:
 
 - base/matrix/whats.yaml
 - base/matrix/telegram.yaml
+- base/matrix/steam.yaml
 - base/matrix/synapse.yaml
 - base/matrix/element.yaml
 - base/matrix/dbs.yaml
