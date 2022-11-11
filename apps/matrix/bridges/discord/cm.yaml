@@ -18,8 +18,8 @@ data:
         interval: 500
     provisioning:
       whitelist:
-        - "@gruber:matrix.gr.wtf.com"
-        - "@.*:matrix.gr.wtf.com"
+        - "@gruber:matrix.gr.wtf"
+        - "@.*:matrix.gr.wtf"
     homeserverUrlMap:
       matrix.gr.wtf: http://matrix-matrix-synapse.matrix.svc.cluster.local:8008
     namePatterns:
