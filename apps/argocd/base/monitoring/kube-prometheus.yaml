@@ -14,24 +14,10 @@ spec:
       values: |
         nameOverride: ""
         namespaceOverride: "monitoring"
-
-        ## Provide a k8s version to auto dashboard import script example: kubeTargetVersionOverride: 1.16.6
-        ##
         kubeTargetVersionOverride: ""
-
-        ## Allow kubeVersion to be overridden while creating the ingress
-        ##
         kubeVersionOverride: ""
-
-        ## Provide a name to substitute for the full names of resources
-        ##
         fullnameOverride: ""
-
-        ## Labels to apply to all resources
-        ##
         commonLabels: {}
-        ## Create default rules for monitoring the cluster
-        ##
         defaultRules:
           create: true
           rules:
@@ -579,11 +565,11 @@ spec:
             ##
             resources:
               limits:
-                cpu: 400m
-                memory: 512Mi
+                cpu: 500m
+                memory: 1Gi
               requests:
-                cpu: 200m
-                memory: 256Mi
+                cpu: 300m
+                memory: 512Mi
 
             ## Pod anti-affinity can prevent the scheduler from placing Prometheus replicas on the same node.
             ## The default value "soft" means that the scheduler should *prefer* to not schedule two replica pods onto the same node but no guarantee is provided.
@@ -1912,11 +1898,11 @@ spec:
             # resource config for prometheusConfigReloader
             resources:
               requests:
-                cpu: 200m
-                memory: 50Mi
+                cpu: 300m
+                memory: 400Mi
               limits:
                 cpu: 200m
-                memory: 50Mi
+                memory: 300Mi
 
           ## Thanos side-car image when configured
           ##
@@ -2637,11 +2623,11 @@ spec:
 
             resources:
               limits:
-                cpu: 400m
-                memory: 512Mi
+                cpu: 500m
+                memory: 1Gi
               requests:
-                cpu: 200m
-                memory: 256Mi
+                cpu: 300m
+                memory: 512Mi
 
             storageSpec:
               volumeClaimTemplate:
@@ -3303,11 +3289,11 @@ spec:
             ##
             resources:
               limits:
-                cpu: 400m
-                memory: 512Mi
+                cpu: 500m
+                memory: 1Gi
               requests:
-                cpu: 200m
-                memory: 256Mi
+                cpu: 250m
+                memory: 512Mi
 
             ## Pod anti-affinity can prevent the scheduler from placing Prometheus replicas on the same node.
             ## The default value "soft" means that the scheduler should *prefer* to not schedule two replica pods onto the same node but no guarantee is provided.
