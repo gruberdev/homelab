@@ -38,7 +38,7 @@ spec:
             containerPort: 9130
             protocol: TCP
           - name: web
-            containerPort: 37288
+            containerPort: 32767
           volumeMounts:
           - name: poller-data
             mountPath: /config

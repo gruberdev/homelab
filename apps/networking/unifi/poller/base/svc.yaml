@@ -24,6 +24,6 @@ spec:
   type: NodePort
   ports:
     - port: 9130
-      nodePort: 37288
+      nodePort: 32767
       protocol: TCP
       name: metrics
