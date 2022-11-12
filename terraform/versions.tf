@@ -10,7 +10,11 @@ terraform {
       version = "0.38.1"
     }
   }
+  backend "pg" {
+  }
 }
+
+
 
 provider "vault" {
   address = var.vault_api_url
