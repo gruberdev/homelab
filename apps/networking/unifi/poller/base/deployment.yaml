@@ -37,6 +37,12 @@ spec:
           - name: metrics
             containerPort: 9130
             protocol: TCP
+          - name: udp
+            containerPort: 9130
+            protocol: UDP
+          - name: web
+            containerPort: 32767
+            protocol: TCP
           volumeMounts:
           - name: poller-data
             mountPath: /config

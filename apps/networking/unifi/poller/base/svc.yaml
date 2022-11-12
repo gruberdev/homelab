@@ -10,6 +10,10 @@ spec:
       targetPort: 9130
       protocol: TCP
       name: metrics
+    - port: 9131
+      targetPort: 37288
+      protocol: TCP
+      name: web
   selector:
     app: unifi-poller
     type: ClusterIP
