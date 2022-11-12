@@ -468,14 +468,14 @@ spec:
                 editable: true
                 options:
                   path: /var/lib/grafana/dashboards/unifi
-              - name: longhorn
+              - name: cluster
                 orgId: 1
-                folder: 'Longhorn'
+                folder: 'cluster'
                 type: file
                 disableDeletion: true
                 editable: true
                 options:
-                  path: /var/lib/grafana/dashboards/longhorn
+                  path: /var/lib/grafana/dashboards/cluster
           dashboards:
             unifi:
               unifiPollerClientDPI:
@@ -502,10 +502,30 @@ spec:
                 gnetId: 11312
                 revision: 8
                 datasource: Prometheus
-            longhorn:
+            cluster:
               longhornMonitoring:
-                gnetId: 11310
-                revision: 4
+                gnetId: 16888
+                revision: 5
+                datasource: Prometheus
+              argocdMonitoring:
+                gnetId: 14584
+                revision: 1
+                datasource: Prometheus
+              postgresMonitoring:
+                gnetId: 12485
+                revision: 1
+                datasource: Prometheus
+              adguardMonitoring:
+                gnetId: 13330
+                revision: 3
+                datasource: Prometheus
+              nvidiaMonitoring:
+                gnetId: 14574
+                revision: 8
+                datasource: Prometheus
+              vaultMonitoring:
+                gnetId: 15124
+                revision: 2
                 datasource: Prometheus
           forceDeployDatasources: false
           forceDeployDashboards: false
