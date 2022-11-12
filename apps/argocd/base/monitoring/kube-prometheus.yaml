@@ -1958,35 +1958,12 @@ spec:
             ## The scrape configuration example below will find master nodes, provided they have the name .*mst.*, relabel the
             ## port to 2379 and allow etcd scraping provided it is running on all Kubernetes master nodes
             ##
-            additionalScrapeConfigs: []
-            # - job_name: kube-etcd
-            #   kubernetes_sd_configs:
-            #     - role: node
-            #   scheme: https
-            #   tls_config:
-            #     ca_file:   /etc/prometheus/secrets/etcd-client-cert/etcd-ca
-            #     cert_file: /etc/prometheus/secrets/etcd-client-cert/etcd-client
-            #     key_file:  /etc/prometheus/secrets/etcd-client-cert/etcd-client-key
-            #   relabel_configs:
-            #   - action: labelmap
-            #     regex: __meta_kubernetes_node_label_(.+)
-            #   - source_labels: [__address__]
-            #     action: replace
-            #     targetLabel: __address__
-            #     regex: ([^:;]+):(\d+)
-            #     replacement: ${1}:2379
-            #   - source_labels: [__meta_kubernetes_node_name]
-            #     action: keep
-            #     regex: .*mst.*
-            #   - source_labels: [__meta_kubernetes_node_name]
-            #     action: replace
-            #     targetLabel: node
-            #     regex: (.*)
-            #     replacement: ${1}
-            #   metric_relabel_configs:
-            #   - regex: (kubernetes_io_hostname|failure_domain_beta_kubernetes_io_region|beta_kubernetes_io_os|beta_kubernetes_io_arch|beta_kubernetes_io_instance_type|failure_domain_beta_kubernetes_io_zone)
-            #     action: labeldrop
-            #
+            additionalScrapeConfigs:
+              - job_name: 'unifipoller'
+                scrape_interval: 30s
+                static_configs:
+                - targets: ['unifi-poller-svc.unifi.svc.cluster.local:9130']
+
             ## If scrape config contains a repetitive section, you may want to use a template.
             ## In the following example, you can see how to define `gce_sd_configs` for multiple zones
             # additionalScrapeConfigs: |
