@@ -1532,7 +1532,6 @@ spec:
                   resources:
                     requests:
                       storage: 5Gi
-
             # Additional volumes on the output StatefulSet definition.
             volumes: []
 
