@@ -34,6 +34,7 @@ resources:
 - base/monitoring/unifi-poller.yaml
 - base/monitoring/kube-prometheus.yaml
 - base/monitoring/kube-prom-crds.yaml
+- base/monitoring/longhorn-monitoring.yaml
 
 - base/services/n8n.yaml
 - base/services/rss-gen.yaml
