@@ -21,7 +21,9 @@ metadata:
 spec:
   selector:
     app: unifi-poller
-  type: ClusterIP
+  type: NodePort
   ports:
-    - port: 37288
-      targetPort: 37288
+    - port: 9130
+      nodePort: 37288
+      protocol: TCP
+      name: metrics
