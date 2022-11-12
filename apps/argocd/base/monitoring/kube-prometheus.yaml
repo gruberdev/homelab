@@ -1563,7 +1563,7 @@ spec:
                   credentials: ""
                 scheme: http
                 static_configs:
-                  - targets: ['192.168.1.8:8123']
+                  - targets: ['192.168.1.10:8123']
               - job_name: 'adguard'
                 static_configs:
                 - targets: ['192.168.1.8:9617']
