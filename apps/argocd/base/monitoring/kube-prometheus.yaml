@@ -336,10 +336,10 @@ spec:
             ##
             resources:
               limits:
-                cpu: 500m
-                memory: 1Gi
-              requests:
                 cpu: 300m
+                memory: 720Mi
+              requests:
+                cpu: 150m
                 memory: 512Mi
 
             ## Pod anti-affinity can prevent the scheduler from placing Prometheus replicas on the same node.
@@ -1563,7 +1563,10 @@ spec:
                   credentials: ""
                 scheme: http
                 static_configs:
-                  - targets: ['home-assistant.homeassistant.svc.cluster.local:8123']
+                  - targets: ['192.168.1.8:8123']
+              - job_name: 'adguard'
+                static_configs:
+                - targets: ['192.168.1.8:9617']
             ## If scrape config contains a repetitive section, you may want to use a template.
             ## In the following example, you can see how to define `gce_sd_configs` for multiple zones
             # additionalScrapeConfigs: |
