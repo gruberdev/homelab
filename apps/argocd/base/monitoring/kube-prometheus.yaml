@@ -511,7 +511,7 @@ spec:
           forceDeployDashboards: false
           defaultDashboardsEnabled: true
           defaultDashboardsTimezone: "America/Sao_Paulo"
-          adminPassword: <path:secret/data/kube-prometheus#grafana-admin-password>
+          adminPassword: <path:kv/data/kube-prometheus#grafana-admin-password>
           rbac:
             pspEnabled: false
           ingress:
