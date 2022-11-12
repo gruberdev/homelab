@@ -53,47 +53,20 @@ spec:
             nodeExporterRecording: true
             prometheus: true
             prometheusOperator: true
-
-          ## Reduce app namespace alert scope
           appNamespacesTarget: ".*"
-
-          ## Labels for default rules
           labels: {}
-          ## Annotations for default rules
           annotations: {}
-
-          ## Additional labels for PrometheusRule alerts
           additionalRuleLabels: {}
-
-          ## Additional annotations for PrometheusRule alerts
           additionalRuleAnnotations: {}
-
-          ## Prefix for runbook URLs. Use this to override the first part of the runbookURLs that is common to all rules.
           runbookUrl: "https://runbooks.prometheus-operator.dev/runbooks"
           disabled: {}
         additionalPrometheusRulesMap: {}
-        ##
         global:
           rbac:
             create: true
-
-            ## Create ClusterRoles that extend the existing view, edit and admin ClusterRoles to interact with prometheus-operator CRDs
-            ## Ref: https://kubernetes.io/docs/reference/access-authn-authz/rbac/#aggregated-clusterroles
             createAggregateClusterRoles: false
             pspEnabled: false
             pspAnnotations: {}
-              ## Specify pod annotations
-              ## Ref: https://kubernetes.io/docs/concepts/policy/pod-security-policy/#apparmor
-              ## Ref: https://kubernetes.io/docs/concepts/policy/pod-security-policy/#seccomp
-              ## Ref: https://kubernetes.io/docs/concepts/policy/pod-security-policy/#sysctl
-              ##
-              # seccomp.security.alpha.kubernetes.io/allowedProfileNames: '*'
-              # seccomp.security.alpha.kubernetes.io/defaultProfileName: 'docker/default'
-              # apparmor.security.beta.kubernetes.io/defaultProfileName: 'runtime/default'
-
-          ## Reference to one or more secrets to be used when pulling images
-          ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-          ##
           imagePullSecrets: []
         alertmanager:
           enabled: true
@@ -145,113 +118,14 @@ spec:
             - name: 'null'
             templates:
             - '/etc/alertmanager/config/*.tmpl'
-
-          ## Pass the Alertmanager configuration directives through Helm's templating
-          ## engine. If the Alertmanager configuration contains Alertmanager templates,
-          ## they'll need to be properly escaped so that they are not interpreted by
-          ## Helm
-          ## ref: https://helm.sh/docs/developing_charts/#using-the-tpl-function
-          ##      https://prometheus.io/docs/alerting/configuration/#tmpl_string
-          ##      https://prometheus.io/docs/alerting/notifications/
-          ##      https://prometheus.io/docs/alerting/notification_examples/
           tplConfig: false
-
-          ## Alertmanager template files to format alerts
-          ## By default, templateFiles are placed in /etc/alertmanager/config/ and if
-          ## they have a .tmpl file suffix will be loaded. See config.templates above
-          ## to change, add other suffixes. If adding other suffixes, be sure to update
-          ## config.templates above to include those suffixes.
-          ## ref: https://prometheus.io/docs/alerting/notifications/
-          ##      https://prometheus.io/docs/alerting/notification_examples/
-          ##
           templateFiles: {}
           ingress:
             enabled: false
-
-            # For Kubernetes >= 1.18 you should specify the ingress-controller via the field ingressClassName
-            # See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress
-            # ingressClassName: nginx
-
-            annotations: {}
-
-            labels: {}
-
-            ## Redirect ingress to an additional defined port on the service
-            # servicePort: 8081
-
-            ## Hosts must be provided if Ingress is enabled.
-            ##
-            hosts: []
-              # - alertmanager.domain.com
-
-            ## Paths to use for ingress rules - one path should match the alertmanagerSpec.routePrefix
-            ##
-            paths: []
-            # - /
-
-            ## For Kubernetes >= 1.18 you should specify the pathType (determines how Ingress paths should be matched)
-            ## See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#better-path-matching-with-path-types
-            # pathType: ImplementationSpecific
-
-            ## TLS configuration for Alertmanager Ingress
-            ## Secret must be manually created in the namespace
-            ##
-            tls: []
-            # - secretName: alertmanager-general-tls
-            #   hosts:
-            #   - alertmanager.example.com
-
-          ## Configuration for Alertmanager secret
-          ##
           secret:
             annotations: {}
-
-          ## Configuration for creating an Ingress that will map to each Alertmanager replica service
-          ## alertmanager.servicePerReplica must be enabled
-          ##
           ingressPerReplica:
             enabled: false
-
-            # For Kubernetes >= 1.18 you should specify the ingress-controller via the field ingressClassName
-            # See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress
-            # ingressClassName: nginx
-
-            annotations: {}
-            labels: {}
-
-            ## Final form of the hostname for each per replica ingress is
-            ## {{ ingressPerReplica.hostPrefix }}-{{ $replicaNumber }}.{{ ingressPerReplica.hostDomain }}
-            ##
-            ## Prefix for the per replica ingress that will have `-$replicaNumber`
-            ## appended to the end
-            hostPrefix: ""
-            ## Domain that will be used for the per replica ingress
-            hostDomain: ""
-
-            ## Paths to use for ingress rules
-            ##
-            paths: []
-            # - /
-
-            ## For Kubernetes >= 1.18 you should specify the pathType (determines how Ingress paths should be matched)
-            ## See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#better-path-matching-with-path-types
-            # pathType: ImplementationSpecific
-
-            ## Secret name containing the TLS certificate for alertmanager per replica ingress
-            ## Secret must be manually created in the namespace
-            tlsSecretName: ""
-
-            ## Separated secret for each per replica Ingress. Can be used together with cert-manager
-            ##
-            tlsSecretPerReplica:
-              enabled: false
-              ## Final form of the secret for each per replica ingress is
-              ## {{ tlsSecretPerReplica.prefix }}-{{ $replicaNumber }}
-              ##
-              prefix: "alertmanager"
-
-          ## Configuration for Alertmanager service
-          ##
           service:
             annotations: {}
             labels: {}
@@ -425,45 +299,11 @@ spec:
             ## Namespaces to be selected for AlertmanagerConfig discovery. If nil, only check own namespace.
             ##
             alertmanagerConfigNamespaceSelector: {}
-            ## Example which selects all namespaces
-            ## with label "alertmanagerconfig" with values any of "example-namespace" or "example-namespace-2"
-            # alertmanagerConfigNamespaceSelector:
-            #   matchExpressions:
-            #     - key: alertmanagerconfig
-            #       operator: In
-            #       values:
-            #         - example-namespace
-            #         - example-namespace-2
-
-            ## Example which selects all namespaces with label "alertmanagerconfig" set to "enabled"
-            # alertmanagerConfigNamespaceSelector:
-            #   matchLabels:
-            #     alertmanagerconfig: enabled
-
-            ## AlermanagerConfig to be used as top level configuration
-            ##
             alertmanagerConfiguration: {}
-            ## Example with select a global alertmanagerconfig
-            # alertmanagerConfiguration:
-            #   name: global-alertmanager-Configuration
-
-            ## Define Log Format
-            # Use logfmt (default) or json logging
             logFormat: logfmt
-
-            ## Log level for Alertmanager to be configured with.
-            ##
             logLevel: info
-
-            ## Size is the expected size of the alertmanager cluster. The controller will eventually make the size of the
-            ## running cluster equal to the expected size.
             replicas: 1
-
-            ## Time duration Alertmanager shall retain data for. Default is '120h', and must match the regular expression
-            ## [0-9]+(ms|s|m|h) (milliseconds seconds minutes hours).
-            ##
             retention: 120h
-
             storage:
               volumeClaimTemplate:
                 spec:
@@ -611,150 +451,100 @@ spec:
           #   auth: |
           #     foo:$apr1$OFG3Xybp$ckL0FHDAkoXYIlH9.cysT0
           #     someoneelse:$apr1$DMZX2Z4q$6SbQIfyuLQd.xmo/P0m2c.
-
-        ## Using default values from https://github.com/grafana/helm-charts/blob/main/charts/grafana/values.yaml
-        ##
         grafana:
           enabled: true
           namespaceOverride: monitoring
           plugins:
             - grafana-piechart-panel
-          ## ForceDeployDatasources Create datasource configmap even if grafana deployment has been disabled
-          ##
+          dashboardProviders:
+            dashboardproviders.yaml:
+              apiVersion: 1
+              providers:
+              - name: unifi
+                orgId: 1
+                folder: 'Unifi'
+                type: file
+                disableDeletion: true
+                editable: true
+                options:
+                  path: /var/lib/grafana/dashboards/unifi
+          dashboards:
+            unifi:
+              unifiPollerClientDPI:
+                gnetId: 11310
+                revision: 4
+                datasource: Prometheus
+              unifiPollerClientInsights:
+                gnetId: 11315
+                revision: 8
+                datasource: Prometheus
+              unifiPollerNetworkSites:
+                gnetId: 11311
+                revision: 4
+                datasource: Prometheus
+              unifiPollerUAPInsights:
+                gnetId: 11314
+                revision: 8
+                datasource: Prometheus
+              unifiPollerUSGInsights:
+                gnetId: 11313
+                revision: 8
+                datasource: Prometheus
+              unifiPollerUSWInsights:
+                gnetId: 11312
+                revision: 8
+                datasource: Prometheus
           forceDeployDatasources: false
-
-          ## ForceDeployDashboard Create dashboard configmap even if grafana deployment has been disabled
-          ##
           forceDeployDashboards: false
-
-          ## Deploy default dashboards
-          ##
           defaultDashboardsEnabled: true
-
-          ## Timezone for the default dashboards
-          ## Other options are: browser or a specific timezone, i.e. Europe/Luxembourg
-          ##
           defaultDashboardsTimezone: "America/Sao_Paulo"
           adminPassword: prom-operator
           rbac:
-            ## If true, Grafana PSPs will be created
-            ##
             pspEnabled: false
           ingress:
             enabled: false
           sidecar:
             dashboards:
               enabled: true
-              label: grafana_dashboard
               labelValue: "1"
-
-              ## Annotations for Grafana dashboard configmaps
-              ##
-              annotations: {}
+              folderAnnotation: grafana_folder
+              searchNamespace: "ALL"
               multicluster:
                 global:
                   enabled: false
                 etcd:
                   enabled: false
               provider:
-                allowUiUpdates: false
+                foldersFromFilesStructure: true
             datasources:
               enabled: true
               defaultDatasourceEnabled: true
-
               uid: prometheus
-
-              ## URL of prometheus datasource
-              ##
               # url: http://prometheus-stack-prometheus:9090/
-
-              # If not defined, will use prometheus.prometheusSpec.scrapeInterval or its default
-              # defaultDatasourceScrapeInterval: 15s
-
-              ## Annotations for Grafana datasource configmaps
-              ##
               annotations: {}
-
-              ## Create datasource for each Pod of Prometheus StatefulSet;
-              ## this uses headless service `prometheus-operated` which is
-              ## created by Prometheus Operator
-              ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/0fee93e12dc7c2ea1218f19ae25ec6b893460590/pkg/prometheus/statefulset.go#L255-L286
               createPrometheusReplicasDatasources: false
               label: grafana_datasource
               labelValue: "1"
-
-              ## Field with internal link pointing to existing data source in Grafana.
-              ## Can be provisioned via additionalDataSources
               exemplarTraceIdDestinations: {}
-                # datasourceUid: Jaeger
-                # traceIdLabelName: trace_id
-
           extraConfigmapMounts: []
           # - name: certs-configmap
           #   mountPath: /etc/grafana/ssl/
           #   configMap: certs-configmap
           #   readOnly: true
-
           deleteDatasources: []
-          # - name: example-datasource
-          #   orgId: 1
-
-          ## Configure additional grafana datasources (passed through tpl)
-          ## ref: http://docs.grafana.org/administration/provisioning/#datasources
           additionalDataSources: []
-          # - name: prometheus-sample
-          #   access: proxy
-          #   basicAuth: true
-          #   basicAuthPassword: pass
-          #   basicAuthUser: daco
-          #   editable: false
-          #   jsonData:
-          #       tlsSkipVerify: true
-          #   orgId: 1
-          #   type: prometheus
-          #   url: https://{{ printf "%s-prometheus.svc" .Release.Name }}:9090
-          #   version: 1
-
-          ## Passed to grafana subchart and used by servicemonitor below
-          ##
           service:
             portName: http-web
-
           serviceMonitor:
-            # If true, a ServiceMonitor CRD is created for a prometheus operator
-            # https://github.com/coreos/prometheus-operator
-            #
             enabled: true
-
-            # Path to use for scraping metrics. Might be different if server.root_url is set
-            # in grafana.ini
             path: "/metrics"
-
-            #  namespace: monitoring  (defaults to use the namespace this chart is deployed to)
-
-            # labels for the ServiceMonitor
+            namespace: monitoring
             labels: {}
-
-            # Scrape interval. If not set, the Prometheus default scrape interval is used.
-            #
             interval: ""
             scheme: http
             tlsConfig: {}
             scrapeTimeout: 30s
-
-            ## RelabelConfigs to apply to samples before scraping
-            ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#relabelconfig
-            ##
             relabelings: []
-            # - sourceLabels: [__meta_kubernetes_pod_node_name]
-            #   separator: ;
-            #   regex: ^(.*)$
-            #   targetLabel: nodename
-            #   replacement: $1
-            #   action: replace
-
-        ## Component scraping the kube api server
-        ##
         kubeApiServer:
           enabled: false
         kubelet:
@@ -790,47 +580,14 @@ spec:
           prometheus:
             monitor:
               enabled: true
-
-              ## Scrape interval. If not set, the Prometheus default scrape interval is used.
-              ##
               interval: ""
-
-              ## Scrape Timeout. If not set, the Prometheus default scrape timeout is used.
-              ##
               scrapeTimeout: ""
-
-              ## proxyUrl: URL of a proxy that should be used for scraping.
-              ##
               proxyUrl: ""
-
-              # Keep labels from scraped data, overriding server-side labels
-              ##
               honorLabels: true
-
-              ## MetricRelabelConfigs to apply to samples after scraping, but before ingestion.
-              ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#relabelconfig
-              ##
               metricRelabelings: []
-              # - action: keep
-              #   regex: 'kube_(daemonset|deployment|pod|namespace|node|statefulset).+'
-              #   sourceLabels: [__name__]
-
-              ## RelabelConfigs to apply to samples before scraping
-              ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#relabelconfig
-              ##
               relabelings: []
-              # - sourceLabels: [__meta_kubernetes_pod_node_name]
-              #   separator: ;
-              #   regex: ^(.*)$
-              #   targetLabel: nodename
-              #   replacement: $1
-              #   action: replace
-
           selfMonitor:
             enabled: false
-
-        ## Deploy node exporter as a daemonset to all nodes
-        ##
         nodeExporter:
           enabled: true
         prometheus-node-exporter:
@@ -846,7 +603,6 @@ spec:
           prometheus:
             monitor:
               enabled: true
-
               jobLabel: jobLabel
 
               ## Scrape interval. If not set, the Prometheus default scrape interval is used.
