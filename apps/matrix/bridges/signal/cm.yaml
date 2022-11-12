@@ -1,0 +1,137 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: signal-bridge-config
+data:
+  config.yaml.tmpl: |
+    homeserver:
+      address: http://matrix-matrix-synapse.matrix.svc.cluster.local:8008
+      domain: matrix.gr.wtf
+      verify_ssl: false
+      software: standard
+      http_retry_count: 4
+      status_endpoint: null
+      message_send_checkpoint_endpoint: null
+      connection_limit: 100
+      async_media: false
+    appservice:
+      address: http://signal-bridge.matrix.svc.cluster.local:80
+      tls_cert: false
+      tls_key: false
+      hostname: 0.0.0.0
+      port: 29328
+      max_body_size: 1
+      database: postgres://${BRIDGE_DB_USERNAME}:${BRIDGE_DB_PASSWORD}@db-bridges.matrix.svc.cluster.local:5432/signal?sslmode=require
+      database_opts:
+        min_size: 1
+        max_size: 10
+      id: signal
+      bot_username: signalbot
+      bot_displayname: Signal bridge bot
+      bot_avatar: mxc://maunium.net/wPJgTQbZOtpBFmDNkiNEMDUp
+      ephemeral_events: true
+      as_token: This value is generated when generating the registration
+      hs_token: This value is generated when generating the registration
+    metrics:
+      enabled: true
+      listen_port: 8000
+    manhole:
+      enabled: false
+    signal:
+      socket_path: /var/run/signald/signald.sock
+      outgoing_attachment_dir: /tmp
+      avatar_dir: ~/.config/signald/avatars
+      data_dir: ~/.config/signald/data
+      delete_unknown_accounts_on_start: false
+      remove_file_after_handling: true
+      registration_enabled: true
+      enable_disappearing_messages_in_groups: false
+    bridge:
+      username_template: signal_{userid}
+      displayname_template: '{displayname} (Signal)'
+      contact_list_names: disallow
+      displayname_preference:
+        - full_name
+        - phone
+      autocreate_group_portal: true
+      autocreate_contact_portal: true
+      public_portals: false
+      sync_with_custom_puppets: true
+      sync_direct_chat_list: true
+      double_puppet_allow_discovery: false
+      double_puppet_server_map:
+        matrix.gr.wtf: http://matrix-matrix-synapse.matrix.svc.cluster.local:8008
+      login_shared_secret_map:
+        matrix.gr.wtf: ${SHARED_SECRET}
+      federate_rooms: true
+      encryption:
+        allow: false
+        default: false
+        appservice: false
+        require: false
+        allow_key_sharing: false
+        verification_levels:
+          receive: unverified
+          send: unverified
+          share: cross-signed-tofu
+        rotation:
+          enable_custom: false
+          milliseconds: 604800000
+          messages: 100
+      private_chat_portal_meta: false
+      delivery_receipts: true
+      delivery_error_reports: true
+      message_status_events: false
+      resend_bridge_info: false
+      periodic_sync: 0
+      bridge_matrix_leave: true
+      provisioning:
+        enabled: true
+        prefix: /_matrix/provision
+        shared_secret: ${SHARED_SECRET}
+        segment_key: null
+      command_prefix: '!signal'
+      management_room_text:
+        welcome: Hello, I'm a Signal bridge bot.
+        welcome_connected: Use `help` for help.
+        welcome_unconnected: Use `help` for help or `link` to log in.
+        additional_help: ''
+      management_room_multiple_messages: false
+      permissions:
+        '*': relay
+        matrix.gr.wtf: user
+        '@gruber:matrix.gr.wtf': admin
+      relay:
+        enabled: false
+        message_formats:
+          m.text: '$sender_displayname: $message'
+          m.notice: '$sender_displayname: $message'
+          m.emote: '* $sender_displayname $message'
+          m.file: $sender_displayname sent a file
+          m.image: $sender_displayname sent an image
+          m.audio: $sender_displayname sent an audio file
+          m.video: $sender_displayname sent a video
+          m.location: $sender_displayname sent a location
+        relaybot: '@relaybot:example.com'
+      location_format: https://www.google.com/maps/place/{lat},{long}
+    logging:
+      version: 1
+      formatters:
+        colored:
+          (): mautrix_signal.util.ColorFormatter
+          format: '[%(asctime)s] [%(levelname)s@%(name)s] %(message)s'
+        normal:
+          format: '[%(asctime)s] [%(levelname)s@%(name)s] %(message)s'
+      handlers:
+        console:
+          class: logging.StreamHandler
+          formatter: colored
+      loggers:
+        mau:
+          level: DEBUG
+        aiohttp:
+          level: INFO
+      root:
+        level: DEBUG
+        handlers:
+          - console
