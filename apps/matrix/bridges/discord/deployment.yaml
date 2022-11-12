@@ -73,10 +73,10 @@ spec:
               mountPath: /bridges
           resources:
             limits:
-              cpu: 400m
+              cpu: 320m
               memory: 512Mi
             requests:
-              cpu: 300m
+              cpu: 150m
               memory: 512Mi
           securityContext:
             capabilities:

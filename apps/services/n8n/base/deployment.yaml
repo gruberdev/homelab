@@ -38,11 +38,11 @@ spec:
               protocol: TCP
           resources:
             requests:
-              cpu: "300m"
-              memory: "512Mi"
+              cpu: 150m
+              memory: 512Mi
             limits:
-              cpu: "600m"
-              memory: "720Mi"
+              cpu: 350m
+              memory: 720Mi
           volumeMounts:
             - name: config-storage
               mountPath: /home/node/.n8n

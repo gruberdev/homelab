@@ -63,10 +63,10 @@ spec:
               name: certs
           resources:
             limits:
-              cpu: "600m"
+              cpu: "380m"
               memory: "1500Mi"
             requests:
-              cpu: "300m"
+              cpu: "240m"
               memory: "1024Mi"
           livenessProbe:
             tcpSocket:

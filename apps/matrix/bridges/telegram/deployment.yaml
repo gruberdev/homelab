@@ -80,10 +80,10 @@ spec:
               mountPath: /bridges
           resources:
             limits:
-              cpu: 400m
+              cpu: 300m
               memory: 512Mi
             requests:
-              cpu: 300m
+              cpu: 100m
               memory: 512Mi
           securityContext:
             capabilities:
@@ -128,10 +128,10 @@ spec:
               mountPath: /data
           resources:
             limits:
-              cpu: 400m
+              cpu: 300m
               memory: 512Mi
             requests:
-              cpu: 300m
+              cpu: 100m
               memory: 256Mi
           securityContext:
             capabilities:

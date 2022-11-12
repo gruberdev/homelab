@@ -379,16 +379,6 @@ spec:
           targetPort: http
         ingress:
           enabled: false
-          traefikPaths: false
-          annotations: {}
-          csHosts: []
-          hosts: []
-          wkHosts: []
-          paths: []
-          csPaths: []
-          includeUnderscoreSynapse: true
-          includeServerName: true
-          tls: []
 
   destination:
     namespace: matrix
