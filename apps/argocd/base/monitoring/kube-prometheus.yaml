@@ -456,6 +456,7 @@ spec:
           namespaceOverride: monitoring
           plugins:
             - grafana-piechart-panel
+            - grafana-clock-panel
           dashboardProviders:
             dashboardproviders.yaml:
               apiVersion: 1
@@ -468,6 +469,14 @@ spec:
                 editable: true
                 options:
                   path: /var/lib/grafana/dashboards/unifi
+              - name: longhorn
+                orgId: 1
+                folder: 'Longhorn'
+                type: file
+                disableDeletion: true
+                editable: true
+                options:
+                  path: /var/lib/grafana/dashboards/longhorn
           dashboards:
             unifi:
               unifiPollerClientDPI:
@@ -494,11 +503,16 @@ spec:
                 gnetId: 11312
                 revision: 8
                 datasource: Prometheus
+            longhorn:
+              longhornMonitoring:
+                gnetId: 11310
+                revision: 4
+                datasource: Prometheus
           forceDeployDatasources: false
           forceDeployDashboards: false
           defaultDashboardsEnabled: true
           defaultDashboardsTimezone: "America/Sao_Paulo"
-          adminPassword: prom-operator
+          adminPassword: <path:secret/data/kube-prometheus#grafana-admin-password>
           rbac:
             pspEnabled: false
           ingress:
