@@ -4,8 +4,8 @@ metadata:
   name: adguard-exporter
 data:
   adguard_protocol: "http"
-  adguard_hostname: "adguard-svc.dns.cluster.local"
-  adguard_port: "3321"
+  adguard_hostname: "192.168.1.8"
+  adguard_port: "3000"
   interval: "60s"
   log_limit: "50000"
   server_port: "9617"
