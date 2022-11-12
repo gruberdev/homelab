@@ -740,20 +740,11 @@ spec:
             # Use certmanager to generate webhook certs
             certManager:
               enabled: false
-          ## Namespaces to scope the interaction of the Prometheus Operator and the apiserver (allow list).
-          ## This is mutually exclusive with denyNamespaces. Setting this to an empty object will disable the configuration
-          ##
           namespaces: {}
             # releaseNamespace: true
             # additional:
             # - kube-system
-
-          ## Namespaces not to scope the interaction of the Prometheus Operator (deny list).
-          ##
           denyNamespaces: []
-
-          ## Filter namespaces to look for prometheus-operator custom resources
-          ##
           alertmanagerInstanceNamespaces: []
           alertmanagerConfigNamespaces: []
           prometheusInstanceNamespaces: []
@@ -764,38 +755,20 @@ spec:
           ## With this specified option cluster.peer will have value alertmanager-monitoring-alertmanager-0.alertmanager-operated.namespace.svc.cluster-domain:9094
           ##
           # clusterDomain: "cluster.local"
-
           networkPolicy:
             ## Enable creation of NetworkPolicy resources.
             ##
             enabled: false
-
-          ## Service account for Alertmanager to use.
-          ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
-          ##
           serviceAccount:
             create: true
             name: ""
-
-          ## Configuration for Prometheus operator service
-          ##
           service:
             annotations: {}
             labels: {}
             clusterIP: ""
-
-          ## Port to expose on each node
-          ## Only used if service.type is 'NodePort'
-          ##
             nodePort: 30080
-
             nodePortTls: 30443
-
-          ## Additional ports to open for Prometheus service
-          ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#multi-port-services
-          ##
             additionalPorts: []
-
           ## Loadbalancer IP
           ## Only use if service.type is "LoadBalancer"
           ##
@@ -805,46 +778,23 @@ spec:
             ## Denotes if this Service desires to route external traffic to node-local or cluster-wide endpoints
             ##
             externalTrafficPolicy: Cluster
-
-          ## Service type
-          ## NodePort, ClusterIP, LoadBalancer
-          ##
             type: ClusterIP
-
-            ## List of IP addresses at which the Prometheus server service is available
-            ## Ref: https://kubernetes.io/docs/user-guide/services/#external-ips
-            ##
             externalIPs: []
-
-          # ## Labels to add to the operator deployment
-          # ##
           labels: {}
-
           ## Annotations to add to the operator deployment
           ##
           annotations: {}
-
-          ## Labels to add to the operator pod
-          ##
           podLabels: {}
-
           ## Annotations to add to the operator pod
           ##
           podAnnotations: {}
-
           ## Assign a PriorityClassName to pods if set
           # priorityClassName: ""
-
           ## Define Log Format
           # Use logfmt (default) or json logging
           # logFormat: logfmt
-
           ## Decrease log verbosity to errors only
           # logLevel: error
-
-          ## If true, the operator will create and maintain a service for scraping kubelets
-          ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/helm/prometheus-operator/README.md
-          ##
           kubeletService:
             enabled: false
           serviceMonitor:
@@ -873,7 +823,6 @@ spec:
           #   operator: "Equal"
           #   value: "value"
           #   effect: "NoSchedule"
-
           ## Assign custom affinity rules to the prometheus operator
           ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
           ##
@@ -902,58 +851,25 @@ spec:
             runAsGroup: 65534
             runAsNonRoot: true
             runAsUser: 65534
-
-          ## Container-specific security context configuration
-          ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
-          ##
           containerSecurityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
-
-          # Enable vertical pod autoscaler support for prometheus-operator
           verticalPodAutoscaler:
             enabled: false
-            # List of resources that the vertical pod autoscaler can control. Defaults to cpu and memory
-            controlledResources: []
-
-            # Define the max allowed resources for the pod
-            maxAllowed: {}
-            # cpu: 200m
-            # memory: 100Mi
-            # Define the min allowed resources for the pod
-            minAllowed: {}
-            # cpu: 200m
-            # memory: 100Mi
-
-            updatePolicy:
-              # Specifies whether recommended updates are applied when a Pod is started and whether recommended updates
-              # are applied during the life of a Pod. Possible values are "Off", "Initial", "Recreate", and "Auto".
-              updateMode: Auto
-
-          ## Prometheus-operator image
-          ##
           image:
             repository: quay.io/prometheus-operator/prometheus-operator
             tag: v0.60.1
             sha: ""
             pullPolicy: IfNotPresent
-
-          ## Prometheus image to use for prometheuses managed by the operator
-          ##
           # prometheusDefaultBaseImage: quay.io/prometheus/prometheus
-
           ## Alertmanager image to use for alertmanagers managed by the operator
           ##
           # alertmanagerDefaultBaseImage: quay.io/prometheus/alertmanager
-
-          ## Prometheus-config-reloader
-          ##
           prometheusConfigReloader:
             image:
               repository: quay.io/prometheus-operator/prometheus-config-reloader
               tag: v0.60.1
               sha: ""
-
             # resource config for prometheusConfigReloader
             resources:
               requests:
@@ -962,20 +878,11 @@ spec:
               limits:
                 cpu: 450m
                 memory: 512Mi
-
-          ## Thanos side-car image when configured
-          ##
           thanosImage:
             repository: quay.io/thanos/thanos
             tag: v0.28.1
             sha: ""
-
-          ## Set a Field Selector to filter watched secrets
-          ##
           secretFieldSelector: ""
-
-        ## Deploy a Prometheus instance
-        ##
         prometheus:
           enabled: true
           annotations: {}
@@ -983,7 +890,6 @@ spec:
             create: true
             name: ""
             annotations: {}
-
           # Service for thanos service discovery on sidecar
           # Enable this can make Thanos Query can use
           # `--store=dnssrv+_grpc._tcp.${kube-prometheus-stack.fullname}-thanos-discovery.${namespace}.svc.cluster.local` to discovery
@@ -1650,7 +1556,14 @@ spec:
                 scrape_interval: 30s
                 static_configs:
                 - targets: ['unifi-poller-svc.unifi.svc.cluster.local:9130']
-
+              - job_name: "hass"
+                scrape_interval: 60s
+                metrics_path: /api/prometheus
+                authorization:
+                  credentials: "your.longlived.token"
+                scheme: https
+                static_configs:
+                  - targets: ['HOSTNAME:8123']
             ## If scrape config contains a repetitive section, you may want to use a template.
             ## In the following example, you can see how to define `gce_sd_configs` for multiple zones
             # additionalScrapeConfigs: |

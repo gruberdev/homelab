@@ -58,7 +58,7 @@ spec:
               containerPort: 53
               protocol: UDP
             - name: dns-tcp
-              containerPort: 53
+              containerPort: 853
               protocol: TCP
           resources:
             requests:
