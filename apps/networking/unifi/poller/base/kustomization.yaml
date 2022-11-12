@@ -5,3 +5,4 @@ resources:
 - svc.yaml
 - cm.yaml
 - secret.yaml
+- svc-monitor.yaml

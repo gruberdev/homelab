@@ -18,6 +18,11 @@ spec:
     metadata:
       labels:
         app: unifi-poller
+        type: poller
+      annotations:
+        prometheus.io/path: /metrics
+        prometheus.io/port: "9130"
+        prometheus.io/scrape: "true"
     spec:
       containers:
         - name: unifi-poller

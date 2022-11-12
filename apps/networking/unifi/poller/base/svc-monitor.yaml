@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: unifi-poller
+  labels:
+    app: unifi-poller
+    release: "prometheus-operator"
+spec:
+  selector:
+    matchLabels:
+      app: unifi-poller
+  namespaceSelector:
+    matchNames:
+    - unifi
+  endpoints:
+  - targetPort: 9130
+    path: /metrics
