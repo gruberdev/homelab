@@ -1555,7 +1555,7 @@ spec:
               - job_name: 'unifipoller'
                 scrape_interval: 30s
                 static_configs:
-                - targets: ['unifi-poller-svc.unifi.svc.cluster.local:9130']
+                - targets: ['192.168.1.8:32767']
               - job_name: "hass"
                 scrape_interval: 60s
                 metrics_path: /api/prometheus
