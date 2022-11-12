@@ -1,0 +1,16 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: adguard-home
+spec:
+  endpoints:
+  - interval: 60s
+    port: metrics
+    metricRelabelings:
+    - sourceLabels: [domain]
+      regex: '^.*?\.?([^.]+\.[^.]+$)'
+      replacement: '$1'
+      targetLabel: second_level_domain
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: adguard-home

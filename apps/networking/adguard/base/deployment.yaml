@@ -37,7 +37,7 @@ spec:
             runAsUser: 0
       containers:
         - name: adguard-home
-          image: adguard/adguardhome:v0.107.11
+          image: adguard/adguardhome:v0.107.18
           env:
             - name: TZ
               value: "America/Sao_Paulo"
@@ -58,7 +58,7 @@ spec:
               containerPort: 53
               protocol: UDP
             - name: dns-tcp
-              containerPort: 853
+              containerPort: 53
               protocol: TCP
           resources:
             requests:
@@ -72,6 +72,24 @@ spec:
               mountPath: /opt/adguardhome/conf
             - name: adguard-home-logs
               mountPath: /opt/adguardhome/work
+        - name: exporter
+          image: adguard-exporter
+          ports:
+          - name: metrics
+            containerPort: 9617
+            protocol: TCP
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "200m"
+          envFrom:
+            - configMapRef:
+                name: adguard-exporter
+            - secretRef:
+                name: adguard-exporter
       volumes:
         - name: adguard-home-configmap
           configMap:

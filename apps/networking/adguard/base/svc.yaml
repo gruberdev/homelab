@@ -21,3 +21,18 @@ spec:
       port: 53
       targetPort: 53
       protocol: UDP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: exporter
+spec:
+  type: ClusterIP
+  selector:
+    app: adguard-home
+  ports:
+  - name: metrics
+    targetPort: metrics
+    port: 9617
+    protocol: TCP
+
