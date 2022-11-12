@@ -55,6 +55,12 @@ spec:
         - name: generate-config
           image: docker.io/grubertech/discord-bridge:v0.1.1
           imagePullPolicy: Always
+          command: ["sh"]
+          args:
+            - -c
+            - |
+              /usr/local/bin/node \
+              /opt/mx-puppet-discord/build/index.js -r
           env:
             - name: CONFIG_PATH
               value: "/data/config.yaml"
@@ -112,12 +118,12 @@ spec:
             - name: bridges
               mountPath: /bridges
           resources:
-            limits:
-              cpu: 400m
-              memory: 512Mi
             requests:
-              cpu: 300m
-              memory: 256Mi
+              cpu: 350m
+              memory: 600Mi
+            limits:
+              cpu: 500m
+              memory: 1Gi
           securityContext:
             capabilities:
               drop:
