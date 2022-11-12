@@ -73,7 +73,7 @@ spec:
             - name: adguard-home-logs
               mountPath: /opt/adguardhome/work
         - name: exporter
-          image: adguard-exporter
+          image: ebrianne/adguard-exporter:latest
           ports:
           - name: metrics
             containerPort: 9617
