@@ -1560,7 +1560,7 @@ spec:
                 scrape_interval: 60s
                 metrics_path: /api/prometheus
                 authorization:
-                  credentials: <path:kv/data/ha#auth-token>
+                  credentials: ""
                 scheme: http
                 static_configs:
                   - targets: ['home-assistant.homeassistant.svc.cluster.local:8123']
