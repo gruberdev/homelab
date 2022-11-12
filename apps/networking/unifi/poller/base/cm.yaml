@@ -5,6 +5,7 @@ metadata:
 data:
   TZ: "America/Sao_Paulo"
   UP_UNIFI_DYNAMIC: "true"
+  UP_UNIFI_DEFAULT_SITE_0: "Main site"
   UP_UNIFI_DEFAULT_VERIFY_SSL: "false"
   UP_PROMETHEUS_DISABLE: "false"
   UP_PROMETHEUS_NAMESPACE: "monitoring"

@@ -1559,7 +1559,7 @@ spec:
                 scrape_interval: 60s
                 metrics_path: /api/prometheus
                 authorization:
-                  credentials: ""
+                  credentials: "<path:kv/data/ha#auth-token>"
                 scheme: http
                 static_configs:
                   - targets: ['192.168.1.10:8123']
