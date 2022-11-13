@@ -25,7 +25,8 @@ spec:
           image: registry.opensource.zalan.do/acid/postgres-operator-ui:v1.8.1
           ports:
             - containerPort: 80
-              protocol: "TCP"
+              name: web
+              protocol: TCP
           readinessProbe:
             httpGet:
               path: "/health"

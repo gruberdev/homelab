@@ -6,6 +6,7 @@ bases:
 - github.com/gruberdev/homelab/apps/networking/tailscale
 - base/rb.yaml
 - base/cm.yaml
+- base/svc.yaml
 
 patchesStrategicMerge:
 - overlay/ui-deployment.yaml
