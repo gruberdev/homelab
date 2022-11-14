@@ -13,6 +13,8 @@ vars:
   PATH_ERROR: is not installed or correctly configured in PATH.
   SVC_CIDR: 10.43.0.0/16
   POD_CIDR: 10.42.0.0/16
+  CLUSTER_DNS: 10.43.0.10
+  CLUSTER_DOMAIN: cluster.local
   HA_DB_NAME: k3s
   KUBECONFIG_MODE: 0777
   DISABLE_K3S: traefik,localstorage
@@ -70,27 +72,85 @@ tasks:
       - Add to your startup script or terminal "'export PATH='/var/lib/rancher/k3s/data/current/bin/:/var/lib/rancher/k3s/data/current/bin/aux:$PATH'"
     ignore_error: true
 
-  gen:node:
+  gen:node:one:
     cmds:
       - rm config/k3s/node-one.yaml
       - |
         cat << EOF > config/k3s/node-one.yaml
         node-name: "node-one"
+        k3s_control_node: true
         write-kubeconfig-mode: "{{.KUBECONFIG_MODE}}"
         flannel-iface: "{{.FLANNEL_INTERFACE}}"
         write-kubeconfig: "${KUBECONFIG_PATH}"
         token: "${K3S_NODE_TOKEN}"
         cluster-cidr: "{{.POD_CIDR}}"
         service-cidr: "{{.SVC_CIDR}}"
+        cluster-dns: "{{.CLUSTER_DNS}}"
+        cluster-domain: "{{.CLUSTER_DOMAIN}}"
         node-ip: "${NODE_SERVER_IP}"
         external-node-ip: "${NODE_SERVER_IP}"
         server: "https://${TAILSCALE_IPV4}:6443"
         disable-network-policy: true
         resolv-conf: "{{.RESOLV_FILE}}"
+        etcd-expose-metrics: true
         datastore-endpoint: "postgres://${HA_DB_USER}:${HA_DB_PASSWORD}@${BASTION_IPV4}/{{.HA_DB_NAME}}?sslmode=disable"
+        kubelet-arg:
+          - "feature-gates=GracefulNodeShutdown=true"
+          - "feature-gates=MixedProtocolLBService=true"
+        kube-controller-manager-arg:
+          # Required to monitor component with kube-prometheus-stack
+          - "bind-address=0.0.0.0"
+          - "node-monitor-period=4s"
+          - "node-monitor-grace-period=16s"
+          - "pod-eviction-timeout=20s"
+        kube-proxy-arg:
+          - "metrics-bind-address=0.0.0.0"
+        kube-scheduler-arg:
+          - "bind-address=0.0.0.0"
+        kube-apiserver-arg:
+          - "default-not-ready-toleration-seconds=20"
+          - "default-unreachable-toleration-seconds=20"
+          - "feature-gates=MixedProtocolLBService=true"
+          - "anonymous-auth=true"
         disable:
           - traefik
           - local-storage
           - metrics-server
+        EOF
+    ignore_error: true
+
+  gen:node:two:
+    cmds:
+      - rm config/k3s/node-two.yaml
+      - |
+        cat << EOF > config/k3s/node-two.yaml
+        node-name: "node-two"
+        write-kubeconfig-mode: "{{.KUBECONFIG_MODE}}"
+        flannel-iface: "{{.FLANNEL_INTERFACE}}"
+        write-kubeconfig: "${KUBECONFIG_PATH}"
+        token: "${K3S_NODE_TOKEN}"
+        node-ip: "${NODE_SERVER_IP}"
+        external-node-ip: "${NODE_SERVER_IP}"
+        server: "https://${CONTROLLER_IPV4}:6443"
+        etcd-expose-metrics: true
+        datastore-endpoint: "postgres://${HA_DB_USER}:${HA_DB_PASSWORD}@${BASTION_IPV4}/{{.HA_DB_NAME}}?sslmode=disable"
+        kubelet-arg:
+          - "feature-gates=GracefulNodeShutdown=true"
+        kube-controller-manager-arg:
+          - "bind-address=0.0.0.0"
+          - "node-monitor-period=4s"
+          - "node-monitor-grace-period=16s"
+          - "pod-eviction-timeout=20s"
+        kube-proxy-arg:
+          - "metrics-bind-address=0.0.0.0"
+        kube-scheduler-arg:
+          - "bind-address=0.0.0.0"
+        kube-apiserver-arg:
+          - "default-not-ready-toleration-seconds=20"
+          - "default-unreachable-toleration-seconds=20"
+          - "anonymous-auth=true"
+        disable:
+          - traefik
+          - local-storage
         EOF
     ignore_error: true

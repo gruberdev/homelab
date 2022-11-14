@@ -119,13 +119,11 @@ tasks:
     preconditions:
       - sh: 'which vault'
         msg: 'vault {{.PATH_ERROR}}'
-    vars:
-      VAULT_UNSEAL_KEY:
-        sh: echo $(kubectl -n vault get secret vault-unseal-keys --ignore-not-found=true -o jsonpath='{.data.vault-root}' | base64 -d)
-    dir: apps/argocd/overlay
     cmds:
-      - echo  {{.VAULT_UNSEAL_KEY}}
-      - vault operator unseal {{.VAULT_UNSEAL_KEY}}
+      - kubectl config set-context --current --namespace=vault --cluster=default
+      - kubectl exec --stdin=true --tty=true vault-0 -- vault operator unseal ${VAULT_UNSEAL_1}
+      - kubectl exec --stdin=true --tty=true vault-0 -- vault operator unseal ${VAULT_UNSEAL_2}
+      - kubectl exec --stdin=true --tty=true vault-0 -- vault operator unseal ${VAULT_UNSEAL_3}
     ignore_error: true
 
   secret:

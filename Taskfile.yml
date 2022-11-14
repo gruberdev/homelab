@@ -27,6 +27,7 @@ vars:
   RESET: tput sgr0
   CLEAR: tput reset
   PATH_ERROR: is not installed or correctly configured in PATH.
+  K8S_VERSION: is not installed or correctly configured in PATH.
 
 dotenv: ['.env']
 
@@ -85,14 +86,14 @@ tasks:
 
   validate:
     preconditions:
-      - sh: "which kubeval"
-        msg: "kubeval {{.PATH_ERROR}}"
+      - sh: "which kubeconform"
+        msg: "kubeconform {{.PATH_ERROR}}"
     desc: Validates your Yaml objects in the repository using Kubeval
     cmds:
       # yamllint disable-line rule:line-length
       - sleep 0.1 && {{.CYAN}} && {{.BOLD}} && {{.BG_B}} && echo -e "\nValidating Yaml files using Kubeval..." && {{.RESET}}
       - sleep 0.1 && {{.CYAN}} && echo -e "\nService object files" && {{.RESET}}
-      - find . -maxdepth 10 -name \*svc.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "1.24.4" -schema-location default {} \;
+      - find . -maxdepth 10 -name svc.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "1.24.4" -schema-location default {} \;
       - sleep 0.1 && {{.CYAN}} && echo -e "\nDeployment object files" && {{.RESET}}
       - find . -maxdepth 10 -name deployment.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "1.24.4" -schema-location default {} \;
       - sleep 0.1 && {{.CYAN}} && echo -e "\nSecret object files" && {{.RESET}}
