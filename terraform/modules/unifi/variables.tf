@@ -73,7 +73,7 @@ variable "guest_wlan_password" {
 variable "smart_wlan_ssid" {
   type        = string
   description = "<sub>Smart Devices-exclusive wireless network SSID name. [Reference](https://registry.terraform.io/providers/paultyng/unifi/latest/docs/resources/wlan#name)</sub>"
-  default     = "無線 | Smart"
+  default     = "SmartLAN"
 }
 
 variable "smart_wlan_password" {

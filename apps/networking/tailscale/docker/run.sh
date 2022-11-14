@@ -104,7 +104,7 @@ fi
 if [[ ! -z "${DEST_PORT}" ]]; then
   echo "Adding iptables rules for REDIRECT"
   iptables -t nat -I PREROUTING -p tcp -d "$(tailscale --socket=${TS_SOCKET} ip -4)" --dport 1:65535 -j REDIRECT --to-ports "${DEST_PORT}"
-  # ip6tables -t nat -I PREROUTING -p tcp -d "$(tailscale --socket=${TS_SOCKET} ip -6)" --dport 1:65535 -j REDIRECT --to-ports "${DEST_PORT}"
+  ip6tables -t nat -I PREROUTING -p tcp -d "$(tailscale --socket=${TS_SOCKET} ip -6)" --dport 1:65535 -j REDIRECT --to-ports "${DEST_PORT}"
 fi
 
 echo "Waiting for tailscaled to exit"

@@ -20,3 +20,4 @@ edge-chat.instagram.com
 graph.instagram.com
 www.instagram.com
 i.instagram.com
+cloud-us.yeelight.com

@@ -31,6 +31,7 @@ resource "unifi_wlan" "guest_wifi" {
 
   wpa3_support    = true
   wpa3_transition = true
+  wlan_band       = "both"
   l2_isolation    = true
   pmf_mode        = "optional"
 
@@ -48,6 +49,7 @@ resource "unifi_wlan" "smartDevices" {
   wpa3_support    = false
   pmf_mode        = "disabled"
   no2ghz_oui      = false
+  wlan_band       = "2g"
 
   network_id    = data.unifi_network.main.id
   ap_group_ids  = [data.unifi_ap_group.default.id]
