@@ -6,7 +6,7 @@ spec:
   project: apps
   source:
     repoURL: https://github.com/hashicorp/vault-helm.git
-    targetRevision: main
+    targetRevision: v0.22.1
     path: .
     helm:
       releaseName: vault
@@ -34,14 +34,14 @@ spec:
           externalVaultAddr: ""
           image:
             repository: "hashicorp/vault-k8s"
-            tag: "0.17.0"
+            tag: "1.0.1"
             pullPolicy: IfNotPresent
           agentImage:
             repository: "hashicorp/vault"
-            tag: "1.11.2"
+            tag: "1.12.0"
           agentDefaults:
-            cpuLimit: "350m"
-            cpuRequest: "250m"
+            cpuLimit: "150m"
+            cpuRequest: "50m"
             memLimit: "128Mi"
             memRequest: "64Mi"
             template: "map"
@@ -61,14 +61,13 @@ spec:
             caBundle: ""
             certName: tls.crt
             keyName: tls.key
-
           resources:
             requests:
-              memory: 256Mi
-              cpu: 150m
+              memory: 128Mi
+              cpu: 50m
             limits:
               memory: 256Mi
-              cpu: 200m
+              cpu: 150m
           extraEnvironmentVars: {}
           affinity: |
             podAntiAffinity:
@@ -84,7 +83,8 @@ spec:
             kubernetes.io/arch: amd64
             kubernetes.io/hostname: node-one
           priorityClassName: ""
-          annotations: {}
+          annotations:
+            reloader.stakater.com/auto: "true"
           extraLabels: {}
           hostNetwork: false
           service:
@@ -96,18 +96,18 @@ spec:
           enabled: true
           image:
             repository: "hashicorp/vault"
-            tag: "1.11.2"
+            tag: "1.12.0"
             pullPolicy: IfNotPresent
           updateStrategyType: "OnDelete"
           logLevel: ""
           logFormat: ""
           resources:
             requests:
-              memory: 256Mi
-              cpu: 250m
+              memory: 128Mi
+              cpu: 50m
             limits:
-              memory: 512Mi
-              cpu: 350m
+              memory: 256Mi
+              cpu: 150m
           ingress:
             enabled: false
           route:
@@ -139,34 +139,19 @@ spec:
           extraArgs: ""
           readinessProbe:
             enabled: true
-            # If you need to use a http path instead of the default exec
-            # path: /v1/sys/health?standbyok=true
-
-            # When a probe fails, Kubernetes will try failureThreshold times before giving up
             failureThreshold: 2
-            # Number of seconds after the container has started before probe initiates
             initialDelaySeconds: 30
-            # How often (in seconds) to perform the probe
             periodSeconds: 15
-            # Minimum consecutive successes for the probe to be considered successful after having failed
             successThreshold: 1
-            # Number of seconds after which the probe times out.
             timeoutSeconds: 5
-          # Used to enable a livenessProbe for the pods
           livenessProbe:
             enabled: false
             path: "/v1/sys/health?standbyok=true"
-            # When a probe fails, Kubernetes will try failureThreshold times before giving up
             failureThreshold: 3
-            # Number of seconds after the container has started before probe initiates
             initialDelaySeconds: 120
-            # How often (in seconds) to perform the probe
             periodSeconds: 10
-            # Minimum consecutive successes for the probe to be considered successful after having failed
             successThreshold: 1
-            # Number of seconds after which the probe times out.
             timeoutSeconds: 5
-
           # Optional duration in seconds the pod needs to terminate gracefully.
           # See: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/
           terminationGracePeriodSeconds: 60
@@ -230,32 +215,16 @@ spec:
           tolerations: []
           nodeSelector:
             kubernetes.io/arch: amd64
-            kubernetes.io/hostname: node-two
+            kubernetes.io/hostname: node-one
           # Enables network policy for server pods
           networkPolicy:
             enabled: false
             egress: []
-            # egress:
-            # - to:
-            #   - ipBlock:
-            #       cidr: 10.0.0.0/24
-            #   ports:
-            #   - protocol: TCP
-            #     port: 443
-
           # Priority class for server pods
           priorityClassName: ""
-
-          # Extra labels to attach to the server pods
-          # This should be a YAML map of the labels to apply to the server pods
           extraLabels: {}
-
-          # Extra annotations to attach to the server pods
-          # This can either be YAML or a YAML-formatted multi-line templated string map
-          # of the annotations to apply to the server pods
-          annotations: {}
-
-          # Enables a headless service to be used by the Vault Statefulset
+          annotations:
+            reloader.stakater.com/auto: "true"
           service:
             enabled: true
             type: ClusterIP
@@ -444,129 +413,8 @@ spec:
           serviceNodePort: null
           externalPort: 8200
           targetPort: 8200
-          # The externalTrafficPolicy can be set to either Cluster or Local
-          # and is only valid for LoadBalancer and NodePort service types.
-          # The default value is Cluster.
-          # ref: https://kubernetes.io/docs/concepts/services-networking/service/#external-traffic-policy
-          externalTrafficPolicy: Cluster
-
-          #loadBalancerSourceRanges:
-          #   - 10.0.0.0/16
-          #   - 1.78.23.3/32
-
-          # loadBalancerIP:
-
-          # Extra annotations to attach to the ui service
-          # This can either be YAML or a YAML-formatted multi-line templated string map
-          # of the annotations to apply to the ui service
-          annotations: {}
-
-        # secrets-store-csi-driver-provider-vault
         csi:
-          # True if you want to install a secrets-store-csi-driver-provider-vault daemonset.
-          #
-          # Requires installing the secrets-store-csi-driver separately, see:
-          # https://github.com/kubernetes-sigs/secrets-store-csi-driver#install-the-secrets-store-csi-driver
-          #
-          # With the driver and provider installed, you can mount Vault secrets into volumes
-          # similar to the Vault Agent injector, and you can also sync those secrets into
-          # Kubernetes secrets.
           enabled: false
-
-          image:
-            repository: "hashicorp/vault-csi-provider"
-            tag: "0.3.0"
-            pullPolicy: IfNotPresent
-
-          # volumes is a list of volumes made available to all containers. These are rendered
-          # via toYaml rather than pre-processed like the extraVolumes value.
-          # The purpose is to make it easy to share volumes between containers.
-          volumes: null
-          # - name: tls
-          #   secret:
-          #     secretName: vault-tls
-
-          # volumeMounts is a list of volumeMounts for the main server container. These are rendered
-          # via toYaml rather than pre-processed like the extraVolumes value.
-          # The purpose is to make it easy to share volumes between containers.
-          volumeMounts: null
-          # - name: tls
-          #   mountPath: "/vault/tls"
-          #   readOnly: true
-
-          resources:
-          # resources:
-          #   requests:
-          #     cpu: 50m
-          #     memory: 128Mi
-          #   limits:
-          #     cpu: 50m
-          #     memory: 128Mi
-
-          # Settings for the daemonSet used to run the provider.
-          daemonSet:
-            updateStrategy:
-              type: RollingUpdate
-              maxUnavailable: ""
-            # Extra annotations for the daemonSet. This can either be YAML or a
-            # YAML-formatted multi-line templated string map of the annotations to apply
-            # to the daemonSet.
-            annotations: {}
-            # Provider host path (must match the CSI provider's path)
-            providersDir: "/etc/kubernetes/secrets-store-csi-providers"
-            # Kubelet host path
-            kubeletRootDir: "/var/lib/kubelet"
-
-          pod:
-            # Extra annotations for the provider pods. This can either be YAML or a
-            # YAML-formatted multi-line templated string map of the annotations to apply
-            # to the pod.
-            annotations: {}
-
-            # Toleration Settings for provider pods
-            # This should be either a multi-line string or YAML matching the Toleration array
-            # in a PodSpec.
-            tolerations: []
-
-          # Priority class for csi pods
-          priorityClassName: ""
-
-          serviceAccount:
-            # Extra annotations for the serviceAccount definition. This can either be
-            # YAML or a YAML-formatted multi-line templated string map of the
-            # annotations to apply to the serviceAccount.
-            annotations: {}
-
-          # Used to configure readinessProbe for the pods.
-          readinessProbe:
-            # When a probe fails, Kubernetes will try failureThreshold times before giving up
-            failureThreshold: 2
-            # Number of seconds after the container has started before probe initiates
-            initialDelaySeconds: 15
-            # How often (in seconds) to perform the probe
-            periodSeconds: 5
-            # Minimum consecutive successes for the probe to be considered successful after having failed
-            successThreshold: 1
-            # Number of seconds after which the probe times out.
-            timeoutSeconds: 3
-          # Used to configure livenessProbe for the pods.
-          livenessProbe:
-            # When a probe fails, Kubernetes will try failureThreshold times before giving up
-            failureThreshold: 3
-            # Number of seconds after the container has started before probe initiates
-            initialDelaySeconds: 60
-            # How often (in seconds) to perform the probe
-            periodSeconds: 15
-            # Minimum consecutive successes for the probe to be considered successful after having failed
-            successThreshold: 1
-            # Number of seconds after which the probe times out.
-            timeoutSeconds: 5
-
-          # Enables debug logging.
-          debug: false
-
-          # Pass arbitrary additional arguments to vault-csi-provider.
-          extraArgs: []
 
   destination:
     namespace: vault
