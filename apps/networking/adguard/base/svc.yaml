@@ -35,4 +35,3 @@ spec:
     targetPort: metrics
     port: 9617
     protocol: TCP
-

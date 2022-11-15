@@ -50,20 +50,12 @@ data:
       ratelimit_whitelist: []
       refuse_any: true
       upstream_dns:
-      - 8.8.8.8
-      - 8.8.4.4
-      - 1.1.1.1
-      - 1.1.1.2
+      - 2a07:a8c0::13:eefe
+      - 2a07:a8c1::13:eefe
       upstream_dns_file: ""
       bootstrap_dns:
-      - 8.8.8.8
-      - 8.8.4.4
-      - 1.1.1.1
-      - 1.1.2.2
       - 2001:4860:4860::8888
       - 2001:4860:4860::8844
-      - 2606:4700:4700::1111
-      - 2606:4700:4700::1001
       all_servers: false
       fastest_addr: false
       allowed_clients: []
