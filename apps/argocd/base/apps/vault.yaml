@@ -80,7 +80,8 @@ spec:
                       component: webhook
                   topologyKey: kubernetes.io/hostname
           tolerations: []
-          nodeSelector: {}
+          nodeSelector:
+            kubernetes.io/arch: amd64
           priorityClassName: ""
           annotations: {}
           extraLabels: {}
@@ -108,36 +109,9 @@ spec:
               cpu: 350m
           ingress:
             enabled: false
-            labels: {}
-            annotations: {}
-            ingressClassName: "nginx"
-            pathType: Prefix
-            activeService: true
-            hosts:
-            - host: vault.k8s.localhost
-              http:
-                paths:
-                - backend:
-                    service:
-                      name: vault
-                      port:
-                        number: 8200
-                  path: /
-                  pathType: Prefix
-            extraPaths: []
-            tls:
-            - hosts:
-              - vault.k8s.localhost
-              secretName: tls-secret
-          # OpenShift only - create a route to expose the service
-          # The created route will be of type passthrough
           route:
             enabled: false
-
-            # When HA mode is enabled and K8s service registration is being used,
-            # configure the route to point to the Vault active service.
             activeService: true
-
             labels: {}
             annotations: {}
             host: chart-example.local
@@ -254,13 +228,8 @@ spec:
           # This should be either a multi-line string or YAML matching the Toleration array
           # in a PodSpec.
           tolerations: []
-
-          # nodeSelector labels for server pod assignment, formatted as a multi-line string or YAML map.
-          # ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
-          # Example:
-          # nodeSelector:
-          #   beta.kubernetes.io/arch: amd64
-          nodeSelector: {}
+          nodeSelector:
+            kubernetes.io/arch: amd64
 
           # Enables network policy for server pods
           networkPolicy:
