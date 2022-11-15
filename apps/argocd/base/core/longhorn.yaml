@@ -6,7 +6,7 @@ spec:
   project: cluster
   source:
     repoURL: 'https://github.com/longhorn/longhorn.git'
-    targetRevision: v1.3.2
+    targetRevision: master
     path: chart
     helm:
       releaseName: longhorn
