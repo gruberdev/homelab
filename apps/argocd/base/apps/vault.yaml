@@ -187,7 +187,6 @@ spec:
           extraEnvironmentVars: {}
           extraSecretEnvironmentVars: []
 
-
           # Deprecated: please use 'volumes' instead.
           # extraVolumes is a list of extra volumes to mount. These will be exposed
           # to Vault in the path `/vault/userconfig/<name>/`. The value below is
@@ -231,7 +230,7 @@ spec:
           tolerations: []
           nodeSelector:
             kubernetes.io/arch: amd64
-            kubernetes.io/hostname: node-one
+            kubernetes.io/hostname: node-two
           # Enables network policy for server pods
           networkPolicy:
             enabled: false
