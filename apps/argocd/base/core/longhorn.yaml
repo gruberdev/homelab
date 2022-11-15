@@ -32,22 +32,22 @@ spec:
             longhorn:
               engine:
                 repository: longhornio/longhorn-engine
-                tag: v1.3.2
+                tag: master-head
               manager:
                 repository: longhornio/longhorn-manager
-                tag: v1.3.2
+                tag: master-head
               ui:
                 repository: longhornio/longhorn-ui
-                tag: v1.3.2
+                tag: master-head
               instanceManager:
                 repository: longhornio/longhorn-instance-manager
-                tag: v1_20221003
+                tag: v1_20220920
               shareManager:
                 repository: longhornio/longhorn-share-manager
-                tag: v1_20221003
+                tag: v1_20220914
               backingImageManager:
                 repository: longhornio/backing-image-manager
-                tag: v3_20221003
+                tag: v3_20220808
             csi:
               attacher:
                 repository: longhornio/csi-attacher
@@ -60,10 +60,10 @@ spec:
                 tag: v2.5.0
               resizer:
                 repository: longhornio/csi-resizer
-                tag: v1.2.0
+                tag: v1.3.0
               snapshotter:
                 repository: longhornio/csi-snapshotter
-                tag: v3.0.3
+                tag: v5.0.1
             pullPolicy: IfNotPresent
           service:
             ui:
