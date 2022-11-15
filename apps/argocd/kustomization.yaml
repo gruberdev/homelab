@@ -21,7 +21,6 @@ resources:
 - base/utilities/reflector.yaml
 - base/utilities/descheduler.yaml
 - base/utilities/kured.yaml
-- base/utilities/node-discovery.yaml
 # - base/utilities/botkube.yaml
 
 - base/apps/vault.yaml

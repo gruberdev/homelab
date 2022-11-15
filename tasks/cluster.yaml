@@ -154,3 +154,19 @@ tasks:
           - local-storage
         EOF
     ignore_error: true
+
+  gen:node:three:
+    cmds:
+      - rm config/k3s/node-two.yaml
+      - |
+        cat << EOF > config/k3s/node-three.yaml
+        node-name: "node-three"
+        server: "https://${CONTROLLER_IPV4}:6443"
+        token: "${K3S_NODE_TOKEN}"
+        node-ip: "${NODE_SERVER_IP}"
+        kubelet-arg:
+          - "feature-gates=GracefulNodeShutdown=true"
+        kube-proxy-arg:
+          - "metrics-bind-address=0.0.0.0"
+        EOF
+    ignore_error: true
