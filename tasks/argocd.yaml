@@ -12,6 +12,7 @@ vars:
   CLEAR: tput reset
   INT_REGISTRY: registry.localhost
   PATH_ERROR: is not installed or correctly configured in PATH.
+  ARGOCD_VERSION: 2.5.2
 
 silent: true
 
@@ -87,8 +88,8 @@ tasks:
     cmds:
       - |
         docker build -t docker.io/grubertech/argocd-sidecar:latest \
-                     -t docker.io/grubertech/argocd-sidecar:v2.5.1 \
-                     -t docker.io/grubertech/argocd:v2.5.1 \
+                     -t docker.io/grubertech/argocd-sidecar:v{{.ARGOCD_VERSION}} \
+                     -t docker.io/grubertech/argocd:v{{.ARGOCD_VERSION}} \
                      -t docker.io/grubertech/argocd:latest .
     ignore_error: true
 
@@ -96,9 +97,9 @@ tasks:
     dir: apps/argocd
     cmds:
       - docker push docker.io/grubertech/argocd-sidecar:latest
-      - docker push docker.io/grubertech/argocd-sidecar:v2.5.1
+      - docker push docker.io/grubertech/argocd-sidecar:v{{.ARGOCD_VERSION}}
       - docker push docker.io/grubertech/argocd:latest
-      - docker push docker.io/grubertech/argocd:v2.5.1
+      - docker push docker.io/grubertech/argocd:v{{.ARGOCD_VERSION}}
     ignore_error: true
 
   rm:
