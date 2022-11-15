@@ -579,11 +579,11 @@ spec:
             scrapeTimeout: 30s
             relabelings: []
         kubeApiServer:
-          enabled: false
+          enabled: true
         kubelet:
-          enabled: false
+          enabled: true
         kubeControllerManager:
-          enabled: false
+          enabled: true
         coreDns:
           enabled: true
           service:
@@ -600,9 +600,9 @@ spec:
         kubeEtcd:
           enabled: false
         kubeScheduler:
-          enabled: false
+          enabled: true
         kubeProxy:
-          enabled: false
+          enabled: true
         kubeStateMetrics:
           enabled: true
         kube-state-metrics:
@@ -620,7 +620,7 @@ spec:
               metricRelabelings: []
               relabelings: []
           selfMonitor:
-            enabled: false
+            enabled: true
         nodeExporter:
           enabled: true
         prometheus-node-exporter:
@@ -637,9 +637,6 @@ spec:
             monitor:
               enabled: true
               jobLabel: jobLabel
-
-              ## Scrape interval. If not set, the Prometheus default scrape interval is used.
-              ##
               interval: ""
 
               ## How long until a scrape request times out. If not set, the Prometheus default scape timeout is used.
