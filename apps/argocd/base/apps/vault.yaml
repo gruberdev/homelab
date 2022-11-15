@@ -82,6 +82,7 @@ spec:
           tolerations: []
           nodeSelector:
             kubernetes.io/arch: amd64
+            kubernetes.io/hostname: node-one
           priorityClassName: ""
           annotations: {}
           extraLabels: {}
@@ -230,7 +231,7 @@ spec:
           tolerations: []
           nodeSelector:
             kubernetes.io/arch: amd64
-
+            kubernetes.io/hostname: node-one
           # Enables network policy for server pods
           networkPolicy:
             enabled: false
