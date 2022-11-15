@@ -13,7 +13,6 @@ spec:
     helm:
       releaseName: botkube
       values: |
-        ## BotKube image configuration.
         image:
           registry: ghcr.io
           repository: kubeshop/botkube
@@ -152,7 +151,6 @@ spec:
                     - error
         executors:
           'kubectl-read-only':
-            ## Kubectl executor configuration.
             kubectl:
               namespaces:
                 include:
@@ -165,7 +163,6 @@ spec:
               defaultNamespace: default
               restrictAccess: false
         existingCommunicationsSecretName: "botkube-vars"
-        ## Global BotKube configuration.
         settings:
           clusterName: not-configured
           configWatcher: true
@@ -173,23 +170,14 @@ spec:
           log:
             level: info
             disableColors: false
-        ## For using custom SSL certificates.
         ssl:
           enabled: false
-          existingSecretName: ""
-          cert: ""
         service:
           name: metrics
           port: 2112
           targetPort: 2112
         ingress:
           create: false
-          annotations:
-            kubernetes.io/ingress.class: nginx
-          host: 'HOST'
-          tls:
-            enabled: false
-            secretName: ''
         serviceMonitor:
           enabled: true
           interval: 10s
