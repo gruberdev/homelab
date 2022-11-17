@@ -5,6 +5,10 @@ jobs:
     name: tflint
     runs-on: ubuntu-latest
     steps:
+      - name: Tailscale
+        uses: tailscale/github-action@v1
+        with:
+          authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
       - name: Clone repo
         uses: actions/checkout@master
       - name: Install Terraform
@@ -14,7 +18,7 @@ jobs:
       - name: Terraform init
         run: |
           cd terraform && \
-          terraform init
+          terraform init -upgrade -backend-config="conn_str=${{ secrets.tf_con_string }}"
       - name: tflint
         uses: reviewdog/action-tflint@master
         with:

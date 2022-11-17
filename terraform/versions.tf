@@ -7,7 +7,7 @@ terraform {
     }
     unifi = {
       source  = "paultyng/unifi"
-      version = "0.38.1"
+      version = "0.38.2"
     }
   }
   backend "pg" {
