@@ -4,43 +4,38 @@ on:
   pull_request:
     branches: ["main"]
 jobs:
+  has-changes:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+      with:
+        # fetch all history for all branches and tags (this is required for the has-changes action)
+        fetch-depth: 0
+    - name: Run action
+      uses: antrea-io/has-changes@v2
+      id: run_action
+      with:
+        paths-ignore: docs *.md ci
+    outputs:
+      has_changes: ${{ steps.run_action.outputs.has_changes }}
+
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Install Kubeconform
         run: |
-             (wget -qO- https://github.com/yannh/kubeconform/releases/download/v0.5.0/kubeconform-linux-amd64.tar.gz | sudo tar xvz -C /usr/local/bin) && sudo chmod +x /usr/local/bin/kubeconform
-      - uses: marceloprado/has-changed-path@v1
-        id: change-services
-        with:
-          paths: apps/**/svc.yaml
-      - uses: marceloprado/has-changed-path@v1
-        id: change-deployments
-        with:
-          paths: apps/**/deployment.yaml
-      - uses: marceloprado/has-changed-path@v1
-        id: change-storage
-        with:
-          paths: apps/**/pvc.yaml
-      - uses: marceloprado/has-changed-path@v1
-        id: change-configmap
-        with:
-          paths: apps/**/cm.yaml
-      - uses: marceloprado/has-changed-path@v1
-        id: change-secret
-        with:
-          paths: apps/**/*secret.yaml
-
+            wget -qO- https://github.com/yannh/kubeconform/releases/download/v0.5.0/kubeconform-linux-amd64.tar.gz | tar xvz -C /usr/bin
       - name: Validate new Services
         id: validate-service
         if: steps.changed-services.outputs.changed == 'true'
         run: |
           find . -maxdepth 10 -name svc.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "1.25.3" -schema-location default {} \;
       - name: Validate new Deployments
-        if: steps.changed-services.outputs.changed == 'true'
+        if: steps.has-changes.outputs.has-changes == 'yes'
         run: |
           find . -maxdepth 10 -name deployment.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "1.25.3" -schema-location default {} \;
       - name: Validate new PVCs
