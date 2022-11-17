@@ -23,8 +23,9 @@ jobs:
         id: validate-service
         uses: mathiasvr/command-output@v1
         if: steps.changed-services.outputs.any_changed == 'true'
-        run: |
-          find . -maxdepth 10 -name svc.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "1.25.3" -schema-location default {} \;
+        with:
+          run: |
+            find . -maxdepth 10 -name svc.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "1.25.3" -schema-location default {} \;
       - name: Find Comment
         uses: peter-evans/find-comment@v2
         id: fc
