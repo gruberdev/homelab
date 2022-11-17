@@ -1,0 +1,73 @@
+name: Validate Kubernetes Resources
+
+on:
+  pull_request:
+    branches: ["main"]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Install Kubeconform
+        run: |
+            wget -qO- https://github.com/yannh/kubeconform/releases/download/v0.5.0/kubeconform-linux-amd64.tar.gz | tar xvz -C /usr/bin
+      - uses: marceloprado/has-changed-path@v1
+        id: change-services
+        with:
+          paths: apps/**/svc.yaml
+      - uses: marceloprado/has-changed-path@v1
+        id: change-deployments
+        with:
+          paths: apps/**/deployment.yaml
+      - uses: marceloprado/has-changed-path@v1
+        id: change-storage
+        with:
+          paths: apps/**/pvc.yaml
+      - uses: marceloprado/has-changed-path@v1
+        id: change-configmap
+        with:
+          paths: apps/**/cm.yaml
+      - uses: marceloprado/has-changed-path@v1
+        id: change-secret
+        with:
+          paths: apps/**/*secret.yaml
+
+      - name: Validate new Services
+        id: validate-service
+        if: steps.changed-services.outputs.changed == 'true'
+        run: |
+          find . -maxdepth 10 -name svc.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "1.25.3" -schema-location default {} \;
+      - name: Validate new Deployments
+        if: steps.changed-services.outputs.changed == 'true'
+        run: |
+          find . -maxdepth 10 -name deployment.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "1.25.3" -schema-location default {} \;
+      - name: Validate new PVCs
+        if: steps.changed-services.outputs.changed == 'true'
+        run: |
+          find . -maxdepth 10 -name deployment.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "1.25.3" -schema-location default {} \;
+      - name: Validate new configMaps
+        if: steps.changed-services.outputs.changed == 'true'
+        run: |
+          find . -maxdepth 10 -name deployment.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "1.25.3" -schema-location default {} \;
+      - name: Validate new Secrets
+        if: steps.changed-services.outputs.changed == 'true'
+        run: |
+          find . -maxdepth 10 -name deployment.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "1.25.3" -schema-location default {} \;
+      - name: Find Comment
+        uses: peter-evans/find-comment@v2
+        id: fc
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: Build output
+      - name: Create or update comment
+        uses: peter-evans/create-or-update-comment@v2
+        with:
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            Build output
+            ${{ steps.validate-service.outputs.build-log }}
+          edit-mode: replace
