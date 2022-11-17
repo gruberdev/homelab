@@ -12,7 +12,7 @@ jobs:
           fetch-depth: 0
       - name: Install Kubeconform
         run: |
-             (wget -qO- https://github.com/yannh/kubeconform/releases/download/v0.5.0/kubeconform-linux-amd64.tar.gz | sudo tar xvz -C /usr/local/bin) && chmod +x /usr/bin/kubeconform
+             (wget -qO- https://github.com/yannh/kubeconform/releases/download/v0.5.0/kubeconform-linux-amd64.tar.gz | sudo tar xvz -C /usr/local/bin) && chmod +x /usr/local/bin/kubeconform
       - uses: marceloprado/has-changed-path@v1
         id: change-services
         with:
