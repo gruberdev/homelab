@@ -18,7 +18,7 @@ jobs:
             apps/**/svc.yaml
       - name: Install Kubeconform
         run: |
-            (wget -qO- https://github.com/yannh/kubeconform/releases/download/v0.5.0/kubeconform-linux-amd64.tar.gz | sudo tar xvz -C /usr/bin) && sudo chmod +x kubeconform
+            (wget -qO- https://github.com/yannh/kubeconform/releases/download/v0.5.0/kubeconform-linux-amd64.tar.gz | sudo tar xvz -C /usr/bin) && sudo chmod +x /usr/bin/kubeconform
       - name: Validate new Services
         id: validate-service
         if: steps.changed-services.outputs.changed == 'true'
