@@ -1,8 +1,23 @@
 name: tflint
-on: [pull_request]
+on:
+  pull_request:
+    branches: ["main"]
 jobs:
+  changed:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Check if Terraform files changed
+        id: terraform-changes
+        uses: tj-actions/changed-files@v34
+        with:
+          files: |
+            terraform/**
   tflint:
-    name: tflint
+    name: Terraform linter
+    if: steps.terraform-changes.outputs.any_changed == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Tailscale
