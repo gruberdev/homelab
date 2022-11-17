@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+bases:
+  - github.com/kubernetes-sigs/nfs-subdir-external-provisioner/deploy
+patchesStrategicMerge:
+  - overlay/nfs-deploy.yaml
+
+namespace: kube-system
+
+commonAnnotations:
+  reloader.stakater.com/auto: "true"
