@@ -24,22 +24,6 @@ jobs:
         if: steps.changed-services.outputs.any_changed == 'true'
         run: |
           find . -maxdepth 10 -name svc.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "1.25.3" -schema-location default {} \;
-      - name: Validate new Deployments
-        if: steps.has-changes.outputs.has-changes == 'yes'
-        run: |
-          find . -maxdepth 10 -name deployment.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "1.25.3" -schema-location default {} \;
-      - name: Validate new PVCs
-        if: steps.changed-services.outputs.changed == 'true'
-        run: |
-          find . -maxdepth 10 -name deployment.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "1.25.3" -schema-location default {} \;
-      - name: Validate new configMaps
-        if: steps.changed-services.outputs.changed == 'true'
-        run: |
-          find . -maxdepth 10 -name deployment.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "1.25.3" -schema-location default {} \;
-      - name: Validate new Secrets
-        if: steps.changed-services.outputs.changed == 'true'
-        run: |
-          find . -maxdepth 10 -name deployment.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "1.25.3" -schema-location default {} \;
       - name: Find Comment
         uses: peter-evans/find-comment@v2
         id: fc
@@ -54,5 +38,5 @@ jobs:
           issue-number: ${{ github.event.pull_request.number }}
           body: |
             Build output
-            ${{ steps.validate-service.outputs.build-log }}
+            ${{ steps.validate-service.outputs.result }}
           edit-mode: replace
