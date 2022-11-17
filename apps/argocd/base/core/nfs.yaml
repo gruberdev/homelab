@@ -9,6 +9,7 @@ spec:
     path: apps/data/nfs
     targetRevision: main
   destination:
+    namespace: kube-system
     name: in-cluster
   syncPolicy:
     automated:
@@ -17,6 +18,7 @@ spec:
       allowEmpty: true
     syncOptions:
     - Validate=false
+    - CreateNamespace=false
     - PrunePropagationPolicy=foreground
     - PruneLast=true
     - ApplyOutOfSyncOnly=false
