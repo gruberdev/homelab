@@ -67,8 +67,14 @@ jobs:
           issue-number: ${{ github.event.pull_request.number }}
           comment-author: 'github-actions[bot]'
           body: |
-            ### Services Validated
-            > ${{ steps.validate-service.outputs.stdout }}
+            <details>
+            <summary>
+            <b>Service resources</b>
+            </summary>
+            <sub>
+            ${{ steps.validate-service.outputs.stdout }}
+            </sub>
+            </details>
       - name: Create or update comment
         uses: peter-evans/create-or-update-comment@v2
         if: steps.changed-services.outputs.any_changed == 'true'
