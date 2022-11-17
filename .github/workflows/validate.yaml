@@ -1,0 +1,46 @@
+name: Validate Kubernetes Resources
+
+on:
+  pull_request:
+    branches: ["main"]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Get changed files in the docs folder
+        id: changed-services
+        uses: tj-actions/changed-files@v34
+        with:
+          files: |
+            apps/**/svc.yaml
+      - name: Install Kubeconform
+        run: |
+            (wget -qO- https://github.com/yannh/kubeconform/releases/download/v0.5.0/kubeconform-linux-amd64.tar.gz | sudo tar xvz -C /usr/bin) && sudo chmod +x /usr/bin/kubeconform
+      - name: Validate new Services
+        id: validate-service
+        uses: mathiasvr/command-output@v1
+        if: steps.changed-services.outputs.any_changed == 'true'
+        with:
+          run: |
+            find . -maxdepth 10 -name svc.yaml -exec kubeconform --verbose -exit-on-error -ignore-missing-schemas -kubernetes-version "1.25.3" -schema-location default {} \;
+      - name: Find Comment
+        uses: peter-evans/find-comment@v2
+        id: fc
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: 'github-actions[bot]'
+          body: |
+            Build output
+            ${{ steps.validate-service.outputs.stdout }}
+      - name: Create or update comment
+        uses: peter-evans/create-or-update-comment@v2
+        with:
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            ### Services Validated
+            > ${{ steps.validate-service.outputs.stdout }}
+          edit-mode: replace
