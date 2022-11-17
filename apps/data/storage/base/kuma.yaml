@@ -5,8 +5,8 @@ metadata:
   namespace: monitoring
 spec:
   accessModes:
-    - ReadWriteOnce
-  storageClassName: longhorn
+    - ReadWriteMany
+  storageClassName: nfs-client
   resources:
     requests:
       storage: 1Gi

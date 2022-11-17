@@ -5,11 +5,11 @@ metadata:
   namespace: media
 spec:
   accessModes:
-    - ReadWriteOnce
-  storageClassName: longhorn
+    - ReadWriteMany
+  storageClassName: nfs-client
   resources:
     requests:
-      storage: 10Gi
+      storage: 100Gi
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -18,11 +18,11 @@ metadata:
   namespace: media
 spec:
   accessModes:
-    - ReadWriteOnce
-  storageClassName: longhorn
+    - ReadWriteMany
+  storageClassName: nfs-client
   resources:
     requests:
-      storage: 10Gi
+      storage: 25Gi
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -31,11 +31,11 @@ metadata:
   namespace: media
 spec:
   accessModes:
-    - ReadWriteOnce
-  storageClassName: longhorn
+    - ReadWriteMany
+  storageClassName: nfs-client
   resources:
     requests:
-      storage: 40Gi
+      storage: 100Gi
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -44,11 +44,11 @@ metadata:
   namespace: media
 spec:
   accessModes:
-    - ReadWriteOnce
-  storageClassName: longhorn
+    - ReadWriteMany
+  storageClassName: nfs-client
   resources:
     requests:
-      storage: 3Gi
+      storage: 50Gi
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -57,8 +57,8 @@ metadata:
   namespace: media
 spec:
   accessModes:
-    - ReadWriteOnce
-  storageClassName: longhorn
+    - ReadWriteMany
+  storageClassName: nfs-client
   resources:
     requests:
       storage: 4Gi

@@ -5,8 +5,8 @@ metadata:
   namespace: media
 spec:
   accessModes:
-    - ReadWriteOnce
-  storageClassName: longhorn
+    - ReadWriteMany
+  storageClassName: nfs-client
   resources:
     requests:
       storage: 5Gi
