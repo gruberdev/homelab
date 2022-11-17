@@ -9,7 +9,7 @@ spec:
     - name: ha
       port: 8123
       protocol: TCP
-      targetPort: 8123
+      targetPort: 8124444
   selector:
     app: home-assistant
   type: ClusterIP
