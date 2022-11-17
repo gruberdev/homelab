@@ -54,5 +54,5 @@ jobs:
           issue-number: ${{ github.event.pull_request.number }}
           body: |
             Build output
-            ${{ steps.validate-service.outputs.build-log }}
+            ${{ steps.build.outputs.build-log }}
           edit-mode: replace
