@@ -16,6 +16,8 @@ resources:
 - base/core/longhorn.yaml
 - base/core/storage.yaml
 - base/core/mysql.yaml
+- base/core/nfs.yaml
+- base/core/nvidia.yaml
 
 - base/utilities/reloader.yaml
 - base/utilities/reflector.yaml
