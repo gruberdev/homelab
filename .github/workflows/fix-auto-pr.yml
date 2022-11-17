@@ -1,4 +1,4 @@
-name: Open a PR when pushing a new fix branch
+name: Automated PR on fix branches
 on:
   push:
     branches-ignore:

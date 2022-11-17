@@ -1,4 +1,4 @@
-name: Open a PR when pushing to new application branch
+name: Automated PR on new feat/app branch
 
 on:
   push:
