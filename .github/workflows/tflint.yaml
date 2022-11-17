@@ -1,7 +1,5 @@
 name: tflint
-on:
-  pull_request:
-    branches: ["main"]
+on: [pull_request]
 jobs:
   changed:
     runs-on: ubuntu-latest
