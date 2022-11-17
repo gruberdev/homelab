@@ -13,26 +13,27 @@ jobs:
         with:
           files: |
             terraform/**
-  tflint:
-    name: Terraform linter
-    if: steps.terraform-changes.outputs.any_changed == 'true'
-    runs-on: ubuntu-latest
-    steps:
+
       - name: Tailscale
+        if: steps.terraform-changes.outputs.any_changed == 'true'
         uses: tailscale/github-action@v1
         with:
           authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
       - name: Clone repo
+        if: steps.terraform-changes.outputs.any_changed == 'true'
         uses: actions/checkout@master
       - name: Install Terraform
+        if: steps.terraform-changes.outputs.any_changed == 'true'
         run: |
           curl iac.sh/terraform > getinst.sh && \
           bash getinst.sh
       - name: Terraform init
+        if: steps.terraform-changes.outputs.any_changed == 'true'
         run: |
           cd terraform && \
           terraform init -upgrade -backend-config="conn_str=${{ secrets.tf_con_string }}"
       - name: tflint
+        if: steps.terraform-changes.outputs.any_changed == 'true'
         uses: reviewdog/action-tflint@master
         with:
           github_token: ${{ secrets.github_token }}
