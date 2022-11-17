@@ -1,20 +1,28 @@
-name: Sync Tailscale ACLs
+name: Sync Tailscale
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
-  acls:
+  acl-sync:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Check if Terraform files changed
+        id: tailscale-changes
+        uses: tj-actions/changed-files@v34
+        with:
+          files: |
+            policy.hujson
 
-      - name: Deploy ACL
-        if: github.event_name == 'push'
+      - uses: actions/checkout@v3
+      - name: Sync ACL with Tailscale
+        if: github.event_name == 'push' && steps.tailscale-changes.outputs.any_changed == 'true'
         id: deploy-acl
         uses: tailscale/gitops-acl-action@v1
         with:
@@ -22,8 +30,8 @@ jobs:
           tailnet: ${{ secrets.TS_TAILNET }}
           action: apply
 
-      - name: Test ACL
-        if: github.event_name == 'pull_request'
+      - name: Test newer ACL configs
+        if: github.event_name == 'pull_request' && steps.tailscale-changes.outputs.any_changed == 'true'
         id: test-acl
         uses: tailscale/gitops-acl-action@v1
         with:

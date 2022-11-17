@@ -1,5 +1,4 @@
----
-name: Repository linters
+name: Linters and utilities
 on:
   push:
     branches: ["main"]
