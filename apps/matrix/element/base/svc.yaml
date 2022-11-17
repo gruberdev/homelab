@@ -3,11 +3,11 @@ kind: Service
 metadata:
   name: element-svc
   labels:
-    app: element
+    app: element2
 spec:
   type: ClusterIP
   selector:
-    app: element
+    app: element2
   ports:
     - name: http
       port: 8080
