@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: https://helm-charts.bitpoke.io
     chart: mysql-operator
-    targetRevision: 0.6.3
+    targetRevision: 0.6.2
     helm:
       releaseName: mysql-operator
       values: |
