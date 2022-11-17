@@ -82,6 +82,12 @@ jobs:
           comment-id: ${{ steps.fc.outputs.comment-id }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
-            ### Services Validated
-            > ${{ steps.validate-service.outputs.stdout }}
+            <details>
+            <summary>
+            <b>Service resources</b>
+            </summary>
+            <sub>
+            ${{ steps.validate-service.outputs.stdout }}
+            </sub>
+            </details>
           edit-mode: replace
