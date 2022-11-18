@@ -83,11 +83,18 @@ jobs:
           issue-number: ${{ github.event.pull_request.number }}
           body: |
             <details>
+
             <summary>
-            <b>Service resources</b>
+
+            <b>Kubernetes Service resources</b>
+
             </summary>
+
             <sub>
-            ${{ steps.validate-service.outputs.stdout }}
+
+            > ${{ steps.validate-service.outputs.stdout }}
+
             </sub>
+
             </details>
           edit-mode: replace
