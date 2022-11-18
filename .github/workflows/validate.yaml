@@ -25,7 +25,7 @@ jobs:
             apps/**/deployment.yaml
             apps/**/statefulset.yaml
       - name: Check if configMap/Secrets have changed
-        id: changed-config
+        id: changed-configs
         uses: tj-actions/changed-files@v34
         with:
           files: |
@@ -59,23 +59,35 @@ jobs:
         with:
           run: |
             find . -maxdepth 10 -name svc.yaml -exec kubeconform --verbose -exit-on-error -ignore-missing-schemas -kubernetes-version "1.25.3" -schema-location default {} \;
+
+      - name: Validate new Workloads
+        id: validate-workloads
+        uses: mathiasvr/command-output@v1
+        if: steps.changed-workloads.outputs.any_changed == 'true'
+        with:
+          run: |
+            find . -maxdepth 10 -name deployment.yaml -exec kubeconform --verbose -exit-on-error -ignore-missing-schemas -kubernetes-version "1.25.3" -schema-location default {} \;
+            find . -maxdepth 10 -name statefulset.yaml -exec kubeconform --verbose -exit-on-error -ignore-missing-schemas -kubernetes-version "1.25.3" -schema-location default {} \;
+
+      - name: Validate new configMaps or Secrets
+        id: validate-configs
+        uses: mathiasvr/command-output@v1
+        if: steps.changed-configs.outputs.any_changed == 'true'
+        with:
+          run: |
+            find . -maxdepth 10 -name cm.yaml -exec kubeconform --verbose -exit-on-error -ignore-missing-schemas -kubernetes-version "1.25.3" -schema-location default {} \;
+            find . -maxdepth 10 -name secret.yaml -exec kubeconform --verbose -exit-on-error -ignore-missing-schemas -kubernetes-version "1.25.3" -schema-location default {} \;
+
       - name: Find Comment
         uses: peter-evans/find-comment@v2
-        if: steps.changed-services.outputs.any_changed == 'true'
         id: fc
         with:
           issue-number: ${{ github.event.pull_request.number }}
           comment-author: 'github-actions[bot]'
           body: |
-            <details>
-            <summary>
-            <b>Service resources</b>
-            </summary>
-            <sub>
-            ${{ steps.validate-service.outputs.stdout }}
-            </sub>
-            </details>
-      - name: Create or update comment
+            ## List of Kubernetes resources schema validation
+
+      - name: Update comment with Service resouces
         uses: peter-evans/create-or-update-comment@v2
         if: steps.changed-services.outputs.any_changed == 'true'
         with:
@@ -89,4 +101,36 @@ jobs:
             > ${{ steps.validate-service.outputs.stdout }}
 
             </details>
-          edit-mode: replace
+          edit-mode: append
+
+      - name: Update comment with workload resouces
+        uses: peter-evans/create-or-update-comment@v2
+        if: steps.changed-workloads.outputs.any_changed == 'true'
+        with:
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            <details>
+
+            <summary><b>Kubernetes Deployment/Statefulset resources</b></summary>
+
+            > ${{ steps.validate-workloads.outputs.stdout }}
+
+            </details>
+          edit-mode: append
+
+      - name: Update comment with config resouces
+        uses: peter-evans/create-or-update-comment@v2
+        if: steps.changed-configs.outputs.any_changed == 'true'
+        with:
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            <details>
+
+            <summary><b>Kubernetes configMap and Secret resources</b></summary>
+
+            > ${{ steps.validate-configs.outputs.stdout }}
+
+            </details>
+          edit-mode: append
