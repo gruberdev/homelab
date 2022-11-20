@@ -1,0 +1,23 @@
+name: Linters and utilities
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+jobs:
+  yaml-linter:
+    name: Yaml Linter
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: yaml-lint
+        uses: ibiqlik/action-yamllint@v3
+        with:
+          config_file: .yamllint
+      - run: echo ${{ steps.yaml-lint.outputs.logfile }}
+  markdown-link-check:
+    name: Check for broken URIs on README
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: gaurav-nelson/github-action-markdown-link-check@v1
