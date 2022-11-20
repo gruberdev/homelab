@@ -95,7 +95,6 @@ tasks:
         cluster-dns: "{{.CLUSTER_DNS}}"
         cluster-domain: "{{.CLUSTER_DOMAIN}}"
         node-ip: "${NODE_SERVER_IP}"
-        external-node-ip: "${NODE_SERVER_IP}"
         etcd-expose-metrics: true
         cluster-init: true
         datastore-endpoint: "https://${NODE_SERVER_IP}:2379"
@@ -137,7 +136,6 @@ tasks:
         k3s_control_node: true
         token: "${K3S_NODE_TOKEN}"
         node-ip: "${NODE_SERVER_IP}"
-        external-node-ip: "${NODE_SERVER_IP}"
         server: "https://${NODE_SERVER_IP}:6443"
         etcd-expose-metrics: true
         cluster-init: true
