@@ -20,6 +20,11 @@ vars:
   DISABLE_K3S: traefik,localstorage
   RESOLV_FILE: /etc/resolv.conf
   FLANNEL_INTERFACE: tailscale0
+env:
+  NODE_SERVER_IP: 192.168.1.8
+  NODE_TWO_IP: 192.168.1.8
+  NODE_ONE_IP: 192.168.1.10
+
 silent: true
 
 tasks:
@@ -79,8 +84,10 @@ tasks:
         cat << EOF > config/k3s/node-one.yaml
         node-name: "node-one"
         k3s_control_node: true
+        tls-san:
+          - "${NODE_ONE_IP}"
+          - "${NODE_TWO_IP}"
         write-kubeconfig-mode: "{{.KUBECONFIG_MODE}}"
-        flannel-iface: "{{.FLANNEL_INTERFACE}}"
         write-kubeconfig: "${KUBECONFIG_PATH}"
         token: "${K3S_NODE_TOKEN}"
         cluster-cidr: "{{.POD_CIDR}}"
@@ -89,16 +96,15 @@ tasks:
         cluster-domain: "{{.CLUSTER_DOMAIN}}"
         node-ip: "${NODE_SERVER_IP}"
         external-node-ip: "${NODE_SERVER_IP}"
-        server: "https://${TAILSCALE_IPV4}:6443"
-        disable-network-policy: true
-        resolv-conf: "{{.RESOLV_FILE}}"
         etcd-expose-metrics: true
-        datastore-endpoint: "postgres://${HA_DB_USER}:${HA_DB_PASSWORD}@${BASTION_IPV4}/{{.HA_DB_NAME}}?sslmode=disable"
+        cluster-init: true
+        datastore-endpoint: "https://${NODE_SERVER_IP}:2379"
+        datastore-cafile: "/var/lib/rancher/k3s/server/tls/etcd/server-ca.crt"
+        datastore-certfile: "/var/lib/rancher/k3s/server/tls/etcd/client.crt"
+        datastore-keyfile: "/var/lib/rancher/k3s/server/tls/etcd/client.key"
         kubelet-arg:
           - "feature-gates=GracefulNodeShutdown=true"
-          - "feature-gates=MixedProtocolLBService=true"
         kube-controller-manager-arg:
-          # Required to monitor component with kube-prometheus-stack
           - "bind-address=0.0.0.0"
           - "node-monitor-period=4s"
           - "node-monitor-grace-period=16s"
@@ -110,12 +116,10 @@ tasks:
         kube-apiserver-arg:
           - "default-not-ready-toleration-seconds=20"
           - "default-unreachable-toleration-seconds=20"
-          - "feature-gates=MixedProtocolLBService=true"
           - "anonymous-auth=true"
         disable:
           - traefik
           - local-storage
-          - metrics-server
         EOF
     ignore_error: true
 
@@ -130,10 +134,11 @@ tasks:
           - "${NODE_TWO_IP}"
         write-kubeconfig-mode: "{{.KUBECONFIG_MODE}}"
         write-kubeconfig: "${KUBECONFIG_PATH}"
+        k3s_control_node: true
         token: "${K3S_NODE_TOKEN}"
         node-ip: "${NODE_SERVER_IP}"
         external-node-ip: "${NODE_SERVER_IP}"
-        server: "https://"${NODE_SERVER_IP}":6443"
+        server: "https://${NODE_SERVER_IP}:6443"
         etcd-expose-metrics: true
         cluster-init: true
         datastore-endpoint: "https://${NODE_SERVER_IP}:2379"
@@ -142,7 +147,7 @@ tasks:
         datastore-keyfile: "/var/lib/rancher/k3s/server/tls/etcd/client.key"
         kubelet-arg:
           - "feature-gates=GracefulNodeShutdown=true"
-            - "node-status-update-frequency=4s"
+          - "node-status-update-frequency=4s"
         kube-controller-manager-arg:
           - "bind-address=0.0.0.0"
           - "node-monitor-period=4s"
