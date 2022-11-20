@@ -111,7 +111,7 @@ tasks:
           - "default-not-ready-toleration-seconds=20"
           - "default-unreachable-toleration-seconds=20"
           - "feature-gates=MixedProtocolLBService=true"
-          - "anonymous-auth=true"
+          - "anonymous-auth=true" 
         disable:
           - traefik
           - local-storage
@@ -126,14 +126,16 @@ tasks:
         cat << EOF > config/k3s/node-two.yaml
         node-name: "node-two"
         write-kubeconfig-mode: "{{.KUBECONFIG_MODE}}"
-        flannel-iface: "{{.FLANNEL_INTERFACE}}"
         write-kubeconfig: "${KUBECONFIG_PATH}"
         token: "${K3S_NODE_TOKEN}"
         node-ip: "${NODE_SERVER_IP}"
         external-node-ip: "${NODE_SERVER_IP}"
         server: "https://${CONTROLLER_IPV4}:6443"
         etcd-expose-metrics: true
-        datastore-endpoint: "postgres://${HA_DB_USER}:${HA_DB_PASSWORD}@${BASTION_IPV4}/{{.HA_DB_NAME}}?sslmode=disable"
+        datastore-endpoint: "https://${NODE_SERVER_IP}:2379"
+        datastore-cafile: "/var/lib/rancher/k3s/server/tls/etcd/server-ca.crt"
+        datastore-certfile: "/var/lib/rancher/k3s/server/tls/etcd/client.crt"
+        datastore-keyfile: "/var/lib/rancher/k3s/server/tls/etcd/client.key"
         kubelet-arg:
           - "feature-gates=GracefulNodeShutdown=true"
         kube-controller-manager-arg:
