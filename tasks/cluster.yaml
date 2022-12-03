@@ -11,19 +11,25 @@ vars:
   RESET: tput sgr0
   CLEAR: tput reset
   PATH_ERROR: is not installed or correctly configured in PATH.
-  SVC_CIDR: 10.43.0.0/16
-  POD_CIDR: 10.42.0.0/16
+  SVC_CIDR: 10.43.0.0/16,2001:cafe:42:1::/112
+  POD_CIDR: 10.42.0.0/16,2001:cafe:42:0::/56
+  IPV4_NETWORK: 192.168.1.0/24
   CLUSTER_DNS: 10.43.0.10
   CLUSTER_DOMAIN: cluster.local
   HA_DB_NAME: k3s
   KUBECONFIG_MODE: 0777
   DISABLE_K3S: traefik,localstorage
+  K3S_PATH: /var/lib/rancher/k3s
   RESOLV_FILE: /etc/resolv.conf
   FLANNEL_INTERFACE: tailscale0
 env:
   NODE_SERVER_IP: 192.168.1.8
   NODE_TWO_IP: 192.168.1.8
   NODE_ONE_IP: 192.168.1.10
+  NODE_THREE_IP: 192.168.1.105
+  VIP: 192.168.1.8
+  INTERFACE: eno1
+  KVVERSION: v0.5.7
 
 silent: true
 
@@ -77,33 +83,172 @@ tasks:
       - Add to your startup script or terminal "'export PATH='/var/lib/rancher/k3s/data/current/bin/:/var/lib/rancher/k3s/data/current/bin/aux:$PATH'"
     ignore_error: true
 
+  gen:clean:
+    cmds:
+      - rm -rf /var/lib/rancher /etc/rancher ~/.kube/*
+      - ip addr flush dev lo
+      - ip addr add 127.0.0.1/8 dev lo
+    ignore_error: true
+
+  gen:files:
+    cmds:
+      - task: gen:manifests
+      - task: gen:calico
+      - task: gen:vip
+
+  gen:manifests:
+    cmds:
+      - mkdir -p {{.K3S_PATH}}/server/manifests/
+    ignore_error: true
+
+  gen:calico:
+    cmds:
+      - rm {{.K3S_PATH}}/server/manifests/calico.yaml
+      - |
+        cat << EOF > {{.K3S_PATH}}/server/manifests/calico.yaml
+        apiVersion: operator.tigera.io/v1
+        kind: Installation
+        metadata:
+          name: default
+        spec:
+          calicoNetwork:
+            nodeAddressAutodetectionV4:
+              cidrs:
+                - "{{.IPV4_NETWORK}}"
+            ipPools:
+              - blockSize: 26
+                cidr: "${POD_CIDR}"
+                encapsulation: "VXLANCrossSubnet"
+                natOutgoing: Enabled
+                nodeSelector: all()
+          nodeMetricsPort: 9091
+          typhaMetricsPort: 9093
+        EOF
+    ignore_error: true
+
+  gen:vip:
+    cmds:
+      - rm {{.K3S_PATH}}/server/manifests/kube-vip.yaml
+      - |
+        cat << EOF > {{.K3S_PATH}}/server/manifests/kube-vip.yaml
+        apiVersion: apps/v1
+        kind: DaemonSet
+        metadata:
+          name: kube-vip
+          namespace: kube-system
+          labels:
+            app.kubernetes.io/instance: kube-vip
+            app.kubernetes.io/name: kube-vip
+        spec:
+          selector:
+            matchLabels:
+              app.kubernetes.io/instance: kube-vip
+              app.kubernetes.io/name: kube-vip
+          template:
+            metadata:
+              labels:
+                app.kubernetes.io/instance: kube-vip
+                app.kubernetes.io/name: kube-vip
+            spec:
+              containers:
+                - name: kube-vip
+                  image: ghcr.io/kube-vip/kube-vip:${KVVERSION}
+                  imagePullPolicy: IfNotPresent
+                  args:
+                    - manager
+                  env:
+                    - name: vip_arp
+                      value: "true"
+                    - name: port
+                      value: "6443"
+                    - name: vip_cidr
+                      value: "32"
+                    - name: cp_enable
+                      value: "true"
+                    - name: cp_namespace
+                      value: kube-system
+                    - name: svc_enable
+                      value: "false"
+                    - name: vip_leaderelection
+                      value: "true"
+                    - name: vip_leaseduration
+                      value: "15"
+                    - name: vip_renewdeadline
+                      value: "10"
+                    - name: vip_retryperiod
+                      value: "2"
+                    - name: address
+                      value: "${NODE_ONE_IP}"
+                  securityContext:
+                    capabilities:
+                      add:
+                        - NET_ADMIN
+                        - NET_RAW
+              hostAliases:
+                - hostnames:
+                    - kubernetes
+                  ip: 127.0.0.1
+              hostNetwork: true
+              serviceAccountName: kube-vip
+              affinity:
+                nodeAffinity:
+                  requiredDuringSchedulingIgnoredDuringExecution:
+                    nodeSelectorTerms:
+                      - matchExpressions:
+                          - key: node-role.kubernetes.io/master
+                            operator: Exists
+                      - matchExpressions:
+                          - key: node-role.kubernetes.io/control-plane
+                            operator: Exists
+              tolerations:
+                - effect: NoSchedule
+                  operator: Exists
+                - effect: NoExecute
+                  operator: Exists
+        EOF
+    ignore_error: true
+
   gen:node:one:
     cmds:
-      - rm config/k3s/node-one.yaml
+      - rm /etc/rancher/k3s/config.yaml
       - |
-        cat << EOF > config/k3s/node-one.yaml
+        cat << EOF > /etc/rancher/k3s/config.yaml
         node-name: "node-one"
-        k3s_control_node: true
+        cluster-init: true
         tls-san:
           - "${NODE_ONE_IP}"
           - "${NODE_TWO_IP}"
-        write-kubeconfig-mode: "{{.KUBECONFIG_MODE}}"
-        write-kubeconfig: "${KUBECONFIG_PATH}"
-        token: "${K3S_NODE_TOKEN}"
+          - "${NODE_THREE_IP}"
+        # Network
+        flannel-backend: "none"
+        disable-network-policy: true
+        disable-cloud-controller: true
+
+        # Datastore
         cluster-cidr: "{{.POD_CIDR}}"
         service-cidr: "{{.SVC_CIDR}}"
         cluster-dns: "{{.CLUSTER_DNS}}"
         cluster-domain: "{{.CLUSTER_DOMAIN}}"
-        node-ip: "${NODE_SERVER_IP}"
+        datastore-endpoint: "https://${NODE_ONE_IP}:2379,https://${NODE_TWO_IP}:2379,https://${NODE_THREE_IP}:2379,"
+
+        # ETCD
         etcd-expose-metrics: true
-        cluster-init: true
-        datastore-endpoint: "https://${NODE_SERVER_IP}:2379"
         datastore-cafile: "/var/lib/rancher/k3s/server/tls/etcd/server-ca.crt"
         datastore-certfile: "/var/lib/rancher/k3s/server/tls/etcd/client.crt"
         datastore-keyfile: "/var/lib/rancher/k3s/server/tls/etcd/client.key"
+
+        # Auth
+        write-kubeconfig-mode: "{{.KUBECONFIG_MODE}}"
+        write-kubeconfig: "${KUBECONFIG_PATH}"
+        token: "${K3S_NODE_TOKEN}"
+
+        # Advanced Parameters
         kubelet-arg:
           - "feature-gates=GracefulNodeShutdown=true"
+          - "node-status-update-frequency=4s"
+          - "node-ip=0.0.0.0"
         kube-controller-manager-arg:
+          - "address=0.0.0.0"
           - "bind-address=0.0.0.0"
           - "node-monitor-period=4s"
           - "node-monitor-grace-period=16s"
@@ -119,6 +264,8 @@ tasks:
         disable:
           - traefik
           - local-storage
+          - metrics-server
+          - servicelb
         EOF
     ignore_error: true
 
