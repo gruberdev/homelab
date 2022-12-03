@@ -23,7 +23,7 @@ vars:
   RESOLV_FILE: /etc/resolv.conf
   FLANNEL_INTERFACE: tailscale0
 env:
-  NODE_SERVER_IP: 192.168.1.8
+  NODE_SERVER_IP: 192.168.1.10
   NODE_TWO_IP: 192.168.1.8
   NODE_ONE_IP: 192.168.1.10
   NODE_THREE_IP: 192.168.1.105
@@ -117,7 +117,7 @@ tasks:
                 - "{{.IPV4_NETWORK}}"
             ipPools:
               - blockSize: 26
-                cidr: "${POD_CIDR}"
+                cidr: "{{.POD_CIDR}}"
                 encapsulation: "VXLANCrossSubnet"
                 natOutgoing: Enabled
                 nodeSelector: all()
@@ -178,7 +178,7 @@ tasks:
                     - name: vip_retryperiod
                       value: "2"
                     - name: address
-                      value: "${NODE_ONE_IP}"
+                      value: "${NODE_SERVER_IP}"
                   securityContext:
                     capabilities:
                       add:
