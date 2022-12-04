@@ -265,7 +265,7 @@ tasks:
                       "type": "k8s"
                   },
                   "kubernetes": {
-                      "kubeconfig": "__KUBECONFIG_FILEPATH__"
+                      "kubeconfig": "/etc/rancher/k3s/k3s.yaml"
                   },
                   "container_settings": {
                     "allow_ip_forwarding": true
