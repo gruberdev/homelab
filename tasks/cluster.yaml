@@ -25,6 +25,7 @@ vars:
   K3S_PATH: /var/lib/rancher/k3s
   RESOLV_FILE: /etc/resolv.conf
   FLANNEL_INTERFACE: tailscale0
+  CALICO_VERSION: v3.24.5
 env:
   NODE_SERVER_IP: 192.168.1.10
   NODE_TWO_IP: 192.168.1.8
@@ -115,7 +116,8 @@ tasks:
 
   gen:calico:1:
     cmds:
-      - kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+      - wget https://raw.githubusercontent.com/projectcalico/calico/{{.CALICO_VERSION}}/manifests/tigera-operator.yaml
+      - mv tigera-operator.yaml {{.K3S_PATH}}/server/manifests/tigera-operator.yaml
     ignore_error: true
 
   gen:calico:2:
@@ -287,6 +289,7 @@ tasks:
 
   gen:node:one:
     cmds:
+      - sleep 0.01 && [ ! -d "/etc/rancher/k3s/" ] && mkdir -p /etc/rancher/k3s
       - rm /etc/rancher/k3s/config.yaml
       - |
         cat << EOF > /etc/rancher/k3s/config.yaml
@@ -321,7 +324,6 @@ tasks:
           - "node-ip=0.0.0.0"
           - "resolv-conf=/run/systemd/resolve/resolv.conf"
           - "node-status-update-frequency=4s"
-          # Features
           - "feature-gates=MixedProtocolLBService=true"
           - "feature-gates=GracefulNodeShutdown=true"
         kube-controller-manager-arg:
@@ -329,23 +331,19 @@ tasks:
           - "node-monitor-period=4s"
           - "node-monitor-grace-period=16s"
           - "pod-eviction-timeout=20s"
-          # Features
           - "feature-gates=MixedProtocolLBService=true"
           - "feature-gates=GracefulNodeShutdown=true"
         kube-proxy-arg:
           - "metrics-bind-address=0.0.0.0"
-          # Features
           - "feature-gates=MixedProtocolLBService=true"
           - "feature-gates=GracefulNodeShutdown=true"
         kube-scheduler-arg:
           - "bind-address=0.0.0.0"
-          # Features
           - "feature-gates=MixedProtocolLBService=true"
           - "feature-gates=GracefulNodeShutdown=true"
           kube-apiserver-arg:
           - "default-not-ready-toleration-seconds=20"
           - "default-unreachable-toleration-seconds=20"
-          # Features
           - "feature-gates=MixedProtocolLBService=true"
           - "feature-gates=GracefulNodeShutdown=true"
           - "feature-gates=ReadWriteOncePod=true"
