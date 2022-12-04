@@ -11,9 +11,12 @@ vars:
   RESET: tput sgr0
   CLEAR: tput reset
   PATH_ERROR: is not installed or correctly configured in PATH.
-  SVC_CIDR: 10.43.0.0/16,2001:cafe:42:1::/112
-  POD_CIDR: 10.42.0.0/16,2001:cafe:42:0::/56
+  SVC_IPV4_CIDR: 10.43.0.0/16
+  SVC_IPV6_CIDR: 2001:cafe:42:1::/112
+  POD_IPV4_CIDR: 10.42.0.0/16
+  POD_IPV6_CIDR: 2001:cafe:42:0::/56
   IPV4_NETWORK: 192.168.1.0/24
+  IPV6_NETWORK: fe80::b207:b52a:249f:862a/64
   CLUSTER_DNS: 10.43.0.10
   CLUSTER_DOMAIN: cluster.local
   HA_DB_NAME: k3s
@@ -28,7 +31,7 @@ env:
   NODE_ONE_IP: 192.168.1.10
   NODE_THREE_IP: 192.168.1.105
   VIP: 192.168.1.8
-  INTERFACE: eno1
+  INTERFACE: enp1s0
   KVVERSION: v0.5.7
 
 silent: true
@@ -115,9 +118,17 @@ tasks:
             nodeAddressAutodetectionV4:
               cidrs:
                 - "{{.IPV4_NETWORK}}"
+            nodeAddressAutodetectionV6:
+              cidrs:
+                - "{{.IPV6_NETWORK}}"
             ipPools:
               - blockSize: 26
-                cidr: "{{.POD_CIDR}}"
+                cidr: "{{.POD_IPV4_CIDR}}"
+                encapsulation: "VXLANCrossSubnet"
+                natOutgoing: Enabled
+                nodeSelector: all()
+              - blockSize: 122
+                cidr: "{{.POD_IPV6_CIDR}}"
                 encapsulation: "VXLANCrossSubnet"
                 natOutgoing: Enabled
                 nodeSelector: all()
@@ -225,17 +236,13 @@ tasks:
         disable-cloud-controller: true
 
         # Datastore
-        cluster-cidr: "{{.POD_CIDR}}"
-        service-cidr: "{{.SVC_CIDR}}"
+        cluster-cidr: "{{.POD_IPV4_CIDR}},{{.POD_IPV6_CIDR}}"
+        service-cidr: "{{.SVC_IPV4_CIDR}},{{.SVC_IPV6_CIDR}}"
         cluster-dns: "{{.CLUSTER_DNS}}"
         cluster-domain: "{{.CLUSTER_DOMAIN}}"
-        datastore-endpoint: "https://${NODE_ONE_IP}:2379,https://${NODE_TWO_IP}:2379,https://${NODE_THREE_IP}:2379,"
 
         # ETCD
         etcd-expose-metrics: true
-        datastore-cafile: "/var/lib/rancher/k3s/server/tls/etcd/server-ca.crt"
-        datastore-certfile: "/var/lib/rancher/k3s/server/tls/etcd/client.crt"
-        datastore-keyfile: "/var/lib/rancher/k3s/server/tls/etcd/client.key"
 
         # Auth
         write-kubeconfig-mode: "{{.KUBECONFIG_MODE}}"
@@ -248,7 +255,6 @@ tasks:
           - "node-status-update-frequency=4s"
           - "node-ip=0.0.0.0"
         kube-controller-manager-arg:
-          - "address=0.0.0.0"
           - "bind-address=0.0.0.0"
           - "node-monitor-period=4s"
           - "node-monitor-grace-period=16s"
