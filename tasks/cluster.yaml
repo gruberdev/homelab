@@ -148,6 +148,8 @@ tasks:
   gen:vip:
     cmds:
       - rm {{.K3S_PATH}}/server/manifests/kube-vip.yaml
+      - rm {{.K3S_PATH}}/server/manifests/kube-rbac.yaml
+      - curl https://kube-vip.io/manifests/rbac.yaml > {{.K3S_PATH}}/server/manifests/kube-rbac.yaml
       - |
         cat << EOF > {{.K3S_PATH}}/server/manifests/kube-vip.yaml
         apiVersion: apps/v1
