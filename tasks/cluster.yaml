@@ -16,7 +16,7 @@ vars:
   POD_IPV4_CIDR: 10.42.0.0/16
   POD_IPV6_CIDR: 2001:cafe:42:0::/56
   IPV4_NETWORK: 192.168.1.0/24
-  IPV6_NETWORK: fe80::b207:b52a:249f:862a/64
+  IPV6_NETWORK: fe80::b207:b52a:249f:862a
   CLUSTER_DNS: 10.43.0.10
   CLUSTER_DOMAIN: cluster.local
   HA_DB_NAME: k3s
@@ -128,7 +128,7 @@ tasks:
                 - "{{.IPV4_NETWORK}}"
             nodeAddressAutodetectionV6:
               cidrs:
-                - "{{.IPV6_NETWORK}}"
+                - "{{.IPV6_NETWORK}}/64"
             ipPools:
               - blockSize: 26
                 cidr: "{{.POD_IPV4_CIDR}}"
@@ -283,6 +283,7 @@ tasks:
       - |
         cat << EOF > /etc/rancher/k3s/config.yaml
         node-name: "node-one"
+        node-ip: "${NODE_SERVER_IP},{{.IPV6_NETWORK}}"
         cluster-init: true
         tls-san:
           - "${NODE_ONE_IP}"
