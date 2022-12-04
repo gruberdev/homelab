@@ -111,8 +111,14 @@ tasks:
     cmds:
       - task: gen:calico:1
       - task: gen:calico:2
+      - task: gen:calico:3
 
   gen:calico:1:
+    cmds:
+      - kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+    ignore_error: true
+
+  gen:calico:2:
     cmds:
       - rm {{.K3S_PATH}}/server/manifests/calico.yaml
       - |
@@ -229,7 +235,7 @@ tasks:
         EOF
     ignore_error: true
 
-  gen:calico:2:
+  gen:calico:3:
     cmds:
       - rm {{.K3S_PATH}}/server/manifests/calico-2.yaml
       - |
@@ -312,21 +318,37 @@ tasks:
 
         # Advanced Parameters
         kubelet-arg:
-          - "feature-gates=GracefulNodeShutdown=true"
-          - "node-status-update-frequency=4s"
           - "node-ip=0.0.0.0"
+          - "resolv-conf=/run/systemd/resolve/resolv.conf"
+          - "node-status-update-frequency=4s"
+          # Features
+          - "feature-gates=MixedProtocolLBService=true"
+          - "feature-gates=GracefulNodeShutdown=true"
         kube-controller-manager-arg:
           - "bind-address=0.0.0.0"
           - "node-monitor-period=4s"
           - "node-monitor-grace-period=16s"
           - "pod-eviction-timeout=20s"
+          # Features
+          - "feature-gates=MixedProtocolLBService=true"
+          - "feature-gates=GracefulNodeShutdown=true"
         kube-proxy-arg:
           - "metrics-bind-address=0.0.0.0"
+          # Features
+          - "feature-gates=MixedProtocolLBService=true"
+          - "feature-gates=GracefulNodeShutdown=true"
         kube-scheduler-arg:
           - "bind-address=0.0.0.0"
-        kube-apiserver-arg:
+          # Features
+          - "feature-gates=MixedProtocolLBService=true"
+          - "feature-gates=GracefulNodeShutdown=true"
+          kube-apiserver-arg:
           - "default-not-ready-toleration-seconds=20"
           - "default-unreachable-toleration-seconds=20"
+          # Features
+          - "feature-gates=MixedProtocolLBService=true"
+          - "feature-gates=GracefulNodeShutdown=true"
+          - "feature-gates=ReadWriteOncePod=true"
           - "anonymous-auth=true"
         disable:
           - traefik
