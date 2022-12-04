@@ -87,7 +87,10 @@ tasks:
     ignore_error: true
 
   gen:clean:
+    dir: /usr/local/bin
     cmds:
+      - sh k3s-killall.sh
+      - sh k3s-uninstall.sh
       - rm -rf /var/lib/rancher /etc/rancher ~/.kube/*
       - ip addr flush dev lo
       - ip addr add 127.0.0.1/8 dev lo
@@ -105,6 +108,11 @@ tasks:
     ignore_error: true
 
   gen:calico:
+    cmds:
+      - task: gen:calico:1
+      - task: gen:calico:2
+
+  gen:calico:1:
     cmds:
       - rm {{.K3S_PATH}}/server/manifests/calico.yaml
       - |
@@ -216,6 +224,56 @@ tasks:
                   operator: Exists
                 - effect: NoExecute
                   operator: Exists
+        EOF
+    ignore_error: true
+
+  gen:calico:2:
+    cmds:
+      - rm {{.K3S_PATH}}/server/manifests/calico-2.yaml
+      - |
+        cat << EOF > {{.K3S_PATH}}/server/manifests/calico-2.yaml
+        kind: ConfigMap
+        apiVersion: v1
+        metadata:
+          name: calico-config
+          namespace: kube-system
+        data:
+          cni_network_config: |-
+            {
+              "name": "k8s-pod-network",
+              "cniVersion": "0.3.1",
+              "plugins": [
+                {
+                  "type": "calico",
+                  "log_level": "info",
+                  "log_file_path": "/var/log/calico/cni/cni.log",
+                  "datastore_type": "kubernetes",
+                  "nodename": "__KUBERNETES_NODE_NAME__",
+                  "mtu": __CNI_MTU__,
+                  "ipam": {
+                      "type": "calico-ipam"
+                  },
+                  "policy": {
+                      "type": "k8s"
+                  },
+                  "kubernetes": {
+                      "kubeconfig": "__KUBECONFIG_FILEPATH__"
+                  },
+                  "container_settings": {
+                    "allow_ip_forwarding": true
+                  }
+                },
+                {
+                  "type": "portmap",
+                  "snat": true,
+                  "capabilities": {"portMappings": true}
+                },
+                {
+                  "type": "bandwidth",
+                  "capabilities": {"bandwidth": true}
+                }
+              ]
+            }
         EOF
     ignore_error: true
 
