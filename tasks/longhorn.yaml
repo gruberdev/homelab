@@ -58,6 +58,25 @@ tasks:
     cmds:
       - knsk --delete-all --force
 
+  assign:
+    cmds:
+      - task: label:nodes
+      - task: annotate:nodes
+
+  label:nodes:
+    cmds:
+      - kubectl label node node-one node.longhorn.io/create-default-disk='config'
+      - kubectl label node node-two node.longhorn.io/create-default-disk='config'
+
+  annotate:nodes:
+    cmds:
+      - |
+        kubectl annotate node node-one \
+        node.longhorn.io/default-disks-config='[{"path":"/mnt/storage","allowScheduling":true}]'
+      - |
+        kubectl annotate node node-two \
+        node.longhorn.io/default-disks-config='[{"path":"/media/k3s/longhorn","allowScheduling":true}]'
+
   install:helm:
     cmds:
       - |
