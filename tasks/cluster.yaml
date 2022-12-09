@@ -380,9 +380,6 @@ tasks:
         cluster-dns: "{{.CLUSTER_DNS}}"
         cluster-domain: "{{.CLUSTER_DOMAIN}}"
 
-        # ETCD
-        etcd-expose-metrics: true
-
         # Auth
         write-kubeconfig-mode: "{{.KUBECONFIG_MODE}}"
         write-kubeconfig: "${KUBECONFIG_PATH}"
