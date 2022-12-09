@@ -17,6 +17,7 @@ vars:
   POD_IPV6_CIDR: 2001:cafe:42:0::/56
   IPV4_NETWORK: 192.168.1.0/24
   IPV6_NETWORK: fe80::b207:b52a:249f:862a
+  NODE_TWO_IPV6: fe80::2d4d:d619:fc4c:e686
   CLUSTER_DNS: 10.43.0.10
   CLUSTER_DOMAIN: cluster.local
   HA_DB_NAME: k3s
@@ -341,7 +342,7 @@ tasks:
           - "bind-address=0.0.0.0"
           - "feature-gates=MixedProtocolLBService=true"
           - "feature-gates=GracefulNodeShutdown=true"
-          kube-apiserver-arg:
+        kube-apiserver-arg:
           - "default-not-ready-toleration-seconds=20"
           - "default-unreachable-toleration-seconds=20"
           - "feature-gates=MixedProtocolLBService=true"
@@ -358,44 +359,68 @@ tasks:
 
   gen:node:two:
     cmds:
-      - rm config/k3s/node-two.yaml
+      - rm /etc/rancher/k3s/config.yaml
       - |
-        cat << EOF > config/k3s/node-two.yaml
+        cat << EOF > /etc/rancher/k3s/config.yaml
         node-name: "node-two"
+        node-ip: "${NODE_TWO_IP},{{.NODE_TWO_IPV6}}"
         tls-san:
           - "${NODE_ONE_IP}"
           - "${NODE_TWO_IP}"
+          - "${NODE_THREE_IP}"
+        # Network
+        flannel-backend: "none"
+        disable-network-policy: true
+        disable-cloud-controller: true
+
+        # Datastore
+        cluster-cidr: "{{.POD_IPV4_CIDR}},{{.POD_IPV6_CIDR}}"
+        service-cidr: "{{.SVC_IPV4_CIDR}},{{.SVC_IPV6_CIDR}}"
+        cluster-dns: "{{.CLUSTER_DNS}}"
+        cluster-domain: "{{.CLUSTER_DOMAIN}}"
+
+        # ETCD
+        etcd-expose-metrics: true
+
+        # Auth
         write-kubeconfig-mode: "{{.KUBECONFIG_MODE}}"
         write-kubeconfig: "${KUBECONFIG_PATH}"
-        k3s_control_node: true
         token: "${K3S_NODE_TOKEN}"
-        node-ip: "${NODE_SERVER_IP}"
-        server: "https://${NODE_SERVER_IP}:6443"
-        etcd-expose-metrics: true
-        cluster-init: true
-        datastore-endpoint: "https://${NODE_SERVER_IP}:2379"
-        datastore-cafile: "/var/lib/rancher/k3s/server/tls/etcd/server-ca.crt"
-        datastore-certfile: "/var/lib/rancher/k3s/server/tls/etcd/client.crt"
-        datastore-keyfile: "/var/lib/rancher/k3s/server/tls/etcd/client.key"
+
+        # Advanced Parameters
         kubelet-arg:
-          - "feature-gates=GracefulNodeShutdown=true"
+          - "node-ip=0.0.0.0"
+          - "resolv-conf=/run/systemd/resolve/resolv.conf"
           - "node-status-update-frequency=4s"
+          - "feature-gates=MixedProtocolLBService=true"
+          - "feature-gates=GracefulNodeShutdown=true"
         kube-controller-manager-arg:
           - "bind-address=0.0.0.0"
           - "node-monitor-period=4s"
           - "node-monitor-grace-period=16s"
           - "pod-eviction-timeout=20s"
+          - "feature-gates=MixedProtocolLBService=true"
+          - "feature-gates=GracefulNodeShutdown=true"
         kube-proxy-arg:
           - "metrics-bind-address=0.0.0.0"
+          - "feature-gates=MixedProtocolLBService=true"
+          - "feature-gates=GracefulNodeShutdown=true"
         kube-scheduler-arg:
           - "bind-address=0.0.0.0"
+          - "feature-gates=MixedProtocolLBService=true"
+          - "feature-gates=GracefulNodeShutdown=true"
         kube-apiserver-arg:
           - "default-not-ready-toleration-seconds=20"
           - "default-unreachable-toleration-seconds=20"
+          - "feature-gates=MixedProtocolLBService=true"
+          - "feature-gates=GracefulNodeShutdown=true"
+          - "feature-gates=ReadWriteOncePod=true"
           - "anonymous-auth=true"
         disable:
           - traefik
           - local-storage
+          - metrics-server
+          - servicelb
         EOF
     ignore_error: true
 
