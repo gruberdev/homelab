@@ -363,6 +363,7 @@ tasks:
       - |
         cat << EOF > /etc/rancher/k3s/config.yaml
         node-name: "node-two"
+        server: https://${NODE_ONE_IP}:6443
         node-ip: "${NODE_TWO_IP},{{.NODE_TWO_IPV6}}"
         tls-san:
           - "${NODE_ONE_IP}"
