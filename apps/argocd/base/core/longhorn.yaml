@@ -111,7 +111,7 @@ spec:
             systemManagedComponentsNodeSelector: ~
             priorityClass: ~
             autoSalvage: ~
-            autoDeletePodWhenVolumeDetachedUnexpectedly: ~
+            autoDeletePodWhenVolumeDetachedUnexpectedly: true
             disableSchedulingOnCordonedNode: ~
             replicaZoneSoftAntiAffinity: ~
             nodeDownPodDeletionPolicy: ~
