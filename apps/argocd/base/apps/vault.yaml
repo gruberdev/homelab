@@ -241,7 +241,7 @@ spec:
             enabled: true
             size: 5Gi
             mountPath: "/vault/data"
-            storageClass: longhorn
+            storageClass: nfs-client
             accessMode: ReadWriteOnce
             annotations: {}
 
@@ -251,7 +251,7 @@ spec:
           # /vault/audit
           # See https://www.vaultproject.io/docs/audit/index.html to know more
           auditStorage:
-            enabled: true
+            enabled: false
             # Size of the PVC created
             size: 5Gi
             # Location where the PVC will be mounted.
