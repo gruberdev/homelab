@@ -25,21 +25,21 @@ resources:
 - base/utilities/kured.yaml
 # - base/utilities/botkube.yaml
 
-- base/apps/vault.yaml
-- base/apps/ha.yaml
+# - base/apps/vault.yaml
+# - base/apps/ha.yaml
 - base/apps/unifi.yaml
-- base/apps/adguard.yaml
-- base/apps/wyze.yaml
+# - base/apps/adguard.yaml
+# - base/apps/wyze.yaml
 
-- base/monitoring/kuma.yaml
-- base/monitoring/unifi-poller.yaml
-- base/monitoring/kube-prometheus.yaml
-- base/monitoring/kube-prom-crds.yaml
-- base/monitoring/longhorn.yaml
+# - base/monitoring/kuma.yaml
+# - base/monitoring/unifi-poller.yaml
+# - base/monitoring/kube-prometheus.yaml
+# - base/monitoring/kube-prom-crds.yaml
+# - base/monitoring/longhorn.yaml
 
-- base/services/n8n.yaml
-- base/services/rss-gen.yaml
-- base/services/rss-hub.yaml
+# - base/services/n8n.yaml
+# - base/services/rss-gen.yaml
+# - base/services/rss-hub.yaml
 
 # - base/services/metabase.yaml
 
@@ -49,19 +49,19 @@ resources:
 # - base/services/media/jellyfin.yaml
 
 # Matrix & utilities
-- base/matrix/synapse.yaml
-- base/matrix/element.yaml
-- base/matrix/dbs.yaml
-- base/matrix/proxies.yaml
+# - base/matrix/synapse.yaml
+# - base/matrix/element.yaml
+# - base/matrix/dbs.yaml
+# - base/matrix/proxies.yaml
 
-# Matrix bridges
-- base/matrix/whats.yaml
-- base/matrix/telegram.yaml
-- base/matrix/steam.yaml
-- base/matrix/linkedin.yaml
-- base/matrix/instagram.yaml
-- base/matrix/signal.yaml
-- base/matrix/discord.yaml
+# # Matrix bridges
+# - base/matrix/whats.yaml
+# - base/matrix/telegram.yaml
+# - base/matrix/steam.yaml
+# - base/matrix/linkedin.yaml
+# - base/matrix/instagram.yaml
+# - base/matrix/signal.yaml
+# - base/matrix/discord.yaml
 
 # Vault plugin
 - base/cmp-plugin.yaml
