@@ -241,7 +241,7 @@ spec:
             enabled: true
             size: 5Gi
             mountPath: "/vault/data"
-            storageClass: nfs-client
+            storageClass: longhorn
             accessMode: ReadWriteOnce
             annotations: {}
 
