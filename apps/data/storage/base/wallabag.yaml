@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: wallabag-images
+  name: wallabag-media
   namespace: services
 spec:
   accessModes:
