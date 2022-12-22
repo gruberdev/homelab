@@ -29,6 +29,7 @@ resources:
 #  Postgres Storage
 - base/postgres/ha.yaml
 - base/postgres/n8n.yaml
+- base/postgres/wallabag.yaml
 
 #  MySQL Storage
 - base/mysql/monica.yaml
