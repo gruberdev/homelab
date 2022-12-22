@@ -3,10 +3,13 @@ kind: Kustomization
 resources:
 
 # Monitoring
-- base/ha.yaml
-- base/wyze.yaml
 - base/flame.yaml
 - base/kuma.yaml
+
+# Home Assistant
+- base/ha.yaml
+- base/wyze.yaml
+- base/frigate.yaml
 
 # Networking
 - base/adguard.yaml
