@@ -25,6 +25,7 @@ resources:
 
 # Services
 - base/n8n.yaml
+- base/wallabag.yaml
 
 #  Postgres Storage
 - base/postgres/ha.yaml
