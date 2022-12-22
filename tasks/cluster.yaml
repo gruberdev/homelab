@@ -27,6 +27,9 @@ vars:
   RESOLV_FILE: /etc/resolv.conf
   FLANNEL_INTERFACE: tailscale0
   CALICO_VERSION: v3.24.5
+  KOORDINATOR_VERSION: 1.0.0
+  NODE_ARCH: linux_x86_64
+  CONTAINERD_PATH: /run/k3s/containerd/containerd.sock
 env:
   NODE_SERVER_IP: 192.168.1.10
   NODE_TWO_IP: 192.168.1.8
@@ -323,6 +326,7 @@ tasks:
         # Advanced Parameters
         kubelet-arg:
           - "node-ip=0.0.0.0"
+          - "container-runtime=remote" 
           - "resolv-conf=/run/systemd/resolve/resolv.conf"
           - "node-status-update-frequency=4s"
           - "feature-gates=MixedProtocolLBService=true"
@@ -437,3 +441,19 @@ tasks:
           - "metrics-bind-address=0.0.0.0"
         EOF
     ignore_error: true
+
+  install:koord:
+    preconditions:
+      - sh: 'which wget'
+        msg: 'wget {{.PATH_ERROR}}'
+      - sh: 'which kubelet'
+        msg: 'kubelet {{.PATH_ERROR}}'
+    cmds:
+      - wget https://github.com/koordinator-sh/koordinator/releases/download/v1.0.0/koord-runtime-proxy_{{.KOORDINATOR_VERSION}}_{{.NODE_ARCH}} -O koord-runtime-proxy
+      - chmod +x koord-runtime-proxy
+      - sudo mv koord-runtime-proxy /usr/local/bin
+      - |
+        koord-runtime-proxy \ 
+        --remote-runtime-service-endpoint={{.CONTAINERD_PATH}} \
+    ignore_error: true
+
