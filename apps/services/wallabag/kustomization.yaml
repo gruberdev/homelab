@@ -1,0 +1,33 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+bases:
+- ./base
+- https://github.com/gruberdev/homelab/apps/networking/tailscale
+
+namespace: services
+patches:
+- path: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/tailscale/patch.yaml
+  target:
+    kind: Deployment
+    name: wallabag
+- patch: |-
+    - op: replace
+      path: "/spec/template/spec/containers/0/env/2"
+      value:
+        name: TS_HOSTNAME
+        value: "wallabag"
+    - op: replace
+      path: "/spec/template/spec/containers/0/env/3"
+      value:
+        name: DEST_PORT
+        value: "80"
+  target:
+    kind: Deployment
+    name: wallabag
+
+images:
+- name: wallabag/wallabag
+  newTag: 2.5.2
+
+commonAnnotations:
+  reloader.stakater.com/auto: "true"
