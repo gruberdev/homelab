@@ -30,7 +30,7 @@ spec:
               valueFrom: { secretKeyRef: { name: walladmin.db-wallabag.credentials.postgresql.acid.zalan.do, key: username } }
             - name: SYMFONY__ENV__DATABASE_PASSWORD
               valueFrom: { secretKeyRef: { name: walladmin.db-wallabag.credentials.postgresql.acid.zalan.do, key: password } }
-              envFrom:
+          envFrom:
             - configMapRef:
                 name: wallabag-cm
             - secretRef:
