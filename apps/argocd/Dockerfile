@@ -1,7 +1,8 @@
 
 ARG HELM_VERSION=3.10.2
 ARG ALPINE_VERSION=3.17
-ARG ARGOCD_VERSION=2.5.3
+ARG ARGOCD_VERSION=2.5.5
+ARG VAULT_PLUGIN_VERSION=1.13.1
 
 FROM alpine/helm:${HELM_VERSION} as helm
 FROM alpine:${ALPINE_VERSION} as temp
@@ -9,7 +10,7 @@ FROM alpine:${ALPINE_VERSION} as temp
 RUN apk add --no-cache curl bash
 RUN curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash && \
     mv kustomize /usr/local/bin
-RUN curl -L https://github.com/argoproj-labs/argocd-vault-plugin/releases/download/v1.13.0/argocd-vault-plugin_1.13.0_linux_amd64 -o /tmp/argocd-vault-plugin \
+RUN curl -L https://github.com/argoproj-labs/argocd-vault-plugin/releases/download/v${VAULT_PLUGIN_VERSION}/argocd-vault-plugin_${VAULT_PLUGIN_VERSION}_linux_amd64 -o /tmp/argocd-vault-plugin \
     && chmod +x /tmp/argocd-vault-plugin
 
 FROM argoproj/argocd:v${ARGOCD_VERSION}
