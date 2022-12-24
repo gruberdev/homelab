@@ -39,7 +39,7 @@ resources:
 # - base/monitoring/kube-prom-crds.yaml
 # - base/monitoring/longhorn.yaml
 
-# - base/services/n8n.yaml
+- base/services/n8n.yaml
 # - base/services/rss-gen.yaml
 # - base/services/rss-hub.yaml
 # - base/services/wallabag.yaml
