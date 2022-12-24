@@ -326,7 +326,7 @@ tasks:
         # Advanced Parameters
         kubelet-arg:
           - "node-ip=0.0.0.0"
-          - "container-runtime=remote" 
+          - "container-runtime=remote"
           - "resolv-conf=/run/systemd/resolve/resolv.conf"
           - "node-status-update-frequency=4s"
           - "feature-gates=MixedProtocolLBService=true"
@@ -453,7 +453,6 @@ tasks:
       - chmod +x koord-runtime-proxy
       - sudo mv koord-runtime-proxy /usr/local/bin
       - |
-        koord-runtime-proxy \ 
+        koord-runtime-proxy \
         --remote-runtime-service-endpoint={{.CONTAINERD_PATH}} \
     ignore_error: true
-
