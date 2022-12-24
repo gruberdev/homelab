@@ -228,17 +228,12 @@ spec:
           service:
             enabled: true
             type: ClusterIP
-
-            # The externalTrafficPolicy can be set to either Cluster or Local
-            # and is only valid for LoadBalancer and NodePort service types.
-            # The default value is Cluster.
-            # ref: https://kubernetes.io/docs/concepts/services-networking/service/#external-traffic-policy
             externalTrafficPolicy: Cluster
             port: 8200
             targetPort: 8200
             annotations: {}
           dataStorage:
-            enabled: true
+            enabled: false
             size: 5Gi
             mountPath: "/vault/data"
             storageClass: longhorn

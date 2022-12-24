@@ -1,0 +1,36 @@
+apiVersion: "acid.zalan.do/v1"
+kind: postgresql
+metadata:
+  name: db-wallabag
+spec:
+  dockerImage: registry.opensource.zalan.do/acid/spilo-14:2.1-p6
+  teamId: "db"
+  numberOfInstances: 1
+  users:
+    admin:
+    - superuser
+    - createdb
+    walladmin: []
+  databases:
+    wallabag: walladmin
+  postgresql:
+    version: "14"
+  volume:
+    size: 1Gi
+    storageClass: longhorn
+  additionalVolumes:
+    - name: data
+      mountPath: /home/postgres/pgdata/partitions
+      targetContainers:
+        - postgres
+      volumeSource:
+        PersistentVolumeClaim:
+          claimName: wallabag-postgres
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: postgres-operator
+              operator: In
+              values:
+                - enabled

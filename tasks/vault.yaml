@@ -50,8 +50,8 @@ tasks:
         msg: 'helm {{.PATH_ERROR}}'
     dir: apps/argocd/overlay
     cmds:
-      - kubectl config set-context --current --namespace=vault --cluster=k3d-demo
-      - kubectl exec vault-0 -- vault operator init -key-shares=1 -key-threshold=1 -format=json > cluster-keys.json
+      - kubectl config set-context --current --namespace=vault
+      - kubectl exec vault-0 -- vault operator init -key-shares=3 -key-threshold=3 -format=json > cluster-keys.json
       - task: highlight_normal
       - echo -e "\nVault's Unseal Key:"
       - task: reset
@@ -127,9 +127,9 @@ tasks:
     ignore_error: true
 
   secret:
-    vars:
-      VAULT_TOKEN:
-        sh: cat cluster-keys.json | jq -r ".root_token"
+#    vars:
+#     VAULT_TOKEN:
+#        sh: cat cluster-keys.json | jq -r ".root_token"
     cmds:
       - rm apps/argocd/base/argocd-vault.yaml
       - |
