@@ -10,8 +10,8 @@ terraform {
       version = "0.38.2"
     }
   }
-  backend "pg" {
-  }
+  # backend "pg" {
+  # }
 }
 
 
