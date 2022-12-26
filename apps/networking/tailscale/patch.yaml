@@ -9,7 +9,7 @@ spec:
       containers:
         - name: tailscale
           imagePullPolicy: Always
-          image: grubertech/tailscale:v1.34.0
+          image: grubertech/tailscale:v1.34.0-1
           lifecycle:
             preStop:
               exec:
