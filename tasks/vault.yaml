@@ -126,6 +126,12 @@ tasks:
       - kubectl exec --stdin=true --tty=true vault-0 -- vault operator unseal ${VAULT_UNSEAL_3}
     ignore_error: true
 
+  newapp:auth:
+    dir: terraform/modules/vault/secrets
+    cmds:
+      - cp -R test {{.CLI_ARGS}}
+    ignore_error: true
+
   secret:
 #    vars:
 #     VAULT_TOKEN:

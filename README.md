@@ -31,7 +31,6 @@
 > |       [Redis Operator][redis-uri]      |   `Databases`   |       <sub>[More details][homelab-redis]</sub>      |       ![][argocd-redis]      |  ![][redis-badge]    |
 > |  [Unifi Controller][service-unifi]     |   `Networking`  | <sub>[More details][homelab-unifi-controller]</sub> | ![][argocd-unifi-controller] | ![][unifi-badge]     |
 > |     [kube-prometheus][service-kube]    |   `Monitoring`  |  <sub>[More details][homelab-kube]</sub>            |       ![][argocd-kube]       |   ![][kube-badge]    |
-> |       [Matrix Synapse][matrix-uri]     |    `Services`   |        <sub>[More details][homelab-matrix]</sub>    |        ![][argocd-matrix]    |  ![][matrix-badge]   |
 > |     [Hashicorp's Vault][vault-uri]     |    `Security`   |       <sub>[Chart Values][homelab-vault]</sub>      |       ![][argocd-vault]      |  ![][vault-badge]    |
 > |    [Longhorn][longhorn-uri]            |    `Storage`    |        <sub>[More details][homelab-longhorn]</sub>  |      ![][argocd-longhorn]    | ![][longhorn-badge]  |
 > |     [Unifi Poller][poller-uri]         |   `Monitoring`  |      <sub>[More details][homelab-poller]</sub>      |      ![][argocd-poller]      | ![][poller-badge]    |
@@ -52,7 +51,8 @@
 > |           [Mango][service-mango]       |   `Media`       |  <sub>[More details][homelab-mango]</sub>           |  ![][argocd-mango]           |  ![][mango-badge]    |
 > |       [Jellyfin][service-jellyfin]     |   `Media`       |  <sub>[More details][homelab-jellyfin]</sub>        |  ![][argocd-jellyfin]        |  ![][jellyfin-badge]   |
 > |    [Metabase][service-metabase]        |   `Analytics`   |       <sub>[More details][homelab-metabase]</sub>   |   ![][argocd-metabase]       | ![][metabase-badge] |
-<-->
+> |       [Matrix Synapse][matrix-uri]     |    `Services`   |        <sub>[More details][homelab-matrix]</sub>    |        ![][argocd-matrix]    |  ![][matrix-badge]   |
+
 
 #### Matrix-related
 
@@ -72,6 +72,7 @@
 > |     mx-puppet-steam     |                    | `Bridge` |                   |                       |
 > |     linkedin-bridge     |                    | `Bridge` |                   |                       |
 > |         botdarr         |                    | `Utilities` |                   |                       |
+<-->
 
 ---
 

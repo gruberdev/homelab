@@ -27,6 +27,7 @@ terraform/**/*.terraform
 terraform/**/*.out
 terraform/**/.terraform
 terraform/**/*.tfvars
+terraform/**/secret.json
 terraform/**/terraform.tfstate
 terraform/**/terraform.tfstate.backup
 
