@@ -6,7 +6,7 @@ spec:
   project: cluster
   source:
     repoURL: 'https://github.com/longhorn/longhorn.git'
-    targetRevision: master
+    targetRevision: v1.4.0-rc2
     path: chart
     helm:
       releaseName: longhorn
@@ -15,38 +15,31 @@ spec:
             cattle:
               systemDefaultRegistry: ""
               windowsCluster:
+                # Enable this to allow Longhorn to run on the Rancher deployed Windows cluster
                 enabled: false
-                # Tolerate Linux node taint
-                tolerations:
-                - key: "cattle.io/os"
-                  value: "linux"
-                  effect: "NoSchedule"
-                  operator: "Equal"
-                nodeSelector:
-                  kubernetes.io/os: "linux"
-                defaultSetting:
-                  taintToleration: cattle.io/os=linux:NoSchedule
-                  systemManagedComponentsNodeSelector: kubernetes.io/os:linux
           image:
             longhorn:
               engine:
                 repository: longhornio/longhorn-engine
-                tag: master-head
+                tag: v1.4.0-rc2
               manager:
                 repository: longhornio/longhorn-manager
-                tag: master-head
+                tag: v1.4.0-rc2
               ui:
                 repository: longhornio/longhorn-ui
-                tag: master-head
+                tag: v1.4.0-rc2
               instanceManager:
                 repository: longhornio/longhorn-instance-manager
-                tag: v1_20220920
+                tag: v1.4.0-rc2
               shareManager:
                 repository: longhornio/longhorn-share-manager
-                tag: v1_20220914
+                tag: v1.4.0-rc2
               backingImageManager:
                 repository: longhornio/backing-image-manager
-                tag: v3_20220808
+                tag: v1.4.0-rc2
+              supportBundleKit:
+                repository: longhornio/support-bundle-kit
+                tag: v0.0.17
             csi:
               attacher:
                 repository: longhornio/csi-attacher
@@ -63,7 +56,11 @@ spec:
               snapshotter:
                 repository: longhornio/csi-snapshotter
                 tag: v5.0.1
+              livenessProbe:
+                repository: longhornio/livenessprobe
+                tag: v2.8.0
             pullPolicy: IfNotPresent
+
           service:
             ui:
               type: ClusterIP
@@ -71,10 +68,15 @@ spec:
             manager:
               type: ClusterIP
               nodePort: ""
+              loadBalancerIP: ""
+              loadBalancerSourceRanges: ""
+
           persistence:
             defaultClass: true
             defaultFsType: ext4
+            defaultMkfsParams: ""
             defaultClassReplicaCount: 1
+            defaultDataLocality: disabled # best-effort otherwise
             reclaimPolicy: Delete
             migratable: false
             recurringJobSelector:
@@ -86,6 +88,10 @@ spec:
               dataSourceType: ~
               dataSourceParameters: ~
               expectedChecksum: ~
+            defaultNodeSelector:
+              enable: false # disable by default
+              selector: []
+            removeSnapshotsDuringFilesystemTrim: ignored # "enabled" or "disabled" otherwise
           csi:
             kubeletRootDir: ~
             attacherReplicaCount: ~
@@ -104,9 +110,14 @@ spec:
             storageOverProvisioningPercentage: ~
             storageMinimalAvailablePercentage: ~
             upgradeChecker: ~
-            defaultReplicaCount: ~
+            defaultReplicaCount: 1
             defaultLonghornStaticStorageClass: ~
             backupstorePollInterval: ~
+            failedBackupTTL: ~
+            restoreVolumeRecurringJobs: ~
+            recurringSuccessfulJobsHistoryLimit: ~
+            recurringFailedJobsHistoryLimit: ~
+            supportBundleFailedHistoryLimit: ~
             taintToleration: ~
             systemManagedComponentsNodeSelector: ~
             priorityClass: ~
@@ -120,6 +131,7 @@ spec:
             disableReplicaRebuild: ~
             replicaReplenishmentWaitInterval: ~
             concurrentReplicaRebuildPerNodeLimit: ~
+            concurrentVolumeBackupRestorePerNodeLimit: ~
             disableRevisionCounter: ~
             systemManagedPodsImagePullPolicy: ~
             allowVolumeCreationWithDegradedAvailability: ~
@@ -132,40 +144,42 @@ spec:
             kubernetesClusterAutoscalerEnabled: ~
             orphanAutoDeletion: ~
             storageNetwork: ~
+            deletingConfirmationFlag: ~
+            engineReplicaTimeout: ~
+            snapshotDataIntegrity: ~
+            snapshotDataIntegrityImmediateCheckAfterSnapshotCreation: ~
+            snapshotDataIntegrityCronjob: ~
+            removeSnapshotsDuringFilesystemTrim: ~
+            fastReplicaRebuildEnabled: ~
+            replicaFileSyncHttpClientTimeout: ~
           privateRegistry:
             createSecret: ~
             registryUrl: ~
             registryUser: ~
             registryPasswd: ~
             registrySecret: ~
+
           longhornManager:
-            priorityClass: ~
-            tolerations: []
-          longhornDriver:
-            priorityClass: ~
-            tolerations: []
-            nodeSelector: {}
+            log:
+              format: plain
           longhornUI:
             replicas: 1
-            priorityClass: ~
-            tolerations: []
             nodeSelector:
-              kubernetes.io/hostname: node-one
-          resources:
-            limits:
-              cpu: 200m
-              memory: 256Mi
-            requests:
-              cpu: 100m
-              memory: 128Mi
+              kubernetes.io/hostname: node-two
+          longhornConversionWebhook:
+            replicas: 1
+            nodeSelector:
+              kubernetes.io/hostname: node-two
+          longhornAdmissionWebhook:
+            replicas: 1
+            nodeSelector:
+              kubernetes.io/hostname: node-two
+          longhornRecoveryBackend:
+            replicas: 1
+            nodeSelector:
+              kubernetes.io/hostname: node-two
           ingress:
             enabled: false
-          enablePSP: false
-          namespaceOverride: "longhorn-system"
-          # Annotations to add to the Longhorn Manager DaemonSet Pods. Optional.
-          annotations: {}
-          serviceAccount:
-            annotations: {}
 
   destination:
     namespace: longhorn-system
