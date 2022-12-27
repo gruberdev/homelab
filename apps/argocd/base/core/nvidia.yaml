@@ -18,16 +18,15 @@ spec:
           map: {}
           default: ""
           fallbackStrategies: ["named" , "single"]
-        legacyDaemonsetAPI: null
-        compatWithCPUManager: null
-        migStrategy: null
-        failOnInitError: null
-        deviceListStrategy: null
-        deviceIDStrategy: null
-        nvidiaDriverRoot: null
+        legacyDaemonsetAPI: "false"
+        compatWithCPUManager: "true"
+        migStrategy: "single"
+        failOnInitError: "true"
+        deviceListStrategy: "envvar"
+        deviceIDStrategy: "uuid"
+        nvidiaDriverRoot: "/"
         gdsEnabled: null
         mofedEnabled: null
-
         nameOverride: ""
         fullnameOverride: ""
         namespaceOverride: ""
@@ -45,11 +44,11 @@ spec:
         securityContext: {}
         resources:
           limits:
-            cpu: 700m
+            cpu: 300m
             memory: 1Gi
           requests:
-            cpu: 300m
-            memory: 700Mi
+            cpu: 100m
+            memory: 256Mi
         nodeSelector:
           kubernetes.io/hostname: node-two
         affinity: {}
