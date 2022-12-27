@@ -19,6 +19,7 @@ resources:
 - base/core/mysql.yaml
 - base/core/nfs.yaml
 - base/core/nvidia.yaml
+- base/core/nvidia-extra.yaml
 - base/core/sealed.yaml
 
 - base/utilities/reloader.yaml
