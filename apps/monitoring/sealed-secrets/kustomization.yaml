@@ -3,8 +3,6 @@ kind: Kustomization
 bases:
 - ./base
 
-namePrefix: auth-
-
 namespace: kube-system
 
 commonAnnotations:
