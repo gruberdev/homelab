@@ -148,11 +148,11 @@ spec:
         name: universal-crossplane
         resources:
             limits:
-              cpu: 100m
-              memory: 768Mi
+              cpu: 150m
+              memory: 512Mi
             requests:
               cpu: 100m
-              memory: 512Mi
+              memory: 256Mi
         securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
