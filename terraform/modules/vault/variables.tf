@@ -45,5 +45,17 @@ variable "kubernetes_host" {
 variable "service_account_name" {
   type        = string
   description = "<sub>The pre-existing service account to generate tokens for Vault agent backend. Mutually exclusive with `kubernetes_role_name` and `generated_role_rules`. If set, only a Kubernetes token will be created when credentials are requested. [Reference](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/kubernetes_secret_backend_role#service_account_name).</sub>"
-  default     = "vault-agent"
+  default     = "vault-auth"
+}
+
+variable "kube_config" {
+  type        = string
+  description = "<sub>A path to a kube config file. Can be sourced from `KUBE_CONFIG_PATH`. [Reference](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs#config_path) </sub>"
+  default     = "~/.kube/config"
+}
+
+variable "kube_context" {
+  type        = string
+  description = "<sub>Context to choose from the config file. Can be sourced from `KUBE_CTX`. [Reference](https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs#config_context) </sub>"
+  default     = "default"
 }
