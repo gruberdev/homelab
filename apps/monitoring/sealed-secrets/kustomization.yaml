@@ -5,7 +5,7 @@ bases:
 
 namePrefix: auth-
 
-namespace: infrastructure
+namespace: kube-system
 
 commonAnnotations:
   reloader.stakater.com/auto: "true"
