@@ -19,28 +19,21 @@ spec:
       serviceAccountName: xgql
       containers:
       - name: xgql
-        image: "upbound/xgql:v0.1.5"
+        image: "upbound/xgql:v0.1.5
         imagePullPolicy: IfNotPresent
         resources:
-            {}
+          requests:
+            memory: 128Mi
+            cpu: 120m
+          limits:
+            memory: 400Mi
+            cpu: 250m
         ports:
           - name: https
             containerPort: 8443
             protocol: TCP
-        args:
-          - --tls-key=/etc/certs/xgql/tls.key
-          - --tls-cert=/etc/certs/xgql/tls.crt
         env:
           - name: POD_NAMESPACE
             valueFrom:
               fieldRef:
                 fieldPath: metadata.namespace
-        volumeMounts:
-          - mountPath: /etc/certs/xgql
-            name: certs
-            readOnly: true
-      volumes:
-        - name: certs
-          secret:
-            defaultMode: 420
-            secretName: xgql-tls
