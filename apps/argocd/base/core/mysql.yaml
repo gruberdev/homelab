@@ -140,9 +140,9 @@ spec:
             enabled: false
           persistence:
             enabled: true
-            storageClass: "longhorn"
+            storageClass: nfs-client
             accessMode: "ReadWriteOnce"
-            size: 1Gi
+            size: 5Gi
             fsGroupWorkaroundEnabled: false
           # key value map of orchestrator conf directives.
           # see: https://github.com/github/orchestrator/blob/master/conf/orchestrator-sample.conf.json

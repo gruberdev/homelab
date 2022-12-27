@@ -3,7 +3,7 @@ kind: Kustomization
 resources:
 - cr.yaml
 - crb.yaml
-- crd.yam
+- crd.yaml
 - deployment.yaml
 - rb.yaml
 - role.yaml
