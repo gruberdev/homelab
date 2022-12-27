@@ -6,11 +6,9 @@ metadata:
   name: sealed-secrets-controller
   namespace: kube-system
 spec:
-  minReadySeconds: 30
   replicas: 1
   strategy:
     type: Recreate
-  revisionHistoryLimit: 10
   selector:
     matchLabels:
       name: sealed-secrets-controller
@@ -27,15 +25,24 @@ spec:
         imagePullPolicy: IfNotPresent
         resources:
           limits:
-            cpu: 300m
-            memory: 512Mi
+            cpu: 350m
+            memory: 700Mi
           requests:
-            cpu: 150m
-            memory: 256Mi
+            cpu: 250m
+            memory: %12Mi
         livenessProbe:
           httpGet:
             path: /healthz
             port: http
+          initialDelaySeconds: 60
+          periodSeconds: 15
+        startupProbe:
+          httpGet:
+            path: /healthz
+            port: http
+          initialDelaySeconds: 60
+          periodSeconds: 15
+          timeoutSeconds: 10
         name: sealed-secrets-controller
         ports:
         - containerPort: 8080
