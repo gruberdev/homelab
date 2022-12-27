@@ -19,7 +19,7 @@ spec:
       serviceAccountName: xgql
       containers:
       - name: xgql
-        image: "upbound/xgql:v0.1.5
+        image: upbound/xgql:v0.1.5
         imagePullPolicy: IfNotPresent
         resources:
           requests:
