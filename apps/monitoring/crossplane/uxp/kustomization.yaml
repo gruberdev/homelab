@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
 - terraform.yaml
 - terraform-config.yaml
+- store-config.yaml
 - deployment.yaml
 - sa.yaml
 - svc.yaml

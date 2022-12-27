@@ -35,3 +35,15 @@ variable "endpoint_path" {
   description = "<sub>Vault password for the main user, used for login purposes.</sub>"
   default     = ""
 }
+
+variable "kubernetes_host" {
+  type        = string
+  description = "<sub>Vault password for the main user, used for login purposes.</sub>"
+  default     = "https://192.168.1.10:6443"
+}
+
+variable "service_account_name" {
+  type        = string
+  description = "<sub>Vault password for the main user, used for login purposes.</sub>"
+  default     = "vault-agent"
+}

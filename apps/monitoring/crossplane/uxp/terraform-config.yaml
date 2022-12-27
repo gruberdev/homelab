@@ -13,5 +13,5 @@ spec:
     annotations:
       vault.hashicorp.com/agent-inject: "true"
       vault.hashicorp.com/agent-inject-token: "true"
-      vault.hashicorp.com/role: "crossplane"
+      vault.hashicorp.com/role: "vault-agent"
       vault.hashicorp.com/agent-run-as-user: "2000"
