@@ -39,7 +39,7 @@ spec:
           pullPolicy: IfNotPresent
           tag: ""
         updateStrategy:
-          type: Recreate
+          type: RollingUpdate
         podAnnotations: {}
         podSecurityContext: {}
         securityContext: {}
