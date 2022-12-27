@@ -10,14 +10,13 @@ spec:
     matchLabels:
       app: crossplane
   strategy:
-    type: RollingUpdate
+    type: Recreate
   template:
     metadata:
       labels:
         app: crossplane
         app.kubernetes.io/component: cloud-infrastructure-controller
         app.kubernetes.io/name: crossplane
-        app.kubernetes.io/instance: uxp
     spec:
       securityContext:
         {}
@@ -58,17 +57,17 @@ spec:
         imagePullPolicy: IfNotPresent
         name: universal-crossplane
         resources:
-            limits:
-              cpu: 500m
-              memory: 1Gi
-            requests:
-              cpu: 250m
-              memory: 768Mi
+          limits:
+            cpu: 240m
+            memory: 512Gi
+          requests:
+            cpu: 120m
+            memory: 256Mi
         securityContext:
-            allowPrivilegeEscalation: false
-            readOnlyRootFilesystem: true
-            runAsGroup: 65532
-            runAsUser: 65532
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          runAsGroup: 65532
+          runAsUser: 65532
         env:
           - name: POD_NAMESPACE
             valueFrom:
@@ -92,8 +91,6 @@ metadata:
   labels:
     app: crossplane-rbac-manager
     app.kubernetes.io/component: cloud-infrastructure-controller
-    app.kubernetes.io/part-of: crossplane
-    app.kubernetes.io/name: crossplane
 spec:
   replicas: 1
   selector:
@@ -101,19 +98,12 @@ spec:
       app: crossplane-rbac-manager
       release: uxp
   strategy:
-    type: RollingUpdate
+    type: Recreate
   template:
     metadata:
       labels:
         app: crossplane-rbac-manager
         release: uxp
-        helm.sh/chart: universal-crossplane-1.10.1-up.1
-        app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/component: cloud-infrastructure-controller
-        app.kubernetes.io/part-of: crossplane
-        app.kubernetes.io/name: crossplane
-        app.kubernetes.io/instance: uxp
-        app.kubernetes.io/version: "1.10.1-up.1"
     spec:
       securityContext:
         {}
@@ -126,17 +116,17 @@ spec:
         imagePullPolicy: IfNotPresent
         name: universal-crossplane-init
         resources:
-            limits:
-              cpu: 100m
-              memory: 768Mi
-            requests:
-              cpu: 100m
-              memory: 512Mi
+          limits:
+            cpu: 100m
+            memory: 768Mi
+          requests:
+            cpu: 100m
+            memory: 512Mi
         securityContext:
-            allowPrivilegeEscalation: false
-            readOnlyRootFilesystem: true
-            runAsGroup: 65532
-            runAsUser: 65532
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          runAsGroup: 65532
+          runAsUser: 65532
       containers:
       - image: upbound/crossplane:v1.10.1-up.1
         args:
@@ -147,17 +137,17 @@ spec:
         imagePullPolicy: IfNotPresent
         name: universal-crossplane
         resources:
-            limits:
-              cpu: 150m
-              memory: 512Mi
-            requests:
-              cpu: 100m
-              memory: 256Mi
+          limits:
+            cpu: 150m
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            memory: 256Mi
         securityContext:
-            allowPrivilegeEscalation: false
-            readOnlyRootFilesystem: true
-            runAsGroup: 65532
-            runAsUser: 65532
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          runAsGroup: 65532
+          runAsUser: 65532
         env:
           - name: LEADER_ELECTION
             value: "true"
