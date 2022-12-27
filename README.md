@@ -26,6 +26,7 @@
 > |             **Application**            |   **Category**  |                       **Info**                      |     **Deployment Status**    | **Latest Semver**
 > |:--------------------------------------:|:---------------:|:---------------------------------------------------:|:----------------------------:|:----------------------:|
 > |          [ArgoCD][argocd-uri]          |    `GitOps`     |      <sub>[More details][homelab-argocd]</sub>      |       ![][argocd-core]       | ![][argo-badge]        |
+> |    [Crossplane][crossplane-uri]        |    `GitOps`     |      <sub>[More details][homelab-crossplane]</sub>  |       ![][argocd-crossplane] | ![][crossplane-badge]  |
 > | [<sub>Zalando PostgreSQL Operator</sub>][p-uri] |   `Databases`   |      <sub>[More details][homelab-zalando]</sub>     |      ![][argocd-zalando]     | ![][zalando-badge]  |
 > |     [MySQL Operator][mysql-uri]        |   `Databases`   |      <sub>[More details][homelab-mysql]</sub>       |      ![][argocd-mysql]       | ![][mysql-badge]     |
 > |       [Redis Operator][redis-uri]      |   `Databases`   |       <sub>[More details][homelab-redis]</sub>      |       ![][argocd-redis]      |  ![][redis-badge]    |
@@ -132,6 +133,7 @@
 <!-- Tech tools URIs -->
 
 [drone-uri]: https://www.drone.io/
+[crossplane-uri]: https://www.crossplane.io/
 [argocd-uri]: https://argoproj.github.io/cd/
 [homeassistant-uri]: https://www.home-assistant.io/
 [adguard-uri]: https://adguard.com/en/adguard-home/overview.html
@@ -189,6 +191,7 @@
 [homelab-wyze]: https://github.com/gruberdev/homelab/tree/main/apps/home/wyze
 [homelab-kube]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/monitoring/kube-prometheus.yaml
 [homelab-kuma]: https://github.com/gruberdev/homelab/tree/main/apps/monitoring/uptime-kuma
+[homelab-crossplane]: https://github.com/gruberdev/homelab/tree/main/apps/monitoring/crossplane
 [homelab-adguard]: https://github.com/gruberdev/homelab/tree/main/apps/networking/adguard
 [homelab-unifi-controller]: https://github.com/gruberdev/homelab/tree/main/apps/networking/unifi/controller
 [homelab-zalando]: https://github.com/gruberdev/homelab/tree/main/apps/data/postgres
@@ -213,6 +216,7 @@
 <!-- ArgoCD Status Badges -->
 
 [argocd-kube]: https://argo.gr.wtf/api/badge?name=kube-prometheus
+[argocd-crossplane]: https://argo.gr.wtf/api/badge?name=crossplane
 [argocd-ha]: https://argo.gr.wtf/api/badge?name=homeassistant
 [argocd-longhorn]: https://argo.gr.wtf/api/badge?name=longhorn
 [argocd-kuma]: https://argo.gr.wtf/api/badge?name=uptime-kuma
@@ -265,6 +269,7 @@
 [cfd-badge]: https://img.shields.io/docker/v/erisamoe/cloudflared?label=Docker&color=blue&logo=docker&sort=semver&style=flat-square
 [rssgen-badge]: https://img.shields.io/github/v/tag/damoeb/rss-proxy?label=Github&logo=github&style=flat-square
 [matrix-badge]: https://img.shields.io/github/v/release/matrix-org/synapse?label=Github&logo=github&style=flat-square
+[crossplane-badge]: https://img.shields.io/github/v/release/crossplane/crossplane?label=Github&logo=github&style=flat-square
 [beets-badge]: https://img.shields.io/github/v/tag/beetbox/beets?label=Github&logo=github&style=flat-square
 [lidarr-badge]: https://img.shields.io/github/v/release/lidarr/lidarr?label=Github&color=blue&logo=github&sort=semver&style=flat-square
 [domainmod-badge]: https://img.shields.io/github/v/release/domainmod/domainmod?label=Github&color=blue&logo=github&sort=semver&style=flat-square
