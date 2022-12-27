@@ -30,7 +30,7 @@ tasks:
   plan:
     dir: terraform
     cmds:
-      - terraform pla
+      - terraform plan
   plan:vault:
     dir: terraform/modules/vault
     cmds:

@@ -14,3 +14,16 @@ resource "vault_identity_entity" "entity" {
   # policies = each.value.policies
   # metadata = each.value.metadata
 }
+
+resource "vault_kubernetes_secret_backend" "services" {
+  path                      = "kubernetes"
+  description               = "Kubernetes Secret Engine Backend"
+  kubernetes_host           = var.kubernetes_host
+}
+
+resource "vault_kubernetes_secret_backend_role" "crossplane" {
+  backend                       = vault_kubernetes_secret_backend.services.path
+  name                          = var.service_account_name
+  allowed_kubernetes_namespaces = ["*"]
+  service_account_name          = var.service_account_name
+}
