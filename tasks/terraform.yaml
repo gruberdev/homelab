@@ -19,16 +19,36 @@ tasks:
     dir: terraform
     cmds:
       - terraform init -upgrade -backend-config="conn_str=${TF_CONN_STR}"
+  init:vault:
+    dir: terraform/modules/vault
+    cmds:
+      - terraform init -upgrade -backend-config="conn_str=${TF_CONN_STR}"
+  init:unifi:
+    dir: terraform/modules/unifi
+    cmds:
+      - terraform init -upgrade -backend-config="conn_str=${TF_CONN_STR}"
   plan:
     dir: terraform
+    cmds:
+      - terraform pla
+  plan:vault:
+    dir: terraform/modules/vault
     cmds:
       - terraform plan
   apply:
     dir: terraform
     cmds:
       - terraform apply -auto-approve
+  apply:vault:
+    dir: terraform/modules/vault
+    cmds:
+      - terraform apply -auto-approve
   destroy:
     dir: terraform
+    cmds:
+      - terraform destroy -auto-approve
+  destroy:vault:
+    dir: terraform/modules/vault
     cmds:
       - terraform destroy -auto-approve
 
