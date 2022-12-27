@@ -38,12 +38,12 @@ variable "endpoint_path" {
 
 variable "kubernetes_host" {
   type        = string
-  description = "<sub>Vault password for the main user, used for login purposes.</sub>"
+  description = "<sub>Kubernetes API URL to connect to when integrating Vault and Crossplane. [Reference](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/kubernetes_secret_backend#kubernetes_host) </sub>"
   default     = "https://192.168.1.10:6443"
 }
 
 variable "service_account_name" {
   type        = string
-  description = "<sub>Vault password for the main user, used for login purposes.</sub>"
+  description = "<sub>The pre-existing service account to generate tokens for Vault agent backend. Mutually exclusive with `kubernetes_role_name` and `generated_role_rules`. If set, only a Kubernetes token will be created when credentials are requested. [Reference](https://registry.terraform.io/providers/hashicorp/vault/latest/docs/resources/kubernetes_secret_backend_role#service_account_name).</sub>"
   default     = "vault-agent"
 }
