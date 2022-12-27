@@ -27,6 +27,7 @@
 > |:--------------------------------------:|:---------------:|:---------------------------------------------------:|:----------------------------:|:----------------------:|
 > |          [ArgoCD][argocd-uri]          |    `GitOps`     |      <sub>[More details][homelab-argocd]</sub>      |       ![][argocd-core]       | ![][argo-badge]        |
 > |    [Crossplane][crossplane-uri]        |    `GitOps`     |      <sub>[More details][homelab-crossplane]</sub>  |       ![][argocd-crossplane] | ![][crossplane-badge]  |
+> |[<sub>Nvidia integration for k8s</sub>][nvidia-uri]|    `Driver`     |      <sub>[More details][homelab-nvidia]</sub>      |       ![][argocd-nvidia] | ![][nvidia-badge]  |
 > | [<sub>Zalando PostgreSQL Operator</sub>][p-uri] |   `Databases`   |      <sub>[More details][homelab-zalando]</sub>     |      ![][argocd-zalando]     | ![][zalando-badge]  |
 > |     [MySQL Operator][mysql-uri]        |   `Databases`   |      <sub>[More details][homelab-mysql]</sub>       |      ![][argocd-mysql]       | ![][mysql-badge]     |
 > |       [Redis Operator][redis-uri]      |   `Databases`   |       <sub>[More details][homelab-redis]</sub>      |       ![][argocd-redis]      |  ![][redis-badge]    |
@@ -43,6 +44,7 @@
 > |      [Home Assistant][service-ha]      |   `Smart Home`   |        <sub>[More details][homelab-ha]</sub>        |        ![][argocd-ha]        |    ![][ha-badge]     |
 > |   [Frigate][frigate-uri]               |   `Smart Home`   |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-frigate]   |  ![][frigate-badge]  |
 > |   [Wyze API Bridge][service-wyze]      |   `Smart Home`   |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-wyze]      |  ![][wyze-badge]     |
+> |[<sub>NFS External Storage Provisioner</sub>][nfs-uri] |    `Storage`     |      <sub>[More details][homelab-nfs]</sub>    |       ![][argocd-nfs] |  |
 > |[Tailscale <sub>(as sidecars)</sub>][tail-uri]    | `Networking`  | <sub>[More details][homelab-tailscale]</sub> |                             |![][tailscale-badge]  |
 > |   [Cloudflared <sub>(as proxies)</sub>][cf-uri]  |   `Networking`  | <sub>[More details][homelab-cloudflared]</sub>  |                        |   ![][cfd-badge]     |
 
@@ -134,6 +136,8 @@
 
 [drone-uri]: https://www.drone.io/
 [crossplane-uri]: https://www.crossplane.io/
+[nvidia-uri]: https://github.com/NVIDIA/k8s-device-plugin
+[nfs-uri]: https://github.com/kubernetes-sigs/nfs-subdir-external-provisioner
 [argocd-uri]: https://argoproj.github.io/cd/
 [homeassistant-uri]: https://www.home-assistant.io/
 [adguard-uri]: https://adguard.com/en/adguard-home/overview.html
@@ -189,6 +193,8 @@
 [homelab-drone]: https://github.com/gruberdev/homelab/tree/main/apps/drone
 [homelab-ha]: https://github.com/gruberdev/homelab/tree/main/apps/home/ha
 [homelab-wyze]: https://github.com/gruberdev/homelab/tree/main/apps/home/wyze
+[homelab-nvidia]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/core/nvidia.yaml
+[homelab-nfs]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/core/nfs.yaml
 [homelab-kube]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/monitoring/kube-prometheus.yaml
 [homelab-kuma]: https://github.com/gruberdev/homelab/tree/main/apps/monitoring/uptime-kuma
 [homelab-crossplane]: https://github.com/gruberdev/homelab/tree/main/apps/monitoring/crossplane
@@ -216,6 +222,8 @@
 <!-- ArgoCD Status Badges -->
 
 [argocd-kube]: https://argo.gr.wtf/api/badge?name=kube-prometheus
+[argocd-nvidia]: https://argo.gr.wtf/api/badge?name=nvidia
+[argocd-nfs]: https://argo.gr.wtf/api/badge?name=nfs-provisioner
 [argocd-crossplane]: https://argo.gr.wtf/api/badge?name=crossplane
 [argocd-ha]: https://argo.gr.wtf/api/badge?name=homeassistant
 [argocd-longhorn]: https://argo.gr.wtf/api/badge?name=longhorn
@@ -257,6 +265,7 @@
 [mysql-badge]: https://img.shields.io/github/v/tag/bitpoke/mysql-operator?label=Github&logo=github&style=flat-square
 [redis-badge]: https://img.shields.io/github/v/tag/spotahome/redis-operator?label=Github&logo=github&style=flat-square
 [tailscale-badge]: https://img.shields.io/github/v/release/tailscale/tailscale?label=Github&logo=github&style=flat-square
+[nvidia-badge]: https://img.shields.io/github/v/release/NVIDIA/k8s-device-plugin?label=Github&logo=github&style=flat-square
 [unifi-badge]: https://img.shields.io/docker/v/linuxserver/unifi-controller?label=Docker&sort=semver&logo=docker&style=flat-square
 [adguard-badge]: https://img.shields.io/docker/v/adguard/adguardhome?label=Docker&color=blue&logo=docker&sort=semver&style=flat-square
 [ha-badge]: https://img.shields.io/github/v/release/home-assistant/core?label=Github&logo=github&style=flat-square
@@ -268,6 +277,7 @@
 [poller-badge]: https://img.shields.io/github/v/release/unpoller/unpoller?label=Github&logo=github&sort=semver&style=flat-square
 [cfd-badge]: https://img.shields.io/docker/v/erisamoe/cloudflared?label=Docker&color=blue&logo=docker&sort=semver&style=flat-square
 [rssgen-badge]: https://img.shields.io/github/v/tag/damoeb/rss-proxy?label=Github&logo=github&style=flat-square
+[nfs-badge]: https://img.shields.io/github/v/tag/kubernetes-sigs/nfs-subdir-external-provisioner?label=Github&logo=github&style=flat-square
 [matrix-badge]: https://img.shields.io/github/v/release/matrix-org/synapse?label=Github&logo=github&style=flat-square
 [crossplane-badge]: https://img.shields.io/github/v/release/crossplane/crossplane?label=Github&logo=github&style=flat-square
 [beets-badge]: https://img.shields.io/github/v/tag/beetbox/beets?label=Github&logo=github&style=flat-square
