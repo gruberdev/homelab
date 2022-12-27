@@ -20,11 +20,14 @@ spec:
           fallbackStrategies: ["named" , "single"]
         legacyDaemonsetAPI: null
         compatWithCPUManager: null
-        migStrategy: "single"
-        failOnInitError: true
-        deviceListStrategy: "envvar"
-        deviceIDStrategy: "uuid"
-        nvidiaDriverRoot: ""
+        migStrategy: null
+        failOnInitError: null
+        deviceListStrategy: null
+        deviceIDStrategy: null
+        nvidiaDriverRoot: null
+        gdsEnabled: null
+        mofedEnabled: null
+
         nameOverride: ""
         fullnameOverride: ""
         namespaceOverride: ""
@@ -46,10 +49,16 @@ spec:
             memory: 1Gi
           requests:
             cpu: 300m
-            memory:700Mi
+            memory: 700Mi
         nodeSelector:
           kubernetes.io/hostname: node-two
         affinity: {}
+        tolerations:
+          - key: CriticalAddonsOnly
+            operator: Exists
+          - key: nvidia.com/gpu
+            operator: Exists
+            effect: NoSchedule
         priorityClassName: "system-node-critical"
         runtimeClassName: null
         nfd:
@@ -82,7 +91,8 @@ spec:
                   - vendor
         gfd:
           enabled: false
-
+          nameOverride: gpu-feature-discovery
+          namespaceOverride: ""
   destination:
     namespace: kube-system
     name: in-cluster
