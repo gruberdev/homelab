@@ -4,7 +4,6 @@ metadata:
   labels:
     name: sealed-secrets-controller
   name: sealed-secrets-controller
-  namespace: kube-system
 spec:
   replicas: 1
   strategy:
