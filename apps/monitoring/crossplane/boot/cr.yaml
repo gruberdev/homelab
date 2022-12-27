@@ -1,0 +1,20 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: upbound-bootstrapper
+rules:
+  - apiGroups:
+    - ""
+    resources:
+    - namespaces
+    resourceNames:
+    - "kube-system"
+    verbs:
+    - "get"
+  - apiGroups:
+    - ""
+    resources:
+    - namespaces
+    verbs:
+    - "list"
+    - "watch"
