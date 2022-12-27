@@ -133,9 +133,6 @@ tasks:
     ignore_error: true
 
   secret:
-#    vars:
-#     VAULT_TOKEN:
-#        sh: cat cluster-keys.json | jq -r ".root_token"
     cmds:
       - rm apps/argocd/base/argocd-vault.yaml
       - |
