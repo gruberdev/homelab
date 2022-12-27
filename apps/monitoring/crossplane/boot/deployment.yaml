@@ -26,7 +26,6 @@ spec:
             - infrastructure
             - --controller
             - tls-secrets
-          env:
           imagePullPolicy: IfNotPresent
           resources:
             requests:
