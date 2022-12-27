@@ -9,7 +9,6 @@ spec:
   selector:
     matchLabels:
       app: crossplane
-      release: uxp
   strategy:
     type: RollingUpdate
   template:

@@ -71,12 +71,12 @@ spec:
           livenessProbe:
             tcpSocket:
               port: 8443
-            initialDelaySeconds: 60
+            initialDelaySeconds: 30
             periodSeconds: 15
           startupProbe:
             tcpSocket:
               port: 8443
-            initialDelaySeconds: 300
+            initialDelaySeconds: 60
             periodSeconds: 30
           readinessProbe:
             tcpSocket:
