@@ -32,7 +32,7 @@ spec:
           - name: https
             containerPort: 8443
             protocol: TCP
-        env:
+       env:
           - name: POD_NAMESPACE
             valueFrom:
               fieldRef:
