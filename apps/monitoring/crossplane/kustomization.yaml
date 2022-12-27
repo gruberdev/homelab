@@ -2,6 +2,8 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 bases:
 - ./base
+- ./boot
+- ./uxp
 resources:
 - https://github.com/crossplane/crossplane//cluster?ref=release-1.10
 

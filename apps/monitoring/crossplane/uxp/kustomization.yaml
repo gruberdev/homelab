@@ -1,9 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- cr.yaml
-- crb.yaml
+- terraform.yaml
 - deployment.yaml
 - sa.yaml
-- svc-monitor.yaml
-- prom-rules.yaml
+- svc.yaml
