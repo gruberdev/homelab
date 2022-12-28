@@ -38,6 +38,7 @@ env:
   VIP: 192.168.1.8
   INTERFACE: enp1s0
   KVVERSION: v0.5.7
+  K3D_VERSION: v5.4.6
   INSTALL_K3S_VERSION: v1.26.0+k3s1
 
 silent: true
@@ -446,6 +447,14 @@ tasks:
         kube-proxy-arg:
           - "metrics-bind-address=0.0.0.0"
         EOF
+    ignore_error: true
+
+  gen:nvidia:
+    cmds:
+      - sudo mkdir -p /var/lib/rancher/k3s/agent/etc/containerd
+      - |
+        sudo wget https://k3d.io/{{.K3D_VERSION}}/usage/advanced/cuda/config.toml.tmpl \
+        -O /var/lib/rancher/k3s/agent/etc/containerd/config.toml.tmpl
     ignore_error: true
 
   install:koord:

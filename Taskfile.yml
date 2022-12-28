@@ -14,6 +14,7 @@ includes:
   longhorn: ./tasks/longhorn.yaml
   cluster: ./tasks/cluster.yaml
   matrix: ./tasks/matrix.yaml
+  test: ./tasks/test.yaml
 
 vars:
   CYAN: tput setaf 6
