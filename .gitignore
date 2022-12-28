@@ -58,6 +58,7 @@ cluster-keys.json
 *.pem
 config/tls/cert.pem
 config/tls/key.pem
+*.key
 
 # Project-related folders
 apps/prometheus/kube-prometheus/*
