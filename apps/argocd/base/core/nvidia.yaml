@@ -35,7 +35,7 @@ spec:
         imagePullSecrets: []
         image:
           repository: nvcr.io/nvidia/k8s-device-plugin
-          pullPolicy: IfNotPresent
+          pullPolicy: Always
           tag: v0.13.0-ubuntu20.04
         updateStrategy:
           type: RollingUpdate
