@@ -38,6 +38,7 @@ env:
   VIP: 192.168.1.8
   INTERFACE: enp1s0
   KVVERSION: v0.5.7
+  INSTALL_K3S_VERSION: v1.26.0+k3s1
 
 silent: true
 
@@ -107,6 +108,12 @@ tasks:
       - task: gen:calico
       - task: gen:vip
 
+  backup:sealed:
+    cmds:
+      - kubectl get secret -n kube-system sealed-secrets-key -o yaml >>main.key
+      - kubectl get secret -n kube-system -l sealedsecrets.bitnami.com/sealed-secrets-key -o yaml >main.key
+    ignore_error: true
+
   gen:manifests:
     cmds:
       - mkdir -p {{.K3S_PATH}}/server/manifests/
@@ -135,6 +142,7 @@ tasks:
           name: default
         spec:
           calicoNetwork:
+            containerIPForwarding: Enabled
             nodeAddressAutodetectionV4:
               cidrs:
                 - "{{.IPV4_NETWORK}}"
@@ -327,7 +335,6 @@ tasks:
         kubelet-arg:
           - "node-ip=0.0.0.0"
           - "container-runtime=remote"
-          - "resolv-conf=/run/systemd/resolve/resolv.conf"
           - "node-status-update-frequency=4s"
           - "feature-gates=MixedProtocolLBService=true"
           - "feature-gates=GracefulNodeShutdown=true"
@@ -392,7 +399,6 @@ tasks:
         # Advanced Parameters
         kubelet-arg:
           - "node-ip=0.0.0.0"
-          - "resolv-conf=/run/systemd/resolve/resolv.conf"
           - "node-status-update-frequency=4s"
           - "feature-gates=MixedProtocolLBService=true"
           - "feature-gates=GracefulNodeShutdown=true"

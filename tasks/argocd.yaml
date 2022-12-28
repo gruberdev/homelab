@@ -84,6 +84,9 @@ tasks:
     ignore_error: true
 
   build:sidecar:
+    preconditions:
+      - sh: 'which docker'
+        msg: 'docker {{.PATH_ERROR}}'
     dir: apps/argocd
     cmds:
       - |
@@ -95,6 +98,9 @@ tasks:
 
   push:sidecar:
     dir: apps/argocd
+    preconditions:
+      - sh: 'which docker'
+        msg: 'docker {{.PATH_ERROR}}'
     cmds:
       - docker push docker.io/grubertech/argocd-sidecar:latest
       - docker push docker.io/grubertech/argocd-sidecar:v{{.ARGOCD_VERSION}}
@@ -104,6 +110,9 @@ tasks:
 
   rm:
     dir: apps/argocd
+    preconditions:
+      - sh: 'which kustomize'
+        msg: 'kustomize {{.PATH_ERROR}}'
     cmds:
       - kustomize build | kubectl delete -f -
     ignore_error: true
@@ -114,3 +123,28 @@ tasks:
     cmds:
       - kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
     ignore_error: true
+
+
+  password:token:
+    preconditions:
+      - sh: 'which argocd'
+        msg: 'argocd {{.PATH_ERROR}}'
+      - sh: 'which kubectl'
+        msg: 'kubectl {{.PATH_ERROR}}'
+    cmds:
+      - |
+        PASSWORD=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo) \
+        argocd login --insecure --username admin --password ${PASSWORD} $ARGOCD_URI
+      - argocd account generate-token --account image-updater --id image-updater > config/argo-token.yaml
+
+  password:update:
+    preconditions:
+      - sh: 'which argocd'
+        msg: 'argocd {{.PATH_ERROR}}'
+      - sh: 'which kubectl'
+        msg: 'kubectl {{.PATH_ERROR}}'
+    cmds:
+      - |
+        PASSWORD=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo) \
+        argocd login --insecure --username admin --password ${PASSWORD} $ARGOCD_URI
+      - argocd account update-password
