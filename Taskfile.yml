@@ -188,9 +188,11 @@ tasks:
       - helm repo add drone https://charts.drone.io
       - helm repo add botkube https://charts.botkube.io
       - helm repo add stakater https://stakater.github.io/stakater-charts
+      - helm repo add fairwinds-stable https://charts.fairwinds.com/stable
       - helm repo add ananace-charts https://ananace.gitlab.io/charts
       - helm repo add sealed-secrets https://bitnami-labs.github.io/sealed-secrets
       - helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+      - helm repo add pixie-operator https://pixie-operator-charts.storage.googleapis.com
       - task: clear
       - echo -e "This will add new repositories to your local Helm\n"
       - task: highlight_normal
