@@ -2,8 +2,6 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: percona
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
 spec:
   project: cluster
   source:
@@ -39,30 +37,6 @@ spec:
             repository: percona/percona-xtradb-cluster
             tag: 8.0.29-21.1
           autoRecovery: true
-          # expose:
-          #   enabled: true
-          #   type: LoadBalancer
-          #   trafficPolicy: Local
-          #   loadBalancerSourceRanges:
-          #   - 10.0.0.0/8
-          #   annotations:
-          #     networking.gke.io/load-balancer-type: "Internal"
-          # replicationChannels:
-          # - name: pxc1_to_pxc2
-          #   isSource: true
-          # - name: pxc2_to_pxc1
-          #   isSource: false
-          #   configuration:
-          #     sourceRetryCount: 3
-          #     sourceConnectRetry: 60
-          #     ssl: false
-          #     sslSkipVerify: true
-          #     ca: '/etc/mysql/ssl/ca.crt'
-          #   sourcesList:
-          #   - host: 10.95.251.101
-          #     port: 3306
-          #     weight: 100
-          # schedulerName: mycustom-scheduler
           imagePullSecrets: []
           annotations: {}
           labels: {}
@@ -90,16 +64,6 @@ spec:
             kubernetes.io/hostname: node-two
           affinity:
             antiAffinityTopologyKey: "kubernetes.io/hostname"
-            # advanced:
-            #   nodeAffinity:
-            #     requiredDuringSchedulingIgnoredDuringExecution:
-            #       nodeSelectorTerms:
-            #       - matchExpressions:
-            #         - key: kubernetes.io/e2e-az-name
-            #           operator: In
-            #           values:
-            #           - e2e-az1
-            #           - e2e-az2
           tolerations: []
           gracePeriod: 600
           podDisruptionBudget:
@@ -111,9 +75,6 @@ spec:
             size: 1Gi
           disableTLS: false
           certManager: false
-          # If this is set will not create secrets from values and will instead try to use
-          # a pre-existing secret of the same name.
-          # clusterSecretName:
           readinessProbes:
             initialDelaySeconds: 15
             timeoutSeconds: 15
@@ -128,127 +89,39 @@ spec:
             failureThreshold: 3
         haproxy:
           enabled: true
-          size: 3
+          size: 1
           image: ""
-          # imagePullPolicy: Always
           imagePullSecrets: []
-          # - name: private-registry-credentials
-        #  configuration: |
-        #
-        #  the actual default configuration file can be found here https://github.com/percona/percona-docker/blob/main/haproxy/dockerdir/etc/haproxy/haproxy-global.cfg
-        #
-        #    global
-        #      maxconn 2048
-        #      external-check
-        #      insecure-fork-wanted
-        #      stats socket /etc/haproxy/pxc/haproxy.sock mode 600 expose-fd listeners level admin
-        #
-        #    defaults
-        #      default-server init-addr last,libc,none
-        #      log global
-        #      mode tcp
-        #      retries 10
-        #      timeout client 28800s
-        #      timeout connect 100500
-        #      timeout server 28800s
-        #
-        #    frontend galera-in
-        #      bind *:3309 accept-proxy
-        #      bind *:3306
-        #      mode tcp
-        #      option clitcpka
-        #      default_backend galera-nodes
-        #
-        #    frontend galera-admin-in
-        #      bind *:33062
-        #      mode tcp
-        #      option clitcpka
-        #      default_backend galera-admin-nodes
-        #
-        #    frontend galera-replica-in
-        #      bind *:3307
-        #      mode tcp
-        #      option clitcpka
-        #      default_backend galera-replica-nodes
-        #
-        #    frontend galera-mysqlx-in
-        #      bind *:33060
-        #      mode tcp
-        #      option clitcpka
-        #      default_backend galera-mysqlx-nodes
-        #
-        #    frontend stats
-        #      bind *:8404
-        #      mode http
-        #      option http-use-htx
-        #      http-request use-service prometheus-exporter if { path /metrics }
           annotations: {}
-          #  iam.amazonaws.com/role: role-arn
           labels: {}
-          #  rack: rack-22
-          # serviceType: ClusterIP
-          # externalTrafficPolicy: Cluster
-          # runtimeClassName: image-rc
-          # loadBalancerSourceRanges:
-          #   - 10.0.0.0/8
-          # loadBalancerIP: 127.0.0.1
-          # serviceAnnotations:
-          #   service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
-          # serviceLabels:
-          #   rack: rack-23
           replicasServiceEnabled: true
-          # replicasLoadBalancerSourceRanges:
-          #   - 10.0.0.0/8
-          # replicasLoadBalancerIP: 127.0.0.1
-          # replicasServiceType: ClusterIP
-          # replicasExternalTrafficPolicy: Cluster
-          # replicasServiceAnnotations:
-          #   service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
-          # replicasServiceLabels:
-          #   rack: rack-23
-          # priorityClassName: high-priority
-          # schedulerName: mycustom-scheduler
           readinessDelaySec: 15
           livenessDelaySec: 300
-          # envVarsSecret: my-env-var-secrets
           resources:
+            limits:
+              cpu: 150m
+              memory: 250Mi
             requests:
-              memory: 1G
-              cpu: 600m
-            limits: {}
-              # memory: 1G
-              # cpu: 600m
+              cpu: 50m
+              memory: 100Mi
           sidecars: []
           sidecarVolumes: []
           sidecarPVCs: []
           sidecarResources:
-            requests: {}
-            limits: {}
-          nodeSelector: {}
-          #  disktype: ssd
-          # serviceAccountName: percona-xtradb-cluster-operator-workload
+            limits:
+              cpu: 150m
+              memory: 250Mi
+            requests:
+              cpu: 50m
+              memory: 100Mi
+          nodeSelector:
+            kubernetes.io/hostname: node-two
           affinity:
             antiAffinityTopologyKey: "kubernetes.io/hostname"
-            # advanced:
-            #   nodeAffinity:
-            #     requiredDuringSchedulingIgnoredDuringExecution:
-            #       nodeSelectorTerms:
-            #       - matchExpressions:
-            #         - key: kubernetes.io/e2e-az-name
-            #           operator: In
-            #           values:
-            #           - e2e-az1
-            #           - e2e-az2
           tolerations: []
-            # - key: "node.alpha.kubernetes.io/unreachable"
-            #   operator: "Exists"
-            #   effect: "NoExecute"
-            #   tolerationSeconds: 6000
           gracePeriod: 30
-          # only one of `maxUnavailable` or `minAvailable` can be set.
           podDisruptionBudget:
             maxUnavailable: 1
-            # minAvailable: 0
           readinessProbes:
             initialDelaySeconds: 15
             timeoutSeconds: 1
@@ -261,188 +134,72 @@ spec:
             periodSeconds: 30
             successThreshold: 1
             failureThreshold: 4
-          # A custom Kubernetes Security Context for a Container to be used instead of the default one
-          # containerSecurityContext:
-          #   privileged: false
-          # A custom Kubernetes Security Context for a Pod to be used instead of the default one
-          # podSecurityContext:
-          #   fsGroup: 1001
-          #   supplementalGroups:
-          #   - 1001
-
         proxysql:
           enabled: false
           size: 3
           image: ""
-          # imagePullPolicy: Always
           imagePullSecrets: []
-        #  configuration: |
-        #    datadir="/var/lib/proxysql"
-        #
-        #    admin_variables =
-        #    {
-        #      admin_credentials="proxyadmin:admin_password"
-        #      mysql_ifaces="0.0.0.0:6032"
-        #      refresh_interval=2000
-        #
-        #      cluster_username="proxyadmin"
-        #      cluster_password="admin_password"
-        #      checksum_admin_variables=false
-        #      checksum_ldap_variables=false
-        #      checksum_mysql_variables=false
-        #      cluster_check_interval_ms=200
-        #      cluster_check_status_frequency=100
-        #      cluster_mysql_query_rules_save_to_disk=true
-        #      cluster_mysql_servers_save_to_disk=true
-        #      cluster_mysql_users_save_to_disk=true
-        #      cluster_proxysql_servers_save_to_disk=true
-        #      cluster_mysql_query_rules_diffs_before_sync=1
-        #      cluster_mysql_servers_diffs_before_sync=1
-        #      cluster_mysql_users_diffs_before_sync=1
-        #      cluster_proxysql_servers_diffs_before_sync=1
-        #    }
-        #
-        #    mysql_variables=
-        #    {
-        #      monitor_password="monitor"
-        #      monitor_galera_healthcheck_interval=1000
-        #      threads=2
-        #      max_connections=2048
-        #      default_query_delay=0
-        #      default_query_timeout=10000
-        #      poll_timeout=2000
-        #      interfaces="0.0.0.0:3306"
-        #      default_schema="information_schema"
-        #      stacksize=1048576
-        #      connect_timeout_server=10000
-        #      monitor_history=60000
-        #      monitor_connect_interval=20000
-        #      monitor_ping_interval=10000
-        #      ping_timeout_server=200
-        #      commands_stats=true
-        #      sessions_sort=true
-        #      have_ssl=true
-        #      ssl_p2s_ca="/etc/proxysql/ssl-internal/ca.crt"
-        #      ssl_p2s_cert="/etc/proxysql/ssl-internal/tls.crt"
-        #      ssl_p2s_key="/etc/proxysql/ssl-internal/tls.key"
-        #      ssl_p2s_cipher="ECDHE-RSA-AES128-GCM-SHA256"
-        #    }
-          # - name: private-registry-credentials
           annotations: {}
-          #  iam.amazonaws.com/role: role-arn
           labels: {}
-          #  rack: rack-22
-          # serviceType: ClusterIP
-          # externalTrafficPolicy: Cluster
-          # runtimeClassName: image-rc
-          # loadBalancerSourceRanges:
-          #   - 10.0.0.0/8
-          # loadBalancerIP: 127.0.0.1
-          # serviceAnnotations:
-          #   service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
-          # serviceLabels:
-          #   rack: rack-23
-          # priorityClassName: high-priority
-          # schedulerName: mycustom-scheduler
           readinessDelaySec: 15
           livenessDelaySec: 300
           # envVarsSecret: my-env-var-secrets
           resources:
+            limits:
+              cpu: 150m
+              memory: 250Mi
             requests:
-              memory: 1G
-              cpu: 600m
-            limits: {}
-              # memory: 1G
-              # cpu: 600m
+              cpu: 50m
+              memory: 100Mi
           sidecars: []
           sidecarVolumes: []
           sidecarPVCs: []
           sidecarResources:
-            requests: {}
-            limits: {}
-          nodeSelector: {}
-          #  disktype: ssd
-          # serviceAccountName: percona-xtradb-cluster-operator-workload
+            limits:
+              cpu: 150m
+              memory: 250Mi
+            requests:
+              cpu: 50m
+              memory: 100Mi
+          nodeSelector:
+            kubernetes.io/hostname: node-two
           affinity:
             antiAffinityTopologyKey: "kubernetes.io/hostname"
-            # advanced:
-            #   nodeAffinity:
-            #     requiredDuringSchedulingIgnoredDuringExecution:
-            #       nodeSelectorTerms:
-            #       - matchExpressions:
-            #         - key: kubernetes.io/e2e-az-name
-            #           operator: In
-            #           values:
-            #           - e2e-az1
-            #           - e2e-az2
           tolerations: []
-            # - key: "node.alpha.kubernetes.io/unreachable"
-            #   operator: "Exists"
-            #   effect: "NoExecute"
-            #   tolerationSeconds: 6000
           gracePeriod: 30
-          # only one of `maxUnavailable` or `minAvailable` can be set.
           podDisruptionBudget:
             maxUnavailable: 1
-            # minAvailable: 0
           persistence:
             enabled: true
-            # if persistence is enabled, you can specify a hostPath (not recommended)
-            # hostPath: /data/mysql
-            # otherwise you can specify values for a storage claim (default)
-            ## percona data Persistent Volume Storage Class
-            ## If defined, storageClassName: <storageClass>
-            ## If set to "-", storageClassName: "", which disables dynamic provisioning
-            ## If undefined (the default) or set to null, no storageClassName spec is
-            ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
-            ##   GKE, AWS & OpenStack)
-            ##
-            # storageClass: "-"
+            storageClass: "nfs-client"
             accessMode: ReadWriteOnce
-            size: 8Gi
-          # A custom Kubernetes Security Context for a Container to be used instead of the default one
-          # containerSecurityContext:
-          #   privileged: false
-          # A custom Kubernetes Security Context for a Pod to be used instead of the default one
-          # podSecurityContext:
-          #   fsGroup: 1001
-          #   supplementalGroups:
-          #   - 1001
-
+            size: 1Gi
         logcollector:
           enabled: true
           image: ""
-          # imagePullPolicy: Always
           imagePullSecrets: []
-          # configuration: |
-          #   [OUTPUT]
-          #         Name  es
-          #         Match *
-          #         Host  192.168.2.3
-          #         Port  9200
-          #         Index my_index
-          #         Type  my_type
           resources:
+            limits:
+              cpu: 150m
+              memory: 250Mi
             requests:
-              memory: 100M
-              cpu: 200m
-            limits: {}
-
+              cpu: 50m
+              memory: 100Mi
         pmm:
           enabled: false
           image:
             repository: percona/pmm-client
             tag: 2.32.0
-          # imagePullPolicy: Always
           imagePullSecrets: []
           serverHost: monitoring-service
           serverUser: admin
           resources:
+            limits:
+              cpu: 150m
+              memory: 250Mi
             requests:
-              memory: 150M
-              cpu: 300m
-            limits: {}
-
+              cpu: 50m
+              memory: 100Mi
         backup:
           enabled: false
           image: ""
@@ -524,7 +281,6 @@ spec:
             #     container: test
             #     endpointUrl: https://accountName.blob.core.windows.net
             #     storageClass: Hot
-
           schedule:
             - name: "daily-backup"
               schedule: "0 0 * * *"
@@ -534,7 +290,6 @@ spec:
             #   schedule: "0 0 * * 6"
             #   keep: 3
             #   storageName: s3-us-west
-
         secrets:
           ## You should be overriding these with your own or specify name for clusterSecretName.
           passwords:
@@ -548,19 +303,7 @@ spec:
             # pmmserverkey: set-pmmserver-api-key
             operator: insecure-operator-password
             replication: insecure-replication-password
-          ## If you are using `cert-manager` you can skip this next section.
           tls: {}
-            # This should be the name of a secret that contains certificates.
-            # it should have the following keys: `ca.crt`, `tls.crt`, `tls.key`
-            # If not set the Helm chart will attempt to create certificates
-            # for you [not recommended for prod]:
-            # cluster:
-
-            # This should be the name of a secret that contains certificates.
-            # it should have the following keys: `ca.crt`, `tls.crt`, `tls.key`
-            # If not set the Helm chart will attempt to create certificates
-            # for you [not recommended for prod]:
-            # internal:
           # logCollector: cluster1-log-collector-secrets
           # vault: keyring-secret-vault
   destination:
