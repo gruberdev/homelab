@@ -16,11 +16,12 @@ resources:
 - base/core/longhorn.yaml
 - base/core/storage.yaml
 - base/core/crossplane.yaml
-- base/core/mysql.yaml
 - base/core/nfs.yaml
 - base/core/nvidia.yaml
 - base/core/nvidia-extra.yaml
 - base/core/sealed.yaml
+- base/core/mysql.yaml
+- base/core/percona.yaml
 
 - base/utilities/reloader.yaml
 - base/utilities/reflector.yaml
