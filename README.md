@@ -152,7 +152,7 @@
 [service-adguard]: https://adguard.com/en/adguard-home/overview.html
 [service-unifi]: https://github.com/jacobalberty/unifi-docker
 [tail-uri]: https://tailscale.com/kb/1151/what-is-tailscale/
-[mysql-uri]: https://github.com/bitpoke/mysql-operator
+[mysql-uri]: https://github.com/percona/percona-server-mysql-operator
 [matrix-uri]: https://matrix.org/
 [service-n8n]: https://n8n.io/
 [p-uri]: https://github.com/zalando/postgres-operator
@@ -262,7 +262,7 @@
 [kube-badge]: https://img.shields.io/github/v/release/prometheus-operator/kube-prometheus?label=Github&logo=github&style=flat-square
 [longhorn-badge]: https://img.shields.io/github/v/tag/longhorn/longhorn?label=Github&logo=github&style=flat-square
 [zalando-badge]: https://img.shields.io/github/v/tag/zalando/postgres-operator?label=Github&logo=github&style=flat-square
-[mysql-badge]: https://img.shields.io/github/v/tag/bitpoke/mysql-operator?label=Github&logo=github&style=flat-square
+[mysql-badge]: https://img.shields.io/docker/v/percona/percona-xtradb-cluster-operator?label=Docker&sort=semver&logo=docker&style=flat-square
 [redis-badge]: https://img.shields.io/github/v/tag/spotahome/redis-operator?label=Github&logo=github&style=flat-square
 [tailscale-badge]: https://img.shields.io/github/v/release/tailscale/tailscale?label=Github&logo=github&style=flat-square
 [nvidia-badge]: https://img.shields.io/github/v/release/NVIDIA/k8s-device-plugin?label=Github&logo=github&style=flat-square
