@@ -1,0 +1,158 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vpa
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: cluster
+  source:
+    repoURL: https://github.com/FairwindsOps/charts.git
+    targetRevision: main
+    path: stable/vpa
+    helm:
+      releaseName: vpa
+      values: |
+        imagePullSecrets: []
+        priorityClassName: ""
+        nameOverride: ""
+        fullnameOverride: ""
+        podLabels: {}
+        rbac:
+          create: true
+        serviceAccount:
+          create: true
+          annotations: {}
+          name: ""
+          automountServiceAccountToken: true
+        recommender:
+          enabled: true
+          extraArgs:
+            v: "4"
+            pod-recommendation-min-cpu-millicores: 15
+            pod-recommendation-min-memory-mb: 100
+          replicaCount: 1
+          podDisruptionBudget: {}
+          image:
+            repository: k8s.gcr.io/autoscaling/vpa-recommender
+            pullPolicy: Always
+            tag: ""
+          podAnnotations: {}
+          podLabels: {}
+          podSecurityContext:
+            runAsNonRoot: true
+            runAsUser: 65534
+          securityContext: {}
+          resources:
+            limits:
+              cpu: 150m
+              memory: 512Mi
+            requests:
+              cpu: 40m
+              memory: 128Mi
+          nodeSelector:
+            kubernetes.io/hostname: node-two
+          tolerations: []
+          affinity: {}
+        updater:
+          enabled: true
+          replicaCount: 1
+          podDisruptionBudget: {}
+          image:
+            repository: k8s.gcr.io/autoscaling/vpa-updater
+            pullPolicy: Always
+            tag: ""
+          podAnnotations: {}
+          podLabels: {}
+          podSecurityContext:
+            runAsNonRoot: true
+            runAsUser: 65534
+          securityContext: {}
+          resources:
+            limits:
+              cpu: 150m
+              memory: 512Mi
+            requests:
+              cpu: 40m
+              memory: 128Mi
+          nodeSelector:
+            kubernetes.io/hostname: node-two
+          tolerations: []
+          affinity: {}
+        admissionController:
+          enabled: false
+          extraArgs: {}
+          generateCertificate: true
+          certGen:
+            image:
+              repository: quay.io/reactiveops/ci-images
+              tag: v11-alpine
+              pullPolicy: Always
+            env: {}
+            resources:
+              limits:
+                cpu: 150m
+                memory: 512Mi
+              requests:
+                cpu: 40m
+                memory: 128Mi
+            nodeSelector:
+              kubernetes.io/hostname: node-two
+            tolerations: []
+            affinity: {}
+          cleanupOnDelete:
+            enabled: true
+            image:
+              repository: quay.io/reactiveops/ci-images
+              tag: v11-alpine
+            resources: {}
+            nodeSelector:
+              kubernetes.io/hostname: node-two
+            tolerations: []
+            affinity: {}
+          replicaCount: 1
+          podDisruptionBudget: {}
+          image:
+            repository: k8s.gcr.io/autoscaling/vpa-admission-controller
+            pullPolicy: Always
+            tag: ""
+          podAnnotations: {}
+          podLabels: {}
+          podSecurityContext:
+            runAsNonRoot: true
+            runAsUser: 65534
+          securityContext: {}
+          resources:
+            limits:
+              cpu: 150m
+              memory: 512Mi
+            requests:
+              cpu: 40m
+              memory: 128Mi
+          tlsSecretKeys: []
+          nodeSelector:
+            kubernetes.io/hostname: node-two
+          tolerations: []
+          affinity: {}
+
+  destination:
+    namespace: monitoring
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: true
+    syncOptions:
+    - Validate=false
+    - CreateNamespace=false
+    - PrunePropagationPolicy=foreground
+    - PruneLast=false
+    - ApplyOutOfSyncOnly=false
+    - Prune=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 20s
+        factor: 2
+        maxDuration: 15m
