@@ -98,6 +98,7 @@
 > - [botkube][botkube-uri] &nbsp; <sub>Monitors cluster events and sends a message through Discord or Slack, capable of alerting for every kind of cluster-related issue.</sub>
 > - [node-problem-detector][node-problem-uri] &nbsp; <sub>Detects if a node has been affected by an issue such as faulty hardware or kernel deadlocks, preventing scheduling.</sub>
 > - [node-feature-discovery][feature-discovery-uri] &nbsp; <sub>Detects hardware information, changes and other data and uses that to increase efficiency of the cluster.</sub>
+> - [Chaos Mesh][chaos-mesh-uri] &nbsp; <sub>A Cloud-native, lightweight, no-dependencies required Chaos Engineering Platform for Kubernetes.</sub>
 
 ---
 
@@ -111,13 +112,9 @@
 
 > #### Monitoring and k8s utilities:
 >
-> - Chaos Mesh for Chaos engineering
-
 > #### Services and applications:
 >
 > - Domainmod
-> - Monica
-> - Wallabag
 >
 
 </details>
@@ -186,6 +183,7 @@
 [argocd-notifications-uri]: https://argocd-notifications.readthedocs.io/en/stable/
 [node-problem-uri]: https://github.com/kubernetes/node-problem-detector
 [feature-discovery-uri]: https://github.com/kubernetes-sigs/node-feature-discovery
+[chaos-mesh-uri]: https://chaos-mesh.org/
 
 <!-- Project Folders -->
 
