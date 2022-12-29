@@ -29,6 +29,7 @@ resources:
 - base/utilities/descheduler.yaml
 # - base/utilities/koordinator.yaml
 # - base/utilities/botkube.yaml
+# - base/utilities/chaos.yaml
 
 - base/apps/vault.yaml
 - base/apps/ha.yaml
@@ -39,6 +40,7 @@ resources:
 
 # - base/monitoring/kuma.yaml
 # - base/monitoring/unifi-poller.yaml
+- base/monitoring/pixie.yaml
 - base/monitoring/kube-prometheus.yaml
 - base/monitoring/kube-prom-crds.yaml
 # - base/monitoring/longhorn.yaml
