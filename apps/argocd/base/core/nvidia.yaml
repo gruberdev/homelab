@@ -59,7 +59,7 @@ spec:
             operator: Exists
             effect: NoSchedule
         priorityClassName: "system-node-critical"
-        runtimeClassName: null
+        runtimeClassName: "nvidia"
         nfd:
           nameOverride: node-feature-discovery
           master:
