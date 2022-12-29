@@ -7,154 +7,35 @@ metadata:
 spec:
   project: cluster
   source:
-    repoURL: https://helm-charts.bitpoke.io
-    chart: mysql-operator
-    targetRevision: 0.6.2
+    repoURL: https://percona.github.io/percona-helm-charts/
+    chart: pxc-operator
+    targetRevision: 1.12.0
     helm:
-      releaseName: mysql-operator
+      releaseName: pxc-operator
       values: |
         replicaCount: 1
-        image:
-          repository: docker.io/bitpoke/mysql-operator
-          pullPolicy: IfNotPresent
-          # Overrides the image tag whose default is the chart appVersion.
-          tag: ""
-        sidecar57:
-          image:
-            repository: docker.io/bitpoke/mysql-operator-sidecar-5.7
-            # Overrides the image tag whose default is the chart appVersion.
-            tag: ""
-        sidecar80:
-          image:
-            repository: docker.io/bitpoke/mysql-operator-sidecar-8.0
-            # Overrides the image tag whose default is the chart appVersion.
-            tag: ""
-        metricsExporter:
-          image:
-            repository: docker.io/prom/mysqld-exporter
-            tag: "v0.13.0"
+        operatorImageRepository: percona/percona-xtradb-cluster-operator
+        imagePullPolicy: IfNotPresent
+        image: ""
+        watchAllNamespaces: true
+        operatorName: mysql-operator
         imagePullSecrets: []
         nameOverride: ""
         fullnameOverride: ""
-        extraEnv: []
-        extraArgs: []
-        rbac:
-          create: true
-        serviceAccount:
-          create: true
-          annotations: {}
-          name: ""
-        podAnnotations: {}
-        podSecurityContext:
-          runAsNonRoot: true
-          runAsUser: 65532
-          runAsGroup: 65532
-          fsGroup: 65532
-        securityContext: {}
-        podDisruptionBudget:
-          enabled: false
-        podSecurityPolicy:
-          enabled: false
-          annotations:
-            seccomp.security.alpha.kubernetes.io/allowedProfileNames: 'docker/default'
-            seccomp.security.alpha.kubernetes.io/defaultProfileName:  'docker/default'
         resources:
           limits:
             cpu: 200m
-            memory: 256Mi
+            memory: 500Mi
           requests:
             cpu: 100m
-            memory: 128Mi
+            memory: 20Mi
         nodeSelector:
           kubernetes.io/hostname: node-two
         tolerations: []
         affinity: {}
-        gracefulShutdown:
-          enabled: true
-        watchNamespace:
-        serviceMonitor:
-          enabled: true
-          servicePortName: prometheus
-          servicePort: 9125
-          interval: 120s
-          scrapeTimeout: 10s
-          additionalLabels: {}
-          jobLabel: ""
-          targetLabels: []
-          podTargetLabels: []
-          metricRelabelings: []
-        mysqlClustersGlobalServiceMonitor:
-          enabled: true
-          interval: 10s
-          scrapeTimeout: 3s
-          servicePortName: prometheus
-          namespaceSelector:
-            any: true
-          selector:
-            matchLabels:
-              app.kubernetes.io/managed-by: mysql.presslabs.org
-              app.kubernetes.io/name: mysql
-        orchestrator:
-          image:
-            repository: docker.io/bitpoke/mysql-operator-orchestrator
-            pullPolicy: IfNotPresent
-            tag: ""
-          securityContext: {}
-          # secretName:  # specify an existing secret to use for orchestrator topology credentials
-          # if a secret is not specified one will be created for orchestrator user and password used to manage MySQL clusters
-          topologyUser: orchestrator
-          topologyPassword:  # this is empty and will be random generated if not specified
-          resources:
-            limits:
-              cpu: 350m
-              memory: 512Mi
-            requests:
-              cpu: 150m
-              memory: 256Mi
-          service:
-            type: ClusterIP
-            port: 3306
-            # nodePort: 3000
-          ingress:
-            enabled: false
-          persistence:
-            enabled: true
-            storageClass: nfs-client
-            accessMode: "ReadWriteMany"
-            size: 5Gi
-            fsGroupWorkaroundEnabled: false
-          config:
-            Debug: false
-            DiscoverByShowSlaveHosts: false
-            UnseenInstanceForgetHours: 1
-            InstancePollSeconds: 5
-            HostnameResolveMethod: "none"
-            MySQLHostnameResolveMethod: "@@report_host"
-            RemoveTextFromHostnameDisplay: ":3306"
-            DetectClusterAliasQuery: "SELECT CONCAT(SUBSTRING(@@hostname, 1, LENGTH(@@hostname) - 1 - LENGTH(SUBSTRING_INDEX(@@hostname,'-',-2))),'.',SUBSTRING_INDEX(@@report_host,'.',-1))"
-            DetectInstanceAliasQuery: "SELECT @@hostname"
-            SlaveLagQuery: "SELECT TIMESTAMPDIFF(SECOND,ts,UTC_TIMESTAMP()) as drift FROM sys_operator.heartbeat ORDER BY drift ASC LIMIT 1"
-            RecoveryPeriodBlockSeconds: 300
-            RecoveryIgnoreHostnameFilters: []
-            RecoverMasterClusterFilters: ['.*']
-            RecoverIntermediateMasterClusterFilters: ['.*']
-            ApplyMySQLPromotionAfterMasterFailover: true
-            FailMasterPromotionIfSQLThreadNotUpToDate: true
-            DetachLostReplicasAfterMasterFailover: true
-            MasterFailoverLostInstancesDowntimeMinutes: 10
-            ProcessesShellCommand: "sh"
-            OnFailureDetectionProcesses:
-              - "/usr/local/bin/orc-helper event -w '{failureClusterAlias}' 'OrcFailureDetection' 'Failure: {failureType}, failed host: {failedHost}, lost replcas: {lostReplicas}' || true"
-              - "/usr/local/bin/orc-helper failover-in-progress '{failureClusterAlias}' '{failureDescription}' || true"
-            PreFailoverProcesses:
-              # as backup in case the first request fails
-              - "/usr/local/bin/orc-helper failover-in-progress '{failureClusterAlias}' '{failureDescription}' || true"
-            PostUnsuccessfulFailoverProcesses:
-              - "/usr/local/bin/orc-helper event -w '{failureClusterAlias}' 'OrcPostUnsuccessfulFailover' 'Failure: {failureType}, failed host: {failedHost} with {countSlaves} slaves' || true"
-            PostMasterFailoverProcesses:
-              - "/usr/local/bin/orc-helper event '{failureClusterAlias}' 'OrcPostMasterFailover' 'Failure type: {failureType}, new master: {successorHost}, slaves: {slaveHosts}' || true"
-            PostIntermediateMasterFailoverProcesses:
-              - "/usr/local/bin/orc-helper event '{failureClusterAlias}' 'OrcPostIntermediateMasterFailover' 'Failure type: {failureType}, failed hosts: {failedHost}, slaves: {countSlaves}' || true"
+        logStructured: false
+        logLevel: "INFO"
+        disableTelemetry: true
   destination:
     namespace: databases
     name: in-cluster
