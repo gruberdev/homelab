@@ -14,13 +14,24 @@ spec:
       releaseName: nvidia-driver
       values: |
         config:
-          name: ""
-          map: {}
+          map:
+            default: |-
+              version: v1
+              flags:
+                migStrategy: none
+            mig-single: |-
+              version: v1
+              flags:
+                migStrategy: single
+            mig-mixed: |-
+              version: v1
+              flags:
+                migStrategy: mixed
           default: ""
           fallbackStrategies: ["named" , "single"]
         legacyDaemonsetAPI: "false"
         compatWithCPUManager: "true"
-        migStrategy: "single"
+        migStrategy: null
         failOnInitError: "true"
         deviceListStrategy: "envvar"
         deviceIDStrategy: "uuid"
@@ -29,7 +40,7 @@ spec:
         mofedEnabled: null
         nameOverride: ""
         fullnameOverride: ""
-        namespaceOverride: ""
+        namespaceOverride: kube-system
         selectorLabelsOverride: {}
         allowDefaultNamespace: false
         imagePullSecrets: []
@@ -45,7 +56,7 @@ spec:
         resources:
           limits:
             cpu: 300m
-            memory: 1Gi
+            memory: 512Gi
           requests:
             cpu: 100m
             memory: 256Mi
