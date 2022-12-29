@@ -7,7 +7,7 @@ spec:
   source:
     repoURL: https://github.com/prometheus-community/helm-charts.git
     path: charts/kube-prometheus-stack/crds/
-    targetRevision: main
+    targetRevision: kube-prometheus-stack-43.2.0
     directory:
       recurse: true
   destination:
