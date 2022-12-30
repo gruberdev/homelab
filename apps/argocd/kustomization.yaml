@@ -20,6 +20,7 @@ resources:
 - base/core/nvidia.yaml
 - base/core/nvidia-extra.yaml
 - base/core/sealed.yaml
+- base/core/private.yaml
 - base/core/mysql.yaml
 - base/core/percona.yaml
 
