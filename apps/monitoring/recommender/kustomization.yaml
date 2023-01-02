@@ -1,8 +1,9 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 bases:
-- ./controller
-- ./dashboard
+- https://github.com/gruberdev/homelab/apps/monitoring/recommender/controller
+- https://github.com/gruberdev/homelab/apps/monitoring/recommender/dashboard
+
 namespace: monitoring
 
 commonAnnotations:
