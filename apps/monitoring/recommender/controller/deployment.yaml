@@ -1,0 +1,47 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: goldilocks-controller
+  labels:
+    app.kubernetes.io/name: goldilocks
+    app.kubernetes.io/component: controller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: goldilocks
+      app.kubernetes.io/component: controller
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: goldilocks
+        app.kubernetes.io/component: controller
+    spec:
+      serviceAccountName: goldilocks-controller
+      containers:
+        - name: goldilocks
+          image: "us-docker.pkg.dev/fairwinds-ops/oss/goldilocks:v4"
+          imagePullPolicy: Always
+          command:
+            - /goldilocks
+            - controller
+          securityContext:
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            runAsUser: 10324
+            capabilities:
+              drop:
+                - ALL
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 25m
+              memory: 32Mi
+            limits:
+              cpu: 25m
+              memory: 32Mi

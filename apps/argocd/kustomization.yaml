@@ -43,6 +43,7 @@ resources:
 # - base/monitoring/unifi-poller.yaml
 # - base/monitoring/pixie.yaml
 - base/monitoring/vpa.yaml
+- base/monitoring/recommender.yaml
 - base/monitoring/kube-prometheus.yaml
 - base/monitoring/kube-prom-crds.yaml
 # - base/monitoring/longhorn.yaml
