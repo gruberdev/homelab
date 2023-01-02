@@ -7,7 +7,7 @@ spec:
   source:
     repoURL: 'https://github.com/prometheus-community/helm-charts.git'
     targetRevision: kube-prometheus-stack-43.2.1
-    path: chart/kube-prometheus-stack
+    path: charts/kube-prometheus-stack
     helm:
       skipCrds: true
       releaseName: kube-prometheus
