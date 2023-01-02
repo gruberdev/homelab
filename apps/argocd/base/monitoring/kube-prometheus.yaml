@@ -672,8 +672,11 @@ spec:
           verticalPodAutoscaler:
             enabled: false
           image:
-            repository: quay.io/prometheus-operator/prometheus-operator
+            registry: quay.io
+            repository: prometheus-operator/prometheus-operator
             tag: v0.61.1
+            sha: ""
+            pullPolicy: IfNotPresent
             sha: ""
             pullPolicy: IfNotPresent
           prometheusConfigReloader:
