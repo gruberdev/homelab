@@ -30,10 +30,6 @@ spec:
             kubeControllerManager: false
             kubelet: false
             kubeProxy: false
-            kubernetesApps: false
-            kubernetesResources: false
-            kubernetesStorage: false
-            kubernetesSystem: false
             kubeScheduler: false
             alertmanager: true
             configReloaders: true
@@ -590,7 +586,7 @@ spec:
                   cpu: 200m
                   memory: 256Mi
               priorityClassName: ""
-              annotations: {}
+              annotations:
                 argocd.argoproj.io/hook: PreSync
                 argocd.argoproj.io/hook-delete-policy: HookSucceeded
               podAnnotations: {}
@@ -1741,6 +1737,7 @@ spec:
         ## Setting to true produces cleaner resource names, but requires a data migration because the name of the persistent volume changes. Therefore this should only be set once on initial installation.
         ##
         cleanPrometheusOperatorObjectNames: false
+
 
   destination:
     namespace: monitoring
