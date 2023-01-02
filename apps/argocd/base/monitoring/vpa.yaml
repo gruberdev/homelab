@@ -80,7 +80,7 @@ spec:
           tolerations: []
           affinity: {}
         admissionController:
-          enabled: false
+          enabled: true
           extraArgs: {}
           generateCertificate: true
           certGen:

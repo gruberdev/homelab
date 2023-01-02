@@ -15,10 +15,33 @@ rules:
       - 'list'
       - 'watch'
   - apiGroups:
+      - 'batch'
+    resources:
+      - '*'
+    verbs:
+      - 'get'
+      - 'list'
+      - 'watch'
+  - apiGroups:
+      - 'longhorn.io'
+    resources:
+      - '*'
+    verbs:
+      - 'get'
+      - 'list'
+      - 'watch'
+  - apiGroups:
+      - 'pkg.crossplane.io'
+    resources:
+      - '*'
+    verbs:
+      - 'get'
+      - 'list'
+      - 'watch'
+  - apiGroups:
       - ''
     resources:
-      - 'namespaces'
-      - 'pods'
+      - '*'
     verbs:
       - 'get'
       - 'list'

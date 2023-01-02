@@ -1,6 +1,4 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: goldilocks-controller
-  labels:
-    app: goldilocks
+  name: goldilocks-dashboard
