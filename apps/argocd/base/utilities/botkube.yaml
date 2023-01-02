@@ -79,18 +79,6 @@ spec:
               labels: {}
               resources:
                 - type: v1/pods
-                #  namespaces:             # Overrides 'source'.kubernetes.namespaces
-                #    include:
-                #      - ".*"
-                #    exclude: []
-                #  annotations: {}         # Overrides 'source'.kubernetes.annotations
-                #  labels: {}              # Overrides 'source'.kubernetes.labels
-                #  name: "" # Optional resource name regex.
-                #  event:
-                #    reason: ""            # Overrides 'source'.kubernetes.event.reason
-                #    message: ""           # Overrides 'source'.kubernetes.event.message
-                #    types:                # Overrides 'source'.kubernetes.event.types
-                #      - create
                 - type: v1/services
                 - type: networking.k8s.io/v1/ingresses
                 - type: v1/nodes
@@ -150,24 +138,6 @@ spec:
                     fields:
                       - spec.template.spec.containers[*].image
                       - status.readyReplicas
-              ## Custom resource example
-              # - type: velero.io/v1/backups
-              #   namespaces:
-              #     include:
-              #       - ".*"
-              #     exclude:
-              #       -
-              #   event:
-              #     types:
-              #       - create
-              #       - update
-              #       - delete
-              #       - error
-              #   updateSetting:
-              #     includeDiff: true
-              #     fields:
-              #       - status.phase
-
           'k8s-err-events':
             displayName: "Kubernetes Errors"
             kubernetes:
@@ -244,201 +214,7 @@ spec:
               defaultNamespace: default
               restrictAccess: false
         existingCommunicationsSecretName: "botkube-vars"
-        communications:
-          'default-group':
-            ## Settings for Slack.
-            slack:
-              # -- If true, enables Slack bot.
-              enabled: false
-              # -- Map of configured channels. The property name under `channels` object is an alias for a given configuration.
-              #
-              ## Format: channels.{alias}
-              channels:
-                'default':
-                  # -- Slack channel name without '#' prefix where you have added Botkube and want to receive notifications in.
-                  name: 'SLACK_CHANNEL'
-                  notification:
-                    # -- If true, the notifications are not sent to the channel. They can be enabled with `@Botkube` command anytime.
-                    disabled: false
-                  bindings:
-                    # -- Executors configuration for a given channel.
-                    executors:
-                      - kubectl-read-only
-                    # -- Notification sources configuration for a given channel.
-                    sources:
-                      - k8s-err-events
-                      - k8s-recommendation-events
-              # -- Slack token.
-              token: ''
-              notification:
-                # -- Configures notification type that are sent. Possible values: `short`, `long`.
-                type: short
-
-            ## Settings for Slack with Socket Mode.
-            socketSlack:
-              # -- If true, enables Slack bot.
-              enabled: false
-              # -- Map of configured channels. The property name under `channels` object is an alias for a given configuration.
-              #
-              ## Format: channels.{alias}
-              channels:
-                'default':
-                  # -- Slack channel name without '#' prefix where you have added Botkube and want to receive notifications in.
-                  name: 'SLACK_CHANNEL'
-                  bindings:
-                    # -- Executors configuration for a given channel.
-                    executors:
-                      - kubectl-read-only
-                    # -- Notification sources configuration for a given channel.
-                    sources:
-                      - k8s-err-events
-                      - k8s-recommendation-events
-              # -- Slack bot token for your own Slack app.
-              # [Ref doc](https://api.slack.com/authentication/token-types).
-              botToken: ''
-              # -- Slack app-level token for your own Slack app.
-              # [Ref doc](https://api.slack.com/authentication/token-types).
-              appToken: ''
-              notification:
-                # -- Configures notification type that are sent. Possible values: `short`, `long`.
-                type: short
-            ## Settings for Mattermost.
-            mattermost:
-              # -- If true, enables Mattermost bot.
-              enabled: false
-              # -- User in Mattermost which belongs the specified Personal Access token.
-              botName: 'Botkube'
-              # -- The URL (including http/https schema) where Mattermost is running. e.g https://example.com:9243
-              url: 'MATTERMOST_SERVER_URL'
-              # -- Personal Access token generated by Botkube user.
-              token: 'MATTERMOST_TOKEN'
-              # -- The Mattermost Team name where Botkube is added.
-              team: 'MATTERMOST_TEAM'
-              # -- Map of configured channels. The property name under `channels` object is an alias for a given configuration.
-              #
-              ## Format: channels.{alias}
-              channels:
-                'default':
-                  # -- The Mattermost channel name for receiving Botkube alerts.
-                  # The Botkube user needs to be added to it.
-                  name: 'MATTERMOST_CHANNEL'
-                  notification:
-                    # -- If true, the notifications are not sent to the channel. They can be enabled with `@Botkube` command anytime.
-                    disabled: false
-                  bindings:
-                    # -- Executors configuration for a given channel.
-                    executors:
-                      - kubectl-read-only
-                    # -- Notification sources configuration for a given channel.
-                    sources:
-                      - k8s-err-events
-                      - k8s-recommendation-events
-              notification:
-                # -- Configures notification type that are sent. Possible values: `short`, `long`.
-                type: short
-
-            ## Settings for MS Teams.
-            teams:
-              # -- If true, enables MS Teams bot.
-              enabled: false
-              # -- The Bot name set while registering Bot to MS Teams.
-              botName: 'Botkube'
-              # -- The Botkube application ID generated while registering Bot to MS Teams.
-              appID: 'APPLICATION_ID'
-              # -- The Botkube application password generated while registering Bot to MS Teams.
-              appPassword: 'APPLICATION_PASSWORD'
-              bindings:
-                # -- Executor bindings apply to all MS Teams channels where Botkube has access to.
-                executors:
-                  - kubectl-read-only
-                # -- Source bindings apply to all channels which have notification turned on with `@Botkube start notifications` command.
-                sources:
-                  - k8s-err-events
-                  - k8s-recommendation-events
-              # -- The path in endpoint URL provided while registering Botkube to MS Teams.
-              messagePath: "/bots/teams"
-              # -- The Service port for bot endpoint on Botkube container.
-              port: 3978
-
-            ## Settings for Discord.
-            discord:
-              # -- If true, enables Discord bot.
-              enabled: false
-              # -- Botkube Bot Token.
-              token: 'DISCORD_TOKEN'
-              # -- Botkube Application Client ID.
-              botID: 'DISCORD_BOT_ID'
-              # -- Map of configured channels. The property name under `channels` object is an alias for a given configuration.
-              #
-              ## Format: channels.{alias}
-              channels:
-                'default':
-                  # -- Discord channel ID for receiving Botkube alerts.
-                  # The Botkube user needs to be added to it.
-                  id: 'DISCORD_CHANNEL_ID'
-                  notification:
-                    # -- If true, the notifications are not sent to the channel. They can be enabled with `@Botkube` command anytime.
-                    disabled: false
-                  bindings:
-                    # -- Executors configuration for a given channel.
-                    executors:
-                      - kubectl-read-only
-                    # -- Notification sources configuration for a given channel.
-                    sources:
-                      - k8s-err-events
-                      - k8s-recommendation-events
-              notification:
-                # -- Configures notification type that are sent. Possible values: `short`, `long`.
-                type: short
-
-            ## Settings for Elasticsearch.
-            elasticsearch:
-              # -- If true, enables Elasticsearch.
-              enabled: false
-              awsSigning:
-                # -- If true, enables awsSigning using IAM for Elasticsearch hosted on AWS. Make sure AWS environment variables are set.
-                # [Ref doc](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html).
-                enabled: false
-                # -- AWS region where Elasticsearch is deployed.
-                awsRegion: "us-east-1"
-                # -- AWS IAM Role arn to assume for credentials, use this only if you don't want to use the EC2 instance role or not running on AWS instance.
-                roleArn: ""
-              # -- The server URL, e.g https://example.com:9243
-              server: 'ELASTICSEARCH_ADDRESS'
-              # -- Basic Auth username.
-              username: 'ELASTICSEARCH_USERNAME'
-              # -- Basic Auth password.
-              password: 'ELASTICSEARCH_PASSWORD'
-              # -- If true, skips the verification of TLS certificate of the Elastic nodes.
-              # It's useful for clusters with self-signed certificates.
-              skipTLSVerify: false
-              # -- Map of configured indices. The `indices` property name is an alias for a given configuration.
-              #
-              ## Format: indices.{alias}
-              indices:
-                'default':
-                  # -- Configures Elasticsearch index settings.
-                  name: botkube
-                  type: botkube-event
-                  shards: 1
-                  replicas: 0
-                  bindings:
-                    # -- Notification sources configuration for a given index.
-                    sources:
-                      - k8s-err-events
-                      - k8s-recommendation-events
-
-            ## Settings for Webhook.
-            webhook:
-              # -- If true, enables Webhook.
-              enabled: false
-              # -- The Webhook URL, e.g.: https://example.com:80
-              url: 'WEBHOOK_URL'
-              bindings:
-                # -- Notification sources configuration for the webhook.
-                sources:
-                  - k8s-err-events
-                  - k8s-recommendation-events
+        communications: {}
         settings:
           clusterName: default
           lifecycleServer:
@@ -484,7 +260,6 @@ spec:
           port: metrics
           labels: {}
         deployment:
-          # -- Extra annotations to pass to the Botkube Deployment.
           annotations: {}
         replicaCount: 1
         extraAnnotations: {}
@@ -500,45 +275,10 @@ spec:
             cpu: 50m
             memory: 128Mi
         extraEnv: []
-        #  - name: {key}
-        #    valueFrom:
-        #      configMapKeyRef:
-        #        name: configmap-name
-        #        key: value_key
-        #  - name: {key}
-        #    value: value
-
         extraVolumes: []
-        # - name: extra-volume-0
-        #   secret:
-        #     secretName: {secret-name}
-        #
-        ## For CSI e.g. Vault:
-        # - name: secrets-store-inline
-        #   csi:
-        #     driver: secrets-store.csi.k8s.io
-        #     readOnly: true
-        #     volumeAttributes:
-        #       secretProviderClass: "vault-database"
-
-        # -- Extra volume mounts to pass to the Botkube container.
-        # [Ref docs](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#volumes-1).
         extraVolumeMounts: []
-        # - name: extra-volume-0
-        #   mountPath: /mnt/volume0
-        #   readOnly: true
-        # - name: extra-volume-1
-        #   mountPath: /mnt/volume1
-        #   readOnly: true
-        # - name: secret-files
-        #   mountPath: /etc/secrets
-        #   subPath: ""
-        #
-        ## For CSI e.g. Vault:
-        # - name: secrets-store-inline
-        #   mountPath: "/mnt/secrets-store"
-        #   readOnly: true
-        nodeSelector: {}
+        nodeSelector:
+          kubernetes.io/hostname: node-two
         tolerations: []
         affinity: {}
         rbac:

@@ -22,9 +22,8 @@ tasks:
       GIT_URI:
         sh: git config --get remote.origin.url | sed -e 's/:/\//g'| sed -e 's/ssh\/\/\///g'| sed -e 's/git@/https:\/\//g' | sed 's/.git$//'
     cmds:
-      - rm config/repo-creds.yaml
       - |
-        cat << EOF > config/repo-creds.yaml
+        kubectl apply -f << EOF
         apiVersion: v1
         kind: Secret
         metadata:
@@ -37,8 +36,6 @@ tasks:
           password: $GH_PASS
           username: $GH_USER
         EOF
-      - kubectl apply -f config/repo-creds.yaml -n argocd
-      - rm config/repo-creds.yaml
     ignore_error: true
 
   repo:
@@ -48,7 +45,7 @@ tasks:
     cmds:
       - rm config/repo.yaml
       - |
-        cat << EOF > config/repo.yaml
+        kubectl apply -f - << EOF
         apiVersion: v1
         kind: Secret
         metadata:
@@ -58,12 +55,25 @@ tasks:
             argocd.argoproj.io/secret-type: repository
         stringData:
           type: git
-          url: {{.GIT_URI}}
+          url: https://github.com/gruberdev/homelab.git
           password: $GH_PASS
           username: $GH_USER
         EOF
-      - kubectl apply -f config/repo.yaml
-      - rm config/repo.yaml
+      - |
+        kubectl apply -f - << EOF
+        apiVersion: v1
+        kind: Secret
+        metadata:
+          name: private-repository
+          namespace: argocd
+          labels:
+            argocd.argoproj.io/secret-type: repository
+        stringData:
+          type: git
+          url: https://github.com/gruberdev/private.git
+          password: $GH_PASS
+          username: $GH_USER
+        EOF
     ignore_error: true
 
   install:
