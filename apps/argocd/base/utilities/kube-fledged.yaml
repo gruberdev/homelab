@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: 'https://github.com/senthilrch/kube-fledged.git'
     targetRevision: master
-    path: src/github.com/senthilrch/kube-fledged
+    path: deploy/kubefledged-operator/helm-charts/kubefledged
     helm:
       releaseName: kube-fledged
   destination:
