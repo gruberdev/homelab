@@ -29,7 +29,7 @@ resources:
 - base/utilities/kured.yaml
 - base/utilities/descheduler.yaml
 # - base/utilities/koordinator.yaml
-# - base/utilities/botkube.yaml
+- base/utilities/botkube.yaml
 # - base/utilities/chaos.yaml
 
 - base/apps/vault.yaml
