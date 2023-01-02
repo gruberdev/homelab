@@ -8,10 +8,86 @@ spec:
   project: cluster
   source:
     repoURL: 'https://github.com/senthilrch/kube-fledged.git'
-    targetRevision: master
+    targetRevision: v0.10.0
     path: deploy/kubefledged-operator/helm-charts/kubefledged
     helm:
       releaseName: kube-fledged
+      values: |
+        controllerReplicaCount: 1
+        webhookServerReplicaCount: 1
+        controller:
+          hostNetwork: false
+          priorityClassName: ""
+        webhookServer:
+          enable: true
+          hostNetwork: false
+          priorityClassName: ""
+        image:
+          kubefledgedControllerRepository: docker.io/senthilrch/kubefledged-controller
+          kubefledgedCRIClientRepository: docker.io/senthilrch/kubefledged-cri-client
+          busyboxImageRepository: senthilrch/busybox
+          busyboxImageVersion: "1.35.0"
+          kubefledgedWebhookServerRepository: docker.io/senthilrch/kubefledged-webhook-server
+          pullPolicy: Always
+        command:
+          kubefledgedControllerCommand: ["/opt/bin/kubefledged-controller"]
+          kubefledgedWebhookServerCommand: ["/opt/bin/kubefledged-webhook-server"]
+        args:
+          controllerLogLevel: INFO
+          controllerImagePullDeadlineDuration: 5m
+          controllerImageCacheRefreshFrequency: 15m
+          controllerImagePullPolicy: IfNotPresent
+          controllerServiceAccountName: ""
+          controllerImageDeleteJobHostNetwork: false
+          controllerJobPriorityClassName: ""
+          controllerJobRetentionPolicy: "delete"
+          controllerCRISocketPath: ""
+          webhookServerLogLevel: INFO
+          webhookServerCertFile: /var/run/secrets/webhook-server/tls.crt
+          webhookServerKeyFile: /var/run/secrets/webhook-server/tls.key
+          webhookServerPort: 443
+        validatingWebhookCABundle:
+        imagePullSecrets: []
+        nameOverride: ""
+        fullnameOverride: ""
+        serviceAccount:
+          create: true
+          name:
+        clusterRole:
+          create: true
+          name:
+        clusterRoleBinding:
+          create: true
+          name:
+        validatingWebhook:
+          create: true
+          name:
+        secret:
+          name:
+        podSecurityContext: {}
+        securityContext: {}
+        service:
+          type: ClusterIP
+          port: 80
+        webhookService:
+          create: true
+          type: ClusterIP
+          port: 3443
+          targetPort: 443
+          name:
+        ingress:
+          enabled: false
+        resources: {}
+          limits:
+            cpu: 120m
+            memory: 256Mi
+          requests:
+            cpu: 20m
+            memory: 64Mi
+        nodeSelector:
+          kubernetes.io/hostname: node-two
+        tolerations: []
+
   destination:
     namespace: kube-system
     name: in-cluster
