@@ -1,11 +1,11 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: recommender
+  name: vpa-recommender
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: monitoring
+  project: cluster
   source:
     repoURL: 'https://github.com/gruberdev/homelab.git'
     path: apps/monitoring/recommender
@@ -19,15 +19,14 @@ spec:
       selfHeal: true
       allowEmpty: true
     syncOptions:
-    - Validate=false
+    - Validate=true
     - CreateNamespace=false
     - PrunePropagationPolicy=foreground
     - PruneLast=true
-    - Replace=true
     - ApplyOutOfSyncOnly=false
     - Prune=true
     retry:
-      limit: -1
+      limit: 10
       backoff:
         duration: 20s
         factor: 2
