@@ -65,7 +65,7 @@ spec:
             pspAnnotations: {}
           imagePullSecrets: []
         alertmanager:
-          enabled: true
+          enabled: false
           annotations: {}
           apiVersion: v2
           serviceAccount:

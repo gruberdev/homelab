@@ -35,7 +35,7 @@
 > |     [kube-prometheus][service-kube]    |   `Monitoring`  |  <sub>[More details][homelab-kube]</sub>            |       ![][argocd-kube]       |   ![][kube-badge]    |
 > |     [Hashicorp's Vault][vault-uri]     |    `Security`   |       <sub>[Chart Values][homelab-vault]</sub>      |       ![][argocd-vault]      |  ![][vault-badge]    |
 > |    [Longhorn][longhorn-uri]            |    `Storage`    |        <sub>[More details][homelab-longhorn]</sub>  |      ![][argocd-longhorn]    | ![][longhorn-badge]  |
-> |     [Unifi Poller][poller-uri]         |   `Monitoring`  |      <sub>[More details][homelab-poller]</sub>      |      ![][argocd-poller]      | ![][poller-badge]    |
+> |     [Unifi Poller][poller-uri]        |   `Monitoring`  |      <sub>[More details][homelab-poller]</sub>      |      ![][argocd-poller]      | ![][poller-badge]    |
 > | [RSS Gen/Proxy][service-rssgen]        |    `Services`   |        <sub>[More details][homelab-rssgen]</sub>    |        ![][argocd-rss-gen]   |  ![][rssgen-badge]   |
 > |    [RSS Hub][service-rsshub]           |    `Services`   |        <sub>[More details][homelab-rsshub]</sub>    |        ![][argocd-rss-hub]   | ![][rsshub-badge]    |
 > |            [n8n][n8n-uri]              |    `Services`   |        <sub>[More details][homelab-n8n]</sub>       |        ![][argocd-n8n]       |  ![][n8n-badge]      |
@@ -160,7 +160,7 @@
 [n8n-uri]: https://n8n.io/
 [vault-uri]: https://github.com/hashicorp/vault
 [flame-uri]: https://github.com/pawelmalak/flame
-[poller-uri]: hhttps://github.com/unpoller/unpoller
+[poller-uri]: https://github.com/unpoller/unpoller
 [cf-uri]: https://github.com/cloudflare/cloudflared
 [service-mango]: https://github.com/getmango/Mango
 [service-jellyfin]: https://github.com/jellyfin/jellyfin
