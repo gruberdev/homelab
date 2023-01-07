@@ -56,7 +56,6 @@ resources:
 
 # Applications/Services
 - base/services/n8n.yaml
-- base/services/rss-gen.yaml
 - base/services/rss-hub.yaml
 - base/services/wallabag.yaml
 # - base/services/metabase.yaml
