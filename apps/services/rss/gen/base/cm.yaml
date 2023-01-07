@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: rssgen-cm
-data:
-  APP_PUBLIC_URL: "https://gen.rss.gr.wtf"
-  TZ: "America/Sao_Paulo"
-  PUPPETEER_HOST: "http://localhost:3000"
