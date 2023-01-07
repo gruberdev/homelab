@@ -678,11 +678,10 @@ spec:
             tag: v0.61.1
             sha: ""
             pullPolicy: IfNotPresent
-            sha: ""
-            pullPolicy: IfNotPresent
           prometheusConfigReloader:
             image:
-              repository: quay.io/prometheus-operator/prometheus-config-reloader
+              registry: quay.io
+              repository: prometheus-operator/prometheus-config-reloader
               tag: v0.61.1
               sha: ""
             resources:
@@ -693,7 +692,8 @@ spec:
                 cpu: 450m
                 memory: 512Mi
           thanosImage:
-            repository: quay.io/thanos/thanos
+            registry: quay.io
+            repository: thanos/thanos
             tag: v0.29.0
             sha: ""
           secretFieldSelector: ""
@@ -1509,7 +1509,8 @@ spec:
           thanosRulerSpec:
             podMetadata: {}
             image:
-              repository: quay.io/thanos/thanos
+              registry: quay.io
+              repository: thanos/thanos
               tag: v0.29.0
               sha: ""
 
