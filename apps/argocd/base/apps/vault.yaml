@@ -238,7 +238,7 @@ spec:
             enabled: true
             size: 5Gi
             mountPath: "/vault/data"
-            storageClass: longhorn
+            storageClass: nfs-client
             accessMode: ReadWriteOnce
             annotations: {}
           # See https://www.vaultproject.io/docs/audit/index.html to know more
