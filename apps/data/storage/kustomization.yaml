@@ -3,7 +3,7 @@ kind: Kustomization
 resources:
 
 # Monitoring
-- base/flame.yaml
+# - base/flame.yaml
 - base/kuma.yaml
 
 # Home Assistant
@@ -12,16 +12,16 @@ resources:
 - base/frigate.yaml
 
 # Networking
-- base/adguard.yaml
+# - base/adguard.yaml
 - base/unifi.yaml
 - base/unifi-poller.yaml
 
 # Media Services
-- base/beets.yaml
-- base/media.yaml
-- base/jellyfin.yaml
-- base/lidarr.yaml
-- base/mango.yaml
+# - base/beets.yaml
+# - base/media.yaml
+# - base/jellyfin.yaml
+# - base/lidarr.yaml
+# - base/mango.yaml
 
 # Services
 - base/n8n.yaml
@@ -36,17 +36,17 @@ resources:
 - base/mysql/monica.yaml
 
 # Matrix
-- base/matrix/synapse.yaml
-- base/matrix/bridges.yaml
-- base/matrix/whats.yaml
-- base/matrix/linkedin.yaml
-- base/matrix/messenger.yaml
-- base/matrix/discord.yaml
-- base/matrix/skype.yaml
-- base/matrix/signal.yaml
-- base/matrix/instagram.yaml
-- base/matrix/steam.yaml
+# - base/matrix/synapse.yaml
+# - base/matrix/bridges.yaml
+# - base/matrix/whats.yaml
+# - base/matrix/linkedin.yaml
+# - base/matrix/messenger.yaml
+# - base/matrix/discord.yaml
+# - base/matrix/skype.yaml
+# - base/matrix/signal.yaml
+# - base/matrix/instagram.yaml
+# - base/matrix/steam.yaml
 
-- base/matrix/telegram.yaml
-- base/postgres/bridges.yaml
-- base/postgres/synapse.yaml
+# - base/matrix/telegram.yaml
+# - base/postgres/bridges.yaml
+# - base/postgres/synapse.yaml
