@@ -43,6 +43,14 @@ spec:
             limits:
               cpu: 350m
               memory: 720Mi
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: web
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: web
           volumeMounts:
             - name: config-storage
               mountPath: /home/node/.n8n

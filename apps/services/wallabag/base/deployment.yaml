@@ -42,10 +42,29 @@ spec:
           resources:
             requests:
               cpu: 150m
-              memory: 512Mi
+              memory: 256Mi
             limits:
-              cpu: 250m
+              cpu: 200m
               memory: 512Mi
+          livenessProbe:
+            httpGet:
+              path: /
+              port: web
+            initialDelaySeconds: 35
+            periodSeconds: 20
+            timeoutSeconds: 3
+          startupProbeProbe:
+            httpGet:
+              path: /
+              port: web
+            initialDelaySeconds: 180
+          readinessProbe:
+            httpGet:
+              path: /
+              port: web
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            timeoutSeconds: 5
           volumeMounts:
             - name: data-storage
               mountPath: /var/www/wallabag/data
