@@ -23,6 +23,14 @@ patches:
   target:
     kind: Deployment
     name: wallabag
+- patch: |-
+    - op: add
+      path: "/spec/template/spec/nodeSelector"
+      value:
+        kubernetes.io/hostname: node-two
+  target:
+    kind: Deployment
+    name: wallabag
 
 images:
 - name: wallabag/wallabag
