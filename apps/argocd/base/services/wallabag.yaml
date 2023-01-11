@@ -4,6 +4,12 @@ metadata:
   name: wallabag
   finalizers:
     - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd-image-updater.argoproj.io/write-back-method: git
+    argocd-image-updater.argoproj.io/write-back-target: kustomization
+    argocd-image-updater.argoproj.io/git-branch: main
+    argocd-image-updater.argoproj.io/image-list: wallabag=wallabag/wallabag
+    argocd-image-updater.argoproj.io/wallabag.platforms: linux/arm64,linux/amd64
 spec:
   project: apps
   source:
