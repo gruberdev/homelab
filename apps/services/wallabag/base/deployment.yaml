@@ -53,7 +53,7 @@ spec:
             initialDelaySeconds: 35
             periodSeconds: 20
             timeoutSeconds: 3
-          startupProbeProbe:
+          startupProbe:
             httpGet:
               path: /
               port: web
