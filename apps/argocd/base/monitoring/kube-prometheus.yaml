@@ -445,6 +445,10 @@ spec:
                 gnetId: 15124
                 revision: 2
                 datasource: Prometheus
+              calicoMonitoring:
+                gnetId: 12175
+                revision: 5
+                datasource: Prometheus
           forceDeployDatasources: false
           forceDeployDashboards: false
           defaultDashboardsEnabled: true
@@ -1047,6 +1051,11 @@ spec:
               - job_name: 'adguard'
                 static_configs:
                 - targets: ['192.168.1.8:9617']
+              - job_name: 'argocd'
+                static_configs:
+                - targets: ['argocd-metrics.argocd.svc.cluster.local:8082/metrics']
+                - targets: ['argocd-server-metrics.argocd.svc.cluster.local:8083/metrics']
+                - targets: ['argocd-repo-server.argocd.svc.cluster.local:8084/metrics']
             ## If scrape config contains a repetitive section, you may want to use a template.
             ## In the following example, you can see how to define `gce_sd_configs` for multiple zones
             # additionalScrapeConfigs: |
