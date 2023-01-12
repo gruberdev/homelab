@@ -1052,10 +1052,12 @@ spec:
                 static_configs:
                 - targets: ['192.168.1.8:9617']
               - job_name: 'argocd'
+                metrics_path: /metrics
                 static_configs:
-                - targets: ['argocd-metrics.argocd.svc.cluster.local:8082/metrics']
-                - targets: ['argocd-server-metrics.argocd.svc.cluster.local:8083/metrics']
-                - targets: ['argocd-repo-server.argocd.svc.cluster.local:8084/metrics']
+                - targets:
+                  - 'argocd-metrics.argocd.svc.cluster.local:8082'
+                  - 'argocd-server-metrics.argocd.svc.cluster.local:8083'
+                  - 'argocd-repo-server.argocd.svc.cluster.local:8084'
             ## If scrape config contains a repetitive section, you may want to use a template.
             ## In the following example, you can see how to define `gce_sd_configs` for multiple zones
             # additionalScrapeConfigs: |
