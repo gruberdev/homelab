@@ -41,7 +41,7 @@ resources:
 - base/apps/ha.yaml
 - base/apps/wyze.yaml
 - base/apps/unifi.yaml
-#- base/apps/frigate.yaml
+# - base/apps/frigate.yaml
 # - base/apps/adguard.yaml
 
 # Monitoring Resources
@@ -57,7 +57,7 @@ resources:
 # Applications/Services
 - base/services/n8n.yaml
 - base/services/rss-hub.yaml
-# - base/services/wallabag.yaml
+- base/services/wallabag.yaml
 # - base/services/metabase.yaml
 
 # Media Services
