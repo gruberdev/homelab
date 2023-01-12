@@ -19,3 +19,5 @@ data:
   DB_TYPE: "postgresdb"
   N8N_METRICS: "true"
   N8N_METRICS_PREFIX: "n8n_"
+  N8N_USER_FOLDER: "/tmp"
+  N8N_DIAGNOSTICS_ENABLED: "false"
