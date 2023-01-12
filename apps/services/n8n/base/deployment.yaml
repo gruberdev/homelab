@@ -45,7 +45,7 @@ spec:
               memory: 720Mi
           volumeMounts:
             - name: config-storage
-              mountPath: /home/node/.n8n
+              mountPath: /tmp
       volumes:
         - name: config-storage
           persistentVolumeClaim:
