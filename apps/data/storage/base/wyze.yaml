@@ -5,8 +5,8 @@ metadata:
   namespace: homeassistant
 spec:
   accessModes:
-    - ReadWriteOnce
-  storageClassName: longhorn
+    - ReadWriteMany
+  storageClassName: nfs-client
   resources:
     requests:
       storage: 1Gi
@@ -18,11 +18,11 @@ metadata:
   namespace: homeassistant
 spec:
   accessModes:
-    - ReadWriteOnce
-  storageClassName: longhorn
+    - ReadWriteMany
+  storageClassName: nfs-client
   resources:
     requests:
-      storage: 50Gi
+      storage: 5Gi
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -31,8 +31,8 @@ metadata:
   namespace: homeassistant
 spec:
   accessModes:
-    - ReadWriteOnce
-  storageClassName: longhorn
+    - ReadWriteMany
+  storageClassName: nfs-client
   resources:
     requests:
-      storage: 15Gi
+      storage: 5Gi
