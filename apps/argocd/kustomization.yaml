@@ -55,9 +55,9 @@ resources:
 # - base/monitoring/pixie.yaml
 
 # Applications/Services
-- base/services/n8n.yaml
+# - base/services/n8n.yaml
 - base/services/rss-hub.yaml
-- base/services/wallabag.yaml
+# - base/services/wallabag.yaml
 # - base/services/metabase.yaml
 
 # Media Services
