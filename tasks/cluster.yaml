@@ -18,6 +18,7 @@ vars:
   IPV4_NETWORK: 192.168.1.0/24
   IPV6_NETWORK: fe80::b207:b52a:249f:862a
   NODE_TWO_IPV6: fe80::2d4d:d619:fc4c:e686
+  NODE_THREE_IPV6: fe80::b30a:f66e:dc95:ca3a
   CLUSTER_DNS: 10.43.0.10
   CLUSTER_DOMAIN: cluster.local
   HA_DB_NAME: k3s
@@ -53,10 +54,7 @@ tasks:
   agent:
     cmds:
       - |
-        sudo curl -sfL https://get.k3s.io | sh -s - agent \
-        --token "${K3S_NODE_TOKEN}" \
-        --server ${NODE_SERVER_IP} \
-        --resolv-conf "{{.RESOLV_FILE}}"
+        sudo curl -sfL https://get.k3s.io | sh -s - -c /etc/rancher/k3s/config.yaml
     ignore_error: true
 
   dns:update:
@@ -441,7 +439,7 @@ tasks:
         node-name: "node-three"
         server: "https://${NODE_ONE_IP}:6443"
         token: "${K3S_NODE_TOKEN}"
-        node-ip: "${NODE_THREE_IP}"
+        node-ip: "${NODE_THREE_IP},{{.NODE_THREE_IPV6}}"
         kubelet-arg:
           - "node-ip=0.0.0.0"
           - "node-status-update-frequency=4s"
