@@ -32,7 +32,7 @@ spec:
           leaderElector:
             enabled: true
           metrics:
-            enabled: false
+            enabled: true
           externalVaultAddr: ""
           image:
             repository: "hashicorp/vault-k8s"
@@ -154,21 +154,12 @@ spec:
             periodSeconds: 10
             successThreshold: 1
             timeoutSeconds: 5
-          # Optional duration in seconds the pod needs to terminate gracefully.
-          # See: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/
           terminationGracePeriodSeconds: 60
-
-          # Used to set the sleep time during the preStop step
           preStopSleepSeconds: 5
-
-          # Used to define commands to run after the pod is ready.
-          # This can be used to automate processes such as initialization
-          # or boostrapping auth methods.
           postStart: []
           # - /bin/sh
           # - -c
           # - /vault/userconfig/myscript/run.sh
-
           # extraEnvironmentVars is a list of extra environment variables to set with the stateful set. These could be
           # used to include variables required for auto-unseal.
           extraEnvironmentVars: {}
@@ -218,7 +209,6 @@ spec:
           nodeSelector:
             kubernetes.io/arch: amd64
             kubernetes.io/hostname: node-one
-          # Enables network policy for server pods
           networkPolicy:
             enabled: false
             egress: []
@@ -268,16 +258,6 @@ spec:
           # past a single replica.
           standalone:
             enabled: "-"
-
-            # config is a raw string of default configuration when using a Stateful
-            # deployment. Default is to use a PersistentVolumeClaim mounted at /vault/data
-            # and store data there. This is only used when using a Replica count of 1, and
-            # using a stateful set. This should be HCL.
-
-            # Note: Configuration files are stored in ConfigMaps so sensitive data
-            # such as passwords should be either mounted through extraSecretEnvironmentVars
-            # or through a Kube secret.  For more information see:
-            # https://www.vaultproject.io/docs/platform/k8s/helm/run#protecting-sensitive-vault-configurations
             config: |
               ui = true
               listener "tcp" {
