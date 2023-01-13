@@ -435,17 +435,22 @@ tasks:
 
   gen:node:three:
     cmds:
-      - rm config/k3s/node-two.yaml
+      - rm /etc/rancher/k3s/config.yaml
       - |
-        cat << EOF > config/k3s/node-three.yaml
+        cat << EOF > /etc/rancher/k3s/config.yaml
         node-name: "node-three"
-        server: "https://${CONTROLLER_IPV4}:6443"
+        server: "https://${NODE_ONE_IP}:6443"
         token: "${K3S_NODE_TOKEN}"
-        node-ip: "${NODE_SERVER_IP}"
+        node-ip: "${NODE_THREE_IP}"
         kubelet-arg:
+          - "node-ip=0.0.0.0"
+          - "node-status-update-frequency=4s"
+          - "feature-gates=MixedProtocolLBService=true"
           - "feature-gates=GracefulNodeShutdown=true"
         kube-proxy-arg:
           - "metrics-bind-address=0.0.0.0"
+          - "feature-gates=MixedProtocolLBService=true"
+          - "feature-gates=GracefulNodeShutdown=true"
         EOF
     ignore_error: true
 
@@ -471,3 +476,18 @@ tasks:
         koord-runtime-proxy \
         --remote-runtime-service-endpoint={{.CONTAINERD_PATH}} \
     ignore_error: true
+
+  enable:recommender:
+    cmds:
+      - kubectl label ns monitoring goldilocks.fairwinds.com/enabled=true
+      - kubectl label ns argocd goldilocks.fairwinds.com/enabled=true
+      - kubectl label ns services goldilocks.fairwinds.com/enabled=true
+      - kubectl label ns kube-system goldilocks.fairwinds.com/enabled=true
+      - kubectl label ns longhorn-system goldilocks.fairwinds.com/enabled=true
+      - kubectl label ns infrastructure goldilocks.fairwinds.com/enabled=true
+      - kubectl label ns vault goldilocks.fairwinds.com/enabled=true
+      - kubectl label ns unifi goldilocks.fairwinds.com/enabled=true
+      - kubectl label ns media goldilocks.fairwinds.com/enabled=true
+
+    ignore_error: true
+
