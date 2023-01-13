@@ -8,7 +8,7 @@ spec:
   project: core
   source:
     repoURL: https://github.com/NVIDIA/k8s-device-plugin.git
-    targetRevision: v0.12.0
+    targetRevision: v0.13.0
     path: deployments/helm/nvidia-device-plugin
     helm:
       releaseName: nvidia-driver
@@ -29,13 +29,13 @@ spec:
                 migStrategy: mixed
           default: ""
           fallbackStrategies: ["named" , "single"]
-        legacyDaemonsetAPI: "false"
-        compatWithCPUManager: "true"
-        migStrategy: null
+        legacyDaemonsetAPI: null
+        compatWithCPUManager: null
+        migStrategy: "single"
         failOnInitError: "true"
         deviceListStrategy: "envvar"
         deviceIDStrategy: "uuid"
-        nvidiaDriverRoot: "/"
+        nvidiaDriverRoot: ""
         gdsEnabled: null
         mofedEnabled: null
         nameOverride: ""
@@ -47,7 +47,6 @@ spec:
         image:
           repository: nvcr.io/nvidia/k8s-device-plugin
           pullPolicy: Always
-          tag: v0.13.0-ubuntu20.04
         updateStrategy:
           type: RollingUpdate
         podAnnotations: {}
@@ -100,9 +99,9 @@ spec:
                   deviceLabelFields:
                   - vendor
         gfd:
-          enabled: true
+          enabled: false
           nameOverride: gpu-feature-discovery
-          namespaceOverride: "kube-system"
+          namespaceOverride: ""
   destination:
     namespace: kube-system
     name: in-cluster
