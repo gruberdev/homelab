@@ -31,6 +31,7 @@ resources:
 - base/utilities/reflector.yaml
 - base/utilities/kured.yaml
 - base/utilities/kube-fledged.yaml
+- base/utilities/nfd.yaml
 - base/utilities/descheduler.yaml
 - base/utilities/botkube.yaml
 # - base/utilities/koordinator.yaml
