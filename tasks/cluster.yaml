@@ -488,4 +488,3 @@ tasks:
       - kubectl label ns media goldilocks.fairwinds.com/enabled=true
 
     ignore_error: true
-
