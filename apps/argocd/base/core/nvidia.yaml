@@ -100,9 +100,9 @@ spec:
                   deviceLabelFields:
                   - vendor
         gfd:
-          enabled: false
+          enabled: true
           nameOverride: gpu-feature-discovery
-          namespaceOverride: ""
+          namespaceOverride: "kube-system"
   destination:
     namespace: kube-system
     name: in-cluster
