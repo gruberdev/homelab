@@ -1037,9 +1037,10 @@ spec:
             ##
             additionalScrapeConfigs:
               - job_name: 'unifipoller'
-                scrape_interval: 30s
+                scrape_interval: 60s
+                metrics_path: /metrics
                 static_configs:
-                - targets: ['192.168.1.8:32767']
+                - targets: ['192.168.1.10:32767']
               - job_name: "hass"
                 scrape_interval: 60s
                 metrics_path: /api/prometheus
