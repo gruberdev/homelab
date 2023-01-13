@@ -89,7 +89,7 @@ resources:
 - https://github.com/gruberdev/homelab/apps/networking/tailscale
 - https://github.com/gruberdev/homelab/apps/networking/cloudflared
 
-- https://raw.githubusercontent.com/argoproj/argo-cd/v2.5.5/manifests/install.yaml
+- https://raw.githubusercontent.com/argoproj/argo-cd/v2.5.6/manifests/install.yaml
 - https://github.com/argoproj-labs/argocd-image-updater/manifests/base
 
 patchesStrategicMerge:
