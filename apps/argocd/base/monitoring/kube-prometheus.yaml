@@ -304,9 +304,6 @@ spec:
             paused: false
             nodeSelector:
               kubernetes.io/hostname: node-two
-            ## Define resources requests and limits for single Pods.
-            ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
-            ##
             resources:
               limits:
                 cpu: 200m
@@ -559,11 +556,11 @@ spec:
                 pullPolicy: IfNotPresent
               resources:
                 limits:
-                  cpu: 200m
-                  memory: 256Mi
+                  cpu: 350m
+                  memory: 1Gi
                 requests:
                   cpu: 100m
-                  memory: 128Mi
+                  memory: 256Mi
               priorityClassName: ""
               annotations:
                 argocd.argoproj.io/hook: PreSync
@@ -629,14 +626,12 @@ spec:
             metricRelabelings: []
           resources:
             limits:
-              cpu: 200m
-              memory: 256Mi
+              cpu: 350m
+              memory: 1Gi
             requests:
               cpu: 100m
-              memory: 128Mi
+              memory: 256Mi
           hostNetwork: false
-          nodeSelector:
-            kubernetes.io/hostname: node-two
           tolerations: []
           affinity: {}
           dnsConfig: {}
