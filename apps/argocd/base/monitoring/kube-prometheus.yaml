@@ -309,11 +309,11 @@ spec:
             ##
             resources:
               limits:
-                cpu: 300m
-                memory: 720Mi
+                cpu: 200m
+                memory: 256Mi
               requests:
-                cpu: 150m
-                memory: 512Mi
+                cpu: 50m
+                memory: 128Mi
             podAntiAffinity: ""
             podAntiAffinityTopologyKey: kubernetes.io/hostname
             affinity: {}
@@ -329,40 +329,14 @@ spec:
             volumes: []
             # Additional VolumeMounts on the output StatefulSet definition.
             volumeMounts: []
-
-            ## InitContainers allows injecting additional initContainers. This is meant to allow doing some changes
-            ## (permissions, dir tree) on mounted volumes before starting prometheus
             initContainers: []
-
-            ## Priority class assigned to the Pods
-            ##
             priorityClassName: ""
-
-            ## AdditionalPeers allows injecting a set of additional Alertmanagers to peer with to form a highly available cluster.
-            ##
             additionalPeers: []
-
-            ## PortName to use for Alert Manager.
-            ##
             portName: "http-web"
-
-            ## ClusterAdvertiseAddress is the explicit address to advertise in cluster. Needs to be provided for non RFC1918 [1] (public) addresses. [1] RFC1918: https://tools.ietf.org/html/rfc1918
-            ##
             clusterAdvertiseAddress: false
-
-            ## ForceEnableClusterMode ensures Alertmanager does not deactivate the cluster mode when running with a single replica.
-            ## Use case is e.g. spanning an Alertmanager cluster across Kubernetes clusters with a single replica in each.
             forceEnableClusterMode: false
-
-            ## Minimum number of seconds for which a newly created pod should be ready without any of its container crashing for it to
-            ## be considered available. Defaults to 0 (pod will be considered available as soon as it is ready).
             minReadySeconds: 0
-
-          ## ExtraSecret can be used to store various data in an extra secret
-          ## (use it for example to store hashed basic auth credentials)
           extraSecret:
-            ## if not set, name will be auto generated
-            # name: ""
             annotations: {}
             data: {}
           #   auth: |
@@ -585,11 +559,11 @@ spec:
                 pullPolicy: IfNotPresent
               resources:
                 limits:
-                  cpu: 400m
-                  memory: 512Mi
-                requests:
                   cpu: 200m
                   memory: 256Mi
+                requests:
+                  cpu: 100m
+                  memory: 128Mi
               priorityClassName: ""
               annotations:
                 argocd.argoproj.io/hook: PreSync
@@ -655,11 +629,11 @@ spec:
             metricRelabelings: []
           resources:
             limits:
-              cpu: 350m
-              memory: 512Mi
-            requests:
               cpu: 200m
               memory: 256Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
           hostNetwork: false
           nodeSelector:
             kubernetes.io/hostname: node-two
@@ -689,12 +663,12 @@ spec:
               tag: v0.61.1
               sha: ""
             resources:
-              requests:
-                cpu: 250m
-                memory: 256Mi
               limits:
-                cpu: 450m
+                cpu: 200m
                 memory: 512Mi
+              requests:
+                cpu: 100m
+                memory: 256Mi
           thanosImage:
             registry: quay.io
             repository: thanos/thanos
@@ -824,6 +798,12 @@ spec:
             metricRelabelings: []
             relabelings: []
           prometheusSpec:
+            containers:
+            - name: prometheus
+              livenessProbe:
+                failureThreshold: 1000
+              readinessProbe:
+                failureThreshold: 1000
             retention: 3d
             disableCompaction: false
             apiserverConfig: {}
@@ -861,47 +841,11 @@ spec:
             ruleSelector: {}
             serviceMonitorSelectorNilUsesHelmValues: true
             serviceMonitorSelector: {}
-            ## Example which selects ServiceMonitors with label "prometheus" set to "somelabel"
-            # serviceMonitorSelector:
-            #   matchLabels:
-            #     prometheus: somelabel
-            ## Namespaces to be selected for ServiceMonitor discovery.
-            ##
             serviceMonitorNamespaceSelector: {}
-            ## Example which selects ServiceMonitors in namespaces with label "prometheus" set to "somelabel"
-            # serviceMonitorNamespaceSelector:
-            #   matchLabels:
-            #     prometheus: somelabel
-
-            ## If true, a nil or {} value for prometheus.prometheusSpec.podMonitorSelector will cause the
-            ## prometheus resource to be created with selectors based on values in the helm deployment,
-            ## which will also match the podmonitors created
-            ##
             podMonitorSelectorNilUsesHelmValues: true
-
-            ## PodMonitors to be selected for target discovery.
-            ## If {}, select all PodMonitors
-            ##
             podMonitorSelector: {}
-            ## Example which selects PodMonitors with label "prometheus" set to "somelabel"
-            # podMonitorSelector:
-            #   matchLabels:
-            #     prometheus: somelabel
-
-            ## Namespaces to be selected for PodMonitor discovery.
-            ## See https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#namespaceselector for usage
-            ##
             podMonitorNamespaceSelector: {}
-
-            ## If true, a nil or {} value for prometheus.prometheusSpec.probeSelector will cause the
-            ## prometheus resource to be created with selectors based on values in the helm deployment,
-            ## which will also match the probes created
-            ##
             probeSelectorNilUsesHelmValues: true
-
-            ## Probes to be selected for target discovery.
-            ## If {}, select all Probes
-            ##
             probeSelector: {}
             ## Example which selects Probes with label "prometheus" set to "somelabel"
             # probeSelector:
@@ -924,9 +868,6 @@ spec:
             ##
             paused: false
 
-            ## Number of replicas of each shard to deploy for a Prometheus deployment.
-            ## Number of replicas multiplied by shards is the total number of Pods created.
-            ##
             replicas: 1
 
             ## EXPERIMENTAL: Number of shards to distribute targets onto.
@@ -997,44 +938,25 @@ spec:
             # - url: http://remote1/push
             ## additionalRemoteWrite is appended to remoteWrite
             additionalRemoteWrite: []
-
             ## Enable/Disable Grafana dashboards provisioning for prometheus remote write feature
             remoteWriteDashboards: false
-
             resources:
               limits:
-                cpu: 500m
-                memory: 1Gi
-              requests:
-                cpu: 300m
+                cpu: 150m
                 memory: 512Mi
-
+              requests:
+                cpu: 80m
+                memory: 256Mi
             storageSpec:
               volumeClaimTemplate:
                 spec:
-                  storageClassName: longhorn
-                  accessModes: ["ReadWriteOnce"]
+                  storageClassName: nfs-client
+                  accessModes: ["ReadWriteMany"]
                   resources:
                     requests:
                       storage: 5Gi
-            # Additional volumes on the output StatefulSet definition.
             volumes: []
-
-            # Additional VolumeMounts on the output StatefulSet definition.
             volumeMounts: []
-
-            ## AdditionalScrapeConfigs allows specifying additional Prometheus scrape configurations. Scrape configurations
-            ## are appended to the configurations generated by the Prometheus Operator. Job configurations must have the form
-            ## as specified in the official Prometheus documentation:
-            ## https://prometheus.io/docs/prometheus/latest/configuration/configuration/#scrape_config. As scrape configs are
-            ## appended, the user is responsible to make sure it is valid. Note that using this feature may expose the possibility
-            ## to break upgrades of Prometheus. It is advised to review Prometheus release notes to ensure that no incompatible
-            ## scrape configs are going to break Prometheus after the upgrade.
-            ## AdditionalScrapeConfigs can be defined as a list or as a templated string.
-            ##
-            ## The scrape configuration example below will find master nodes, provided they have the name .*mst.*, relabel the
-            ## port to 2379 and allow etcd scraping provided it is running on all Kubernetes master nodes
-            ##
             additionalScrapeConfigs:
               - job_name: 'unifipoller'
                 scrape_interval: 60s
