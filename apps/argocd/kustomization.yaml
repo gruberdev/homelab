@@ -57,6 +57,7 @@ resources:
 - base/services/n8n.yaml
 - base/services/rss-hub.yaml
 - base/services/wallabag.yaml
+- base/services/onchange.yaml
 # - base/services/metabase.yaml
 
 # Media Services

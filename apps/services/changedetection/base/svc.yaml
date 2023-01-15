@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: change-svc
+  labels:
+    app: change-server
+spec:
+  type: ClusterIP
+  selector:
+    app: change-server
+  ports:
+    - name: web
+      port: 80
+      targetPort: 5000
+      protocol: TCP

@@ -3,7 +3,6 @@ kind: Kustomization
 resources:
 
 # Monitoring
-# - base/flame.yaml
 - base/kuma.yaml
 
 # Home Assistant
@@ -25,6 +24,7 @@ resources:
 
 # Services
 - base/n8n.yaml
+- base/change.yaml
 - base/wallabag.yaml
 
 #  Postgres Storage

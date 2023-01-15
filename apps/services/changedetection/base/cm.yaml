@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: change-cm
+data:
+  GENERIC_TIMEZONE: "America/Sao_Paulo"
+  TZ: "America/Sao_Paulo"
+  HIDE_REFERER: "true"
+  BASE_URL: "https://change.gr.wtf"
