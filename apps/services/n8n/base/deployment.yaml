@@ -45,7 +45,7 @@ spec:
               memory: 720Mi
           volumeMounts:
             - name: config-storage
-              mountPath: /tmp
+              mountPath: /home/node
       volumes:
         - name: config-storage
           persistentVolumeClaim:
