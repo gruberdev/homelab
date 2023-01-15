@@ -17,7 +17,7 @@ spec:
     version: "14"
   volume:
     size: 1Gi
-    storageClass: nfs-client
+    storageClass: longhorn
   additionalVolumes:
     - name: data
       mountPath: /home/postgres/pgdata/partitions
