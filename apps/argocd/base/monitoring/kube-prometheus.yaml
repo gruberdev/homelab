@@ -945,8 +945,8 @@ spec:
             storageSpec:
               volumeClaimTemplate:
                 spec:
-                  storageClassName: nfs-client
-                  accessModes: ["ReadWriteMany"]
+                  storageClassName: longhorn
+                  accessModes: ["ReadWriteOnce"]
                   resources:
                     requests:
                       storage: 5Gi
