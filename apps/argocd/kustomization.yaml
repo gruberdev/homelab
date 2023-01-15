@@ -93,6 +93,13 @@ resources:
 - https://raw.githubusercontent.com/argoproj/argo-cd/v2.5.6/manifests/install.yaml
 - https://github.com/argoproj-labs/argocd-image-updater/manifests/base
 
+# Rollout Extension
+- https://raw.githubusercontent.com/argoproj-labs/rollout-extension/v0.3.0/manifests/install.yaml
+
+components:
+# Extensions controller component
+- https://github.com/argoproj-labs/argocd-extensions/manifests
+
 patchesStrategicMerge:
 - overlay/argocd-svc.yaml
 - overlay/argocd-deployment.yaml
