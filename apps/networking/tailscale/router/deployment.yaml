@@ -21,7 +21,7 @@ spec:
       containers:
         - name: router
           imagePullPolicy: Always
-          image: grubertech/tailscale:v1.34.1
+          image: grubertech/tailscale:v1.34.1-1
           ports:
             - name: http
               containerPort: 80
