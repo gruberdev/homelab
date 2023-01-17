@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grocy-cm
+data:
+  GENERIC_TIMEZONE: "America/Sao_Paulo"
+  TZ: "America/Sao_Paulo"
+  PUID: "1000"
+  PGID: "1000"

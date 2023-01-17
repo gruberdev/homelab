@@ -1,0 +1,43 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grocy
+  labels:
+    app: grocy
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: grocy
+  template:
+    metadata:
+      labels:
+        app: grocy
+    spec:
+      containers:
+        - name: grocy
+          image: lscr.io/linuxserver/grocy:v3.3.2-ls175
+          envFrom:
+            - configMapRef:
+                name: grocy-cm
+          ports:
+            - name: web
+              containerPort: 80
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 120m
+              memory: 256Mi
+            limits:
+              cpu: 220m
+              memory: 512Mi
+          volumeMounts:
+            - name: config-storage
+              mountPath: /config
+      volumes:
+        - name: config-storage
+          persistentVolumeClaim:
+            claimName: grocy-storage
