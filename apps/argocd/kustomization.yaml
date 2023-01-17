@@ -19,6 +19,7 @@ resources:
 - base/core/storage.yaml
 - base/core/crossplane.yaml
 - base/core/nfs.yaml
+- base/core/router.yaml
 - base/core/nvidia.yaml
 - base/core/nvidia-extra.yaml
 - base/core/sealed.yaml
@@ -95,9 +96,6 @@ resources:
 
 # Image Updater
 - https://github.com/argoproj-labs/argocd-image-updater/manifests/base
-
-# ArgoCD Notifications
-#- https://raw.githubusercontent.com/argoproj-labs/argocd-notifications/release-1.0/manifests/install.yaml
 
 # Rollout Extension
 #- https://raw.githubusercontent.com/argoproj-labs/rollout-extension/v0.3.0/manifests/install.yaml

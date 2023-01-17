@@ -98,7 +98,7 @@ if [[ ! -z "${TS_DEST_SVC}" ]]; then
   DEST_IP=$(ping -q -c 1 -t 1 "${TS_DEST_SVC}" | grep PING | sed -e "s/).*//" | sed -e "s/.*(//")
   echo "Service ClusterIP Address is $DEST_IP"
   iptables -t nat -I PREROUTING -d "$(tailscale --socket=${TS_SOCKET} ip -4)" -j DNAT --to-destination "${DEST_IP}"
-  # ip6tables -t nat -I PREROUTING -d "$(tailscale --socket=${TS_SOCKET} ip -6)" -j DNAT --to-destination "${DEST_IP}"
+  ip6tables -t nat -I PREROUTING -d "$(tailscale --socket=${TS_SOCKET} ip -6)" -j DNAT --to-destination "${DEST_IP}"
 fi
 
 if [[ ! -z "${DEST_PORT}" ]]; then
