@@ -556,11 +556,11 @@ spec:
                 pullPolicy: IfNotPresent
               resources:
                 limits:
-                  cpu: 350m
+                  cpu: 600m
                   memory: 1Gi
                 requests:
-                  cpu: 100m
-                  memory: 256Mi
+                  cpu: 400m
+                  memory: 512Mi
               priorityClassName: ""
               annotations:
                 argocd.argoproj.io/hook: PreSync
@@ -626,11 +626,11 @@ spec:
             metricRelabelings: []
           resources:
             limits:
-              cpu: 350m
+              cpu: 600m
               memory: 1Gi
             requests:
-              cpu: 100m
-              memory: 256Mi
+              cpu: 400m
+              memory: 512Mi
           hostNetwork: false
           tolerations: []
           affinity: {}
@@ -659,11 +659,11 @@ spec:
               sha: ""
             resources:
               limits:
-                cpu: 200m
-                memory: 512Mi
+                cpu: 600m
+                memory: 1Gi
               requests:
-                cpu: 100m
-                memory: 256Mi
+                cpu: 400m
+                memory: 512Mi
           thanosImage:
             registry: quay.io
             repository: thanos/thanos
@@ -937,10 +937,10 @@ spec:
             remoteWriteDashboards: false
             resources:
               limits:
-                cpu: 150m
+                cpu: 250m
                 memory: 512Mi
               requests:
-                cpu: 80m
+                cpu: 200m
                 memory: 256Mi
             storageSpec:
               volumeClaimTemplate:
