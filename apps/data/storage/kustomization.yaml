@@ -24,6 +24,7 @@ resources:
 
 # Services
 - base/n8n.yaml
+- base/grocy.yaml
 - base/change.yaml
 - base/wallabag.yaml
 
