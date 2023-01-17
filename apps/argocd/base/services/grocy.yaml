@@ -2,7 +2,8 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: grocy
-  annotations:
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: apps
   source:
