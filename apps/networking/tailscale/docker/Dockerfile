@@ -6,4 +6,5 @@ RUN apk update && apk add ca-certificates ipcalc \
 
 COPY iptables.sh iptables.sh
 COPY run.sh /run.sh
+RUN chmod +x run.sh && chmod +x iptables.sh
 CMD "/run.sh"
