@@ -98,9 +98,6 @@ resources:
 # Image Updater
 - https://github.com/argoproj-labs/argocd-image-updater/manifests/base
 
-# Rollout Extension
-#- https://raw.githubusercontent.com/argoproj-labs/rollout-extension/v0.3.0/manifests/install.yaml
-
 components:
 # Extensions controller component
 - https://github.com/argoproj-labs/argocd-extensions/manifests
