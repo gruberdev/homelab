@@ -12,7 +12,7 @@ vars:
   CLEAR: tput reset
   INT_REGISTRY: registry.localhost
   PATH_ERROR: is not installed or correctly configured in PATH.
-  ARGOCD_VERSION: 2.5.6
+  ARGOCD_VERSION: 2.5.7
 
 silent: true
 
@@ -92,6 +92,11 @@ tasks:
       - kubectl wait deploy/argocd-server -n argocd --for condition=available --timeout=600s
       - echo ""
     ignore_error: true
+
+  build:
+    cmds:
+      - task: build:sidecar
+      - task: push:sidecar
 
   build:sidecar:
     preconditions:
