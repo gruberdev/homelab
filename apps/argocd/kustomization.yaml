@@ -93,7 +93,7 @@ resources:
 - https://github.com/gruberdev/homelab/apps/networking/tailscale
 - https://github.com/gruberdev/homelab/apps/networking/cloudflared
 
-- https://raw.githubusercontent.com/argoproj/argo-cd/v2.5.6/manifests/install.yaml
+- https://raw.githubusercontent.com/argoproj/argo-cd/v2.5.7/manifests/install.yaml
 
 # Image Updater
 - https://github.com/argoproj-labs/argocd-image-updater/manifests/base
@@ -116,21 +116,7 @@ images:
   newTag: v2.5.7
 
 patches:
-- path: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/tailscale/patch.yaml
-  target:
-    kind: Deployment
-    name: argocd-server
 - patch: |-
-    - op: replace
-      path: "/spec/template/spec/containers/0/env/2"
-      value:
-        name: TS_HOSTNAME
-        value: "argocd"
-    - op: replace
-      path: "/spec/template/spec/containers/0/env/3"
-      value:
-        name: DEST_PORT
-        value: "8080"
     - op: add
       path: "/spec/strategy"
       value:
