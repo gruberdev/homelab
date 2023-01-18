@@ -7,4 +7,20 @@ bases:
 resources:
 - https://github.com/crossplane/crossplane//cluster?ref=release-1.10
 
+patches:
+- patch: |-
+    - op: add
+      path: "/spec/template/spec/nodeSelector"
+      value:
+        kubernetes.io/arch: amd64
+  target:
+    kind: StatefulSet
+- patch: |-
+    - op: add
+      path: "/spec/template/spec/nodeSelector"
+      value:
+        kubernetes.io/arch: amd64
+  target:
+    kind: Deployment
+
 namespace: infrastructure
