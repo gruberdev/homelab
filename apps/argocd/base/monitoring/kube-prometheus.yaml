@@ -2149,13 +2149,13 @@ spec:
 
           ## Resource limits & requests
           ##
-          resources:
-            limits:
-              cpu: 300m
-              memory: 512Mi
-            requests:
-              cpu: 200m
-              memory: 256Mi
+          resources: {}
+          # limits:
+          #   cpu: 200m
+          #   memory: 200Mi
+          # requests:
+          #   cpu: 100m
+          #   memory: 100Mi
 
           # Required for use in managed kubernetes clusters (such as AWS EKS) with custom CNI (such as calico),
           # because control-plane managed by AWS cannot communicate with pods' IP CIDR and admission webhooks are not working
@@ -3017,25 +3017,23 @@ spec:
 
             ## Resource limits & requests
             ##
-            resources:
-              limits:
-                cpu: 250m
-                memory: 512Mi
-              requests:
-                cpu: 150m
-                memory: 256Mi
+            resources: {}
+            # requests:
+            #   memory: 400Mi
 
             ## Prometheus StorageSpec for persistent data
             ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/user-guides/storage.md
             ##
-            storageSpec:
-              volumeClaimTemplate:
-                spec:
-                  storageClassName: nfs-client
-                  accessModes: ["ReadWriteMany"]
-                  resources:
-                    requests:
-                      storage: 4Gi
+            storageSpec: {}
+            ## Using PersistentVolumeClaim
+            ##
+            #  volumeClaimTemplate:
+            #    spec:
+            #      storageClassName: gluster
+            #      accessModes: ["ReadWriteOnce"]
+            #      resources:
+            #        requests:
+            #          storage: 50Gi
             #    selector: {}
 
             ## Using tmpfs volume
@@ -3863,6 +3861,7 @@ spec:
         ## Setting to true produces cleaner resource names, but requires a data migration because the name of the persistent volume changes. Therefore this should only be set once on initial installation.
         ##
         cleanPrometheusOperatorObjectNames: false
+
 
 
   destination:
