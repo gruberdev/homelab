@@ -42,8 +42,7 @@
 > |   [Grocy][grocy-uri]                 |   `Services`   |        <sub>[More details][homelab-grocy]</sub>      |        ![][argocd-grocy]  |  ![][grocy-badge] |
 > |           [Mango][service-mango]       |   `Media`       |  <sub>[More details][homelab-mango]</sub>           |  ![][argocd-mango]           |  ![][mango-badge]    |
 > |   [Monica][monica-uri]                 |   `Services`   |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-monica]    |  ![][monica-badge]   |
-> |   [Changedetection.io][change-uri]     |   `Services`   |        <
-sub>[More details][homelab-change]</sub>      |        ![][argocd-change]    |  ![][change-badge]   |
+> |   [Changedetection.io][change-uri]     |   `Services`   |       <sub>[More details][homelab-change]</sub>      |        ![][argocd-change]    |  ![][change-badge]   |
 > |      [Home Assistant][service-ha]      |   `Smart Home`   |        <sub>[More details][homelab-ha]</sub>        |        ![][argocd-ha]        |    ![][ha-badge]     |
 > |   [Frigate][frigate-uri]               |   `Smart Home`   |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-frigate]   |  ![][frigate-badge]  |
 > |   [Wyze API Bridge][service-wyze]      |   `Smart Home`   |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-wyze]      |  ![][wyze-badge]     |
