@@ -39,8 +39,11 @@
 > |    [RSS Hub][service-rsshub]           |    `Services`   |        <sub>[More details][homelab-rsshub]</sub>    |        ![][argocd-rss-hub]   | ![][rsshub-badge]    |
 > |            [n8n][n8n-uri]              |    `Services`   |        <sub>[More details][homelab-n8n]</sub>       |        ![][argocd-n8n]       |  ![][n8n-badge]      |
 > |   [Wallabag][wallabag-uri]             |   `Services`   |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-wallabag]  |  ![][wallabag-badge] |
+> |   [Grocy][grocy-uri]                 |   `Services`   |        <sub>[More details][homelab-grocy]</sub>      |        ![][argocd-grocy]  |  ![][grocy-badge] |
+> |           [Mango][service-mango]       |   `Media`       |  <sub>[More details][homelab-mango]</sub>           |  ![][argocd-mango]           |  ![][mango-badge]    |
 > |   [Monica][monica-uri]                 |   `Services`   |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-monica]    |  ![][monica-badge]   |
-> |   [Changedetection.io][change-uri]     |   `Services`   |        <sub>[More details][homelab-change]</sub>      |        ![][argocd-change]    |  ![][change-badge]   |
+> |   [Changedetection.io][change-uri]     |   `Services`   |        <
+sub>[More details][homelab-change]</sub>      |        ![][argocd-change]    |  ![][change-badge]   |
 > |      [Home Assistant][service-ha]      |   `Smart Home`   |        <sub>[More details][homelab-ha]</sub>        |        ![][argocd-ha]        |    ![][ha-badge]     |
 > |   [Frigate][frigate-uri]               |   `Smart Home`   |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-frigate]   |  ![][frigate-badge]  |
 > |   [Wyze API Bridge][service-wyze]      |   `Smart Home`   |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-wyze]      |  ![][wyze-badge]     |
@@ -160,6 +163,7 @@
 [longhorn-uri]: https://longhorn.io/
 [n8n-uri]: https://n8n.io/
 [vault-uri]: https://github.com/hashicorp/vault
+[grocy-uri]: https://github.com/grocy/grocy
 [flame-uri]: https://github.com/pawelmalak/flame
 [poller-uri]: https://github.com/unpoller/unpoller
 [cf-uri]: https://github.com/cloudflare/cloudflared
@@ -202,6 +206,7 @@
 [homelab-zalando]: https://github.com/gruberdev/homelab/tree/main/apps/data/postgres
 [homelab-change]: https://github.com/gruberdev/homelab/tree/main/apps/services/changedetection
 [homelab-redis]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/core/redis.yaml
+[homelab-grocy]: https://github.com/gruberdev/homelab/tree/main/apps/services/grocy
 [homelab-mysql]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/core/mysql.yaml
 [homelab-tailscale]: https://github.com/gruberdev/homelab/tree/main/apps/networking/tailscale
 [homelab-vault]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/apps/vault.yaml
@@ -228,6 +233,7 @@
 [argocd-ha]: https://argo.gr.wtf/api/badge?name=homeassistant
 [argocd-longhorn]: https://argo.gr.wtf/api/badge?name=longhorn
 [argocd-kuma]: https://argo.gr.wtf/api/badge?name=uptime-kuma
+[argocd-grocy]: https://argo.gr.wtf/api/badge?name=grocy
 [argocd-adguard]:https://argo.gr.wtf/api/badge?name=adguard
 [argocd-unifi-controller]: https://argo.gr.wtf/api/badge?name=unifi-controller
 [argocd-core]: https://argo.gr.wtf/api/badge?name=argocd
@@ -272,6 +278,7 @@
 [ha-badge]: https://img.shields.io/github/v/release/home-assistant/core?label=Github&logo=github&style=flat-square
 [wyze-badge]: https://img.shields.io/github/v/release/mrlt8/docker-wyze-bridge?label=Github&logo=github&style=flat-square
 [change-badge]: https://img.shields.io/github/v/release/dgtlmoon/changedetection.io?label=Github&logo=github&style=flat-square
+[grocy-badge]: https://img.shields.io/github/v/release/grocy/grocy?label=Github&logo=github&style=flat-square
 [n8n-badge]: https://img.shields.io/docker/v/n8nio/n8n?label=Docker&color=blue&logo=docker&sort=semver&style=flat-square
 [vault-badge]: https://img.shields.io/github/v/release/hashicorp/vault?label=Github&logo=github&style=flat-square
 [flame-badge]: https://img.shields.io/github/v/release/pawelmalak/flame?label=Github&logo=github&sort=semver&style=flat-square
