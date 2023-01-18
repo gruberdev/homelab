@@ -98,6 +98,9 @@ resources:
 # Image Updater
 - https://github.com/argoproj-labs/argocd-image-updater/manifests/base
 
+# Rollout Extension
+#- https://raw.githubusercontent.com/argoproj-labs/rollout-extension/v0.3.0/manifests/install.yaml
+
 components:
 # Extensions controller component
 - https://github.com/argoproj-labs/argocd-extensions/manifests
@@ -116,7 +119,21 @@ images:
   newTag: v2.5.7
 
 patches:
+- path: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/tailscale/patch.yaml
+  target:
+    kind: Deployment
+    name: argocd-server
 - patch: |-
+    - op: replace
+      path: "/spec/template/spec/containers/0/env/2"
+      value:
+        name: TS_HOSTNAME
+        value: "argocd"
+    - op: replace
+      path: "/spec/template/spec/containers/0/env/3"
+      value:
+        name: DEST_PORT
+        value: "8080"
     - op: add
       path: "/spec/strategy"
       value:
