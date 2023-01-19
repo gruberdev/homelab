@@ -27,6 +27,10 @@ spec:
     server: https://kubernetes.default.svc
   - namespace: rss
     server: https://kubernetes.default.svc
+  - namespace: gaming
+    server: https://kubernetes.default.svc
+  - namespace: agones-system
+    server: https://kubernetes.default.svc
   clusterResourceWhitelist:
   - group: '*'
     kind: '*'
