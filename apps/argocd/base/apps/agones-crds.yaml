@@ -7,7 +7,7 @@ spec:
   source:
     repoURL: https://github.com/googleforgames/agones.git
     targetRevision: v1.28.0
-    path: install/helm/agones/templates/crds
+    path: install/helm/agones/templates/crds/
     directory:
       recurse: true
   destination:
@@ -15,8 +15,9 @@ spec:
     name: in-cluster
   syncPolicy:
     automated:
+      validate: false
       prune: true
-      selfHeal: true
+      selfHeal: false
       allowEmpty: true
     syncOptions:
     - Validate=false
@@ -24,7 +25,6 @@ spec:
     - PrunePropagationPolicy=foreground
     - PruneLast=true
     - ApplyOutOfSyncOnly=false
-    - Prune=true
     retry:
       limit: 5
       backoff:
