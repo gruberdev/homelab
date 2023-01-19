@@ -40,9 +40,6 @@ spec:
                     roles:
                       - detect
                       - rtmp
-              width: 1280
-              height: 720
-              fps: 5
           mqtt:
             # Required: host name
             host: mqtt.server.com
@@ -73,12 +70,12 @@ spec:
             timeoutSeconds: 10
           readiness:
             enabled: true
-            initialDelaySeconds: 30
+            initialDelaySeconds: 20
             failureThreshold: 5
             timeoutSeconds: 10
           startup:
             enabled: true
-            failureThreshold: 30
+            failureThreshold: 60
             periodSeconds: 60
         service:
           type: ClusterIP
