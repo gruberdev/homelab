@@ -120,21 +120,7 @@ images:
   newTag: v2.5.7
 
 patches:
-- path: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/tailscale/patch.yaml
-  target:
-    kind: Deployment
-    name: argocd-server
 - patch: |-
-    - op: replace
-      path: "/spec/template/spec/containers/0/env/2"
-      value:
-        name: TS_HOSTNAME
-        value: "argocd"
-    - op: replace
-      path: "/spec/template/spec/containers/0/env/3"
-      value:
-        name: DEST_PORT
-        value: "8080"
     - op: add
       path: "/spec/strategy"
       value:
@@ -170,7 +156,7 @@ patches:
     name: cloudflared
 - patch: |-
     - op: add
-      path: "/spec/template/spec/containers/1/command/-"
+      path: "/spec/template/spec/containers/0/command/-"
       value: "--insecure"
   target:
     kind: Deployment
