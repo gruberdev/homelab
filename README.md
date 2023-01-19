@@ -44,7 +44,6 @@
 > |   [Monica][monica-uri]                 |   `Services`   |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-monica]    |  ![][monica-badge]   |
 > |   [Changedetection.io][change-uri]     |   `Services`   |       <sub>[More details][homelab-change]</sub>      |        ![][argocd-change]    |  ![][change-badge]   |
 > |      [Home Assistant][service-ha]      |   `Smart Home`   |        <sub>[More details][homelab-ha]</sub>        |        ![][argocd-ha]        |    ![][ha-badge]     |
-> |   [Frigate][frigate-uri]               |   `Smart Home`   |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-frigate]   |  ![][frigate-badge]  |
 > |   [Wyze API Bridge][service-wyze]      |   `Smart Home`   |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-wyze]      |  ![][wyze-badge]     |
 > |[<sub>NFS External Storage Provisioner</sub>][nfs-uri] |    `Storage`     |      <sub>[More details][homelab-nfs]</sub>    |       ![][argocd-nfs] |  |
 > |[Tailscale <sub>(as sidecars)</sub>][tail-uri]    | `Networking`  | <sub>[More details][homelab-tailscale]</sub> |                             |![][tailscale-badge]  |
@@ -169,7 +168,6 @@
 [service-mango]: https://github.com/getmango/Mango
 [service-jellyfin]: https://github.com/jellyfin/jellyfin
 [wallabag-uri]: https://github.com/wallabag/wallabag
-[frigate-uri]: https://github.com/blakeblackshear/frigate
 [domainmod-uri]: https://github.com/domainmod/domainmod
 [monica-uri]: https://github.com/monicahq/monica
 [crossplane-uri]: https://github.com/crossplane/crossplane
@@ -256,7 +254,6 @@
 [argocd-mango]: https://argo.gr.wtf/api/badge?name=mango
 [argocd-jellyfin]: https://argo.gr.wtf/api/badge?name=jellyfin
 [argocd-wallabag]: https://argo.gr.wtf/api/badge?name=wallabag
-[argocd-frigate]: https://argo.gr.wtf/api/badge?name=frigate
 [argocd-domainmod]: https://argo.gr.wtf/api/badge?name=domainmod
 [argocd-monica]: https://argo.gr.wtf/api/badge?name=monica
 [argocd-crossplane]: https://argo.gr.wtf/api/badge?name=crossplane
@@ -294,7 +291,6 @@
 [crossplane-badge]: https://img.shields.io/github/v/release/crossplane/crossplane?label=Github&color=blue&logo=github&sort=semver&style=flat-square
 [metabase-badge]: https://img.shields.io/docker/v/metabase/metabase?label=Docker&color=blue&logo=docker&sort=semver&style=flat-square
 [wallabag-badge]: https://img.shields.io/docker/v/wallabag/wallabag?label=Docker&color=blue&logo=docker&sort=semver&style=flat-square
-[frigate-badge]: https://img.shields.io/github/v/release/blakeblackshear/frigate?label=Github&color=blue&logo=github&sort=semver&style=flat-square
 [rsshub-badge]: https://img.shields.io/static/v1?label=No&message=version%20provided&color=gray&labelColor=gray&style=flat-square
 [mango-badge]: https://img.shields.io/github/v/release/getmango/mango?label=Github&logo=github&style=flat-square
 [jellyfin-badge]: https://img.shields.io/github/v/release/jellyfin/jellyfin?label=Github&logo=github&style=flat-square
