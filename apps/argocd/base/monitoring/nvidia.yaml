@@ -39,7 +39,8 @@ spec:
           requests:
             cpu: 50m
             memory: 128Mi
-        nodeSelector: {}
+        nodeSelector:
+          kubernetes.io/hostname: node-two
         tolerations: []
         affinity: {}
         port: 9835
