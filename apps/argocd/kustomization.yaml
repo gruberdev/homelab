@@ -44,7 +44,7 @@ resources:
 - base/apps/ha.yaml
 - base/apps/wyze.yaml
 - base/apps/unifi.yaml
-# - base/apps/frigate.yaml
+- base/apps/frigate.yaml
 # - base/apps/adguard.yaml
 
 # Monitoring Resources
