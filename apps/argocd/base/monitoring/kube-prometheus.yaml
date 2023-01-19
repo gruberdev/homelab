@@ -12,38 +12,12 @@ spec:
       skipCrds: true
       releaseName: kube-prometheus
       values: |
-        # Default values for kube-prometheus-stack.
-        # This is a YAML-formatted file.
-        # Declare variables to be passed into your templates.
-
-        ## Provide a name in place of kube-prometheus-stack for `app:` labels
-        ##
         nameOverride: ""
-
-        ## Override the deployment namespace
-        ##
         namespaceOverride: "monitoring"
-
-        ## Provide a k8s version to auto dashboard import script example: kubeTargetVersionOverride: 1.16.6
-        ##
         kubeTargetVersionOverride: ""
-
-        ## Allow kubeVersion to be overridden while creating the ingress
-        ##
         kubeVersionOverride: ""
-
-        ## Provide a name to substitute for the full names of resources
-        ##
         fullnameOverride: ""
-
-        ## Labels to apply to all resources
-        ##
         commonLabels: {}
-        # scmhash: abc123
-        # myLabel: aakkmd
-
-        ## Create default rules for monitoring the cluster
-        ##
         defaultRules:
           create: true
           rules:
@@ -74,119 +48,34 @@ spec:
             nodeExporterRecording: true
             prometheus: true
             prometheusOperator: true
-
-          ## Reduce app namespace alert scope
           appNamespacesTarget: ".*"
-
-          ## Labels for default rules
           labels: {}
-          ## Annotations for default rules
           annotations: {}
-
-          ## Additional labels for PrometheusRule alerts
           additionalRuleLabels: {}
-
-          ## Additional annotations for PrometheusRule alerts
           additionalRuleAnnotations: {}
-
-          ## Prefix for runbook URLs. Use this to override the first part of the runbookURLs that is common to all rules.
           runbookUrl: "https://runbooks.prometheus-operator.dev/runbooks"
-
-          ## Disabled PrometheusRule alerts
           disabled: {}
-          # KubeAPIDown: true
-          # NodeRAIDDegraded: true
-
-        ## Deprecated way to provide custom recording or alerting rules to be deployed into the cluster.
-        ##
-        # additionalPrometheusRules: []
-        #  - name: my-rule-file
-        #    groups:
-        #      - name: my_group
-        #        rules:
-        #        - record: my_record
-        #          expr: 100 * my_record
-
-        ## Provide custom recording or alerting rules to be deployed into the cluster.
-        ##
         additionalPrometheusRulesMap: {}
-        #  rule-name:
-        #    groups:
-        #    - name: my_group
-        #      rules:
-        #      - record: my_record
-        #        expr: 100 * my_record
-
-        ##
         global:
           rbac:
             create: true
-
-            ## Create ClusterRoles that extend the existing view, edit and admin ClusterRoles to interact with prometheus-operator CRDs
-            ## Ref: https://kubernetes.io/docs/reference/access-authn-authz/rbac/#aggregated-clusterroles
             createAggregateClusterRoles: false
             pspEnabled: false
             pspAnnotations: {}
-              ## Specify pod annotations
-              ## Ref: https://kubernetes.io/docs/concepts/policy/pod-security-policy/#apparmor
-              ## Ref: https://kubernetes.io/docs/concepts/policy/pod-security-policy/#seccomp
-              ## Ref: https://kubernetes.io/docs/concepts/policy/pod-security-policy/#sysctl
-              ##
-              # seccomp.security.alpha.kubernetes.io/allowedProfileNames: '*'
-              # seccomp.security.alpha.kubernetes.io/defaultProfileName: 'docker/default'
-              # apparmor.security.beta.kubernetes.io/defaultProfileName: 'runtime/default'
-
-          ## Global image registry to use if it needs to be overriden for some specific use cases (e.g local registries, custom images, ...)
-          ##
           imageRegistry: ""
-
-          ## Reference to one or more secrets to be used when pulling images
-          ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-          ##
           imagePullSecrets: []
-          # - name: "image-pull-secret"
-          # or
-          # - "image-pull-secret"
-
-        ## Configuration for alertmanager
-        ## ref: https://prometheus.io/docs/alerting/alertmanager/
-        ##
         alertmanager:
-
-          ## Deploy alertmanager
-          ##
           enabled: true
-
-          ## Annotations for Alertmanager
-          ##
           annotations: {}
-
-          ## Api that prometheus will use to communicate with alertmanager. Possible values are v1, v2
-          ##
           apiVersion: v2
-
-          ## Service account for Alertmanager to use.
-          ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
-          ##
           serviceAccount:
             create: true
             name: ""
             annotations: {}
-
-          ## Configure pod disruption budgets for Alertmanager
-          ## ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/#specifying-a-poddisruptionbudget
-          ## This configuration is immutable once created and will require the PDB to be deleted to be changed
-          ## https://github.com/kubernetes/kubernetes/issues/45398
-          ##
           podDisruptionBudget:
             enabled: false
             minAvailable: 1
             maxUnavailable: ""
-
-          ## Alertmanager configuration directives
-          ## ref: https://prometheus.io/docs/alerting/configuration/#configuration-file
-          ##      https://prometheus.io/webtools/alerting/routing-tree-editor/
-          ##
           config:
             global:
               resolve_timeout: 5m
@@ -225,132 +114,24 @@ spec:
             - name: 'null'
             templates:
             - '/etc/alertmanager/config/*.tmpl'
-
-          ## Pass the Alertmanager configuration directives through Helm's templating
-          ## engine. If the Alertmanager configuration contains Alertmanager templates,
-          ## they'll need to be properly escaped so that they are not interpreted by
-          ## Helm
-          ## ref: https://helm.sh/docs/developing_charts/#using-the-tpl-function
-          ##      https://prometheus.io/docs/alerting/configuration/#tmpl_string
-          ##      https://prometheus.io/docs/alerting/notifications/
-          ##      https://prometheus.io/docs/alerting/notification_examples/
           tplConfig: false
-
-          ## Alertmanager template files to format alerts
-          ## By default, templateFiles are placed in /etc/alertmanager/config/ and if
-          ## they have a .tmpl file suffix will be loaded. See config.templates above
-          ## to change, add other suffixes. If adding other suffixes, be sure to update
-          ## config.templates above to include those suffixes.
-          ## ref: https://prometheus.io/docs/alerting/notifications/
-          ##      https://prometheus.io/docs/alerting/notification_examples/
-          ##
           templateFiles: {}
-          #
-          ## An example template:
-          #   template_1.tmpl: |-
-          #       {{ define "cluster" }}{{ .ExternalURL | reReplaceAll ".*alertmanager\\.(.*)" "$1" }}{{ end }}
-          #
-          #       {{ define "slack.myorg.text" }}
-          #       {{- $root := . -}}
-          #       {{ range .Alerts }}
-          #         *Alert:* {{ .Annotations.summary }} - `{{ .Labels.severity }}`
-          #         *Cluster:* {{ template "cluster" $root }}
-          #         *Description:* {{ .Annotations.description }}
-          #         *Graph:* <{{ .GeneratorURL }}|:chart_with_upwards_trend:>
-          #         *Runbook:* <{{ .Annotations.runbook }}|:spiral_note_pad:>
-          #         *Details:*
-          #           {{ range .Labels.SortedPairs }} - *{{ .Name }}:* `{{ .Value }}`
-          #           {{ end }}
-          #       {{ end }}
-          #       {{ end }}
-
           ingress:
             enabled: false
-
-            # For Kubernetes >= 1.18 you should specify the ingress-controller via the field ingressClassName
-            # See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress
-            # ingressClassName: nginx
-
-            annotations: {}
-
-            labels: {}
-
-            ## Redirect ingress to an additional defined port on the service
-            # servicePort: 8081
-
-            ## Hosts must be provided if Ingress is enabled.
-            ##
-            hosts: []
-              # - alertmanager.domain.com
-
-            ## Paths to use for ingress rules - one path should match the alertmanagerSpec.routePrefix
-            ##
-            paths: []
-            # - /
-
-            ## For Kubernetes >= 1.18 you should specify the pathType (determines how Ingress paths should be matched)
-            ## See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#better-path-matching-with-path-types
-            # pathType: ImplementationSpecific
-
-            ## TLS configuration for Alertmanager Ingress
-            ## Secret must be manually created in the namespace
-            ##
-            tls: []
-            # - secretName: alertmanager-general-tls
-            #   hosts:
-            #   - alertmanager.example.com
-
-          ## Configuration for Alertmanager secret
-          ##
           secret:
             annotations: {}
-
-          ## Configuration for creating an Ingress that will map to each Alertmanager replica service
-          ## alertmanager.servicePerReplica must be enabled
-          ##
           ingressPerReplica:
             enabled: false
-
-            # For Kubernetes >= 1.18 you should specify the ingress-controller via the field ingressClassName
-            # See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress
-            # ingressClassName: nginx
-
             annotations: {}
             labels: {}
-
-            ## Final form of the hostname for each per replica ingress is
-            ## {{ ingressPerReplica.hostPrefix }}-{{ $replicaNumber }}.{{ ingressPerReplica.hostDomain }}
-            ##
-            ## Prefix for the per replica ingress that will have `-$replicaNumber`
-            ## appended to the end
             hostPrefix: ""
             ## Domain that will be used for the per replica ingress
             hostDomain: ""
-
-            ## Paths to use for ingress rules
-            ##
             paths: []
-            # - /
-
-            ## For Kubernetes >= 1.18 you should specify the pathType (determines how Ingress paths should be matched)
-            ## See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#better-path-matching-with-path-types
-            # pathType: ImplementationSpecific
-
-            ## Secret name containing the TLS certificate for alertmanager per replica ingress
-            ## Secret must be manually created in the namespace
             tlsSecretName: ""
-
-            ## Separated secret for each per replica Ingress. Can be used together with cert-manager
-            ##
             tlsSecretPerReplica:
               enabled: false
-              ## Final form of the secret for each per replica ingress is
-              ## {{ tlsSecretPerReplica.prefix }}-{{ $replicaNumber }}
-              ##
               prefix: "alertmanager"
-
-          ## Configuration for Alertmanager service
-          ##
           service:
             annotations: {}
             labels: {}
@@ -3083,51 +2864,11 @@ spec:
                   - 'argocd-metrics.argocd.svc.cluster.local:8082'
                   - 'argocd-server-metrics.argocd.svc.cluster.local:8083'
                   - 'argocd-repo-server.argocd.svc.cluster.local:8084'
-            # - job_name: kube-etcd
-            #   kubernetes_sd_configs:
-            #     - role: node
-            #   scheme: https
-            #   tls_config:
-            #     ca_file:   /etc/prometheus/secrets/etcd-client-cert/etcd-ca
-            #     cert_file: /etc/prometheus/secrets/etcd-client-cert/etcd-client
-            #     key_file:  /etc/prometheus/secrets/etcd-client-cert/etcd-client-key
-            #   relabel_configs:
-            #   - action: labelmap
-            #     regex: __meta_kubernetes_node_label_(.+)
-            #   - source_labels: [__address__]
-            #     action: replace
-            #     targetLabel: __address__
-            #     regex: ([^:;]+):(\d+)
-            #     replacement: ${1}:2379
-            #   - source_labels: [__meta_kubernetes_node_name]
-            #     action: keep
-            #     regex: .*mst.*
-            #   - source_labels: [__meta_kubernetes_node_name]
-            #     action: replace
-            #     targetLabel: node
-            #     regex: (.*)
-            #     replacement: ${1}
-            #   metric_relabel_configs:
-            #   - regex: (kubernetes_io_hostname|failure_domain_beta_kubernetes_io_region|beta_kubernetes_io_os|beta_kubernetes_io_arch|beta_kubernetes_io_instance_type|failure_domain_beta_kubernetes_io_zone)
-            #     action: labeldrop
-            #
-            ## If scrape config contains a repetitive section, you may want to use a template.
-            ## In the following example, you can see how to define `gce_sd_configs` for multiple zones
-            # additionalScrapeConfigs: |
-            #  - job_name: "node-exporter"
-            #    gce_sd_configs:
-            #    {{range $zone := .Values.gcp_zones}}
-            #    - project: "project1"
-            #      zone: "{{$zone}}"
-            #      port: 9100
-            #    {{end}}
-            #    relabel_configs:
-            #    ...
-
-
-            ## If additional scrape configurations are already deployed in a single secret file you can use this section.
-            ## Expected values are the secret name and key
-            ## Cannot be used with additionalScrapeConfigs
+              - job_name: 'nvidia'
+                metrics_path: /metrics
+                static_configs:
+                - targets:
+                  - 'nvidia-exporter-nvidia-gpu-exporter.svc.cluster.local:9835'
             additionalScrapeConfigsSecret: {}
               # enabled: false
               # name:
@@ -3819,47 +3560,18 @@ spec:
               runAsNonRoot: true
               runAsUser: 1000
               fsGroup: 2000
-
-            ## ListenLocal makes the ThanosRuler server listen on loopback, so that it does not bind against the Pod IP.
-            ## Note this is only for the ThanosRuler UI, not the gossip communication.
-            ##
             listenLocal: false
-
-            ## Containers allows injecting additional containers. This is meant to allow adding an authentication proxy to an ThanosRuler pod.
-            ##
             containers: []
-
-            # Additional volumes on the output StatefulSet definition.
             volumes: []
-
-            # Additional VolumeMounts on the output StatefulSet definition.
             volumeMounts: []
-
-            ## InitContainers allows injecting additional initContainers. This is meant to allow doing some changes
-            ## (permissions, dir tree) on mounted volumes before starting prometheus
             initContainers: []
-
-            ## Priority class assigned to the Pods
-            ##
             priorityClassName: ""
-
-            ## PortName to use for ThanosRuler.
-            ##
             portName: "web"
-
-          ## ExtraSecret can be used to store various data in an extra secret
-          ## (use it for example to store hashed basic auth credentials)
           extraSecret:
             ## if not set, name will be auto generated
             # name: ""
             annotations: {}
             data: {}
-          #   auth: |
-          #     foo:$apr1$OFG3Xybp$ckL0FHDAkoXYIlH9.cysT0
-          #     someoneelse:$apr1$DMZX2Z4q$6SbQIfyuLQd.xmo/P0m2c.
-
-        ## Setting to true produces cleaner resource names, but requires a data migration because the name of the persistent volume changes. Therefore this should only be set once on initial installation.
-        ##
         cleanPrometheusOperatorObjectNames: false
 
   destination:
