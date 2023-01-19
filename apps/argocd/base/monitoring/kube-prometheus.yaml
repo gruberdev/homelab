@@ -2604,37 +2604,16 @@ spec:
             ##
             configMaps: []
 
-            ## QuerySpec defines the query command line flags when starting Prometheus.
-            ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#queryspec
-            ##
             query: {}
-
-            ## Namespaces to be selected for PrometheusRules discovery.
-            ## If nil, select own namespace. Namespaces to be selected for ServiceMonitor discovery.
-            ## See https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#namespaceselector for usage
-            ##
-            ruleNamespaceSelector: {}
-
-            ## If true, a nil or {} value for prometheus.prometheusSpec.ruleSelector will cause the
-            ## prometheus resource to be created with selectors based on values in the helm deployment,
-            ## which will also match the PrometheusRule resources created
-            ##
+            ruleNamespaceSelector:
+              any: true
             ruleSelectorNilUsesHelmValues: true
-
-            ## PrometheusRules to be selected for target discovery.
-            ## If {}, select all PrometheusRules
-            ##
-            ruleSelector: {}
-            ## Example which select all PrometheusRules resources
-            ## with label "prometheus" with values any of "example-rules" or "example-rules-2"
-            # ruleSelector:
-            #   matchExpressions:
-            #     - key: prometheus
-            #       operator: In
-            #       values:
-            #         - example-rules
-            #         - example-rules-2
-            #
+            ruleSelector:
+              matchExpressions:
+                - key: prometheus
+                  operator: In
+                  values:
+                    - longhorn
             ## Example which select all PrometheusRules resources with label "role" set to "example-rules"
             # ruleSelector:
             #   matchLabels:
@@ -2854,9 +2833,6 @@ spec:
                 scheme: http
                 static_configs:
                   - targets: ['192.168.1.10:8123']
-              - job_name: 'adguard'
-                static_configs:
-                - targets: ['192.168.1.8:9617']
               - job_name: 'argocd'
                 metrics_path: /metrics
                 static_configs:
