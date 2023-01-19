@@ -34,7 +34,7 @@ spec:
     volumeSpec:
       persistentVolumeClaim:
         storageClassName: nfs-client
-        accessModes: [ "ReadWriteMany" ]
+        accessModes: ["ReadWriteMany"]
         resources:
           requests:
             storage: 2G
