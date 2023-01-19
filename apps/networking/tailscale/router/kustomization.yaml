@@ -5,3 +5,13 @@ bases:
 - svc.yaml
 
 namespace: kube-system
+
+patches:
+- patch: |-
+    - op: add
+      path: "/spec/template/spec/nodeSelector"
+      value:
+        kubernetes.io/arch: amd64
+  target:
+    kind: Deployment
+    name: router
