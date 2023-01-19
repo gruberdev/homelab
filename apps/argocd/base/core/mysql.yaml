@@ -16,7 +16,7 @@ spec:
         replicaCount: 1
         operatorImageRepository: percona/percona-xtradb-cluster-operator
         imagePullPolicy: IfNotPresent
-        image: ""
+        image: "percona/percona-xtradb-cluster-operator:1.12.0"
         watchAllNamespaces: true
         operatorName: mysql-operator
         imagePullSecrets: []
