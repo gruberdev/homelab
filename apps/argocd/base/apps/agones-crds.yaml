@@ -1,31 +1,26 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: agones
+  name: agones-crds
 spec:
   project: apps
   source:
     repoURL: https://github.com/googleforgames/agones.git
-    targetRevision: v1.27.0
-    path: install/helm/agones/templates/
-    helm:
-      skipCrds: true
-      releaseName: vault
-      values: |
-        global:
-
-
+    targetRevision: v1.28.0
+    path: install/helm/agones/templates/crds
+    directory:
+      recurse: true
   destination:
-    namespace: vault
+    namespace: gaming
     name: in-cluster
   syncPolicy:
     automated:
       prune: true
-      selfHeal: false
+      selfHeal: true
       allowEmpty: true
     syncOptions:
     - Validate=false
-    - CreateNamespace=true
+    - CreateNamespace=false
     - PrunePropagationPolicy=foreground
     - PruneLast=true
     - ApplyOutOfSyncOnly=false
@@ -36,12 +31,3 @@ spec:
         duration: 5s
         factor: 2
         maxDuration: 3m
-  ignoreDifferences:
-  - group: admissionregistration.k8s.io
-    kind: MutatingWebhookConfiguration
-    jsonPointers:
-      - /webhooks
-  - group: apps
-    kind: Deployment
-    jsonPointers:
-    - /spec/replicas

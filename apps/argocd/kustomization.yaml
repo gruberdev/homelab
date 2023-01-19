@@ -64,6 +64,10 @@ resources:
 - base/services/monica.yaml
 # - base/services/metabase.yaml
 
+# Agones & Gaming Related
+- base/apps/agones.yaml
+- base/apps/agones-crds.yaml
+
 # Media Services
 # - base/services/media/beets.yaml
 # - base/services/media/lidarr.yaml
