@@ -26,6 +26,7 @@ resources:
 - base/grocy.yaml
 - base/change.yaml
 - base/wallabag.yaml
+- base/monica.yaml
 
 #  Postgres Storage
 - base/postgres/ha.yaml

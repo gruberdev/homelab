@@ -1,0 +1,48 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: monica
+  labels:
+    app: monica
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: monica
+  template:
+    metadata:
+      labels:
+        app: monica
+    spec:
+      containers:
+        - name: server
+          image: monica:3.7.0
+          env:
+            - name: DB_PASSWORD
+              valueFrom: { secretKeyRef: { name: monica-db, key: root } }
+          envFrom:
+            - configMapRef:
+                name: monica-cm
+            - secretRef:
+                name: monica-vars
+          ports:
+            - name: web
+              containerPort: 80
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 150m
+              memory: 256Mi
+            limits:
+              cpu: 300m
+              memory: 512Mi
+          volumeMounts:
+            - name: config-storage
+              mountPath: /var/www
+      volumes:
+        - name: config-storage
+          persistentVolumeClaim:
+            claimName: monica-storage
