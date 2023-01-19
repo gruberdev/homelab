@@ -32,6 +32,17 @@ spec:
         extraVolumeMounts: []
         shmSize: 1Gi
         config: |
+          cameras:
+            home_feed:
+              ffmpeg:
+                inputs:
+                  - path: rtsp://wyze-bridge.homeassistant.svc.cluster.local:8554
+                    roles:
+                      - detect
+                      - rtmp
+              width: 1280
+              height: 720
+              fps: 5
           mqtt:
             # Required: host name
             host: mqtt.server.com
@@ -52,22 +63,8 @@ spec:
             # Optional: interval in seconds for publishing stats (default: shown below)
             stats_interval: 60
           detectors:
-            # coral:
-            #   type: edgetpu
-            #   device: usb
             cpu1:
               type: cpu
-            cameras:
-              home_feed:
-                ffmpeg:
-                  inputs:
-                    - path: rtsp://wyze-bridge.homeassistant.svc.cluster.local:8554
-                      roles:
-                        - detect
-                        - rtmp
-                width: 1280
-                height: 720
-                fps: 5
         probes:
           liveness:
             enabled: true
