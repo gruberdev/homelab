@@ -53,7 +53,7 @@ spec:
         cpu: 230m
   logcollector:
     enabled: true
-    image: percona/percona-xtradb-cluster-operator:1.12.0-
+    image: percona/percona-xtradb-cluster-operator:1.12.0-logcollector
     resources:
       requests:
         memory: 120Mi
