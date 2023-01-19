@@ -104,11 +104,9 @@ spec:
           limits:
             cpu: 200m
             memory: 512Mi
-            nvidia.com/gpu.shared: 25
           requests:
             cpu: 400m
             memory: 256Mi
-            nvidia.com/gpu.shared: 10
         securityContext: {}
         nodeSelector:
           kubernetes.io/hostname: node-two
