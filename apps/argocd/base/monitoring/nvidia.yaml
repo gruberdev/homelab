@@ -45,7 +45,7 @@ spec:
         affinity: {}
         port: 9835
         hostPort:
-          enabled: false
+          enabled: true
           port: 9835
         log:
           level: info

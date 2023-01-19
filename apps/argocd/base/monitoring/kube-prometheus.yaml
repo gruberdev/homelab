@@ -2867,8 +2867,7 @@ spec:
               - job_name: 'nvidia'
                 metrics_path: /metrics
                 static_configs:
-                - targets:
-                  - 'nvidia-exporter-nvidia-gpu-exporter.svc.cluster.local:9835'
+                - targets: ['192.168.1.8:9835']
             additionalScrapeConfigsSecret: {}
               # enabled: false
               # name:
