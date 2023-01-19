@@ -49,16 +49,3 @@ spec:
   resources:
     requests:
       storage: 50Gi
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: manga-library
-  namespace: media
-spec:
-  accessModes:
-    - ReadWriteOnce
-  storageClassName: longhorn
-  resources:
-    requests:
-      storage: 4Gi

@@ -5,8 +5,21 @@ metadata:
   namespace: media
 spec:
   accessModes:
-    - ReadWriteMany
-  storageClassName: nfs-client
+    - ReadWriteOnce
+  storageClassName: longhorn
   resources:
     requests:
       storage: 2Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: manga-library
+  namespace: media
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: longhorn
+  resources:
+    requests:
+      storage: 4Gi
