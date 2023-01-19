@@ -2604,9 +2604,16 @@ spec:
             ##
             configMaps: []
 
+            ## QuerySpec defines the query command line flags when starting Prometheus.
+            ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#queryspec
+            ##
             query: {}
-            ruleNamespaceSelector:
-              any: true
+
+            ## Namespaces to be selected for PrometheusRules discovery.
+            ## If nil, select own namespace. Namespaces to be selected for ServiceMonitor discovery.
+            ## See https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#namespaceselector for usage
+            ##
+            ruleNamespaceSelector: {}
             ruleSelectorNilUsesHelmValues: true
             ruleSelector:
               matchExpressions:
@@ -2614,11 +2621,6 @@ spec:
                   operator: In
                   values:
                     - longhorn
-            ## Example which select all PrometheusRules resources with label "role" set to "example-rules"
-            # ruleSelector:
-            #   matchLabels:
-            #     role: example-rules
-
             ## If true, a nil or {} value for prometheus.prometheusSpec.serviceMonitorSelector will cause the
             ## prometheus resource to be created with selectors based on values in the helm deployment,
             ## which will also match the servicemonitors created
