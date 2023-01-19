@@ -1,0 +1,115 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nvidia-exporter
+spec:
+  project: monitoring
+  source:
+    repoURL: 'https://github.com/utkuozdemir/helm-charts.git'
+    targetRevision: master
+    path: nvidia-gpu-exporter
+    helm:
+      releaseName: nvidia-exporter
+      values: |
+        image:
+          repository: docker.io/utkuozdemir/nvidia_gpu_exporter
+          pullPolicy: IfNotPresent
+          tag: ""
+        imagePullSecrets: []
+        nameOverride: ""
+        fullnameOverride: ""
+        serviceAccount:
+          create: true
+          annotations: {}
+          name: ""
+        podAnnotations: {}
+        podSecurityContext: {}
+        securityContext:
+          privileged: true
+        service:
+          type: ClusterIP
+          port: 9835
+          nodePort:
+        ingress:
+          enabled: false
+        resources:
+          limits:
+            cpu: 100m
+            memory: 256Mi
+          requests:
+            cpu: 50m
+            memory: 128Mi
+        nodeSelector: {}
+        tolerations: []
+        affinity: {}
+        port: 9835
+        hostPort:
+          enabled: false
+          port: 9835
+        log:
+          level: info
+          format: logfmt
+        queryFieldNames:
+          - AUTO
+        nvidiaSmiCommand: nvidia-smi
+        telemetryPath: /metrics
+        volumes:
+          - name: nvidiactl
+            hostPath:
+              path: /dev/nvidiactl
+          - name: nvidia0
+            hostPath:
+              path: /dev/nvidia0
+          - name: nvidia-smi
+            hostPath:
+              path: /usr/bin/nvidia-smi
+          - name: libnvidia-ml-so
+            hostPath:
+              path: /usr/lib/x86_64-linux-gnu/libnvidia-ml.so
+          - name: libnvidia-ml-so-1
+            hostPath:
+              path: /usr/lib/x86_64-linux-gnu/libnvidia-ml.so.1
+        volumeMounts:
+          - name: nvidiactl
+            mountPath: /dev/nvidiactl
+          - name: nvidia0
+            mountPath: /dev/nvidia0
+          - name: nvidia-smi
+            mountPath: /usr/bin/nvidia-smi
+          - name: libnvidia-ml-so
+            mountPath: /usr/lib/x86_64-linux-gnu/libnvidia-ml.so
+          - name: libnvidia-ml-so-1
+            mountPath: /usr/lib/x86_64-linux-gnu/libnvidia-ml.so.1
+        serviceMonitor:
+          enabled: true
+          additionalLabels: {}
+          scheme: http
+          bearerTokenFile:
+          interval:
+          tlsConfig: {}
+          proxyUrl: ""
+          relabelings: []
+          metricRelabelings: []
+          scrapeTimeout: 10s
+
+  destination:
+    namespace: monitoring
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
+      allowEmpty: true
+    syncOptions:
+    - Validate=false
+    - CreateNamespace=false
+    - PrunePropagationPolicy=foreground
+    - PruneLast=true
+    - ApplyOutOfSyncOnly=false
+    - Prune=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m

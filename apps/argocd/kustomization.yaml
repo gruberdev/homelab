@@ -51,6 +51,7 @@ resources:
 - base/monitoring/kuma.yaml
 - base/monitoring/unifi-poller.yaml
 - base/monitoring/kube-prometheus.yaml
+- base/monitoring/nvidia.yaml
 - base/monitoring/kube-prom-crds.yaml
 - base/monitoring/longhorn.yaml
 # - base/monitoring/pixie.yaml
