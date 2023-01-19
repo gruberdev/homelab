@@ -57,17 +57,17 @@ spec:
             #   device: usb
             cpu1:
               type: cpu
-           cameras:
-             home_feed:
-               ffmpeg:
-                 inputs:
-                   - path: rtsp://wyze-bridge.homeassistant.svc.cluster.local:8554
-                     roles:
-                       - detect
-                       - rtmp
-               width: 1280
-               height: 720
-               fps: 5
+            cameras:
+              home_feed:
+                ffmpeg:
+                  inputs:
+                    - path: rtsp://wyze-bridge.homeassistant.svc.cluster.local:8554
+                      roles:
+                        - detect
+                        - rtmp
+                width: 1280
+                height: 720
+                fps: 5
         probes:
           liveness:
             enabled: true
