@@ -102,10 +102,10 @@ spec:
             skipuninstall: false
         resources:
           limits:
-            cpu: 200m
+            cpu: 350m
             memory: 512Mi
           requests:
-            cpu: 400m
+            cpu: 150m
             memory: 256Mi
         securityContext: {}
         nodeSelector:
