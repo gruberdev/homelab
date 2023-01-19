@@ -4,7 +4,7 @@ metadata:
   name: monica-cm
 data:
   TZ: "America/Sao_Paulo"
-  APP_ENV: "production"
+  APP_ENV: "local"
   APP_DEBUG: "true"
   APP_URL: "http://monica"
   APP_FORCE_URL: "false"
