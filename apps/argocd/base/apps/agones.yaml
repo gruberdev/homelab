@@ -145,7 +145,7 @@ spec:
               loadBalancerSourceRanges: []
               annotations: {}
             healthCheck:
-              initialDelaySeconds: 3
+              initialDelaySeconds: 15
               periodSeconds: 3
               failureThreshold: 3
               timeoutSeconds: 1
@@ -233,9 +233,9 @@ spec:
             sdk:
               name: agones-sdk
               cpuRequest: 30m
-              cpuLimit: 600m
-              memoryRequest: 50m
-              memoryLimit: 130m
+              cpuLimit: 80m
+              memoryRequest: 50mi
+              memoryLimit: 130mi
               alwaysPull: false
             ping:
               name: agones-ping
