@@ -99,9 +99,9 @@ spec:
               timeoutSeconds: 1
             allocationBatchWaitTime: 500ms
           ping:
-            install: false
+            install: true
             pdb:
-              enabled: false
+              enabled: true
               minAvailable: 1
             updateStrategy: Recreate
             resources:
@@ -230,9 +230,9 @@ spec:
             sdk:
               name: agones-sdk
               cpuRequest: 30m
-              cpuLimit: 0
-              memoryRequest: 0
-              memoryLimit: 0
+              cpuLimit: 100m
+              memoryRequest: 50Mi
+              memoryLimit: 100Mi
               alwaysPull: false
             ping:
               name: agones-ping
@@ -270,3 +270,10 @@ spec:
         duration: 5s
         factor: 2
         maxDuration: 3m
+  ignoreDifferences:
+  - group: "agones-sdk-access"
+    kind: "ClusterRoleBinding"
+  - group: "agones-sdk"
+    kind: "ClusterRole"
+  - group: "agones-sdk"
+    kind: "ServiceAccount"
