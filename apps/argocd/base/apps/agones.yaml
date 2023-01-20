@@ -12,6 +12,7 @@ spec:
     path: install/helm/agones
     helm:
       releaseName: agones
+      skipCrds: true
       values: |
         agones:
           featureGates: ""
@@ -250,7 +251,7 @@ spec:
           installTests: false
 
   destination:
-    namespace: gaming
+    namespace: agones-system
     name: in-cluster
   syncPolicy:
     automated:

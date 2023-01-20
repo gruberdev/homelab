@@ -6,12 +6,12 @@ spec:
   project: apps
   source:
     repoURL: https://github.com/googleforgames/agones.git
-    targetRevision: v1.28.0
-    path: install/helm/agones/templates/crds/
+    targetRevision: release-1.29.0
+    path: install/helm/agones/templates/crds
     directory:
       recurse: true
   destination:
-    namespace: gaming
+    namespace: agones-system
     name: in-cluster
   syncPolicy:
     automated:
