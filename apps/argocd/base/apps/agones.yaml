@@ -245,10 +245,7 @@ spec:
               pullPolicy: IfNotPresent
         gameservers:
           namespaces:
-          - default
           - agones-system
-          - gaming
-          - server
           minPort: 7000
           maxPort: 8000
           podPreserveUnknownFields: false
