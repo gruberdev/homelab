@@ -234,8 +234,8 @@ spec:
               name: agones-sdk
               cpuRequest: 30m
               cpuLimit: 80m
-              memoryRequest: 50mi
-              memoryLimit: 130mi
+              memoryRequest: 50Mi
+              memoryLimit: 130Mi
               alwaysPull: false
             ping:
               name: agones-ping
