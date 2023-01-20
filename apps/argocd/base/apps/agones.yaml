@@ -30,7 +30,7 @@ spec:
           registerWebhooks: true
           registerApiService: true
           crds:
-            install: true
+            install: false
             cleanupOnDelete: true
           serviceaccount:
             allocator:
