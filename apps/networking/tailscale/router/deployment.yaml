@@ -36,7 +36,7 @@ spec:
               value: "true"
             - name: TS_HOSTNAME
               value: "router"
-            - name: TS_ROUTES
+            - name: ROUTES
               value: "10.43.0.0/16,10.42.0.0/24"
             - name: AUTH_KEY
               valueFrom:
