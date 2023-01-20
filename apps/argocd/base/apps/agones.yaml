@@ -8,7 +8,7 @@ spec:
   project: apps
   source:
     repoURL: https://github.com/googleforgames/agones.git
-    targetRevision: v1.28.0
+    targetRevision: release-1.29.0
     path: install/helm/agones
     helm:
       releaseName: agones
@@ -68,7 +68,7 @@ spec:
                     matchExpressions:
                       - key: agones.dev/agones-system
                         operator: Exists
-            generateTLS: true
+            generateTLS: false
             tlsCert: ""
             tlsKey: ""
             disableSecret: false
@@ -127,12 +127,12 @@ spec:
                     matchExpressions:
                       - key: agones.dev/agones-system
                         operator: Exists
-            replicas: 2
+            replicas: 1
             http:
               expose: true
               response: ok
               port: 80
-              serviceType: LoadBalancer
+              serviceType: ClusterIP
               loadBalancerIP: ""
               loadBalancerSourceRanges: []
               annotations: {}
@@ -140,7 +140,7 @@ spec:
               expose: true
               rateLimit: 20
               port: 50000
-              serviceType: LoadBalancer
+              serviceType: ClusterIP
               loadBalancerIP: ""
               loadBalancerSourceRanges: []
               annotations: {}
@@ -187,7 +187,7 @@ spec:
             replicas: 1
             service:
               name: agones-allocator
-              serviceType: LoadBalancer
+              serviceType: ClusterIP
               loadBalancerIP: ""
               loadBalancerSourceRanges: []
               annotations: {}
@@ -211,7 +211,7 @@ spec:
                 port: 8080
                 portName: http
             disableSecretCreation: false
-            generateTLS: true
+            generateTLS: false
             tlsCert: ""
             tlsKey: ""
             generateClientTLS: true
@@ -222,8 +222,8 @@ spec:
             totalRemoteAllocationTimeout: 30s
             allocationBatchWaitTime: 500ms
           image:
-            registry: gcr.io/agones-images
-            tag: 1.28.0
+            registry: us-docker.pkg.dev/agones-images/release
+            tag: 1.29.0
             controller:
               name: agones-controller
               pullPolicy: IfNotPresent
