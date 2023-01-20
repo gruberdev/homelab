@@ -276,11 +276,9 @@ spec:
         factor: 2
         maxDuration: 3m
   ignoreDifferences:
-  - group: admissionregistration.k8s.io
-    kind: MutatingWebhookConfiguration
-    jsonPointers:
-      - /webhooks
-  - group: apps
-    kind: Deployment
-    jsonPointers:
-    - /spec/replicas
+  - group: "agones-sdk-access"
+    kind: "ClusterRoleBinding"
+  - group: "agones-sdk"
+    kind: "ClusterRole"
+  - group: "agones-sdk"
+    kind: "ServiceAccount"
