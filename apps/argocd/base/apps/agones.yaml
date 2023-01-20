@@ -15,7 +15,7 @@ spec:
       skipCrds: true
       values: |
         agones:
-          featureGates: ""
+          featureGates: "PlayerTracking=true"
           metrics:
             prometheusEnabled: true
             prometheusServiceDiscovery: true
@@ -31,7 +31,7 @@ spec:
           registerApiService: true
           crds:
             install: false
-            cleanupOnDelete: true
+            cleanupOnDelete: false
           serviceaccount:
             allocator:
               name: agones-allocator
@@ -99,19 +99,18 @@ spec:
               timeoutSeconds: 1
             allocationBatchWaitTime: 500ms
           ping:
-            install: true
+            install: false
             pdb:
               enabled: false
               minAvailable: 1
-            updateStrategy: {}
+            updateStrategy: Recreate
             resources:
-              resources:
-                requests:
-                  cpu: 100m
-                  memory: 256Mi
-                limits:
-                  cpu: 300m
-                  memory: 512Gi
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                cpu: 300m
+                memory: 512Gi
             nodeSelector:
               kubernetes.io/hostname: node-two
             annotations: {}
