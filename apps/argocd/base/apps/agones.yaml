@@ -11,8 +11,8 @@ spec:
     targetRevision: release-1.29.0
     path: install/helm/agones
     helm:
-      releaseName: agones
       skipCrds: true
+      releaseName: agones
       values: |
         agones:
           featureGates: "PlayerTracking=true"
@@ -31,7 +31,7 @@ spec:
           registerApiService: true
           crds:
             install: false
-            cleanupOnDelete: false
+            cleanupOnDelete: true
           serviceaccount:
             allocator:
               name: agones-allocator
@@ -69,7 +69,7 @@ spec:
                     matchExpressions:
                       - key: agones.dev/agones-system
                         operator: Exists
-            generateTLS: false
+            generateTLS: true
             tlsCert: ""
             tlsKey: ""
             disableSecret: false
@@ -93,7 +93,7 @@ spec:
             http:
               port: 8080
             healthCheck:
-              initialDelaySeconds: 35
+              initialDelaySeconds: 15
               periodSeconds: 3
               failureThreshold: 3
               timeoutSeconds: 1
@@ -101,16 +101,16 @@ spec:
           ping:
             install: true
             pdb:
-              enabled: true
+              enabled: false
               minAvailable: 1
-            updateStrategy: Recreate
+            updateStrategy: {}
             resources:
               requests:
-                cpu: 100m
-                memory: 256Mi
+                cpu: 200m
+                memory: 512Mi
               limits:
-                cpu: 300m
-                memory: 512Gi
+                cpu: 800m
+                memory: 1Gi
             nodeSelector:
               kubernetes.io/hostname: node-two
             annotations: {}
@@ -145,7 +145,7 @@ spec:
               loadBalancerSourceRanges: []
               annotations: {}
             healthCheck:
-              initialDelaySeconds: 35
+              initialDelaySeconds: 3
               periodSeconds: 3
               failureThreshold: 3
               timeoutSeconds: 1
@@ -160,14 +160,15 @@ spec:
             logLevel: info
             annotations: {}
             resources:
-              requests:
-                cpu: 100m
-                memory: 256Mi
-              limits:
-                cpu: 300m
-                memory: 512Gi
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 128Mi
+                limits:
+                  cpu: 150m
+                  memory: 256Gi
             healthCheck:
-              initialDelaySeconds: 35
+              initialDelaySeconds: 15
               periodSeconds: 3
               failureThreshold: 3
               timeoutSeconds: 1
@@ -184,7 +185,7 @@ spec:
                     matchExpressions:
                       - key: agones.dev/agones-system
                         operator: Exists
-            replicas: 1
+            replicas: 3
             service:
               name: agones-allocator
               serviceType: ClusterIP
@@ -211,7 +212,7 @@ spec:
                 port: 8080
                 portName: http
             disableSecretCreation: false
-            generateTLS: false
+            generateTLS: true
             tlsCert: ""
             tlsKey: ""
             generateClientTLS: true
@@ -227,12 +228,14 @@ spec:
             controller:
               name: agones-controller
               pullPolicy: IfNotPresent
+            extensions:
+              name: agones-extensions
             sdk:
               name: agones-sdk
               cpuRequest: 30m
-              cpuLimit: 100m
-              memoryRequest: 50Mi
-              memoryLimit: 100Mi
+              cpuLimit: 600m
+              memoryRequest: 50m
+              memoryLimit: 130m
               alwaysPull: false
             ping:
               name: agones-ping
@@ -242,18 +245,23 @@ spec:
               pullPolicy: IfNotPresent
         gameservers:
           namespaces:
+          - default
+          - agones-system
           - gaming
+          - server
           minPort: 7000
           maxPort: 8000
           podPreserveUnknownFields: false
         helm:
           installTests: false
 
+
   destination:
     namespace: agones-system
     name: in-cluster
   syncPolicy:
     automated:
+      validate: false
       prune: true
       selfHeal: true
       allowEmpty: true
@@ -271,9 +279,11 @@ spec:
         factor: 2
         maxDuration: 3m
   ignoreDifferences:
-  - group: "agones-sdk-access"
-    kind: "ClusterRoleBinding"
-  - group: "agones-sdk"
-    kind: "ClusterRole"
-  - group: "agones-sdk"
-    kind: "ServiceAccount"
+  - group: admissionregistration.k8s.io
+    kind: MutatingWebhookConfiguration
+    jsonPointers:
+      - /webhooks
+  - group: apps
+    kind: Deployment
+    jsonPointers:
+    - /spec/replicas
