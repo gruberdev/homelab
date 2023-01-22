@@ -36,6 +36,7 @@ resources:
 - base/utilities/nfd.yaml
 - base/utilities/descheduler.yaml
 - base/utilities/botkube.yaml
+- base/utilities/eraser.yaml
 # - base/utilities/koordinator.yaml
 # - base/utilities/chaos.yaml
 
