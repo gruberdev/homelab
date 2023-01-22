@@ -13,16 +13,13 @@ spec:
     name: in-cluster
   syncPolicy:
     automated:
-      prune: false
+      prune: true
       selfHeal: true
-      allowEmpty: true
     syncOptions:
     - Validate=false
     - CreateNamespace=false
     - PrunePropagationPolicy=foreground
-    - PruneLast=false
-    - ApplyOutOfSyncOnly=true
-    - Prune=false
+    - PruneLast=true
     retry:
       limit: 10
       backoff:
