@@ -108,21 +108,6 @@
 
 <details>
 
-<summary> <b>To be implemented</b> </summary>
-
-&nbsp;
-
-> #### Monitoring and k8s utilities:
->
-> #### Services and applications:
->
-> - Domainmod
->
-
-</details>
-
-<details>
-
 <summary> <b>Repository Stats</b> </summary>
 
 <br>
