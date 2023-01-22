@@ -551,7 +551,7 @@ spec:
               providers:
               - name: unifi
                 orgId: 1
-                folder: 'Unifi'
+                folder: 'unifi'
                 type: file
                 disableDeletion: true
                 editable: true
@@ -559,7 +559,7 @@ spec:
                   path: /var/lib/grafana/dashboards/unifi
               - name: services
                 orgId: 1
-                folder: 'Services'
+                folder: 'services'
                 type: file
                 disableDeletion: true
                 editable: true
@@ -567,7 +567,7 @@ spec:
                   path: /var/lib/grafana/dashboards/services
               - name: kubernetes
                 orgId: 1
-                folder: 'Kubernetes'
+                folder: 'kubernetes'
                 type: file
                 disableDeletion: true
                 editable: true
