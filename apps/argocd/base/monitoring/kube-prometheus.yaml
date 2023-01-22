@@ -407,9 +407,13 @@ spec:
             ## Define resources requests and limits for single Pods.
             ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
             ##
-            resources: {}
-            # requests:
-            #   memory: 400Mi
+            resources:
+              requests:
+                cpu: 80m
+                memory: 128Mi
+              limits:
+                cpu: 140m
+                memory: 256Mi
 
             ## Pod anti-affinity can prevent the scheduler from placing Prometheus replicas on the same node.
             ## The default value "soft" means that the scheduler should *prefer* to not schedule two replica pods onto the same node but no guarantee is provided.
@@ -587,7 +591,32 @@ spec:
                 gnetId: 11312
                 revision: 8
                 datasource: Prometheus
-            cluster:
+            kubernetes:
+              apiServer:
+                gnetId: 15761
+                revision: 11
+                datasource: Prometheus
+              coreDns:
+                gnetId: 15762
+                revision: 10
+                datasource: Prometheus
+              globalView:
+                gnetId: 15757
+                revision: 22
+                datasource: Prometheus
+              namespaces:
+                gnetId: 15758
+                revision: 15
+                datasource: Prometheus
+              nodes:
+                gnetId: 15759
+                revision: 14
+                datasource: Prometheus
+              pods:
+                gnetId: 15760
+                revision: 15
+                datasource: Prometheus
+            services:
               longhornMonitoring:
                 gnetId: 16888
                 revision: 5
@@ -1725,7 +1754,13 @@ spec:
                 tag: v1.3.0
                 sha: ""
                 pullPolicy: IfNotPresent
-              resources: {}
+              resources:
+                requests:
+                  cpu: 80m
+                  memory: 128Mi
+                limits:
+                  cpu: 140m
+                  memory: 256Mi
               ## Provide a priority class name to the webhook patching job
               ##
               priorityClassName: ""
@@ -1930,13 +1965,13 @@ spec:
 
           ## Resource limits & requests
           ##
-          resources: {}
-          # limits:
-          #   cpu: 200m
-          #   memory: 200Mi
-          # requests:
-          #   cpu: 100m
-          #   memory: 100Mi
+          resources:
+            limits:
+              cpu: 200m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 256Mi
 
           # Required for use in managed kubernetes clusters (such as AWS EKS) with custom CNI (such as calico),
           # because control-plane managed by AWS cannot communicate with pods' IP CIDR and admission webhooks are not working
@@ -2052,11 +2087,11 @@ spec:
             # resource config for prometheusConfigReloader
             resources:
               requests:
-                cpu: 200m
-                memory: 50Mi
+                cpu: 80m
+                memory: 128Mi
               limits:
-                cpu: 200m
-                memory: 50Mi
+                cpu: 140m
+                memory: 256Mi
 
           ## Thanos side-car image when configured
           ##
@@ -2779,9 +2814,13 @@ spec:
 
             ## Resource limits & requests
             ##
-            resources: {}
-            # requests:
-            #   memory: 400Mi
+            resources:
+              requests:
+                cpu: 100m
+                memory: 128Mi
+              limits:
+                cpu: 150m
+                memory: 256Mi
 
             ## Prometheus StorageSpec for persistent data
             ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/user-guides/storage.md
@@ -3478,9 +3517,13 @@ spec:
             ## Define resources requests and limits for single Pods.
             ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
             ##
-            resources: {}
-            # requests:
-            #   memory: 400Mi
+            resources:
+              requests:
+                cpu: 140m
+                memory: 128Mi
+              limits:
+                cpu: 220m
+                memory: 512Mi
 
             ## Pod anti-affinity can prevent the scheduler from placing Prometheus replicas on the same node.
             ## The default value "soft" means that the scheduler should *prefer* to not schedule two replica pods onto the same node but no guarantee is provided.
