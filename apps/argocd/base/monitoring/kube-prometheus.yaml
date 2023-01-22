@@ -544,6 +544,8 @@ spec:
           plugins:
             - grafana-piechart-panel
             - grafana-clock-panel
+            - grafana-image-renderer
+            - grafana-worldmap-panel
           dashboardProviders:
             dashboardproviders.yaml:
               apiVersion: 1
@@ -558,7 +560,7 @@ spec:
                   path: /var/lib/grafana/dashboards/unifi
               - name: services
                 orgId: 1
-                folder: 'services'
+                folder: 'Services'
                 type: file
                 disableDeletion: true
                 editable: true
@@ -566,7 +568,7 @@ spec:
                   path: /var/lib/grafana/dashboards/services
               - name: kubernetes
                 orgId: 1
-                folder: 'kubernetes'
+                folder: 'Kubernetes'
                 type: file
                 disableDeletion: true
                 editable: true
