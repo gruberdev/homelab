@@ -545,7 +545,6 @@ spec:
             - grafana-piechart-panel
             - grafana-clock-panel
             - grafana-image-renderer
-            - grafana-worldmap-panel
           dashboardProviders:
             dashboardproviders.yaml:
               apiVersion: 1
