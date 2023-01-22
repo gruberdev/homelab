@@ -88,7 +88,7 @@ if [[ ! -z "${TS_EXTRA_ARGS}" ]]; then
 fi
 
 echo "Running tailscale up"
-tailscale --socket="${TS_SOCKET}" up ${UP_ARGS} --reset
+tailscale --socket="${TS_SOCKET}" up ${UP_ARGS} --accept-routes=true --reset
 
 if [[ ! -z "${TS_DEST_SVC}" ]]; then
   echo "Internal SVC found, finding KubeDNS clusterIP and creating iptables rules for DNAT"

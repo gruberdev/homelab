@@ -6,6 +6,7 @@ metadata:
     app: router
 spec:
   type: ClusterIP
+  clusterIP: 10.43.173.87
   selector:
     app: router
   ports:
