@@ -27,6 +27,7 @@ resources:
 - base/change.yaml
 - base/wallabag.yaml
 - base/monica.yaml
+- base/domainmod.yaml
 
 #  Postgres Storage
 - base/postgres/ha.yaml

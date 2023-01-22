@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: domainmod-cm
+data:
+  TZ: "America/Sao_Paulo"
+  DOMAINMOD_DATABASE_HOST: "domainmod-cluster-haproxy.services.svc.cluster.local"
+  DOMAINMOD_DATABASE: "domainmod"
+  DOMAINMOD_USER: "root"

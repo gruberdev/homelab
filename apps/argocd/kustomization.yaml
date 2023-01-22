@@ -62,6 +62,7 @@ resources:
 - base/services/onchange.yaml
 - base/services/grocy.yaml
 - base/services/monica.yaml
+- base/services/domainmod.yaml
 # - base/services/metabase.yaml
 
 # Media Services

@@ -1,0 +1,46 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: domainmod
+  labels:
+    app: domainmod
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: domainmod
+  template:
+    metadata:
+      labels:
+        app: domainmod
+    spec:
+      containers:
+        - name: server
+          image: domainmod/domainmod:latest
+          env:
+            - name: DOMAINMOD_PASSWORD
+              valueFrom: { secretKeyRef: { name: domainmod-db, key: root } }
+          envFrom:
+            - configMapRef:
+                name: domainmod-cm
+          ports:
+            - name: web
+              containerPort: 80
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 200m
+              memory: 256Mi
+            limits:
+              cpu: 250m
+              memory: 512Mi
+          volumeMounts:
+            - name: config-storage
+              mountPath: /var/www/html
+      volumes:
+        - name: config-storage
+          persistentVolumeClaim:
+            claimName: domainmod-storage
