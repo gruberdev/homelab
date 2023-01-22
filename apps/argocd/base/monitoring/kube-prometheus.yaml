@@ -2826,26 +2826,23 @@ spec:
             ##
             resources:
               requests:
-                cpu: 200m
-                memory: 256Mi
-              limits:
-                cpu: 400m
+                cpu: 250m
                 memory: 512Mi
+              limits:
+                cpu: 500m
+                memory: 1Gi
 
             ## Prometheus StorageSpec for persistent data
             ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/user-guides/storage.md
             ##
-            storageSpec: {}
-            ## Using PersistentVolumeClaim
-            ##
-            #  volumeClaimTemplate:
-            #    spec:
-            #      storageClassName: gluster
-            #      accessModes: ["ReadWriteOnce"]
-            #      resources:
-            #        requests:
-            #          storage: 50Gi
-            #    selector: {}
+            storageSpec:
+              volumeClaimTemplate:
+                spec:
+                  storageClassName: nfs-client
+                  accessModes: ["ReadWriteMany"]
+                  resources:
+                    requests:
+                      storage: 30Gi
 
             ## Using tmpfs volume
             ##
