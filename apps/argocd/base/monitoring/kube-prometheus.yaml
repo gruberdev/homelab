@@ -537,8 +537,6 @@ spec:
           #     foo:$apr1$OFG3Xybp$ckL0FHDAkoXYIlH9.cysT0
           #     someoneelse:$apr1$DMZX2Z4q$6SbQIfyuLQd.xmo/P0m2c.
 
-        ## Using default values from https://github.com/grafana/helm-charts/blob/main/charts/grafana/values.yaml
-        ##
         grafana:
           enabled: true
           namespaceOverride: monitoring
@@ -557,14 +555,22 @@ spec:
                 editable: true
                 options:
                   path: /var/lib/grafana/dashboards/unifi
-              - name: cluster
+              - name: services
                 orgId: 1
-                folder: 'cluster'
+                folder: 'services'
                 type: file
                 disableDeletion: true
                 editable: true
                 options:
-                  path: /var/lib/grafana/dashboards/cluster
+                  path: /var/lib/grafana/dashboards/services
+              - name: kubernetes
+                orgId: 1
+                folder: 'kubernetes'
+                type: file
+                disableDeletion: true
+                editable: true
+                options:
+                  path: /var/lib/grafana/dashboards/kubernetes
           dashboards:
             unifi:
               unifiPollerClientDPI:
