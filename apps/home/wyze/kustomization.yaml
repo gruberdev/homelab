@@ -3,7 +3,6 @@ kind: Kustomization
 bases:
 - ./base
 namespace: homeassistant
-
 patches:
 - patch: |-
     - op: add
@@ -13,10 +12,8 @@ patches:
   target:
     kind: Deployment
     name: wyze-bridge
-
 commonAnnotations:
   reloader.stakater.com/auto: "true"
-
 images:
 - name: mrlt8/wyze-bridge
-  newTag: 1.11.1
+  newTag: 1.11.3
