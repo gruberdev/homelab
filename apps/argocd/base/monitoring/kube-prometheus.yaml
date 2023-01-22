@@ -2827,10 +2827,10 @@ spec:
             resources:
               requests:
                 cpu: 250m
-                memory: 512Mi
-              limits:
-                cpu: 500m
                 memory: 1Gi
+              limits:
+                cpu: 1
+                memory: 3Gi
 
             ## Prometheus StorageSpec for persistent data
             ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/user-guides/storage.md
@@ -3618,8 +3618,8 @@ spec:
     - ApplyOutOfSyncOnly=false
     - Prune=true
     retry:
-      limit: 5
+      limit: 15
       backoff:
-        duration: 5s
+        duration: 15s
         factor: 2
-        maxDuration: 3m
+        maxDuration: 20m
