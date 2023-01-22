@@ -1762,11 +1762,11 @@ spec:
                 pullPolicy: IfNotPresent
               resources:
                 requests:
-                  cpu: 80m
-                  memory: 128Mi
-                limits:
-                  cpu: 140m
+                  cpu: 150m
                   memory: 256Mi
+                limits:
+                  cpu: 350m
+                  memory: 512Mi
               ## Provide a priority class name to the webhook patching job
               ##
               priorityClassName: ""
@@ -1973,11 +1973,11 @@ spec:
           ##
           resources:
             limits:
+              cpu: 400mm
+              memory: 1Gi
+            requests:
               cpu: 200m
               memory: 512Mi
-            requests:
-              cpu: 100m
-              memory: 256Mi
 
           # Required for use in managed kubernetes clusters (such as AWS EKS) with custom CNI (such as calico),
           # because control-plane managed by AWS cannot communicate with pods' IP CIDR and admission webhooks are not working
@@ -1987,7 +1987,8 @@ spec:
           ## Define which Nodes the Pods are scheduled on.
           ## ref: https://kubernetes.io/docs/user-guide/node-selection/
           ##
-          nodeSelector: {}
+          nodeSelector:
+            kubernetes.io/hostname: node-two
 
           ## Tolerations for use with node taints
           ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
@@ -2093,11 +2094,11 @@ spec:
             # resource config for prometheusConfigReloader
             resources:
               requests:
-                cpu: 80m
-                memory: 128Mi
-              limits:
-                cpu: 140m
+                cpu: 120m
                 memory: 256Mi
+              limits:
+                cpu: 240m
+                memory: 512Mi
 
           ## Thanos side-car image when configured
           ##
@@ -2822,11 +2823,11 @@ spec:
             ##
             resources:
               requests:
-                cpu: 100m
-                memory: 128Mi
-              limits:
-                cpu: 150m
+                cpu: 200m
                 memory: 256Mi
+              limits:
+                cpu: 400m
+                memory: 512Mi
 
             ## Prometheus StorageSpec for persistent data
             ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/user-guides/storage.md
