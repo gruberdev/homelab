@@ -2,10 +2,38 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 bases:
 - ./base
+- github.com/gruberdev/homelab/apps/data/postgres/exporter
 
 namespace: services
 
 patches:
+- patch: |-
+    - op: replace
+      path: "/spec/template/spec/containers/0/env/0"
+      value:
+        name: DATA_SOURCE_URI
+        value: db-n8n.services.svc.cluster.local
+  target:
+    kind: Deployment
+    name: postgres-exporter
+- patch: |-
+    - op: replace
+      path: "/spec/template/spec/containers/0/env/1"
+      value:
+        name: DATA_SOURCE_USER
+        value: { secretKeyRef: { name: postgres.db-n8n.credentials.postgresql.acid.zalan.do, key: username } }
+  target:
+    kind: Deployment
+    name: postgres-exporter
+- patch: |-
+    - op: replace
+      path: "/spec/template/spec/containers/0/env/2"
+      value:
+        name: DATA_SOURCE_PASS
+        value: { secretKeyRef: { name: postgres.db-n8n.credentials.postgresql.acid.zalan.do, key: password } }
+  target:
+    kind: Deployment
+    name: postgres-exporter
 - patch: |-
     - op: add
       path: "/spec/template/spec/nodeSelector"
