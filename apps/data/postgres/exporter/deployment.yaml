@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-exporter
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: postgres-exporter
+  template:
+    metadata:
+      labels:
+        app: postgres-exporter
+    spec:
+      containers:
+      - name: postgres-exporter
+        image: quay.io/prometheuscommunity/postgres-exporter:latest
+        env:
+          - name: DATA_SOURCE_URI
+            value: example-uri
+          - name: DATA_SOURCE_USER
+            valueFrom: { secretKeyRef: { name: cluster-name.team-name.credentials.postgresql.acid.zalan.do, key: username } }
+          - name: DATA_SOURCE_PASS
+            valueFrom: { secretKeyRef: { name: cluster-name.team-name.credentials.postgresql.acid.zalan.do, key: password } }
+        envFrom:
+          - configMapRef:
+              name: postgres-exporter-cm
+        ports:
+        - name: metrics
+          containerPort: 9187
+        resources:
+          limits:
+            cpu: 100m
+            memory: 200Mi
+          requests:
+            cpu: 50m
+            memory: 100Mi
