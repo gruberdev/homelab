@@ -188,7 +188,7 @@
 [homelab-crossplane]: https://github.com/gruberdev/homelab/tree/main/apps/monitoring/crossplane
 [homelab-adguard]: https://github.com/gruberdev/homelab/tree/main/apps/networking/adguard
 [homelab-unifi-controller]: https://github.com/gruberdev/homelab/tree/main/apps/networking/unifi/controller
-[homelab-zalando]: https://github.com/gruberdev/homelab/tree/main/apps/data/postgres
+[homelab-zalando]: https://github.com/gruberdev/homelab/tree/main/apps/data/postgres/operator
 [homelab-change]: https://github.com/gruberdev/homelab/tree/main/apps/services/changedetection
 [homelab-redis]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/core/redis.yaml
 [homelab-grocy]: https://github.com/gruberdev/homelab/tree/main/apps/services/grocy
