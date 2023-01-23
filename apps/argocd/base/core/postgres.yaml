@@ -12,7 +12,7 @@ spec:
   project: cluster
   source:
     repoURL: 'https://github.com/gruberdev/homelab.git'
-    path: apps/data/postgres
+    path: apps/data/postgres/operator
     targetRevision: main
   destination:
     namespace: databases
