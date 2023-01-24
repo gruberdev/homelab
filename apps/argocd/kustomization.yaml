@@ -19,6 +19,7 @@ resources:
 - base/core/crossplane.yaml
 - base/core/router.yaml
 - base/core/tailscale.yaml
+- base/core/democratic-csi.yaml
 - base/core/nvidia.yaml
 - base/core/nvidia-extra.yaml
 - base/core/sealed.yaml
@@ -50,6 +51,7 @@ resources:
 - base/monitoring/unifi-poller.yaml
 - base/monitoring/kube-prometheus.yaml
 - base/monitoring/nvidia.yaml
+- base/monitoring/nextdns.yaml
 - base/monitoring/kube-prom-crds.yaml
 # - base/monitoring/pixie.yaml
 
