@@ -1,0 +1,52 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextdns-exporter
+  labels:
+    app: nextdns-exporter
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: nextdns-exporter
+  template:
+    metadata:
+      labels:
+        app: nextdns-exporter
+    spec:
+      containers:
+        - name: exporter
+          image: ghcr.io/raylas/nextdns-exporter:0.5.1
+          envFrom:
+            - configMapRef:
+                name: nextdns-cm
+            - secretRef:
+                name: nextdns-vars
+                optional: true
+          ports:
+            - name: metrics
+              containerPort: 9948
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /metrics
+              port: 9948
+              scheme: HTTP
+            initialDelaySeconds: 180
+            periodSeconds: 60
+            timeoutSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /metrics
+              port: 9948
+              scheme: HTTP
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "50m"
+            limits:
+              memory: "256Mi"
+              cpu: "150m"

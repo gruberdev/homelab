@@ -15,12 +15,11 @@ resources:
 - base/core/postgres.yaml
 - base/core/redis.yaml
 - base/core/redis-crd.yaml
-- base/core/longhorn.yaml
 - base/core/storage.yaml
 - base/core/crossplane.yaml
-- base/core/nfs.yaml
 - base/core/router.yaml
 - base/core/tailscale.yaml
+- base/core/democratic-csi.yaml
 - base/core/nvidia.yaml
 - base/core/nvidia-extra.yaml
 - base/core/sealed.yaml
@@ -52,8 +51,8 @@ resources:
 - base/monitoring/unifi-poller.yaml
 - base/monitoring/kube-prometheus.yaml
 - base/monitoring/nvidia.yaml
+- base/monitoring/nextdns.yaml
 - base/monitoring/kube-prom-crds.yaml
-- base/monitoring/longhorn.yaml
 # - base/monitoring/pixie.yaml
 
 # Applications/Services
