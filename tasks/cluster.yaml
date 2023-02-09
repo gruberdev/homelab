@@ -36,7 +36,6 @@ vars:
   DUALSTACK: true
   ETCD: true
 env:
-  NODE_SERVER_IP: 192.168.1.10
   NODE_TWO_IP: 192.168.1.8
   NODE_ONE_IP: 192.168.1.10
   NODE_THREE_IP: 192.168.1.105
@@ -311,7 +310,7 @@ tasks:
       - |
         cat << EOF > {{.K3S_CONFIG}}
         node-name: "node-one"
-        node-ip: "${NODE_SERVER_IP},{{.IPV6_NETWORK}}"
+        node-ip: "${NODE_ONE_IP},{{.IPV6_NETWORK}}"
         cluster-init: true
         tls-san:
           - "${NODE_ONE_IP}"
