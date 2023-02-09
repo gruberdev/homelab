@@ -58,7 +58,7 @@ jobs:
         if: steps.changed-services.outputs.any_changed == 'true'
         with:
           run: |
-            find . -maxdepth 10 -name svc.yaml -exec kubeconform --verbose -exit-on-error -ignore-missing-schemas -kubernetes-version "1.25.3" -schema-location default {} \;
+            find . -maxdepth 15 -name svc.yaml -exec kubeconform --verbose -exit-on-error -ignore-missing-schemas -kubernetes-version "1.26.0" -schema-location default {} \;
 
       - name: Validate new Workloads
         id: validate-workloads
@@ -66,8 +66,8 @@ jobs:
         if: steps.changed-workloads.outputs.any_changed == 'true'
         with:
           run: |
-            find . -maxdepth 10 -name deployment.yaml -exec kubeconform --verbose -exit-on-error -ignore-missing-schemas -kubernetes-version "1.25.3" -schema-location default {} \;
-            find . -maxdepth 10 -name statefulset.yaml -exec kubeconform --verbose -exit-on-error -ignore-missing-schemas -kubernetes-version "1.25.3" -schema-location default {} \;
+            find . -maxdepth 15 -name deployment.yaml -exec kubeconform --verbose -exit-on-error -ignore-missing-schemas -kubernetes-version "1.26.0" -schema-location default {} \;
+            find . -maxdepth 15 -name statefulset.yaml -exec kubeconform --verbose -exit-on-error -ignore-missing-schemas -kubernetes-version "1.26.0" -schema-location default {} \;
 
       - name: Validate new configMaps or Secrets
         id: validate-configs
@@ -75,8 +75,29 @@ jobs:
         if: steps.changed-configs.outputs.any_changed == 'true'
         with:
           run: |
-            find . -maxdepth 10 -name cm.yaml -exec kubeconform --verbose -exit-on-error -ignore-missing-schemas -kubernetes-version "1.25.3" -schema-location default {} \;
-            find . -maxdepth 10 -name secret.yaml -exec kubeconform --verbose -exit-on-error -ignore-missing-schemas -kubernetes-version "1.25.3" -schema-location default {} \;
+            find . -maxdepth 15 -name cm.yaml -exec kubeconform --verbose -exit-on-error -ignore-missing-schemas -kubernetes-version "1.26.0" -schema-location default {} \;
+            find . -maxdepth 15 -name secret.yaml -exec kubeconform --verbose -exit-on-error -ignore-missing-schemas -kubernetes-version "1.26.0" -schema-location default {} \;
+
+      - name: Validate new Permissions and RBAC resources
+        id: validate-configs
+        uses: mathiasvr/command-output@v1
+        if: steps.changed-rbac.outputs.any_changed == 'true'
+        with:
+          run: |
+            find . -maxdepth 15 -name rb.yaml -exec kubeconform --verbose -exit-on-error -ignore-missing-schemas -kubernetes-version "1.26.0" -schema-location default {} \;
+            find . -maxdepth 15 -name crb.yaml -exec kubeconform --verbose -exit-on-error -ignore-missing-schemas -kubernetes-version "1.26.0" -schema-location default {} \;
+            find . -maxdepth 15 -name role.yaml -exec kubeconform --verbose -exit-on-error -ignore-missing-schemas -kubernetes-version "1.26.0" -schema-location default {} \;
+            find . -maxdepth 15 -name cr.yaml -exec kubeconform --verbose -exit-on-error -ignore-missing-schemas -kubernetes-version "1.26.0" -schema-location default {} \;
+
+      - name: Validate new Storage resources
+        id: validate-configs
+        uses: mathiasvr/command-output@v1
+        if: steps.changed-storage.outputs.any_changed == 'true'
+        with:
+          run: |
+            find . -maxdepth 15 -name pvc.yaml -exec kubeconform --verbose -exit-on-error -ignore-missing-schemas -kubernetes-version "1.26.0" -schema-location default {} \;
+            find . -maxdepth 15 -name pv.yaml -exec kubeconform --verbose -exit-on-error -ignore-missing-schemas -kubernetes-version "1.26.0" -schema-location default {} \;
+            find . -maxdepth 15 -name clas.yaml -exec kubeconform --verbose -exit-on-error -ignore-missing-schemas -kubernetes-version "1.26.0" -schema-location default {} \;
 
       - name: Find Comment
         uses: peter-evans/find-comment@v2
@@ -96,7 +117,7 @@ jobs:
           body: |
             <details>
 
-            <summary><b>Kubernetes Service resources</b></summary>
+            <summary><b>Kubernetes `Service` resources</b></summary>
 
             > ${{ steps.validate-service.outputs.stdout }}
 
@@ -128,9 +149,41 @@ jobs:
           body: |
             <details>
 
-            <summary><b>Kubernetes configMap and Secret resources</b></summary>
+            <summary><b>Kubernetes `configMap` and `Secret` resources</b></summary>
 
             > ${{ steps.validate-configs.outputs.stdout }}
+
+            </details>
+          edit-mode: append
+
+      - name: Update comment with RBAC resouces
+        uses: peter-evans/create-or-update-comment@v2
+        if: steps.changed-rbac.outputs.any_changed == 'true'
+        with:
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            <details>
+
+            <summary><b>Kubernetes `RoleBinding`, `ClusteRoleBinding`, `Role` and `ClusterRole` resources</b></summary>
+
+            > ${{ steps.validate-rbac.outputs.stdout }}
+
+            </details>
+          edit-mode: append
+
+      - name: Update comment with Storage resouces
+        uses: peter-evans/create-or-update-comment@v2
+        if: steps.changed-storage.outputs.any_changed == 'true'
+        with:
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            <details>
+
+            <summary><b>Kubernetes `PersistentVolume`, `PersistentVolumeClaim`, and `StorageClass` resources</b></summary>
+
+            > ${{ steps.validate-storage.outputs.stdout }}
 
             </details>
           edit-mode: append

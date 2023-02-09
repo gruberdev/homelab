@@ -34,7 +34,7 @@
 > |  [Unifi Controller][service-unifi]     |   `Networking`  | <sub>[More details][homelab-unifi-controller]</sub> | ![][argocd-unifi-controller] | ![][unifi-badge]     |
 > |     [kube-prometheus][service-kube]    |   `Monitoring`  |  <sub>[More details][homelab-kube]</sub>            |       ![][argocd-kube]       |   ![][kube-badge]    |
 > |     [Hashicorp's Vault][vault-uri]     |    `Security`   |       <sub>[Chart Values][homelab-vault]</sub>      |       ![][argocd-vault]      |  ![][vault-badge]    |
-> |    [Longhorn][longhorn-uri]            |    `Storage`    |        <sub>[More details][homelab-longhorn]</sub>  |      ![][argocd-longhorn]    | ![][longhorn-badge]  |
+> |  [democratic-csi][democratic-csi-uri]  |    `Storage`    |  <sub>[More details][homelab-democratic-csi]</sub>  |  ![][argocd-democratic-csi] | ![][democratic-csi-badge]  |
 > |     [Unifi Poller][poller-uri]        |   `Monitoring`  |      <sub>[More details][homelab-poller]</sub>      |      ![][argocd-poller]      | ![][poller-badge]    |
 > |    [RSS Hub][service-rsshub]           |    `Services`   |        <sub>[More details][homelab-rsshub]</sub>    |        ![][argocd-rss-hub]   | ![][rsshub-badge]    |
 > |            [n8n][n8n-uri]              |    `Services`   |        <sub>[More details][homelab-n8n]</sub>       |        ![][argocd-n8n]       |  ![][n8n-badge]      |
@@ -45,7 +45,6 @@
 > |   [Changedetection.io][change-uri]     |   `Services`   |       <sub>[More details][homelab-change]</sub>      |        ![][argocd-change]    |  ![][change-badge]   |
 > |      [Home Assistant][service-ha]      |   `Smart Home`   |        <sub>[More details][homelab-ha]</sub>        |        ![][argocd-ha]        |    ![][ha-badge]     |
 > |   [Wyze API Bridge][service-wyze]      |   `Smart Home`   |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-wyze]      |  ![][wyze-badge]     |
-> |[<sub>NFS External Storage Provisioner</sub>][nfs-uri] |    `Storage`     |      <sub>[More details][homelab-nfs]</sub>    |       ![][argocd-nfs] |  |
 > |[Tailscale <sub>(as sidecars)</sub>][tail-uri]    | `Networking`  | <sub>[More details][homelab-tailscale]</sub> |                             |![][tailscale-badge]  |
 > |   [Cloudflared <sub>(as proxies)</sub>][cf-uri]  |   `Networking`  | <sub>[More details][homelab-cloudflared]</sub>  |                        |   ![][cfd-badge]     |
 
@@ -144,7 +143,7 @@
 [service-wyze]: https://github.com/mrlt8/docker-wyze-bridge
 [change-uri]: https://github.com/dgtlmoon/changedetection.io
 [redis-uri]: https://github.com/spotahome/redis-operator
-[longhorn-uri]: https://longhorn.io/
+[democratic-csi-uri]: https://longhorn.io/
 [n8n-uri]: https://n8n.io/
 [vault-uri]: https://github.com/hashicorp/vault
 [grocy-uri]: https://github.com/grocy/grocy
@@ -199,7 +198,7 @@
 [homelab-n8n]: https://github.com/gruberdev/homelab/tree/main/apps/services/n8n
 [homelab-flame]: https://github.com/gruberdev/homelab/tree/main/apps/monitoring/flame
 [homelab-poller]: https://github.com/gruberdev/homelab/tree/main/apps/networking/unifi/poller
-[homelab-longhorn]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/core/longhorn.yaml
+[homelab-democratic-csi]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/core/longhorn.yaml
 [homelab-cloudflared]: https://github.com/gruberdev/homelab/tree/main/apps/networking/cloudflared
 [homelab-rssgen]: https://github.com/gruberdev/homelab/tree/main/apps/services/rss/gen
 [homelab-rsshub]: https://github.com/gruberdev/homelab/tree/main/apps/services/rss/hub
@@ -216,7 +215,7 @@
 [argocd-nfs]: https://argo.gr.wtf/api/badge?name=nfs-provisioner
 [argocd-crossplane]: https://argo.gr.wtf/api/badge?name=crossplane
 [argocd-ha]: https://argo.gr.wtf/api/badge?name=homeassistant
-[argocd-longhorn]: https://argo.gr.wtf/api/badge?name=longhorn
+[argocd-democratic-csi]: https://argo.gr.wtf/api/badge?name=longhorn
 [argocd-kuma]: https://argo.gr.wtf/api/badge?name=uptime-kuma
 [argocd-grocy]: https://argo.gr.wtf/api/badge?name=grocy
 [argocd-adguard]:https://argo.gr.wtf/api/badge?name=adguard
@@ -251,7 +250,7 @@
 
 [argo-badge]: https://img.shields.io/github/v/release/argoproj/argo-cd?label=Github&logo=github&style=flat-square
 [kube-badge]: https://img.shields.io/github/v/release/prometheus-operator/kube-prometheus?label=Github&logo=github&style=flat-square
-[longhorn-badge]: https://img.shields.io/github/v/tag/longhorn/longhorn?label=Github&logo=github&style=flat-square
+[democratic-csi-badge]: https://img.shields.io/github/v/tag/longhorn/longhorn?label=Github&logo=github&style=flat-square
 [zalando-badge]: https://img.shields.io/github/v/tag/zalando/postgres-operator?label=Github&logo=github&style=flat-square
 [mysql-badge]: https://img.shields.io/docker/v/percona/percona-xtradb-cluster-operator?label=Docker&sort=semver&logo=docker&style=flat-square
 [redis-badge]: https://img.shields.io/github/v/tag/spotahome/redis-operator?label=Github&logo=github&style=flat-square
