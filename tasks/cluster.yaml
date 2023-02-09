@@ -390,6 +390,7 @@ tasks:
 
   gen:node:two:
     cmds:
+      - sleep 0.01 && [ ! -d "/etc/rancher/k3s/" ] && mkdir -p /etc/rancher/k3s
       - rm {{.K3S_CONFIG}}
       - |
         cat << EOF > {{.K3S_CONFIG}}
@@ -469,6 +470,7 @@ tasks:
 
   gen:node:three:
     cmds:
+      - sleep 0.01 && [ ! -d "/etc/rancher/k3s/" ] && mkdir -p /etc/rancher/k3s
       - rm {{.K3S_CONFIG}}
       - |
         cat << EOF > {{.K3S_CONFIG}}
