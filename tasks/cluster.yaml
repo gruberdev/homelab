@@ -25,12 +25,16 @@ vars:
   KUBECONFIG_MODE: 0777
   DISABLE_K3S: traefik,localstorage
   K3S_PATH: /var/lib/rancher/k3s
+  K3S_CONFIG: /etc/rancher/k3s/config.yaml
   RESOLV_FILE: /etc/resolv.conf
   FLANNEL_INTERFACE: tailscale0
   CALICO_VERSION: v3.24.2
   KOORDINATOR_VERSION: 1.0.0
   NODE_ARCH: linux_x86_64
   CONTAINERD_PATH: /run/k3s/containerd/containerd.sock
+  NETWORKING: calico
+  DUALSTACK: true
+  ETCD: true
 env:
   NODE_SERVER_IP: 192.168.1.10
   NODE_TWO_IP: 192.168.1.8
@@ -40,7 +44,7 @@ env:
   INTERFACE: enp1s0
   KVVERSION: v0.5.7
   K3D_VERSION: v5.4.6
-  INSTALL_K3S_VERSION: v1.26.0+k3s2
+  INSTALL_K3S_VERSION: v1.26.1-k3s1
 
 silent: true
 
@@ -48,14 +52,16 @@ tasks:
   server:
     cmds:
       - |
-        sudo curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server" sh -s - -c config/k3s/node-one.yaml
+        sudo curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server" sh -s - -c {{.K3S_CONFIG}}
     ignore_error: true
+    interactive: true
 
   agent:
     cmds:
       - |
-        sudo curl -sfL https://get.k3s.io | sh -s - -c /etc/rancher/k3s/config.yaml
+        sudo curl -sfL https://get.k3s.io | sh -s - -c {{.K3S_CONFIG}}
     ignore_error: true
+    interactive: true
 
   dns:update:
     cmds:
@@ -301,9 +307,9 @@ tasks:
   gen:node:one:
     cmds:
       - sleep 0.01 && [ ! -d "/etc/rancher/k3s/" ] && mkdir -p /etc/rancher/k3s
-      - rm /etc/rancher/k3s/config.yaml
+      - rm {{.K3S_CONFIG}}
       - |
-        cat << EOF > /etc/rancher/k3s/config.yaml
+        cat << EOF > {{.K3S_CONFIG}}
         node-name: "node-one"
         node-ip: "${NODE_SERVER_IP},{{.IPV6_NETWORK}}"
         cluster-init: true
@@ -311,19 +317,24 @@ tasks:
           - "${NODE_ONE_IP}"
           - "${NODE_TWO_IP}"
           - "${NODE_THREE_IP}"
-        # Network
+
+        {{- if eq .NETWORKING "calico"}}
+        # Networking
         flannel-backend: "none"
         disable-network-policy: true
         disable-cloud-controller: true
+        {{- end}}
 
-        # Datastore
+        # Internal Networking
         cluster-cidr: "{{.POD_IPV4_CIDR}},{{.POD_IPV6_CIDR}}"
         service-cidr: "{{.SVC_IPV4_CIDR}},{{.SVC_IPV6_CIDR}}"
         cluster-dns: "{{.CLUSTER_DNS}}"
         cluster-domain: "{{.CLUSTER_DOMAIN}}"
 
         # ETCD
+        {{- if eq .ETCD "true"}}
         etcd-expose-metrics: true
+        {{- end}}
 
         # Auth
         write-kubeconfig-mode: "{{.KUBECONFIG_MODE}}"
@@ -335,27 +346,37 @@ tasks:
           - "node-ip=0.0.0.0"
           - "container-runtime=remote"
           - "node-status-update-frequency=4s"
+        {{- if eq .DUALSTACK "true"}}
           - "feature-gates=MixedProtocolLBService=true"
+        {{- end}}
           - "feature-gates=GracefulNodeShutdown=true"
         kube-controller-manager-arg:
           - "bind-address=0.0.0.0"
           - "node-monitor-period=4s"
           - "node-monitor-grace-period=16s"
           - "pod-eviction-timeout=20s"
+        {{- if eq .DUALSTACK "true"}}
           - "feature-gates=MixedProtocolLBService=true"
+        {{- end}}
           - "feature-gates=GracefulNodeShutdown=true"
         kube-proxy-arg:
           - "metrics-bind-address=0.0.0.0"
+        {{- if eq .DUALSTACK "true"}}
           - "feature-gates=MixedProtocolLBService=true"
+        {{- end}}
           - "feature-gates=GracefulNodeShutdown=true"
         kube-scheduler-arg:
           - "bind-address=0.0.0.0"
+        {{- if eq .DUALSTACK "true"}}
           - "feature-gates=MixedProtocolLBService=true"
+        {{- end}}
           - "feature-gates=GracefulNodeShutdown=true"
         kube-apiserver-arg:
           - "default-not-ready-toleration-seconds=20"
           - "default-unreachable-toleration-seconds=20"
+        {{- if eq .DUALSTACK "true"}}
           - "feature-gates=MixedProtocolLBService=true"
+        {{- end}}
           - "feature-gates=GracefulNodeShutdown=true"
           - "feature-gates=ReadWriteOncePod=true"
           - "anonymous-auth=true"
@@ -369,9 +390,9 @@ tasks:
 
   gen:node:two:
     cmds:
-      - rm /etc/rancher/k3s/config.yaml
+      - rm {{.K3S_CONFIG}}
       - |
-        cat << EOF > /etc/rancher/k3s/config.yaml
+        cat << EOF > {{.K3S_CONFIG}}
         node-name: "node-two"
         server: https://${NODE_ONE_IP}:6443
         node-ip: "${NODE_TWO_IP},{{.NODE_TWO_IPV6}}"
@@ -379,12 +400,16 @@ tasks:
           - "${NODE_ONE_IP}"
           - "${NODE_TWO_IP}"
           - "${NODE_THREE_IP}"
-        # Network
+
+        {{- if eq .NETWORKING "calico"}}
+
+        # Calico networking
         flannel-backend: "none"
         disable-network-policy: true
         disable-cloud-controller: true
+        {{- end}}
 
-        # Datastore
+        # Internal Networking
         cluster-cidr: "{{.POD_IPV4_CIDR}},{{.POD_IPV6_CIDR}}"
         service-cidr: "{{.SVC_IPV4_CIDR}},{{.SVC_IPV6_CIDR}}"
         cluster-dns: "{{.CLUSTER_DNS}}"
@@ -399,27 +424,38 @@ tasks:
         kubelet-arg:
           - "node-ip=0.0.0.0"
           - "node-status-update-frequency=4s"
+        {{- if eq .DUALSTACK "true"}}
           - "feature-gates=MixedProtocolLBService=true"
+        {{- end}}
           - "feature-gates=GracefulNodeShutdown=true"
         kube-controller-manager-arg:
           - "bind-address=0.0.0.0"
           - "node-monitor-period=4s"
           - "node-monitor-grace-period=16s"
           - "pod-eviction-timeout=20s"
+        {{- if eq .DUALSTACK "true"}}
           - "feature-gates=MixedProtocolLBService=true"
+        {{- end}}
           - "feature-gates=GracefulNodeShutdown=true"
         kube-proxy-arg:
           - "metrics-bind-address=0.0.0.0"
+        {{- if eq .DUALSTACK "true"}}
           - "feature-gates=MixedProtocolLBService=true"
+        {{- end}}
           - "feature-gates=GracefulNodeShutdown=true"
         kube-scheduler-arg:
           - "bind-address=0.0.0.0"
+        {{- if eq .DUALSTACK "true"}}
+          - "feature-gates=MixedProtocolLBService=true"
+        {{- end}}
           - "feature-gates=MixedProtocolLBService=true"
           - "feature-gates=GracefulNodeShutdown=true"
         kube-apiserver-arg:
           - "default-not-ready-toleration-seconds=20"
           - "default-unreachable-toleration-seconds=20"
+        {{- if eq .DUALSTACK "true"}}
           - "feature-gates=MixedProtocolLBService=true"
+        {{- end}}
           - "feature-gates=GracefulNodeShutdown=true"
           - "feature-gates=ReadWriteOncePod=true"
           - "anonymous-auth=true"
@@ -433,9 +469,9 @@ tasks:
 
   gen:node:three:
     cmds:
-      - rm /etc/rancher/k3s/config.yaml
+      - rm {{.K3S_CONFIG}}
       - |
-        cat << EOF > /etc/rancher/k3s/config.yaml
+        cat << EOF > {{.K3S_CONFIG}}
         node-name: "node-three"
         server: "https://${NODE_ONE_IP}:6443"
         token: "${K3S_NODE_TOKEN}"
@@ -443,21 +479,17 @@ tasks:
         kubelet-arg:
           - "node-ip=0.0.0.0"
           - "node-status-update-frequency=4s"
+        {{- if eq .DUALSTACK "true"}}
           - "feature-gates=MixedProtocolLBService=true"
+        {{- end}}
           - "feature-gates=GracefulNodeShutdown=true"
         kube-proxy-arg:
           - "metrics-bind-address=0.0.0.0"
+        {{- if eq .DUALSTACK "true"}}
           - "feature-gates=MixedProtocolLBService=true"
+        {{- end}}
           - "feature-gates=GracefulNodeShutdown=true"
         EOF
-    ignore_error: true
-
-  gen:nvidia:
-    cmds:
-      - sudo mkdir -p /var/lib/rancher/k3s/agent/etc/containerd
-      - |
-        sudo wget https://k3d.io/{{.K3D_VERSION}}/usage/advanced/cuda/config.toml.tmpl \
-        -O /var/lib/rancher/k3s/agent/etc/containerd/config.toml.tmpl
     ignore_error: true
 
   install:koord:
@@ -486,5 +518,4 @@ tasks:
       - kubectl label ns vault goldilocks.fairwinds.com/enabled=true
       - kubectl label ns unifi goldilocks.fairwinds.com/enabled=true
       - kubectl label ns media goldilocks.fairwinds.com/enabled=true
-
     ignore_error: true

@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nextdns-cm
+data:
+  LOG_LEVEL: "INFO"
+  METRICS_PORT: "9948"
+  METRICS_PATH: "/metrics"
+  NEXTDNS_RESULT_WINDOW: "-5m"
+  NEXTDNS_RESULT_LIMIT: "50"
