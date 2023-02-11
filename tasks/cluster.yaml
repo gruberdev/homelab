@@ -151,8 +151,7 @@ tasks:
               cidrs:
                 - "{{.IPV4_NETWORK}}"
             nodeAddressAutodetectionV6:
-              cidrs:
-                - "{{.IPV6_NETWORK}}/64"
+              canReach: 8.8.8.8
             ipPools:
               - blockSize: 26
                 cidr: "{{.POD_IPV4_CIDR}}"
