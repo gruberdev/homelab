@@ -151,8 +151,7 @@ tasks:
               cidrs:
                 - "{{.IPV4_NETWORK}}"
             nodeAddressAutodetectionV6:
-              canReach:
-                - 2001:4860:4860::8888
+              interface: enp1s0
             ipPools:
               - blockSize: 26
                 cidr: "{{.POD_IPV4_CIDR}}"
