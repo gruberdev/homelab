@@ -150,8 +150,7 @@ tasks:
             nodeAddressAutodetectionV4:
               cidrs:
                 - "{{.IPV4_NETWORK}}"
-            nodeAddressAutodetectionV6:
-              kubernetes: NodeInternalIP
+            nodeAddressAutodetectionV6: {}
             ipPools:
               - blockSize: 26
                 cidr: "{{.POD_IPV4_CIDR}}"
