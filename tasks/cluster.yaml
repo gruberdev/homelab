@@ -28,7 +28,7 @@ vars:
   K3S_CONFIG: /etc/rancher/k3s/config.yaml
   RESOLV_FILE: /etc/resolv.conf
   FLANNEL_INTERFACE: tailscale0
-  CALICO_VERSION: v3.24.2
+  CALICO_VERSION: v3.25.0
   KOORDINATOR_VERSION: 1.0.0
   NODE_ARCH: linux_x86_64
   CONTAINERD_PATH: /run/k3s/containerd/containerd.sock
