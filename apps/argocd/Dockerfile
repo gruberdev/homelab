@@ -1,5 +1,5 @@
 
-ARG HELM_VERSION=3.10.2
+ARG HELM_VERSION=3.11.1
 ARG ALPINE_VERSION=3.17.1
 ARG ARGOCD_VERSION=2.6.2
 ARG VAULT_PLUGIN_VERSION=1.13.1
@@ -19,7 +19,7 @@ USER root
 
 RUN apt-get update && \
     apt-get install -y \
-            curl &&\
+            curl && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
