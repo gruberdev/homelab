@@ -32,7 +32,7 @@ vars:
   KOORDINATOR_VERSION: 1.0.0
   NODE_ARCH: linux_x86_64
   CONTAINERD_PATH: /run/k3s/containerd/containerd.sock
-  NETWORKING: calico
+  NETWORKING: flannel
   DUALSTACK: true
   ETCD: true
 env:
@@ -325,7 +325,6 @@ tasks:
         # Internal Networking
         cluster-cidr: "{{.POD_IPV4_CIDR}},{{.POD_IPV6_CIDR}}"
         service-cidr: "{{.SVC_IPV4_CIDR}},{{.SVC_IPV6_CIDR}}"
-        cluster-dns: "{{.CLUSTER_DNS}}"
         cluster-domain: "{{.CLUSTER_DOMAIN}}"
 
         # ETCD
@@ -336,7 +335,6 @@ tasks:
         # Auth
         write-kubeconfig-mode: "{{.KUBECONFIG_MODE}}"
         write-kubeconfig: "${KUBECONFIG_PATH}"
-        token: "${K3S_NODE_TOKEN}"
 
         # Advanced Parameters
         kubelet-arg:
