@@ -19,7 +19,6 @@ vars:
   IPV6_NETWORK: fe80::b207:b52a:249f:862a
   NODE_TWO_IPV6: fe80::2d4d:d619:fc4c:e686
   NODE_THREE_IPV6: fe80::b30a:f66e:dc95:ca3a
-  CLUSTER_DNS: 10.43.0.10
   CLUSTER_DOMAIN: cluster.local
   HA_DB_NAME: k3s
   KUBECONFIG_MODE: 0777
@@ -502,17 +501,4 @@ tasks:
       - |
         koord-runtime-proxy \
         --remote-runtime-service-endpoint={{.CONTAINERD_PATH}} \
-    ignore_error: true
-
-  enable:recommender:
-    cmds:
-      - kubectl label ns monitoring goldilocks.fairwinds.com/enabled=true
-      - kubectl label ns argocd goldilocks.fairwinds.com/enabled=true
-      - kubectl label ns services goldilocks.fairwinds.com/enabled=true
-      - kubectl label ns kube-system goldilocks.fairwinds.com/enabled=true
-      - kubectl label ns longhorn-system goldilocks.fairwinds.com/enabled=true
-      - kubectl label ns infrastructure goldilocks.fairwinds.com/enabled=true
-      - kubectl label ns vault goldilocks.fairwinds.com/enabled=true
-      - kubectl label ns unifi goldilocks.fairwinds.com/enabled=true
-      - kubectl label ns media goldilocks.fairwinds.com/enabled=true
     ignore_error: true
