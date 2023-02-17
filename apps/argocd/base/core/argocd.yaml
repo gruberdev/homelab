@@ -7,7 +7,7 @@ spec:
   source:
     repoURL: 'https://github.com/gruberdev/homelab.git'
     path: apps/argocd
-    targetRevision: main
+    targetRevision: feat/new-storage
   destination:
     namespace: argocd
     name: in-cluster
