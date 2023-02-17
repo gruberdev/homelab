@@ -7,15 +7,12 @@ bases:
 - base/rb.yaml
 - base/cm.yaml
 - base/svc.yaml
-
 patchesStrategicMerge:
 - overlay/ui-deployment.yaml
 - overlay/ui-ingress.yaml
 - overlay/operator-deployment.yaml
 - overlay/cm.yaml
-
 namespace: databases
-
 patches:
 - path: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/tailscale/patch.yaml
   target:
@@ -35,7 +32,6 @@ patches:
   target:
     kind: Deployment
     name: postgres-operator-ui
-
 images:
 - name: registry.opensource.zalan.do/acid/postgres-operator-ui
   newTag: v1.9.0
