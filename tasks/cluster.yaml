@@ -32,7 +32,7 @@ vars:
   NODE_ARCH: linux_x86_64
   CONTAINERD_PATH: /run/k3s/containerd/containerd.sock
   NETWORKING: flannel
-  DUALSTACK: true
+  DUALSTACK: false
   ETCD: true
 env:
   NODE_TWO_IP: 192.168.1.8
@@ -322,8 +322,14 @@ tasks:
         {{- end}}
 
         # Internal Networking
+
+        {{- if eq .DUALSTACK "true"}}
         cluster-cidr: "{{.POD_IPV4_CIDR}},{{.POD_IPV6_CIDR}}"
         service-cidr: "{{.SVC_IPV4_CIDR}},{{.SVC_IPV6_CIDR}}"
+        {{- else }}
+        cluster-cidr: "{{.POD_IPV4_CIDR}}"
+        service-cidr: "{{.SVC_IPV4_CIDR}}"
+        {{- end}}
         cluster-domain: "{{.CLUSTER_DOMAIN}}"
 
         # ETCD
@@ -390,14 +396,18 @@ tasks:
         cat << EOF > {{.K3S_CONFIG}}
         node-name: "node-two"
         server: https://${NODE_ONE_IP}:6443
+        {{- if eq .DUALSTACK "true"}}
         node-ip: "${NODE_TWO_IP},{{.NODE_TWO_IPV6}}"
+        {{- else }}
+        node-ip: "${NODE_TWO_IP}"
+        {{- end}}
+
         tls-san:
           - "${NODE_ONE_IP}"
           - "${NODE_TWO_IP}"
           - "${NODE_THREE_IP}"
 
         {{- if eq .NETWORKING "calico"}}
-
         # Calico networking
         flannel-backend: "none"
         disable-network-policy: true
@@ -405,9 +415,15 @@ tasks:
         {{- end}}
 
         # Internal Networking
+
+        {{- if eq .DUALSTACK "true"}}
         cluster-cidr: "{{.POD_IPV4_CIDR}},{{.POD_IPV6_CIDR}}"
         service-cidr: "{{.SVC_IPV4_CIDR}},{{.SVC_IPV6_CIDR}}"
-        cluster-dns: "{{.CLUSTER_DNS}}"
+        {{- else }}
+        cluster-cidr: "{{.POD_IPV4_CIDR}}"
+        service-cidr: "{{.SVC_IPV4_CIDR}}"
+        {{- end}}
+
         cluster-domain: "{{.CLUSTER_DOMAIN}}"
 
         # Auth
