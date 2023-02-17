@@ -3,9 +3,7 @@ kind: Kustomization
 bases:
 - ./base
 - github.com/gruberdev/homelab/apps/data/postgres/exporter
-
 namespace: services
-
 patches:
 - patch: |-
     - op: replace
@@ -42,10 +40,8 @@ patches:
   target:
     kind: Deployment
     name: n8n-server
-
 commonAnnotations:
   reloader.stakater.com/auto: "true"
-
 images:
 - name: n8nio/n8n
-  newTag: 0.212.0
+  newTag: 0.216.0
