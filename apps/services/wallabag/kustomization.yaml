@@ -2,7 +2,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 bases:
 - ./base
-
 namespace: services
 patches:
 - patch: |-
@@ -13,10 +12,8 @@ patches:
   target:
     kind: Deployment
     name: wallabag
-
 images:
 - name: wallabag/wallabag
-  newTag: 2.5.2
-
+  newTag: 2.5.4
 commonAnnotations:
   reloader.stakater.com/auto: "true"
