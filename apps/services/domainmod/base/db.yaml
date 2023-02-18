@@ -33,7 +33,7 @@ spec:
         cpu: 350m
     volumeSpec:
       persistentVolumeClaim:
-        storageClassName: nfs-client
+        storageClassName: iscsi
         accessModes: ["ReadWriteMany"]
         resources:
           requests:

@@ -17,7 +17,7 @@ spec:
     version: "14"
   volume:
     size: 2Gi
-    storageClass: longhorn
+    storageClass: iscsi
   additionalVolumes:
     - name: data
       mountPath: /home/postgres/pgdata/partitions
