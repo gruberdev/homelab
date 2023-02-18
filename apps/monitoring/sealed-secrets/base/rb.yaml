@@ -11,7 +11,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: sealed-secrets-controller
-  namespace: kube-system
+  namespace: secrets
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -19,7 +19,7 @@ metadata:
   labels:
     name: sealed-secrets-service-proxier
   name: sealed-secrets-service-proxier
-  namespace: kube-system
+  namespace: secrets
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role

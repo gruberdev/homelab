@@ -7,7 +7,6 @@ includes:
   tailscale: ./tasks/tailscale.yaml
   argocd: ./tasks/argocd.yaml
   vault: ./tasks/vault.yaml
-  drone: ./tasks/drone.yaml
   vultr: ./tasks/vultr.yaml
   tf: ./tasks/terraform.yaml
   secrets: ./tasks/secrets.yaml

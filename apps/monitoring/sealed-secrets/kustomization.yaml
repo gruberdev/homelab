@@ -3,7 +3,7 @@ kind: Kustomization
 bases:
 - ./base
 
-namespace: kube-system
+namespace: secrets
 
 commonAnnotations:
   reloader.stakater.com/auto: "true"

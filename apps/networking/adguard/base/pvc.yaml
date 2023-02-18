@@ -5,7 +5,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: longhorn
+  storageClassName: iscsi
   resources:
     requests:
       storage: 1Gi
@@ -17,7 +17,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: longhorn
+  storageClassName: iscsi
   resources:
     requests:
       storage: 1Gi
