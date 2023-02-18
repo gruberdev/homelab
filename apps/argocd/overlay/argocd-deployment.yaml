@@ -19,7 +19,8 @@ spec:
           emptyDir: {}
       initContainers:
       - name: download-tools
-        image: docker.io/grubertech/argocd-sidecar:v2.5.7
+        image: docker.io/grubertech/argocd-sidecar:v2.6.2
+        imagePullPolicy: Always
         env:
           - name: AVP_VERSION
             value: 1.13.1
@@ -35,7 +36,8 @@ spec:
       containers:
       - name: avp-helm
         command: [/var/run/argocd/argocd-cmp-server]
-        image: docker.io/grubertech/argocd-sidecar:v2.5.7
+        image: docker.io/grubertech/argocd-sidecar:v2.6.2
+        imagePullPolicy: Always
         securityContext:
           runAsNonRoot: true
           runAsUser: 999
@@ -54,7 +56,8 @@ spec:
             mountPath: /usr/local/bin/argocd-vault-plugin
       - name: avp-kustomize
         command: [/var/run/argocd/argocd-cmp-server]
-        image: docker.io/grubertech/argocd-sidecar:v2.5.7
+        image: docker.io/grubertech/argocd-sidecar:v2.6.2
+        imagePullPolicy: Always
         securityContext:
           runAsNonRoot: true
           runAsUser: 999
@@ -73,7 +76,8 @@ spec:
             mountPath: /usr/local/bin/argocd-vault-plugin
       - name: avp
         command: [/var/run/argocd/argocd-cmp-server]
-        image: docker.io/grubertech/argocd-sidecar:v2.5.7
+        image: docker.io/grubertech/argocd-sidecar:v2.6.2
+        imagePullPolicy: Always
         securityContext:
           runAsNonRoot: true
           runAsUser: 999
