@@ -24,7 +24,7 @@ spec:
     version: "14"
   volume:
     size: 2Gi
-    storageClass: longhorn
+    storageClass: iscsi
   resources:
     requests:
       cpu: 300m
