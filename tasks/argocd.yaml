@@ -12,7 +12,7 @@ vars:
   CLEAR: tput reset
   INT_REGISTRY: registry.localhost
   PATH_ERROR: is not installed or correctly configured in PATH.
-  ARGOCD_VERSION: 2.5.7
+  ARGOCD_VERSION: 2.6.2
 
 silent: true
 
@@ -23,7 +23,7 @@ tasks:
         sh: git config --get remote.origin.url | sed -e 's/:/\//g'| sed -e 's/ssh\/\/\///g'| sed -e 's/git@/https:\/\//g' | sed 's/.git$//'
     cmds:
       - |
-        kubectl apply -f << EOF
+        kubectl apply -f - << EOF
         apiVersion: v1
         kind: Secret
         metadata:

@@ -19,7 +19,6 @@ vars:
   IPV6_NETWORK: fe80::b207:b52a:249f:862a
   NODE_TWO_IPV6: fe80::2d4d:d619:fc4c:e686
   NODE_THREE_IPV6: fe80::b30a:f66e:dc95:ca3a
-  CLUSTER_DNS: 10.43.0.10
   CLUSTER_DOMAIN: cluster.local
   HA_DB_NAME: k3s
   KUBECONFIG_MODE: 0777
@@ -33,7 +32,7 @@ vars:
   NODE_ARCH: linux_x86_64
   CONTAINERD_PATH: /run/k3s/containerd/containerd.sock
   NETWORKING: flannel
-  DUALSTACK: true
+  DUALSTACK: false
   ETCD: true
 env:
   NODE_TWO_IP: 192.168.1.8
@@ -323,8 +322,14 @@ tasks:
         {{- end}}
 
         # Internal Networking
+
+        {{- if eq .DUALSTACK "true"}}
         cluster-cidr: "{{.POD_IPV4_CIDR}},{{.POD_IPV6_CIDR}}"
         service-cidr: "{{.SVC_IPV4_CIDR}},{{.SVC_IPV6_CIDR}}"
+        {{- else }}
+        cluster-cidr: "{{.POD_IPV4_CIDR}}"
+        service-cidr: "{{.SVC_IPV4_CIDR}}"
+        {{- end}}
         cluster-domain: "{{.CLUSTER_DOMAIN}}"
 
         # ETCD
@@ -391,14 +396,18 @@ tasks:
         cat << EOF > {{.K3S_CONFIG}}
         node-name: "node-two"
         server: https://${NODE_ONE_IP}:6443
+        {{- if eq .DUALSTACK "true"}}
         node-ip: "${NODE_TWO_IP},{{.NODE_TWO_IPV6}}"
+        {{- else }}
+        node-ip: "${NODE_TWO_IP}"
+        {{- end}}
+
         tls-san:
           - "${NODE_ONE_IP}"
           - "${NODE_TWO_IP}"
           - "${NODE_THREE_IP}"
 
         {{- if eq .NETWORKING "calico"}}
-
         # Calico networking
         flannel-backend: "none"
         disable-network-policy: true
@@ -406,9 +415,15 @@ tasks:
         {{- end}}
 
         # Internal Networking
+
+        {{- if eq .DUALSTACK "true"}}
         cluster-cidr: "{{.POD_IPV4_CIDR}},{{.POD_IPV6_CIDR}}"
         service-cidr: "{{.SVC_IPV4_CIDR}},{{.SVC_IPV6_CIDR}}"
-        cluster-dns: "{{.CLUSTER_DNS}}"
+        {{- else }}
+        cluster-cidr: "{{.POD_IPV4_CIDR}}"
+        service-cidr: "{{.SVC_IPV4_CIDR}}"
+        {{- end}}
+
         cluster-domain: "{{.CLUSTER_DOMAIN}}"
 
         # Auth
@@ -502,17 +517,4 @@ tasks:
       - |
         koord-runtime-proxy \
         --remote-runtime-service-endpoint={{.CONTAINERD_PATH}} \
-    ignore_error: true
-
-  enable:recommender:
-    cmds:
-      - kubectl label ns monitoring goldilocks.fairwinds.com/enabled=true
-      - kubectl label ns argocd goldilocks.fairwinds.com/enabled=true
-      - kubectl label ns services goldilocks.fairwinds.com/enabled=true
-      - kubectl label ns kube-system goldilocks.fairwinds.com/enabled=true
-      - kubectl label ns longhorn-system goldilocks.fairwinds.com/enabled=true
-      - kubectl label ns infrastructure goldilocks.fairwinds.com/enabled=true
-      - kubectl label ns vault goldilocks.fairwinds.com/enabled=true
-      - kubectl label ns unifi goldilocks.fairwinds.com/enabled=true
-      - kubectl label ns media goldilocks.fairwinds.com/enabled=true
     ignore_error: true

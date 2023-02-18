@@ -70,7 +70,7 @@ spec:
             maxUnavailable: 1
           persistence:
             enabled: false
-            storageClass: "nfs-client"
+            storageClass: "iscsi"
             accessMode: ReadWriteMany
             size: 1Gi
           disableTLS: false
@@ -171,7 +171,7 @@ spec:
             maxUnavailable: 1
           persistence:
             enabled: true
-            storageClass: "nfs-client"
+            storageClass: "iscsi"
             accessMode: ReadWriteOnce
             size: 1Gi
         logcollector:
