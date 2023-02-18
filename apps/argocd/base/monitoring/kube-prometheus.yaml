@@ -2838,7 +2838,7 @@ spec:
             storageSpec:
               volumeClaimTemplate:
                 spec:
-                  storageClassName: nfs-client
+                  storageClassName: iscsi
                   accessModes: ["ReadWriteMany"]
                   resources:
                     requests:
