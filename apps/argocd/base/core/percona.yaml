@@ -71,7 +71,7 @@ spec:
           persistence:
             enabled: false
             storageClass: "iscsi"
-            accessMode: ReadWriteMany
+            accessMode: ReadWriteOnce
             size: 1Gi
           disableTLS: false
           certManager: false

@@ -5,7 +5,7 @@ metadata:
   namespace: monitoring
 spec:
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   storageClassName: iscsi
   resources:
     requests:
