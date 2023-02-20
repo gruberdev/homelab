@@ -34,7 +34,7 @@ spec:
     volumeSpec:
       persistentVolumeClaim:
         storageClassName: iscsi
-        accessModes: ["ReadWriteMany"]
+        accessModes: ["ReadWriteOnce"]
         resources:
           requests:
             storage: 2G
