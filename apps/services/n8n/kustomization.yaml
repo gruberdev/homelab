@@ -19,7 +19,7 @@ patches:
       path: "/spec/template/spec/containers/0/env/1"
       value:
         name: DATA_SOURCE_USER
-        value: { secretKeyRef: { name: postgres.db-n8n.credentials.postgresql.acid.zalan.do, key: username } }
+        valueFrom: { secretKeyRef: { name: postgres.db-n8n.credentials.postgresql.acid.zalan.do, key: username } }
   target:
     kind: Deployment
     name: postgres-exporter
@@ -28,7 +28,7 @@ patches:
       path: "/spec/template/spec/containers/0/env/2"
       value:
         name: DATA_SOURCE_PASS
-        value: { secretKeyRef: { name: postgres.db-n8n.credentials.postgresql.acid.zalan.do, key: password } }
+        valueFrom: { secretKeyRef: { name: postgres.db-n8n.credentials.postgresql.acid.zalan.do, key: password } }
   target:
     kind: Deployment
     name: postgres-exporter
