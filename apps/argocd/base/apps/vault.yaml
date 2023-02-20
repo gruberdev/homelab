@@ -242,7 +242,7 @@ spec:
             # configured default Storage Class.
             storageClass: iscsi
             # Access Mode of the storage device being used for the PVC
-            accessMode: ReadWriteMany
+            accessMode: ReadWriteOnce
             # Annotations to apply to the PVC
             annotations: {}
 
