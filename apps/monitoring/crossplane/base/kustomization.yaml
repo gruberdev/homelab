@@ -5,5 +5,4 @@ resources:
 - crb.yaml
 - deployment.yaml
 - sa.yaml
-- svc-monitor.yaml
-- prom-rules.yaml
+
