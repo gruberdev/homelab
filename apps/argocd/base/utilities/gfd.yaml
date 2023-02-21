@@ -1,0 +1,114 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gpu-feature-discovery
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: cluster
+  source:
+    repoURL: https://github.com/NVIDIA/gpu-feature-discovery.git
+    targetRevision: v0.7.0
+    path: deployments/helm/gpu-feature-discovery
+    helm:
+      releaseName: nfd-gfd-discovery
+      values: |
+          failOnInitError: true
+          migStrategy: none
+          noTimestamp: false
+          sleepInterval: 60s
+          nameOverride: ""
+          fullnameOverride: ""
+          selectorLabelsOverride: {}
+          allowDefaultNamespace: false
+          imagePullSecrets: []
+          image:
+            repository: nvcr.io/nvidia/gpu-feature-discovery
+            pullPolicy: IfNotPresent
+            # Overrides the image tag whose default is the chart appVersion.
+            tag: ""
+          updateStrategy:
+            type: RollingUpdate
+          podAnnotations: {}
+          podSecurityContext: {}
+          securityContext:
+            privileged: true
+          resources: {}
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                - matchExpressions:
+                  - key: feature.node.kubernetes.io/pci-10de.present
+                    operator: In
+                    values:
+                    - "true"
+                - matchExpressions:
+                  - key: feature.node.kubernetes.io/cpu-model.vendor_id
+                    operator: In
+                    values:
+                    - "NVIDIA"
+                - matchExpressions:
+                  - key: "nvidia.com/gpu.present"
+                    operator: In
+                    values:
+                    - "true"
+          nodeSelector:
+            kubernetes.io/hostname: node-two
+          tolerations:
+            - key: CriticalAddonsOnly
+              operator: Exists
+            - key: nvidia.com/gpu
+              operator: Exists
+              effect: NoSchedule
+          priorityClassName: "system-node-critical"
+          runtimeClassName: null
+          nfd:
+            nameOverride: node-feature-discovery
+            master:
+              extraLabelNs:
+                - nvidia.com
+              serviceAccount:
+                name: node-feature-discovery
+            worker:
+              tolerations:
+              - key: "node-role.kubernetes.io/master"
+                operator: "Equal"
+                value: ""
+                effect: "NoSchedule"
+              - key: "nvidia.com/gpu"
+                operator: "Equal"
+                value: "present"
+                effect: "NoSchedule"
+              config:
+                sources:
+                  pci:
+                    deviceClassWhitelist:
+                    - "02"
+                    - "0200"
+                    - "0207"
+                    - "0300"
+                    - "0302"
+                    deviceLabelFields:
+                    - vendor
+  destination:
+    namespace: kube-system
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: true
+    syncOptions:
+    - Validate=false
+    - CreateNamespace=false
+    - PrunePropagationPolicy=foreground
+    - PruneLast=false
+    - ApplyOutOfSyncOnly=false
+    - Prune=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 20s
+        factor: 2
+        maxDuration: 15m
