@@ -69,7 +69,7 @@ spec:
           podDisruptionBudget:
             maxUnavailable: 1
           persistence:
-            enabled: false
+            enabled: true
             storageClass: "iscsi"
             accessMode: ReadWriteOnce
             size: 1Gi
@@ -201,12 +201,10 @@ spec:
               cpu: 50m
               memory: 100Mi
         backup:
-          enabled: false
+          enabled: true
           image: ""
           # serviceAccountName: percona-xtradb-cluster-operator
-          # imagePullPolicy: Always
           imagePullSecrets: []
-          # - name: private-registry-credentials
           pitr:
             enabled: false
             storageName: s3-us-west-binlogs
@@ -219,11 +217,11 @@ spec:
               type: filesystem
               volume:
                 persistentVolumeClaim:
-                #  storageClassName: standard
+                  storageClassName: iscsi
                   accessModes: ["ReadWriteOnce"]
                   resources:
                     requests:
-                      storage: 6Gi
+                      storage: 2Gi
             # s3-us-west:
             #   type: s3
             #   verifyTLS: true
@@ -291,18 +289,17 @@ spec:
             #   keep: 3
             #   storageName: s3-us-west
         secrets:
-          ## You should be overriding these with your own or specify name for clusterSecretName.
           passwords:
-            root: insecure-root-password
-            xtrabackup: insecure-xtrabackup-password
-            monitor: insecure-monitor-password
-            clustercheck: insecure-clustercheck-password
-            proxyadmin: insecure-proxyadmin-password
+            root: <path:kv/data/percona#root-password>
+            xtrabackup: <path:kv/data/percona#xtrabackup-password>
+            monitor: <path:kv/data/percona#monitor-password>
+            clustercheck: <path:kv/data/percona#clustercheck-password>
+            proxyadmin: <path:kv/data/percona#proxyadmin-password>
             pmmserver: insecure-pmmserver-password
             # If pmmserverkey is set in that case pmmserver pass will not be included
             # pmmserverkey: set-pmmserver-api-key
-            operator: insecure-operator-password
-            replication: insecure-replication-password
+            operator: <path:kv/data/percona#operator-password>
+            replication: <path:kv/data/percona#replication-password>
           tls: {}
           # logCollector: cluster1-log-collector-secrets
           # vault: keyring-secret-vault
