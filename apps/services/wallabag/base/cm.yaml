@@ -8,7 +8,7 @@ data:
   SYMFONY__ENV__DATABASE_HOST: "db-wallabag.services.svc.cluster.local"
   SYMFONY__ENV__DATABASE_PORT: "5432"
   SYMFONY__ENV__DATABASE_NAME: "wallabag"
-  SYMFONY__ENV__DATABASE_USER: "walladmin"
+  SYMFONY__ENV__DATABASE_USER: "wallabag"
   SYMFONY__ENV__LOCALE: "en"
   SYMFONY__ENV__MAILER_HOST: "mail.smtp2go.com"
   POPULATE_DATABASE: "True"
