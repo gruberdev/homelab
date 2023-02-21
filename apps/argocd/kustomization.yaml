@@ -24,8 +24,7 @@ resources:
 - base/core/nvidia-extra.yaml
 - base/core/sealed.yaml
 - base/core/private.yaml
-- base/core/mysql.yaml
-- base/core/percona.yaml
+#- base/core/mysql.yaml
 
 # Utilities
 - base/utilities/reloader.yaml
