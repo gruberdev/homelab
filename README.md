@@ -34,7 +34,6 @@
 > |  [Unifi Controller][service-unifi]     |   `Networking`  | <sub>[More details][homelab-unifi-controller]</sub> | ![][argocd-unifi-controller] | ![][unifi-badge]     |
 > |     [kube-prometheus][service-kube]    |   `Monitoring`  |  <sub>[More details][homelab-kube]</sub>            |       ![][argocd-kube]       |   ![][kube-badge]    |
 > |     [Hashicorp's Vault][vault-uri]     |    `Security`   |       <sub>[Chart Values][homelab-vault]</sub>      |       ![][argocd-vault]      |  ![][vault-badge]    |
-> |  [democratic-csi][democratic-csi-uri]  |    `Storage`    |  <sub>[More details][homelab-democratic-csi]</sub>  |  ![][argocd-democratic-csi] | ![][democratic-csi-badge]  |
 > |     [Unifi Poller][poller-uri]        |   `Monitoring`  |      <sub>[More details][homelab-poller]</sub>      |      ![][argocd-poller]      | ![][poller-badge]    |
 > |    [RSS Hub][service-rsshub]           |    `Services`   |        <sub>[More details][homelab-rsshub]</sub>    |        ![][argocd-rss-hub]   | ![][rsshub-badge]    |
 > |            [n8n][n8n-uri]              |    `Services`   |        <sub>[More details][homelab-n8n]</sub>       |        ![][argocd-n8n]       |  ![][n8n-badge]      |
@@ -198,7 +197,6 @@
 [homelab-n8n]: https://github.com/gruberdev/homelab/tree/main/apps/services/n8n
 [homelab-flame]: https://github.com/gruberdev/homelab/tree/main/apps/monitoring/flame
 [homelab-poller]: https://github.com/gruberdev/homelab/tree/main/apps/networking/unifi/poller
-[homelab-democratic-csi]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/core/longhorn.yaml
 [homelab-cloudflared]: https://github.com/gruberdev/homelab/tree/main/apps/networking/cloudflared
 [homelab-rssgen]: https://github.com/gruberdev/homelab/tree/main/apps/services/rss/gen
 [homelab-rsshub]: https://github.com/gruberdev/homelab/tree/main/apps/services/rss/hub
