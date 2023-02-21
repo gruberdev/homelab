@@ -10,10 +10,9 @@
 
 ### Associated Resources
 
-- [Postgres Operator][operator-uri]: 
+- [Postgres Operator][operator-uri]:
 The Home Assistant depends on the operator to create and manage its main database.
 - [ArgoCD][argo-uri]: Responsible for managing Kubernetes resources related to Home Assistant
-- [nfs-subdir-external-provisioner][nfs-uri]: Storage solution for Kubernetes, responsible for managing PVCs for Home Assistant resources.
 
 ### References and links
 
@@ -36,5 +35,4 @@ kubectl apply -k ./apps/home/ha
 [github-uri]: https://github.com/home-assistant
 [operator-uri]: https://github.com/gruberdev/homelab/tree/main/apps/data/postgres
 [argo-uri]: https://github.com/gruberdev/homelab/tree/main/apps/argocd
-[nfs-uri]: https://github.com/gruberdev/homelab/tree/main/apps/data/nfs
 [awesome-uri]: https://github.com/frenck/awesome-home-assistant
