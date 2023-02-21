@@ -71,38 +71,8 @@ spec:
             effect: NoSchedule
         priorityClassName: "system-node-critical"
         runtimeClassName: "nvidia"
-        nfd:
-          nameOverride: node-feature-discovery
-          master:
-            extraLabelNs:
-              - nvidia.com
-            serviceAccount:
-              name: node-feature-discovery
-          worker:
-            tolerations:
-            - key: "node-role.kubernetes.io/master"
-              operator: "Equal"
-              value: ""
-              effect: "NoSchedule"
-            - key: "nvidia.com/gpu"
-              operator: "Equal"
-              value: "present"
-              effect: "NoSchedule"
-            config:
-              sources:
-                pci:
-                  deviceClassWhitelist:
-                  - "02"
-                  - "0200"
-                  - "0207"
-                  - "0300"
-                  - "0302"
-                  deviceLabelFields:
-                  - vendor
         gfd:
           enabled: false
-          nameOverride: gpu-feature-discovery
-          namespaceOverride: ""
   destination:
     namespace: kube-system
     name: in-cluster
