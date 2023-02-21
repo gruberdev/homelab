@@ -11,7 +11,7 @@ spec:
     chart: mysql-operator
     targetRevision: 2.0.8
     helm:
-      releaseName: pxc-operator
+      releaseName: mysql-operator
       values: |
         image:
           registry:
