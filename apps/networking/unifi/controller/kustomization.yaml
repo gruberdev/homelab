@@ -16,4 +16,4 @@ commonAnnotations:
   reloader.stakater.com/auto: "true"
 images:
 - name: jacobalberty/unifi
-  newTag: 7.3.83
+  newTag: v7.3.83
