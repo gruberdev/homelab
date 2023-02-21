@@ -5,4 +5,3 @@ resources:
 - crb.yaml
 - deployment.yaml
 - sa.yaml
-
