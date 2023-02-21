@@ -19,8 +19,6 @@
 ### Associated Resources
 
 - [ArgoCD][argo-uri]: Responsible for managing Kubernetes resources related to Zalando's operator.
-- [nfs-subdir-external-provisioner][nfs-uri]: Storage solution for Kubernetes, responsible for managing PVCs where some of the database files are stored.
-- [Longhorn][longhorn-uri]: Storage solution for Kubernetes, responsible for managing PVCs where some of the database files are stored.
 
 ### References and links
 
@@ -40,8 +38,6 @@ kubectl apply -k ./apps/data/postgres
 
 [github-uri]: https://github.com/zalando/postgres-operator
 [argo-uri]: https://github.com/gruberdev/homelab/tree/main/apps/argocd
-[nfs-uri]: https://github.com/gruberdev/homelab/tree/main/apps/data/nfs
-[longhorn-uri]: https://github.com/gruberdev/homelab/tree/main/apps/monitoring/longhorn
 [howto-uri]: https://github.com/gruberdev/homelab/blob/f7981240d33ca1679587d206364b039d6191d7bf/apps/home/ha/base/deployment.yaml#L46-L51
 [example-uri]: https://github.com/zalando/postgres-operator/blob/master/manifests/complete-postgres-manifest.yaml
 [docs-uri]: https://postgres-operator.readthedocs.io/en/latest/
