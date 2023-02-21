@@ -10,9 +10,9 @@ spec:
     admin:
     - superuser
     - createdb
-    walladmin: []
+    wallabag: []
   databases:
-    wallabag: walladmin
+    wallabag: wallabag
   postgresql:
     version: "14"
   volume:
