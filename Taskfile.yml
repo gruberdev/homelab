@@ -183,7 +183,6 @@ tasks:
       - helm repo add emberstack https://emberstack.github.io/helm-charts
       - helm repo add keyporttech https://keyporttech.github.io/helm-charts/
       - helm repo add agones https://agones.dev/chart/stable
-      - helm repo add percona https://percona.github.io/percona-helm-charts/
       - helm repo add drone https://charts.drone.io
       - helm repo add botkube https://charts.botkube.io
       - helm repo add stakater https://stakater.github.io/stakater-charts
