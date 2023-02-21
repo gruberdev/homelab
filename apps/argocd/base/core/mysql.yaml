@@ -7,35 +7,25 @@ metadata:
 spec:
   project: cluster
   source:
-    repoURL: https://percona.github.io/percona-helm-charts/
-    chart: pxc-operator
-    targetRevision: 1.12.0
+    repoURL: https://mysql.github.io/mysql-operator/
+    chart: mysql-operator
+    targetRevision: 2.0.8
     helm:
       releaseName: pxc-operator
       values: |
-        replicaCount: 1
-        operatorImageRepository: percona/percona-xtradb-cluster-operator
-        imagePullPolicy: IfNotPresent
-        image: "percona/percona-xtradb-cluster-operator:1.12.0"
-        watchAllNamespaces: true
-        operatorName: mysql-operator
-        imagePullSecrets: []
-        nameOverride: ""
-        fullnameOverride: ""
-        resources:
-          limits:
-            cpu: 200m
-            memory: 500Mi
-          requests:
-            cpu: 100m
-            memory: 20Mi
-        nodeSelector:
-          kubernetes.io/hostname: node-two
-        tolerations: []
-        affinity: {}
-        logStructured: false
-        logLevel: "INFO"
-        disableTelemetry: true
+        image:
+          registry:
+          repository: mysql
+          name: mysql-operator
+          pullPolicy: IfNotPresent
+          tag: ""
+          pullSecrets:
+            enabled: false
+            secretName:
+        envs:
+            imagesPullPolicy: IfNotPresent
+            imagesDefaultRegistry:
+            imagesDefaultRepository:
   destination:
     namespace: databases
     name: in-cluster
