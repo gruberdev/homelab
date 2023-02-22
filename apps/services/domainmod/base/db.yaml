@@ -3,7 +3,7 @@ kind: InnoDBCluster
 metadata:
   name: domainmod-db
 spec:
-  instances: 1
+  instances: 3
   tlsUseSelfSigned: true
   router:
     instances: 1
@@ -28,8 +28,8 @@ spec:
     - name: mysql
       resources:
         limits:
-          cpu: 300m
-          memory: 768Mi
+          cpu: 200m
+          memory: 400Mi
         requests:
-          cpu: 150m
-          memory: 256Mi
+          cpu: 100m
+          memory: 200Mi
