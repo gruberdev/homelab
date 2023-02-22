@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: mysql-operator
+  name: mysql-operator-crds
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
