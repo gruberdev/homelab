@@ -25,6 +25,7 @@ resources:
 - base/core/sealed.yaml
 - base/core/private.yaml
 - base/core/mysql.yaml
+- base/core/mysql-crd.yaml
 
 # Utilities
 - base/utilities/reloader.yaml

@@ -11,6 +11,7 @@ spec:
     chart: mysql-operator
     targetRevision: 2.0.8
     helm:
+      skipCrds: true
       releaseName: mysql-operator
       values: |
         image:
