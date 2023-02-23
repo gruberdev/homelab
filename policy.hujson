@@ -75,28 +75,30 @@
  		],
  	},
  	"tagOwners": {
- 		"tag:database":  ["group:admins"],
- 		"tag:network":   ["group:admins"],
- 		"tag:clients":   ["group:admins"],
- 		"tag:nodes":     ["group:admins"],
- 		"tag:matrix":    ["group:admins"],
- 		"tag:cluster":   ["group:admins"],
- 		"tag:internal":  ["group:admins"],
- 		"tag:exit":      ["group:admins"],
+ 		"tag:database":     ["group:admins"],
+ 		"tag:network":      ["group:admins"],
+ 		"tag:clients":      ["group:admins"],
+ 		"tag:nodes":        ["group:admins"],
+ 		"tag:matrix":       ["group:admins"],
+ 		"tag:cluster":      ["group:admins"],
+ 		"tag:internal":     ["group:admins"],
+ 		"tag:exit":         ["group:admins"],
+   "tag:k8s":          ["tag:k8s-operator"],
+   "tag:k8s-operator": [],
  	},
   "autoApprovers": {
    "routes": {
      "192.168.0.0/24": [
-      "tag:network",
-      "tag:clients",
-      "tag:exit",
-      "tag:nodes"
+      "tag:internal",
      ],
 					"192.168.1.0/24": [
-      "tag:network",
-      "tag:clients",
-      "tag:exit",
-      "tag:nodes"
+      "tag:internal"
+     ],
+					"10.43.0.0/16": [
+      "tag:cluster",
+     ],
+					"10.42.0.0/16": [
+      "tag:cluster",
      ],
    },
    "exitNode": ["tag:exit"],
@@ -115,4 +117,10 @@
  			"users":  ["autogroup:nonroot", "root"],
  		},
  	],
+		"nodeAttrs": [
+			{
+				"target": ["autogroup:members"],
+				"attr":   ["funnel"],
+			},
+		],
  }
