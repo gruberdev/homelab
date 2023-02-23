@@ -36,4 +36,4 @@ spec:
     serviceType: ClusterIP
     port: 6379
   nodeSelector:
-    kubernetes.io/hostname: node-two
+    kubernetes.io/hostname: node-one

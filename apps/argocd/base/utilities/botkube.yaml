@@ -278,7 +278,7 @@ spec:
         extraVolumes: []
         extraVolumeMounts: []
         nodeSelector:
-          kubernetes.io/hostname: node-two
+          kubernetes.io/hostname: node-one
         tolerations: []
         affinity: {}
         rbac:

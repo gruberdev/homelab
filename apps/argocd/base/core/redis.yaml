@@ -31,7 +31,7 @@ spec:
           serviceAccountName: redis-operator
           priorityClassName: ""
           nodeSelector:
-            kubernetes.io/hostname: node-two
+            kubernetes.io/hostname: node-one
           tolerateAllTaints: false
           tolerations: []
           affinity: {}
