@@ -54,7 +54,7 @@ spec:
                   values:
                   - "true"
         nodeSelector:
-          kubernetes.io/hostname: node-two
+          kubernetes.io/hostname: node-one
         tolerations:
           - key: CriticalAddonsOnly
             operator: Exists

@@ -6,7 +6,7 @@ spec:
   instances: 1
   tlsUseSelfSigned: true
   router:
-    instances: 1
+    instances: 3
   secretName: mysql-admin
   imagePullPolicy : IfNotPresent
   baseServerId: 1000
@@ -22,14 +22,14 @@ spec:
     accessModes: [ "ReadWriteOnce" ]
     resources:
       requests:
-        storage: "3GB"
+        storage: "5GB"
   podSpec:
     containers:
     - name: mysql
       resources:
         limits:
-          cpu: 300m
+          cpu: 500m
           memory: 768Mi
         requests:
-          cpu: 150m
-          memory: 256Mi
+          cpu: 250m
+          memory: 512Mi
