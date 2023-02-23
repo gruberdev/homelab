@@ -36,7 +36,7 @@ spec:
               cpu: 200m
               memory: 512Mi
           nodeSelector:
-            kubernetes.io/hostname: node-two
+            kubernetes.io/hostname: node-one
         patches: {}
   destination:
     namespace: monitoring

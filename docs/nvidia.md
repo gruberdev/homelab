@@ -1,12 +1,12 @@
-# How to setup a Nvidia GPU on k3s/Kubernetes
+# How to setup a Nvidia GPU on `k3s`/Kubernetes
 
 It consists of the following steps:
 1. [Verify if your GPU is compatible with CUDA][cuda-compatibility]
 2. Installing the Nvidia proprietary driver on the node <sub>(At the host level)</sub>
 3. [Install CUDA drivers][cuda-drivers]
 4. Patching the driver so the GPU has unrestricted simultaneous NVENC video encoding sessions <sub>(If you are using a consumer-grade GPU)</sub>
-5. Installing [Nvidia's container toolkit][toolkit-uri] on the node <sub> (At host level, only compatible with containerd and Docker) </sub>
-6. Configuring k3s containerd, so the Nvidia container runtime may be able to interact with the low-level interface
+5. Installing [Nvidia's container toolkit][toolkit-uri] on the node <sub> (At host level, only compatible with `containerd` and `Docker`) </sub>
+6. Configuring `k3s` `containerd`, so the Nvidia container runtime may be able to interact with the low-level interface
 7. Deploying [gpu-feature-discovery][gfd-uri] along [node-feature-discovery][nfd-uri] to your cluster
 8. Deploying [k8s-device-plugin][nvidia-driver-repo] chart as well
 9. Provisioning resources referencing the GPU for the pods that will use them

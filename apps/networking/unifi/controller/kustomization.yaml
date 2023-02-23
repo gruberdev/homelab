@@ -8,7 +8,7 @@ patches:
     - op: add
       path: "/spec/template/spec/nodeSelector"
       value:
-        kubernetes.io/hostname: node-one
+        kubernetes.io/hostname: node-five
   target:
     kind: Deployment
     name: unifi-controller

@@ -55,7 +55,7 @@ spec:
               memory: 256Mi
           # Node labels for chaos-controller-manager pod assignment
           nodeSelector:
-            kubernetes.io/hostname: node-two
+            kubernetes.io/hostname: node-one
           # Toleration labels for chaos-controller-manager pod assignment
           tolerations: []
           # Map of chaos-controller-manager node/pod affinities
@@ -140,7 +140,7 @@ spec:
               cpu: 25m
               memory: 128Mi
           nodeSelector:
-            kubernetes.io/hostname: node-two
+            kubernetes.io/hostname: node-one
           tolerations: []
           affinity: {}
           # Specify DaemonSetUpdateStrategy for chaos-daemon
@@ -171,7 +171,7 @@ spec:
           gcpClientId: ""
           gcpClientSecret: ""
           nodeSelector:
-            kubernetes.io/hostname: node-two
+            kubernetes.io/hostname: node-one
           tolerations: []
           affinity: {}
           podAnnotations: {}
@@ -303,7 +303,7 @@ spec:
           priorityClassName: ""
           # Node labels for chaos-dns-server pod assignment
           nodeSelector:
-            kubernetes.io/hostname: node-two
+            kubernetes.io/hostname: node-one
           # Toleration labels for chaos-dns-server pod assignment
           tolerations: []
           # Pod annotations of chaos-dns-server
@@ -344,7 +344,7 @@ spec:
           priorityClassName: ""
           # Node labels for prometheus pod assignment
           nodeSelector:
-            kubernetes.io/hostname: node-two
+            kubernetes.io/hostname: node-one
           # Toleration labels for prometheus pod assignment
           tolerations: []
           # Map of prometheus node/pod affinities

@@ -34,6 +34,10 @@ tasks:
       - rm config/infra-roles-secret.yaml
     ignore_error: true
 
+  label:
+    cmds:
+      - kubectl label node node-one postgres-operator=enabled
+
   decrypt:
     cmds:
       - echo -e "usage 'task postgres:decrypt -- {namespace}.{username}.{team}-{clustername}'\n"
