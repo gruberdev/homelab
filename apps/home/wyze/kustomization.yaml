@@ -8,7 +8,7 @@ patches:
     - op: add
       path: "/spec/template/spec/nodeSelector"
       value:
-        kubernetes.io/hostname: node-two
+        kubernetes.io/hostname: node-one
   target:
     kind: Deployment
     name: wyze-bridge

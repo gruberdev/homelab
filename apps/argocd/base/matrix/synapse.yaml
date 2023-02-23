@@ -88,7 +88,7 @@ spec:
             periodSeconds: 5
             initialDelaySeconds: 10
           nodeSelector:
-            kubernetes.io/hostname: node-two
+            kubernetes.io/hostname: node-one
           tolerations: []
           affinity: {}
         workers:
@@ -137,7 +137,7 @@ spec:
                 port: metrics
             initialDelaySeconds: 120
             nodeSelector:
-              kubernetes.io/hostname: node-two
+              kubernetes.io/hostname: node-one
             tolerations: []
             affinity: {}
           generic_worker:
@@ -323,7 +323,7 @@ spec:
           #    cpu: 5m
           #    memory: 15Mi
           nodeSelector:
-            kubernetes.io/hostname: node-two
+            kubernetes.io/hostname: node-one
           tolerations: []
           affinity: {}
         postgresql:
