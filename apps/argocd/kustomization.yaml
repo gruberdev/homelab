@@ -17,15 +17,16 @@ resources:
 - base/core/redis-crd.yaml
 - base/core/storage.yaml
 - base/core/crossplane.yaml
-- base/core/router.yaml
 - base/core/tailscale.yaml
-- base/core/democratic-csi.yaml
+- base/core/tailscale-operator.yaml
 - base/core/nvidia.yaml
 - base/core/nvidia-extra.yaml
 - base/core/sealed.yaml
 - base/core/private.yaml
 - base/core/mysql.yaml
 - base/core/mysql-crd.yaml
+# - base/core/democratic-csi.yaml
+# - base/core/router.yaml
 
 # Utilities
 - base/utilities/reloader.yaml
@@ -133,7 +134,7 @@ patches:
     - op: add
       path: "/spec/template/spec/nodeSelector"
       value:
-        kubernetes.io/hostname: node-one
+        kubernetes.io/hostname: node-two
         kubernetes.io/arch: amd64
   target:
     kind: Deployment
@@ -141,7 +142,7 @@ patches:
     - op: add
       path: "/spec/template/spec/nodeSelector"
       value:
-        kubernetes.io/hostname: node-one
+        kubernetes.io/hostname: node-two
         kubernetes.io/arch: amd64
   target:
     kind: StatefulSet
