@@ -658,48 +658,9 @@ spec:
           defaultDashboardsTimezone: "America/Sao_Paulo"
           adminPassword: <path:kv/data/kube-prometheus#grafana-admin-password>
           rbac:
-            ## If true, Grafana PSPs will be created
-            ##
             pspEnabled: false
-
           ingress:
-            ## If true, Grafana Ingress will be created
-            ##
             enabled: false
-
-            ## IngressClassName for Grafana Ingress.
-            ## Should be provided if Ingress is enable.
-            ##
-            # ingressClassName: nginx
-
-            ## Annotations for Grafana Ingress
-            ##
-            annotations: {}
-              # kubernetes.io/ingress.class: nginx
-              # kubernetes.io/tls-acme: "true"
-
-            ## Labels to be added to the Ingress
-            ##
-            labels: {}
-
-            ## Hostnames.
-            ## Must be provided if Ingress is enable.
-            ##
-            # hosts:
-            #   - grafana.domain.com
-            hosts: []
-
-            ## Path for grafana ingress
-            path: /
-
-            ## TLS configuration for grafana Ingress
-            ## Secret must be manually created in the namespace
-            ##
-            tls: []
-            # - secretName: grafana-general-tls
-            #   hosts:
-            #   - grafana.example.com
-
           sidecar:
             dashboards:
               enabled: true
@@ -778,7 +739,12 @@ spec:
           ##
           service:
             portName: http-web
-
+            enabled: true
+            type: ClusterIP
+            annotations:
+              tailscale.com/expose: "true"
+              tailscale.com/hostname: "grafana"
+            portName: service
           serviceMonitor:
             # If true, a ServiceMonitor CRD is created for a prometheus operator
             # https://github.com/coreos/prometheus-operator
