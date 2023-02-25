@@ -13,20 +13,6 @@ spec:
     helm:
       skipCrds: true
       releaseName: mysql-operator
-      values: |
-        image:
-          registry:
-          repository: mysql
-          name: mysql-operator
-          pullPolicy: IfNotPresent
-          tag: ""
-          pullSecrets:
-            enabled: false
-            secretName:
-        envs:
-            imagesPullPolicy: IfNotPresent
-            imagesDefaultRegistry:
-            imagesDefaultRepository:
   destination:
     namespace: databases
     name: in-cluster
@@ -43,7 +29,7 @@ spec:
     - ApplyOutOfSyncOnly=false
     - Prune=true
     retry:
-      limit: -1
+      limit: 5
       backoff:
         duration: 20s
         factor: 2
