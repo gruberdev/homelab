@@ -2,14 +2,99 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: eraser
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
 spec:
-  project: cluster
+  project: core
   source:
-    repoURL: 'https://github.com/gruberdev/homelab.git'
-    path: apps/monitoring/eraser
-    targetRevision: main
+    repoURL: https://azure.github.io/eraser/charts
+    chart: eraser
+    targetRevision: 1.0.0
+    helm:
+      releaseName: eraser
+      values: |
+        runtimeConfig:
+          health: {}
+            # healthProbeBindAddress: :8081
+          metrics: {}
+            # bindAddress: 127.0.0.1:8080
+          webhook: {}
+            # port: 9443
+          leaderElection: {}
+            # leaderElect: true
+            # resourceName: e29e094a.k8s.io
+          manager:
+            runtime: containerd
+            otlpEndpoint: ""
+            logLevel: info
+            scheduling: {}
+              # repeatInterval: ""
+              # beginImmediately: true
+            profile: {}
+              # enabled: false
+              # port: 0
+            imageJob:
+              successRatio: 1.0
+              cleanup: {}
+                # delayOnSuccess: ""
+                # delayOnFailure: ""
+            pullSecrets: [] # image pull secrets for collector/scanner/eraser
+            priorityClassName: "" # priority class name for collector/scanner/eraser
+            nodeFilter:
+              type: exclude # must be either exclude|include
+              selectors:
+                - eraser.sh/cleanup.filter
+                - kubernetes.io/os=windows
+          components:
+            collector:
+              enabled: true
+              image:
+                tag: "v1.1.0-beta.0"
+              limits:
+                cpu: 150m
+                memory: 256Mi
+              requests:
+                cpu: 50m
+                memory: 128Mi
+            scanner:
+              enabled: true
+              image:
+                tag: "v1.1.0-beta.0"
+              limits:
+                cpu: 150m
+                memory: 256Mi
+              requests:
+                cpu: 50m
+                memory: 128Mi
+              config: ""
+            eraser:
+              image:
+                tag: "v1.1.0-beta.0"
+              limits:
+                cpu: 150m
+                memory: 256Mi
+              requests:
+                cpu: 50m
+                memory: 128Mi
+        deploy:
+          image:
+            repo: ghcr.io/azure/eraser-manager
+            pullPolicy: IfNotPresent
+            # Overrides the image tag whose default is the chart appVersion.
+            tag: "v1.1.0-beta.0"
+          additionalArgs: []
+          priorityClassName: ""
+          securityContext:
+            allowPrivilegeEscalati
+          resources:
+            limits:
+              memory: 30Mi
+            requests:
+              cpu: 100m
+              memory: 20Mi
+          nodeSelector:
+            kubernetes.io/os: linux
+          tolerations: []
+          affinity: {}
+
   destination:
     namespace: eraser-system
     name: in-cluster
@@ -19,14 +104,15 @@ spec:
       selfHeal: true
       allowEmpty: true
     syncOptions:
-    - Validate=true
+    - Validate=false
     - CreateNamespace=true
     - PrunePropagationPolicy=foreground
+    - PruneLast=false
     - ApplyOutOfSyncOnly=false
     - Prune=true
     retry:
-      limit: 10
+      limit: 5
       backoff:
-        duration: 30s
+        duration: 20s
         factor: 2
         maxDuration: 15m
