@@ -2857,7 +2857,7 @@ spec:
               - job_name: 'nvidia'
                 metrics_path: /metrics
                 static_configs:
-                - targets: ['192.168.1.8:9835']
+                - targets: ['192.168.1.2:9835']
             additionalScrapeConfigsSecret: {}
               # enabled: false
               # name:
