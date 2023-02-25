@@ -35,5 +35,6 @@ spec:
   ignoreDifferences:
   - group: "*"
     kind: "*"
-    jsonPointers:
-    - /spec/versions/additionalPrinterColumns/schema/openAPIV3Schema/properties/spec/properties/keyring/properties/oci/properties/endpoints/properties/description
+    managedFieldsManagers:
+    - k3s
+    - argocd-application-controller
