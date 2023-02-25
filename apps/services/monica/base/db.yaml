@@ -1,7 +1,7 @@
 apiVersion: mysql.oracle.com/v2
 kind: InnoDBCluster
 metadata:
-  name: monica-de
+  name: monica-xe
 spec:
   instances: 1
   tlsUseSelfSigned: true
@@ -9,11 +9,6 @@ spec:
     instances: 1
   secretName: mysql-admin
   imagePullPolicy : IfNotPresent
-  datadirVolumeClaimTemplate:
-    accessModes: [ "ReadWriteOnce" ]
-    resources:
-      requests:
-        storage: "5GB"
   podSpec:
     containers:
     - name: mysql
