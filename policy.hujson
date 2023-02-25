@@ -117,10 +117,10 @@
  			"users":  ["autogroup:nonroot", "root"],
  		},
  	],
-		"nodeAttrs": [
-			{
-				"target": ["autogroup:members"],
-				"attr":   ["funnel"],
-			},
-		],
+			"nodeAttrs": [
+							{
+											"target": ["group:admins"],
+											"attr":   ["funnel"],
+							},
+			],
  }
