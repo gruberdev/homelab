@@ -1,3 +1,4 @@
+
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -7,13 +8,11 @@ metadata:
 spec:
   project: cluster
   source:
-    repoURL: https://github.com/mysql/mysql-operator.git
-    path: helm/mysql-operator/crds
-    targetRevision: HEAD
-    directory:
-      recurse: true
+    repoURL: 'https://github.com/gruberdev/homelab.git'
+    path: apps/data/mysql
+    targetRevision: main
   destination:
-    namespace: databases
+    namespace: argocd
     name: in-cluster
   syncPolicy:
     automated:
@@ -21,12 +20,10 @@ spec:
       selfHeal: true
       allowEmpty: true
     syncOptions:
-    - Validate=false
-    - CreateNamespace=false
-    - PrunePropagationPolicy=background
+    - Validate=true
+    - CreateNamespace=true
+    - PrunePropagationPolicy=foreground
     - PruneLast=true
-    - ApplyOutOfSyncOnly=false
-    - Prune=true
     - Replace=true
     - ServerSideApply=true
     retry:
