@@ -3,7 +3,7 @@ kind: Application
 metadata:
   name: eraser
 spec:
-  project: core
+  project: cluster
   source:
     repoURL: https://azure.github.io/eraser/charts
     chart: eraser
