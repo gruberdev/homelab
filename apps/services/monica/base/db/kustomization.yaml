@@ -28,7 +28,7 @@ patches:
     kind: StatefulSet
 - patch: |-
     - op: replace
-      path: "/spec/template/metadata/labels"
+      path: "/spec/template/metadata/labels/app"
       value: "monica-db"
   target:
     kind: StatefulSet
