@@ -5,7 +5,6 @@ metadata:
   labels:
     app: wallabag
 spec:
-  type: ClusterIP
   selector:
     app: wallabag
   ports:
@@ -13,3 +12,5 @@ spec:
       port: 8080
       targetPort: 80
       protocol: TCP
+  loadBalancerClass: tailscale
+  type: LoadBalancer
