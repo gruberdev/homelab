@@ -20,9 +20,6 @@ spec:
       containers:
         - name: server
           image: monica:3.7.0
-          env:
-            - name: DB_PASSWORD
-              valueFrom: { secretKeyRef: { name: monica-db, key: root } }
           envFrom:
             - configMapRef:
                 name: monica-cm
