@@ -1,23 +1,14 @@
 apiVersion: mysql.oracle.com/v2
 kind: InnoDBCluster
 metadata:
-  name: monica-db
+  name: monica-de
 spec:
   instances: 1
   tlsUseSelfSigned: true
   router:
-    instances: 3
+    instances: 1
   secretName: mysql-admin
   imagePullPolicy : IfNotPresent
-  baseServerId: 1000
-  version: 8.0.32
-  serviceAccountName: mysql-operator-sa
-  mycnf: |
-    [mysqld]
-    core_file
-    local_infile=off
-    [mysql]
-    database=monica
   datadirVolumeClaimTemplate:
     accessModes: [ "ReadWriteOnce" ]
     resources:
