@@ -33,7 +33,7 @@ spec:
         factor: 2
         maxDuration: 15m
   ignoreDifferences:
-  - group: *
-    kind: *
+  - group: "*"
+    kind: "*"
     jsonPointers:
     - /spec/versions/additionalPrinterColumns/schema/openAPIV3Schema/properties/spec/properties/keyring/properties/oci/properties/endpoints/properties/description
