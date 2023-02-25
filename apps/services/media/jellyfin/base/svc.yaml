@@ -2,10 +2,11 @@ apiVersion: v1
 kind: Service
 metadata:
   name: jellyfin-svc
+  annotations:
+    tailscale.com/hostname: "watch"
   labels:
     app: jellyfin
 spec:
-  type: ClusterIP
   selector:
     app: jellyfin
   ports:
@@ -13,3 +14,5 @@ spec:
       port: 80
       targetPort: 8096
       protocol: TCP
+  loadBalancerClass: tailscale
+  type: LoadBalancer
