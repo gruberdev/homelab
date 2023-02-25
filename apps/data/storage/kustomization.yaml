@@ -36,6 +36,7 @@ resources:
 
 #  MySQL Storage
 - base/mysql/monica.yaml
+- base/mysql/domainmod.yaml
 
 # Matrix
 # - base/matrix/synapse.yaml

@@ -23,8 +23,6 @@ resources:
 - base/core/nvidia-extra.yaml
 - base/core/sealed.yaml
 - base/core/private.yaml
-- base/core/mysql.yaml
-- base/core/mysql-crd.yaml
 # - base/core/democratic-csi.yaml
 # - base/core/router.yaml
 
