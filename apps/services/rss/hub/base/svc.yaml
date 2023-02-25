@@ -5,7 +5,6 @@ metadata:
   labels:
     app: rss-hub
 spec:
-  type: ClusterIP
   selector:
     app: rss-hub
   ports:
@@ -13,3 +12,5 @@ spec:
       port: 3001
       targetPort: 1200
       protocol: TCP
+  loadBalancerClass: tailscale
+  type: LoadBalancer
