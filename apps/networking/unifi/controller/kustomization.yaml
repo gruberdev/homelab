@@ -12,8 +12,10 @@ patches:
   target:
     kind: Deployment
     name: unifi-controller
+
 commonAnnotations:
   reloader.stakater.com/auto: "true"
+
 images:
 - name: jacobalberty/unifi
   newTag: v7.3.83

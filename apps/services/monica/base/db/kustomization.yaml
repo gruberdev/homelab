@@ -51,4 +51,3 @@ patches:
       value: "monica-db"
   target:
     kind: Service
-
