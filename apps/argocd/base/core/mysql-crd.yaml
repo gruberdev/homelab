@@ -28,6 +28,7 @@ spec:
     - ApplyOutOfSyncOnly=false
     - Prune=true
     - Replace=true
+    - ServerSideApply=true
     retry:
       limit: 5
       backoff:
