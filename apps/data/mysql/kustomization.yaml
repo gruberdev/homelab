@@ -1,0 +1,5 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- https://raw.githubusercontent.com/mysql/mysql-operator/8.0.32-2.0.8/helm/mysql-operator/crds/crd.yaml
