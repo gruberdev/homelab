@@ -4,6 +4,8 @@ metadata:
   name: rss-hub
   labels:
     app: rss-hub
+  annotations:
+    tailscale.com/hostname: "rsshub"
 spec:
   selector:
     app: rss-hub

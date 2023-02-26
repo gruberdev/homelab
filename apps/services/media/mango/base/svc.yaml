@@ -4,8 +4,9 @@ metadata:
   name: mango-svc
   labels:
     app: mango-server
+  annotations:
+    tailscale.com/hostname: "manga"
 spec:
-  type: ClusterIP
   selector:
     app: mango-server
   ports:
@@ -13,3 +14,5 @@ spec:
       port: 80
       targetPort: 9000
       protocol: TCP
+  loadBalancerClass: tailscale
+  type: LoadBalancer

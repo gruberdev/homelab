@@ -4,6 +4,8 @@ metadata:
   name: wallabag
   labels:
     app: wallabag
+  annotations:
+    tailscale.com/hostname: "wallabag"
 spec:
   selector:
     app: wallabag
