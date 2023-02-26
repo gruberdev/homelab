@@ -119,7 +119,7 @@
  	],
 			"nodeAttrs": [
 							{
-											"target": ["group:admins"],
+											"target": ["group:admins", "tag:k8s-operator", "k8s"],
 											"attr":   ["funnel"],
 							},
 			],

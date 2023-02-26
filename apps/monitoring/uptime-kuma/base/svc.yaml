@@ -3,9 +3,10 @@ kind: Service
 metadata:
   name: kuma-svc
   labels:
-    name: kuma
+    name: kuma\
+  annotations:
+    tailscale.com/hostname: "kuma"
 spec:
-  type: ClusterIP
   selector:
     app: kuma
   ports:
@@ -13,3 +14,5 @@ spec:
     protocol: TCP
     port: 8080
     targetPort: 3001
+  loadBalancerClass: tailscale
+  type: LoadBalancer

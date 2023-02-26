@@ -20,8 +20,8 @@ spec:
         app: jellyfin
     spec:
       containers:
-        - name: beets
-          image: linuxserver/jellyfin:amd64-version-10.8.4-1
+        - name: jellyfin
+          image: jellyfin/jellyfin:10.8.9
           imagePullPolicy: IfNotPresent
           livenessProbe:
             httpGet:
@@ -35,6 +35,11 @@ spec:
           envFrom:
             - configMapRef:
                 name: jellyfin-cm
+          env:
+          - name: NVIDIA_VISIBLE_DEVICES
+            value: all
+          - name: NVIDIA_DRIVER_CAPABILITIES
+            value: all
           ports:
             - name: http
               containerPort: 8096
@@ -52,20 +57,22 @@ spec:
             limits:
               cpu: 300m
               memory: 400Mi
+              nvidia.com/gpu: "1"
             requests:
               cpu: 150m
               memory: 200Mi
           volumeMounts:
-            - name: dev-dri
-              mountPath: /dev/dri
             - name: movies
               mountPath: /movies
             - name: anime
               mountPath: /anime
+            - name: cache
+              mountPath: /cache
             - name: config
               mountPath: /config
           securityContext:
             privileged: true
+      runtimeClassName: nvidia
       volumes:
         - name: config
           persistentVolumeClaim:
@@ -76,6 +83,6 @@ spec:
         - name: anime
           persistentVolumeClaim:
             claimName: anime-storage
-        - name: dev-dri
-          hostPath:
-            path: /dev/dri
+        - name: cache
+          persistentVolumeClaim:
+            claimName: cache-storage
