@@ -6,24 +6,6 @@ bases:
 namespace: media
 
 patches:
-- path: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/tailscale/patch.yaml
-  target:
-    kind: Deployment
-    name: jellyfin
-- patch: |-
-    - op: replace
-      path: "/spec/template/spec/containers/0/env/2"
-      value:
-        name: TS_HOSTNAME
-        value: "media-tv"
-    - op: replace
-      path: "/spec/template/spec/containers/0/env/3"
-      value:
-        name: DEST_PORT
-        value: "8096"
-  target:
-    kind: Deployment
-    name: jellyfin
 - patch: |-
     - op: add
       path: "/spec/template/spec/nodeSelector"
