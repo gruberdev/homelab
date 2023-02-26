@@ -4,6 +4,8 @@ metadata:
   name: change-svc
   labels:
     app: change-server
+  annotations:
+    tailscale.com/hostname: "onchange"
 spec:
   selector:
     app: change-server

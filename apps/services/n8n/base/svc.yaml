@@ -4,6 +4,8 @@ metadata:
   name: n8n
   labels:
     app: n8n-server
+  annotations:
+    tailscale.com/hostname: "n8n"
 spec:
   selector:
     app: n8n-server

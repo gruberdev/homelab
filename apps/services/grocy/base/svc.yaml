@@ -4,8 +4,9 @@ metadata:
   name: grocy-svc
   labels:
     app: grocy
+  annotations:
+    tailscale.com/hostname: "grocy"
 spec:
-  type: ClusterIP
   selector:
     app: grocy
   ports:
@@ -13,3 +14,5 @@ spec:
       port: 80
       targetPort: 80
       protocol: TCP
+  loadBalancerClass: tailscale
+  type: LoadBalancer
