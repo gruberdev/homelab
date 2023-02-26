@@ -42,7 +42,7 @@
 > |   [Changedetection.io][change-uri]     |   `Services`   |       <sub>[More details][homelab-change]</sub>      |        ![][argocd-change]    |  ![][change-badge]   |
 > |      [Home Assistant][service-ha]      |   `Smart Home`   |        <sub>[More details][homelab-ha]</sub>        |        ![][argocd-ha]        |    ![][ha-badge]     |
 > |   [Wyze API Bridge][service-wyze]      |   `Smart Home`   |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-wyze]      |  ![][wyze-badge]     |
-> |[Tailscale <sub>(as sidecars)</sub>][tail-uri]    | `Networking`  | <sub>[More details][homelab-tailscale]</sub> |                             |![][tailscale-badge]  |
+> |[Tailscale-operator][tail-uri]    | `Networking`  | <sub>[More details][homelab-tailscale]</sub> |     ![][argocd-tailscale]   |![][tailscale-badge]  |
 > |   [Cloudflared <sub>(as proxies)</sub>][cf-uri]  |   `Networking`  | <sub>[More details][homelab-cloudflared]</sub>  |                        |   ![][cfd-badge]     |
 
 <!-- >
@@ -94,6 +94,8 @@
 > - [Reloader][reloader-uri] &nbsp; <sub>Everytime a `configMap` or a `Secret` resource is created or changed, the pods that use them will be reloaded.</sub>
 > - [Trivy operator][trivy-uri] &nbsp; <sub>Generates security reports automatically in response to workload and other changes to the cluster.</sub>
 > - [Botkube][botkube-uri] &nbsp; <sub>Monitors cluster events and sends a message through Discord or Slack, capable of alerting for every kind of cluster-related issue.</sub>
+> - [Democratic-CSI][democratic-csi-uri] &nbsp; <sub>A Cloud-native, lightweight, no-dependencies required Chaos Engineering Platform for Kubernetes.</sub>
+
 > - [node-problem-detector][node-problem-uri] &nbsp; <sub>Detects if a node has been affected by an issue such as faulty hardware or kernel deadlocks, preventing scheduling.</sub>
 > - [node-feature-discovery][feature-discovery-uri] &nbsp; <sub>Detects hardware information, changes and other data and uses that to increase efficiency of the cluster.</sub>
 > - [Chaos Mesh][chaos-mesh-uri] &nbsp; <sub>A Cloud-native, lightweight, no-dependencies required Chaos Engineering Platform for Kubernetes.</sub>
@@ -239,6 +241,7 @@
 [argocd-domainmod]: https://argo.gr.wtf/api/badge?name=domainmod
 [argocd-monica]: https://argo.gr.wtf/api/badge?name=monica
 [argocd-crossplane]: https://argo.gr.wtf/api/badge?name=crossplane
+[argocd-tailscale]: https://argo.gr.wtf/api/badge?name=tailscale
 
 
 <!-- Badge Images -->
