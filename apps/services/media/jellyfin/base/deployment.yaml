@@ -79,10 +79,10 @@ spec:
             claimName: jellyfin-storage
         - name: movies
           persistentVolumeClaim:
-            claimName: movies-storage
+            claimName: movie-library
         - name: anime
           persistentVolumeClaim:
-            claimName: anime-storage
+            claimName: anime-library
         - name: cache
           persistentVolumeClaim:
             claimName: cache-storage
