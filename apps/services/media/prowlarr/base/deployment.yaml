@@ -1,0 +1,91 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prowlarr
+  labels:
+    app: prowlarr
+  annotations:
+    link.argocd.argoproj.io/external-link: http://prowlarr
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: prowlarr
+  template:
+    metadata:
+      labels:
+        app: prowlarr
+    spec:
+      containers:
+        - name: prowlarr
+          image: linuxserver/prowlarr:amd64-1.1.3
+          envFrom:
+            - configMapRef:
+                name: prowlarr-cm
+          ports:
+            - name: web
+              containerPort: 9696
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 9696
+              scheme: HTTP
+              timeoutSeconds: 3
+              periodSeconds: 10
+              initialDelaySeconds: 20
+          startupProbe:
+            httpGet:
+              path: /
+              port: 9696
+              scheme: HTTP
+              timeoutSeconds: 2
+              periodSeconds: 20
+              initialDelaySeconds: 60
+          resources:
+            limits:
+              cpu: 300m
+              memory: 512Mi
+            requests:
+              cpu: 150m
+              memory: 256Mi
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: music-downloads
+              mountPath: /downloads/music
+            - name: movie-downloads
+              mountPath: /downloads/movie
+            - name: anime-downloads
+              mountPath: /downloads/anime
+            - name: music-library
+              mountPath: /music
+            - name: movies
+              mountPath: /movies
+            - name: anime
+              mountPath: /anime
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: prowlarr-storage
+        - name: music-downloads
+          persistentVolumeClaim:
+            claimName: music-downloads
+        - name: music-library
+          persistentVolumeClaim:
+            claimName: music-storage
+        - name: movie-downloads
+          persistentVolumeClaim:
+            claimName: movie-downloads
+        - name: movies
+          persistentVolumeClaim:
+            claimName: movie-library
+        - name: anime-downloads
+          persistentVolumeClaim:
+            claimName: anime-downloads
+        - name: anime
+          persistentVolumeClaim:
+            claimName: anime-library
