@@ -5,6 +5,8 @@ metadata:
   name: grocy
   labels:
     app: grocy
+  annotations:
+    link.argocd.argoproj.io/external-link: http://grocy
 spec:
   replicas: 1
   strategy:
