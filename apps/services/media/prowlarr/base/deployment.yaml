@@ -32,18 +32,14 @@ spec:
           livenessProbe:
             httpGet:
               path: /
-              periodSeconds: 10
               port: 9696
               scheme: HTTP
-              timeoutSeconds: 3
           startupProbe:
             failureThreshold: 3
             httpGet:
               path: /
-              periodSeconds: 20
               port: 9696
               scheme: HTTP
-              timeoutSeconds: 2
           resources:
             limits:
               cpu: 350m
