@@ -69,6 +69,7 @@ resources:
 # - base/services/media/lidarr.yaml
 - base/services/media/mango.yaml
 - base/services/media/prowlarr.yaml
+- base/services/media/sonarr.yaml
 - base/services/media/jellyfin.yaml
 
 # Matrix & utilities

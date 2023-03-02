@@ -2,57 +2,52 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: prowlarr
+  name: sonarr
   labels:
-    app: prowlarr
+    app: sonarr
   annotations:
-    link.argocd.argoproj.io/external-link: http://prowlarr
+    link.argocd.argoproj.io/external-link: http://sonarr
 spec:
   replicas: 1
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      app: prowlarr
+      app: sonarr
   template:
     metadata:
       labels:
-        app: prowlarr
+        app: sonarr
     spec:
       containers:
-        - name: prowlarr
-          image: linuxserver/prowlarr:amd64-1.1.3
+        - name: sonarr
+          image: linuxserver/sonarr:amd64-3.0.9
           envFrom:
             - configMapRef:
-                name: prowlarr-cm
+                name: sonarr-cm
           ports:
             - name: web
-              containerPort: 9696
+              containerPort: 8989
               protocol: TCP
           livenessProbe:
             httpGet:
+              path: /
+              port: 8989
+              scheme: HTTP
               initialDelaySeconds: 20
-              path: /
-              periodSeconds: 10
-              port: 9696
-              scheme: HTTP
-              timeoutSeconds: 3
           startupProbe:
-            failureThreshold: 3
             httpGet:
-              initialDelaySeconds: 60
               path: /
-              periodSeconds: 20
-              port: 9696
+              port: 8989
               scheme: HTTP
-              timeoutSeconds: 2
+              initialDelaySeconds: 60
           resources:
             limits:
+              cpu: 500m
+              memory: 736Mi
+            requests:
               cpu: 350m
               memory: 512Mi
-            requests:
-              cpu: 250m
-              memory: 256Mi
           volumeMounts:
             - name: config
               mountPath: /config
@@ -71,7 +66,7 @@ spec:
       volumes:
         - name: config
           persistentVolumeClaim:
-            claimName: prowlarr-storage
+            claimName: sonarr-storage
         - name: music-downloads
           persistentVolumeClaim:
             claimName: music-downloads
