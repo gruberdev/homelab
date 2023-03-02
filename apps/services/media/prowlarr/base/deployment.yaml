@@ -31,7 +31,6 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              initialDelaySeconds: 20
               path: /
               periodSeconds: 10
               port: 9696
@@ -40,7 +39,6 @@ spec:
           startupProbe:
             failureThreshold: 3
             httpGet:
-              initialDelaySeconds: 60
               path: /
               periodSeconds: 20
               port: 9696
