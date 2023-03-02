@@ -49,12 +49,8 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /config
-            - name: music-downloads
-              mountPath: /downloads/music
-            - name: movie-downloads
-              mountPath: /downloads/movie
-            - name: anime-downloads
-              mountPath: /downloads/anime
+            - name: downloads
+              mountPath: /downloads
             - name: music-library
               mountPath: /music
             - name: movies
@@ -65,21 +61,15 @@ spec:
         - name: config
           persistentVolumeClaim:
             claimName: sonarr-storage
-        - name: music-downloads
-          persistentVolumeClaim:
-            claimName: music-downloads
         - name: music-library
           persistentVolumeClaim:
             claimName: music-storage
-        - name: movie-downloads
-          persistentVolumeClaim:
-            claimName: movie-downloads
         - name: movies
           persistentVolumeClaim:
             claimName: movie-library
-        - name: anime-downloads
+        - name: downloads
           persistentVolumeClaim:
-            claimName: anime-downloads
+            claimName: downloads-storage
         - name: anime
           persistentVolumeClaim:
             claimName: anime-library

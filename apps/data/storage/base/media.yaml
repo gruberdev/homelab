@@ -14,19 +14,6 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: music-downloads
-  namespace: media
-spec:
-  accessModes:
-    - ReadWriteOnce
-  storageClassName: iscsi
-  resources:
-    requests:
-      storage: 25Gi
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
   name: anime-library
   namespace: media
 spec:
@@ -49,32 +36,6 @@ spec:
   resources:
     requests:
       storage: 50Gi
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: anime-downloads
-  namespace: media
-spec:
-  accessModes:
-    - ReadWriteOnce
-  storageClassName: iscsi
-  resources:
-    requests:
-      storage: 100Gi
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: movie-downloads
-  namespace: media
-spec:
-  accessModes:
-    - ReadWriteOnce
-  storageClassName: iscsi
-  resources:
-    requests:
-      storage: 20Gi
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -139,7 +100,7 @@ spec:
   storageClassName: iscsi
   resources:
     requests:
-      storage: 100Gi
+      storage: 200Gi
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -152,4 +113,4 @@ spec:
   storageClassName: iscsi
   resources:
     requests:
-      storage: 100Gi
+      storage: 200Gi
