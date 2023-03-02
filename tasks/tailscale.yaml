@@ -67,32 +67,41 @@ tasks:
 
   secret:
     cmds:
-      - rm config/ts-secret.yaml
       - |
-        cat << EOF > config/ts-secret.yaml
+        kubectl apply -f - << EOF
         apiVersion: v1
         kind: Secret
         metadata:
-          name: tailscale
+          name: operator-oauth
+          namespace: tailscale
           annotations:
             reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
             reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"
             reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: ""
         stringData:
-          AUTH_KEY: $TS_KEY
+          client_id: $TAILSCALE_OAUTH2_CLIENT_ID
+          client_secret: $TAILSCALE_OAUTH2_CLIENT_SECRET
         EOF
-      - kubectl apply -f config/ts-secret.yaml -n kube-system
-      - kubectl apply -f config/ts-secret.yaml -n argocd
-      - kubectl apply -f config/ts-secret.yaml -n services
-      - kubectl apply -f config/ts-secret.yaml -n matrix
-      - kubectl apply -f config/ts-secret.yaml -n rss
-      - rm config/ts-secret.yaml
     ignore_error: true
 
   sidecar:
     cmds:
       - task: sidecar:build
       - task: sidecar:push
+
+  operator:
+    dir: apps/networking/tailscale/operator
+    preconditions:
+      - sh: 'which kustomize'
+        msg: 'kustomize {{.PATH_ERROR}}'
+      - sh: 'which kubectl'
+        msg: 'kubectl {{.PATH_ERROR}}'
+    cmds:
+      - kubectl create namespace tailscale
+      - kustomize build | kubectl apply -f -
+      - task: secret
+      - echo "Patched secret."
+    ignore_error: true
 
   sidecar:build:
     dir: apps/networking/tailscale/docker
