@@ -5,6 +5,8 @@ metadata:
   name: mango-server
   labels:
     app: mango-server
+  annotations:
+    link.argocd.argoproj.io/external-link: http://manga
 spec:
   replicas: 1
   strategy:

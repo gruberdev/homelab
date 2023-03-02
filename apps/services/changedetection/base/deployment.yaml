@@ -5,6 +5,8 @@ metadata:
   name: change-server
   labels:
     app: change-server
+  annotations:
+    link.argocd.argoproj.io/external-link: http://onchange
 spec:
   replicas: 1
   strategy:
