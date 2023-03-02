@@ -34,13 +34,11 @@ spec:
               path: /
               port: 8989
               scheme: HTTP
-              initialDelaySeconds: 20
           startupProbe:
             httpGet:
               path: /
               port: 8989
               scheme: HTTP
-              initialDelaySeconds: 60
           resources:
             limits:
               cpu: 500m
