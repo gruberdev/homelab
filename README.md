@@ -94,8 +94,7 @@
 > - [Reloader][reloader-uri] &nbsp; <sub>Everytime a `configMap` or a `Secret` resource is created or changed, the pods that use them will be reloaded.</sub>
 > - [Trivy operator][trivy-uri] &nbsp; <sub>Generates security reports automatically in response to workload and other changes to the cluster.</sub>
 > - [Botkube][botkube-uri] &nbsp; <sub>Monitors cluster events and sends a message through Discord or Slack, capable of alerting for every kind of cluster-related issue.</sub>
-> - [Democratic-CSI][democratic-csi-uri] &nbsp; <sub>A Cloud-native, lightweight, no-dependencies required Chaos Engineering Platform for Kubernetes.</sub>
-
+> - [Democratic-CSI][democratic-uri] &nbsp; <sub>[A CSI implementation][csi-uri] for multiple ZFS-based storage systems.</sub>
 > - [node-problem-detector][node-problem-uri] &nbsp; <sub>Detects if a node has been affected by an issue such as faulty hardware or kernel deadlocks, preventing scheduling.</sub>
 > - [node-feature-discovery][feature-discovery-uri] &nbsp; <sub>Detects hardware information, changes and other data and uses that to increase efficiency of the cluster.</sub>
 > - [Chaos Mesh][chaos-mesh-uri] &nbsp; <sub>A Cloud-native, lightweight, no-dependencies required Chaos Engineering Platform for Kubernetes.</sub>
@@ -114,6 +113,8 @@
 
 </details>
 
+<!-- Misc -->
+[csi-uri]: https://kubernetes-csi.github.io/docs/
 <!-- Tech tools URIs -->
 
 [drone-uri]: https://www.drone.io/
@@ -154,6 +155,7 @@
 [domainmod-uri]: https://github.com/domainmod/domainmod
 [monica-uri]: https://github.com/monicahq/monica
 [crossplane-uri]: https://github.com/crossplane/crossplane
+[democratic-uri]: https://github.com/democratic-csi/democratic-csi
 
 <!-- Cluster Utilities/Internal Tooling -->
 
