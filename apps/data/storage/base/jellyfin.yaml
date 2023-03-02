@@ -14,7 +14,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: cache-storage
+  name: jellyfin-cache
   namespace: media
 spec:
   accessModes:
