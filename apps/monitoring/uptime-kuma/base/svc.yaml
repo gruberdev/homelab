@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: kuma-svc
   labels:
-    name: kuma\
+    name: kuma
   annotations:
     tailscale.com/hostname: "kuma"
 spec:
