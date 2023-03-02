@@ -85,4 +85,4 @@ spec:
             claimName: anime-library
         - name: cache
           persistentVolumeClaim:
-            claimName: cache-storage
+            claimName: jellyfin-cache

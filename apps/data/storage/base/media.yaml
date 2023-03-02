@@ -9,7 +9,7 @@ spec:
   storageClassName: iscsi
   resources:
     requests:
-      storage: 100Gi
+      storage: 50Gi
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -22,7 +22,7 @@ spec:
   storageClassName: iscsi
   resources:
     requests:
-      storage: 200Gi
+      storage: 250Gi
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -35,7 +35,7 @@ spec:
   storageClassName: iscsi
   resources:
     requests:
-      storage: 50Gi
+      storage: 100Gi
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -113,7 +113,7 @@ spec:
   storageClassName: iscsi
   resources:
     requests:
-      storage: 100Gi
+      storage: 150Gi
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -126,4 +126,4 @@ spec:
   storageClassName: iscsi
   resources:
     requests:
-      storage: 100Gi
+      storage: 150Gi
