@@ -43,7 +43,6 @@
 > |       [Jellyfin][service-jellyfin]     |   `Media`       |  <sub>[More details][homelab-jellyfin]</sub>        |  ![][argocd-jellyfin]        |  ![][jellyfin-badge]   |
 > |           [Sonarr][service-sonarr]     |   `Media`       |  <sub>[More details][homelab-sonarr]</sub>          |  ![][argocd-sonarr]          |  ![][sonarr-badge]   |
 > |       [Prowlarr][service-prowlarr]     |   `Media`       |  <sub>[More details][homelab-prowlarr]</sub>        |  ![][argocd-prowlarr]       |  ![][prowlarr-badge]   |
-
 > |      [Home Assistant][service-ha]      |   `Smart Home`   |        <sub>[More details][homelab-ha]</sub>        |        ![][argocd-ha]        |    ![][ha-badge]     |
 > |   [Wyze API Bridge][service-wyze]      |   `Smart Home`   |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-wyze]      |  ![][wyze-badge]     |
 > |    [Tailscale-operator][tail-uri]        | `Networking`  | <sub>[More details][homelab-tailscale]</sub>         |     ![][argocd-tailscale]   |![][tailscale-badge]  |
