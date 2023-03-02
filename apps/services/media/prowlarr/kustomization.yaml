@@ -13,7 +13,7 @@ patches:
         kubernetes.io/hostname: node-one
   target:
     kind: Deployment
-    name: beets
+    name: prowlarr
 
 commonAnnotations:
   reloader.stakater.com/auto: "true"
