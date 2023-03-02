@@ -77,7 +77,7 @@ spec:
         - name: music-library
           persistentVolumeClaim:
             claimName: music-storage
-        - name: movies-downloads
+        - name: movie-downloads
           persistentVolumeClaim:
             claimName: movie-downloads
         - name: movies
