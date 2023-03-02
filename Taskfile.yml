@@ -60,10 +60,10 @@ tasks:
       - task {{.CLI_ARGS}} --summary
 
   lint:
-    desc: local-path storage
+    desc: lint testing
     preconditions:
-      - sh: "which kustomize"
-        msg: "kustomize {{.PATH_ERROR}}"
+      - sh: "which yamllint"
+        msg: "yamllint {{.PATH_ERROR}}"
     cmds:
       - yamllint -c ./.yamllint .
 
