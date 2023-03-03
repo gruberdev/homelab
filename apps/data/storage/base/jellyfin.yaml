@@ -23,3 +23,4 @@ spec:
   resources:
     requests:
       storage: 10Gi
+ sudo curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="v1.26.1+k3s1" INSTALL_K3S_EXEC="agent" sh -s - --docker -c /etc/rancher/k3s/config.yaml
