@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: bazarr
+  labels:
+    app: bazarr
+  annotations:
+    tailscale.com/hostname: "bazarr"
+spec:
+  selector:
+    app: bazarr
+  ports:
+    - name: web
+      port: 80
+      targetPort: 6767
+      protocol: TCP
+  loadBalancerClass: tailscale
+  type: LoadBalancer

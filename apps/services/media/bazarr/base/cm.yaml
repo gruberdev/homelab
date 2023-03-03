@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: bazarr-cm
+data:
+  PUID: "0"
+  PGID: "0"
+  UMASK: "002"
+  TZ: "America/Sao_Paulo"
