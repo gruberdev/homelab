@@ -1,0 +1,66 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bazarr
+  labels:
+    app: bazarr
+  annotations:
+    link.argocd.argoproj.io/external-link: http://bazarr
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: bazarr
+  template:
+    metadata:
+      labels:
+        app: bazarr
+    spec:
+      containers:
+        - name: bazarr
+          image: hotio/bazarr:release-1.2.0
+          envFrom:
+            - configMapRef:
+                name: bazarr-cm
+          ports:
+            - name: web
+              containerPort: 6767
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 6767
+              scheme: HTTP
+          startupProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 6767
+              scheme: HTTP
+          resources:
+            limits:
+              cpu: 350m
+              memory: 512Mi
+            requests:
+              cpu: 250m
+              memory: 256Mi
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: movies
+              mountPath: /movies
+            - name: anime
+              mountPath: /anime
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: bazarr-storage
+        - name: movies
+          persistentVolumeClaim:
+            claimName: movie-library
+        - name: anime
+          persistentVolumeClaim:
+            claimName: anime-library
