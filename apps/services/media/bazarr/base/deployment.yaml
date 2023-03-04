@@ -29,17 +29,16 @@ spec:
             - name: web
               containerPort: 6767
               protocol: TCP
+          readinessProbe:
+            tcpSocket:
+              port: 6767
+            initialDelaySeconds: 15
+            periodSeconds: 10
           livenessProbe:
-            httpGet:
-              path: /
+            tcpSocket:
               port: 6767
-              scheme: HTTP
-          startupProbe:
-            failureThreshold: 3
-            httpGet:
-              path: /
-              port: 6767
-              scheme: HTTP
+            initialDelaySeconds: 35
+            periodSeconds: 15
           resources:
             limits:
               cpu: 350m
