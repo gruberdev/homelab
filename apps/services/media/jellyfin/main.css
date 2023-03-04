@@ -1,0 +1,74 @@
+@import url("https://cdn.jsdelivr.net/npm/jellyskin@latest/dist/main.css");
+
+@import url('https://fonts.googleapis.com/css?family=Inter&display=swap');
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+h1 {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Adjust both "size-adjust" and "size" to modify size */
+.headerTabs.sectionTabs {
+  text-size-adjust: 110%;
+  font-size: 110%;
+}
+.pageTitle {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.emby-tab-button {
+  padding: 1.75em 1.7em;
+}
+
+/* Narrow the login form */
+#loginPage .readOnlyContent,
+#loginPage form {
+  max-width: 22em;
+}
+.countIndicator {background: #00000058;}
+/* Hide "please login" text, margin is to prevent login form moving too far up */
+#loginPage h1 {
+  display: none;
+}
+#loginPage .padded-left.padded-right.padded-bottom-page {
+  margin-top: 50px;
+}
+
+/* Hide "manual" and "forgot" buttons */
+#loginPage .raised.cancel.block.btnManual.emby-button {
+  display: none;
+}
+#loginPage .raised.cancel.block.btnForgotPassword.emby-button {
+  display: none;
+}
+
+.headerCastButton {
+  display: none;
+}
+
+.headerHomeButton {
+  display: none;
+}
+
+.headerButton.headerButtonRight.headerUserButton.paper-icon-button-light {
+  display: none;
+}
+
+#similarCollapsible {
+  display: none;
+}
+
+div.nextUpSection {
+  display: none;
+}
+
+.skinHeader.focuscontainer-x.skinHeader-withBackground.skinHeader-blurred {
+  background: none;
+  background-color: rgba(0, 0, 0, 0);
+}
+.skinHeader.focuscontainer-x.skinHeader-withBackground.skinHeader-blurred.noHomeButtonHeader {
+  background: none;
+  background-color: rgba(0, 0, 0, 0);
+}
