@@ -21,8 +21,10 @@ spec:
         - name: server
           image: domainmod/domainmod:latest
           env:
+            - name: DOMAINMOD_USER
+              valueFrom: { secretKeyRef: { name: mysql-admin, key: rootUser } }
             - name: DOMAINMOD_PASSWORD
-              valueFrom: { secretKeyRef: { name: domainmod-db, key: root } }
+              valueFrom: { secretKeyRef: { name: mysql-admin, key: rootPassword } }
           envFrom:
             - configMapRef:
                 name: domainmod-cm
