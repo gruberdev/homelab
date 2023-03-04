@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: bazarr
-          image: hotio/bazarr:release-1.2.0
+          image: linuxserver/bazarr:amd64-version-v1.2.0
           envFrom:
             - configMapRef:
                 name: bazarr-cm
