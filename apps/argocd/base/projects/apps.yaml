@@ -31,6 +31,8 @@ spec:
     server: https://kubernetes.default.svc
   - namespace: agones-system
     server: https://kubernetes.default.svc
+  - namespace: default
+    server: https://kubernetes.default.svc
   clusterResourceWhitelist:
   - group: '*'
     kind: '*'
