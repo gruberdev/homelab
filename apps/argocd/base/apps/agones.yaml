@@ -11,6 +11,7 @@ spec:
     targetRevision: release-1.30.0
     path: install/helm/agones
     helm:
+      skipCrds: true
       releaseName: agones
       values: |
         agones:
@@ -36,7 +37,7 @@ spec:
           registerWebhooks: true
           registerApiService: true
           crds:
-            install: true
+            install: false
             cleanupOnDelete: true
           serviceaccount:
             allocator:
