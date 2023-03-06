@@ -26,17 +26,20 @@
 > |:--------------------------------------:|:---------------:|:---------------------------------------------------:|:----------------------------:|:----------------------:|
 > |          [ArgoCD][argocd-uri]          |    `GitOps`     |      <sub>[More details][homelab-argocd]</sub>      |       ![][argocd-core]       | ![][argo-badge]        |
 > |    [Crossplane][crossplane-uri]        |    `GitOps`     |      <sub>[More details][homelab-crossplane]</sub>  |       ![][argocd-crossplane] | ![][crossplane-badge]  |
+> |     [Hashicorp's Vault][vault-uri]     |    `Security`   |       <sub>[Chart values][homelab-vault]</sub>      |       ![][argocd-vault]      |  ![][vault-badge]    |
 > |[<sub>Nvidia integration for k8s</sub>][nvidia-uri]|    `Driver`     |      <sub>[More details][homelab-nvidia]</sub>      |       ![][argocd-nvidia] | ![][nvidia-badge]  |
 > | [<sub>Zalando PostgreSQL Operator</sub>][p-uri] |   `Databases`   |      <sub>[More details][homelab-zalando]</sub>     |      ![][argocd-zalando]     | ![][zalando-badge]  |
 > |       [Redis Operator][redis-uri]      |   `Databases`   |       <sub>[More details][homelab-redis]</sub>      |       ![][argocd-redis]      |  ![][redis-badge]    |
 > |  [Unifi Controller][service-unifi]     |   `Networking`  | <sub>[More details][homelab-unifi-controller]</sub> | ![][argocd-unifi-controller] | ![][unifi-badge]     |
 > |     [kube-prometheus][service-kube]    |   `Monitoring`  |  <sub>[More details][homelab-kube]</sub>            |       ![][argocd-kube]       |   ![][kube-badge]    |
-> |     [Hashicorp's Vault][vault-uri]     |    `Security`   |       <sub>[Chart Values][homelab-vault]</sub>      |       ![][argocd-vault]      |  ![][vault-badge]    |
-> |     [Unifi Poller][poller-uri]        |   `Monitoring`  |      <sub>[More details][homelab-poller]</sub>      |      ![][argocd-poller]      | ![][poller-badge]    |
+> |     [Unifi Poller][poller-uri]         |   `Monitoring`  |      <sub>[More details][homelab-poller]</sub>      |      ![][argocd-poller]      | ![][poller-badge]    |
+> | [Nvidia GPU Exporter][nvidia-exp-uri]  |   `Monitoring`  | <sub>[Chart values][homelab-gpu-exporter]</sub>     | ![][argocd-gpu-exporter]  | ![][gpu-exporter-badge] |
+> |     [Uptime Kuma][kuma-uri]            |   `Monitoring`  |      <sub>[More details][homelab-kuma]</sub>          |      ![][argocd-kuma]      | ![][kuma-badge]      |
+> |       [Agones][agones-uri]             |    `Services`   |        <sub>[More details][homelab-agones]</sub>    |        ![][argocd-agones]    |  ![][agones-badge]   |
 > |    [RSS Hub][service-rsshub]           |    `Services`   |        <sub>[More details][homelab-rsshub]</sub>    |        ![][argocd-rss-hub]   | ![][rsshub-badge]    |
 > |            [n8n][n8n-uri]              |    `Services`   |        <sub>[More details][homelab-n8n]</sub>       |        ![][argocd-n8n]       |  ![][n8n-badge]      |
 > |   [Wallabag][wallabag-uri]             |   `Services`   |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-wallabag]  |  ![][wallabag-badge] |
-> |   [Grocy][grocy-uri]                 |   `Services`   |        <sub>[More details][homelab-grocy]</sub>      |        ![][argocd-grocy]  |  ![][grocy-badge] |
+> |   [Grocy][grocy-uri]                   |   `Services`   |        <sub>[More details][homelab-grocy]</sub>      |        ![][argocd-grocy]  |  ![][grocy-badge] |
 > |   [Monica][monica-uri]                 |   `Services`   |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-monica]    |  ![][monica-badge]   |
 > |   [Changedetection.io][change-uri]     |   `Services`   |       <sub>[More details][homelab-change]</sub>      |        ![][argocd-change]    |  ![][change-badge]   |
 > |           [Mango][service-mango]       |   `Media`       |  <sub>[More details][homelab-mango]</sub>           |  ![][argocd-mango]           |  ![][mango-badge]    |
@@ -143,7 +146,9 @@
 [service-wyze]: https://github.com/mrlt8/docker-wyze-bridge
 [change-uri]: https://github.com/dgtlmoon/changedetection.io
 [redis-uri]: https://github.com/spotahome/redis-operator
+[redis-uri]: https://github.com/spotahome/redis-operator
 [democratic-csi-uri]: https://longhorn.io/
+[agones-uri]: https://github.com/googleforgames/agones
 [n8n-uri]: https://n8n.io/
 [vault-uri]: https://github.com/hashicorp/vault
 [grocy-uri]: https://github.com/grocy/grocy
@@ -157,6 +162,7 @@
 [wallabag-uri]: https://github.com/wallabag/wallabag
 [domainmod-uri]: https://github.com/domainmod/domainmod
 [monica-uri]: https://github.com/monicahq/monica
+[nvidia-exp-uri]: https://github.com/utkuozdemir/nvidia_gpu_exporter
 [crossplane-uri]: https://github.com/crossplane/crossplane
 [democratic-uri]: https://github.com/democratic-csi/democratic-csi
 
@@ -211,6 +217,8 @@
 [homelab-metabase]: https://github.com/gruberdev/homelab/tree/main/apps/data/metabase
 [homelab-mango]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/mango
 [homelab-jellyfin]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/jellyfin
+[homelab-agones]: https://github.com/gruberdev/homelab/tree/main/apps/services/agones
+[homelab-gpu-exporter]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/monitoring/nvidia.yaml
 
 <!-- ArgoCD Status Badges -->
 
@@ -251,6 +259,8 @@
 [argocd-monica]: https://argo.gr.wtf/api/badge?name=monica
 [argocd-crossplane]: https://argo.gr.wtf/api/badge?name=crossplane
 [argocd-tailscale]: https://argo.gr.wtf/api/badge?name=tailscale
+[argocd-agones]: https://argo.gr.wtf/api/badge?name=agones
+[argocd-gpu-exporter]: https://argo.gr.wtf/api/badge?name=nvidia-exporter
 
 
 <!-- Badge Images -->
@@ -289,3 +299,6 @@
 [rsshub-badge]: https://img.shields.io/static/v1?label=No&message=version%20provided&color=gray&labelColor=gray&style=flat-square
 [mango-badge]: https://img.shields.io/github/v/release/getmango/mango?label=Github&logo=github&style=flat-square
 [jellyfin-badge]: https://img.shields.io/github/v/release/jellyfin/jellyfin?label=Github&logo=github&style=flat-square
+[agones-badge]: https://img.shields.io/github/v/release/googleforgames/agones?label=Github&color=blue&logo=github&sort=semver&style=flat-square
+[gpu-exporter-badge]: https://img.shields.io/github/v/release/utkuozdemir/nvidia_gpu_exporter?label=Github&logo=github&style=flat-square
+[kuma-badge]: https://img.shields.io/github/v/release/louislam/uptime-kuma?label=Github&logo=github&style=flat-square
