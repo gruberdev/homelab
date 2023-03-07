@@ -2,8 +2,6 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: agones
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
 spec:
   project: apps
   source:
@@ -24,13 +22,13 @@ spec:
                         PodHostname=true&\
                         SafeToEvict=true"
           metrics:
-            prometheusEnabled: false
+            prometheusEnabled: true
             prometheusServiceDiscovery: true
             stackdriverEnabled: false
             stackdriverProjectID: ""
             stackdriverLabels: ""
             serviceMonitor:
-              enabled: false
+              enabled: true
               interval: 30s
           rbacEnabled: true
           registerServiceAccounts: true
@@ -110,7 +108,7 @@ spec:
                 minAvailable: 1
             replicas: 1
           ping:
-            install: true
+            install: false
             pdb:
               enabled: false
               minAvailable: 1
@@ -155,7 +153,7 @@ spec:
               loadBalancerSourceRanges: []
               annotations: {}
             healthCheck:
-              initialDelaySeconds: 3
+              initialDelaySeconds: 25
               periodSeconds: 3
               failureThreshold: 3
               timeoutSeconds: 1
@@ -177,7 +175,7 @@ spec:
                 cpu: 400m
                 memory: 600Mi
             healthCheck:
-              initialDelaySeconds: 3
+              initialDelaySeconds: 25
               periodSeconds: 3
               failureThreshold: 3
               timeoutSeconds: 1
@@ -197,7 +195,7 @@ spec:
             replicas: 1
             service:
               name: agones-allocator
-              serviceType: LoadBalancer
+              serviceType: NodePort
               loadBalancerIP: ""
               loadBalancerSourceRanges: []
               annotations: {}
