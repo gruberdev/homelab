@@ -1,5 +1,6 @@
 ignore: |
   .github/workflows/*
+  services/agones/
 
 rules:
   braces: disable
