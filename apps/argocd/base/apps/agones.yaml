@@ -256,8 +256,8 @@ spec:
           namespaces:
           - default
           - agones-system
-          minPort: 30000
-          maxPort: 30100
+          minPort: 32767
+          maxPort: 34000
           podPreserveUnknownFields: false
         helm:
           installTests: false
