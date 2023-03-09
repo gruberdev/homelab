@@ -266,7 +266,6 @@ spec:
     name: in-cluster
   syncPolicy:
     automated:
-      validate: false
       prune: true
       selfHeal: true
       allowEmpty: true
