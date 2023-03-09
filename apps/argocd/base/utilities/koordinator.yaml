@@ -7,7 +7,7 @@ spec:
   source:
     repoURL: https://koordinator-sh.github.io/charts/
     chart: koordinator
-    targetRevision: 1.0.0
+    targetRevision: 1.1.1
     helm:
       releaseName: koordinator
       values: |
