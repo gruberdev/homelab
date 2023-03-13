@@ -9,4 +9,4 @@ data:
   DOMAINMOD_WEB_ROOT: ""
   DOMAINMOD_USER: "root"
   PGID: "1000"
-  PUID: "100"
+  PUID: "1000"
