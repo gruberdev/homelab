@@ -20,7 +20,9 @@ spec:
           - secretRef:
               name: secret
         ports:
-        - containerPort: 3306
+          - name: db
+            containerPort: 3306
+            protocol: TCP
         env:
         - name: MYSQL_DATABASE
           value: "monica"
