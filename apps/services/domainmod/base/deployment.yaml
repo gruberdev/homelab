@@ -24,7 +24,7 @@ spec:
             - name: DOMAINMOD_USER
               valueFrom: { secretKeyRef: { name: mysql-admin, key: rootUser } }
             - name: DOMAINMOD_PASSWORD
-              valueFrom: { secretKeyRef: { name: mysql-admin, key: rootPassword } }
+              valueFrom: { secretKeyRef: { name: mysql-admin, key: MYSQL_ROOT_PASSWORD } }
           envFrom:
             - configMapRef:
                 name: domainmod-cm
