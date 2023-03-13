@@ -18,7 +18,7 @@ spec:
         image: mysql:8
         command:
           - mysqld
-          - --sql_mode=""
+          - --sql_mode=
           - --user=root
         envFrom:
           - secretRef:
