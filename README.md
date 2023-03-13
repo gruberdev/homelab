@@ -40,7 +40,6 @@
 > |            [n8n][n8n-uri]              |    `Services`   |        <sub>[More details][homelab-n8n]</sub>       |        ![][argocd-n8n]       |  ![][n8n-badge]      |
 > |   [Wallabag][wallabag-uri]             |   `Services`   |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-wallabag]  |  ![][wallabag-badge] |
 > |   [Grocy][grocy-uri]                   |   `Services`   |        <sub>[More details][homelab-grocy]</sub>      |        ![][argocd-grocy]  |  ![][grocy-badge] |
-> |   [Monica][monica-uri]                 |   `Services`   |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-monica]    |  ![][monica-badge]   |
 > |   [Changedetection.io][change-uri]     |   `Services`   |       <sub>[More details][homelab-change]</sub>      |        ![][argocd-change]    |  ![][change-badge]   |
 > |           [Mango][service-mango]       |   `Media`       |  <sub>[More details][homelab-mango]</sub>           |  ![][argocd-mango]           |  ![][mango-badge]    |
 > |       [Jellyfin][service-jellyfin]     |   `Media`       |  <sub>[More details][homelab-jellyfin]</sub>        |  ![][argocd-jellyfin]        |  ![][jellyfin-badge]   |
@@ -160,8 +159,6 @@
 [service-mango]: https://github.com/getmango/Mango
 [service-jellyfin]: https://github.com/jellyfin/jellyfin
 [wallabag-uri]: https://github.com/wallabag/wallabag
-[domainmod-uri]: https://github.com/domainmod/domainmod
-[monica-uri]: https://github.com/monicahq/monica
 [nvidia-exp-uri]: https://github.com/utkuozdemir/nvidia_gpu_exporter
 [crossplane-uri]: https://github.com/crossplane/crossplane
 [democratic-uri]: https://github.com/democratic-csi/democratic-csi
@@ -255,8 +252,6 @@
 [argocd-mango]: https://argo.gr.wtf/api/badge?name=mango
 [argocd-jellyfin]: https://argo.gr.wtf/api/badge?name=jellyfin
 [argocd-wallabag]: https://argo.gr.wtf/api/badge?name=wallabag
-[argocd-domainmod]: https://argo.gr.wtf/api/badge?name=domainmod
-[argocd-monica]: https://argo.gr.wtf/api/badge?name=monica
 [argocd-crossplane]: https://argo.gr.wtf/api/badge?name=crossplane
 [argocd-tailscale]: https://argo.gr.wtf/api/badge?name=tailscale
 [argocd-agones]: https://argo.gr.wtf/api/badge?name=agones
@@ -291,8 +286,7 @@
 [sonarr-badge]: https://img.shields.io/github/v/release/linuxserver/docker-sonarr?label=Github&logo=github&style=flat-square
 [beets-badge]: https://img.shields.io/github/v/tag/beetbox/beets?label=Github&logo=github&style=flat-square
 [lidarr-badge]: https://img.shields.io/github/v/release/lidarr/lidarr?label=Github&color=blue&logo=github&sort=semver&style=flat-square
-[domainmod-badge]: https://img.shields.io/github/v/release/domainmod/domainmod?label=Github&color=blue&logo=github&sort=semver&style=flat-square
-[monica-badge]: https://img.shields.io/github/v/release/monicahq/monica?label=Github&color=blue&logo=github&sort=semver&style=flat-square
+[crossplane-badge]: https://img.shields.io/github/v/release/crossplane/crossplane?label=Github&color=blue&logo=github&sort=semver&style=flat-square
 [crossplane-badge]: https://img.shields.io/github/v/release/crossplane/crossplane?label=Github&color=blue&logo=github&sort=semver&style=flat-square
 [metabase-badge]: https://img.shields.io/docker/v/metabase/metabase?label=Docker&color=blue&logo=docker&sort=semver&style=flat-square
 [wallabag-badge]: https://img.shields.io/docker/v/wallabag/wallabag?label=Docker&color=blue&logo=docker&sort=semver&style=flat-square
