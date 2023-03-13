@@ -56,3 +56,9 @@ patches:
       value: "domainmod-db"
   target:
     kind: Service
+- patch: |-
+    - op: replace
+      path: "/spec/template/spec/containers/0/volumeMounts/0/mountPath"
+      value: "/config"
+  target:
+    kind: StatefulSet
