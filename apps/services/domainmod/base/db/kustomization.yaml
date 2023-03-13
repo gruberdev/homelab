@@ -10,7 +10,7 @@ namePrefix: domainmod-
 images:
 - name: mysql:8
   newName: ghcr.io/linuxserver/mariadb
-  newTag: alpine
+  newTag: latest
 
 patches:
 - patch: |-
