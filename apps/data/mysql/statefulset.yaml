@@ -16,6 +16,10 @@ spec:
       containers:
       - name: mysql
         image: mysql:8
+        command:
+          - mysqld
+          - --sql_mode=""
+          - --user=root
         envFrom:
           - secretRef:
               name: secret

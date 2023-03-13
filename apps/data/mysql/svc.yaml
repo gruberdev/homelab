@@ -10,6 +10,6 @@ spec:
     app: db
   ports:
     - name: db
-      port: 3306
+      port: 80
       targetPort: 3306
       protocol: TCP
