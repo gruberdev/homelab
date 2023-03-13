@@ -7,3 +7,18 @@ data:
   JVM_MAX_THREAD_STACK_SIZE: "1280k"
   JVM_INIT_HEAP_SIZE: "500M"
   JVM_MAX_HEAP_SIZE: "1450M"
+  gateway.config.json: |
+    {
+     "protocols": {
+      "bgp": {
+       "64501": {
+        "neighbor": {
+         "192.168.1.2" : {"remote-as": "64500"},
+         "192.168.1.4": {"remote-as": "64500"},
+         "192.168.1.10": {"remote-as": "64500"}
+        },
+        "parameters": {"router-id": "192.168.1.1"}
+       }
+      }
+     }
+    }
