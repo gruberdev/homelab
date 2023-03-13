@@ -61,6 +61,9 @@ spec:
               name: logs
             - mountPath: /unifi/cert
               name: certs
+            - mountPath: /opt/docker/unifi/data/sites/default/config.gateway.json
+              subPath: gateway.config.json
+              name: default
           resources:
             limits:
               cpu: "380m"
@@ -93,3 +96,6 @@ spec:
         - name: certs
           persistentVolumeClaim:
             claimName: unifi-certificates
+        - name: default
+          configMap:
+            name: unifi-controller-cm
