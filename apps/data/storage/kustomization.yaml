@@ -26,17 +26,11 @@ resources:
 - base/grocy.yaml
 - base/change.yaml
 - base/wallabag.yaml
-- base/monica.yaml
-- base/domainmod.yaml
 
 #  Postgres Storage
 - base/postgres/ha.yaml
 - base/postgres/n8n.yaml
 - base/postgres/wallabag.yaml
-
-#  MySQL Storage
-- base/mysql/monica.yaml
-- base/mysql/domainmod.yaml
 
 # Matrix
 # - base/matrix/synapse.yaml
