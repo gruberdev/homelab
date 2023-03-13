@@ -9,7 +9,7 @@ namePrefix: domainmod-
 
 images:
 - name: mysql:8
-  newName: ghcr.io/linuxserver/mariadb
+  newName: yobasystems/alpine-mariadb
   newTag: latest
 
 patches:
@@ -56,9 +56,3 @@ patches:
       value: "domainmod-db"
   target:
     kind: Service
-- patch: |-
-    - op: replace
-      path: "/spec/template/spec/containers/0/volumeMounts/0/mountPath"
-      value: "/config"
-  target:
-    kind: StatefulSet
