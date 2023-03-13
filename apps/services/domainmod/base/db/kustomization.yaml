@@ -62,3 +62,9 @@ patches:
       value: "/config"
   target:
     kind: StatefulSet
+- patch: |-
+    - op: add
+      path: "/spec/template/spec/containers/0/command"
+      value: ["mysqld", "--sql_mode="]
+  target:
+    kind: StatefulSet
