@@ -7,6 +7,11 @@ bases:
 namespace: services
 namePrefix: domainmod-
 
+images:
+- name: mysql:8
+  newName: ghcr.io/linuxserver/mariadb
+  newTag: alpine
+
 patches:
 - patch: |-
     - op: replace
