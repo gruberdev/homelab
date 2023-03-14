@@ -37,6 +37,7 @@
 > |     [Uptime Kuma][kuma-uri]            |   `Monitoring`  |      <sub>[More details][homelab-kuma]</sub>          |      ![][argocd-kuma]      | ![][kuma-badge]      |
 > |       [Agones][agones-uri]             |    `Services`   |        <sub>[More details][homelab-agones]</sub>    |        ![][argocd-agones]    |  ![][agones-badge]   |
 > |    [RSS Hub][service-rsshub]           |    `Services`   |        <sub>[More details][homelab-rsshub]</sub>    |        ![][argocd-rss-hub]   | ![][rsshub-badge]    |
+> |    [Feedpushr][service-feedpushr]      |    `Services`   |        <sub>[More details][homelab-feedpushr]</sub>    |        ![][argocd-feedpushr]   | ![][fedpushr-badge]    |
 > |            [n8n][n8n-uri]              |    `Services`   |        <sub>[More details][homelab-n8n]</sub>       |        ![][argocd-n8n]       |  ![][n8n-badge]      |
 > |   [Wallabag][wallabag-uri]             |   `Services`   |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-wallabag]  |  ![][wallabag-badge] |
 > |   [Grocy][grocy-uri]                   |   `Services`   |        <sub>[More details][homelab-grocy]</sub>      |        ![][argocd-grocy]  |  ![][grocy-badge] |
@@ -130,6 +131,7 @@
 [kuma-uri]: https://github.com/louislam/uptime-kuma
 [service-rssgen]: https://github.com/damoeb/rss-proxy
 [service-rsshub]: https://github.com/DIYgod/RSSHub
+[service-feedpushr]: https://github.com/ncarlier/feedpushr
 [service-beets]: https://github.com/beetbox/beets
 [service-lidarr]: https://github.com/Lidarr/Lidarr
 [service-metabase]: https://www.metabase.com/
@@ -209,6 +211,7 @@
 [homelab-sonarr]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/sonarr
 [homelab-prowlarr]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/prowlarr
 [homelab-rsshub]: https://github.com/gruberdev/homelab/tree/main/apps/services/rss/hub
+[homelab-feedpushr]: https://github.com/gruberdev/homelab/tree/main/apps/services/rss/feedpushr
 [homelab-beets]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/beets
 [homelab-lidarr]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/lidarr
 [homelab-metabase]: https://github.com/gruberdev/homelab/tree/main/apps/data/metabase
@@ -243,6 +246,7 @@
 [argocd-poller]: https://argo.gr.wtf/api/badge?name=unifi-poller
 [argocd-rss-gen]: https://argo.gr.wtf/api/badge?name=rss-gen
 [argocd-rss-hub]: https://argo.gr.wtf/api/badge?name=rss-hub
+[argocd-feedpushr]: https://argo.gr.wtf/api/badge?name=feedpushr
 [argocd-change]: https://argo.gr.wtf/api/badge?name=changedetection
 [argocd-beets]: https://argo.gr.wtf/api/badge?name=beets
 [argocd-lidarr]: https://argo.gr.wtf/api/badge?name=lidarr
@@ -287,10 +291,10 @@
 [beets-badge]: https://img.shields.io/github/v/tag/beetbox/beets?label=Github&logo=github&style=flat-square
 [lidarr-badge]: https://img.shields.io/github/v/release/lidarr/lidarr?label=Github&color=blue&logo=github&sort=semver&style=flat-square
 [crossplane-badge]: https://img.shields.io/github/v/release/crossplane/crossplane?label=Github&color=blue&logo=github&sort=semver&style=flat-square
-[crossplane-badge]: https://img.shields.io/github/v/release/crossplane/crossplane?label=Github&color=blue&logo=github&sort=semver&style=flat-square
 [metabase-badge]: https://img.shields.io/docker/v/metabase/metabase?label=Docker&color=blue&logo=docker&sort=semver&style=flat-square
 [wallabag-badge]: https://img.shields.io/docker/v/wallabag/wallabag?label=Docker&color=blue&logo=docker&sort=semver&style=flat-square
 [rsshub-badge]: https://img.shields.io/static/v1?label=No&message=version%20provided&color=gray&labelColor=gray&style=flat-square
+[feedpushr-badge]: https://img.shields.io/github/v/release/ncarlier/feedpushr?label=Github&color=blue&logo=github&sort=semver&style=flat-square
 [mango-badge]: https://img.shields.io/github/v/release/getmango/mango?label=Github&logo=github&style=flat-square
 [jellyfin-badge]: https://img.shields.io/github/v/release/jellyfin/jellyfin?label=Github&logo=github&style=flat-square
 [agones-badge]: https://img.shields.io/github/v/release/googleforgames/agones?label=Github&color=blue&logo=github&sort=semver&style=flat-square
