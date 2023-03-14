@@ -1,0 +1,51 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: feedpushr
+  labels:
+    app: feedpushr
+  annotations:
+    link.argocd.argoproj.io/external-link: http://feedpushr
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: feedpushr
+  template:
+    metadata:
+      labels:
+        app: feedpushr
+    spec:
+      containers:
+        - name: feedpushr
+          image: ncarlier/feedpushr
+          envFrom:
+            - configMapRef:
+                name: feedpushr-config
+          ports:
+            - name: web
+              containerPort: 8080
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 80m
+              memory: 100Mi
+            limits:
+              cpu: 230m
+              memory: 400Mi
+          volumeMounts:
+            - name: database
+              mountPath: /var/opt
+        - name: auth
+          mountPath: /etc/feedpushr.htpasswd
+          readOnly: true
+      volumes:
+        - name: auth
+          secret:
+            secretName: feedpushr-vars
+        - name: database
+          persistentVolumeClaim:
+            claimName: feedpushr-database
