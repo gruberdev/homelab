@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: feedpushr-config
+data:
+  TZ: "America/Sao_Paulo"
+  FP_AUTHORIZED_USERNAME: "gruber"
+  FP_CACHE_RETENTION: "72h"
+  FP_CLEAR_CACHE: "false"
+  FP_CLEAR_CONFIG: "false"
+  FP_DB: "boltdb://var/opt/feedpushr.db"
+  FP_DELAY: "1m"
+  FP_FAN_OUT_DELAY: "0s"
+  FP_EXPLORE_PROVIDER": "default"
+  FP_IMPORT: ""
+  FP_LISTEN_ADDR: ":8080"
+  FP_LOG_LEVEL: "info"
+  FP_LOG_OUTPUT: ""
+  FP_LOG_PRETTY: "false"
+  FP_MAX_NB_FEEDS: "0"
+  FP_MAX_NB_OUTPUTS: "0"
+  FP_PLUGINS: ""
+  FP_PUBLIC_URL: ""
+  FP_SENTRY_DSN: ""
+  FP_TIMEOUT: "5s"
+  FP_AUTHN: "/etc/feedpushr.htpasswd"
