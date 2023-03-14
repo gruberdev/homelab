@@ -10,7 +10,6 @@ config/tls/*.pem
 cluster-keys*
 db.yaml
 sealed.yaml
-secret.yaml
 values.yaml
 apps/argocd/overlay/*.json
 j*.pem
