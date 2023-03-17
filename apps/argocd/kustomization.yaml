@@ -52,7 +52,7 @@ resources:
 - base/monitoring/unifi-poller.yaml
 - base/monitoring/kube-prometheus.yaml
 #- base/monitoring/nvidia.yaml
-- base/monitoring/nextdns.yaml
+#- base/monitoring/nextdns.yaml
 - base/monitoring/kube-prom-crds.yaml
 # - base/monitoring/pixie.yaml
 
@@ -68,12 +68,12 @@ resources:
 # Media Services
 # - base/services/media/beets.yaml
 # - base/services/media/lidarr.yaml
-- base/services/media/bazarr.yaml
+#- base/services/media/bazarr.yaml
 - base/services/media/mango.yaml
-- base/services/media/qbittorrent.yaml
-- base/services/media/prowlarr.yaml
-- base/services/media/sonarr.yaml
-- base/services/media/jellyfin.yaml
+#- base/services/media/qbittorrent.yaml
+#- base/services/media/prowlarr.yaml
+#- base/services/media/sonarr.yaml
+#- base/services/media/jellyfin.yaml
 
 # Matrix & utilities
 # - base/matrix/synapse.yaml
