@@ -23,13 +23,13 @@ spec:
           image: wallabag/wallabag:2.5.2
           env:
             - name: POSTGRES_USER
-              valueFrom: { secretKeyRef: { name: walladmin.db-wallabag.credentials.postgresql.acid.zalan.do, key: username } }
+              valueFrom: { secretKeyRef: { name: wallabag.db-wallabag.credentials.postgresql.acid.zalan.do, key: username } }
             - name: POSTGRES_PASSWORD
-              valueFrom: { secretKeyRef: { name: walladmin.db-wallabag.credentials.postgresql.acid.zalan.do, key: password } }
+              valueFrom: { secretKeyRef: { name: wallabag.db-wallabag.credentials.postgresql.acid.zalan.do, key: password } }
             - name: SYMFONY__ENV__DATABASE_USER
-              valueFrom: { secretKeyRef: { name: walladmin.db-wallabag.credentials.postgresql.acid.zalan.do, key: username } }
+              valueFrom: { secretKeyRef: { name: wallabag.db-wallabag.credentials.postgresql.acid.zalan.do, key: username } }
             - name: SYMFONY__ENV__DATABASE_PASSWORD
-              valueFrom: { secretKeyRef: { name: walladmin.db-wallabag.credentials.postgresql.acid.zalan.do, key: password } }
+              valueFrom: { secretKeyRef: { name: wallabag.db-wallabag.credentials.postgresql.acid.zalan.do, key: password } }
           envFrom:
             - configMapRef:
                 name: wallabag-cm
