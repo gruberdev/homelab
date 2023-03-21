@@ -204,13 +204,13 @@ spec:
                 port: 1443
                 portName: https
                 targetPort: 8443
-                nodePort: 0 # nodePort will be used if the serviceType is set to NodePort
+                nodePort: 30564
               grpc:
                 enabled: true
                 port: 4443
                 portName: grpc
                 targetPort: 8443
-                nodePort: 0 # nodePort will be used if the serviceType is set to NodePort
+                nodePort: 30300
             serviceMetrics:
               name: agones-allocator-metrics-service
               annotations: {}
