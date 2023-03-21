@@ -1778,10 +1778,12 @@ spec:
           ## Namespaces to scope the interaction of the Prometheus Operator and the apiserver (allow list).
           ## This is mutually exclusive with denyNamespaces. Setting this to an empty object will disable the configuration
           ##
-          namespaces: {}
-            # releaseNamespace: true
-            # additional:
-            # - kube-system
+          namespaces:
+            releaseNamespace: true
+            additional:
+              - kube-system
+              - vault
+              - agones-system
 
           ## Namespaces not to scope the interaction of the Prometheus Operator (deny list).
           ##
