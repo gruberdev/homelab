@@ -2650,8 +2650,8 @@ spec:
             ## Namespaces to be selected for ServiceMonitor discovery.
             ##
             serviceMonitorNamespaceSelector:
-              - agones-system
-              - monitoring
+              matchLabels:
+                prometheus: enabled
             ## Example which selects ServiceMonitors in namespaces with label "prometheus" set to "somelabel"
             # serviceMonitorNamespaceSelector:
             #   matchLabels:
@@ -2856,10 +2856,10 @@ spec:
                   - 'argocd-metrics.argocd.svc.cluster.local:8082'
                   - 'argocd-server-metrics.argocd.svc.cluster.local:8083'
                   - 'argocd-repo-server.argocd.svc.cluster.local:8084'
-              - job_name: 'nvidia'
-                metrics_path: /metrics
-                static_configs:
-                - targets: ['192.168.1.2:9835']
+              # - job_name: 'nvidia'
+              #   metrics_path: /metrics
+              #   static_configs:
+              #   - targets: ['192.168.1.2:9835']
             additionalScrapeConfigsSecret: {}
               # enabled: false
               # name:
