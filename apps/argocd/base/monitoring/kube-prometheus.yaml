@@ -2649,7 +2649,9 @@ spec:
 
             ## Namespaces to be selected for ServiceMonitor discovery.
             ##
-            serviceMonitorNamespaceSelector: {}
+            serviceMonitorNamespaceSelector:
+              - agones-system
+              - monitoring
             ## Example which selects ServiceMonitors in namespaces with label "prometheus" set to "somelabel"
             # serviceMonitorNamespaceSelector:
             #   matchLabels:
