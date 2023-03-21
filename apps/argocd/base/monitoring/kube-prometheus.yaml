@@ -2650,8 +2650,11 @@ spec:
             ## Namespaces to be selected for ServiceMonitor discovery.
             ##
             serviceMonitorNamespaceSelector:
-              matchLabels:
-                prometheus: enabled
+              matchNames:
+                - monitoring
+                - kube-system
+                - vault
+                - agones-system
             ## Example which selects ServiceMonitors in namespaces with label "prometheus" set to "somelabel"
             # serviceMonitorNamespaceSelector:
             #   matchLabels:
