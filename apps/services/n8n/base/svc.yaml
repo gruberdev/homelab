@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: n8n
+  name: n8n-tailscale
   labels:
     app: n8n-server
   annotations:
@@ -16,3 +16,19 @@ spec:
       protocol: TCP
   loadBalancerClass: tailscale
   type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: n8n
+  labels:
+    app: n8n-server
+spec:
+  selector:
+    app: n8n-server
+  ports:
+    - name: web
+      port: 80
+      targetPort: 5678
+      protocol: TCP
+  type: ClusterIP
