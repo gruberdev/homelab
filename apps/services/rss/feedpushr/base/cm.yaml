@@ -8,7 +8,7 @@ data:
   FP_CACHE_RETENTION: "72h"
   FP_CLEAR_CACHE: "false"
   FP_CLEAR_CONFIG: "false"
-  FP_DB: "boltdb://var/opt/feedpushr.db"
+  FP_DB: "boltdb:///var/opt/feedpushr.db"
   FP_DELAY: "1m"
   FP_FAN_OUT_DELAY: "0s"
   FP_EXPLORE_PROVIDER: "default"
