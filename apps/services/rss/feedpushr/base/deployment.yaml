@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: feedpushr
-          image: ncarlier/feedpushr
+          image: docker.io/ncarlier/feedpushr:3.3.1
           envFrom:
             - configMapRef:
                 name: feedpushr-config
