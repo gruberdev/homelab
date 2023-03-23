@@ -11,7 +11,7 @@ data:
   FP_DB: "boltdb://var/opt/feedpushr.db"
   FP_DELAY: "1m"
   FP_FAN_OUT_DELAY: "0s"
-  FP_EXPLORE_PROVIDER": "default"
+  FP_EXPLORE_PROVIDER: "default"
   FP_IMPORT: ""
   FP_LISTEN_ADDR: ":8080"
   FP_LOG_LEVEL: "info"
