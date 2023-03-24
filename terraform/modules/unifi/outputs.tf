@@ -1,3 +1,3 @@
 output "site_id" {
-  value = unifi_site.homelab.name
+  value = unifi_site.default.name
 }
