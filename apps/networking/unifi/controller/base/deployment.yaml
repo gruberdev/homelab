@@ -69,10 +69,10 @@ spec:
             #   name: default
           resources:
             limits:
-              cpu: "720m"
-              memory: "1500Mi"
+              cpu: "1500m"
+              memory: "2000Mi"
             requests:
-              cpu: "512m"
+              cpu: "1024m"
               memory: "1024Mi"
           livenessProbe:
             tcpSocket:
