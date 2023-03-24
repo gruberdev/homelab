@@ -19,7 +19,10 @@ spec:
       labels:
         app: unifi-controller
     spec:
-      terminationGracePeriodSeconds: 10
+      terminationGracePeriodSeconds: 60
+      securityContext:
+          runAsUser: 999
+          fsGroup: 999
       containers:
         - name: unifi-controller
           image: jacobalberty/unifi:v7.2.92
@@ -61,7 +64,7 @@ spec:
               name: logs
             - mountPath: /unifi/cert
               name: certs
-            # - mountPath: /opt/docker/unifi/data/sites/default/config.gateway.json
+            # - mountPath: /unifi/data/sites/default/config.gateway.json
             #   subPath: gateway.config.json
             #   name: default
           resources:

@@ -36,7 +36,7 @@ vars:
   ETCD: true
 env:
   NODE_TWO_IP: 192.168.1.8
-  NODE_ONE_IP: 192.168.1.10
+  NODE_ONE_IP: 192.168.1.2
   NODE_THREE_IP: 192.168.1.105
   VIP: 192.168.1.8
   INTERFACE: enp1s0
@@ -57,7 +57,7 @@ tasks:
   agent:
     cmds:
       - |
-        sudo curl -sfL https://get.k3s.io | sh -s - -c {{.K3S_CONFIG}}
+        sudo curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="v1.26.1+k3s1" INSTALL_K3S_EXEC="agent" sh -s - -c {{.K3S_CONFIG}}
     ignore_error: true
     interactive: true
 
@@ -306,7 +306,7 @@ tasks:
       - rm {{.K3S_CONFIG}}
       - |
         cat << EOF > {{.K3S_CONFIG}}
-        node-name: "node-one"
+        node-name: "node-five"
         node-ip: "${NODE_ONE_IP},{{.IPV6_NETWORK}}"
         cluster-init: true
         tls-san:
