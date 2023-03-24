@@ -1,3 +1,3 @@
-resource "unifi_site" "homelab" {
-  description = "Main site"
+resource "unifi_site" "default" {
+   description = "Main site"
 }
