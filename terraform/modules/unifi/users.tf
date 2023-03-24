@@ -8,7 +8,7 @@ resource "unifi_user_group" "unlimited" {
 
   qos_rate_max_down = -1
   qos_rate_max_up   = -1
-  site              = unifi_site.homelab.name
+  site              = unifi_site.default.name
 }
 
 resource "unifi_user_group" "smart" {
@@ -16,7 +16,7 @@ resource "unifi_user_group" "smart" {
 
   qos_rate_max_down = 10000 # 10mbps
   qos_rate_max_up   = 1000 # 1mbps
-  site              = unifi_site.homelab.name
+  site              = unifi_site.default.name
 }
 
 resource "unifi_user_group" "guests" {
@@ -24,7 +24,7 @@ resource "unifi_user_group" "guests" {
 
   qos_rate_max_down = 50000 # 50mbps
   qos_rate_max_up   = 10000 # 10mbps
-  site              = unifi_site.homelab.name
+  site              = unifi_site.default.name
 }
 
 resource "unifi_user" "user" {
@@ -35,8 +35,8 @@ resource "unifi_user" "user" {
   dev_id_override = each.value.device
   fixed_ip        = each.value.ip
   user_group_id   = each.value.group
-  network_id      = data.unifi_network.main.id
-  site            = unifi_site.homelab.name
+  network_id      = unifi_network.main.id
+  site            = unifi_site.default.name
   note            = trimspace("managed by Terraform")
 
   allow_existing         = true
