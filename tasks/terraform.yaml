@@ -40,6 +40,11 @@ tasks:
     cmds:
       - terraform plan
 
+  plan:unifi:
+    dir: terraform/modules/unifi
+    cmds:
+      - terraform plan
+
   apply:
     dir: terraform
     cmds:
@@ -47,6 +52,11 @@ tasks:
 
   apply:vault:
     dir: terraform/modules/vault
+    cmds:
+      - terraform apply -auto-approve
+
+  apply:unifi:
+    dir: terraform/modules/unifi
     cmds:
       - terraform apply -auto-approve
 
