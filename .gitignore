@@ -33,6 +33,7 @@ terraform/**/.terraform
 terraform/**/*.tfvars
 terraform/**/secret.json
 terraform/**/terraform.tfstate
+terraform/**/*.tfstate.*
 terraform/**/terraform.tfstate.backup
 
 config/tls/base/tls-secret.yaml

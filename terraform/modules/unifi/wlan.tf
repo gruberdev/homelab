@@ -1,11 +1,6 @@
 data "unifi_ap_group" "default" {
-  site = unifi_site.homelab.name
-  name = "homelab"
-}
-
-data "unifi_network" "main" {
-  name = "main"
-  site = unifi_site.homelab.name
+  site = unifi_site.default.name
+  name = "default"
 }
 
 resource "unifi_wlan" "main_wifi" {
@@ -18,10 +13,10 @@ resource "unifi_wlan" "main_wifi" {
   no2ghz_oui      = true
   pmf_mode        = "required"
 
-  network_id    = data.unifi_network.main.id
+  network_id    = unifi_network.main.id
   ap_group_ids  = [data.unifi_ap_group.default.id]
   user_group_id = unifi_user_group.unlimited.id
-  site          = unifi_site.homelab.name
+  site          = unifi_site.default.name
 }
 
 resource "unifi_wlan" "guest_wifi" {
@@ -35,10 +30,10 @@ resource "unifi_wlan" "guest_wifi" {
   l2_isolation    = true
   pmf_mode        = "optional"
 
-  network_id    = data.unifi_network.main.id
+  network_id    = unifi_network.main.id
   ap_group_ids  = [data.unifi_ap_group.default.id]
   user_group_id = unifi_user_group.guests.id
-  site          = unifi_site.homelab.name
+  site          = unifi_site.default.name
 }
 
 resource "unifi_wlan" "smartDevices" {
@@ -51,8 +46,8 @@ resource "unifi_wlan" "smartDevices" {
   no2ghz_oui      = false
   wlan_band       = "2g"
 
-  network_id    = data.unifi_network.main.id
+  network_id    = unifi_network.main.id
   ap_group_ids  = [data.unifi_ap_group.default.id]
   user_group_id = unifi_user_group.guests.id
-  site          = unifi_site.homelab.name
+  site          = unifi_site.default.name
 }

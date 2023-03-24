@@ -34,10 +34,9 @@ variable "api_url" {
 }
 
 variable "controller_sec" {
-  type        = string
+  type        = bool
   description = "<sub>Skip TLS verification when trying to access the API. [Reference](https://registry.terraform.io/providers/paultyng/unifi/latest/docs#allow_insecure)</sub>"
-  default     = ""
-  sensitive   = true
+  default     = true
 }
 
 variable "upstream_dns" {
