@@ -33,8 +33,10 @@ dotenv: ['.env']
 
 tasks:
   clear:
+
     cmds:
       - sleep 0.1 && {{.CLEAR}}
+
   highlight_bg:
     cmds:
       - |
@@ -60,7 +62,7 @@ tasks:
       - task {{.CLI_ARGS}} --summary
 
   lint:
-    desc: lint testing
+    desc: Performs lint testing on the YAML files in the repository using the yamllint tool to ensure proper formatting and syntax.
     preconditions:
       - sh: "which yamllint"
         msg: "yamllint {{.PATH_ERROR}}"
