@@ -545,6 +545,7 @@ spec:
             GF_RENDERING_SERVER_URL: "http://grafana-image-renderer.monitoring.svc.cluster.local/render"
             GF_RENDERING_CALLBACK_URL: "http://kube-prometheus-grafana.monitoring.svc.cluster.local"
           plugins:
+            - grafana-image-renderer
             - grafana-piechart-panel
             - grafana-clock-panel
           dashboardProviders:
