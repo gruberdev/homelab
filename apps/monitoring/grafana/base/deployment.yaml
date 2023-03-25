@@ -19,6 +19,9 @@ spec:
       containers:
         - name: exporter
           image: grafana/grafana-image-renderer:3.6.4
+          env:
+            - name: ENABLE_METRICS
+              value: "true"
           ports:
             - name: render
               containerPort: 8081
