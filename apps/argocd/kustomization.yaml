@@ -16,14 +16,13 @@ resources:
 - base/core/redis.yaml
 - base/core/redis-crd.yaml
 - base/core/storage.yaml
-- base/core/minio-operator.yaml
 - base/core/crossplane.yaml
 - base/core/tailscale.yaml
 - base/core/tailscale-operator.yaml
-#- base/core/nvidia.yaml
-#- base/core/nvidia-extra.yaml
 - base/core/sealed.yaml
-- base/core/private.yaml
+# - base/core/private.yaml
+# - base/core/nvidia.yaml
+# - base/core/nvidia-extra.yaml
 # - base/core/democratic-csi.yaml
 # - base/core/router.yaml
 
@@ -32,10 +31,10 @@ resources:
 - base/utilities/reflector.yaml
 - base/utilities/kured.yaml
 - base/utilities/kube-fledged.yaml
-# - base/utilities/gfd.yaml
 - base/utilities/descheduler.yaml
 - base/utilities/botkube.yaml
 - base/utilities/eraser.yaml
+# - base/utilities/gfd.yaml
 # - base/utilities/koordinator.yaml
 # - base/utilities/chaos.yaml
 
@@ -51,31 +50,31 @@ resources:
 # Monitoring Resources
 - base/monitoring/kuma.yaml
 - base/monitoring/unifi-poller.yaml
+- base/monitoring/kube-prom-crds.yaml
 - base/monitoring/kube-prometheus.yaml
 # - base/monitoring/nvidia.yaml
 # - base/monitoring/nextdns.yaml
-- base/monitoring/kube-prom-crds.yaml
 # - base/monitoring/pixie.yaml
 
 # Applications/Services
 - base/services/n8n.yaml
 - base/services/rss-hub.yaml
 - base/services/feedpushr.yaml
-# - base/services/wallabag.yaml
 - base/services/onchange.yaml
 - base/services/grocy.yaml
 - base/services/chatgpt.yaml
+# - base/services/wallabag.yaml
 # - base/services/metabase.yaml
 
 # Media Services
+- base/services/media/mango.yaml
 # - base/services/media/beets.yaml
 # - base/services/media/lidarr.yaml
-#- base/services/media/bazarr.yaml
-- base/services/media/mango.yaml
-#- base/services/media/qbittorrent.yaml
-#- base/services/media/prowlarr.yaml
-#- base/services/media/sonarr.yaml
-#- base/services/media/jellyfin.yaml
+# - base/services/media/bazarr.yaml
+# - base/services/media/qbittorrent.yaml
+# - base/services/media/prowlarr.yaml
+# - base/services/media/sonarr.yaml
+# - base/services/media/jellyfin.yaml
 
 # Matrix & utilities
 # - base/matrix/synapse.yaml

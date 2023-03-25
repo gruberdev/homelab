@@ -126,6 +126,15 @@ version = 2
 
 ## Deploying `gpu-feature-discovery` along `node-feature-discovery`
 
+Both Helm charts are required to properly label nodes that have a GPU attached to them. Although `k8s-device-plugin` allows you to deploy ` gpu-feature-discovery`  as part of their resources, I decided to split them. You can find my Helm chart `values.yaml`  equivalent file for ArgoCD here:
+
+- [apps/argocd/base/utilities/gfd.yaml](github.com)
+
+
+It is recommended to read all the individual respositories, their default ` values.yaml` for the Helm deployments, and what each value should be changed to match your infrastructure. 
+
+If you need an example, feel free to use mine as a reference to change yours.
+
 ## Create a runtime class resource
 
 Apply the following yaml to your cluster:
