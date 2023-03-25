@@ -411,10 +411,10 @@ spec:
             resources:
               requests:
                 cpu: 80m
-                memory: 128Mi
-              limits:
-                cpu: 140m
                 memory: 256Mi
+              limits:
+                cpu: 250m
+                memory: 512Mi
 
             ## Pod anti-affinity can prevent the scheduler from placing Prometheus replicas on the same node.
             ## The default value "soft" means that the scheduler should *prefer* to not schedule two replica pods onto the same node but no guarantee is provided.
@@ -541,6 +541,9 @@ spec:
         grafana:
           enabled: true
           namespaceOverride: monitoring
+          env:
+            GF_RENDERING_SERVER_URL: "http://grafana-image-renderer.monitoring.svc.cluster.local/render"
+            GF_RENDERING_CALLBACK_URL: "http://kube-prometheus-grafana.monitoring.svc.cluster.local"
           plugins:
             - grafana-piechart-panel
             - grafana-clock-panel
