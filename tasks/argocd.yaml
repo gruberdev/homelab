@@ -162,3 +162,22 @@ tasks:
         PASSWORD=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo) \
         argocd login --insecure --username admin --password ${PASSWORD} $ARGOCD_URI
       - argocd account update-password
+
+  login:
+    preconditions:
+      - sh: 'which argocd'
+        msg: 'argocd {{.PATH_ERROR}}'
+    cmds:
+      - argocd login argo.gr.wtf --username $ARGOCD_USERNAME --password $ARGOCD_PASSWORD
+
+  refresh:
+    preconditions:
+      - sh: 'which argocd'
+        msg: 'argocd {{.PATH_ERROR}}'
+    cmds:
+      - argocd app list -o name | xargs -I{} argocd app get --hard-refresh {}
+
+  reset:
+    cmds:
+      - task: login
+      - task: refresh
