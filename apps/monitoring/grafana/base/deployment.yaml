@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana-image-renderer
+  labels:
+    app: grafana-image-renderer
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: grafana-image-renderer
+  template:
+    metadata:
+      labels:
+        app: grafana-image-renderer
+    spec:
+      containers:
+        - name: exporter
+          image: grafana/grafana-image-renderer:3.6.4
+          ports:
+            - name: render
+              containerPort: 8081
+          livenessProbe:
+            httpGet:
+              port: 8081
+              path: /
+            initialDelaySeconds: 15
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              port: 8081
+              path: /
+            initialDelaySeconds: 15
+            periodSeconds: 5
+          resources:
+            requests:
+              memory: 512Mi
+              cpu: "300m"
+            limits:
+              memory: 1Gi
+              cpu: 950m
