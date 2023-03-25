@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: minio-operator
+spec:
+  project: cluster
+  source:
+    repoURL: 'https://github.com/minio/operator.git'
+    path: .
+    targetRevision: v4.5.8
+  destination:
+    namespace: minio-operator
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false
+      allowEmpty: true
+    syncOptions:
+    - Validate=false
+    - CreateNamespace=true
+    - PrunePropagationPolicy=foreground
+    - PruneLast=false
+    - ApplyOutOfSyncOnly=true
+    - Prune=false
+    retry:
+      limit: 10
+      backoff:
+        duration: 20s
+        factor: 2
+        maxDuration: 15m
