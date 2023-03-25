@@ -22,6 +22,7 @@ spec:
       containers:
         - name: chatgpt
           image: docker.io/grubertech/chatgpt:latest
+          imagePullPolicy: Always
           envFrom:
             - configMapRef:
                 name: chatgpt-config
