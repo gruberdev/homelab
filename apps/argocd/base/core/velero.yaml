@@ -3,7 +3,7 @@ kind: Application
 metadata:
   name: velero
 spec:
-  project: core
+  project: cluster
   source:
     repoURL: https://github.com/vmware-tanzu/helm-charts.git
     targetRevision: velero-3.1.4
