@@ -5,14 +5,19 @@ metadata:
   labels:
     app: wyze-bridge
 spec:
-  type: ClusterIP
   selector:
     app: wyze-bridge
   ports:
     - name: web
       port: 80
+      targetPort: 5000
+      protocol: TCP
+    - name: hls
+      port: 8888
       targetPort: 8888
       protocol: TCP
     - name: rtsp
       protocol: TCP
       port: 8554
+      targetPort: 8554
+  type: ClusterIP
