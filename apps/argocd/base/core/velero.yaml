@@ -34,13 +34,13 @@ spec:
             image: velero/velero-plugin-for-csi:v0.4.2
             imagePullPolicy: IfNotPresent
             volumeMounts:
-              - mountPath: /target
+              - mountPath: /plugins
                 name: plugins
           - name: velero-plugin-for-aws
             image: velero/velero-plugin-for-aws:v1.6.1
             imagePullPolicy: IfNotPresent
             volumeMounts:
-              - mountPath: /target
+              - mountPath: /plugins
                 name: plugins
         podSecurityContext: {}
           # fsGroup: 1337
