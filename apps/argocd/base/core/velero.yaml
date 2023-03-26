@@ -40,7 +40,7 @@ spec:
             image: velero/velero-plugin-for-aws:v1.6.1
             imagePullPolicy: IfNotPresent
             volumeMounts:
-              - mountPath: /plugins
+              - mountPath: /target
                 name: plugins
         podSecurityContext: {}
           # fsGroup: 1337
