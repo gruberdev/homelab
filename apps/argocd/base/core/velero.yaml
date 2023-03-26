@@ -30,12 +30,12 @@ spec:
             memory: 512Mi
         dnsPolicy: ClusterFirst
         initContainers:
-          - name: velero-plugin-for-csi
-            image: velero/velero-plugin-for-csi:v0.4.2
-            imagePullPolicy: IfNotPresent
-            volumeMounts:
-              - mountPath: /plugins
-                name: plugins
+          # - name: velero-plugin-for-csi
+          #   image: velero/velero-plugin-for-csi:v0.4.2
+          #   imagePullPolicy: IfNotPresent
+          #   volumeMounts:
+          #     - mountPath: /plugins
+          #       name: plugins
           - name: velero-plugin-for-aws
             image: velero/velero-plugin-for-aws:v1.6.1
             imagePullPolicy: IfNotPresent
@@ -197,7 +197,7 @@ spec:
           # comments below.
           # --------------------
           # `velero server` default: restic
-          uploaderType:
+          uploaderType: restic
           # `velero server` default: 1m
           backupSyncPeriod:
           # `velero server` default: 4h
@@ -225,7 +225,7 @@ spec:
           # The address to expose prometheus metrics. Default: :8085
           metricsAddress:
           # Directory containing Velero plugins. Default: /plugins
-          pluginDir:
+          pluginDir: /plugins
           # The address to expose the pprof profiler. Default: localhost:6060
           profilerAddress:
           # `velero server` default: false
