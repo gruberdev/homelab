@@ -30,18 +30,18 @@ spec:
             memory: 512Mi
         dnsPolicy: ClusterFirst
         initContainers:
-          # - name: velero-plugin-for-csi
-          #   image: velero/velero-plugin-for-csi:v0.4.2
-          #   imagePullPolicy: IfNotPresent
-          #   volumeMounts:
-          #     - mountPath: /target
-          #       name: plugins
-          # - name: velero-plugin-for-aws
-          #   image: velero/velero-plugin-for-aws:v1.6.1
-          #   imagePullPolicy: IfNotPresent
-          #   volumeMounts:
-          #     - mountPath: /target
-          #       name: plugins
+          - name: velero-plugin-for-csi
+            image: velero/velero-plugin-for-csi:v0.4.2
+            imagePullPolicy: IfNotPresent
+            volumeMounts:
+              - mountPath: /target
+                name: plugins
+          - name: velero-plugin-for-aws
+            image: velero/velero-plugin-for-aws:v1.6.1
+            imagePullPolicy: IfNotPresent
+            volumeMounts:
+              - mountPath: /target
+                name: plugins
         podSecurityContext: {}
           # fsGroup: 1337
         containerSecurityContext: {}
@@ -59,30 +59,30 @@ spec:
         dnsConfig: {}
         extraVolumes: []
         extraVolumeMounts: []
-        extraObjects: []
-          # - apiVersion: secrets-store.csi.x-k8s.io/v1
-          #   kind: SecretProviderClass
-          #   metadata:
-          #     name: velero-secrets-store
-          #   spec:
-          #     provider: aws
-          #     parameters:
-          #       objects: |
-          #         - objectName: "velero"
-          #           objectType: "secretsmanager"
-          #           jmesPath:
-          #               - path: "access_key"
-          #                 objectAlias: "access_key"
-          #               - path: "secret_key"
-          #                 objectAlias: "secret_key"
-          #     secretObjects:
-          #       - data:
-          #         - key: access_key
-          #           objectName: client-id
-          #         - key: client-secret
-          #           objectName: client-secret
-          #         secretName: velero-secrets-store
-          #         type: Opaque
+        extraObjects:
+          - apiVersion: secrets-store.csi.x-k8s.io/v1
+            kind: SecretProviderClass
+            metadata:
+              name: velero-secrets-store
+            spec:
+              provider: aws
+              parameters:
+                objects: |
+                  - objectName: "velero"
+                    objectType: "secretsmanager"
+                    jmesPath:
+                        - path: "access_key"
+                          objectAlias: "access_key"
+                        - path: "secret_key"
+                          objectAlias: "secret_key"
+              secretObjects:
+                - data:
+                  - key: access_key
+                    objectName: client-id
+                  - key: client-secret
+                    objectName: client-secret
+                  secretName: velero-secrets-store
+                  type: Opaque
         metrics:
           enabled: true
           scrapeInterval: 30s
