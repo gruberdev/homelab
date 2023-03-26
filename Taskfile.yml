@@ -95,28 +95,28 @@ tasks:
       # yamllint disable-line rule:line-length
       - sleep 0.1 && {{.CYAN}} && {{.BOLD}} && {{.BG_B}} && echo -e "\nValidating Yaml files using Kubeconform..." && {{.RESET}}
       - sleep 0.1 && {{.CYAN}} && echo -e "\nService object files" && {{.RESET}}
-      - find . -maxdepth 10 -name svc.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "{{.K8S_VERSION}}" -schema-location default {} \;
+      - find . -maxdepth 20 -name svc.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "{{.K8S_VERSION}}" -schema-location default {} \;
       - sleep 0.1 && {{.CYAN}} && echo -e "\nDeployment object files" && {{.RESET}}
-      - find . -maxdepth 10 -name deployment.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "{{.K8S_VERSION}}" -schema-location default {} \;
+      - find . -maxdepth 20 -name deployment.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "{{.K8S_VERSION}}" -schema-location default {} \;
       - sleep 0.1 && {{.CYAN}} && echo -e "\nSecret object files" && {{.RESET}}
-      - find . -maxdepth 10 -name \*secret.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "{{.K8S_VERSION}}" -schema-location default {} \;
+      - find . -maxdepth 20 -name \*secret.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "{{.K8S_VERSION}}" -schema-location default {} \;
       - sleep 0.1 && {{.CYAN}} && echo -e "\nconfigMap object files" && {{.RESET}}
-      - find . -maxdepth 10 -name cm.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "{{.K8S_VERSION}}" -schema-location default {} \;
+      - find . -maxdepth 20 -name cm.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "{{.K8S_VERSION}}" -schema-location default {} \;
       - sleep 0.1 && {{.CYAN}} && echo -e "\nPVC object files" && {{.RESET}}
-      - find . -maxdepth 10 -name pvc.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "{{.K8S_VERSION}}" -schema-location default {} \;
+      - find . -maxdepth 20 -name pvc.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "{{.K8S_VERSION}}" -schema-location default {} \;
       - sleep 0.1 && {{.CYAN}} && echo -e "\nPV object files" && {{.RESET}}
       - find . -maxdepth 10 -name pv.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "{{.K8S_VERSION}}" -schema-location default {} \;
       # yamllint disable-line rule:line-length
       # - sleep 0.1 && {{.CYAN}} && echo -e "\nCustomRoleBinding object files" && {{.RESET}}
       # - find . -maxdepth 10 -name crb.yaml -exec kubeval {} \;
       - sleep 0.1 && {{.CYAN}} && echo -e "\nRole object files" && {{.RESET}}
-      - find . -maxdepth 10 -name role.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "{{.K8S_VERSION}}" -schema-location default {} \;
+      - find . -maxdepth 20 -name role.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "{{.K8S_VERSION}}" -schema-location default {} \;
       - sleep 0.1 && {{.CYAN}} && echo -e "\nServiceAccount object files" && {{.RESET}}
-      - find . -maxdepth 10 -name sa.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "{{.K8S_VERSION}}" -schema-location default {} \;
+      - find . -maxdepth 20 -name sa.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "{{.K8S_VERSION}}" -schema-location default {} \;
       - sleep 0.1 && {{.CYAN}} && echo -e "\nClusterRole object files" && {{.RESET}}
-      - find . -maxdepth 10 -name cr.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "{{.K8S_VERSION}}" -schema-location default {} \;
+      - find . -maxdepth 20 -name cr.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "{{.K8S_VERSION}}" -schema-location default {} \;
       - sleep 0.1 && {{.CYAN}} && echo -e "\nRole Binding object files" && {{.RESET}}
-      - find . -maxdepth 10 -name rb.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "{{.K8S_VERSION}}" -schema-location default {} \;
+      - find . -maxdepth 20 -name rb.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "{{.K8S_VERSION}}" -schema-location default {} \;
     silent: true
 
   calc:
@@ -124,8 +124,8 @@ tasks:
       - sh: "which kuota-calc"
         msg: "kuota-calc {{.PATH_ERROR}}"
     cmds:
-      - find . -maxdepth 10 -name deployment.yaml -exec cat {} \; | kuota-calc --detailed
-      - find . -maxdepth 10 -name statefulset.yaml -exec cat {} \; | kuota-calc --detailed
+      - find . -maxdepth 20 -name deployment.yaml -exec cat {} \; | kuota-calc --detailed
+      - find . -maxdepth 20 -name statefulset.yaml -exec cat {} \; | kuota-calc --detailed
 
   test:k3d:
     desc: Starts your local k3d cluster.
@@ -195,6 +195,7 @@ tasks:
       - helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
       - helm repo add pixie-operator https://pixie-operator-charts.storage.googleapis.com
       - helm repo add eraser https://azure.github.io/eraser/charts
+      - helm repo add vmware-tanzu https://vmware-tanzu.github.io/helm-charts
       - task: clear
       - echo -e "This will add new repositories to your local Helm\n"
       - task: highlight_normal
