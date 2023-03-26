@@ -24,6 +24,13 @@ spec:
           imagePullPolicy: IfNotPresent
           securityContext:
             runAsUser: 65533
+          env:
+            - name: DB_USERNAME
+              valueFrom: { secretKeyRef: { name: homeuser.db-ha.credentials.postgresql.acid.zalan.do, key: username } }
+            - name: DB_PASSWORD
+              valueFrom: { secretKeyRef: { name: homeuser.db-ha.credentials.postgresql.acid.zalan.do, key: password } }
+            - name: DB_STRING
+              value: "postgresql://${DB_USERNAME}:${DB_PASSWORD}@db-ha.homeassistant.svc.cluster.local:5432/homeassistant?client_encoding=utf8&sslmode=require"
           volumeMounts:
           - name: temp-config
             mountPath: /tmp/git
@@ -43,12 +50,6 @@ spec:
             value: America/Sao_Paulo
           - name: PYTHONWARNINGS
             value: ignore:Unverified HTTPS request
-          - name: DB_USERNAME
-            valueFrom: { secretKeyRef: { name: homeuser.db-ha.credentials.postgresql.acid.zalan.do, key: username } }
-          - name: DB_PASSWORD
-            valueFrom: { secretKeyRef: { name: homeuser.db-ha.credentials.postgresql.acid.zalan.do, key: password } }
-          - name: DB_STRING
-            value: "postgresql://${DB_USERNAME}:${DB_PASSWORD}@db-ha.homeassistant.svc.cluster.local:5432/homeassistant?sslmode=require"
           image: homeassistant/home-assistant:2022.9
           imagePullPolicy: IfNotPresent
           name: home-assistant
@@ -63,8 +64,8 @@ spec:
               protocol: TCP
           resources:
             limits:
-              cpu: 300m
-              memory: 850Mi
+              cpu: 350m
+              memory: 1000Mi
             requests:
               cpu: 100m
               memory: 500Mi
@@ -83,7 +84,7 @@ spec:
               port: 8123
             timeoutSeconds: 5
             periodSeconds: 10
-            initialDelaySeconds: 120
+            initialDelaySeconds: 60
           securityContext:
             privileged: true
           volumeMounts:
