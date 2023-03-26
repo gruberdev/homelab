@@ -142,7 +142,7 @@ spec:
           annotations: {}
           # Labels to set for the upgrade/cleanup job. Optional.
           labels: {}
-        upgradeCRDs: true
+        upgradeCRDs: false
         cleanUpCRDs: false
         configuration:
           # Cloud provider being used (e.g. aws, azure, gcp).
