@@ -16,7 +16,7 @@ spec:
           tag: v1.10.2
           pullPolicy: IfNotPresent
         annotations:
-          secret.reloader.stakater.com/reload: "velero-creds
+          secret.reloader.stakater.com/reload: "velero-creds"
         resources:
           requests:
             cpu: 200m
@@ -132,7 +132,7 @@ spec:
             # Additional provider-specific configuration. See link above
             # for details of required/optional fields for your provider.
             config:
-              region: us-east-1
+              region: main
               s3ForcePathStyle: true
               s3Url: https://ewr1.vultrobjects.com
               publicUrl: https://ewr1.vultrobjects.com
