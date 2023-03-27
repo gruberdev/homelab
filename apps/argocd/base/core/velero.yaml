@@ -99,11 +99,8 @@ spec:
             enabled: true
             annotations: {}
             additionalLabels: {}
-            # ServiceMonitor namespace. Default to Velero namespace.
-            # namespace:
-            # ServiceMonitor connection scheme. Defaults to HTTP.
+            namespace: monitoring
             # scheme: ""
-            # ServiceMonitor connection tlsConfig. Defaults to {}.
             # tlsConfig: {}
 
           prometheusRule:
@@ -143,7 +140,7 @@ spec:
           # Labels to set for the upgrade/cleanup job. Optional.
           labels: {}
         upgradeCRDs: false
-        cleanUpCRDs: false
+        cleanUpCRDs: true
         configuration:
           # Cloud provider being used (e.g. aws, azure, gcp).
           provider: aws
@@ -155,7 +152,7 @@ spec:
             name: vultr
             # provider is the name for the backup storage location provider. If omitted
             # `configuration.provider` will be used instead.
-            provider: "velero.io/aws"
+            provider: aws
             # bucket is the name of the bucket to store backups in. Required.
             bucket: k8s-backups
             accessMode: ReadWrite
@@ -219,9 +216,9 @@ spec:
           # `velero server` default: 1h
           garbageCollectionFrequency:
           # Set log-format for Velero pod. Default: text. Other option: json.
-          logFormat:
+          logFormat: text
           # Set log-level for Velero pod. Default: info. Other options: debug, warning, error, fatal, panic.
-          logLevel:
+          logLevel: debug
           # The address to expose prometheus metrics. Default: :8085
           metricsAddress:
           # Directory containing Velero plugins. Default: /plugins
@@ -282,10 +279,10 @@ spec:
         # Whether to create backupstoragelocation crd, if false => do not create a default backup location
         backupsEnabled: true
         # Whether to create volumesnapshotlocation crd, if false => disable snapshot feature
-        snapshotsEnabled: false
+        snapshotsEnabled: true
 
         # Whether to deploy the node-agent daemonset.
-        deployNodeAgent: false
+        deployNodeAgent: true
 
         nodeAgent:
           podVolumePath: /var/lib/kubelet/pods
