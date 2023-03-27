@@ -162,9 +162,9 @@ spec:
             # Additional provider-specific configuration. See link above
             # for details of required/optional fields for your provider.
             config:
-              region: minio
+              region: us-east-1
               s3ForcePathStyle: true
-              s3Url: https://k8s-backups.ewr1.vultrobjects.com
+              s3Url: https://ewr1.vultrobjects.com
             #  kmsKeyId:
             #  resourceGroup:
             #  storageAccount:
