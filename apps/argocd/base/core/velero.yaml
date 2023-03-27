@@ -34,7 +34,7 @@ spec:
             image: velero/velero-plugin-for-csi:v0.4.2
             imagePullPolicy: IfNotPresent
             volumeMounts:
-              - mountPath: /plugins
+              - mountPath: /target
                 name: plugins
           - name: velero-plugin-for-aws
             image: velero/velero-plugin-for-aws:v1.6.1
