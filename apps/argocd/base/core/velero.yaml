@@ -15,47 +15,35 @@ spec:
           repository: velero/velero
           tag: v1.10.2
           pullPolicy: IfNotPresent
-          imagePullSecrets: []
-        annotations: {}
-        # secret.reloader.stakater.com/reload: "<VELERO_SECRET_NAME>"
-        labels: {}
-        podAnnotations: {}
-        podLabels: {}
+        annotations:
+          secret.reloader.stakater.com/reload: "velero-creds
         resources:
           requests:
-            cpu: 500m
+            cpu: 200m
             memory: 128Mi
           limits:
-            cpu: 1000m
+            cpu: 500m
             memory: 512Mi
         dnsPolicy: ClusterFirst
         initContainers:
-          # - name: velero-plugin-for-csi
-          #   image: velero/velero-plugin-for-csi:v0.4.2
-          #   imagePullPolicy: IfNotPresent
-          #   volumeMounts:
-          #     - mountPath: /target
-          #       name: plugins
+          - name: velero-plugin-for-csi
+            image: velero/velero-plugin-for-csi:v0.4.2
+            imagePullPolicy: IfNotPresent
+            volumeMounts:
+              - mountPath: /target
+                name: plugins
           - name: velero-plugin-for-aws
             image: velero/velero-plugin-for-aws:v1.6.1
             imagePullPolicy: IfNotPresent
             volumeMounts:
               - mountPath: /target
                 name: plugins
-        podSecurityContext: {}
-          # fsGroup: 1337
-        containerSecurityContext: {}
-          # allowPrivilegeEscalation: false
-          # capabilities:
-          #   drop: ["ALL"]
-          #   add: []
-          # readOnlyRootFilesystem: true
-        lifecycle: {}
         priorityClassName: ""
         terminationGracePeriodSeconds: 3600
         tolerations: []
         affinity: {}
-        nodeSelector: {}
+        nodeSelector:
+          kubernetes.io/arch: amd64
         dnsConfig: {}
         extraVolumes: []
         extraVolumeMounts: []
@@ -97,11 +85,7 @@ spec:
           serviceMonitor:
             autodetect: true
             enabled: true
-            annotations: {}
-            additionalLabels: {}
             namespace: monitoring
-            # scheme: ""
-            # tlsConfig: {}
 
           prometheusRule:
             enabled: false
@@ -130,16 +114,7 @@ spec:
         kubectl:
           image:
             repository: docker.io/bitnami/kubectl
-          # Container Level Security Context for the 'kubectl' container of the crd jobs. Optional.
-          # See: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
-          containerSecurityContext: {}
-          # Resource requests/limits to specify for the upgrade/cleanup job. Optional
-          resources: {}
-          # Annotations to set for the upgrade/cleanup job. Optional.
-          annotations: {}
-          # Labels to set for the upgrade/cleanup job. Optional.
-          labels: {}
-        upgradeCRDs: false
+        upgradeCRDs: true
         cleanUpCRDs: true
         configuration:
           # Cloud provider being used (e.g. aws, azure, gcp).
@@ -150,10 +125,8 @@ spec:
             # name is the name of the backup storage location where backups should be stored. If a name is not provided,
             # a backup storage location will be created with the name "default". Optional.
             name: vultr
-            # provider is the name for the backup storage location provider. If omitted
-            # `configuration.provider` will be used instead.
+            prefix: backups
             provider: aws
-            # bucket is the name of the bucket to store backups in. Required.
             bucket: k8s-backups
             accessMode: ReadWrite
             # Additional provider-specific configuration. See link above
@@ -162,20 +135,17 @@ spec:
               region: us-east-1
               s3ForcePathStyle: true
               s3Url: https://ewr1.vultrobjects.com
-            #  kmsKeyId:
-            #  resourceGroup:
-            #  storageAccount:
-            #  publicUrl:
-            #  insecureSkipTLSVerify:
+              publicUrl: https://ewr1.vultrobjects.com
+              insecureSkipTLSVerify: true
 
           # Parameters for the `default` VolumeSnapshotLocation. See
           # https://velero.io/docs/v1.6/api-types/volumesnapshotlocation/
           volumeSnapshotLocation:
             # name is the name of the volume snapshot location where snapshots are being taken. Required.
-            name:
+            name: vultr
             # provider is the name for the volume snapshot provider. If omitted
             # `configuration.provider` will be used instead.
-            provider:
+            provider: aws
             # Additional provider-specific configuration. See link above
             # for details of required/optional fields for your provider.
             config: {}
@@ -239,9 +209,10 @@ spec:
           # `velero server` default: velero
           namespace: velero
           # additional key/value pairs to be used as environment variables such as "AWS_CLUSTER_NAME: 'yourcluster.domain.tld'"
-          extraEnvVars: {}
+          extraEnvVars:
+            TZ: "America/Sao_Paulo"
           # Set true for backup all pod volumes without having to apply annotation on the pod when used file system backup Default: false.
-          defaultVolumesToFsBackup:
+          defaultVolumesToFsBackup: true
           # How often repository maintain is run for repositories by default.
           defaultRepoMaintainFrequency:
         rbac:
@@ -264,12 +235,12 @@ spec:
         credentials:
           useSecret: true
           # Name of the secret to create if `useSecret` is true and `existingSecret` is empty
-          name:
+          name: velero-creds
           secretContents:
            cloud: |
              [default]
-             aws_access_key_id=<path:kv/data/velero#id>
-             aws_secret_access_key=<path:kv/data/velero#key>
+             aws_access_key_id = <path:kv/data/velero#id>
+             aws_secret_access_key = <path:kv/data/velero#key>
           extraEnvVars: {}
           # Name of a pre-existing secret (if any) in the Velero namespace
           # that will be used to load environment variables into velero and node-agent.
@@ -279,34 +250,25 @@ spec:
         # Whether to create backupstoragelocation crd, if false => do not create a default backup location
         backupsEnabled: true
         # Whether to create volumesnapshotlocation crd, if false => disable snapshot feature
-        snapshotsEnabled: false
+        snapshotsEnabled: true
 
         # Whether to deploy the node-agent daemonset.
-        deployNodeAgent: false
+        deployNodeAgent: true
 
         nodeAgent:
           podVolumePath: /var/lib/kubelet/pods
-          privileged: false
+          privileged: true
           # Pod priority class name to use for the node-agent daemonset. Optional.
           priorityClassName: ""
           # Resource requests/limits to specify for the node-agent daemonset deployment. Optional.
           # https://velero.io/docs/v1.6/customize-installation/#customize-resource-requests-and-limits
           resources:
             requests:
-              cpu: 500m
-              memory: 512Mi
+              cpu: 150m
+              memory: 256Mi
             limits:
-              cpu: 1000m
-              memory: 1024Mi
-
-          # Tolerations to use for the node-agent daemonset. Optional.
-          tolerations: []
-
-          # Annotations to set for the node-agent daemonset. Optional.
-          annotations: {}
-
-          # labels to set for the node-agent daemonset. Optional.
-          labels: {}
+              cpu: 350m
+              memory: 728Mi
 
           # will map /scratch to emptyDir. Set to false and specify your own volume
           # via extraVolumes and extraVolumeMounts that maps to /scratch
@@ -341,7 +303,8 @@ spec:
           lifecycle: {}
 
           # Node selector to use for the node-agent daemonset. Optional.
-          nodeSelector: {}
+          nodeSelector:
+            kubernetes.io/arch: amd64
 
           # Affinity to use with node-agent daemonset. Optional.
           affinity: {}
@@ -391,7 +354,6 @@ spec:
     - PruneLast=false
     - ApplyOutOfSyncOnly=false
     - Prune=true
-    - Replace=true
     retry:
       limit: 5
       backoff:
