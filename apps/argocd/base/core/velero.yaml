@@ -162,9 +162,9 @@ spec:
             # Additional provider-specific configuration. See link above
             # for details of required/optional fields for your provider.
             config:
-              region: us-east-1
+              region: minio
               s3ForcePathStyle: true
-              s3Url: https://ewr1.vultrobjects.com
+              s3Url: https://k8s-backups.ewr1.vultrobjects.com
             #  kmsKeyId:
             #  resourceGroup:
             #  storageAccount:
@@ -209,7 +209,7 @@ spec:
           # `velero server` default: 20.0
           clientQPS:
           # Name of the default backup storage location. Default: default
-          defaultBackupStorageLocation:
+          defaultBackupStorageLocation: vultr
           # How long to wait by default before backups can be garbage collected. Default: 72h
           defaultBackupTTL:
           # Name of the default volume snapshot location.
@@ -229,7 +229,7 @@ spec:
           # The address to expose the pprof profiler. Default: localhost:6060
           profilerAddress:
           # `velero server` default: false
-          restoreOnlyMode:
+          restoreOnlyMode: false
           # `velero server` default: customresourcedefinitions,namespaces,storageclasses,volumesnapshotclass.snapshot.storage.k8s.io,volumesnapshotcontents.snapshot.storage.k8s.io,volumesnapshots.snapshot.storage.k8s.io,persistentvolumes,persistentvolumeclaims,secrets,configmaps,serviceaccounts,limitranges,pods,replicasets.apps,clusterclasses.cluster.x-k8s.io,clusters.cluster.x-k8s.io,clusterresourcesets.addons.cluster.x-k8s.io
           restoreResourcePriorities:
           # `velero server` default: 1m
@@ -240,7 +240,7 @@ spec:
           # features: EnableCSI
           features:
           # `velero server` default: velero
-          namespace:
+          namespace: velero
           # additional key/value pairs to be used as environment variables such as "AWS_CLUSTER_NAME: 'yourcluster.domain.tld'"
           extraEnvVars: {}
           # Set true for backup all pod volumes without having to apply annotation on the pod when used file system backup Default: false.
@@ -282,7 +282,7 @@ spec:
         # Whether to create backupstoragelocation crd, if false => do not create a default backup location
         backupsEnabled: true
         # Whether to create volumesnapshotlocation crd, if false => disable snapshot feature
-        snapshotsEnabled: true
+        snapshotsEnabled: false
 
         # Whether to deploy the node-agent daemonset.
         deployNodeAgent: false
