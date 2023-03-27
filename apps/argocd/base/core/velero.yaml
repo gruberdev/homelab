@@ -30,12 +30,12 @@ spec:
             memory: 512Mi
         dnsPolicy: ClusterFirst
         initContainers:
-          # - name: velero-plugin-for-csi
-          #   image: velero/velero-plugin-for-csi:v0.4.2
-          #   imagePullPolicy: IfNotPresent
-          #   volumeMounts:
-          #     - mountPath: /plugins
-          #       name: plugins
+          - name: velero-plugin-for-csi
+            image: velero/velero-plugin-for-csi:v0.4.2
+            imagePullPolicy: IfNotPresent
+            volumeMounts:
+              - mountPath: /plugins
+                name: plugins
           - name: velero-plugin-for-aws
             image: velero/velero-plugin-for-aws:v1.6.1
             imagePullPolicy: IfNotPresent
@@ -155,7 +155,7 @@ spec:
             name: vultr
             # provider is the name for the backup storage location provider. If omitted
             # `configuration.provider` will be used instead.
-            provider: aws
+            provider: "velero.io/aws"
             # bucket is the name of the bucket to store backups in. Required.
             bucket: k8s-backups
             accessMode: ReadWrite
@@ -238,7 +238,7 @@ spec:
           terminatingResourceTimeout:
           # Comma separated list of velero feature flags. default: empty
           # features: EnableCSI
-          features:
+          features: EnableCSI
           # `velero server` default: velero
           namespace: velero
           # additional key/value pairs to be used as environment variables such as "AWS_CLUSTER_NAME: 'yourcluster.domain.tld'"
