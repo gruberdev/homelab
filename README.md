@@ -27,25 +27,22 @@
 > |          [ArgoCD][argocd-uri]          |    `GitOps`     |      <sub>[More details][homelab-argocd]</sub>      |       ![][argocd-core]       | ![][argo-badge]        |
 > |    [Crossplane][crossplane-uri]        |    `GitOps`     |      <sub>[More details][homelab-crossplane]</sub>  |       ![][argocd-crossplane] | ![][crossplane-badge]  |
 > |     [Hashicorp's Vault][vault-uri]     |    `Security`   |       <sub>[Chart values][homelab-vault]</sub>      |       ![][argocd-vault]      |  ![][vault-badge]    |
-> |[<sub>Nvidia integration for k8s</sub>][nvidia-uri]|    `Driver`     |      <sub>[More details][homelab-nvidia]</sub>      |       ![][argocd-nvidia] | ![][nvidia-badge]  |
 > | [<sub>Zalando PostgreSQL Operator</sub>][p-uri] |   `Databases`   |      <sub>[More details][homelab-zalando]</sub>     |      ![][argocd-zalando]     | ![][zalando-badge]  |
 > |       [Redis Operator][redis-uri]      |   `Databases`   |       <sub>[More details][homelab-redis]</sub>      |       ![][argocd-redis]      |  ![][redis-badge]    |
+> |    [Milvus][service-milvus]            |    `Databases`  |        <sub>[More details][homelab-milvus]</sub>    |        ![][argocd-milvus]   | ![][milvus-badge]    |
 > |  [Unifi Controller][service-unifi]     |   `Networking`  | <sub>[More details][homelab-unifi-controller]</sub> | ![][argocd-unifi-controller] | ![][unifi-badge]     |
 > |     [kube-prometheus][service-kube]    |   `Monitoring`  |  <sub>[More details][homelab-kube]</sub>            |       ![][argocd-kube]       |   ![][kube-badge]    |
 > |     [Unifi Poller][poller-uri]         |   `Monitoring`  |      <sub>[More details][homelab-poller]</sub>      |      ![][argocd-poller]      | ![][poller-badge]    |
-> | [Nvidia GPU Exporter][nvidia-exp-uri]  |   `Monitoring`  | <sub>[Chart values][homelab-gpu-exporter]</sub>     | ![][argocd-gpu-exporter]  | ![][gpu-exporter-badge] |
 > |     [Uptime Kuma][kuma-uri]            |   `Monitoring`  |      <sub>[More details][homelab-kuma]</sub>          |      ![][argocd-kuma]      | ![][kuma-badge]      |
 > |       [Agones][agones-uri]             |    `Services`   |        <sub>[More details][homelab-agones]</sub>    |        ![][argocd-agones]    |  ![][agones-badge]   |
 > |    [RSS Hub][service-rsshub]           |    `Services`   |        <sub>[More details][homelab-rsshub]</sub>    |        ![][argocd-rss-hub]   | ![][rsshub-badge]    |
 > |    [Feedpushr][service-feedpushr]      |    `Services`   |        <sub>[More details][homelab-feedpushr]</sub>    |        ![][argocd-feedpushr]   | ![][feedpushr-badge]    |
+> | <sub>[ChatGPT Discord Bot][service-chatgpt]</sub> |  `Services`   |  <sub>[More details][homelab-chatgpt]</sub>    |  ![][argocd-chatgpt] | ![][chatgpt-badge]    |
 > |            [n8n][n8n-uri]              |    `Services`   |        <sub>[More details][homelab-n8n]</sub>       |        ![][argocd-n8n]       |  ![][n8n-badge]      |
 > |   [Wallabag][wallabag-uri]             |   `Services`   |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-wallabag]  |  ![][wallabag-badge] |
 > |   [Grocy][grocy-uri]                   |   `Services`   |        <sub>[More details][homelab-grocy]</sub>      |        ![][argocd-grocy]  |  ![][grocy-badge] |
 > |   [Changedetection.io][change-uri]     |   `Services`   |       <sub>[More details][homelab-change]</sub>      |        ![][argocd-change]    |  ![][change-badge]   |
 > |           [Mango][service-mango]       |   `Media`       |  <sub>[More details][homelab-mango]</sub>           |  ![][argocd-mango]           |  ![][mango-badge]    |
-> |       [Jellyfin][service-jellyfin]     |   `Media`       |  <sub>[More details][homelab-jellyfin]</sub>        |  ![][argocd-jellyfin]        |  ![][jellyfin-badge]   |
-> |           [Sonarr][service-sonarr]     |   `Media`       |  <sub>[More details][homelab-sonarr]</sub>          |  ![][argocd-sonarr]          |  ![][sonarr-badge]   |
-> |       [Prowlarr][service-prowlarr]     |   `Media`       |  <sub>[More details][homelab-prowlarr]</sub>        |  ![][argocd-prowlarr]       |  ![][prowlarr-badge]   |
 > |      [Home Assistant][service-ha]      |   `Smart Home`   |        <sub>[More details][homelab-ha]</sub>        |        ![][argocd-ha]        |    ![][ha-badge]     |
 > |   [Wyze API Bridge][service-wyze]      |   `Smart Home`   |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-wyze]      |  ![][wyze-badge]     |
 > |    [Tailscale-operator][tail-uri]        | `Networking`  | <sub>[More details][homelab-tailscale]</sub>         |     ![][argocd-tailscale]   |![][tailscale-badge]  |
@@ -56,7 +53,12 @@
 > |           [Lidarr][service-lidarr]     |   `Media`       |  <sub>[More details][homelab-lidarr]</sub>          |  ![][argocd-lidarr]          |  ![][lidarr-badge]   |
 > |    [Metabase][service-metabase]        |   `Analytics`   |       <sub>[More details][homelab-metabase]</sub>   |   ![][argocd-metabase]       | ![][metabase-badge] |
 > |       [Matrix Synapse][matrix-uri]     |    `Services`   |        <sub>[More details][homelab-matrix]</sub>    |        ![][argocd-matrix]    |  ![][matrix-badge]   |
-
+> |         botdarr         |                    | `Utilities` |                   |                       |
+> | [Nvidia GPU Exporter][nvidia-exp-uri]  |   `Monitoring`  | <sub>[Chart values][homelab-gpu-exporter]</sub>     | ![][argocd-gpu-exporter]  | ![][gpu-exporter-badge] |
+> |[<sub>Nvidia integration for k8s</sub>][nvidia-uri]|    `Driver`     |      <sub>[More details][homelab-nvidia]</sub>      |       ![][argocd-nvidia] | ![][nvidia-badge]  |
+> |       [Jellyfin][service-jellyfin]     |   `Media`       |  <sub>[More details][homelab-jellyfin]</sub>        |  ![][argocd-jellyfin]        |  ![][jellyfin-badge]   |
+> |           [Sonarr][service-sonarr]     |   `Media`       |  <sub>[More details][homelab-sonarr]</sub>          |  ![][argocd-sonarr]          |  ![][sonarr-badge]   |
+> |       [Prowlarr][service-prowlarr]     |   `Media`       |  <sub>[More details][homelab-prowlarr]</sub>        |  ![][argocd-prowlarr]       |  ![][prowlarr-badge]   |
 
 #### Matrix-related
 
@@ -75,7 +77,6 @@
 > |     go-skype-bridge     |                    | `Bridge` |                   |                       |
 > |     mx-puppet-steam     |                    | `Bridge` |                   |                       |
 > |     linkedin-bridge     |                    | `Bridge` |                   |                       |
-> |         botdarr         |                    | `Utilities` |                   |                       |
 <-->
 
 ---
@@ -140,6 +141,8 @@
 [change-uri]: https://github.com/dgtlmoon/changedetection.io/
 [service-adguard]: https://adguard.com/en/adguard-home/overview.html
 [service-unifi]: https://github.com/jacobalberty/unifi-docker
+[service-chatgpt]: https://github.com/Zero6992/chatGPT-discord-bot
+[service-milvus]: https://milvus.io/
 [tail-uri]: https://tailscale.com/kb/1151/what-is-tailscale/
 [matrix-uri]: https://matrix.org/
 [service-n8n]: https://n8n.io/
@@ -208,6 +211,8 @@
 [homelab-poller]: https://github.com/gruberdev/homelab/tree/main/apps/networking/unifi/poller
 [homelab-cloudflared]: https://github.com/gruberdev/homelab/tree/main/apps/networking/cloudflared
 [homelab-rssgen]: https://github.com/gruberdev/homelab/tree/main/apps/services/rss/gen
+[homelab-chatgpt]: https://github.com/gruberdev/homelab/tree/main/apps/services/chatgpt
+[homelab-milvus]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/apps/milvus.yaml
 [homelab-sonarr]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/sonarr
 [homelab-prowlarr]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/prowlarr
 [homelab-rsshub]: https://github.com/gruberdev/homelab/tree/main/apps/services/rss/hub
@@ -243,6 +248,8 @@
 [argocd-mysql]: https://argo.gr.wtf/api/badge?name=mysql-operator
 [argocd-changedetection]: https://argo.gr.wtf/api/badge?name=changedetection
 [argocd-tailscale]: https://argo.gr.wtf/api/badge?name=tailscale
+[argocd-chatgpt]: https://argo.gr.wtf/api/badge?name=chatgpt
+[argocd-milvus]: https://argo.gr.wtf/api/badge?name=milvus
 [argocd-poller]: https://argo.gr.wtf/api/badge?name=unifi-poller
 [argocd-rss-gen]: https://argo.gr.wtf/api/badge?name=rss-gen
 [argocd-rss-hub]: https://argo.gr.wtf/api/badge?name=rss-hub
@@ -300,3 +307,5 @@
 [agones-badge]: https://img.shields.io/github/v/release/googleforgames/agones?label=Github&color=blue&logo=github&sort=semver&style=flat-square
 [gpu-exporter-badge]: https://img.shields.io/github/v/release/utkuozdemir/nvidia_gpu_exporter?label=Github&logo=github&style=flat-square
 [kuma-badge]: https://img.shields.io/github/v/release/louislam/uptime-kuma?label=Github&logo=github&style=flat-square
+[chatgpt-badge]: https://img.shields.io/github/v/tag/Zero6992/chatGPT-discord-bot?label=Github&logo=github&style=flat-square
+[milvus-badge]: https://img.shields.io/docker/v/milvusdb/milvus?label=Docker&color=blue&logo=docker&sort=semver&style=flat-square
