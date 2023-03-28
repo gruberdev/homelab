@@ -634,7 +634,7 @@ spec:
           useIAM: false
           cloudProvider: "aws"
   destination:
-    namespace: milvus
+    namespace: milvus-system
     name: in-cluster
   syncPolicy:
     automated:
