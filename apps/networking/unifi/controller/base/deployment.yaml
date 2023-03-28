@@ -21,8 +21,8 @@ spec:
     spec:
       terminationGracePeriodSeconds: 60
       securityContext:
-          runAsUser: 999
-          fsGroup: 999
+        runAsUser: 999
+        fsGroup: 999
       containers:
         - name: unifi-controller
           image: jacobalberty/unifi:v7.2.92
