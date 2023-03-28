@@ -625,7 +625,7 @@ spec:
         externalS3:
           enabled: true
           host: "ewr1.vultrobjects.com"
-          port: "80"
+          port: "443"
           accessKey: "<path:kv/data/velero#id>"
           secretKey: "<path:kv/data/velero#key>"
           useSSL: true
