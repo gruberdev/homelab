@@ -46,6 +46,7 @@ resources:
 - base/apps/unifi.yaml
 - base/apps/agones.yaml
 - base/apps/agones-crd.yaml
+- base/apps/milvus.yaml
 # - base/apps/adguard.yaml
 
 # Monitoring Resources
