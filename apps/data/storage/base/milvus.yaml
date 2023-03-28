@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: milvus-storage
-  namespace: milvus
+  namespace: milvus-system
 spec:
   accessModes:
     - ReadWriteOnce
