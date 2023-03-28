@@ -128,7 +128,7 @@ version = 2
 
 Both Helm charts are required to properly label nodes that have a GPU attached to them. Although `k8s-device-plugin` allows you to deploy ` gpu-feature-discovery`  as part of their resources, I decided to split them. You can find my Helm chart `values.yaml`  equivalent file for ArgoCD here:
 
-- [apps/argocd/base/utilities/gfd.yaml](github.com)
+- [apps/argocd/base/utilities/gfd.yaml][gfd-uri]
 
 
 It is recommended to read all the individual respositories, their default ` values.yaml` for the Helm deployments, and what each value should be changed to match your infrastructure. 
@@ -216,3 +216,4 @@ Done
 [cuda-list]: https://catalog.ngc.nvidia.com/orgs/nvidia/containers/cuda/tags
 [k3s-docs]: https://docs.k3s.io/advanced#nvidia-container-runtime-support
 [nvidia-gpu-operator]: https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/overview.html
+[gfd-uri]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/utilities/gfd.yaml
