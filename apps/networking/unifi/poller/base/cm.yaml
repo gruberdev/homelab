@@ -5,7 +5,7 @@ metadata:
 data:
   TZ: "America/Sao_Paulo"
   UP_UNIFI_DYNAMIC: "false"
-  UP_POLLER_DEBUG: "true"
+  UP_POLLER_DEBUG: "false"
   UP_WEBSERVER_ENABLE: "true"
   UP_UNIFI_DEFAULT_SITE_0: "default"
   UP_UNIFI_CONTROLLER_0_URL: "https://192.168.1.10:32321"
