@@ -3,13 +3,186 @@ kind: Application
 metadata:
   name: descheduler
   finalizers:
-    - resources-finalizer.argocd.argoproj.io
+  - resources-finalizer.argocd.argoproj.io
 spec:
   project: cluster
   source:
-    repoURL: 'https://github.com/kubernetes-sigs/descheduler.git'
+    repoURL: https://kubernetes-sigs.github.io/descheduler/
+    chart: descheduler
     targetRevision: v0.26.0
-    path: kubernetes/deployment/
+    helm:
+      releaseName: descheduler
+      values: |
+        # CronJob or Deployment
+        kind: CronJob
+        image:
+          repository: registry.k8s.io/descheduler/descheduler
+          tag: "v0.26.0"
+          pullPolicy: IfNotPresent
+        imagePullSecrets:
+        resources:
+          requests:
+            cpu: 60m
+            memory: 128Mi
+          limits:
+            cpu: 200m
+            memory: 352Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+          privileged: false
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          runAsUser: 1000
+        nameOverride: ""
+        fullnameOverride: ""
+
+        # labels that'll be applied to all resources
+        commonLabels: {}
+        cronJobApiVersion: "batch/v1"
+        schedule: "*/2 * * * *"
+        suspend: false
+        # startingDeadlineSeconds: 200
+        # successfulJobsHistoryLimit: 3
+        # failedJobsHistoryLimit: 1
+        # ttlSecondsAfterFinished 600
+
+        # Required when running as a Deployment
+        deschedulingInterval: 5m
+
+        # Specifies the replica count for Deployment
+        # Set leaderElection if you want to use more than 1 replica
+        # Set affinity.podAntiAffinity rule if you want to schedule onto a node
+        # only if that node is in the same zone as at least one already-running descheduler
+        replicas: 1
+
+        # Specifies whether Leader Election resources should be created
+        # Required when running as a Deployment
+        # NOTE: Leader election can't be activated if DryRun enabled
+        leaderElection: {}
+        #  enabled: true
+        #  leaseDuration: 15s
+        #  renewDeadline: 10s
+        #  retryPeriod: 2s
+        #  resourceLock: "leases"
+        #  resourceName: "descheduler"
+        #  resourceNamescape: "kube-system"
+
+        cmdOptions:
+          v: 3
+
+        # Recommended to use the latest Policy API version supported by the Descheduler app version
+        deschedulerPolicyAPIVersion: "descheduler/v1alpha1"
+
+        deschedulerPolicy:
+          # nodeSelector: "key1=value1,key2=value2"
+          # maxNoOfPodsToEvictPerNode: 10
+          # maxNoOfPodsToEvictPerNamespace: 10
+          # ignorePvcPods: true
+          # evictLocalStoragePods: true
+          strategies:
+            RemoveDuplicates:
+              enabled: true
+            RemovePodsHavingTooManyRestarts:
+              enabled: true
+              params:
+                podsHavingTooManyRestarts:
+                  podRestartThreshold: 100
+                  includingInitContainers: true
+            RemovePodsViolatingNodeTaints:
+              enabled: true
+            RemovePodsViolatingNodeAffinity:
+              enabled: true
+              params:
+                nodeAffinityType:
+                - requiredDuringSchedulingIgnoredDuringExecution
+            RemovePodsViolatingInterPodAntiAffinity:
+              enabled: true
+            RemovePodsViolatingTopologySpreadConstraint:
+              enabled: true
+              params:
+                includeSoftConstraints: false
+            LowNodeUtilization:
+              enabled: true
+              params:
+                nodeResourceUtilizationThresholds:
+                  thresholds:
+                    cpu: 20
+                    memory: 20
+                    pods: 20
+                  targetThresholds:
+                    cpu: 75
+                    memory: 75
+                    pods: 50
+
+        priorityClassName: system-cluster-critical
+        nodeSelector: {}
+        #  foo: bar
+        affinity: {}
+        # nodeAffinity:
+        #   requiredDuringSchedulingIgnoredDuringExecution:
+        #     nodeSelectorTerms:
+        #     - matchExpressions:
+        #       - key: kubernetes.io/e2e-az-name
+        #         operator: In
+        #         values:
+        #         - e2e-az1
+        #         - e2e-az2
+        #  podAntiAffinity:
+        #    requiredDuringSchedulingIgnoredDuringExecution:
+        #      - labelSelector:
+        #          matchExpressions:
+        #            - key: app.kubernetes.io/name
+        #              operator: In
+        #              values:
+        #                - descheduler
+        #        topologyKey: "kubernetes.io/hostname"
+        tolerations: []
+        # - key: 'management'
+        #   operator: 'Equal'
+        #   value: 'tool'
+        #   effect: 'NoSchedule'
+        rbac:
+          create: true
+        serviceAccount:
+          create: true
+          name:
+          annotations: {}
+        podAnnotations: {}
+        podLabels: {}
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /healthz
+            port: 10258
+            scheme: HTTPS
+          initialDelaySeconds: 15
+          periodSeconds: 10
+
+        service:
+          enabled: false
+
+        serviceMonitor:
+          enabled: true
+          namespace: "monitoring"
+          interval: ""
+          # honorLabels: true
+          insecureSkipVerify: true
+          serverName: null
+          metricRelabelings: []
+            # - action: keep
+            #   regex: 'descheduler_(build_info|pods_evicted)'
+            #   sourceLabels: [__name__]
+          relabelings: []
+            # - sourceLabels: [__meta_kubernetes_pod_node_name]
+            #   separator: ;
+            #   regex: ^(.*)$
+            #   targetLabel: nodename
+            #   replacement: $1
+            #   action: replace
+
   destination:
     namespace: kube-system
     name: in-cluster
@@ -17,7 +190,7 @@ spec:
     automated:
       prune: true
       selfHeal: true
-      allowEmpty: true
+      allowEmpty: false
     syncOptions:
     - Validate=false
     - CreateNamespace=false
@@ -26,8 +199,8 @@ spec:
     - ApplyOutOfSyncOnly=false
     - Prune=true
     retry:
-      limit: -1
+      limit: 10
       backoff:
         duration: 30s
         factor: 2
-        maxDuration: 30m
+        maxDuration: 60m
