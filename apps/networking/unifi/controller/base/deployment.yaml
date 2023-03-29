@@ -19,13 +19,13 @@ spec:
       labels:
         app: unifi-controller
     spec:
-      terminationGracePeriodSeconds: 60
-      securityContext:
-        runAsUser: 999
-        fsGroup: 999
+      terminationGracePeriodSeconds: 5
       containers:
         - name: unifi-controller
           image: jacobalberty/unifi:v7.2.92
+          securityContext:
+            runAsUser: 0
+            allowPrivilegeEscalation: true
           envFrom:
             - configMapRef:
                 name: unifi-controller-cm
