@@ -109,13 +109,13 @@ spec:
               params:
                 nodeResourceUtilizationThresholds:
                   thresholds:
-                    cpu: 20
-                    memory: 20
-                    pods: 20
-                  targetThresholds:
-                    cpu: 75
-                    memory: 75
+                    cpu: 50
+                    memory: 60
                     pods: 50
+                  targetThresholds:
+                    cpu: 80
+                    memory: 80
+                    pods: 100
 
         priorityClassName: system-cluster-critical
         nodeSelector: {}
