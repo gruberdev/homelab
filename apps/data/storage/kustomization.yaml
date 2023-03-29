@@ -16,9 +16,9 @@ resources:
 
 # Media Services
 # - base/beets.yaml
-- base/media.yaml
+#- base/media.yaml
 # - base/lidarr.yaml
-- base/jellyfin.yaml
+#- base/jellyfin.yaml
 - base/mango.yaml
 
 # Services
