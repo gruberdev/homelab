@@ -1,4 +1,4 @@
-FROM ghcr.io/tailscale/tailscale:v1.38.2
+FROM ghcr.io/tailscale/tailscale:v1.38.3
 
 RUN apk update && apk add ca-certificates ipcalc \
                iptables ip6tables iproute2 \
