@@ -7,7 +7,7 @@ spec:
   source:
     repoURL: https://pixie-operator-charts.storage.googleapis.com
     chart: pixie-operator-chart
-    targetRevision: 0.0.38
+    targetRevision: 0.1.0
     helm:
       values: |
         deployOLM: "true"
