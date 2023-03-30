@@ -5,7 +5,7 @@ metadata:
 data:
   TZ: "America/Sao_Paulo"
   CHAT_MODEL: "OFFICIAL"
-  GPT_ENGINE: "gpt-4"
+  GPT_ENGINE: "gpt-3.5-turbo"
   UNOFFICIAL_PAID: "True"
   LOGGING: "True"
   REPLYING_ALL: "False"
