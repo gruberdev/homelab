@@ -251,8 +251,8 @@
 [argocd-mysql]: https://argo.gr.wtf/api/badge?name=mysql-operator
 [argocd-changedetection]: https://argo.gr.wtf/api/badge?name=changedetection
 [argocd-tailscale]: https://argo.gr.wtf/api/badge?name=tailscale
-[argocd-chatgpt]: https://argo.gr.wtf/api/badge?name=chatgpt-discord
-[argocd-p-chatgpt]: https://argo.gr.wtf/api/badge?name=chatgpt-plugin
+[argocd-chatgpt]: https://argo.gr.wtf/api/badge?name=discord-bot-gpt
+[argocd-p-chatgpt]: https://argo.gr.wtf/api/badge?name=memory-plugin-gpt
 [argocd-milvus]: https://argo.gr.wtf/api/badge?name=milvus
 [argocd-poller]: https://argo.gr.wtf/api/badge?name=unifi-poller
 [argocd-rss-gen]: https://argo.gr.wtf/api/badge?name=rss-gen
