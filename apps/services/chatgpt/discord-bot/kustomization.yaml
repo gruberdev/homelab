@@ -3,7 +3,7 @@ kind: Kustomization
 bases:
 - ./base
 
-namespace: services
+namespace: chatgpt
 
 commonAnnotations:
   reloader.stakater.com/auto: "true"
@@ -16,4 +16,4 @@ patches:
         kubernetes.io/arch: amd64
   target:
     kind: Deployment
-    name: chatgpt
+    name: chatgpt-discord

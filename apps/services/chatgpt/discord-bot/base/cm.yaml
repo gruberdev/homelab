@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: chatgpt-config
+  name: chatgpt-discord-config
 data:
   TZ: "America/Sao_Paulo"
   CHAT_MODEL: "OFFICIAL"
