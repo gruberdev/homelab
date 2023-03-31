@@ -1,0 +1,41 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chatgpt-discord
+  labels:
+    app: chatgpt-discord
+  annotations:
+    link.argocd.argoproj.io/external-link: http://chatgpt
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: chatgpt-discord
+  template:
+    metadata:
+      labels:
+        app: chatgpt-discord
+    spec:
+      containers:
+        - name: bot
+          image: docker.io/grubertech/chatgpt:v1.2.1
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: chatgpt-discord-config
+            - secretRef:
+                name: chatgpt-discord-vars
+          ports:
+            - name: web
+              containerPort: 80
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 120m
+              memory: 256Mi
+            limits:
+              cpu: 220m
+              memory: 512Mi

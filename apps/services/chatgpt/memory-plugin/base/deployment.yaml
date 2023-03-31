@@ -2,9 +2,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: chatgpt
+  name: chatgpt-plugin
   labels:
-    app: chatgpt
+    app: chatgpt-plugin
   annotations:
     link.argocd.argoproj.io/external-link: http://chatgpt
 spec:
@@ -13,21 +13,21 @@ spec:
     type: Recreate
   selector:
     matchLabels:
-      app: chatgpt
+      app: chatgpt-plugin
   template:
     metadata:
       labels:
-        app: chatgpt
+        app: chatgpt-plugin
     spec:
       containers:
-        - name: chatgpt
-          image: docker.io/grubertech/chatgpt:v1.2.1
+        - name: server
+          image: docker.io/grubertech/chatgpt-plugin:latest
           imagePullPolicy: Always
           envFrom:
             - configMapRef:
-                name: chatgpt-config
+                name: chatgpt-plugin-config
             - secretRef:
-                name: chatgpt-vars
+                name: chatgpt-plugin-vars
           ports:
             - name: web
               containerPort: 80
