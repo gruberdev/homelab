@@ -403,7 +403,7 @@ spec:
             ## ref: https://kubernetes.io/docs/user-guide/node-selection/
             ##
             nodeSelector:
-              kubernetes.io/hostname: node-one
+              kubernetes.io/arch: amd64
 
             ## Define resources requests and limits for single Pods.
             ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
@@ -1750,7 +1750,7 @@ spec:
               #   argocd.argoproj.io/hook-delete-policy: HookSucceeded
               podAnnotations: {}
               nodeSelector:
-                kubernetes.io/hostname: node-one
+                kubernetes.io/arch: amd64
               affinity: {}
               tolerations: []
 
@@ -1966,7 +1966,7 @@ spec:
           ## ref: https://kubernetes.io/docs/user-guide/node-selection/
           ##
           nodeSelector:
-            kubernetes.io/hostname: node-one
+            kubernetes.io/arch: amd64
           ## Tolerations for use with node taints
           ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
           ##
@@ -2610,7 +2610,7 @@ spec:
             ## ref: https://kubernetes.io/docs/user-guide/node-selection/
             ##
             nodeSelector:
-              kubernetes.io/hostname: node-one
+              kubernetes.io/arch: amd64
 
 
             ## Secrets is a list of Secrets in the same namespace as the Prometheus object, which shall be mounted into the Prometheus Pods.
@@ -3485,7 +3485,7 @@ spec:
             ## ref: https://kubernetes.io/docs/user-guide/node-selection/
             ##
             nodeSelector:
-              kubernetes.io/hostname: node-one
+              kubernetes.io/arch: amd64
 
             ## Define resources requests and limits for single Pods.
             ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
