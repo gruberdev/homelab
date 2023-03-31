@@ -7,4 +7,4 @@ data:
   DATASTORE: "milvus"
   MILVUS_HOST: "milvus.milvus-system.svc.cluster.local"
   MILVUS_PORT: "19530"
-  MILVUS_COLLECTION: "chatgpt-memory"
+  MILVUS_COLLECTION: "chatgpt_memory"
