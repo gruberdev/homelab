@@ -6,3 +6,4 @@ resources:
 - gameserver.yaml
 - gameserverset.yaml
 - gameserverallocationpolicy.yaml
+- apiservice.yaml
