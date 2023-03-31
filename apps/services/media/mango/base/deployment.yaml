@@ -45,7 +45,7 @@ spec:
       volumes:
         - name: library
           persistentVolumeClaim:
-            claimName: manga-library
+            claimName: mango-library
         - name: config
           persistentVolumeClaim:
             claimName: mango-storage
