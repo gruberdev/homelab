@@ -14,7 +14,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: manga-library
+  name: mango-library
   namespace: media
 spec:
   accessModes:
@@ -22,4 +22,4 @@ spec:
   storageClassName: iscsi
   resources:
     requests:
-      storage: 4Gi
+      storage: 25Gi
