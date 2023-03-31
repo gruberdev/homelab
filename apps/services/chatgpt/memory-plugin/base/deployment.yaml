@@ -5,8 +5,6 @@ metadata:
   name: chatgpt-plugin
   labels:
     app: chatgpt-plugin
-  annotations:
-    link.argocd.argoproj.io/external-link: http://chatgpt
 spec:
   replicas: 1
   strategy:
@@ -29,7 +27,7 @@ spec:
             - secretRef:
                 name: chatgpt-plugin-vars
           ports:
-            - name: web
+            - name: server
               containerPort: 80
               protocol: TCP
           resources:
