@@ -35,6 +35,8 @@ spec:
     server: https://kubernetes.default.svc
   - namespace: milvus-system
     server: https://kubernetes.default.svc
+  - namespace: chatgpt
+    server: https://kubernetes.default.svc
   clusterResourceWhitelist:
   - group: '*'
     kind: '*'
