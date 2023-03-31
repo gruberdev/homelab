@@ -28,12 +28,12 @@ spec:
                 name: chatgpt-plugin-vars
           ports:
             - name: server
-              containerPort: 80
+              containerPort: 8080
               protocol: TCP
           resources:
             requests:
-              cpu: 120m
+              cpu: 80m
               memory: 256Mi
             limits:
-              cpu: 220m
+              cpu: 160m
               memory: 512Mi
