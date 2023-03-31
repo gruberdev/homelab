@@ -1,17 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: chatgpt
+  name: memory-plugin-gpt
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: apps
   source:
     repoURL: 'https://github.com/gruberdev/homelab.git'
-    path: apps/services/chatgpt
+    path: apps/services/chatgpt/memory-plugin
     targetRevision: main
   destination:
-    namespace: services
+    namespace: chatgpt
     name: in-cluster
   syncPolicy:
     automated:
@@ -25,9 +25,10 @@ spec:
     - PruneLast=true
     - ApplyOutOfSyncOnly=false
     - Prune=true
+    - Replace=true
     retry:
-      limit: 10
+      limit: 5
       backoff:
-        duration: 20s
+        duration: 60s
         factor: 2
         maxDuration: 15m

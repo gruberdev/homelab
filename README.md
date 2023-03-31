@@ -38,6 +38,7 @@
 > |    [RSS Hub][service-rsshub]           |    `Services`   |        <sub>[More details][homelab-rsshub]</sub>    |        ![][argocd-rss-hub]   | ![][rsshub-badge]    |
 > |    [Feedpushr][service-feedpushr]      |    `Services`   |        <sub>[More details][homelab-feedpushr]</sub>    |        ![][argocd-feedpushr]   | ![][feedpushr-badge]    |
 > | <sub>[ChatGPT Discord Bot][service-chatgpt]</sub> |  `Services`   |  <sub>[More details][homelab-chatgpt]</sub>    |  ![][argocd-chatgpt] | ![][chatgpt-badge]    |
+> | <sub>[ChatGPT Retrieval Plugin][service-p-chatgpt]</sub> |  `Services`   |  <sub>[More details][homelab-p-chatgpt]</sub>    |  ![][argocd-p-chatgpt] | ![][chatgpt-p-badge]    |
 > |            [n8n][n8n-uri]              |    `Services`   |        <sub>[More details][homelab-n8n]</sub>       |        ![][argocd-n8n]       |  ![][n8n-badge]      |
 > |   [Wallabag][wallabag-uri]             |   `Services`   |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-wallabag]  |  ![][wallabag-badge] |
 > |   [Grocy][grocy-uri]                   |   `Services`   |        <sub>[More details][homelab-grocy]</sub>      |        ![][argocd-grocy]  |  ![][grocy-badge] |
@@ -142,6 +143,7 @@
 [service-adguard]: https://adguard.com/en/adguard-home/overview.html
 [service-unifi]: https://github.com/jacobalberty/unifi-docker
 [service-chatgpt]: https://github.com/Zero6992/chatGPT-discord-bot
+[service-p-chatgpt]: https://github.com/openai/chatgpt-retrieval-plugin
 [service-milvus]: https://milvus.io/
 [tail-uri]: https://tailscale.com/kb/1151/what-is-tailscale/
 [matrix-uri]: https://matrix.org/
@@ -211,7 +213,8 @@
 [homelab-poller]: https://github.com/gruberdev/homelab/tree/main/apps/networking/unifi/poller
 [homelab-cloudflared]: https://github.com/gruberdev/homelab/tree/main/apps/networking/cloudflared
 [homelab-rssgen]: https://github.com/gruberdev/homelab/tree/main/apps/services/rss/gen
-[homelab-chatgpt]: https://github.com/gruberdev/homelab/tree/main/apps/services/chatgpt
+[homelab-chatgpt]: https://github.com/gruberdev/homelab/tree/main/apps/services/chatgpt/discord-bot
+[homelab-p-chatgpt]: https://github.com/gruberdev/homelab/tree/main/apps/services/chatgpt/memory-plugin
 [homelab-milvus]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/apps/milvus.yaml
 [homelab-sonarr]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/sonarr
 [homelab-prowlarr]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/prowlarr
@@ -248,7 +251,8 @@
 [argocd-mysql]: https://argo.gr.wtf/api/badge?name=mysql-operator
 [argocd-changedetection]: https://argo.gr.wtf/api/badge?name=changedetection
 [argocd-tailscale]: https://argo.gr.wtf/api/badge?name=tailscale
-[argocd-chatgpt]: https://argo.gr.wtf/api/badge?name=chatgpt
+[argocd-chatgpt]: https://argo.gr.wtf/api/badge?name=chatgpt-discord
+[argocd-p-chatgpt]: https://argo.gr.wtf/api/badge?name=chatgpt-plugin
 [argocd-milvus]: https://argo.gr.wtf/api/badge?name=milvus
 [argocd-poller]: https://argo.gr.wtf/api/badge?name=unifi-poller
 [argocd-rss-gen]: https://argo.gr.wtf/api/badge?name=rss-gen
@@ -308,4 +312,5 @@
 [gpu-exporter-badge]: https://img.shields.io/github/v/release/utkuozdemir/nvidia_gpu_exporter?label=Github&logo=github&style=flat-square
 [kuma-badge]: https://img.shields.io/github/v/release/louislam/uptime-kuma?label=Github&logo=github&style=flat-square
 [chatgpt-badge]: https://img.shields.io/github/v/tag/Zero6992/chatGPT-discord-bot?label=Github&logo=github&style=flat-square
+[chatgpt-p-badge]: https://img.shields.io/docker/v/grubertech/chatgpt-plugin?label=Docker&color=blue&logo=docker&sort=semver&style=flat-square
 [milvus-badge]: https://img.shields.io/docker/v/milvusdb/milvus?label=Docker&color=blue&logo=docker&sort=semver&style=flat-square
