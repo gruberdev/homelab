@@ -51,10 +51,10 @@ spec:
           resources:
             requests:
               memory: "128Mi"
-              cpu: "200m"
+              cpu: 100m
             limits:
               memory: "256Mi"
-              cpu: "500m"
+              cpu: 200m
       volumes:
         - name: kuma-data
           persistentVolumeClaim:

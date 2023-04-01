@@ -10,10 +10,10 @@ data:
   cluster_name_label: cluster-name
   crd_categories: "all"
   db_hosted_zone: db.example.com
-  default_cpu_limit: 500m
-  default_cpu_request: 250m
-  default_memory_limit: 600Mi
-  default_memory_request: 350Mi
+  default_cpu_limit: 350m
+  default_cpu_request: 200m
+  default_memory_limit: 400Mi
+  default_memory_request: 200Mi
   docker_image: registry.opensource.zalan.do/acid/spilo-14:2.1-p6
   # downscaler_annotations: "deployment-time,downscaler/*"
   # enable_admin_role_for_users: "true"
@@ -53,9 +53,9 @@ data:
   # logical_backup_s3_secret_access_key: ""
   # logical_backup_s3_retention_time: ""
   logical_backup_schedule: "30 00 * * *"
-  max_cpu_request: "1"
-  max_memory_request: 2Gi
-  min_cpu_limit: 250m
-  min_memory_limit: 150Mi
+  max_cpu_request: 450m
+  max_memory_request: 500Mi
+  min_cpu_limit: 100m
+  min_memory_limit: 250Mi
   password_rotation_interval: "90"
   password_rotation_user_retention: "180"
