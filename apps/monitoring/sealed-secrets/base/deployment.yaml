@@ -24,11 +24,11 @@ spec:
         imagePullPolicy: IfNotPresent
         resources:
           limits:
-            cpu: 350m
-            memory: 700Mi
+            cpu: 120m
+            memory: 350Mi
           requests:
-            cpu: 250m
-            memory: 512Mi
+            cpu: 50m
+            memory: 256Mi
         livenessProbe:
           httpGet:
             path: /healthz

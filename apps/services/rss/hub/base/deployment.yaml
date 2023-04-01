@@ -33,11 +33,11 @@ spec:
               protocol: TCP
           resources:
             requests:
-              cpu: "64m"
-              memory: "128Mi"
+              cpu: 60m
+              memory: 128Mi
             limits:
-              cpu: "128m"
-              memory: "256Mi"
+              cpu: 120m
+              memory: 256Mi
           livenessProbe:
             tcpSocket:
               port: 1200
