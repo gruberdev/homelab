@@ -48,11 +48,11 @@ spec:
             mountPath: /config
           resources:
             limits:
-              cpu: "300m"
-              memory: "512Mi"
-            requests:
-              cpu: "250m"
+              cpu: "100m"
               memory: "256Mi"
+            requests:
+              cpu: "50m"
+              memory: "128Mi"
           readinessProbe:
             httpGet:
               path: /metrics

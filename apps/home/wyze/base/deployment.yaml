@@ -65,11 +65,11 @@ spec:
             failureThreshold: 3
           resources:
             requests:
-              cpu: "150m"
-              memory: "512Mi"
+              cpu: 80m
+              memory: 256Mi
             limits:
-              cpu: "300m"
-              memory: "720Mi"
+              cpu: 180m
+              memory: 512Mi
           volumeMounts:
             - mountPath: /tokens
               name: config
