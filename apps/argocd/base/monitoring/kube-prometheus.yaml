@@ -2071,11 +2071,11 @@ spec:
             # resource config for prometheusConfigReloader
             resources:
               requests:
-                cpu: 120m
-                memory: 256Mi
+                cpu: 40m
+                memory: 80Mi
               limits:
-                cpu: 240m
-                memory: 512Mi
+                cpu: 80m
+                memory: 160Mi
 
           ## Thanos side-car image when configured
           ##
@@ -2804,11 +2804,11 @@ spec:
             ##
             resources:
               requests:
-                cpu: 250m
-                memory: 1Gi
+                cpu: 130m
+                memory: 512Mi
               limits:
-                cpu: 1
-                memory: 3Gi
+                cpu: 600m
+                memory: 2Gi
 
             ## Prometheus StorageSpec for persistent data
             ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/user-guides/storage.md

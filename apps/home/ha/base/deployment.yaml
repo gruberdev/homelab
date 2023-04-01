@@ -65,9 +65,9 @@ spec:
           resources:
             limits:
               cpu: 350m
-              memory: 1000Mi
+              memory: 800Mi
             requests:
-              cpu: 100m
+              cpu: 200m
               memory: 500Mi
           livenessProbe:
             tcpSocket:
