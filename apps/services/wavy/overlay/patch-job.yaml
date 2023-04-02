@@ -16,7 +16,7 @@ spec:
         - create
         - --namespace=services
         - --secret-name=wavy-webhook-tls
-        - --host=wavy-webhook,wavy-webhook.wavy.svc
+        - --host=wavy-webhook,wavy-webhook.services.svc
         - --key-name=tls.key
         - --cert-name=tls.crt
       containers:
