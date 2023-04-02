@@ -6,7 +6,7 @@ spec:
   project: cluster
   source:
     repoURL: https://mongodb.github.io/helm-charts
-    chart: community-operator
+    chart: community-operator-crds
     targetRevision: 0.7.8
     helm:
       releaseName: mangodb-operator-crds
