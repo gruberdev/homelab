@@ -1,0 +1,30 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: cert-gen
+  namespace: wavy
+  labels:
+    app.kubernetes.io/name: wavy
+    app.kubernetes.io/component: certificate-generator
+spec:
+  template:
+    spec:
+      initContainers:
+      - name: create
+        args:
+        - create
+        - --namespace=services
+        - --secret-name=wavy-webhook-tls
+        - --host=wavy-webhook,wavy-webhook.wavy.svc
+        - --key-name=tls.key
+        - --cert-name=tls.crt
+      containers:
+      - name: patch
+        image: k8s.gcr.io/ingress-nginx/kube-webhook-certgen:v1.0
+        args:
+        - patch
+        - --webhook-name=wavy.squat.ai
+        - --secret-name=wavy-webhook-tls
+        - --namespace=services
+        - --patch-validating=false

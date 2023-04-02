@@ -4,7 +4,8 @@ resources:
 - https://raw.githubusercontent.com/wavyland/wavy/main/manifests/webhook.yaml
 
 patchesStrategicMerge:
-- overlay/patch.yaml
+- overlay/patch-deploy.yaml
+- overlay/patch-job.yaml
 
 namespace: services
 
