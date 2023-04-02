@@ -38,11 +38,11 @@ spec:
               protocol: TCP
           resources:
             requests:
-              cpu: 150m
-              memory: 512Mi
+              cpu: 100m
+              memory: 128i
             limits:
               cpu: 350m
-              memory: 720Mi
+              memory: 400Mi
           volumeMounts:
             - name: config-storage
               mountPath: /home/node
