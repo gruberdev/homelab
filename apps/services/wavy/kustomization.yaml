@@ -3,6 +3,9 @@ kind: Kustomization
 resources:
 - https://raw.githubusercontent.com/wavyland/wavy/main/manifests/webhook.yaml
 
+patchesStrategicMerge:
+- overlay/patch.yaml
+
 namespace: services
 
 commonAnnotations:

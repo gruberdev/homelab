@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wavy-webhook
+  namespace: wavy
+  labels:
+    app.kubernetes.io/name: wavy
+    app.kubernetes.io/component: webhook-server
+spec:
+  template:
+    spec:
+      containers:
+      - name: webhook
+        image: ghcr.io/wavyland/wavy
+        args:
+        - webhook
+        - --certificate=/run/secrets/tls/tls.crt
+        - --key=/run/secrets/tls/tls.key
+        - --listen-metrics=:9090
+        - --listen=:8443
+        resources:
+          limits:
+            cpu: 150m
+            memory: 256Mi
+          requests:
+            cpu: 50m
+            memory: 128Mi
+        ports:
+        - containerPort: 8443
+          name: webhook
+        - containerPort: 9090
+          name: metrics
+        volumeMounts:
+        - name: tls
+          mountPath: /run/secrets/tls
+          readOnly: true
+      volumes:
+      - name: tls
+        secret:
+          secretName: wavy-webhook-tls
+          optional: true
