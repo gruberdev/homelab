@@ -6,7 +6,7 @@ spec:
   project: apps
   source:
     repoURL: https://github.com/hashicorp/vault-helm.git
-    targetRevision: v0.22.1
+    targetRevision: v0.23.0
     path: .
     helm:
       releaseName: vault
