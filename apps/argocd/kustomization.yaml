@@ -47,6 +47,8 @@ resources:
 - base/apps/agones.yaml
 - base/apps/agones-crd.yaml
 - base/apps/milvus.yaml
+- base/apps/mangodb.yaml
+- base/apps/mangodb-crds.yaml
 # - base/apps/adguard.yaml
 
 # Monitoring Resources
@@ -106,7 +108,7 @@ resources:
 - https://github.com/gruberdev/homelab/apps/networking/tailscale
 - https://github.com/gruberdev/homelab/apps/networking/cloudflared
 
-- https://raw.githubusercontent.com/argoproj/argo-cd/v2.6.2/manifests/install.yaml
+- https://raw.githubusercontent.com/argoproj/argo-cd/v2.6.7/manifests/install.yaml
 
 # Image Updater
 - https://github.com/argoproj-labs/argocd-image-updater/manifests/base

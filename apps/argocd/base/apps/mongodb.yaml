@@ -1,0 +1,89 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mongodb-operator
+spec:
+  project: cluster
+  source:
+    repoURL: https://mongodb.github.io/helm-charts
+    chart: community-operator
+    targetRevision: 0.7.8
+    helm:
+      releaseName: mongodb-operator
+      values: |
+        operator:
+          name: mongodb-kubernetes-operator
+          operatorImageName: mongodb-kubernetes-operator
+          deploymentName: mongodb-kubernetes-operator
+          version: 0.7.8
+          watchNamespace: "*"
+          resources:
+            requests:
+              cpu: 80m
+              memory: 128Mi
+            limits:
+              cpu: 200m
+              memory: 330Mi
+          extraEnvs: []
+          # environment:
+          # - name: CLUSTER_DOMAIN
+          #   value: my-cluster.domain
+        ## Operator's database
+        database:
+          name: mongodb-database
+          # set this to the namespace where you would like
+          # to deploy the MongoDB database,
+          # Note if the database namespace is not same
+          # as the operator namespace,
+          # make sure to set "watchNamespace" to "*"
+          # to ensure that the operator has the
+          # permission to reconcile resources in other namespaces
+          # namespace: databases
+        agent:
+          name: mongodb-agent
+          version: 12.0.15.7646-1
+        versionUpgradeHook:
+          name: mongodb-kubernetes-operator-version-upgrade-post-start-hook
+          version: 1.0.6
+        readinessProbe:
+          name: mongodb-kubernetes-readinessprobe
+          version: 1.0.12
+        mongodb:
+          name: mongo
+          repo: docker.io
+        registry:
+          agent: quay.io/mongodb
+          versionUpgradeHook: quay.io/mongodb
+          readinessProbe: quay.io/mongodb
+          operator: quay.io/mongodb
+          pullPolicy: Always
+        community-operator-crds:
+          enabled: false
+        createResource: false
+        resource:
+          name: mongodb-replica-set
+          version: 4.4.0
+          members: 3
+          tls:
+            enabled: false
+  destination:
+    namespace: databases
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: true
+    syncOptions:
+    - Validate=false
+    - CreateNamespace=false
+    - PrunePropagationPolicy=foreground
+    - PruneLast=true
+    - ApplyOutOfSyncOnly=false
+    - Prune=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m

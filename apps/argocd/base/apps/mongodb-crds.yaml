@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mangodb-operator-crds
+spec:
+  project: cluster
+  source:
+    repoURL: https://mongodb.github.io/helm-charts
+    chart: community-operator
+    targetRevision: 0.7.8
+    helm:
+      releaseName: mangodb-operator-crds
+  destination:
+    namespace: databases
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: true
+    syncOptions:
+    - Validate=false
+    - CreateNamespace=falses
+    - PrunePropagationPolicy=foreground
+    - PruneLast=true
+    - ApplyOutOfSyncOnly=false
+    - Prune=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
