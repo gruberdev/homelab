@@ -30,7 +30,8 @@
 > | [<sub>Zalando PostgreSQL Operator</sub>][p-uri] |   `Databases`   |      <sub>[More details][homelab-zalando]</sub>     |      ![][argocd-zalando]     | ![][zalando-badge]  |
 > |       [Redis Operator][redis-uri]      |   `Databases`   |       <sub>[More details][homelab-redis]</sub>      |       ![][argocd-redis]      |  ![][redis-badge]    |
 > |    [Milvus][service-milvus]            |    `Databases`  |        <sub>[More details][homelab-milvus]</sub>    |        ![][argocd-milvus]   | ![][milvus-badge]    |
-> |  [Unifi Controller][service-unifi]     |   `Networking`  | <sub>[More details][homelab-unifi-controller]</sub> | ![][argocd-unifi-controller] | ![][unifi-badge]     |
+> |    [Milvus][service-milvus]            |    `Databases`  |        <sub>[More details][homelab-milvus]</sub>    |        ![][argocd-milvus]   | ![][milvus-badge]    |
+> | [<sub>MongoDB Community Operator</sub>][service-mongo] | `Databases` | <sub>[More details][homelab-mongo]</sub> |       ![][argocd-mongo]     | ![][mongo-badge]     |
 > |     [kube-prometheus][service-kube]    |   `Monitoring`  |  <sub>[More details][homelab-kube]</sub>            |       ![][argocd-kube]       |   ![][kube-badge]    |
 > |     [Unifi Poller][poller-uri]         |   `Monitoring`  |      <sub>[More details][homelab-poller]</sub>      |      ![][argocd-poller]      | ![][poller-badge]    |
 > |     [Uptime Kuma][kuma-uri]            |   `Monitoring`  |      <sub>[More details][homelab-kuma]</sub>          |      ![][argocd-kuma]      | ![][kuma-badge]      |
@@ -41,6 +42,7 @@
 > | <sub>[ChatGPT Retrieval Plugin][service-p-chatgpt]</sub> |  `Services`   |  <sub>[More details][homelab-p-chatgpt]</sub>    |  ![][argocd-p-chatgpt] | ![][chatgpt-p-badge]    |
 > |            [n8n][n8n-uri]              |    `Services`   |        <sub>[More details][homelab-n8n]</sub>       |        ![][argocd-n8n]       |  ![][n8n-badge]      |
 > |   [Wallabag][wallabag-uri]             |   `Services`   |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-wallabag]  |  ![][wallabag-badge] |
+> |   [Wavy][wavy-uri]                     |   `Services`   |        <sub>[More details][homelab-wavy]</sub>      |        ![][argocd-wavy]       |  ![][wavy-badge] |
 > |   [Grocy][grocy-uri]                   |   `Services`   |        <sub>[More details][homelab-grocy]</sub>      |        ![][argocd-grocy]  |  ![][grocy-badge] |
 > |   [Changedetection.io][change-uri]     |   `Services`   |       <sub>[More details][homelab-change]</sub>      |        ![][argocd-change]    |  ![][change-badge]   |
 > |           [Mango][service-mango]       |   `Media`       |  <sub>[More details][homelab-mango]</sub>           |  ![][argocd-mango]           |  ![][mango-badge]    |
@@ -137,6 +139,7 @@
 [service-beets]: https://github.com/beetbox/beets
 [service-lidarr]: https://github.com/Lidarr/Lidarr
 [service-metabase]: https://www.metabase.com/
+[service-mongo]: https://github.com/mongodb/mongodb-kubernetes-operator
 [service-kube]: https://github.com/prometheus-operator/kube-prometheus
 [service-ha]: https://www.home-assistant.io/
 [change-uri]: https://github.com/dgtlmoon/changedetection.io/
@@ -159,6 +162,7 @@
 [vault-uri]: https://github.com/hashicorp/vault
 [grocy-uri]: https://github.com/grocy/grocy
 [flame-uri]: https://github.com/pawelmalak/flame
+[wavy-uri]: https://github.com/wavyland/wavy
 [poller-uri]: https://github.com/unpoller/unpoller
 [cf-uri]: https://github.com/cloudflare/cloudflared
 [service-sonarr]: https://github.com/Sonarr/Sonarr
@@ -199,6 +203,8 @@
 [homelab-kuma]: https://github.com/gruberdev/homelab/tree/main/apps/monitoring/uptime-kuma
 [homelab-crossplane]: https://github.com/gruberdev/homelab/tree/main/apps/monitoring/crossplane
 [homelab-adguard]: https://github.com/gruberdev/homelab/tree/main/apps/networking/adguard
+[homelab-mongo]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/apps/mongodb.yaml
+[homelab-wavy]: https://github.com/gruberdev/homelab/tree/main/apps/services/wavy
 [homelab-unifi-controller]: https://github.com/gruberdev/homelab/tree/main/apps/networking/unifi/controller
 [homelab-zalando]: https://github.com/gruberdev/homelab/tree/main/apps/data/postgres/operator
 [homelab-change]: https://github.com/gruberdev/homelab/tree/main/apps/services/changedetection
@@ -254,6 +260,8 @@
 [argocd-chatgpt]: https://argo.gr.wtf/api/badge?name=discord-bot-gpt
 [argocd-p-chatgpt]: https://argo.gr.wtf/api/badge?name=memory-plugin-gpt
 [argocd-milvus]: https://argo.gr.wtf/api/badge?name=milvus
+[argocd-mongo]: https://argo.gr.wtf/api/badge?name=mongodb-operator
+[argocd-wavy]: https://argo.gr.wtf/api/badge?name=wavy
 [argocd-poller]: https://argo.gr.wtf/api/badge?name=unifi-poller
 [argocd-rss-gen]: https://argo.gr.wtf/api/badge?name=rss-gen
 [argocd-rss-hub]: https://argo.gr.wtf/api/badge?name=rss-hub
@@ -314,3 +322,6 @@
 [chatgpt-badge]: https://img.shields.io/github/v/tag/Zero6992/chatGPT-discord-bot?label=Github&logo=github&style=flat-square
 [chatgpt-p-badge]: https://img.shields.io/docker/v/grubertech/chatgpt-plugin?label=Docker&color=blue&logo=docker&sort=semver&style=flat-square
 [milvus-badge]: https://img.shields.io/docker/v/milvusdb/milvus?label=Docker&color=blue&logo=docker&sort=semver&style=flat-square
+[wavy-badge]: https://img.shields.io/static/v1?label=No&message=version%20provided&color=gray&labelColor=gray&style=flat-square
+[mongo-badge]: https://img.shields.io/github/v/tag/mongodb/mongodb-kubernetes-operator?label=Github&logo=github&style=flat-square
+
