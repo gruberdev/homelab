@@ -28,11 +28,11 @@ spec:
           name: universal-crossplane-init
           resources:
             limits:
-              cpu: 500m
-              memory: 1Gi
+              cpu: 150m
+              memory: 300m
             requests:
-              cpu: 250m
-              memory: 768Mi
+              cpu: 50m
+              memory: 128Mi
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
@@ -56,11 +56,11 @@ spec:
         name: universal-crossplane
         resources:
           limits:
-            cpu: 240m
-            memory: 512Mi
+            cpu: 150m
+            memory: 300Mi
           requests:
-            cpu: 120m
-            memory: 256Mi
+            cpu: 50m
+            memory: 128Mi
         securityContext:
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: true
@@ -116,10 +116,10 @@ spec:
         resources:
           limits:
             cpu: 150m
-            memory: 512Mi
+            memory: 300Mi
           requests:
-            cpu: 100m
-            memory: 350Mi
+            cpu: 50m
+            memory: 150m
         securityContext:
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: true
@@ -137,10 +137,10 @@ spec:
         resources:
           limits:
             cpu: 150m
-            memory: 512Mi
+            memory: 300Mi
           requests:
-            cpu: 100m
-            memory: 256Mi
+            cpu: 50m
+            memory: 128Mi
         securityContext:
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: true
