@@ -49,6 +49,7 @@ resources:
 - base/apps/milvus.yaml
 - base/apps/mangodb.yaml
 - base/apps/mangodb-crds.yaml
+- base/apps/wavy.yaml
 # - base/apps/adguard.yaml
 
 # Monitoring Resources
