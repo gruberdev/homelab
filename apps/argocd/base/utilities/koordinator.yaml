@@ -22,28 +22,31 @@ spec:
         koordlet:
           image:
             repository: koordinator-sh/koordlet
-            tag: "1.0.0"
+            tag: "v1.1.1"
           resources:
             limits:
-              cpu: 500m
+              cpu: 200m
               memory: 256Mi
             requests:
-              cpu: "0"
-              memory: "0"
+              cpu: 50m
+              memory: 128Mi
+          features: ""
           log:
+            # log level for koordlet
             level: "4"
           hostDirs:
             kubeletConfigDir: /etc/kubernetes/
             kubeletLibDir: /var/lib/kubelet/
             koordProxyRegisterDir: /etc/runtime/hookserver.d/
             koordletSockDir: /var/run/koordlet
+          enableServiceMonitor: false
         manager:
           log:
             level: "4"
-          replicas: 2
+          replicas: 1
           image:
             repository: koordinator-sh/koord-manager
-            tag: "1.0.0"
+            tag: "v1.1.1"
           webhook:
             port: 9876
           metrics:
@@ -53,10 +56,10 @@ spec:
           resyncPeriod: "0"
           resources:
             limits:
-              cpu: 200m
-              memory: 356mb
+              cpu: 400m
+              memory: 512Mi
             requests:
-              cpu: 50m
+              cpu: 100m
               memory: 128Mi
           hostNetwork: false
           nodeAffinity: {}
@@ -71,20 +74,21 @@ spec:
           annotations: {}
         scheduler:
           log:
+            # log level for koord-scheduler
             level: "4"
-          replicas: 2
+          replicas: 1
           image:
             repository: koordinator-sh/koord-scheduler
-            tag: "1.0.0"
+            tag: "v1.1.1"
           port: 10251
           featureGates: ""
           compatibleFeatureGates: "CSIStorageCapacity=false"
           resources:
             limits:
-              cpu: 200m
-              memory: 350mb
+              cpu: 300m
+              memory: 512Mi
             requests:
-              cpu: 50m
+              cpu: 100m
               memory: 128Mi
           hostNetwork: false
           nodeAffinity: {}
@@ -93,19 +97,19 @@ spec:
         descheduler:
           log:
             level: "4"
-          replicas: 2
+          replicas: 1
           image:
             repository: koordinator-sh/koord-descheduler
-            tag: "1.0.0"
+            tag: "v1.1.1"
           port: 10251
           featureGates: ""
           resources:
             limits:
-              cpu: 400m
-              memory: 712mb
+              cpu: 300m
+              memory: 512Mi
             requests:
-              cpu: 200m
-              memory: 256Mi
+              cpu: 100m
+              memory: 128Mi
           hostNetwork: false
           nodeAffinity: {}
           nodeSelector: {}
