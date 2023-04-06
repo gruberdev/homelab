@@ -53,11 +53,11 @@ spec:
           resyncPeriod: "0"
           resources:
             limits:
-              cpu: 400m
-              memory: 712mb
-            requests:
               cpu: 200m
-              memory: 256Mi
+              memory: 356mb
+            requests:
+              cpu: 50m
+              memory: 128Mi
           hostNetwork: false
           nodeAffinity: {}
           nodeSelector: {}
@@ -81,11 +81,11 @@ spec:
           compatibleFeatureGates: "CSIStorageCapacity=false"
           resources:
             limits:
-              cpu: 400m
-              memory: 712mb
-            requests:
               cpu: 200m
-              memory: 256Mi
+              memory: 350mb
+            requests:
+              cpu: 50m
+              memory: 128Mi
           hostNetwork: false
           nodeAffinity: {}
           nodeSelector: {}
@@ -118,7 +118,7 @@ spec:
     automated:
       prune: true
       selfHeal: true
-      allowEmpty: true
+      allowEmpty: false
     syncOptions:
     - Validate=false
     - CreateNamespace=true
