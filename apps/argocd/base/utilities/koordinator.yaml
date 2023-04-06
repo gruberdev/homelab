@@ -63,7 +63,8 @@ spec:
               memory: 128Mi
           hostNetwork: false
           nodeAffinity: {}
-          nodeSelector: {}
+          nodeSelector:
+            kubernetes.io/arch: amd64
           tolerations: []
         webhookConfiguration:
           failurePolicy:
@@ -92,7 +93,8 @@ spec:
               memory: 128Mi
           hostNetwork: false
           nodeAffinity: {}
-          nodeSelector: {}
+          nodeSelector:
+            kubernetes.io/arch: amd64
           tolerations: []
         descheduler:
           log:
@@ -112,7 +114,8 @@ spec:
               memory: 128Mi
           hostNetwork: false
           nodeAffinity: {}
-          nodeSelector: {}
+          nodeSelector:
+            kubernetes.io/arch: amd64
           tolerations: []
 
   destination:
