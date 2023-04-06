@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: https://kubernetes-sigs.github.io/descheduler/
     chart: descheduler
-    targetRevision: v0.26.0
+    targetRevision: v0.26.1
     helm:
       releaseName: descheduler
       values: |
@@ -17,7 +17,7 @@ spec:
         kind: CronJob
         image:
           repository: registry.k8s.io/descheduler/descheduler
-          tag: "v0.26.0"
+          tag: "v0.26.1"
           pullPolicy: IfNotPresent
         imagePullSecrets:
         resources:
