@@ -20,7 +20,7 @@ resources:
 - base/core/tailscale.yaml
 - base/core/tailscale-operator.yaml
 - base/core/sealed.yaml
-- base/core/velero.yaml
+#- base/core/velero.yaml
 # - base/core/private.yaml
 # - base/core/nvidia.yaml
 # - base/core/nvidia-extra.yaml
@@ -34,9 +34,9 @@ resources:
 - base/utilities/kube-fledged.yaml
 - base/utilities/descheduler.yaml
 - base/utilities/botkube.yaml
+- base/utilities/koordinator.yaml
 #- base/utilities/eraser.yaml
 # - base/utilities/gfd.yaml
-# - base/utilities/koordinator.yaml
 # - base/utilities/chaos.yaml
 
 # Applications

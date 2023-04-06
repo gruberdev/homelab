@@ -30,11 +30,11 @@ spec:
               protocol: TCP
           resources:
             requests:
-              cpu: 80m
+              cpu: 50m
               memory: 100Mi
             limits:
-              cpu: 150m
-              memory: 400Mi
+              cpu: 120m
+              memory: 200Mi
           volumeMounts:
             - name: database
               mountPath: /var/opt
