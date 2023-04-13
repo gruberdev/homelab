@@ -4,9 +4,6 @@ bases:
 - ./base
 - ./boot
 - ./uxp
-resources:
-- https://github.com/crossplane/crossplane//cluster?ref=v1.11.3
-
 patches:
 - patch: |-
     - op: add
