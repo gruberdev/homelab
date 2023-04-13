@@ -214,7 +214,7 @@ spec:
               port: 8082
               response: ok
               serviceType: LoadBalancer
-            install: true
+            install: false
             pdb:
               enabled: false
               minAvailable: 1
