@@ -1,8 +1,28 @@
+---
+# Source: agones/templates/crds/gameserverallocationpolicy.yaml
+# Copyright 2019 Google LLC All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   labels:
+    component: crd
     app: agones
+    chart: agones-1.31.0
+    release: agones-crds
+    heritage: Helm
   name: gameserverallocationpolicies.multicluster.agones.dev
 spec:
   group: multicluster.agones.dev
@@ -10,50 +30,49 @@ spec:
     kind: GameServerAllocationPolicy
     plural: gameserverallocationpolicies
     shortNames:
-    - gsap
+      - gsap
   scope: Namespaced
   versions:
-  - name: v1
-    schema:
-      openAPIV3Schema:
-        description: GameServerAllocationPolicy is the Schema for the gameserverallocationpolicies
-          API.
-        properties:
-          spec:
-            description: 'GameServerAllocationPolicySpec defines the desired state
-              of GameServerAllocationPolicy. More info: https://agones.dev/site/docs/reference/agones_crd_api_reference/#multicluster.agones.dev/v1.GameServerAllocationPolicy'
-            properties:
-              connectionInfo:
-                properties:
-                  allocationEndpoints:
-                    items:
+    - name: v1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          description: 'GameServerAllocationPolicy is the Schema for the gameserverallocationpolicies API.'
+          type: object
+          properties:
+            spec:
+              description: 'GameServerAllocationPolicySpec defines the desired state of GameServerAllocationPolicy. More info:
+                https://agones.dev/site/docs/reference/agones_crd_api_reference/#multicluster.agones.dev/v1.GameServerAllocationPolicy'
+              type: object
+              required:
+                - priority
+                - weight
+              properties:
+                priority:
+                  format: int32
+                  minimum: 0
+                  type: integer
+                weight:
+                  format: int64
+                  minimum: 0
+                  type: integer
+                connectionInfo:
+                  type: object
+                  required:
+                    - namespace
+                  properties:
+                    clusterName:
                       type: string
-                    minItems: 1
-                    type: array
-                  clusterName:
-                    type: string
-                  namespace:
-                    type: string
-                  secretName:
-                    type: string
-                  serverCa:
-                    format: byte
-                    type: string
-                required:
-                - namespace
-                type: object
-              priority:
-                format: int32
-                minimum: 0
-                type: integer
-              weight:
-                format: int64
-                minimum: 0
-                type: integer
-            required:
-            - priority
-            - weight
-            type: object
-        type: object
-    served: true
-    storage: true
+                    allocationEndpoints:
+                      items:
+                        type: string
+                      type: array
+                      minItems: 1
+                    secretName:
+                      type: string
+                    namespace:
+                      type: string
+                    serverCa:
+                      type: string
+                      format: byte
