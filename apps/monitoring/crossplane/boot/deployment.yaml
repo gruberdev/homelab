@@ -19,7 +19,7 @@ spec:
       serviceAccountName: upbound-bootstrapper
       containers:
         - name: bootstrapper
-          image: upbound/uxp-bootstrapper:v1.10.1-up.1
+          image: upbound/uxp-bootstrapper:v1.11.3-up.1
           args:
             - start
             - --namespace

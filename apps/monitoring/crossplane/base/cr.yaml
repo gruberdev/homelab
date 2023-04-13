@@ -11,17 +11,6 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: crossplane:system:aggregate-to-crossplane
-  labels:
-    app: crossplane
-    helm.sh/chart: universal-crossplane-1.10.1-up.1
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/component: cloud-infrastructure-controller
-    app.kubernetes.io/part-of: crossplane
-    app.kubernetes.io/name: crossplane
-    app.kubernetes.io/instance: uxp
-    app.kubernetes.io/version: "1.10.1-up.1"
-    crossplane.io/scope: "system"
-    rbac.crossplane.io/aggregate-to-crossplane: "true"
 rules:
 - apiGroups:
   - ""
