@@ -20,7 +20,7 @@ spec:
     spec:
       serviceAccountName: crossplane
       initContainers:
-        - image: upbound/crossplane:v1.11.3-up.1
+        - image: docker.io/upbound/crossplane:v1.10.3-up.1
           args:
           - core
           - init
@@ -48,7 +48,7 @@ spec:
               fieldRef:
                 fieldPath: spec.serviceAccountName
       containers:
-      - image: upbound/crossplane:v1.11.3-up.1
+      - image: docker.io/upbound/crossplane:v1.10.3-up.1
         args:
         - core
         - start
@@ -107,7 +107,7 @@ spec:
         {}
       serviceAccountName: rbac-manager
       initContainers:
-      - image: upbound/crossplane:v1.11.3-up.1
+      - image: docker.io/upbound/crossplane:v1.10.3-up.1
         args:
         - rbac
         - init
@@ -126,7 +126,7 @@ spec:
           runAsGroup: 65532
           runAsUser: 65532
       containers:
-      - image: upbound/crossplane:v1.11.3-up.1
+      - image: docker.io/upbound/crossplane:v1.10.3-up.1
         args:
         - rbac
         - start
