@@ -854,3 +854,15 @@ spec:
         duration: 15s
         factor: 2
         maxDuration: 20m
+  # See: https://github.com/prometheus-community/helm-charts/issues/1041
+  ignoreDifferences:
+    - group: admissionregistration.k8s.io
+      kind: MutatingWebhookConfiguration
+      name: kube-prometheus-stack-admission
+      jsonPointers:
+        - /webhooks/0/failurePolicy
+    - group: admissionregistration.k8s.io
+      kind: ValidatingWebhookConfiguration
+      name: kube-prometheus-stack-admission
+      jsonPointers:
+        - /webhooks/0/failurePolicy
