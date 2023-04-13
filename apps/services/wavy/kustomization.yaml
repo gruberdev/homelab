@@ -4,6 +4,7 @@ resources:
 - https://raw.githubusercontent.com/wavyland/wavy/1e45bf3a20838814bb466c4b7bcb101389ecb947/manifests/webhook.yaml
 
 patchesStrategicMerge:
+- overlay/namespace-delete.yaml
 - overlay/patch-deploy.yaml
 - overlay/patch-job.yaml
 
