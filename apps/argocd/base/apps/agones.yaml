@@ -63,7 +63,7 @@ spec:
                 portName: https
                 targetPort: 8443
               name: agones-allocator
-              serviceType: LoadBalancer
+              serviceType: NodePort
             serviceMetrics:
               http:
                 enabled: true
@@ -95,8 +95,8 @@ spec:
             generateTLS: true
             healthCheck:
               failureThreshold: 3
-              initialDelaySeconds: 3
-              periodSeconds: 3
+              initialDelaySeconds: 30
+              periodSeconds: 5
               timeoutSeconds: 1
             http:
               port: 8080
@@ -182,10 +182,10 @@ spec:
             registry: us-docker.pkg.dev/agones-images/release
             sdk:
               alwaysPull: false
-              cpuLimit: 0
+              cpuLimit: 150m
               cpuRequest: 30m
-              memoryLimit: 0
-              memoryRequest: 0
+              memoryLimit: 200Mi
+              memoryRequest: 50Mi
               name: agones-sdk
             tag: 1.31.0
           metrics:
@@ -205,9 +205,9 @@ spec:
                       operator: Exists
                   weight: 1
             healthCheck:
-              failureThreshold: 3
-              initialDelaySeconds: 3
-              periodSeconds: 3
+              failureThreshold: 5
+              initialDelaySeconds: 30
+              periodSeconds: 10
               timeoutSeconds: 1
             http:
               expose: true
