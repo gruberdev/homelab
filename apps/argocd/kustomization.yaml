@@ -34,8 +34,8 @@ resources:
 - base/utilities/kube-fledged.yaml
 - base/utilities/descheduler.yaml
 - base/utilities/botkube.yaml
-- base/utilities/wavy.yaml
-#- base/utilities/eraser.yaml
+# - base/utilities/wavy.yaml
+# - base/utilities/eraser.yaml
 # - base/utilities/gfd.yaml
 # - base/utilities/chaos.yaml
 
