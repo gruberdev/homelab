@@ -33,7 +33,6 @@ resources:
 - base/utilities/kured.yaml
 - base/utilities/kube-fledged.yaml
 - base/utilities/descheduler.yaml
-- base/utilities/botkube.yaml
 # - base/utilities/wavy.yaml
 # - base/utilities/eraser.yaml
 # - base/utilities/gfd.yaml
@@ -57,6 +56,7 @@ resources:
 - base/monitoring/kube-prom-crds.yaml
 - base/monitoring/kube-prometheus.yaml
 - base/monitoring/grafana.yaml
+- base/monitoring/botkube.yaml
 # - base/monitoring/nvidia.yaml
 # - base/monitoring/nextdns.yaml
 # - base/monitoring/pixie.yaml
