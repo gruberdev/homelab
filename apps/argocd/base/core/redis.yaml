@@ -12,14 +12,16 @@ spec:
       skipCrds: true
       releaseName: redis-operator
       values: |
+          nodeSelector:
+            kubernetes.io/hostname: node-one
           redisOperator:
-            name: redis-operator
             imageName: quay.io/opstree/redis-operator
-            imageTag: v0.12.0
             imagePullPolicy: Always
+            imageTag: v0.12.0
+            name: redis-operator
             podAnnotations:
               reloader.stakater.com/auto: "true"
-            podLabels: {}
+          replicas: 1
           resources:
             limits:
               cpu: 300m
@@ -27,15 +29,8 @@ spec:
             requests:
               cpu: 100m
               memory: 200Mi
-          replicas: 1
           serviceAccountName: redis-operator
-          priorityClassName: ""
-          nodeSelector:
-            kubernetes.io/hostname: node-one
           tolerateAllTaints: false
-          tolerations: []
-          affinity: {}
-
   destination:
     namespace: databases
     name: in-cluster

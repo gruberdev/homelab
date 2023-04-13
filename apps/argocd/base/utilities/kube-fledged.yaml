@@ -13,65 +13,40 @@ spec:
     helm:
       releaseName: kube-fledged
       values: |
-        controllerReplicaCount: 1
-        webhookServerReplicaCount: 1
-        controller:
-          hostNetwork: false
-          priorityClassName: ""
-        webhookServer:
-          enable: true
-          hostNetwork: false
-          priorityClassName: ""
-        image:
-          kubefledgedControllerRepository: docker.io/senthilrch/kubefledged-controller
-          kubefledgedCRIClientRepository: docker.io/senthilrch/kubefledged-cri-client
-          busyboxImageRepository: senthilrch/busybox
-          busyboxImageVersion: "1.35.0"
-          kubefledgedWebhookServerRepository: docker.io/senthilrch/kubefledged-webhook-server
-          pullPolicy: Always
-        command:
-          kubefledgedControllerCommand: ["/opt/bin/kubefledged-controller"]
-          kubefledgedWebhookServerCommand: ["/opt/bin/kubefledged-webhook-server"]
         args:
-          controllerLogLevel: INFO
-          controllerImagePullDeadlineDuration: 5m
           controllerImageCacheRefreshFrequency: 15m
-          controllerImagePullPolicy: IfNotPresent
-          controllerServiceAccountName: ""
           controllerImageDeleteJobHostNetwork: false
-          controllerJobPriorityClassName: ""
-          controllerJobRetentionPolicy: "delete"
-          controllerCRISocketPath: ""
-          webhookServerLogLevel: INFO
+          controllerImagePullDeadlineDuration: 5m
+          controllerImagePullPolicy: IfNotPresent
+          controllerJobRetentionPolicy: delete
+          controllerLogLevel: INFO
           webhookServerCertFile: /var/run/secrets/webhook-server/tls.crt
           webhookServerKeyFile: /var/run/secrets/webhook-server/tls.key
+          webhookServerLogLevel: INFO
           webhookServerPort: 443
-        validatingWebhookCABundle:
-        imagePullSecrets: []
-        nameOverride: ""
-        fullnameOverride: ""
-        serviceAccount:
-          create: true
         clusterRole:
           create: true
         clusterRoleBinding:
           create: true
-        validatingWebhook:
-          create: true
-        secret:
-        podSecurityContext: {}
-        securityContext: {}
-        service:
-          type: ClusterIP
-          port: 80
-        webhookService:
-          create: true
-          type: ClusterIP
-          port: 3443
-          targetPort: 443
-          name:
+        command:
+          kubefledgedControllerCommand:
+          - /opt/bin/kubefledged-controller
+          kubefledgedWebhookServerCommand:
+          - /opt/bin/kubefledged-webhook-server
+        controller:
+          hostNetwork: false
+        controllerReplicaCount: 1
+        image:
+          busyboxImageRepository: senthilrch/busybox
+          busyboxImageVersion: 1.35.0
+          kubefledgedCRIClientRepository: docker.io/senthilrch/kubefledged-cri-client
+          kubefledgedControllerRepository: docker.io/senthilrch/kubefledged-controller
+          kubefledgedWebhookServerRepository: docker.io/senthilrch/kubefledged-webhook-server
+          pullPolicy: Always
         ingress:
           enabled: false
+        nodeSelector:
+          kubernetes.io/arch: amd64
         resources:
           limits:
             cpu: 120m
@@ -79,10 +54,22 @@ spec:
           requests:
             cpu: 20m
             memory: 64Mi
-        nodeSelector:
-          kubernetes.io/arch: amd64
-        tolerations: []
-
+        service:
+          port: 80
+          type: ClusterIP
+        serviceAccount:
+          create: true
+        validatingWebhook:
+          create: true
+        webhookServer:
+          enable: true
+          hostNetwork: false
+        webhookServerReplicaCount: 1
+        webhookService:
+          create: true
+          port: 3443
+          targetPort: 443
+          type: ClusterIP
   destination:
     namespace: kube-system
     name: in-cluster

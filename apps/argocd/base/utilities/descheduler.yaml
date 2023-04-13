@@ -13,145 +13,59 @@ spec:
     helm:
       releaseName: descheduler
       values: |
-        # CronJob or Deployment
-        kind: Deployment
-        image:
-          repository: registry.k8s.io/descheduler/descheduler
-          tag: "v0.26.1"
-          pullPolicy: IfNotPresent
-        imagePullSecrets:
-        resources:
-          requests:
-            cpu: 60m
-            memory: 128Mi
-          limits:
-            cpu: 150m
-            memory: 300Mi
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-              - ALL
-          privileged: false
-          readOnlyRootFilesystem: true
-          runAsNonRoot: true
-          runAsUser: 1000
-        nameOverride: ""
-        fullnameOverride: ""
-
-        # labels that'll be applied to all resources
-        commonLabels: {}
-        cronJobApiVersion: "batch/v1"
-        schedule: "*/2 * * * *"
-        suspend: false
-        # startingDeadlineSeconds: 200
-        # successfulJobsHistoryLimit: 3
-        # failedJobsHistoryLimit: 1
-        # ttlSecondsAfterFinished 600
-
-        # Required when running as a Deployment
-        deschedulingInterval: 5m
-
-        # Specifies the replica count for Deployment
-        # Set leaderElection if you want to use more than 1 replica
-        # Set affinity.podAntiAffinity rule if you want to schedule onto a node
-        # only if that node is in the same zone as at least one already-running descheduler
-        replicas: 1
-
-        # Specifies whether Leader Election resources should be created
-        # Required when running as a Deployment
-        # NOTE: Leader election can't be activated if DryRun enabled
-        leaderElection:
-          enabled: true
-          leaseDuration: 15s
-          renewDeadline: 10s
-          retryPeriod: 2s
-          resourceLock: "leases"
-          resourceName: "descheduler"
-          resourceNamescape: "kube-system"
-
         cmdOptions:
           v: 3
-
-        # Recommended to use the latest Policy API version supported by the Descheduler app version
-        deschedulerPolicyAPIVersion: "descheduler/v1alpha1"
-
+        cronJobApiVersion: batch/v1
         deschedulerPolicy:
-          # nodeSelector: "key1=value1,key2=value2"
-          # maxNoOfPodsToEvictPerNode: 10
-          # maxNoOfPodsToEvictPerNamespace: 10
-          # ignorePvcPods: true
-          # evictLocalStoragePods: true
           strategies:
+            LowNodeUtilization:
+              enabled: true
+              params:
+                nodeResourceUtilizationThresholds:
+                  targetThresholds:
+                    cpu: 80
+                    memory: 80
+                    pods: 100
+                  thresholds:
+                    cpu: 50
+                    memory: 60
+                    pods: 50
             RemoveDuplicates:
               enabled: true
             RemovePodsHavingTooManyRestarts:
               enabled: true
               params:
                 podsHavingTooManyRestarts:
-                  podRestartThreshold: 100
                   includingInitContainers: true
-            RemovePodsViolatingNodeTaints:
+                  podRestartThreshold: 100
+            RemovePodsViolatingInterPodAntiAffinity:
               enabled: true
             RemovePodsViolatingNodeAffinity:
               enabled: true
               params:
                 nodeAffinityType:
                 - requiredDuringSchedulingIgnoredDuringExecution
-            RemovePodsViolatingInterPodAntiAffinity:
+            RemovePodsViolatingNodeTaints:
               enabled: true
             RemovePodsViolatingTopologySpreadConstraint:
               enabled: true
               params:
                 includeSoftConstraints: false
-            LowNodeUtilization:
-              enabled: true
-              params:
-                nodeResourceUtilizationThresholds:
-                  thresholds:
-                    cpu: 50
-                    memory: 60
-                    pods: 50
-                  targetThresholds:
-                    cpu: 80
-                    memory: 80
-                    pods: 100
-
-        priorityClassName: system-cluster-critical
-        nodeSelector: {}
-        #  foo: bar
-        affinity: {}
-        # nodeAffinity:
-        #   requiredDuringSchedulingIgnoredDuringExecution:
-        #     nodeSelectorTerms:
-        #     - matchExpressions:
-        #       - key: kubernetes.io/e2e-az-name
-        #         operator: In
-        #         values:
-        #         - e2e-az1
-        #         - e2e-az2
-        #  podAntiAffinity:
-        #    requiredDuringSchedulingIgnoredDuringExecution:
-        #      - labelSelector:
-        #          matchExpressions:
-        #            - key: app.kubernetes.io/name
-        #              operator: In
-        #              values:
-        #                - descheduler
-        #        topologyKey: "kubernetes.io/hostname"
-        tolerations: []
-        # - key: 'management'
-        #   operator: 'Equal'
-        #   value: 'tool'
-        #   effect: 'NoSchedule'
-        rbac:
-          create: true
-        serviceAccount:
-          create: true
-          name:
-          annotations: {}
-        podAnnotations: {}
-        podLabels: {}
+        deschedulerPolicyAPIVersion: descheduler/v1alpha1
+        deschedulingInterval: 5m
+        image:
+          pullPolicy: IfNotPresent
+          repository: registry.k8s.io/descheduler/descheduler
+          tag: v0.26.1
+        kind: Deployment
+        leaderElection:
+          enabled: true
+          leaseDuration: 15s
+          renewDeadline: 10s
+          resourceLock: leases
+          resourceName: descheduler
+          resourceNamescape: kube-system
+          retryPeriod: 2s
         livenessProbe:
           failureThreshold: 3
           httpGet:
@@ -160,29 +74,36 @@ spec:
             scheme: HTTPS
           initialDelaySeconds: 15
           periodSeconds: 10
-
+        priorityClassName: system-cluster-critical
+        rbac:
+          create: true
+        replicas: 1
+        resources:
+          limits:
+            cpu: 150m
+            memory: 300Mi
+          requests:
+            cpu: 60m
+            memory: 128Mi
+        schedule: '*/2 * * * *'
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          privileged: false
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          runAsUser: 1000
         service:
           enabled: false
-
+        serviceAccount:
+          create: true
         serviceMonitor:
           enabled: true
-          namespace: "monitoring"
-          interval: ""
-          # honorLabels: true
           insecureSkipVerify: true
-          serverName: null
-          metricRelabelings: []
-            # - action: keep
-            #   regex: 'descheduler_(build_info|pods_evicted)'
-            #   sourceLabels: [__name__]
-          relabelings: []
-            # - sourceLabels: [__meta_kubernetes_pod_node_name]
-            #   separator: ;
-            #   regex: ^(.*)$
-            #   targetLabel: nodename
-            #   replacement: $1
-            #   action: replace
-
+          namespace: monitoring
+        suspend: false
   destination:
     namespace: kube-system
     name: in-cluster

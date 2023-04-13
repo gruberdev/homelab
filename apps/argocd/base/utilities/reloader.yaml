@@ -22,11 +22,8 @@ spec:
           ignoreConfigMaps: false
           reloadOnCreate: true
           reloadStrategy: default
-          ignoreNamespaces: ""
-          logFormat: ""
           watchGlobally: true
           readOnlyRootFileSystem: false
-
   destination:
     namespace: kube-system
     name: in-cluster

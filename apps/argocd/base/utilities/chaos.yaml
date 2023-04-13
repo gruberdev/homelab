@@ -13,39 +13,67 @@ spec:
     helm:
       releaseName: chaos-mesh
       values: |
-        nameOverride: ""
-        fullnameOverride: ""
-        customLabels: {}
-        clusterScoped: true
-        rbac:
-          create: true
-        timezone: "America/Sao_Paulo"
-        enableProfiling: true
-        enableCtrlServer: true
-        images:
-          registry: "ghcr.io"
-          tag: "latest"
-        imagePullSecrets: []
-        controllerManager:
-          securityContext: {}
-          hostNetwork: false
-          allowHostNetworkTesting: false
-          serviceAccount: chaos-controller-manager
-          priorityClassName: ""
-          replicaCount: 1
+        bpfki:
+          create: false
+          grpcPort: 50051
           image:
-            registry: ""
-            repository: chaos-mesh/chaos-mesh
-            tag: ""
+            repository: chaos-mesh/chaos-kernel
           imagePullPolicy: IfNotPresent
-          env:
-            WEBHOOK_PORT: 10250
-            METRICS_PORT: 10080
+        chaosDaemon:
+          grpcPort: 31767
+          hostNetwork: false
+          httpPort: 31766
+          image:
+            repository: chaos-mesh/chaos-daemon
+          imagePullPolicy: IfNotPresent
+          mtls:
+            enabled: true
+          nodeSelector:
+            kubernetes.io/hostname: node-one
+          podSecurityPolicy: false
+          privileged: true
+          resources:
+            limits:
+              cpu: 150m
+              memory: 300Mi
+            requests:
+              cpu: 25m
+              memory: 128Mi
+          runtime: docker
+          serviceAccount: chaos-daemon
+          socketPath: /var/run/docker.sock
+        chaosDlv:
+          enable: false
+          image:
+            repository: chaos-mesh/chaos-dlv
+          imagePullPolicy: IfNotPresent
+        clusterScoped: true
+        controllerManager:
+          allowHostNetworkTesting: false
+          chaosdSecurityMode: true
           enableFilterNamespace: false
-          targetNamespace: chaos-mesh
-          service:
-            # Kubernetes Service type for service chaos-controller-manager
-            type: ClusterIP
+          enabledControllers:
+          - '*'
+          enabledWebhooks:
+          - '*'
+          env:
+            METRICS_PORT: 10080
+            WEBHOOK_PORT: 10250
+          hostNetwork: false
+          image:
+            repository: chaos-mesh/chaos-mesh
+          imagePullPolicy: IfNotPresent
+          leaderElection:
+            enabled: true
+            leaseDuration: 15s
+            renewDeadline: 10s
+            retryPeriod: 2s
+          nodeSelector:
+            kubernetes.io/hostname: node-one
+          podChaos:
+            podFailure:
+              pauseImage: gcr.io/google-containers/pause:latest
+          replicaCount: 1
           resources:
             limits:
               cpu: 500m
@@ -53,137 +81,46 @@ spec:
             requests:
               cpu: 25m
               memory: 256Mi
-          # Node labels for chaos-controller-manager pod assignment
-          nodeSelector:
-            kubernetes.io/hostname: node-one
-          # Toleration labels for chaos-controller-manager pod assignment
-          tolerations: []
-          # Map of chaos-controller-manager node/pod affinities
-          affinity: {}
-          # Pod annotations of chaos-controller-manager
-          podAnnotations: {}
-          # A list of controllers to enable. "*" enables all controllers by default.
-          enabledControllers:
-            - "*"
-          # A list of webhooks to enable. "*" enables all webhooks by default.
-          enabledWebhooks:
-            - "*"
-          podChaos:
-            podFailure:
-              pauseImage: gcr.io/google-containers/pause:latest
-          leaderElection:
-            enabled: true
-            leaseDuration: 15s
-            renewDeadline: 10s
-            retryPeriod: 2s
-          chaosdSecurityMode: true
-        chaosDaemon:
-          image:
-            registry: ""
-            repository: chaos-mesh/chaos-daemon
-            tag: ""
-          imagePullPolicy: IfNotPresent
-          grpcPort: 31767
-          httpPort: 31766
-          env: {}
-          hostNetwork: false
-          mtls:
-            enabled: true
-          # Run chaos-daemon container in privileged mode. Processes in privileged containers
-          # are essentially equivalent to root on the host.
-          # If it is set to false, the following capabilities will be set. You can grant certain privileges
-          # to a process without granting all the privileges of the root user.
-          ## capabilities:
-          ##   add:
-          ##     - SYS_PTRACE
-          ##     - NET_ADMIN
-          ##     - MKNOD
-          ##     - SYS_CHROOT
-          ##     - SYS_ADMIN
-          ##     - KILL
-          ##     # CAP_IPC_LOCK is used to lock memory
-          ##     - IPC_LOCK
-          privileged: true
-          # Custom priorityClassName for using pod priorities
-          priorityClassName: ""
-          # Pod annotations of chaos-daemon
-          podAnnotations: {}
-          # ServiceAccount name for chaos-daemon
-          serviceAccount: chaos-daemon
-          # Specify PodSecurityPolicy(psp) on chaos-daemon pods
-          podSecurityPolicy: false
-          # runtime specifies which container runtime to use. Currently
-          # we only supports docker, containerd and CRI-O.
-          runtime: docker
-          # socketPath specifies the path of container runtime socket on the host.
-          socketPath: /var/run/docker.sock
-
-          # If you are using Kind or using containerd as CRI, you can use the
-          # config below to use containerd as the runtime in chaos-daemon.
-          # runtime: containerd
-          # socketPath: /run/containerd/containerd.sock
-
-          # If you are using CRI-O as CRI, you can use the
-          # config below to use CRI-O as the runtime in chaos-daemon.
-          # runtime: crio
-          # socketPath: /var/run/crio/crio.sock
-
-          # You can customize socket dir via socketDir
-          # If you set socketPath and socketDir at the same time, only socketPath will work.
-
-          # CPU/Memory resource requests/limits for chaosDaemon container
-          resources:
-            limits:
-              cpu: 150m
-              memory: 300Mi
-            requests:
-              cpu: 25m
-              memory: 128Mi
-          nodeSelector:
-            kubernetes.io/hostname: node-one
-          tolerations: []
-          affinity: {}
-          # Specify DaemonSetUpdateStrategy for chaos-daemon
-          updateStrategy: {}
-            # Example update strategy:
-            # type: RollingUpdate
-            # rollingUpdate:
-            #   maxUnavailable: 33%
-        dashboard:
-          # Enable chaos-dashboard
-          create: true
-          rootUrl: http://localhost:2333
-          securityContext: {}
-          hostNetwork: false
-          replicaCount: 1
-          priorityClassName: ""
-          serviceAccount: chaos-dashboard
-          image:
-            # override global registry, empty value means using the global images.registry
-            registry: ""
-            # repository part for image of chaos-dashboard
-            repository: chaos-mesh/chaos-dashboard
-            # override global tag, empty value means using the global images.tag
-            tag: ""
-          imagePullPolicy: IfNotPresent
-          securityMode: true
-          gcpSecurityMode: false
-          gcpClientId: ""
-          gcpClientSecret: ""
-          nodeSelector:
-            kubernetes.io/hostname: node-one
-          tolerations: []
-          affinity: {}
-          podAnnotations: {}
           service:
-            # Service annotations for the dashboard
-            annotations: {}
-            # Service type of the service created for exposing the dashboard
-            type: NodePort
-            # Set the `clusterIP` of the dashboard service if the type is `ClusterIP`
-            # clusterIP:
-            # Set the `nodePort` of the dashboard service if the type is `NodePort`
-            # nodePort:
+            type: ClusterIP
+          serviceAccount: chaos-controller-manager
+          targetNamespace: chaos-mesh
+        dashboard:
+          create: true
+          env:
+            CLEAN_SYNC_PERIOD: 12h
+            DATABASE_DATASOURCE: /data/core.sqlite
+            DATABASE_DRIVER: sqlite3
+            LISTEN_HOST: 0.0.0.0
+            LISTEN_PORT: 2333
+            METRIC_HOST: 0.0.0.0
+            METRIC_PORT: 2334
+            TTL_EVENT: 168h
+            TTL_EXPERIMENT: 336h
+            TTL_SCHEDULE: 336h
+            TTL_WORKFLOW: 336h
+          gcpSecurityMode: false
+          hostNetwork: false
+          image:
+            repository: chaos-mesh/chaos-dashboard
+          imagePullPolicy: IfNotPresent
+          ingress:
+            certManager: false
+            enabled: false
+            hosts:
+            - name: dashboard.local
+              tls: false
+              tlsSecret: dashboard.local-tls
+            paths:
+            - /
+          nodeSelector:
+            kubernetes.io/hostname: node-one
+          persistentVolume:
+            enabled: false
+            mountPath: /data
+            size: 8Gi
+            storageClassName: standard
+          replicaCount: 1
           resources:
             limits:
               cpu: 150m
@@ -191,264 +128,80 @@ spec:
             requests:
               cpu: 25m
               memory: 128Mi
-
-          persistentVolume:
-            # If you are using SQLite as your DB for Chaos Dashboard, it is recommended to enable persistence.
-            # If enable, the chart will create a PersistenceVolumeClaim to store its state in. If you are
-            # using a DB other than SQLite, set this to false to avoid allocating unused storage.
-            # If set to false, Chaos Mesh will use an emptyDir instead, which is ephemeral.
-            enabled: false
-
-            # If you'd like to bring your own PVC for persisting chaos event, pass the name of the
-            # created + ready PVC here. If set, this Chart will not create the default PVC.
-            # Requires server.persistentVolume.enabled: true
-            #
-            existingClaim: ""
-
-            # Chaos Dashboard data Persistent Volume size.
-            size: 8Gi
-
-            # Chaos Dashboard data Persistent Volume Storage Class.
-            # If defined, storageClassName: <storageClass>
-            storageClassName: standard
-
-            # Chaos Dashboard data Persistent Volume mount root path
-            #
-            mountPath: /data
-
-            # Subdirectory of Chaos Dashboard data Persistent Volume to mount
-            # Useful if the volume's root directory is not empty
-            #
-            subPath: ""
-
-          # The keys within the "env" map are mounted as environment variables on the pod.
-          env:
-            # The address which chaos-dashboard would listen on.
-            LISTEN_HOST: 0.0.0.0
-            # The port which chaos-dashboard would listen on.
-            LISTEN_PORT: 2333
-            # The address which metrics endpoints would listen on.
-            METRIC_HOST: 0.0.0.0
-            # The ports which metrics endpoints would listen on.
-            METRIC_PORT: 2334
-
-            # If you'd like to use a DB other than SQLite (the default), set a driver + DSN here.
-            DATABASE_DRIVER: sqlite3
-            # The db dsn used for Chaos Dashboard
-            DATABASE_DATASOURCE: /data/core.sqlite
-
-            # Set the sync period to clean up archived data
-            CLEAN_SYNC_PERIOD: 12h
-            # Set TTL of archived event data
-            TTL_EVENT: 168h
-            # Set TTL of archived experiment data
-            TTL_EXPERIMENT: 336h
-            # Set TTL of archived schedule data
-            TTL_SCHEDULE: 336h
-            # Set TTL of archived workflow data
-            TTL_WORKFLOW: 336h
-          ingress:
-            ## Set to true to enable ingress record generation
-            enabled: false
-
-            ## Set this to true in order to add the corresponding annotations for cert-manager
-            certManager: false
-
-            ## Ingress annotations done as key:value pairs
-            ## For a full list of possible ingress annotations, please see
-            ## ref: https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/nginx-configuration/annotations.md
-            ##
-            ## If tls is set to true, annotation ingress.kubernetes.io/secure-backends: "true" will automatically be set
-            ## If certManager is set to true, annotation kubernetes.io/tls-acme: "true" will automatically be set
-            # annotations:
-            #   kubernetes.io/ingress.class: nginx
-
-            ## The list of hostnames to be covered with this ingress record.
-            ## Most likely this will be just one host, but in the event more hosts are needed, this is an array
-            hosts:
-              - name: dashboard.local
-
-                ## Set this to true in order to enable TLS on the ingress record
-                tls: false
-
-                ## Optionally specify the TLS hosts for the ingress record
-                ## Useful when the Ingress controller supports www-redirection
-                ## If not specified, the above host name will be used
-                # tlsHosts:
-                # - www.dashboard.local
-                # - dashboard.local
-
-                ## If TLS is set to true, you must declare what secret will store the key/certificate for TLS
-                tlsSecret: dashboard.local-tls
-
-            # Paths that map requests to chaos dashboard
-            paths: ["/"]
-
-            # Override apiVersion of ingress rendered by this helm chart
-            apiVersionOverrides: ""
-
-            # Defines which ingress controller will implement the resource
-            ingressClassName: ""
-
+          rootUrl: http://localhost:2333
+          securityMode: true
+          service:
+            type: NodePort
+          serviceAccount: chaos-dashboard
         dnsServer:
-          # Enable DNS Server which required by DNSChaos
           create: false
-          # Name of serviceaccount for chaos-dns-server.
-          serviceAccount: chaos-dns-server
-          # Image of DNS Server
+          env:
+            LISTEN_HOST: 0.0.0.0
+            LISTEN_PORT: 53
+          grpcPort: 9288
           image: pingcap/coredns:v0.2.1
-          # Image pull policy
           imagePullPolicy: IfNotPresent
-          # Customized priorityClassName for chaos-dns-server
-          priorityClassName: ""
-          # Node labels for chaos-dns-server pod assignment
+          name: chaos-mesh-dns-server
           nodeSelector:
             kubernetes.io/hostname: node-one
-          # Toleration labels for chaos-dns-server pod assignment
-          tolerations: []
-          # Pod annotations of chaos-dns-server
-          podAnnotations: {}
-          # the service name of chaos-dns-server
-          name: chaos-mesh-dns-server
-          # grpc port for chaos-dns-server
-          grpcPort: 9288
-          # Number of replicas
           replicas: 1
-          # CPU/Memory resource requests/limits for chaos-dns-server pod
           resources:
-            # We usually recommend not to specify default resources and to leave this as a conscious
-            # choice for the user. This also increases chances charts run on environments with little
-            # resources, such as Minikube. If you do want to specify resources, uncomment the following
-            # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-            limits: {}
-            #  cpu: 500m
-            #  memory: 1024Mi
             requests:
               cpu: 100m
               memory: 70Mi
-          env:
-            # The address of chaos-dns-server listen on
-            LISTEN_HOST: "0.0.0.0"
-            # The port of chaos-dns-server listen on
-            LISTEN_PORT: 53
-
+          serviceAccount: chaos-dns-server
+        enableCtrlServer: true
+        enableProfiling: true
+        images:
+          registry: ghcr.io
+          tag: latest
         prometheus:
-          # Enable prometheus
           create: false
-          serviceAccount: prometheus
-          # Docker image for prometheus
           image: prom/prometheus:v2.18.1
-          # Image pull policy
           imagePullPolicy: IfNotPresent
-          # Custom priorityClassName for using pod priorities
-          priorityClassName: ""
-          # Node labels for prometheus pod assignment
           nodeSelector:
             kubernetes.io/hostname: node-one
-          # Toleration labels for prometheus pod assignment
-          tolerations: []
-          # Map of prometheus node/pod affinities
-          affinity: {}
-          # Deployment prometheus annotations
-          podAnnotations: {}
-          #  CPU/Memory resource requests/limits for prometheus pod
           resources:
-            # We usually recommend not to specify default resources and to leave this as a conscious
-            # choice for the user. This also increases chances charts run on environments with little
-            # resources, such as Minikube. If you do want to specify resources, uncomment the following
-            # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
             limits:
               cpu: 500m
               memory: 1024Mi
             requests:
               cpu: 250m
               memory: 512Mi
-          # Kubernetes Service type
           service:
             type: ClusterIP
-
+          serviceAccount: prometheus
           volume:
-            # storage size of PVC
             storage: 2Gi
-            # storage class of PVC
             storageClassName: standard
-
+        rbac:
+          create: true
+        timezone: America/Sao_Paulo
         webhook:
-          certManager:
-            # Setup the webhook using cert-manager
-            enabled: false
-          # if empty and disable certManager, Helm will auto-generate these fields
-          caBundlePEM: |
-          crtPEM: |
-          keyPEM: |
-          # It is recommended that admission webhooks should evaluate as quickly as possible (typically in milliseconds),
-          # since they add to API request latency. It is encouraged to use a small timeout for webhooks.
-          # https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#timeouts
-          timeoutSeconds: 5
-          # FailurePolicy defines how unrecognized errors and timeout errors from the admission webhook are handled.
-          # https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#failure-policy
-          FailurePolicy: Fail
-
           CRDS:
-            - podchaos
-            - iochaos
-            - timechaos
-            - networkchaos
-            - kernelchaos
-            - stresschaos
-            - awschaos
-            - azurechaos
-            - gcpchaos
-            - dnschaos
-            - jvmchaos
-            - schedule
-            - workflow
-            - httpchaos
-            - blockchaos
-            - physicalmachinechaos
-            - physicalmachine
-            - statuscheck
-            - remotecluster
-
-        bpfki:
-          # Enable chaos-kernel
-          create: false
-          # image would be constructed by <registry>/<repository>:<tag>
-          image:
-            # empty registry means using the global images.registry
-            registry: ""
-            repository: chaos-mesh/chaos-kernel
-            # empty tag means using the global images.tag
-            tag: ""
-          # Image pull policy
-          imagePullPolicy: IfNotPresent
-          # The port which grpc server listens on
-          grpcPort: 50051
-          # CPU/Memory resource requests/limits for chaos-kernel container
-          resources:
-            {}
-            # We usually recommend not to specify default resources and to leave this as a conscious
-            # choice for the user. This also increases chances charts run on environments with little
-            # resources, such as Minikube. If you do want to specify resources, uncomment the following
-            # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-            # limits:
-            #  cpu: 500m
-            #  memory: 1024Mi
-            # requests:
-            #  cpu: 250m
-            #  memory: 512Mi
-
-        chaosDlv:
-          enable: false
-          # image would be constructed by <registry>/<repository>:<tag>
-          image:
-            # empty registry means using the global images.registry
-            registry: ""
-            repository: chaos-mesh/chaos-dlv
-            # empty tag means using the global images.tag
-            tag: ""
-          imagePullPolicy: IfNotPresent
-
+          - podchaos
+          - iochaos
+          - timechaos
+          - networkchaos
+          - kernelchaos
+          - stresschaos
+          - awschaos
+          - azurechaos
+          - gcpchaos
+          - dnschaos
+          - jvmchaos
+          - schedule
+          - workflow
+          - httpchaos
+          - blockchaos
+          - physicalmachinechaos
+          - physicalmachine
+          - statuscheck
+          - remotecluster
+          FailurePolicy: Fail
+          certManager:
+            enabled: false
+          timeoutSeconds: 5
   destination:
     namespace: monitoring
     name: in-cluster
