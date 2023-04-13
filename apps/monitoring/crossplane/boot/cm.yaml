@@ -3,6 +3,6 @@ kind: ConfigMap
 metadata:
   name: universal-crossplane-config
 data:
-  crossplaneVersion: 1.11.3-up.1
+  crossplaneVersion: 1.10.1-up.1
   xgqlVersion: 0.1.5
-  uxpVersion: 1.11.3-up.1
+  uxpVersion: 1.10.1-up.1
