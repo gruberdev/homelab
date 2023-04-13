@@ -858,11 +858,11 @@ spec:
   ignoreDifferences:
     - group: admissionregistration.k8s.io
       kind: MutatingWebhookConfiguration
-      name: kube-prometheus-stack-admission
+      name: kube-prometheus-kube-prome-admission
       jsonPointers:
         - /webhooks/0/failurePolicy
     - group: admissionregistration.k8s.io
       kind: ValidatingWebhookConfiguration
-      name: kube-prometheus-stack-admission
+      name: kube-prometheus-kube-prome-admission
       jsonPointers:
         - /webhooks/0/failurePolicy
