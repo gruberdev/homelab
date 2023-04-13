@@ -1,13 +1,13 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- https://raw.githubusercontent.com/wavyland/wavy/main/manifests/webhook.yaml
+- https://raw.githubusercontent.com/wavyland/wavy/1e45bf3a20838814bb466c4b7bcb101389ecb947/manifests/webhook.yaml
 
 patchesStrategicMerge:
 - overlay/patch-deploy.yaml
 - overlay/patch-job.yaml
 
-namespace: services
+namespace: wavy
 
 commonAnnotations:
   reloader.stakater.com/auto: "true"
