@@ -21,7 +21,7 @@ spec:
           secretName: operator-oauth
       containers:
         - name: operator
-          image: tailscale/k8s-operator:unstable-v1.37
+          image: tailscale/k8s-operator:unstable-v1.39
           resources:
             requests:
               cpu: 220m
@@ -45,11 +45,11 @@ spec:
             - name: CLIENT_SECRET_FILE
               value: /oauth/client_secret
             - name: PROXY_IMAGE
-              value: tailscale/tailscale:unstable
+              value: tailscale/tailscale:unstable-v1.39
             - name: PROXY_TAGS
               value: tag:k8s
             - name: AUTH_PROXY
-              value: "false"
+              value: "true"
           volumeMounts:
           - name: oauth
             mountPath: /oauth
