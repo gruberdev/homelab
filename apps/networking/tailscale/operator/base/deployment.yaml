@@ -21,8 +21,7 @@ spec:
           secretName: operator-oauth
       containers:
         - name: operator
-          image: grubertech/tailscale-operator:latest
-          imagePullPolicy: Always
+          image: tailscale/k8s-operator:unstable-v1.39
           resources:
             requests:
               cpu: 220m
@@ -50,9 +49,7 @@ spec:
             - name: PROXY_TAGS
               value: tag:k8s
             - name: AUTH_PROXY
-              value: "false"
-            - name: INGRESS_IP
-              value: 10.43.8.105
+              value: "true"
           volumeMounts:
           - name: oauth
             mountPath: /oauth
