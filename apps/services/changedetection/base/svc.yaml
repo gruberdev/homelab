@@ -4,7 +4,8 @@ metadata:
   name: change-svc
   labels:
     app: change-server
-  annotations:
+    external-dns.alpha.kubernetes.io/target: onchange.raptor-beta.ts.net
+    external-dns.alpha.kubernetes.io/access: private
     tailscale.com/hostname: "onchange"
 spec:
   selector:
