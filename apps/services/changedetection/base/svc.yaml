@@ -2,13 +2,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: change-svc
-  annotations:
-    external-dns.alpha.kubernetes.io/hostname: "nchange.gr.wtf"
-    external-dns.alpha.kubernetes.io/access: "public"
-    external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
   labels:
     app: change-server
-
     tailscale.com/hostname: "onchange"
 spec:
   selector:
