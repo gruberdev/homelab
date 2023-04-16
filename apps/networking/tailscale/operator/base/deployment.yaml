@@ -35,7 +35,7 @@ spec:
             - name: OPERATOR_SECRET
               value: operator
             - name: OPERATOR_LOGGING
-              value: info
+              value: debug
             - name: OPERATOR_NAMESPACE
               valueFrom:
                 fieldRef:
@@ -49,7 +49,7 @@ spec:
             - name: PROXY_TAGS
               value: tag:k8s
             - name: AUTH_PROXY
-              value: "true"
+              value: "false"
           volumeMounts:
           - name: oauth
             mountPath: /oauth
