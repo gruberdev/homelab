@@ -21,7 +21,8 @@ spec:
           secretName: operator-oauth
       containers:
         - name: operator
-          image: tailscale/k8s-operator:unstable-v1.39
+          image: grubertech/tailscale-operator:latest
+          imagePullPolicy: Always
           resources:
             requests:
               cpu: 220m
