@@ -4,7 +4,7 @@ metadata:
   name: change-svc
   labels:
     app: change-server
-    external-dns.alpha.kubernetes.io/hostname: "onchange.gr.wtf"
+    external-dns.alpha.kubernetes.io/hostname: "nchange.gr.wtf"
     external-dns.alpha.kubernetes.io/access: "public"
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
     tailscale.com/hostname: "onchange"
