@@ -19,6 +19,8 @@ resources:
 - base/core/crossplane.yaml
 - base/core/tailscale.yaml
 - base/core/tailscale-operator.yaml
+- base/core/external-dns.yaml
+- base/core/nginx-ingress.yaml
 - base/core/sealed.yaml
 #- base/core/velero.yaml
 # - base/core/private.yaml
