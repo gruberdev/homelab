@@ -164,6 +164,7 @@ spec:
     - PruneLast=true
     - ApplyOutOfSyncOnly=false
     - Prune=true
+    - Relace=True
     retry:
       limit: 5
       backoff:
