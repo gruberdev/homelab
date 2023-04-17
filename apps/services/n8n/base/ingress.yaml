@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: n8n
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: n8n.gr.wtf
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: n8n.gr.wtf
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: n8n-tailscale
+            port:
+              name: web
+  tls:
+  - hosts:
+    - n8n.gr.wtf
+    secretName: n8n-tls
