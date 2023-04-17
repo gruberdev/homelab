@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: change-ingress
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: onchange.gr.wtf
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    cert-manager.io/cluster-issuer: letsencrypt-staging
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: onchange.gr.wtf
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: change-svc
+            port:
+              name: web
+  tls:
+  - hosts:
+    - onchange.gr.wtf
+    secretName: onchange-tls1
