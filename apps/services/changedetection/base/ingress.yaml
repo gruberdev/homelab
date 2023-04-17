@@ -23,4 +23,4 @@ spec:
   tls:
   - hosts:
     - onchange.gr.wtf
-    secretName: onchange-tx
+    secretName: onchange-t
