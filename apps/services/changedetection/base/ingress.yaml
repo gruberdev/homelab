@@ -5,7 +5,7 @@ metadata:
   annotations:
     external-dns.alpha.kubernetes.io/hostname: onchange.gr.wtf
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
-    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
   ingressClassName: nginx
   rules:
@@ -19,3 +19,7 @@ spec:
             name: change-svc
             port:
               name: web
+  tls:
+  - hosts:
+    - onchange.gr.wtf
+    secretName: onchange-tls
