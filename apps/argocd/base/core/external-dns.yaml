@@ -23,7 +23,7 @@ spec:
         cloudflare:
           apiKey: <path:kv/data/cloudflare#api-key-64>
           apiToken: <path:kv/data/cloudflare#api-token-64>
-          email: <path:kv/data/cloudflare#email>
+          email: <path:kv/data/cloudflare#email-64>
           proxied: false
         clusterDomain: cluster.local
         combineFQDNAnnotation: false
