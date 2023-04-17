@@ -4,7 +4,7 @@ metadata:
   name: change-ingress
   annotations:
     external-dns.alpha.kubernetes.io/hostname: onchange.gr.wtf
-    external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     cert-manager.io/cluster-issuer: letsencrypt-staging
 spec:
@@ -23,4 +23,4 @@ spec:
   tls:
   - hosts:
     - onchange.gr.wtf
-    secretName: onchange-t-29mfk
+    secretName: onchange-tls
