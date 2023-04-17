@@ -22,6 +22,7 @@ resources:
 - base/core/external-dns.yaml
 - base/core/nginx-ingress.yaml
 - base/core/certmanager.yaml
+- base/core/issuer.yaml
 - base/core/sealed.yaml
 # - base/core/velero.yaml
 # - base/core/private.yaml
