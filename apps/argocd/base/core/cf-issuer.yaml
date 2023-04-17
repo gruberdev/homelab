@@ -1,0 +1,55 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cloudflare-ca-issuer
+spec:
+  project: cluster
+  source:
+    repoURL: https://github.com/cloudflare/origin-ca-issuer.git
+    targetRevision: v0.6.1
+    path: deploy/charts/origin-ca-issuer/
+    helm:
+      releaseName: cert-manager
+      values: |
+        controller:
+          disableApprovedCheck: false
+          image:
+            pullPolicy: Always
+            repository: cloudflare/origin-ca-issuer
+            tag: v0.6.1
+          nodeSelector:
+            kubernetes.io/arch: amd64
+          replicaCount: 1
+          resources:
+            limits:
+              cpu: 150m
+              memory: 128Mi
+            requests:
+              cpu: 20m
+              memory: 32Mi
+          serviceAccount:
+            create: true
+        global:
+          rbac:
+            create: true
+  destination:
+    namespace: cert-manager
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: true
+    syncOptions:
+    - Validate=false
+    - CreateNamespace=false
+    - PrunePropagationPolicy=foreground
+    - PruneLast=true
+    - ApplyOutOfSyncOnly=false
+    - Prune=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 60s
+        factor: 2
+        maxDuration: 15m
