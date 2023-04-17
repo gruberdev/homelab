@@ -21,7 +21,7 @@ spec:
         azure:
           useManagedIdentityExtension: false
         cloudflare:
-          apiKey: <path:kv/data/cloudflare#api-key>
+          apiToken: <path:kv/data/cloudflare#api-token>
           email: <path:kv/data/cloudflare#email>
           proxied: false
         clusterDomain: cluster.local
@@ -70,7 +70,7 @@ spec:
           successThreshold: 1
           timeoutSeconds: 5
         logFormat: text
-        logLevel: info
+        logLevel: debug
         metrics:
           enabled: false
           googlePodMonitor:
@@ -110,6 +110,7 @@ spec:
           successThreshold: 1
           timeoutSeconds: 5
         registry: txt
+        textPrefix: k8s-
         replicaCount: 1
         resources:
           limits:
@@ -139,9 +140,9 @@ spec:
         - service
         - ingress
         startupProbe:
-          enabled: false
+          enabled: true
           failureThreshold: 6
-          initialDelaySeconds: 5
+          initialDelaySeconds: 20
           periodSeconds: 10
           successThreshold: 1
           timeoutSeconds: 5
