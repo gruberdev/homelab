@@ -21,9 +21,9 @@ spec:
         azure:
           useManagedIdentityExtension: false
         cloudflare:
-          apiKey: <path:kv/data/cloudflare#api-key-64>
-          apiToken: <path:kv/data/cloudflare#api-token-64>
-          email: <path:kv/data/cloudflare#email-64>
+          apiKey: <path:kv/data/cloudflare#api-key>
+          apiToken: <path:kv/data/cloudflare#api-token>
+          email: <path:kv/data/cloudflare#email>
           proxied: false
         clusterDomain: cluster.local
         combineFQDNAnnotation: false
