@@ -60,7 +60,7 @@ spec:
         image:
           pullPolicy: IfNotPresent
           repository: quay.io/jetstack/cert-manager-controller
-        installCRDs: false
+        installCRDs: true
         maxConcurrentChallenges: 60
         nodeSelector:
           kubernetes.io/arch: amd64
