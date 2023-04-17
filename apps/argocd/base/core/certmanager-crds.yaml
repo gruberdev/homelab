@@ -3,9 +3,9 @@ kind: Application
 metadata:
   name: certmanager-crds
 spec:
-  project: monitoring
+  project: cluster
   source:
-    repoURL: https://github.com/prometheus-community/helm-charts.git
+    repoURL: https://github.com/cert-manager/cert-manager.git
     path: deploy/crds
     targetRevision: v1.11.1
     directory:
