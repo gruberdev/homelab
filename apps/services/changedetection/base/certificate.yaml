@@ -1,0 +1,12 @@
+ apiVersion: cert-manager.io/v1
+ kind: Certificate
+ metadata:
+   name: onchange
+ spec:
+   secretName: onchange-tlse
+   issuerRef:
+     name: letsencrypt-production
+     kind: ClusterIssuer
+   commonName: onchange.gr.wtf
+   dnsNames:
+   - onchange.gr.wtf
