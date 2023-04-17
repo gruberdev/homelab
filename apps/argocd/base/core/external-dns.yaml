@@ -39,7 +39,7 @@ spec:
             mountPath: /etc/coredns/tls/etcd
             secretName: etcd-client-certs
         crd:
-          create: false
+          create: true
         designate:
           customCA:
             enabled: false
