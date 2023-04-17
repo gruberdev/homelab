@@ -95,8 +95,10 @@ spec:
           fsGroup: 1001
           runAsUser: 1001
         policy: upsert-only
+        podAnnotations:
+          reloader.stakater.com/auto: "true"
         provider: cloudflare
-        publishHostIP: true
+        publishHostIP: false
         publishInternalServices: true
         rbac:
           apiVersion: v1
@@ -111,7 +113,7 @@ spec:
           successThreshold: 1
           timeoutSeconds: 5
         registry: txt
-        textPrefix: k8s-
+        textPrefix: k8s
         replicaCount: 1
         resources:
           limits:
