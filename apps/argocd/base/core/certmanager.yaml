@@ -3,7 +3,7 @@ kind: Application
 metadata:
   name: certmanager
 spec:
-  project: cluster
+  project: core
   source:
     repoURL: https://charts.jetstack.io
     chart: cert-manager
