@@ -1,0 +1,216 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: certmanager
+spec:
+  project: cluster
+  source:
+    repoURL: https://charts.jetstack.io
+    chart: cert-manager
+    targetRevision: 1.11.1
+    helm:
+      releaseName: cert-manager
+      values: |
+        acmesolver:
+          image:
+            repository: quay.io/jetstack/cert-manager-acmesolver
+        cainjector:
+          containerSecurityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+          enabled: true
+          image:
+            pullPolicy: IfNotPresent
+            repository: quay.io/jetstack/cert-manager-cainjector
+          nodeSelector:
+            kubernetes.io/arch: amd64
+            kubernetes.io/os: linux
+          replicaCount: 1
+          resources:
+            limits:
+              cpu: 150m
+              memory: 256Mi
+            requests:
+              cpu: 50m
+              memory: 128Mi
+          securityContext:
+            runAsNonRoot: true
+            seccompProfile:
+              type: RuntimeDefault
+          serviceAccount:
+            automountServiceAccountToken: true
+            create: true
+        containerSecurityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+        global:
+          leaderElection:
+            namespace: kube-system
+          logLevel: 2
+          podSecurityPolicy:
+            enabled: false
+            useAppArmor: true
+          rbac:
+            aggregateClusterRoles: true
+            create: true
+        image:
+          pullPolicy: IfNotPresent
+          repository: quay.io/jetstack/cert-manager-controller
+        installCRDs: false
+        maxConcurrentChallenges: 60
+        nodeSelector:
+          kubernetes.io/arch: amd64
+          kubernetes.io/os: linux
+        prometheus:
+          enabled: true
+          servicemonitor:
+            enabled: true
+            honorLabels: false
+            interval: 60s
+            path: /metrics
+            prometheusInstance: default
+            scrapeTimeout: 30s
+            targetPort: 9402
+        replicaCount: 1
+        resources:
+          limits:
+            cpu: 150m
+            memory: 256Mi
+          requests:
+            cpu: 50m
+            memory: 128Mi
+        securityContext:
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
+        serviceAccount:
+          automountServiceAccountToken: true
+          create: true
+        startupapicheck:
+          backoffLimit: 4
+          containerSecurityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+          enabled: true
+          image:
+            pullPolicy: IfNotPresent
+            repository: quay.io/jetstack/cert-manager-ctl
+          jobAnnotations:
+            helm.sh/hook: post-install
+            helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
+            helm.sh/hook-weight: "1"
+          nodeSelector:
+            kubernetes.io/os: linux
+          rbac:
+            annotations:
+              helm.sh/hook: post-install
+              helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
+              helm.sh/hook-weight: "-5"
+          resources:
+            limits:
+              cpu: 150m
+              memory: 256Mi
+            requests:
+              cpu: 50m
+              memory: 128Mi
+          securityContext:
+            runAsNonRoot: true
+            seccompProfile:
+              type: RuntimeDefault
+          serviceAccount:
+            annotations:
+              helm.sh/hook: post-install
+              helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
+              helm.sh/hook-weight: "-5"
+            automountServiceAccountToken: true
+            create: true
+          timeout: 1m
+        webhook:
+          containerSecurityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+          hostNetwork: false
+          image:
+            pullPolicy: IfNotPresent
+            repository: quay.io/jetstack/cert-manager-webhook
+          livenessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          networkPolicy:
+            egress:
+            - ports:
+              - port: 80
+                protocol: TCP
+              - port: 443
+                protocol: TCP
+              - port: 53
+                protocol: TCP
+              - port: 53
+                protocol: UDP
+              to:
+              - ipBlock:
+                  cidr: 0.0.0.0/0
+            enabled: false
+            ingress:
+            - from:
+              - ipBlock:
+                  cidr: 0.0.0.0/0
+          nodeSelector:
+            kubernetes.io/os: linux
+          readinessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+          replicaCount: 1
+          resources:
+            limits:
+              cpu: 150m
+              memory: 256Mi
+            requests:
+              cpu: 50m
+              memory: 128Mi
+          securePort: 10250
+          securityContext:
+            runAsNonRoot: true
+            seccompProfile:
+              type: RuntimeDefault
+          serviceAccount:
+            automountServiceAccountToken: true
+            create: true
+          serviceType: ClusterIP
+          timeoutSeconds: 10
+
+  destination:
+    namespace: cert-manager
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: true
+    syncOptions:
+    - Validate=false
+    - CreateNamespace=true
+    - PrunePropagationPolicy=foreground
+    - PruneLast=true
+    - ApplyOutOfSyncOnly=false
+    - Prune=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 60s
+        factor: 2
+        maxDuration: 15m
