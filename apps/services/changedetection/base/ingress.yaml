@@ -6,9 +6,7 @@ metadata:
     external-dns.alpha.kubernetes.io/hostname: onchange.gr.wtf
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    cert-manager.io/issuer: prod-issuer
-    cert-manager.io/issuer-kind: OriginIssuer
-    cert-manager.io/issuer-group: cert-manager.k8s.cloudflare.com
+    cert-manager.io/cluster-issuer: letsencrypt-staging
 spec:
   ingressClassName: nginx
   rules:
@@ -23,9 +21,6 @@ spec:
             port:
               name: web
   tls:
-    # specifying a host in the TLS section will tell cert-manager what
-    # DNS SANs should be on the created certificate.
-    - hosts:
-        - onchange.gr.wtf
-      # cert-manager will create this secret
-      secretName: onchange-tls
+  - hosts:
+    - onchange.gr.wtf
+    secretName: onchange-tx
