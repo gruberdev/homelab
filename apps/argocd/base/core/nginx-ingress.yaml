@@ -145,11 +145,11 @@ spec:
           reportNodeInternalIp: true
           resources:
             limits:
-              cpu: 100m
-              memory: 150Mi
+              cpu: 300m
+              memory: 512Mi
             requests:
               cpu: 100m
-              memory: 50Mi
+              memory: 256Mi
           scope:
             enabled: false
           service:
