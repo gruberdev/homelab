@@ -35,9 +35,9 @@ spec:
           volumeMounts:
             - name: data-storage
               mountPath: /vol
-          startupProbe:                                             !!
-            httpGet:                                                  !!
-              path: /ready                                            !!
+          startupProbe:
+            httpGet:
+              path: /ready
               port: http
             initialDelaySeconds: 120
             failureThreshold: 60
