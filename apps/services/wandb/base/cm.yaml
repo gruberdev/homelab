@@ -6,4 +6,3 @@ data:
   TZ: "America/Sao_Paulo"
   WANDB_MODE: "disabled"
   WANDB_BASE_URL: "http://localhost:8080"
-  HOST: "wandb.gr.wtf"
