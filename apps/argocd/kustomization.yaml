@@ -17,8 +17,8 @@ resources:
 - base/core/redis-crd.yaml
 - base/core/storage.yaml
 - base/core/crossplane.yaml
-- base/core/tailscale.yaml
-- base/core/tailscale-operator.yaml
+# - base/core/tailscale.yaml
+# - base/core/tailscale-operator.yaml
 - base/core/external-dns.yaml
 - base/core/nginx-ingress.yaml
 - base/core/certmanager.yaml
