@@ -9,4 +9,4 @@
      kind: ClusterIssuer
    commonName: n8n.gr.wtf
    dnsNames:
-   - n8n.gr.wtf
+     - n8n.gr.wtf
