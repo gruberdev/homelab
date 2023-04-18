@@ -12,7 +12,8 @@ spec:
     solvers:
     - selector:
         dnsNames:
-        - onchange.gr.wtf
+          - '*.gr.wtf'
+          - gr.wtf
       dns01:
         cloudflare:
           email: rpg.gruber@gmail.com
