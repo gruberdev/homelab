@@ -67,7 +67,7 @@ resources:
 
 # Applications/Services
 - base/services/n8n.yaml
-# - base/services/onchange.yaml
+- base/services/onchange.yaml
 # - base/services/rss-hub.yaml
 # - base/services/feedpushr.yaml
 # - base/services/grocy.yaml
