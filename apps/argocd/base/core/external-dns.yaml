@@ -124,6 +124,11 @@ spec:
         updateStrategy:
           type: Recreate
         args:
+          - --provider cloudflare
+          - --source=ingress
+          - --source=service
+          - --registry=txt
+          - --txt-owner-id=external-dns
           - --cloudflare-dns-records-per-page=100
           - --interval=2m
         sources:
