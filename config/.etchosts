@@ -1,9 +1,0 @@
-127.0.0.1 k8s.localhost
-127.0.0.1 cluster.localhost
-127.0.0.1 k8s.example
-127.0.0.1 cluster.testing
-127.0.0.1 example.cluster
-127.0.0.1 k8s.lab
-127.0.0.1 vault.k8s.localhost
-127.0.0.1 dbs.k8s.localhost
-127.0.0.1 postgres.k8s.localhost
