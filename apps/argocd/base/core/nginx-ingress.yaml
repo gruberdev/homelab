@@ -159,7 +159,7 @@ spec:
             enabled: true
             external:
               enabled: true
-            externalTrafficPolicy: Local
+            externalTrafficPolicy: Cluster
             internal:
               enabled: false
               externalTrafficPolicy: Local
