@@ -13,7 +13,6 @@ resources:
 # Core Applications
 - base/core/argocd.yaml
 - base/core/postgres.yaml
-- base/core/vitess.yaml
 - base/core/redis.yaml
 - base/core/redis-crd.yaml
 - base/core/storage.yaml
