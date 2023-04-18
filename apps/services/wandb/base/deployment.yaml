@@ -35,6 +35,13 @@ spec:
           volumeMounts:
             - name: data-storage
               mountPath: /vol
+          startupProbe:                                               !!
+            httpGet:                                                  !!
+              path: /ready                                            !!
+              port: http
+            periodSeconds: 30
+            initialDelaySeconds: 120
+            failureThreshold: 60
           livenessProbe:
             httpGet:
               path: /healthz
