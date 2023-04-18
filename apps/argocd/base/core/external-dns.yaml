@@ -124,7 +124,7 @@ spec:
         updateStrategy:
           type: Recreate
         args:
-          - --provider cloudflare
+          - --provider=cloudflare
           - --source=ingress
           - --source=service
           - --registry=txt
