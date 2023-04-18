@@ -35,19 +35,16 @@
 > |     [Unifi Poller][poller-uri]         |   `Monitoring`  |      <sub>[More details][homelab-poller]</sub>      |      ![][argocd-poller]      | ![][poller-badge]    |
 > |     [Uptime Kuma][kuma-uri]            |   `Monitoring`  |      <sub>[More details][homelab-kuma]</sub>          |      ![][argocd-kuma]      | ![][kuma-badge]      |
 > |       [Agones][agones-uri]             |    `Services`   |        <sub>[More details][homelab-agones]</sub>    |        ![][argocd-agones]    |  ![][agones-badge]   |
-> |    [RSS Hub][service-rsshub]           |    `Services`   |        <sub>[More details][homelab-rsshub]</sub>    |        ![][argocd-rss-hub]   | ![][rsshub-badge]    |
-> |    [Feedpushr][service-feedpushr]      |    `Services`   |        <sub>[More details][homelab-feedpushr]</sub>    |        ![][argocd-feedpushr]   | ![][feedpushr-badge]    |
 > | <sub>[ChatGPT Discord Bot][service-chatgpt]</sub> |  `Services`   |  <sub>[More details][homelab-chatgpt]</sub>    |  ![][argocd-chatgpt] | ![][chatgpt-badge]    |
 > | <sub>[ChatGPT Retrieval Plugin][service-p-chatgpt]</sub> |  `Services`   |  <sub>[More details][homelab-p-chatgpt]</sub>    |  ![][argocd-p-chatgpt] | ![][chatgpt-p-badge]    |
 > |            [n8n][n8n-uri]              |    `Services`   |        <sub>[More details][homelab-n8n]</sub>       |        ![][argocd-n8n]       |  ![][n8n-badge]      |
-> |   [Wallabag][wallabag-uri]             |   `Services`   |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-wallabag]  |  ![][wallabag-badge] |
-> |   [Wavy][wavy-uri]                     |   `Services`   |        <sub>[More details][homelab-wavy]</sub>      |        ![][argocd-wavy]       |  ![][wavy-badge] |
-> |   [Grocy][grocy-uri]                   |   `Services`   |        <sub>[More details][homelab-grocy]</sub>      |        ![][argocd-grocy]  |  ![][grocy-badge] |
 > |   [Changedetection.io][change-uri]     |   `Services`   |       <sub>[More details][homelab-change]</sub>      |        ![][argocd-change]    |  ![][change-badge]   |
 > |           [Mango][service-mango]       |   `Media`       |  <sub>[More details][homelab-mango]</sub>           |  ![][argocd-mango]           |  ![][mango-badge]    |
 > |      [Home Assistant][service-ha]      |   `Smart Home`   |        <sub>[More details][homelab-ha]</sub>        |        ![][argocd-ha]        |    ![][ha-badge]     |
 > |   [Wyze API Bridge][service-wyze]      |   `Smart Home`   |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-wyze]      |  ![][wyze-badge]     |
 > |    [Tailscale-operator][tail-uri]        | `Networking`  | <sub>[More details][homelab-tailscale]</sub>         |     ![][argocd-tailscale]   |![][tailscale-badge]  |
+> | [ExternalDNS][service-externaldns] |  `Networking`   |  <sub>[More details][homelab-externaldns]</sub>    |  ![][argocd-externaldns] | ![][externaldns-badge]    |
+> | [CertManager][service-certmanager] |  `Networking`   |  <sub>[More details][homelab-certmanager]</sub>    |  ![][argocd-certmanager] | ![][certmanager-badge]    |
 > |   [Cloudflared <sub>(as proxies)</sub>][cf-uri]  |   `Networking`  | <sub>[More details][homelab-cloudflared]</sub>  |                        |   ![][cfd-badge]     |
 
 <!-- >
@@ -61,6 +58,11 @@
 > |       [Jellyfin][service-jellyfin]     |   `Media`       |  <sub>[More details][homelab-jellyfin]</sub>        |  ![][argocd-jellyfin]        |  ![][jellyfin-badge]   |
 > |           [Sonarr][service-sonarr]     |   `Media`       |  <sub>[More details][homelab-sonarr]</sub>          |  ![][argocd-sonarr]          |  ![][sonarr-badge]   |
 > |       [Prowlarr][service-prowlarr]     |   `Media`       |  <sub>[More details][homelab-prowlarr]</sub>        |  ![][argocd-prowlarr]       |  ![][prowlarr-badge]   |
+> |    [RSS Hub][service-rsshub]           |    `Services`   |        <sub>[More details][homelab-rsshub]</sub>    |        ![][argocd-rss-hub]   | ![][rsshub-badge]    |
+> |    [Feedpushr][service-feedpushr]      |    `Services`   |        <sub>[More details][homelab-feedpushr]</sub>    |        ![][argocd-feedpushr]   | ![][feedpushr-badge]    |
+> |   [Wallabag][wallabag-uri]             |   `Services`   |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-wallabag]  |  ![][wallabag-badge] |
+> |   [Wavy][wavy-uri]                     |   `Services`   |        <sub>[More details][homelab-wavy]</sub>      |        ![][argocd-wavy]       |  ![][wavy-badge] |
+> |   [Grocy][grocy-uri]                   |   `Services`   |        <sub>[More details][homelab-grocy]</sub>      |        ![][argocd-grocy]  |  ![][grocy-badge] |
 
 #### Matrix-related
 
@@ -150,6 +152,8 @@
 [tail-uri]: https://tailscale.com/kb/1151/what-is-tailscale/
 [matrix-uri]: https://matrix.org/
 [service-n8n]: https://n8n.io/
+[service-certmanager]: https://github.com/cert-manager/cert-manager
+[service-externaldns]: https://github.com/kubernetes-sigs/external-dns
 [p-uri]: https://github.com/zalando/postgres-operator
 [service-wyze]: https://github.com/mrlt8/docker-wyze-bridge
 [change-uri]: https://github.com/dgtlmoon/changedetection.io
@@ -229,6 +233,8 @@
 [homelab-lidarr]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/lidarr
 [homelab-metabase]: https://github.com/gruberdev/homelab/tree/main/apps/data/metabase
 [homelab-mango]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/mango
+[homelab-certmanager]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/core/certmanager.yaml
+[homelab-externaldns]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/core/externaldns.yaml
 [homelab-jellyfin]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/jellyfin
 [homelab-agones]: https://github.com/gruberdev/homelab/tree/main/apps/services/agones
 [homelab-gpu-exporter]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/monitoring/nvidia.yaml
@@ -278,7 +284,8 @@
 [argocd-tailscale]: https://argo.gr.wtf/api/badge?name=tailscale
 [argocd-agones]: https://argo.gr.wtf/api/badge?name=agones
 [argocd-gpu-exporter]: https://argo.gr.wtf/api/badge?name=nvidia-exporter
-
+[argocd-externaldns]: https://argo.gr.wtf/api/badge?name=external-dns
+[argocd-certmanager]: https://argo.gr.wtf/api/badge?name=certmanager
 
 <!-- Badge Images -->
 
@@ -323,4 +330,5 @@
 [milvus-badge]: https://img.shields.io/docker/v/milvusdb/milvus?label=Docker&color=blue&logo=docker&sort=semver&style=flat-square
 [wavy-badge]: https://img.shields.io/static/v1?label=No&message=version%20provided&color=gray&labelColor=gray&style=flat-square
 [mongo-badge]: https://img.shields.io/github/v/tag/mongodb/mongodb-kubernetes-operator?label=Github&logo=github&style=flat-square
-
+[certmanager-badge]: https://img.shields.io/github/v/release/cert-manager/cert-manager?label=Github&logo=github&style=flat-square
+[externaldns-badge]: https://img.shields.io/github/v/release/kubernetes-sigs/external-dns?label=Github&logo=github&style=flat-square
