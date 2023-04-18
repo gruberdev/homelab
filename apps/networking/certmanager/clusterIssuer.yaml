@@ -16,6 +16,7 @@ spec:
           - gr.wtf
           - onchange.gr.wtf
           - n8n.gr.wtf
+          - ai.gr.wtf
       dns01:
         cloudflare:
           email: rpg.gruber@gmail.com
