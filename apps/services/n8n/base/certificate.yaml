@@ -7,6 +7,6 @@
    issuerRef:
      name: letsencrypt-production
      kind: ClusterIssuer
-   commonName: onchange.gr.wtf
+   commonName: n8n.gr.wtf
    dnsNames:
    - n8n.gr.wtf
