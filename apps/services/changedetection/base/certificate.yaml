@@ -9,4 +9,4 @@
      kind: ClusterIssuer
    commonName: onchange.gr.wtf
    dnsNames:
-   - onchange.gr.wtf
+     - onchange.gr.wtf
