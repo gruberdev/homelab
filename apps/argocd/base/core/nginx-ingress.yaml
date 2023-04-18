@@ -161,8 +161,8 @@ spec:
               enabled: true
             externalTrafficPolicy: Cluster
             internal:
-              enabled: false
-              externalTrafficPolicy: Local
+              enabled: true
+              externalTrafficPolicy: Cluster
             ipFamilies:
             - IPv4
             ipFamilyPolicy: SingleStack
