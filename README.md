@@ -233,8 +233,8 @@
 [homelab-lidarr]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/lidarr
 [homelab-metabase]: https://github.com/gruberdev/homelab/tree/main/apps/data/metabase
 [homelab-mango]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/mango
-[homelab-certmanager]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/core/certmanager.yaml
-[homelab-externaldns]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/core/externaldns.yaml
+[homelab-certmanager]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/core/external-dns.yaml
+[homelab-externaldns]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/core/external-dns.yaml
 [homelab-jellyfin]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/jellyfin
 [homelab-agones]: https://github.com/gruberdev/homelab/tree/main/apps/services/agones
 [homelab-gpu-exporter]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/monitoring/nvidia.yaml
