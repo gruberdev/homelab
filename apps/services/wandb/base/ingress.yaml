@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: wandb
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: ai.gr.wtf
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
+    external-dns.alpha.kubernetes.io/ttl: "120"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: ai.gr.wtf
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: wandb
+            port:
+              name: http
+  tls:
+  - hosts:
+    - ai.gr.wtf
+    secretName: wandb-tls
