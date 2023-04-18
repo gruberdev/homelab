@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wandb
+  labels:
+    app: wandb
+spec:
+  strategy:
+    type: Recreate
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wandb
+  template:
+    metadata:
+      labels:
+        app: wandb
+    spec:
+      containers:
+        - name: wandb
+          envFrom:
+            - configMapRef:
+                name: wandb-cm
+            - secretRef:
+                name: wandb-vars
+          imagePullPolicy: IfNotPresent
+          image: wandb/local:0.31.1
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          volumeMounts:
+            - name: data-storage
+              mountPath: /vol
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: http
+          resources:
+            requests:
+              cpu: 200m
+              memory: 256Mi
+            limits:
+              cpu: 1000m
+              memory: 1024Mi
+      volumes:
+        - name: data-storage
+          persistentVolumeClaim:
+            claimName: wandb-data
