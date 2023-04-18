@@ -121,6 +121,11 @@ spec:
         serviceAccount:
           automountServiceAccountToken: true
           create: true
+        updateStrategy:
+          type: Recreate
+        args:
+          - --cloudflare-dns-records-per-page=100
+          - --interval=2m
         sources:
         - service
         - ingress
