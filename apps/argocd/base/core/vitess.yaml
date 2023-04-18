@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vitess
+spec:
+  project: cluster
+  source:
+    repoURL: 'https://github.com/gruberdev/homelab.git'
+    path: apps/data/vitess
+    targetRevision: main
+  destination:
+    namespace: databases
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
+      allowEmpty: true
+    syncOptions:
+    - Validate=false
+    - CreateNamespace=false
+    - PrunePropagationPolicy=foreground
+    - PruneLast=false
+    - ApplyOutOfSyncOnly=true
+    - Prune=false
+    retry:
+      limit: 10
+      backoff:
+        duration: 20s
+        factor: 2
+        maxDuration: 15m
