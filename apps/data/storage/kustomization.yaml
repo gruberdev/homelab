@@ -16,13 +16,14 @@ resources:
 
 # Media Services
 # - base/beets.yaml
-#- base/media.yaml
+# - base/media.yaml
 # - base/lidarr.yaml
-#- base/jellyfin.yaml
+# - base/jellyfin.yaml
 - base/mango.yaml
 
 # Services
 - base/n8n.yaml
+- base/wandb.yaml
 - base/feedpushr.yaml
 - base/grocy.yaml
 - base/change.yaml

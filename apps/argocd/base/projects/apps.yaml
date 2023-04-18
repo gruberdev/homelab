@@ -37,6 +37,8 @@ spec:
     server: https://kubernetes.default.svc
   - namespace: chatgpt
     server: https://kubernetes.default.svc
+  - namespace: mlops
+    server: https://kubernetes.default.svc
   clusterResourceWhitelist:
   - group: '*'
     kind: '*'
