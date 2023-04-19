@@ -112,7 +112,7 @@ spec:
             ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
             ##   GKE, AWS & OpenStack)
             ##
-            storageClass: "iscsi"
+            # storageClass: "iscsi"
             accessMode: ReadWriteOnce
             size: 20Gi
             # If you want to re-use an existing pv claim
