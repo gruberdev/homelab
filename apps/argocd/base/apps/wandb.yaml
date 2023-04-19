@@ -86,7 +86,11 @@ spec:
 
         mysql:
           # Set this to false if you want to bring your own mysql
-          managed: true
+          managed: false
+          host: mysql-db.mlops.svc.cluster.lcoal
+          user: root
+          password: ""
+          database: wandb
           image:
             pullPolicy: IfNotPresent
             repository: mysql/mysql-server
