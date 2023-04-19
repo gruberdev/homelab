@@ -114,10 +114,8 @@ spec:
             ##
             storageClass: "iscsi"
             accessMode: ReadWriteOnce
-            size: 1Gi
+            size: 20Gi
             # If you want to re-use an existing pv claim
-            existingClaim:
-              claimName: wandb-data
             annotations: {}
   destination:
     namespace: mlops
