@@ -5,9 +5,9 @@ metadata:
 spec:
   project: cluster
   source:
-    repoURL: https://mariadb-operator.github.io/mariadb-operator
-    chart: mariadb-operator
-    targetRevision: 0.11.0
+    repoURL: https://github.com/mariadb-operator/mariadb-operator.git
+    targetRevision: main
+    path: deploy/charts/mariadb-operator
     helm:
       releaseName: mariadb-operator
       values: |
