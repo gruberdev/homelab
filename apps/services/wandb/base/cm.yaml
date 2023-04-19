@@ -8,4 +8,4 @@ data:
   LOCAL_RESTORE: "false"
   LOCAL_DEV: "false"
   WANDB_BASE_URL: "http://localhost:8080"
-  HOST: "localhost"
+  HOST: "https://ai.gr.wtf"
