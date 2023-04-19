@@ -44,7 +44,7 @@ spec:
         - name: LICENSE
           value: <path:kv/data/mlops#wandb-license-key>
         - name: LOCAL_RESTORE
-          value: true
+          value: "true"
         imagePullSecrets: []
         nameOverride: ""
         fullnameOverride: ""
