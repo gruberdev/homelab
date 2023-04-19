@@ -43,7 +43,8 @@ spec:
         extraEnv:
         - name: LICENSE
           value: <path:kv/data/mlops#wandb-license-key>
-
+        - name: LOCAL_RESTORE
+          value: true
         imagePullSecrets: []
         nameOverride: ""
         fullnameOverride: ""
