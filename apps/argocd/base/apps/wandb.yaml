@@ -28,8 +28,8 @@ spec:
         # !!! Be sure to use the externally accessible host / ingress,
         # not the internal service
         # s3://$ACCESS_KEY_ID:$SECRET_KEY@$HOST/$BUCKET?tls=true
-        bucket: <path:kv/data/mlops#wandb-s3-string>
-        bucketRegion: us-east-1
+        bucket:
+        bucketRegion:
         # If you use a custom KMS key for bucket encryption specify the arn here
         bucketKmsKeyArn:
         # We use sendgrid.com by default to send emails, but you can specify your own smtp server
@@ -37,7 +37,7 @@ spec:
         # when setting up an ingress, set this to http://domain.com or https://domain.com
         host:
         # If you aren't connected to an external bucket and want to mount a custom claim for minio
-        existingClaim:
+        existingClaim: wandb-s3
 
         # set additional env variables
         extraEnv:
