@@ -4,5 +4,7 @@ metadata:
   name: wandb-cm
 data:
   TZ: "America/Sao_Paulo"
-  WANDB_MODE: "disabled"
+  LOCAL_SECURE: "false"
+  LOCAL_RESTORE: "true"
+  LOCAL_DEV: "true"
   WANDB_BASE_URL: "http://localhost:8080"
