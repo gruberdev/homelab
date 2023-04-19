@@ -5,7 +5,7 @@ metadata:
 spec:
   project: cluster
   source:
-    repoURL: hhttps://github.com/wandb/helm-charts.git
+    repoURL: https://github.com/wandb/helm-charts.git
     targetRevision: wandb-0.2.0
     path: charts/wandb
     helm:
