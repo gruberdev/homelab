@@ -1,0 +1,142 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: wandb
+spec:
+  project: cluster
+  source:
+    repoURL: hhttps://github.com/wandb/helm-charts.git
+    targetRevision: wandb-0.2.0
+    path: charts/wandb
+    helm:
+      releaseName: wandb
+      values: |
+        agent:
+        # Default values for wandb.
+        image:
+          repository: wandb/local
+          pullPolicy: IfNotPresent
+          # Overrides the image tag whose default is the chart appVersion.
+          tag: ""
+
+        # Required for production environments
+        license:
+        # If set to true we'll provision an admin user and allow admin api access
+        enableAdminApi: false
+        # If using S3 be sure the pod has valid IAM creds, if using minio
+        # you can include the creds in the bucket url, i.e.
+        # !!! Be sure to use the externally accessible host / ingress,
+        # not the internal service
+        # s3://$ACCESS_KEY_ID:$SECRET_KEY@$HOST/$BUCKET?tls=true
+        bucket: <path:kv/data/mlops#wandb-s3-string>
+        bucketRegion: us-east-1
+        # If you use a custom KMS key for bucket encryption specify the arn here
+        bucketKmsKeyArn:
+        # We use sendgrid.com by default to send emails, but you can specify your own smtp server
+        smtpServer:
+        # when setting up an ingress, set this to http://domain.com or https://domain.com
+        host:
+        # If you aren't connected to an external bucket and want to mount a custom claim for minio
+        existingClaim:
+
+        # set additional env variables
+        extraEnv:
+        - name: LICENSE
+          value: <path:kv/data/mlops#wandb-license-key>
+
+        imagePullSecrets: []
+        nameOverride: ""
+        fullnameOverride: ""
+
+        # dns hostAliases, generally only used in development
+        hostAliases: []
+        # Custom CA's to make SSL verification work for self signed certs
+        # You'll likely want to use `--set-file customCACerts={/path/to/rootCA.crt}`
+        customCACerts: []
+
+        serviceAccount:
+          create: true
+        podAnnotations: {}
+        podSecurityContext:
+          fsGroup: 0
+          fsGroupChangePolicy: "OnRootMismatch"
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 999
+          runAsGroup: 0
+        service:
+          type: ClusterIP
+          port: 8080
+        sso:
+          enabled: false
+        ingress:
+          enabled: false
+        resources:
+          limits:
+            cpu: 300m
+            memory: 450mi
+          requests:
+            cpu: 100m
+            memory: 200Mi
+        nodeSelector: {}
+
+        tolerations: []
+
+        affinity: {}
+
+        mysql:
+          # Set this to false if you want to bring your own mysql
+          managed: true
+          image:
+            pullPolicy: IfNotPresent
+            repository: mysql/mysql-server
+            tag: "8.0"
+          resources:
+            limits:
+              cpu: 300m
+              memory: 450mi
+            requests:
+              cpu: 100m
+              memory: 200Mi
+          service:
+            ## Specify a service type
+            ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services---service-types
+            type: ClusterIP
+            port: 3306
+          persistence:
+            enabled: true
+            ## database data Persistent Volume Storage Class
+            ## If defined, storageClassName: <storageClass>
+            ## If set to "-", storageClassName: "", which disables dynamic provisioning
+            ## If undefined (the default) or set to null, no storageClassName spec is
+            ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+            ##   GKE, AWS & OpenStack)
+            ##
+            storageClass: "iscsi"
+            accessMode: ReadWriteOnce
+            size: 1Gi
+            # If you want to re-use an existing pv claim
+            existingClaim:
+              claimName: wandb-data
+            annotations: {}
+  destination:
+    namespace: mlops
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: true
+    syncOptions:
+    - Validate=false
+    - CreateNamespace=false
+    - PrunePropagationPolicy=foreground
+    - PruneLast=true
+    - ApplyOutOfSyncOnly=false
+    - Prune=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
