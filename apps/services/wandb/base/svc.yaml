@@ -16,3 +16,19 @@ spec:
       protocol: TCP
   loadBalancerClass: tailscale
   type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wandb-internal
+  labels:
+    app: wandb
+spec:
+  selector:
+    app: wandb
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+      protocol: TCP
+  type: ClusterIP
