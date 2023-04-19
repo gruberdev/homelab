@@ -74,11 +74,11 @@ spec:
           enabled: false
         resources:
           limits:
-            cpu: 300m
-            memory: 450Mi
+            cpu: 700m
+            memory: 1Gi
           requests:
-            cpu: 100m
-            memory: 200Mi
+            cpu: 250m
+            memory: 512Mi
         nodeSelector: {}
 
         tolerations: []
@@ -98,11 +98,11 @@ spec:
             tag: "8.0"
           resources:
             limits:
-              cpu: 300m
-              memory: 450Mi
+              cpu: 700m
+              memory: 1Gi
             requests:
-              cpu: 100m
-              memory: 200Mi
+              cpu: 250m
+              memory: 512Mi
           service:
             ## Specify a service type
             ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services---service-types
@@ -110,17 +110,8 @@ spec:
             port: 3306
           persistence:
             enabled: true
-            ## database data Persistent Volume Storage Class
-            ## If defined, storageClassName: <storageClass>
-            ## If set to "-", storageClassName: "", which disables dynamic provisioning
-            ## If undefined (the default) or set to null, no storageClassName spec is
-            ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
-            ##   GKE, AWS & OpenStack)
-            ##
-            # storageClass: "iscsi"
             accessMode: ReadWriteOnce
             size: 20Gi
-            # If you want to re-use an existing pv claim
             annotations: {}
   destination:
     namespace: mlops
