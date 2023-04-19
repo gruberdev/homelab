@@ -87,7 +87,7 @@ spec:
         mysql:
           # Set this to false if you want to bring your own mysql
           managed: false
-          host: mysql-db.mlops.svc.cluster.lcoal
+          host: mysql-db.mlops.svc.cluster.local
           user: root
           password: ""
           database: wandb
