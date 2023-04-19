@@ -8,3 +8,4 @@ data:
   LOCAL_RESTORE: "true"
   LOCAL_DEV: "true"
   WANDB_BASE_URL: "http://localhost:8080"
+  HOST: "localhost"
