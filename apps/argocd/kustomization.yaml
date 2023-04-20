@@ -53,7 +53,6 @@ resources:
 - base/apps/mongodb.yaml
 - base/apps/wandb.yaml
 - base/apps/mongodb-crds.yaml
-- base/apps/jupyterlab.yaml
 # - base/apps/adguard.yaml
 
 # Monitoring Resources
