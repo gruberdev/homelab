@@ -48,6 +48,6 @@ resource "unifi_wlan" "smartDevices" {
 
   network_id    = unifi_network.main.id
   ap_group_ids  = [data.unifi_ap_group.default.id]
-  user_group_id = unifi_user_group.guests.id
+  user_group_id = unifi_user_group.smart.id
   site          = unifi_site.default.name
 }
