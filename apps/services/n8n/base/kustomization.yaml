@@ -7,3 +7,4 @@ resources:
 - db.yaml
 - ingress.yaml
 - certificate.yaml
+- secret.yaml
