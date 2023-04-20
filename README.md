@@ -42,6 +42,7 @@
 > |           [Mango][service-mango]       |   `Media`       |  <sub>[More details][homelab-mango]</sub>           |  ![][argocd-mango]           |  ![][mango-badge]    |
 > |      [Home Assistant][service-ha]      |   `Smart Home`   |        <sub>[More details][homelab-ha]</sub>        |        ![][argocd-ha]        |    ![][ha-badge]     |
 > |   [Wyze API Bridge][service-wyze]      |   `Smart Home`   |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-wyze]      |  ![][wyze-badge]     |
+> |     [Unifi Controller][unifi-uri]      |   `Networking`  |      <sub>[More details][homelab-unifi]</sub>      |      ![][argocd-unifi]      | ![][unifi-badge]    |
 > |    [Tailscale-operator][tail-uri]        | `Networking`  | <sub>[More details][homelab-tailscale]</sub>         |     ![][argocd-tailscale]   |![][tailscale-badge]  |
 > | [ExternalDNS][service-externaldns] |  `Networking`   |  <sub>[More details][homelab-externaldns]</sub>    |  ![][argocd-externaldns] | ![][externaldns-badge]    |
 > | [CertManager][service-certmanager] |  `Networking`   |  <sub>[More details][homelab-certmanager]</sub>    |  ![][argocd-certmanager] | ![][certmanager-badge]    |
@@ -166,6 +167,7 @@
 [grocy-uri]: https://github.com/grocy/grocy
 [flame-uri]: https://github.com/pawelmalak/flame
 [wavy-uri]: https://github.com/wavyland/wavy
+[unifi-uri]: https://github.com/jacobalberty/unifi-docker
 [poller-uri]: https://github.com/unpoller/unpoller
 [cf-uri]: https://github.com/cloudflare/cloudflared
 [service-sonarr]: https://github.com/Sonarr/Sonarr
@@ -238,6 +240,7 @@
 [homelab-jellyfin]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/jellyfin
 [homelab-agones]: https://github.com/gruberdev/homelab/tree/main/apps/services/agones
 [homelab-gpu-exporter]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/monitoring/nvidia.yaml
+[homelab-unifi]: https://github.com/gruberdev/homelab/tree/main/apps/networking/unifi/controller
 
 <!-- ArgoCD Status Badges -->
 
@@ -281,11 +284,12 @@
 [argocd-jellyfin]: https://argo.gr.wtf/api/badge?name=jellyfin
 [argocd-wallabag]: https://argo.gr.wtf/api/badge?name=wallabag
 [argocd-crossplane]: https://argo.gr.wtf/api/badge?name=crossplane
-[argocd-tailscale]: https://argo.gr.wtf/api/badge?name=tailscale
+[argocd-tailscale]: https://argo.gr.wtf/api/badge?name=tailscale-operator
 [argocd-agones]: https://argo.gr.wtf/api/badge?name=agones
 [argocd-gpu-exporter]: https://argo.gr.wtf/api/badge?name=nvidia-exporter
 [argocd-externaldns]: https://argo.gr.wtf/api/badge?name=external-dns
 [argocd-certmanager]: https://argo.gr.wtf/api/badge?name=certmanager
+[argocd-unifi]: https://argo.gr.wtf/api/badge?name=unifi-controller
 
 <!-- Badge Images -->
 
