@@ -39,7 +39,7 @@ spec:
           name: anyuid
           sudoEnabled: true
         storage:
-          enableDshm: true
+          enableDshm: false
           enabled: true
           mountPath: /home/gruber/projects/persistent
           size: 5Gi
