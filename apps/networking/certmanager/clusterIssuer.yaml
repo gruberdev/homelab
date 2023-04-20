@@ -17,6 +17,17 @@ spec:
           - onchange.gr.wtf
           - n8n.gr.wtf
           - ai.gr.wtf
+          - unifi.gr.wtf
+          - home.gr.wtf
+          - monitoring.gr.wtf
+          - grafana.gr.wtf
+          - jupyter.gr.wtf
+          - ha.gr.wtf
+          - argo.gr.wtf
+          - chat.gr.wtf
+          - status.gr.wtf
+          - manga.gr.wtf
+          - books.gr.wtf
       dns01:
         cloudflare:
           email: rpg.gruber@gmail.com
