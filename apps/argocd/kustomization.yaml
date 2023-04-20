@@ -116,6 +116,9 @@ resources:
 
 - https://raw.githubusercontent.com/argoproj/argo-cd/v2.6.7/manifests/install.yaml
 
+# ArgoCD Extensions
+- https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/ha/install.yaml
+
 # Image Updater
 - https://github.com/argoproj-labs/argocd-image-updater/manifests/base
 
