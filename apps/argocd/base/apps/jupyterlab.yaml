@@ -3,7 +3,7 @@ kind: Application
 metadata:
   name: jupyterlab
 spec:
-  project: cluster
+  project: apps
   source:
     repoURL: https://maastrichtu-ids.github.io/dsri-helm-charts
     chart: jupyterlab
