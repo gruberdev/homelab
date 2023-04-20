@@ -56,3 +56,21 @@ spec:
     protocol: TCP
     name: devices
   type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: unifi-lb
+  labels:
+    app: unifi-controller
+    tailscale.com/hostname: "unifi"
+spec:
+  selector:
+    app: unifi-controller
+  ports:
+    - name: guest-http
+      port: 80
+      targetPort: 8880
+      protocol: TCP
+  loadBalancerClass: tailscale
+  type: LoadBalancer
