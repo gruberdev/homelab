@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: actual-cm
+data:
+  TZ: "America/Sao_Paulo"
+  ACTUAL_PORT: "5006"
+  ACTUAL_SERVER_FILES: "/data/server-files"
+  ACTUAL_USER_FILES: "/data/user-files"
