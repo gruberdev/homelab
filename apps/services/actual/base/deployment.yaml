@@ -26,8 +26,8 @@ spec:
             - configMapRef:
                 name: actual-cm
           ports:
-            - name: web
-              containerPort: 80
+            - name: http
+              containerPort: 5006
               protocol: TCP
           resources:
             requests:
