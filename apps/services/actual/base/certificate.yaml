@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: actual-cloudflare
+spec:
+  secretName: actual-tls
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: finance.gr.wtf
+  dnsNames:
+    - finance.gr.wtf

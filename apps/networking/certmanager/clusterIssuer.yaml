@@ -28,6 +28,8 @@ spec:
           - status.gr.wtf
           - manga.gr.wtf
           - books.gr.wtf
+          - finance.gr.wtf
+          - budget.gr.wtf
       dns01:
         cloudflare:
           email: rpg.gruber@gmail.com
