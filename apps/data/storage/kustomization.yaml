@@ -29,6 +29,7 @@ resources:
 - base/change.yaml
 - base/wallabag.yaml
 - base/milvus.yaml
+- base/actual.yaml
 
 #  Postgres Storage
 - base/postgres/ha.yaml

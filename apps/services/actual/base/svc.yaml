@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: actual
+  labels:
+    app: actual
+  annotations:
+    tailscale.com/hostname: "finance"
+spec:
+  selector:
+    app: actual
+  ports:
+    - name: web
+      port: 80
+      targetPort: 80
+      protocol: TCP
+  loadBalancerClass: tailscale
+  type: LoadBalancer
