@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: actual-finance
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: finance.gr.wtf
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
+    external-dns.alpha.kubernetes.io/ttl: "120"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: finance.gr.wtf
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: actual
+            port:
+              name: web
+  tls:
+  - hosts:
+    - finance.gr.wtf
+    secretName: actual-tls
