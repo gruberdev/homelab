@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: ha-cloudflare
+spec:
+  secretName: ha-tls
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: home.gr.wtf
+  dnsNames:
+    - home.gr.wtf
