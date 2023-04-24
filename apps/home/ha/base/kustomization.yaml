@@ -5,3 +5,5 @@ resources:
   - db.yaml
   - deployment.yaml
   - svc.yaml
+  - ingress.yaml
+  - certificate.yaml
