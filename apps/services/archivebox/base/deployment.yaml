@@ -1,0 +1,45 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: archivebox
+  labels:
+    app: archivebox
+  annotations:
+    link.argocd.argoproj.io/external-link: https://archive.グルーバー.com
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: archivebox
+  template:
+    metadata:
+      labels:
+        app: archivebox
+    spec:
+      containers:
+        - name: archivebox
+          image: ghcr.io/archivebox/archivebox/archivebox:0.4.20
+          envFrom:
+            - configMapRef:
+                name: archivebox-cm
+          ports:
+            - name: web
+              containerPort: 8000
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 80m
+              memory: 256Mi
+            limits:
+              cpu: 220m
+              memory: 512Mi
+          volumeMounts:
+            - name: data-storage
+              mountPath: /data
+      volumes:
+        - name: data-storage
+          persistentVolumeClaim:
+            claimName: archivebox-storage
