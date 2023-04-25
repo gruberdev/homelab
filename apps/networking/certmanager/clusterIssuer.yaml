@@ -13,6 +13,7 @@ spec:
     - selector:
         dnsNames:
           - '*.gr.wtf'
+          - '*.xn--qck4cud2cb.com'
           - gr.wtf
           - onchange.gr.wtf
           - n8n.gr.wtf
@@ -30,6 +31,10 @@ spec:
           - books.gr.wtf
           - finance.gr.wtf
           - budget.gr.wtf
+          - xn--qck4cud2cb.com
+          - argo.xn--qck4cud2cb.com
+          - archive.xn--qck4cud2cb.com
+          - archive.グルーバー.com
       dns01:
         cloudflare:
           email: rpg.gruber@gmail.com
