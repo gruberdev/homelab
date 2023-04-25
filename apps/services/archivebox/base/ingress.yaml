@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: archivebox
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: archive.グルーバー.com
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
+    external-dns.alpha.kubernetes.io/ttl: "120"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: archive.グルーバー.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: actual
+            port:
+              name: web
+  tls:
+  - hosts:
+    - archive.グルーバー.com
+    secretName: archive-tls
