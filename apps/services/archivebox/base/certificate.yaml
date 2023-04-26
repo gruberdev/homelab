@@ -7,6 +7,6 @@ spec:
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
-  commonName: archive.グルーバー.com
+  commonName: archive.xn--qck4cud2cb.com
   dnsNames:
-    - archive.グルーバー.com
+    - archive.xn--qck4cud2cb.com
