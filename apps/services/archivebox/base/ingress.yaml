@@ -3,14 +3,14 @@ kind: Ingress
 metadata:
   name: archivebox
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: archive.グルーバー.com
+    external-dns.alpha.kubernetes.io/hostname: archive.xn--qck4cud2cb.com
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
     external-dns.alpha.kubernetes.io/ttl: "120"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
   ingressClassName: nginx
   rules:
-  - host: archive.グルーバー.com
+  - host: archive.xn--qck4cud2cb.com
     http:
       paths:
       - path: /
@@ -22,5 +22,5 @@ spec:
               name: web
   tls:
   - hosts:
-    - archive.グルーバー.com
+    - archive.xn--qck4cud2cb.com
     secretName: archive-tls
