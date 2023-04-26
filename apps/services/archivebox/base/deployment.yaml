@@ -19,9 +19,43 @@ spec:
       labels:
         app: archivebox
     spec:
+      initContainers:
+        - name: archivebox-init
+          image: ghcr.io/archivebox/archivebox/archivebox:0.4.20
+          command: ['/app/venv/bin/archivebox']
+          args: ['init']
+          resources:
+            requests:
+              cpu: 80m
+              memory: 256Mi
+            limits:
+              cpu: 220m
+              memory: 512Mi
+          volumeMounts:
+            - name: data-storage
+              mountPath: /app/data
       containers:
         - name: archivebox
           image: ghcr.io/archivebox/archivebox/archivebox:0.4.20
+          command: ['/app/venv/bin/gunicorn']
+          args:
+            - --pythonpath
+            - /app/venv/lib/python3.10/site-packages/archivebox
+            - -b
+            - 0.0.0.0:8000
+            - --timeout
+            - "300"
+            - archivebox.wsgi:application
+          livenessProbe:
+            tcpSocket:
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          readinessProbe:
+            tcpSocket:
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 10
           envFrom:
             - configMapRef:
                 name: archivebox-cm
