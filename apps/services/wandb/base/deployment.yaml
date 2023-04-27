@@ -16,8 +16,49 @@ spec:
       labels:
         app: wandb
     spec:
+      serviceAccountName: wandb
+      securityContext:
+        fsGroup: 0
+        fsGroupChangePolicy: OnRootMismatch
+      initContainers:
+      - name: init-db
+        image: wandb/local:0.31.1
+        env:
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: wandb-vars
+                key: MYSQL_PASSWORD
+          - name: DB_HOST
+            value: mysql-db.mlops.svc.cluster.local:3306
+          - name: DB_USER
+            value: wandb_local
+          - name: DB
+            value: wandb_local
+        command: ['bash', '-c', "until mysql -h$DB_HOST -u$DB_USER -p$DB_PASSWORD -D$DB --execute=\"SELECT 1\"; do echo waiting for db; sleep 2; done"]
       containers:
         - name: wandb
+          env:
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: wandb-vars
+                  key: MYSQL_PASSWORD
+            - name: DB_USER
+              value: wandb_local
+            - name: DB
+              value: wandb_local
+            - name: DB_HOST
+              value: mysql-db.mlops.svc.cluster.local:3306
+            - name: LICENSE
+              valueFrom:
+                secretKeyRef:
+                  name: wandb-vars
+                  key: LICENSE
+            - name: MYSQL
+              value: mysql://$(DB_USER):$(DB_PASSWORD)@$(DB_HOST)/$(DB)
+            - name: HOST
+              value: http://localhost:8080
           envFrom:
             - configMapRef:
                 name: wandb-cm
@@ -39,12 +80,14 @@ spec:
             httpGet:
               path: /ready
               port: http
-            initialDelaySeconds: 120
-            failureThreshold: 60
+            initialDelaySeconds: 600
+            failureThreshold: 120
           livenessProbe:
             httpGet:
               path: /healthz
               port: http
+            initialDelaySeconds: 600
+            failureThreshold: 120
           readinessProbe:
             httpGet:
               path: /ready
@@ -54,8 +97,8 @@ spec:
               cpu: 200m
               memory: 256Mi
             limits:
-              cpu: 1000m
-              memory: 1024Mi
+              cpu: 2000m
+              memory: 2048Mi
       volumes:
         - name: data-storage
           persistentVolumeClaim:
