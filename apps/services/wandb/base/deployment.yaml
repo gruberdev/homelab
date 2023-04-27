@@ -29,7 +29,7 @@ spec:
                 name: wandb-vars
                 key: MYSQL_PASSWORD
           - name: DB_HOST
-            value: mysql-db.mlops.svc.cluster.local:3306
+            value: mysql-db.mlops.svc.cluster.local
           - name: DB_USER
             value: wandb_local
           - name: DB
@@ -48,7 +48,7 @@ spec:
             - name: DB
               value: wandb_local
             - name: DB_HOST
-              value: mysql-db.mlops.svc.cluster.local:3306
+              value: mysql-db.mlops.svc.cluster.local
             - name: LICENSE
               valueFrom:
                 secretKeyRef:
