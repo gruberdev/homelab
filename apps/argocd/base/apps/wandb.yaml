@@ -91,7 +91,7 @@ spec:
           host: mysql-db.mlops.svc.cluster.local:3306
           user: root
           password: <path:kv/data/mlops#wandb-db-password>
-          database: wandb
+          database: wandb_local
           image:
             pullPolicy: IfNotPresent
             repository: mysql/mysql-server
