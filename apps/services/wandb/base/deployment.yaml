@@ -31,7 +31,7 @@ spec:
           - name: DB_HOST
             value: mysql-db.mlops.svc.cluster.local
           - name: DB_USER
-            value: wandb_local
+            value: root
           - name: DB
             value: wandb_local
         command: ['bash', '-c', "until mysql -h$DB_HOST -u$DB_USER -p$DB_PASSWORD -D$DB --execute=\"SELECT 1\"; do echo waiting for db; sleep 2; done"]
@@ -44,7 +44,7 @@ spec:
                   name: wandb-vars
                   key: MYSQL_PASSWORD
             - name: DB_USER
-              value: wandb_local
+              value: root
             - name: DB
               value: wandb_local
             - name: DB_HOST
