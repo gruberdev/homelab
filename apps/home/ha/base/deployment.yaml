@@ -18,10 +18,7 @@ spec:
       labels:
         app: home-assistant
     spec:
-      securityContext:
-        allowPrivilegeEscalation: false
-        runAsUser: 0
-        initContainers:
+      initContainers:
         - name: git-sync
           image: k8s.gcr.io/git-sync/git-sync:v3.6.1
           imagePullPolicy: IfNotPresent
@@ -77,7 +74,7 @@ spec:
             tcpSocket:
               port: 8123
             periodSeconds: 20
-            initialDelaySeconds: 350
+            initialDelaySeconds: 60
           readinessProbe:
             tcpSocket:
               port: 8123
@@ -88,7 +85,7 @@ spec:
               port: 8123
             timeoutSeconds: 5
             periodSeconds: 10
-            initialDelaySeconds: 400
+            initialDelaySeconds: 60
           securityContext:
             privileged: true
           volumeMounts:
