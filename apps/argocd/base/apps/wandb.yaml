@@ -42,7 +42,7 @@ spec:
         - name: LICENSE
           value: <path:kv/data/mlops#wandb-license-key>
         - name: LOCAL_RESTORE
-          value: "true"
+          value: "false"
         - name: LOCAL_SECURE
           value: "false"
         imagePullSecrets: []
@@ -79,7 +79,8 @@ spec:
           requests:
             cpu: 250m
             memory: 512Mi
-        nodeSelector: {}
+        nodeSelector:
+          kubernetes.io/arch: amd64
 
         tolerations: []
 
