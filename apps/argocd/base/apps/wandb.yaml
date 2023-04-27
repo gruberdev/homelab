@@ -5,115 +5,9 @@ metadata:
 spec:
   project: apps
   source:
-    repoURL: https://github.com/wandb/helm-charts.git
-    targetRevision: wandb-0.2.0
-    path: charts/wandb
-    helm:
-      releaseName: wandb
-      values: |
-        agent:
-        # Default values for wandb.
-        image:
-          repository: wandb/local
-          pullPolicy: IfNotPresent
-          tag: "0.31.1"
-
-        # Required for production environments
-        license: <path:kv/data/mlops#wandb-license-key>
-        # If set to true we'll provision an admin user and allow admin api access
-        enableAdminApi: true
-        # If using S3 be sure the pod has valid IAM creds, if using minio
-        # you can include the creds in the bucket url, i.e.
-        # not the internal service
-        # s3://$ACCESS_KEY_ID:$SECRET_KEY@$HOST/$BUCKET?tls=true
-        bucket:
-        bucketRegion:
-        # If you use a custom KMS key for bucket encryption specify the arn here
-        bucketKmsKeyArn:
-        # We use sendgrid.com by default to send emails, but you can specify your own smtp server
-        smtpServer:
-        # when setting up an ingress, set this to http://domain.com or https://domain.com
-        host:
-        # If you aren't connected to an external bucket and want to mount a custom claim for minio
-        existingClaim: wandb-s3
-
-        # set additional env variables
-        extraEnv:
-        - name: LICENSE
-          value: <path:kv/data/mlops#wandb-license-key>
-        - name: LOCAL_RESTORE
-          value: "false"
-        - name: LOCAL_SECURE
-          value: "false"
-        imagePullSecrets: []
-        nameOverride: ""
-        fullnameOverride: ""
-
-        # dns hostAliases, generally only used in development
-        hostAliases: []
-        # Custom CA's to make SSL verification work for self signed certs
-        # You'll likely want to use `--set-file customCACerts={/path/to/rootCA.crt}`
-        customCACerts: []
-
-        serviceAccount:
-          create: true
-        podAnnotations: {}
-        podSecurityContext:
-          fsGroup: 0
-          fsGroupChangePolicy: "OnRootMismatch"
-        securityContext:
-          runAsNonRoot: false
-          runAsUser: 0
-          runAsGroup: 0
-        service:
-          type: ClusterIP
-          port: 8080
-        sso:
-          enabled: false
-        ingress:
-          enabled: false
-        resources:
-          limits:
-            cpu: 700m
-            memory: 1Gi
-          requests:
-            cpu: 250m
-            memory: 512Mi
-        nodeSelector:
-          kubernetes.io/arch: amd64
-
-        tolerations: []
-
-        affinity: {}
-
-        mysql:
-          # Set this to false if you want to bring your own mysql
-          managed: false
-          host: mysql-db.mlops.svc.cluster.local:3306
-          user: root
-          password: <path:kv/data/mlops#wandb-db-password>
-          database: wandb_local
-          image:
-            pullPolicy: IfNotPresent
-            repository: mysql/mysql-server
-            tag: "8.0"
-          resources:
-            limits:
-              cpu: 700m
-              memory: 1Gi
-            requests:
-              cpu: 250m
-              memory: 512Mi
-          service:
-            ## Specify a service type
-            ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services---service-types
-            type: ClusterIP
-            port: 3306
-          persistence:
-            enabled: true
-            accessMode: ReadWriteOnce
-            size: 20Gi
-            annotations: {}
+    repoURL: 'https://github.com/gruberdev/homelab.git'
+    path: apps/services/wandb
+    targetRevision: main
   destination:
     namespace: mlops
     name: in-cluster
@@ -128,10 +22,11 @@ spec:
     - PrunePropagationPolicy=foreground
     - PruneLast=true
     - ApplyOutOfSyncOnly=false
+    - Replace=true
     - Prune=true
     retry:
-      limit: 5
+      limit: 10
       backoff:
-        duration: 5s
+        duration: 60s
         factor: 2
-        maxDuration: 3m
+        maxDuration: 15m
