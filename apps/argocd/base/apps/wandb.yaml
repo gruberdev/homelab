@@ -21,7 +21,7 @@ spec:
         # Required for production environments
         license: <path:kv/data/mlops#wandb-license-key>
         # If set to true we'll provision an admin user and allow admin api access
-        enableAdminApi: false
+        enableAdminApi: true
         # If using S3 be sure the pod has valid IAM creds, if using minio
         # you can include the creds in the bucket url, i.e.
         # not the internal service
