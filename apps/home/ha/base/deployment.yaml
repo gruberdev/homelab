@@ -18,7 +18,10 @@ spec:
       labels:
         app: home-assistant
     spec:
-      initContainers:
+      securityContext:
+        allowPrivilegeEscalation: false
+        runAsUser: 0
+        initContainers:
         - name: git-sync
           image: k8s.gcr.io/git-sync/git-sync:v3.6.1
           imagePullPolicy: IfNotPresent
@@ -44,6 +47,7 @@ spec:
             - secretRef:
                 name: git-vars
                 optional: true
+
       containers:
         - env:
           - name: TZ
