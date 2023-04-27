@@ -16,8 +16,7 @@ spec:
         image:
           repository: wandb/local
           pullPolicy: IfNotPresent
-          # Overrides the image tag whose default is the chart appVersion.
-          tag: ""
+          tag: "0.31.1"
 
         # Required for production environments
         license: <path:kv/data/mlops#wandb-license-key>
@@ -25,7 +24,6 @@ spec:
         enableAdminApi: false
         # If using S3 be sure the pod has valid IAM creds, if using minio
         # you can include the creds in the bucket url, i.e.
-        # !!! Be sure to use the externally accessible host / ingress,
         # not the internal service
         # s3://$ACCESS_KEY_ID:$SECRET_KEY@$HOST/$BUCKET?tls=true
         bucket:
@@ -44,7 +42,7 @@ spec:
         - name: LICENSE
           value: <path:kv/data/mlops#wandb-license-key>
         - name: LOCAL_RESTORE
-          value: "true"
+          value: "false"
         imagePullSecrets: []
         nameOverride: ""
         fullnameOverride: ""
@@ -62,8 +60,8 @@ spec:
           fsGroup: 0
           fsGroupChangePolicy: "OnRootMismatch"
         securityContext:
-          runAsNonRoot: true
-          runAsUser: 999
+          runAsNonRoot: false
+          runAsUser: 0
           runAsGroup: 0
         service:
           type: ClusterIP
@@ -90,7 +88,7 @@ spec:
           managed: false
           host: mysql-db.mlops.svc.cluster.local
           user: root
-          password: ""
+          password:
           database: wandb
           image:
             pullPolicy: IfNotPresent
