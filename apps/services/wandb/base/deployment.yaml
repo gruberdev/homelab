@@ -37,6 +37,8 @@ spec:
         command: ['bash', '-c', "until mysql -h$DB_HOST -u$DB_USER -p$DB_PASSWORD -D$DB --execute=\"SELECT 1\"; do echo waiting for db; sleep 2; done"]
       containers:
         - name: wandb
+          image: "wandb/local:0.31.1"
+          imagePullPolicy: IfNotPresent
           env:
             - name: DB_PASSWORD
               valueFrom:
