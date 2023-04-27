@@ -88,7 +88,7 @@ spec:
           managed: false
           host: mysql-db.mlops.svc.cluster.local
           user: root
-          password:
+          password: <path:kv/data/mlops#wandb-db-password>
           database: wandb
           image:
             pullPolicy: IfNotPresent
