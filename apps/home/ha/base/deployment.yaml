@@ -77,7 +77,7 @@ spec:
             tcpSocket:
               port: 8123
             periodSeconds: 20
-            initialDelaySeconds: 60
+            initialDelaySeconds: 350
           readinessProbe:
             tcpSocket:
               port: 8123
@@ -88,7 +88,7 @@ spec:
               port: 8123
             timeoutSeconds: 5
             periodSeconds: 10
-            initialDelaySeconds: 60
+            initialDelaySeconds: 400
           securityContext:
             privileged: true
           volumeMounts:
