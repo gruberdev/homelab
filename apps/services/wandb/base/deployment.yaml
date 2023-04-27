@@ -48,26 +48,35 @@ spec:
             - name: DB
               value: wandb_local
             - name: DB_HOST
-              value: mysql-db.mlops.svc.cluster.local
+              value: mysql-db.mlops.svc.cluster.local:3306
             - name: LICENSE
               valueFrom:
                 secretKeyRef:
                   name: wandb-vars
                   key: LICENSE
+            - name: GLOBAL_ADMIN_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: wandb-vars
+                  key: ADMIN_API_KEY
+            - name: GORILLA_INSECURE_ALLOW_API_KEY_ADMIN_ACCESS
+              value: "true"
+            - name: WANDB_HELM_CHART
+              value: wandb:0.2.0
             - name: MYSQL
               value: mysql://$(DB_USER):$(DB_PASSWORD)@$(DB_HOST)/$(DB)
             - name: HOST
               value: http://localhost:8080
-          envFrom:
-            - configMapRef:
-                name: wandb-cm
-            - secretRef:
-                name: wandb-vars
-          imagePullPolicy: IfNotPresent
-          image: wandb/local:0.31.1
+            - name: LICENSE
+              value: <path:kv/data/mlops#wandb-license-key>
+            - name: LOCAL_RESTORE
+              value: "false"
+            - name: LOCAL_SECURE
+              value: "false"
           securityContext:
+            runAsGroup: 0
+            runAsNonRoot: false
             runAsUser: 0
-            allowPrivilegeEscalation: true
           ports:
             - name: http
               containerPort: 8080
