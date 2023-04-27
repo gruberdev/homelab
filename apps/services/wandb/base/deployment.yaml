@@ -16,7 +16,6 @@ spec:
       labels:
         app: wandb
     spec:
-      serviceAccountName: wandb
       securityContext:
         fsGroup: 0
         fsGroupChangePolicy: OnRootMismatch
