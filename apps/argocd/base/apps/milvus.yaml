@@ -14,9 +14,7 @@ spec:
         attu:
           enabled: false
         cluster:
-          enabled: false
-        dataCoordinator:
-          enabled: false
+          enabled: true
         dataNode:
           activeStandby:
             enabled: false
@@ -89,89 +87,10 @@ spec:
             pullPolicy: IfNotPresent
             repository: milvusdb/milvus-config-tool
             tag: v0.1.1
-        indexCoordinator:
-          enabled: false
-        indexNode:
-          disk:
-            enabled: true
-            size:
-              enabled: true
-          enabled: true
-          heaptrack:
-            enabled: false
-          profiling:
-            enabled: false
-          replicas: 1
-          resources:
-            limits:
-              cpu: 550m
-              ephemeral-storage: 40Gi
-              memory: 1Gi
-            requests:
-              cpu: 150m
-              memory: 512Mi
         ingress:
           enabled: false
         kafka:
-          defaultReplicationFactor: 1
           enabled: false
-          extraEnvVars:
-          - name: KAFKA_CFG_MAX_PARTITION_FETCH_BYTES
-            value: "5242880"
-          - name: KAFKA_CFG_MAX_REQUEST_SIZE
-            value: "5242880"
-          - name: KAFKA_CFG_REPLICA_FETCH_MAX_BYTES
-            value: "10485760"
-          - name: KAFKA_CFG_FETCH_MESSAGE_MAX_BYTES
-            value: "5242880"
-          - name: KAFKA_CFG_LOG_ROLL_HOURS
-            value: "24"
-          heapOpts: -Xmx4096m -Xms4096m
-          image:
-            repository: bitnami/kafka
-            tag: 3.1.0-debian-10-r52
-          logRetentionBytes: _-1
-          logRetentionHours: 168
-          maxMessageBytes: _10485760
-          metrics:
-            jmx:
-              enabled: false
-              image:
-                repository: bitnami/jmx-exporter
-                tag: 0.16.1-debian-10-r245
-            kafka:
-              enabled: false
-              image:
-                repository: bitnami/kafka-exporter
-                tag: 1.4.2-debian-10-r182
-            serviceMonitor:
-              enabled: false
-          name: kafka
-          offsetsTopicReplicationFactor: 1
-          pdb:
-            create: false
-          persistence:
-            accessMode: ReadWriteOnce
-            enabled: true
-            size: 50Gi
-          replicaCount: 1
-          service:
-            ports:
-              client: 9092
-            type: ClusterIP
-          startupProbe:
-            enabled: true
-          terminationGracePeriodSeconds: "90"
-          zookeeper:
-            enabled: true
-            replicaCount: 1
-        livenessProbe:
-          enabled: true
-          failureThreshold: 5
-          initialDelaySeconds: 90
-          periodSeconds: 30
-          successThreshold: 1
-          timeoutSeconds: 5
         log:
           file:
             maxAge: 10
@@ -248,6 +167,7 @@ spec:
               cpu: 150m
               memory: 512Mi
         pulsar:
+          enabled: true
           affinity:
             anti_affinity: false
           autorecovery:
@@ -314,10 +234,9 @@ spec:
             broker: true
             functions: false
             proxy: true
-            pulsar_manager: false
+            pulsar_manager: true
             toolset: false
             zookeeper: true
-          enabled: false
           images:
             autorecovery:
               pullPolicy: IfNotPresent
@@ -398,69 +317,55 @@ spec:
               requests:
                 cpu: 0.3
                 memory: 1024Mi
-        queryCoordinator:
-          enabled: false
-        queryNode:
-          disk:
-            enabled: true
-            size:
-              enabled: false
-          enabled: true
-          heaptrack:
-            enabled: false
-          profiling:
-            enabled: false
+        standalone:
           replicas: 1
           resources:
-            limits:
-              cpu: 550m
-              ephemeral-storage: 50Gi
-              memory: 1Gi
-            requests:
-              cpu: 150m
-              memory: 512Mi
-        readinessProbe:
-          enabled: true
-          failureThreshold: 5
-          initialDelaySeconds: 90
-          periodSeconds: 10
-          successThreshold: 1
-          timeoutSeconds: 5
-        rootCoordinator:
-          enabled: false
-        service:
-          loadBalancerSourceRanges:
-          - 0.0.0.0/0
-          port: 19530
-          type: ClusterIP
-        serviceAccount:
-          create: false
-        standalone:
+          limits:
+             ephemeral-storage: 75Gi
+          nodeSelector:
+            kubernetes.io/arch: amd64
+
+          heaptrack:
+            enabled: false
           disk:
             enabled: true
             size:
               enabled: true
-          heaptrack:
-            enabled: false
-          messageQueue: rocksmq
+          profiling:
+            enabled: false  # Enable live profiling
+          messageQueue: pulsar
           persistence:
+            mountPath: "/var/lib/milvus"
+            enabled: true
             annotations:
               helm.sh/resource-policy: keep
-            enabled: true
-            mountPath: /var/lib/milvus
             persistentVolumeClaim:
-              existingClaim: milvus-storage
-          profiling:
-            enabled: false
+              existingClaim: "milvus-storage"
+              storageClass: iscsi
+              accessModes: ReadWriteOnce
+              size: 50Gi
+        queryCoordinator:
+          enabled: false
+        rootCoordinator:
+          enabled: false
+        mixCoordinator:
+          enabled: true
           replicas: 1
           resources:
             limits:
               cpu: 550m
-              ephemeral-storage: 30Gi
-              memory: 1Gi
+              memory: 1.5Gi
             requests:
               cpu: 150m
               memory: 512Mi
+          nodeSelector:
+            kubernetes.io/arch: amd64
+          activeStandby:
+            enabled: false
+        indexCoordinator:
+          enabled: false
+        dataCoordinator:
+          enabled: false
   destination:
     namespace: milvus-system
     name: in-cluster
