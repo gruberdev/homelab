@@ -86,7 +86,7 @@ spec:
         mysql:
           # Set this to false if you want to bring your own mysql
           managed: false
-          host: mysql-db.mlops.svc.cluster.local
+          host: mysql-db.mlops.svc.cluster.local:3306
           user: root
           password: <path:kv/data/mlops#wandb-db-password>
           database: wandb
