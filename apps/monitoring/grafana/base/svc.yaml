@@ -12,3 +12,23 @@ spec:
   - name: renderer
     port: 80
     targetPort: 8081
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana-tailscale
+  annotations:
+    tailscale.com/hostname: grafana
+  labels:
+    app.kubernetes.io/instance: kube-prometheus
+    app.kubernetes.io/name: grafana
+spec:
+  selector:
+    app.kubernetes.io/instance: kube-prometheus
+    app.kubernetes.io/name: grafana
+  ports:
+  - name: service
+    port: 80
+    targetPort: 3000
+  type: LoadBalancer
+  loadBalancerClass: tailscale
