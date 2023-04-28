@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: taskwarrior-backend
+  labels:
+    app: taskwarrior
+    component: backend
+spec:
+  selector:
+    app: taskwarrior
+    component: backend
+  ports:
+    - name: http
+      port: 80
+      targetPort: 53589
+      protocol: TCP
+  type: ClusterIP
