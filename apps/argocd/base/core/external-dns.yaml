@@ -18,6 +18,8 @@ spec:
             mountPath: /.aws
           region: us-east-1
           zonesCacheDuration: 0
+        domainFilters:
+          - xn--qck4cud2cb.com
         azure:
           useManagedIdentityExtension: false
         cloudflare:
@@ -122,6 +124,7 @@ spec:
         updateStrategy:
           type: Recreate
         args:
+          - --domain-filter=xn--qck4cud2cb.com
           - --log-level=debug
           - --provider=cloudflare
           - --zone-id-filter=<path:kv/data/cloudflare#zone-id>
