@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: taskwarrior
+  labels:
+    app: taskwarrior
+    component: backend
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: taskwarrior
+      component: backend
+  template:
+    metadata:
+      labels:
+        app: taskwarrior
+        component: backend
+    spec:
+      containers:
+        - name: backend
+          image: ghcr.io/connectical/taskd:1.1.0-alpine3.17.3
+          envFrom:
+            - configMapRef:
+                name: taskwarrior-backend-config
+            - secretRef:
+                name: taskwarrior-backend-vars
+          ports:
+            - name: http
+              containerPort: 53589
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 150m
+              memory: 256Mi
+            limits:
+              cpu: 200m
+              memory: 512Mi
+          volumeMounts:
+            - name: data-storage
+              mountPath: /var/taskd
+      volumes:
+        - name: data-storage
+          persistentVolumeClaim:
+            claimName: taskwarrior-backend
