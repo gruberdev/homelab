@@ -3,3 +3,5 @@ kind: Kustomization
 resources:
 - deployment.yaml
 - svc.yaml
+- certificate.yaml
+- ingress.yaml

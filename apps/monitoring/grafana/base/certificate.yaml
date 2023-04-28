@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: grafana-ingress-cert
+spec:
+  secretName: grafana-tls
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: grafana.xn--qck4cud2cb.com
+  dnsNames:
+    - grafana.xn--qck4cud2cb.com
