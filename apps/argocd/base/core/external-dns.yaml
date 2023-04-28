@@ -122,6 +122,7 @@ spec:
         updateStrategy:
           type: Recreate
         args:
+          - --log-level=debug
           - --provider=cloudflare
           - --zone-id-filter=<path:kv/data/cloudflare#zone-id>
           - --source=ingress
