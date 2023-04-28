@@ -37,7 +37,7 @@ spec:
             filename: designate-ca.pem
             mountPath: /config/designate
         dryRun: false
-        forceTxtOwnerId: false
+        forceTxtOwnerId: true
         ignoreHostnameAnnotation: false
         image:
           pullPolicy: IfNotPresent
@@ -58,13 +58,11 @@ spec:
         logFormat: text
         logLevel: debug
         metrics:
-          enabled: false
+          enabled: true
           googlePodMonitor:
             enabled: false
-            endpoint: /metrics
-            interval: 60s
           serviceMonitor:
-            enabled: false
+            enabled: true
             honorLabels: false
         ns1:
           minTTL: 10
@@ -95,15 +93,15 @@ spec:
           timeoutSeconds: 5
         registry: txt
         txtOwnerId: default
-        textPrefix: k8s
+        textPrefix: unique
         replicaCount: 1
         resources:
           limits:
-            cpu: 150m
-            memory: 256Mi
+            cpu: 250m
+            memory: 512Mi
           requests:
-            cpu: 35m
-            memory: 50Mi
+            cpu: 70m
+            memory: 150Mi
         rfc2136:
           minTTL: 0s
           port: 53
@@ -125,6 +123,8 @@ spec:
           type: Recreate
         args:
           - --provider=cloudflare
+          - --domain-filter=gr.wtf
+          - --domain-filter=xn--qck4cud2cb.com
           - --source=ingress
           - --source=service
           - --registry=txt
@@ -132,8 +132,8 @@ spec:
           - --cloudflare-dns-records-per-page=100
           - --interval=2m
         sources:
-        - service
-        - ingress
+          - service
+          - ingress
         startupProbe:
           enabled: true
           failureThreshold: 6
