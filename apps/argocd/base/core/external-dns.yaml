@@ -21,11 +21,11 @@ spec:
         domainFilters:
           - xn--qck4cud2cb.com
           - グルーバー.com
+          - gr.wtf
         azure:
           useManagedIdentityExtension: false
         cloudflare:
           apiKey: <path:kv/data/cloudflare#api-key>
-          apiToken: <path:kv/data/cloudflare#api-token>
           email: <path:kv/data/cloudflare#email>
           proxied: false
         clusterDomain: cluster.local
@@ -40,7 +40,7 @@ spec:
             filename: designate-ca.pem
             mountPath: /config/designate
         dryRun: false
-        forceTxtOwnerId: true
+        forceTxtOwnerId: false
         ignoreHostnameAnnotation: false
         image:
           pullPolicy: IfNotPresent
@@ -95,7 +95,7 @@ spec:
           successThreshold: 1
           timeoutSeconds: 5
         registry: txt
-        txtOwnerId: default
+        txtOwnerId: external-dns
         textPrefix: unique
         replicaCount: 1
         resources:
@@ -128,11 +128,12 @@ spec:
           - --log-level=debug
           - --provider=cloudflare
           - --source=ingress
-          - --source=service
           - --registry=txt
           - --txt-owner-id=external-dns
+          - --txt-prefix=unique
           - --cloudflare-dns-records-per-page=1000
           - --interval=2m
+          - --txt-cache-interval=10m
         sources:
           - service
           - ingress
