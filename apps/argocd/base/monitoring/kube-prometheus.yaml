@@ -303,9 +303,6 @@ spec:
           rbac:
             pspEnabled: false
           service:
-            annotations:
-              tailscale.com/expose: "true"
-              tailscale.com/hostname: grafana
             enabled: true
             portName: service
             type: ClusterIP
