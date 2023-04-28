@@ -14,7 +14,7 @@ spec:
         attu:
           enabled: false
         cluster:
-          enabled: true
+          enabled: false
         dataNode:
           activeStandby:
             enabled: false
