@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: taskwarrior-ui
+  labels:
+    app: taskwarrior
+    component: ui
+  annotations:
+    link.argocd.argoproj.io/external-link: https://task.xn--qck4cud2cb.com
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: taskwarrior
+      component: ui
+  template:
+    metadata:
+      labels:
+        app: taskwarrior
+        component: ui
+    spec:
+      containers:
+        - name: ui-server
+          image: docker.io/dcsunset/taskwarrior-webui:20230306
+          envFrom:
+            - configMapRef:
+                name: taskwarrior-ui-config
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 150m
+              memory: 256Mi
+            limits:
+              cpu: 200m
+              memory: 512Mi
+          volumeMounts:
+            - name: data-storage
+              mountPath: /data
+      volumes:
+        - name: data-storage
+          persistentVolumeClaim:
+            claimName: taskwarrior-ui
