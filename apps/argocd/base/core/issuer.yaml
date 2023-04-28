@@ -2,6 +2,8 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: certmanager-clusterissuer
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: core
   source:
@@ -23,6 +25,7 @@ spec:
     - PruneLast=true
     - ApplyOutOfSyncOnly=false
     - Prune=true
+    - Replace=true
     retry:
       limit: 5
       backoff:
