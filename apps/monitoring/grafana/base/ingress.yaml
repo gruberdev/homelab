@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: grafana-ingress-internal
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: grafana.xn--qck4cud2cb.com
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
+    external-dns.alpha.kubernetes.io/ttl: "120"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: grafana.xn--qck4cud2cb.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: grafana-tailscale
+            port:
+              name: service
+  tls:
+  - hosts:
+    - grafana.xn--qck4cud2cb.com
+    secretName: grafana-tls
