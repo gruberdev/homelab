@@ -34,7 +34,12 @@ spec:
           - xn--qck4cud2cb.com
           - argo.xn--qck4cud2cb.com
           - archive.xn--qck4cud2cb.com
-          - archive.グルーバー.com
+          - finance.xn--qck4cud2cb.com
+          - grafana.xn--qck4cud2cb.com
+          - home.xn--qck4cud2cb.com
+          - unifi.xn--qck4cud2cb.com
+          - ai.xn--qck4cud2cb.com
+          - n8n.xn--qck4cud2cb.com
       dns01:
         cloudflare:
           email: rpg.gruber@gmail.com
