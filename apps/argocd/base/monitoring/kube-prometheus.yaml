@@ -246,6 +246,8 @@ spec:
                 datasource: Prometheus
                 gnetId: 16888
                 revision: 5
+              milvusMonitoring:
+                url: https://raw.githubusercontent.com/milvus-io/milvus/master/deployments/monitor/grafana/milvus-dashboard.json
               nvidiaMonitoring:
                 datasource: Prometheus
                 gnetId: 14574
