@@ -71,6 +71,7 @@ resources:
 - base/services/onchange.yaml
 - base/services/actual.yaml
 - base/services/archivebox.yaml
+- base/services/taskwarrior.yaml
 # - base/services/rss-hub.yaml
 # - base/services/feedpushr.yaml
 # - base/services/grocy.yaml
