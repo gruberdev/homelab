@@ -122,14 +122,14 @@ spec:
         updateStrategy:
           type: Recreate
         args:
+          - --log-level=debug
           - --provider=cloudflare
-          - --domain-filter=gr.wtf
-          - --domain-filter=xn--qck4cud2cb.com
+          - --zone-id-filter=<path:kv/data/cloudflare#zone-id>
           - --source=ingress
           - --source=service
           - --registry=txt
           - --txt-owner-id=external-dns
-          - --cloudflare-dns-records-per-page=100
+          - --cloudflare-dns-records-per-page=1000
           - --interval=2m
         sources:
           - service
