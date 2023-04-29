@@ -538,6 +538,14 @@ spec:
                 - argocd-metrics.argocd.svc.cluster.local:8082
                 - argocd-server-metrics.argocd.svc.cluster.local:8083
                 - argocd-repo-server.argocd.svc.cluster.local:8084
+            - job_name: 'uptime'
+              scrape_interval: 30s
+              scheme: http
+              static_configs:
+                - targets: ['kuma-svc.monitoring.svc.cluster.local:8080']
+              basic_auth:
+                username: <path:kv/data/kuma#username>
+                password: <path:kv/data/kuma#password
             allowOverlappingBlocks: false
             arbitraryFSAccessThroughSMs: false
             disableCompaction: false
