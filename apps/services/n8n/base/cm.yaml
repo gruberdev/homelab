@@ -11,7 +11,7 @@ data:
   N8N_BASIC_AUTH_ACTIVE: "true"
   N8N_EMAIL_MODE: "smtp"
   N8N_SMTP_SSL: "true"
-  N8N_HOST: "n8n.gr.wtf"
+  N8N_HOST: "n8n.gruber.dev.br"
   N8N_PORT: "5678"
   N8N_PROTOCOL: "http"
   NODE_ENV: "production"
