@@ -126,14 +126,16 @@ spec:
           type: Recreate
         args:
           - --log-level=debug
+          - --policy=upsert-only
           - --provider=cloudflare
           - --source=ingress
           - --registry=txt
           - --txt-owner-id=external-dns
-          - --txt-prefix=unique
+          - --txt-prefix=homelab
           - --cloudflare-dns-records-per-page=1000
-          - --interval=2m
+          - --interval=6m
           - --txt-cache-interval=10m
+          - --source=service
         sources:
           - service
           - ingress
