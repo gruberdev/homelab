@@ -7,6 +7,6 @@ spec:
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
-  commonName: n8n.gr.wtf
+  commonName: n8n.gruber.dev.br
   dnsNames:
-    - n8n.gr.wtf
+    - n8n.gruber.dev.br
