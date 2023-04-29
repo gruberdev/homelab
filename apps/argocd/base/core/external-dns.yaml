@@ -125,6 +125,7 @@ spec:
         updateStrategy:
           type: Recreate
         args:
+          - --events
           - --log-level=debug
           - --policy=upsert-only
           - --provider=cloudflare
