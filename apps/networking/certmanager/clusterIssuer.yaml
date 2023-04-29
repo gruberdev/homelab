@@ -14,6 +14,7 @@ spec:
         dnsNames:
           - '*.gr.wtf'
           - '*.xn--qck4cud2cb.com'
+          - '*.gruber.dev.br'
           - gr.wtf
           - onchange.gr.wtf
           - n8n.gr.wtf
@@ -32,6 +33,7 @@ spec:
           - finance.gr.wtf
           - budget.gr.wtf
           - xn--qck4cud2cb.com
+          - n8n.gruber.dev.br
           - argo.xn--qck4cud2cb.com
           - archive.xn--qck4cud2cb.com
           - finance.xn--qck4cud2cb.com
