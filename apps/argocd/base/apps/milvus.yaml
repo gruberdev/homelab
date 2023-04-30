@@ -169,7 +169,7 @@ spec:
               cpu: 150m
               memory: 512Mi
         pulsar:
-          enabled: true
+          enabled: false
           affinity:
             anti_affinity: false
           autorecovery:
@@ -334,7 +334,7 @@ spec:
               enabled: true
           profiling:
             enabled: false  # Enable live profiling
-          messageQueue: pulsar
+          messageQueue: rocksmq
           persistence:
             mountPath: "/var/lib/milvus"
             enabled: true
