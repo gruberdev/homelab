@@ -11,6 +11,8 @@ spec:
     helm:
       releaseName: milvus
       values: |
+        nodeSelector:
+          kubernetes.io/arch: amd64
         attu:
           enabled: false
         cluster:
@@ -173,11 +175,11 @@ spec:
           autorecovery:
             resources:
               limits:
-                cpu: 600m
-                memory: 1Gi
-              requests:
-                cpu: 150m
+                cpu: 300m
                 memory: 512Mi
+              requests:
+                cpu: 50m
+                memory: 128Mi
           bookkeeper:
             configData:
               PULSAR_GC: |
@@ -190,11 +192,11 @@ spec:
             replicaCount: 1
             resources:
               limits:
-                cpu: 500m
-                memory: 1.5Gi
+                cpu: 350m
+                memory: 512Gi
               requests:
                 cpu: 150m
-                memory: 512Mi
+                memory: 256Mi
             volumes:
               journal:
                 name: journal
@@ -223,11 +225,11 @@ spec:
             replicaCount: 1
             resources:
               limits:
-                cpu: 550m
-                memory: 1.5Gi
+                cpu: 450m
+                memory: 1Gi
               requests:
                 cpu: 150m
-                memory: 512Mi
+                memory: 128Mi
           components:
             autorecovery: true
             bookkeeper: true
@@ -294,8 +296,8 @@ spec:
                 -Xms2048m -Xmx2048m
               httpNumThreads: "100"
             limits:
-              cpu: 550m
-              memory: 1Gi
+              cpu: 350m
+              memory: 512Mi
             pdb:
               usePolicy: false
             ports:
@@ -324,7 +326,6 @@ spec:
              ephemeral-storage: 75Gi
           nodeSelector:
             kubernetes.io/arch: amd64
-
           heaptrack:
             enabled: false
           disk:
