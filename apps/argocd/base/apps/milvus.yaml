@@ -39,7 +39,7 @@ spec:
               enabled: false
           autoCompactionMode: revision
           autoCompactionRetention: "1000"
-          enabled: true
+          enabled: false
           extraEnvVars:
           - name: ETCD_QUOTA_BACKEND_BYTES
             value: "4294967296"
@@ -49,7 +49,7 @@ spec:
             value: "2500"
           image:
             pullPolicy: IfNotPresent
-            repository: bitnami/etcd
+            repository: milvusdb/etcd
             tag: 3.5.8
           name: etcd
           pdb:
