@@ -72,9 +72,9 @@ spec:
   selector:
     app: unifi-controller
   ports:
-    - name: guest-http
+    - name: devices
       port: 80
-      targetPort: 8880
+      targetPort: 8080
       protocol: TCP
   loadBalancerClass: tailscale
   type: LoadBalancer
