@@ -55,6 +55,10 @@ spec:
     nodePort: 32322
     protocol: TCP
     name: devices
+  - port: 3478
+    nodePort: 3478
+    protocol: TCP
+    name: stun
   type: NodePort
 ---
 apiVersion: v1

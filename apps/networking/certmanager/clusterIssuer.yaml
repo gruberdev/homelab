@@ -43,6 +43,7 @@ spec:
           - ai.xn--qck4cud2cb.com
           - n8n.xn--qck4cud2cb.com
           - task.xn--qck4cud2cb.com
+          - unifi.gruber.dev.br
       dns01:
         cloudflare:
           email: rpg.gruber@gmail.com
