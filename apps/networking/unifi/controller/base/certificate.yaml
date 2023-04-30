@@ -7,6 +7,6 @@ spec:
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
-  commonName: unifi.gr.wtf
+  commonName: unifi.gruber.dev.br
   dnsNames:
-    - unifi.gr.wtf
+    - unifi.gruber.dev.br
