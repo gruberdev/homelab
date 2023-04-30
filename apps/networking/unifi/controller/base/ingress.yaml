@@ -19,7 +19,7 @@ spec:
           service:
             name: unifi-lb
             port:
-              name: guest-http
+              name: devices
   tls:
   - hosts:
     - unifi.gruber.dev.br
