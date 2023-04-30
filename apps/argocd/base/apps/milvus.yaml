@@ -49,8 +49,8 @@ spec:
             value: "2500"
           image:
             pullPolicy: IfNotPresent
-            repository: milvusdb/etcd
-            tag: 3.5.5-r2
+            repository: bitnami/etcd
+            tag: 3.5.8
           name: etcd
           pdb:
             create: false
