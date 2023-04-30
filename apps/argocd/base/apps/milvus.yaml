@@ -14,7 +14,24 @@ spec:
         nodeSelector:
           kubernetes.io/arch: amd64
         attu:
-          enabled: false
+          enabled: true
+          name: attu
+          image:
+            repository: zilliz/attu
+            tag: v2.2.4
+            pullPolicy: IfNotPresent
+          service:
+            type: ClusterIP
+            port: 3000
+          resources:
+            limits:
+              cpu: 350m
+              memory: 512Mi
+            requests:
+              cpu: 150m
+              memory: 128Mi
+          ingress:
+            enabled: false
         cluster:
           enabled: false
         dataCoordinator:
@@ -31,7 +48,7 @@ spec:
           resources:
             limits:
               cpu: 350m
-              memory: 512Gi
+              memory: 512Mi
             requests:
               cpu: 150m
               memory: 128Mi
@@ -108,7 +125,7 @@ spec:
             limits:
               cpu: 350m
               ephemeral-storage: 35Gi
-              memory: 512Gi
+              memory: 512Mi
             requests:
               cpu: 150m
               memory: 128Mi
@@ -219,7 +236,7 @@ spec:
             resources:
               limits:
                 cpu: 350m
-                memory: 512Gi
+                memory: 512Mi
               requests:
                 cpu: 150m
                 memory: 128Mi
@@ -245,7 +262,7 @@ spec:
           resources:
             limits:
               cpu: 350m
-              memory: 512Gi
+              memory: 512Mi
             requests:
               cpu: 150m
               memory: 128Mi
@@ -256,7 +273,7 @@ spec:
             resources:
               limits:
                 cpu: 350m
-                memory: 512Gi
+                memory: 512Mi
               requests:
                 cpu: 150m
                 memory: 128Mi
@@ -273,7 +290,7 @@ spec:
             resources:
               limits:
                 cpu: 350m
-                memory: 512Gi
+                memory: 512Mi
               requests:
                 cpu: 150m
                 memory: 128Mi
@@ -306,7 +323,7 @@ spec:
             resources:
               limits:
                 cpu: 350m
-                memory: 512Gi
+                memory: 512Mi
               requests:
                 cpu: 150m
                 memory: 128Mi
@@ -411,7 +428,7 @@ spec:
             limits:
               cpu: 350m
               ephemeral-storage: 35Gi
-              memory: 512Gi
+              memory: 512Mi
             requests:
               cpu: 150m
               memory: 128Mi
@@ -453,7 +470,7 @@ spec:
             limits:
               cpu: 350m
               ephemeral-storage: 35Gi
-              memory: 512Gi
+              memory: 512Mi
             requests:
               cpu: 150m
               memory: 128Mi
