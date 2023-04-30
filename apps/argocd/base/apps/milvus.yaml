@@ -17,6 +17,8 @@ spec:
           enabled: false
         cluster:
           enabled: false
+        dataCoordinator:
+          enabled: false
         dataNode:
           activeStandby:
             enabled: false
@@ -28,18 +30,18 @@ spec:
           replicas: 1
           resources:
             limits:
-              cpu: 1
-              memory: 2Gi
+              cpu: 350m
+              memory: 512Gi
             requests:
               cpu: 150m
-              memory: 512Mi
+              memory: 128Mi
         etcd:
           auth:
             rbac:
               enabled: false
           autoCompactionMode: revision
           autoCompactionRetention: "1000"
-          enabled: false
+          enabled: true
           extraEnvVars:
           - name: ETCD_QUOTA_BACKEND_BYTES
             value: "4294967296"
@@ -50,7 +52,7 @@ spec:
           image:
             pullPolicy: IfNotPresent
             repository: milvusdb/etcd
-            tag: 3.5.8
+            tag: 3.5.5-r2
           name: etcd
           pdb:
             create: false
@@ -89,10 +91,89 @@ spec:
             pullPolicy: IfNotPresent
             repository: milvusdb/milvus-config-tool
             tag: v0.1.1
+        indexCoordinator:
+          enabled: false
+        indexNode:
+          disk:
+            enabled: true
+            size:
+              enabled: true
+          enabled: true
+          heaptrack:
+            enabled: false
+          profiling:
+            enabled: false
+          replicas: 1
+          resources:
+            limits:
+              cpu: 350m
+              ephemeral-storage: 35Gi
+              memory: 512Gi
+            requests:
+              cpu: 150m
+              memory: 128Mi
         ingress:
           enabled: false
         kafka:
+          defaultReplicationFactor: 1
           enabled: false
+          extraEnvVars:
+          - name: KAFKA_CFG_MAX_PARTITION_FETCH_BYTES
+            value: "5242880"
+          - name: KAFKA_CFG_MAX_REQUEST_SIZE
+            value: "5242880"
+          - name: KAFKA_CFG_REPLICA_FETCH_MAX_BYTES
+            value: "10485760"
+          - name: KAFKA_CFG_FETCH_MESSAGE_MAX_BYTES
+            value: "5242880"
+          - name: KAFKA_CFG_LOG_ROLL_HOURS
+            value: "24"
+          heapOpts: -Xmx4096m -Xms4096m
+          image:
+            repository: bitnami/kafka
+            tag: 3.1.0-debian-10-r52
+          logRetentionBytes: _-1
+          logRetentionHours: 168
+          maxMessageBytes: _10485760
+          metrics:
+            jmx:
+              enabled: false
+              image:
+                repository: bitnami/jmx-exporter
+                tag: 0.16.1-debian-10-r245
+            kafka:
+              enabled: false
+              image:
+                repository: bitnami/kafka-exporter
+                tag: 1.4.2-debian-10-r182
+            serviceMonitor:
+              enabled: false
+          name: kafka
+          offsetsTopicReplicationFactor: 1
+          pdb:
+            create: false
+          persistence:
+            accessMode: ReadWriteOnce
+            enabled: true
+            size: 50Gi
+          replicaCount: 1
+          service:
+            ports:
+              client: 9092
+            type: ClusterIP
+          startupProbe:
+            enabled: true
+          terminationGracePeriodSeconds: "90"
+          zookeeper:
+            enabled: true
+            replicaCount: 1
+        livenessProbe:
+          enabled: true
+          failureThreshold: 5
+          initialDelaySeconds: 90
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 5
         log:
           file:
             maxAge: 10
@@ -137,11 +218,11 @@ spec:
               size: 10Gi
             resources:
               limits:
-                cpu: 500m
-                memory: 1Gi
+                cpu: 350m
+                memory: 512Gi
               requests:
                 cpu: 150m
-                memory: 512Mi
+                memory: 128Mi
           secondary:
             name: secondary
             persistence:
@@ -163,22 +244,21 @@ spec:
           replicas: 1
           resources:
             limits:
-              cpu: 550m
-              memory: 1Gi
+              cpu: 350m
+              memory: 512Gi
             requests:
               cpu: 150m
-              memory: 512Mi
+              memory: 128Mi
         pulsar:
-          enabled: false
           affinity:
             anti_affinity: false
           autorecovery:
             resources:
               limits:
-                cpu: 300m
-                memory: 512Mi
+                cpu: 350m
+                memory: 512Gi
               requests:
-                cpu: 50m
+                cpu: 150m
                 memory: 128Mi
           bookkeeper:
             configData:
@@ -196,7 +276,7 @@ spec:
                 memory: 512Gi
               requests:
                 cpu: 150m
-                memory: 256Mi
+                memory: 128Mi
             volumes:
               journal:
                 name: journal
@@ -225,8 +305,8 @@ spec:
             replicaCount: 1
             resources:
               limits:
-                cpu: 450m
-                memory: 1Gi
+                cpu: 350m
+                memory: 512Gi
               requests:
                 cpu: 150m
                 memory: 128Mi
@@ -236,9 +316,10 @@ spec:
             broker: true
             functions: false
             proxy: true
-            pulsar_manager: true
+            pulsar_manager: false
             toolset: false
             zookeeper: true
+          enabled: false
           images:
             autorecovery:
               pullPolicy: IfNotPresent
@@ -295,16 +376,10 @@ spec:
               PULSAR_MEM: |
                 -Xms2048m -Xmx2048m
               httpNumThreads: "100"
-            limits:
-              cpu: 350m
-              memory: 512Mi
             pdb:
               usePolicy: false
             ports:
               pulsar: 6650
-            requests:
-              cpu: 150m
-              memory: 512Mi
             service:
               type: ClusterIP
           zookeeper:
@@ -319,54 +394,69 @@ spec:
               requests:
                 cpu: 0.3
                 memory: 1024Mi
-        standalone:
-          replicas: 1
-          resources:
-          limits:
-             ephemeral-storage: 75Gi
-          nodeSelector:
-            kubernetes.io/arch: amd64
+        queryCoordinator:
+          enabled: false
+        queryNode:
+          disk:
+            enabled: true
+            size:
+              enabled: false
+          enabled: true
           heaptrack:
             enabled: false
+          profiling:
+            enabled: false
+          replicas: 1
+          resources:
+            limits:
+              cpu: 350m
+              ephemeral-storage: 35Gi
+              memory: 512Gi
+            requests:
+              cpu: 150m
+              memory: 128Mi
+        readinessProbe:
+          enabled: true
+          failureThreshold: 5
+          initialDelaySeconds: 90
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
+        rootCoordinator:
+          enabled: false
+        service:
+          loadBalancerSourceRanges:
+          - 0.0.0.0/0
+          port: 19530
+          type: ClusterIP
+        serviceAccount:
+          create: false
+        standalone:
           disk:
             enabled: true
             size:
               enabled: true
-          profiling:
-            enabled: false  # Enable live profiling
+          heaptrack:
+            enabled: false
           messageQueue: rocksmq
           persistence:
-            mountPath: "/var/lib/milvus"
-            enabled: true
             annotations:
               helm.sh/resource-policy: keep
+            enabled: true
+            mountPath: /var/lib/milvus
             persistentVolumeClaim:
-              existingClaim: "milvus-storage"
-              storageClass: iscsi
-              accessModes: ReadWriteOnce
-              size: 50Gi
-        queryCoordinator:
-          enabled: false
-        rootCoordinator:
-          enabled: false
-        mixCoordinator:
-          enabled: true
+              existingClaim: milvus-storage
+          profiling:
+            enabled: false
           replicas: 1
           resources:
             limits:
-              cpu: 550m
-              memory: 1.5Gi
+              cpu: 350m
+              ephemeral-storage: 35Gi
+              memory: 512Gi
             requests:
               cpu: 150m
-              memory: 512Mi
-          nodeSelector:
-            kubernetes.io/arch: amd64
-          activeStandby:
-            enabled: false
-        indexCoordinator:
-          enabled: false
-        dataCoordinator:
-          enabled: false
+              memory: 128Mi
   destination:
     namespace: milvus-system
     name: in-cluster
