@@ -13,4 +13,3 @@
 
 [website-uri]: https://github.com/wavyland/wavy
 [docs-uri]: https://github.com/wavyland/wavy/blob/main/README.md
-
