@@ -364,7 +364,7 @@ spec:
                 provider: kubernetes
             targetLimit: 0
           tlsConfig:
-            insecureSkipVerify: false
+            insecureSkipVerify: true
             serverName: kubernetes
         kubeControllerManager:
           enabled: true
