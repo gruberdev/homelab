@@ -9,6 +9,6 @@ data:
     metrics: 0.0.0.0:2000
     no-autoupdate: true
     ingress:
-    - hostname: argo.gr.wtf
+    - hostname: argo.gruber.dev.br
       service: http://argocd-server:80
     - service: http_status:404
