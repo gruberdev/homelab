@@ -131,7 +131,7 @@ Both Helm charts are required to properly label nodes that have a GPU attached t
 - [apps/argocd/base/utilities/gfd.yaml][gfd-uri]
 
 
-It is recommended to read all the individual respositories, their default ` values.yaml` for the Helm deployments, and what each value should be changed to match your infrastructure. 
+It is recommended to read all the individual respositories, their default ` values.yaml` for the Helm deployments, and what each value should be changed to match your infrastructure.
 
 If you need an example, feel free to use mine as a reference to change yours.
 
