@@ -39,7 +39,7 @@
 > task tailscale:operator
 > ```
 >
-> **This will install the operator "manually"** 
+> **This will install the operator "manually"**
 >
 > Any questions check the Operator's official documentation on Tailscale's website.
 >
