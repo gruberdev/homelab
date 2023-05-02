@@ -109,7 +109,7 @@ jobs:
             ## List of Kubernetes resources schema validation
 
       - name: Update comment with Service resouces
-        uses: peter-evans/create-or-update-comment@v2
+        uses: peter-evans/create-or-update-comment@v3
         if: steps.changed-services.outputs.any_changed == 'true'
         with:
           comment-id: ${{ steps.fc.outputs.comment-id }}
@@ -125,7 +125,7 @@ jobs:
           edit-mode: append
 
       - name: Update comment with workload resouces
-        uses: peter-evans/create-or-update-comment@v2
+        uses: peter-evans/create-or-update-comment@v3
         if: steps.changed-workloads.outputs.any_changed == 'true'
         with:
           comment-id: ${{ steps.fc.outputs.comment-id }}
@@ -141,7 +141,7 @@ jobs:
           edit-mode: append
 
       - name: Update comment with config resouces
-        uses: peter-evans/create-or-update-comment@v2
+        uses: peter-evans/create-or-update-comment@v3
         if: steps.changed-configs.outputs.any_changed == 'true'
         with:
           comment-id: ${{ steps.fc.outputs.comment-id }}
@@ -157,7 +157,7 @@ jobs:
           edit-mode: append
 
       - name: Update comment with RBAC resouces
-        uses: peter-evans/create-or-update-comment@v2
+        uses: peter-evans/create-or-update-comment@v3
         if: steps.changed-rbac.outputs.any_changed == 'true'
         with:
           comment-id: ${{ steps.fc.outputs.comment-id }}
@@ -173,7 +173,7 @@ jobs:
           edit-mode: append
 
       - name: Update comment with Storage resouces
-        uses: peter-evans/create-or-update-comment@v2
+        uses: peter-evans/create-or-update-comment@v3
         if: steps.changed-storage.outputs.any_changed == 'true'
         with:
           comment-id: ${{ steps.fc.outputs.comment-id }}
