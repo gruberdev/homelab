@@ -15,4 +15,3 @@ repos:
   - id: trailing-whitespace
   - id: check-added-large-files
   - id: end-of-file-fixer
-    args: [--no-ensure-ascii, --autofix]
