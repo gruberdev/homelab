@@ -6,34 +6,34 @@ metadata:
     app: unifi-controller
 spec:
   ports:
-    - port: 80
-      targetPort: 8443
-      name: web-https
-      protocol: TCP
-    - port: 8080
-      name: devices
-      protocol: TCP
-    - port: 8843
-      name: guest-https
-      protocol: TCP
-    - port: 8880
-      name: guest-http
-      protocol: TCP
-    - port: 6789
-      name: mobile-test
-      protocol: TCP
-    - port: 3478
-      name: stun
-      protocol: UDP
-    - port: 10001
-      name: discovery
-      protocol: UDP
-    - port: 1900
-      name: discoveryl2
-      protocol: UDP
-    - port: 5514
-      name: syslog
-      protocol: UDP
+  - port: 80
+    targetPort: 8443
+    name: web-https
+    protocol: TCP
+  - port: 8080
+    name: devices
+    protocol: TCP
+  - port: 8843
+    name: guest-https
+    protocol: TCP
+  - port: 8880
+    name: guest-http
+    protocol: TCP
+  - port: 6789
+    name: mobile-test
+    protocol: TCP
+  - port: 3478
+    name: stun
+    protocol: UDP
+  - port: 10001
+    name: discovery
+    protocol: UDP
+  - port: 1900
+    name: discoveryl2
+    protocol: UDP
+  - port: 5514
+    name: syslog
+    protocol: UDP
   selector:
     app: unifi-controller
 ---
@@ -55,10 +55,6 @@ spec:
     nodePort: 32322
     protocol: TCP
     name: devices
-  - port: 3478
-    nodePort: 3478
-    protocol: TCP
-    name: stun
   type: NodePort
 ---
 apiVersion: v1
@@ -72,9 +68,9 @@ spec:
   selector:
     app: unifi-controller
   ports:
-    - name: devices
-      port: 80
-      targetPort: 8080
-      protocol: TCP
+  - name: devices
+    port: 80
+    targetPort: 8080
+    protocol: TCP
   loadBalancerClass: tailscale
   type: LoadBalancer
