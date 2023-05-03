@@ -3,3 +3,6 @@ kind: Kustomization
 resources:
 - cm.yaml
 - deployment.yaml
+images:
+- name: erisamoe/cloudflared
+  newTag: 2023.5.0
