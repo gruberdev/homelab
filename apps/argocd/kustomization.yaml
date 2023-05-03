@@ -173,13 +173,13 @@ patches:
   target:
     kind: Deployment
     name: cloudflared
-# - patch: |-
-#     - op: add
-#       path: "/spec/template/spec/containers/0/command/-"
-#       value: "--insecure"
-#   target:
-#     kind: Deployment
-#     name: argocd-server
+- patch: |-
+    - op: add
+      path: "/spec/template/spec/containers/0/args/-"
+      value: "--insecure"
+  target:
+    kind: Deployment
+    name: argocd-server
 
 commonAnnotations:
   reloader.stakater.com/auto: "true"
