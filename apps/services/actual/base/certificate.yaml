@@ -7,6 +7,6 @@ spec:
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
-  commonName: finance.gr.wtf
+  commonName: finance.gruber.dev.br
   dnsNames:
-    - finance.gr.wtf
+  - finance.gruber.dev.br

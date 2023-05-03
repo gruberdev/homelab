@@ -22,20 +22,20 @@ tasks:
       GIT_URI:
         sh: git config --get remote.origin.url | sed -e 's/:/\//g'| sed -e 's/ssh\/\/\///g'| sed -e 's/git@/https:\/\//g' | sed 's/.git$//'
     cmds:
-      - |
-        kubectl apply -f - << EOF
-        apiVersion: v1
-        kind: Secret
-        metadata:
-          name: private-repo-creds
-          labels:
-            argocd.argoproj.io/secret-type: repo-creds
-        stringData:
-          type: git
-          url: {{.GIT_URI}}
-          password: $GH_PASS
-          username: $GH_USER
-        EOF
+    - |
+      kubectl apply -f - << EOF
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: private-repo-creds
+        labels:
+          argocd.argoproj.io/secret-type: repo-creds
+      stringData:
+        type: git
+        url: {{.GIT_URI}}
+        password: $GH_PASS
+        username: $GH_USER
+      EOF
     ignore_error: true
 
   repo:
@@ -43,141 +43,141 @@ tasks:
       GIT_URI:
         sh: git config --get remote.origin.url | sed -e 's/:/\//g'| sed -e 's/ssh\/\/\///g'| sed -e 's/git@/https:\/\//g' | sed 's/.git$//'
     cmds:
-      - rm config/repo.yaml
-      - |
-        kubectl apply -f - << EOF
-        apiVersion: v1
-        kind: Secret
-        metadata:
-          name: main-repository
-          namespace: argocd
-          labels:
-            argocd.argoproj.io/secret-type: repository
-        stringData:
-          type: git
-          url: https://github.com/gruberdev/homelab.git
-          password: $GH_PASS
-          username: $GH_USER
-        EOF
-      - |
-        kubectl apply -f - << EOF
-        apiVersion: v1
-        kind: Secret
-        metadata:
-          name: private-repository
-          namespace: argocd
-          labels:
-            argocd.argoproj.io/secret-type: repository
-        stringData:
-          type: git
-          url: https://github.com/gruberdev/private.git
-          password: $GH_PASS
-          username: $GH_USER
-        EOF
+    - rm config/repo.yaml
+    - |
+      kubectl apply -f - << EOF
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: main-repository
+        namespace: argocd
+        labels:
+          argocd.argoproj.io/secret-type: repository
+      stringData:
+        type: git
+        url: https://github.com/gruberdev/homelab.git
+        password: $GH_PASS
+        username: $GH_USER
+      EOF
+    - |
+      kubectl apply -f - << EOF
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: private-repository
+        namespace: argocd
+        labels:
+          argocd.argoproj.io/secret-type: repository
+      stringData:
+        type: git
+        url: https://github.com/gruberdev/private.git
+        password: $GH_PASS
+        username: $GH_USER
+      EOF
     ignore_error: true
 
   install:
     desc: Installs ArgoCD resources manually on the local cluster
     dir: apps/argocd
     preconditions:
-      - sh: 'which kustomize'
-        msg: 'kustomize {{.PATH_ERROR}}'
-      - sh: 'which kubectl'
-        msg: 'kubectl {{.PATH_ERROR}}'
+    - sh: 'which kustomize'
+      msg: 'kustomize {{.PATH_ERROR}}'
+    - sh: 'which kubectl'
+      msg: 'kubectl {{.PATH_ERROR}}'
     cmds:
-      - kubectl create namespace argocd
-      - kustomize build | kubectl apply -f -
-      - sleep 10
-      - kustomize build | kubectl apply -f -
-      - kubectl wait deploy/argocd-server -n argocd --for condition=available --timeout=600s
-      - echo ""
+    - kubectl create namespace argocd
+    - kustomize build | kubectl apply -f -
+    - sleep 10
+    - kustomize build | kubectl apply -f -
+    - kubectl wait deploy/argocd-server -n argocd --for condition=available --timeout=600s
+    - echo ""
     ignore_error: true
 
   build:
     cmds:
-      - task: build:sidecar
-      - task: push:sidecar
+    - task: build:sidecar
+    - task: push:sidecar
 
   build:sidecar:
     preconditions:
-      - sh: 'which docker'
-        msg: 'docker {{.PATH_ERROR}}'
+    - sh: 'which docker'
+      msg: 'docker {{.PATH_ERROR}}'
     dir: apps/argocd
     cmds:
-      - |
-        docker build -t docker.io/grubertech/argocd-sidecar:latest \
-                     -t docker.io/grubertech/argocd-sidecar:v{{.ARGOCD_VERSION}} \
-                     -t docker.io/grubertech/argocd:v{{.ARGOCD_VERSION}} \
-                     -t docker.io/grubertech/argocd:latest .
+    - |
+      docker build -t docker.io/grubertech/argocd-sidecar:latest \
+                   -t docker.io/grubertech/argocd-sidecar:v{{.ARGOCD_VERSION}} \
+                   -t docker.io/grubertech/argocd:v{{.ARGOCD_VERSION}} \
+                   -t docker.io/grubertech/argocd:latest .
     ignore_error: true
 
   push:sidecar:
     dir: apps/argocd
     preconditions:
-      - sh: 'which docker'
-        msg: 'docker {{.PATH_ERROR}}'
+    - sh: 'which docker'
+      msg: 'docker {{.PATH_ERROR}}'
     cmds:
-      - docker push docker.io/grubertech/argocd-sidecar:latest
-      - docker push docker.io/grubertech/argocd-sidecar:v{{.ARGOCD_VERSION}}
-      - docker push docker.io/grubertech/argocd:latest
-      - docker push docker.io/grubertech/argocd:v{{.ARGOCD_VERSION}}
+    - docker push docker.io/grubertech/argocd-sidecar:latest
+    - docker push docker.io/grubertech/argocd-sidecar:v{{.ARGOCD_VERSION}}
+    - docker push docker.io/grubertech/argocd:latest
+    - docker push docker.io/grubertech/argocd:v{{.ARGOCD_VERSION}}
     ignore_error: true
 
   rm:
     dir: apps/argocd
     preconditions:
-      - sh: 'which kustomize'
-        msg: 'kustomize {{.PATH_ERROR}}'
+    - sh: 'which kustomize'
+      msg: 'kustomize {{.PATH_ERROR}}'
     cmds:
-      - kustomize build | kubectl delete -f -
+    - kustomize build | kubectl delete -f -
     ignore_error: true
 
   bridge: kubectl port-forward -n argocd svc/argocd-server 8832:80
 
   password:
     cmds:
-      - kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
+    - kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
     ignore_error: true
 
   password:token:
     preconditions:
-      - sh: 'which argocd'
-        msg: 'argocd {{.PATH_ERROR}}'
-      - sh: 'which kubectl'
-        msg: 'kubectl {{.PATH_ERROR}}'
+    - sh: 'which argocd'
+      msg: 'argocd {{.PATH_ERROR}}'
+    - sh: 'which kubectl'
+      msg: 'kubectl {{.PATH_ERROR}}'
     cmds:
-      - |
-        PASSWORD=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo) \
-        argocd login --insecure --username admin --password ${PASSWORD} $ARGOCD_URI
-      - argocd account generate-token --account image-updater --id image-updater > config/argo-token.yaml
+    - |
+      PASSWORD=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo) \
+      argocd login --insecure --username admin --password ${PASSWORD} $ARGOCD_URI
+    - argocd account generate-token --account image-updater --id image-updater > config/argo-token.yaml
 
   password:update:
     preconditions:
-      - sh: 'which argocd'
-        msg: 'argocd {{.PATH_ERROR}}'
-      - sh: 'which kubectl'
-        msg: 'kubectl {{.PATH_ERROR}}'
+    - sh: 'which argocd'
+      msg: 'argocd {{.PATH_ERROR}}'
+    - sh: 'which kubectl'
+      msg: 'kubectl {{.PATH_ERROR}}'
     cmds:
-      - |
-        PASSWORD=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo) \
-        argocd login --insecure --username admin --password ${PASSWORD} $ARGOCD_URI
-      - argocd account update-password
+    - |
+      PASSWORD=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo) \
+      argocd login --insecure --username admin --password ${PASSWORD} $ARGOCD_URI
+    - argocd account update-password
 
   login:
     preconditions:
-      - sh: 'which argocd'
-        msg: 'argocd {{.PATH_ERROR}}'
+    - sh: 'which argocd'
+      msg: 'argocd {{.PATH_ERROR}}'
     cmds:
-      - argocd login argo.gr.wtf --username $ARGOCD_USERNAME --password $ARGOCD_PASSWORD
+    - argocd login argo.gruber.dev.br --username $ARGOCD_USERNAME --password $ARGOCD_PASSWORD
 
   refresh:
     preconditions:
-      - sh: 'which argocd'
-        msg: 'argocd {{.PATH_ERROR}}'
+    - sh: 'which argocd'
+      msg: 'argocd {{.PATH_ERROR}}'
     cmds:
-      - argocd app list -o name | xargs -I{} argocd app get --hard-refresh {}
+    - argocd app list -o name | xargs -I{} argocd app get --hard-refresh {}
 
   reset:
     cmds:
-      - task: login
-      - task: refresh
+    - task: login
+    - task: refresh

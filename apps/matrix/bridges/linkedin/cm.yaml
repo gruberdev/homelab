@@ -6,7 +6,7 @@ data:
   config.yaml.tmpl: |
     homeserver:
       address: http://matrix-matrix-synapse.matrix.svc.cluster.local:8008
-      domain: matrix.gr.wtf
+      domain: matrix.gruber.dev.br
       verify_ssl: false
       asmux: false
       http_retry_count: 4
@@ -55,10 +55,10 @@ data:
       sync_with_custom_puppets: true
       sync_direct_chat_list: false
       double_puppet_server_map:
-        matrix.gr.wtf: http://matrix-matrix-synapse.matrix.svc.cluster.local:8008
+        matrix.gruber.dev.br: http://matrix-matrix-synapse.matrix.svc.cluster.local:8008
       double_puppet_allow_discovery: false
       login_shared_secret_map:
-        matrix.gr.wtf: ${SHARED_SECRET}
+        matrix.gruber.dev.br: ${SHARED_SECRET}
       presence: true
       update_avatar_initial_sync: true
       federate_rooms: true
@@ -94,8 +94,8 @@ data:
       mute_bridging: false
       tag_only_on_create: true
       permissions:
-        matrix.gr.wtf: user
-        '@gruber:matrix.gr.wtf': admin
+        matrix.gruber.dev.br: user
+        '@gruber:matrix.gruber.dev.br': admin
     logging:
       version: 1
       formatters:

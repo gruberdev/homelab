@@ -7,10 +7,10 @@ data:
     bridge:
       port: 29334
       bindAddress: 0.0.0.0
-      domain: matrix.gr.wtf
+      domain: matrix.gruber.dev.br
       homeserverUrl: http://matrix-matrix-synapse.matrix.svc.cluster.local:8008
       loginSharedSecretMap:
-        matrix.gr.wtf "${SHARED_SECRET}"
+        matrix.gruber.dev.br "${SHARED_SECRET}"
       displayname: Discord Puppet Bridge
       enableGroupSync: true
       presence:
@@ -18,10 +18,10 @@ data:
         interval: 500
     provisioning:
       whitelist:
-        - "@gruber:matrix.gr.wtf"
-        - "@.*:matrix.gr.wtf"
+        - "@gruber:matrix.gruber.dev.br"
+        - "@.*:matrix.gruber.dev.br"
     homeserverUrlMap:
-      matrix.gr.wtf: http://matrix-matrix-synapse.matrix.svc.cluster.local:8008
+      matrix.gruber.dev.br: http://matrix-matrix-synapse.matrix.svc.cluster.local:8008
     namePatterns:
       user: :name
       userOverride: :displayname

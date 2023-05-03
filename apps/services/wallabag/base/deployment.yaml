@@ -5,7 +5,7 @@ metadata:
   labels:
     app: wallabag
   annotations:
-    link.argocd.argoproj.io/external-link: http://wallabag.gr.wtf
+    link.argocd.argoproj.io/external-link: http://wallabag.gruber.dev.br
 spec:
   replicas: 1
   strategy:
@@ -19,42 +19,42 @@ spec:
         app: wallabag
     spec:
       containers:
-        - name: wallabag
-          image: wallabag/wallabag:2.5.2
-          env:
-            - name: POSTGRES_USER
-              valueFrom: { secretKeyRef: { name: wallabag.db-wallabag.credentials.postgresql.acid.zalan.do, key: username } }
-            - name: POSTGRES_PASSWORD
-              valueFrom: { secretKeyRef: { name: wallabag.db-wallabag.credentials.postgresql.acid.zalan.do, key: password } }
-            - name: SYMFONY__ENV__DATABASE_USER
-              valueFrom: { secretKeyRef: { name: wallabag.db-wallabag.credentials.postgresql.acid.zalan.do, key: username } }
-            - name: SYMFONY__ENV__DATABASE_PASSWORD
-              valueFrom: { secretKeyRef: { name: wallabag.db-wallabag.credentials.postgresql.acid.zalan.do, key: password } }
-          envFrom:
-            - configMapRef:
-                name: wallabag-cm
-            - secretRef:
-                name: wallabag-vars
-          ports:
-            - name: web
-              containerPort: 80
-              protocol: TCP
-          resources:
-            requests:
-              cpu: 150m
-              memory: 256Mi
-            limits:
-              cpu: 200m
-              memory: 512Mi
-          volumeMounts:
-            - name: data-storage
-              mountPath: /var/www/wallabag/data
-            - name: media-storage
-              mountPath: /var/www/wallabag/web/assets/images
-      volumes:
-        - name: media-storage
-          persistentVolumeClaim:
-            claimName: wallabag-media
+      - name: wallabag
+        image: wallabag/wallabag:2.5.2
+        env:
+        - name: POSTGRES_USER
+          valueFrom: {secretKeyRef: {name: wallabag.db-wallabag.credentials.postgresql.acid.zalan.do, key: username}}
+        - name: POSTGRES_PASSWORD
+          valueFrom: {secretKeyRef: {name: wallabag.db-wallabag.credentials.postgresql.acid.zalan.do, key: password}}
+        - name: SYMFONY__ENV__DATABASE_USER
+          valueFrom: {secretKeyRef: {name: wallabag.db-wallabag.credentials.postgresql.acid.zalan.do, key: username}}
+        - name: SYMFONY__ENV__DATABASE_PASSWORD
+          valueFrom: {secretKeyRef: {name: wallabag.db-wallabag.credentials.postgresql.acid.zalan.do, key: password}}
+        envFrom:
+        - configMapRef:
+            name: wallabag-cm
+        - secretRef:
+            name: wallabag-vars
+        ports:
+        - name: web
+          containerPort: 80
+          protocol: TCP
+        resources:
+          requests:
+            cpu: 150m
+            memory: 256Mi
+          limits:
+            cpu: 200m
+            memory: 512Mi
+        volumeMounts:
         - name: data-storage
-          persistentVolumeClaim:
-            claimName: wallabag-data
+          mountPath: /var/www/wallabag/data
+        - name: media-storage
+          mountPath: /var/www/wallabag/web/assets/images
+      volumes:
+      - name: media-storage
+        persistentVolumeClaim:
+          claimName: wallabag-media
+      - name: data-storage
+        persistentVolumeClaim:
+          claimName: wallabag-data

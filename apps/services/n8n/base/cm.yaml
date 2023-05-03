@@ -19,7 +19,7 @@ data:
   N8N_LOG_OUTPUT: "console,file"
   N8N_LOG_FILE_LOCATION: "/home/node/n8n/logs/n8n.log"
   N8N_LOG_FILE_MAXCOUNT: "60"
-  WEBHOOK_URL: "n8n.gr.wtf"
+  WEBHOOK_URL: "n8n.gruber.dev.br"
   DB_TYPE: "postgresdb"
   N8N_METRICS: "true"
   N8N_METRICS_PREFIX: "n8n_"

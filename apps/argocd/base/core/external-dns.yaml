@@ -19,9 +19,7 @@ spec:
           region: us-east-1
           zonesCacheDuration: 0
         domainFilters:
-          - xn--qck4cud2cb.com
-          - グルーバー.com
-          - gr.wtf
+          - gruber.dev.br
         azure:
           useManagedIdentityExtension: false
         cloudflare:

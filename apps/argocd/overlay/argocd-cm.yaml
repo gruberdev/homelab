@@ -8,6 +8,6 @@ metadata:
 data:
   accounts.image-updater: apiKey
   application.resourceTrackingMethod: annotation
-  url: https://argocd.gr.wtf
+  url: https://argocd.gruber.dev.br
   statusbadge.enabled: "true"
-  statusbadge.url: "https://status.argo.gr.wtf/"
+  statusbadge.url: "https://status.argo.gruber.dev.br/"
