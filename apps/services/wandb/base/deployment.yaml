@@ -23,93 +23,93 @@ spec:
       - name: init-db
         image: wandb/local:0.31.1
         env:
-          - name: DB_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: wandb-vars
-                key: MYSQL_PASSWORD
-          - name: DB_HOST
-            value: mysql-db.mlops.svc.cluster.local
-          - name: DB_USER
-            value: root
-          - name: DB
-            value: wandb_local
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: wandb-vars
+              key: MYSQL_PASSWORD
+        - name: DB_HOST
+          value: mysql-db.mlops.svc.cluster.local
+        - name: DB_USER
+          value: root
+        - name: DB
+          value: wandb_local
         command: ['bash', '-c', "until mysql -h$DB_HOST -u$DB_USER -p$DB_PASSWORD -D$DB --execute=\"SELECT 1\"; do echo waiting for db; sleep 2; done"]
       containers:
-        - name: wandb
-          image: "wandb/local:0.31.1"
-          imagePullPolicy: IfNotPresent
-          env:
-            - name: DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: wandb-vars
-                  key: MYSQL_PASSWORD
-            - name: DB_USER
-              value: root
-            - name: DB
-              value: wandb_local
-            - name: DB_HOST
-              value: mysql-db.mlops.svc.cluster.local:3306
-            - name: LICENSE
-              valueFrom:
-                secretKeyRef:
-                  name: wandb-vars
-                  key: LICENSE
-            - name: GLOBAL_ADMIN_API_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: wandb-vars
-                  key: ADMIN_API_KEY
-            - name: GORILLA_INSECURE_ALLOW_API_KEY_ADMIN_ACCESS
-              value: "true"
-            - name: WANDB_HELM_CHART
-              value: wandb:0.2.0
-            - name: MYSQL
-              value: mysql://$(DB_USER):$(DB_PASSWORD)@$(DB_HOST)/$(DB)
-            - name: HOST
-              value: http://localhost:8080
-            - name: LICENSE
-              value: <path:kv/data/mlops#wandb-license-key>
-            - name: LOCAL_RESTORE
-              value: "false"
-            - name: LOCAL_SECURE
-              value: "false"
-          securityContext:
-            runAsGroup: 0
-            runAsNonRoot: false
-            runAsUser: 0
-          ports:
-            - name: http
-              containerPort: 8080
-              protocol: TCP
-          volumeMounts:
-            - name: data-storage
-              mountPath: /vol
-          startupProbe:
-            httpGet:
-              path: /ready
-              port: http
-            initialDelaySeconds: 600
-            failureThreshold: 120
-          livenessProbe:
-            httpGet:
-              path: /healthz
-              port: http
-            initialDelaySeconds: 600
-            failureThreshold: 120
-          readinessProbe:
-            httpGet:
-              path: /ready
-              port: http
-          resources:
-            requests:
-              cpu: 200m
-              memory: 256Mi
-            limits:
-              cpu: 2000m
-              memory: 2048Mi
-      volumes:
+      - name: wandb
+        image: "wandb/local:0.31.1"
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: wandb-vars
+              key: MYSQL_PASSWORD
+        - name: DB_USER
+          value: root
+        - name: DB
+          value: wandb_local
+        - name: DB_HOST
+          value: mysql-db.mlops.svc.cluster.local:3306
+        - name: LICENSE
+          valueFrom:
+            secretKeyRef:
+              name: wandb-vars
+              key: LICENSE
+        - name: GLOBAL_ADMIN_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: wandb-vars
+              key: ADMIN_API_KEY
+        - name: GORILLA_INSECURE_ALLOW_API_KEY_ADMIN_ACCESS
+          value: "true"
+        - name: WANDB_HELM_CHART
+          value: wandb:0.2.0
+        - name: MYSQL
+          value: mysql://$(DB_USER):$(DB_PASSWORD)@$(DB_HOST)/$(DB)
+        - name: HOST
+          value: http://localhost:8080
+        - name: LICENSE
+          value: <path:kv/data/mlops#wandb-license-key>
+        - name: LOCAL_RESTORE
+          value: "false"
+        - name: LOCAL_SECURE
+          value: "false"
+        securityContext:
+          runAsGroup: 0
+          runAsNonRoot: false
+          runAsUser: 0
+        ports:
+        - name: http
+          containerPort: 8080
+          protocol: TCP
+        volumeMounts:
         - name: data-storage
-          persistentVolumeClaim:
-            claimName: wandb-data
+          mountPath: /vol
+        startupProbe:
+          httpGet:
+            path: /ready
+            port: http
+          initialDelaySeconds: 600
+          failureThreshold: 600
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: http
+          initialDelaySeconds: 600
+          failureThreshold: 600
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: http
+        resources:
+          requests:
+            cpu: 200m
+            memory: 256Mi
+          limits:
+            cpu: 2000m
+            memory: 2048Mi
+      volumes:
+      - name: data-storage
+        persistentVolumeClaim:
+          claimName: wandb-data
