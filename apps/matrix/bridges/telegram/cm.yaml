@@ -6,7 +6,7 @@ data:
   config.yaml.tmpl: |
     homeserver:
       address: http://matrix-matrix-synapse.matrix.svc.cluster.local:8008
-      domain: matrix.gr.wtf
+      domain: matrix.gruber.dev.br
       verify_ssl: false
       software: standard
       http_retry_count: 4
@@ -74,10 +74,10 @@ data:
       sync_with_custom_puppets: false
       sync_direct_chat_list: false
       double_puppet_server_map:
-        matrix.gr.wtf: http://matrix-matrix-synapse.matrix.svc.cluster.local:8008
+        matrix.gruber.dev.br: http://matrix-matrix-synapse.matrix.svc.cluster.local:8008
       double_puppet_allow_discovery: false
       login_shared_secret_map:
-        matrix.gr.wtf: ${SHARED_SECRET}
+        matrix.gruber.dev.br: ${SHARED_SECRET}
       telegram_link_preview: true
       invite_link_resolve: false
       caption_in_message: false
@@ -186,8 +186,8 @@ data:
       management_room_multiple_messages: false
       permissions:
         '*': relaybot
-        matrix.gr.wtf: user
-        '@gruber:matrix.gr.wtf': admin
+        matrix.gruber.dev.br: user
+        '@gruber:matrix.gruber.dev.br': admin
       relaybot:
         private_chat:
           invite: []

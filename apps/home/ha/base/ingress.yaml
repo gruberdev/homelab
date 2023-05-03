@@ -3,14 +3,14 @@ kind: Ingress
 metadata:
   name: homeassistant
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: home.gr.wtf
+    external-dns.alpha.kubernetes.io/hostname: home.gruber.dev.br
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
     external-dns.alpha.kubernetes.io/ttl: "120"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
   ingressClassName: nginx
   rules:
-  - host: home.gr.wtf
+  - host: home.gruber.dev.br
     http:
       paths:
       - path: /
@@ -22,5 +22,5 @@ spec:
               name: ha
   tls:
   - hosts:
-    - home.gr.wtf
+    - home.gruber.dev.br
     secretName: ha-tls

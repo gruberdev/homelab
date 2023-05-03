@@ -9,6 +9,6 @@ data:
     metrics: 0.0.0.0:2000
     no-autoupdate: true
     ingress:
-    - hostname: matrix.gr.wtf
+    - hostname: matrix.gruber.dev.br
       service: http://matrix-matrix-synapse.matrix.svc.cluster.local:8008
     - service: http_status:404

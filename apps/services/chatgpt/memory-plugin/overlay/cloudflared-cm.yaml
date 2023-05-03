@@ -9,6 +9,6 @@ data:
     metrics: 0.0.0.0:2000
     no-autoupdate: true
     ingress:
-    - hostname: ai.gr.wtf
+    - hostname: ai.gruber.dev.br
       service: http://chatgpt-plugin:80
     - service: http_status:404

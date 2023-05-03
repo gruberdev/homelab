@@ -1,4 +1,3 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -6,7 +5,7 @@ metadata:
   labels:
     app: element
   annotations:
-    link.argocd.argoproj.io/external-link: https://chat.gr.wtf
+    link.argocd.argoproj.io/external-link: https://chat.gruber.dev.br
 spec:
   replicas: 1
   strategy:
@@ -20,35 +19,35 @@ spec:
         app: element
     spec:
       containers:
-        - name: element
-          image: vectorim/element-web:v1.11.13
-          envFrom:
-            - configMapRef:
-                name: element-cm
-          ports:
-            - name: http
-              containerPort: 80
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
-          volumeMounts:
-            - name: ui-config
-              mountPath: /app/config.json
-              subPath: config.json
-          resources:
-            requests:
-              cpu: "300m"
-              memory: "256Mi"
-            limits:
-              cpu: "600m"
-              memory: "400Mi"
-      volumes:
-        - name: ui-config
-          configMap:
+      - name: element
+        image: vectorim/element-web:v1.11.13
+        envFrom:
+        - configMapRef:
             name: element-cm
+        ports:
+        - name: http
+          containerPort: 80
+          protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /
+            port: http
+        readinessProbe:
+          httpGet:
+            path: /
+            port: http
+        volumeMounts:
+        - name: ui-config
+          mountPath: /app/config.json
+          subPath: config.json
+        resources:
+          requests:
+            cpu: "300m"
+            memory: "256Mi"
+          limits:
+            cpu: "600m"
+            memory: "400Mi"
+      volumes:
+      - name: ui-config
+        configMap:
+          name: element-cm

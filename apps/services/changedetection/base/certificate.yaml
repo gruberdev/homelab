@@ -7,6 +7,6 @@ spec:
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
-  commonName: onchange.gr.wtf
+  commonName: onchange.gruber.dev.br
   dnsNames:
-    - onchange.gr.wtf
+  - onchange.gruber.dev.br

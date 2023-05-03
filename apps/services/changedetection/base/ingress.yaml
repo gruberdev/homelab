@@ -3,14 +3,14 @@ kind: Ingress
 metadata:
   name: change-ingress
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: onchange.gr.wtf
+    external-dns.alpha.kubernetes.io/hostname: onchange.gruber.dev.br
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
     external-dns.alpha.kubernetes.io/ttl: "120"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
   ingressClassName: nginx
   rules:
-  - host: onchange.gr.wtf
+  - host: onchange.gruber.dev.br
     http:
       paths:
       - path: /
@@ -22,5 +22,5 @@ spec:
               name: web
   tls:
   - hosts:
-    - onchange.gr.wtf
+    - onchange.gruber.dev.br
     secretName: onchange-tlse
