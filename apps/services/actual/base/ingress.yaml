@@ -3,14 +3,14 @@ kind: Ingress
 metadata:
   name: actual-finance
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: finance.gr.wtf
+    external-dns.alpha.kubernetes.io/hostname: finance.gruber.dev.br
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
     external-dns.alpha.kubernetes.io/ttl: "120"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
   ingressClassName: nginx
   rules:
-  - host: finance.gr.wtf
+  - host: finance.gruber.dev.br
     http:
       paths:
       - path: /
@@ -22,5 +22,5 @@ spec:
               name: web
   tls:
   - hosts:
-    - finance.gr.wtf
+    - finance.gruber.dev.br
     secretName: actual-tls

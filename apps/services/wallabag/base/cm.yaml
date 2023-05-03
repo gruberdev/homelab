@@ -13,7 +13,7 @@ data:
   SYMFONY__ENV__MAILER_HOST: "mail.smtp2go.com"
   POPULATE_DATABASE: "True"
   SYMFONY__ENV__SERVER_NAME: "wallabag-grwtf"
-  SYMFONY__ENV__DOMAIN_NAME: "https://wallabag.gr.wtf"
+  SYMFONY__ENV__DOMAIN_NAME: "https://wallabag.gruber.dev.br"
   SYMFONY__ENV__DATABASE_CHARSET: "utf8mb4"
   SYMFONY__ENV__DATABASE_TABLE_PREFIX: "wallabag_"
   SYMFONY__ENV__FOSUSER_REGISTRATION: "false"

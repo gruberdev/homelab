@@ -3,7 +3,7 @@ kind: Application
 metadata:
   name: synapse
   finalizers:
-    - resources-finalizer.argocd.argoproj.io
+  - resources-finalizer.argocd.argoproj.io
 spec:
   project: matrix
   source:
@@ -17,15 +17,15 @@ spec:
           repository: matrixdotorg/synapse
           # tag: ''
           pullPolicy: IfNotPresent
-        serverName: 'matrix.gr.wtf'
-        publicServerName: 'matrix.gr.wtf'
+        serverName: 'matrix.gruber.dev.br'
+        publicServerName: 'matrix.gruber.dev.br'
         signingkey:
           job:
             enabled: false
             existingSecret: matrix-sign
             existingSecretKey: signature
         config:
-          publicBaseurl: 'https://matrix.gr.wtf'
+          publicBaseurl: 'https://matrix.gruber.dev.br'
           reportStats: false
           enableRegistration: false
           registrationSharedSecret: <path:kv/data/synapse#registrationSharedSecret>

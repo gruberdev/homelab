@@ -12,38 +12,24 @@ spec:
     solvers:
     - selector:
         dnsNames:
-          - '*.gr.wtf'
-          - '*.xn--qck4cud2cb.com'
-          - '*.gruber.dev.br'
-          - gr.wtf
-          - onchange.gr.wtf
-          - n8n.gr.wtf
-          - ai.gr.wtf
-          - unifi.gr.wtf
-          - home.gr.wtf
-          - monitoring.gr.wtf
-          - grafana.gr.wtf
-          - jupyter.gr.wtf
-          - ha.gr.wtf
-          - argo.gr.wtf
-          - chat.gr.wtf
-          - status.gr.wtf
-          - manga.gr.wtf
-          - books.gr.wtf
-          - finance.gr.wtf
-          - budget.gr.wtf
-          - xn--qck4cud2cb.com
-          - n8n.gruber.dev.br
-          - argo.xn--qck4cud2cb.com
-          - archive.xn--qck4cud2cb.com
-          - finance.xn--qck4cud2cb.com
-          - grafana.xn--qck4cud2cb.com
-          - home.xn--qck4cud2cb.com
-          - unifi.xn--qck4cud2cb.com
-          - ai.xn--qck4cud2cb.com
-          - n8n.xn--qck4cud2cb.com
-          - task.xn--qck4cud2cb.com
-          - unifi.gruber.dev.br
+        - '*.gruber.dev.br'
+        - gruber.dev.br
+        - onchange.gruber.dev.br
+        - ai.gruber.dev.br
+        - home.gruber.dev.br
+        - monitoring.gruber.dev.br
+        - grafana.gruber.dev.br
+        - jupyter.gruber.dev.br
+        - ha.gruber.dev.br
+        - argo.gruber.dev.br
+        - chat.gruber.dev.br
+        - status.gruber.dev.br
+        - manga.gruber.dev.br
+        - books.gruber.dev.br
+        - finance.gruber.dev.br
+        - budget.gruber.dev.br
+        - n8n.gruber.dev.br
+        - unifi.gruber.dev.br
       dns01:
         cloudflare:
           email: rpg.gruber@gmail.com
