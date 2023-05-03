@@ -137,6 +137,8 @@ namespace: argocd
 images:
 - name: quay.io/argoproj/argocd
   newTag: v2.7.1
+- name: erisamoe/cloudflared
+  newTag: 2023.5.0
 
 patches:
 - patch: |-
