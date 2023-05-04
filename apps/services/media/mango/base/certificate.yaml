@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: manga-cloudflare
+spec:
+  secretName: manga-tls
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: manga.gruber.dev.br
+  dnsNames:
+  - manga.gruber.dev.br
