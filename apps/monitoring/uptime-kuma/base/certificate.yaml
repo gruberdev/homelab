@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: kuma-cloudflare
+spec:
+  secretName: kuma-tls
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: kuma.gruber.dev.br
+  dnsNames:
+  - kuma.gruber.dev.br
