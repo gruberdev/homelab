@@ -24,6 +24,7 @@ spec:
         - argo.gruber.dev.br
         - chat.gruber.dev.br
         - status.gruber.dev.br
+        - kuma.gruber.dev.br
         - manga.gruber.dev.br
         - books.gruber.dev.br
         - finance.gruber.dev.br
