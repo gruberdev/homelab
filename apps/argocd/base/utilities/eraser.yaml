@@ -7,7 +7,7 @@ spec:
   source:
     repoURL: https://azure.github.io/eraser/charts
     chart: eraser
-    targetRevision: 1.0.0
+    targetRevision: 1.1.0
     helm:
       releaseName: eraser
       values: |
