@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jupyterlab
+  labels:
+    app: jupyterlab
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: jupyterlab
+  template:
+    metadata:
+      labels:
+        app: jupyterlab
+    spec:
+      containers:
+      - name: jupyterlab
+        image: jupyter/base-notebook:notebook-6.5.4
+        securityContext:
+          runAsUser: 0
+        livenessProbe:
+          tcpSocket:
+            port: 8888
+          initialDelaySeconds: 35
+          periodSeconds: 15
+        readinessProbe:
+          tcpSocket:
+            port: 8888
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        envFrom:
+        - configMapRef:
+            name: jupyterlab-config
+        ports:
+        - name: http
+          containerPort: 8888
+          protocol: TCP
+        resources:
+          requests:
+            cpu: 200m
+            memory: 256Mi
+          limits:
+            cpu: 1000m
+            memory: 1024Mi
+        volumeMounts:
+        - name: data-storage
+          mountPath: /home/gruber
+      volumes:
+      - name: data-storage
+        persistentVolumeClaim:
+          claimName: jupyterlab-storage

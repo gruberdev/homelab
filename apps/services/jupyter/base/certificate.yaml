@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: jupyterlab-cloudflare
+spec:
+  secretName: lab-tls
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: lab.gruber.dev.br
+  dnsNames:
+  - lab.gruber.dev.br
