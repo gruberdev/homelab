@@ -7,3 +7,6 @@ resources:
 - certificate.yaml
 - ingress.yaml
 - secret.yaml
+- rb.yaml
+- role.yaml
+- sa.yaml
