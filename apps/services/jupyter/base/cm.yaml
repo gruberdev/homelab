@@ -10,3 +10,7 @@ data:
   RESTARTABLE: "yes"
   JUPYTER_PORT: "8888"
   DOCKER_STACKS_JUPYTER_CMD: "lab"
+  WANDB_BASE_URL: "http://wandb.mlops.svc.cluster.local"
+  WANDB_DIR: "/home/gruber/wandb"
+  WANDB_CACHE_DIR: "/home/gruber/wandb/cache"
+  WANDB_CONFIG_DIR: "/home/gruber/wandb/config"
