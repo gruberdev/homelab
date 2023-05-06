@@ -16,6 +16,7 @@ spec:
       labels:
         app: jupyterlab
     spec:
+      serviceAccountName: wandb
       containers:
       - name: jupyterlab
         image: jupyter/base-notebook:notebook-6.5.4
