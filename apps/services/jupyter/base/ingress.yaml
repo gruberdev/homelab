@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: jupyterlab
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: lab.gruber.dev.br
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
+    external-dns.alpha.kubernetes.io/ttl: "120"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: lab.gruber.dev.br
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: jupyterlab
+            port:
+              name: http
+  tls:
+  - hosts:
+    - lab.gruber.dev.br
+    secretName: lab-tls

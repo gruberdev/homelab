@@ -32,6 +32,7 @@ resources:
 - base/wallabag.yaml
 - base/milvus.yaml
 - base/actual.yaml
+- base/jupyterlab.yaml
 
 #  Postgres Storage
 - base/postgres/ha.yaml
