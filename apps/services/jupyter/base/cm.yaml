@@ -7,7 +7,6 @@ data:
   NB_USER: "gruber"
   CHOWN_HOME: "yes"
   GRANT_SUDO: "yes"
-  GEN_CERT: "no"
   RESTARTABLE: "yes"
   JUPYTER_PORT: "8888"
   DOCKER_STACKS_JUPYTER_CMD: "lab"
