@@ -50,7 +50,7 @@ spec:
             memory: 1024Mi
         volumeMounts:
         - name: data-storage
-          mountPath: /home/gruber
+          mountPath: /home/root
       volumes:
       - name: data-storage
         persistentVolumeClaim:
