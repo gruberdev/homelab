@@ -19,7 +19,7 @@ spec:
       serviceAccountName: wandb
       containers:
       - name: jupyterlab
-        image: jupyter/base-notebook:notebook-6.5.4
+        image: amalic/jupyterlab:latest
         securityContext:
           runAsUser: 0
         livenessProbe:
@@ -50,7 +50,7 @@ spec:
             memory: 1024Mi
         volumeMounts:
         - name: data-storage
-          mountPath: /home/root
+          mountPath: /notebooks
       volumes:
       - name: data-storage
         persistentVolumeClaim:
