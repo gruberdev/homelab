@@ -48,10 +48,10 @@ spec:
           resources:
             limits:
               cpu: 350m
-              memory: 512Mi
+              memory: 1024Mi
             requests:
               cpu: 150m
-              memory: 128Mi
+              memory: 512Mi
         etcd:
           auth:
             rbac:
@@ -125,7 +125,7 @@ spec:
             limits:
               cpu: 350m
               ephemeral-storage: 35Gi
-              memory: 512Mi
+              memory: 1024Mi
             requests:
               cpu: 150m
               memory: 128Mi
@@ -290,7 +290,7 @@ spec:
             resources:
               limits:
                 cpu: 350m
-                memory: 512Mi
+                memory: 1024Mi
               requests:
                 cpu: 150m
                 memory: 128Mi
@@ -389,9 +389,9 @@ spec:
           resources:
             configData:
               PULSAR_GC: |
-                -XX:MaxDirectMemorySize=2048m
+                -XX:MaxDirectMemorySize=1024m
               PULSAR_MEM: |
-                -Xms2048m -Xmx2048m
+                -Xms1024 -Xmx1024m
               httpNumThreads: "100"
             pdb:
               usePolicy: false
@@ -409,7 +409,10 @@ spec:
               usePolicy: false
             resources:
               requests:
-                cpu: 0.3
+                cpu: 100m
+                memory: 350Mi
+              limits:
+                cpu: 350m
                 memory: 1024Mi
         queryCoordinator:
           enabled: false
@@ -428,7 +431,7 @@ spec:
             limits:
               cpu: 350m
               ephemeral-storage: 35Gi
-              memory: 512Mi
+              memory: 1024Mi
             requests:
               cpu: 150m
               memory: 128Mi
@@ -468,12 +471,12 @@ spec:
           replicas: 1
           resources:
             limits:
-              cpu: 350m
+              cpu: 550m
               ephemeral-storage: 35Gi
-              memory: 512Mi
+              memory: 1024Mi
             requests:
-              cpu: 150m
-              memory: 128Mi
+              cpu: 350m
+              memory: 512Mi
   destination:
     namespace: milvus-system
     name: in-cluster
