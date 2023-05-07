@@ -1,13 +1,27 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: wandb
+  name: wandb-launch-role-binding
   namespace: mlops
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: wandb
 subjects:
 - kind: ServiceAccount
   name: wandb
   namespace: mlops
+roleRef:
+  kind: Role
+  name: wandb-launch-agent
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: wandb-cr
+  namespace: mlops
+subjects:
+- kind: ServiceAccount
+  name: wandb
+  namespace: mlops
+roleRef:
+  kind: ClusterRole
+  name: wandb-job-creator
+  apiGroup: rbac.authorization.k8s.io
