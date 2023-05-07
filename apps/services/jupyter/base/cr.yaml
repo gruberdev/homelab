@@ -1,11 +1,10 @@
 apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
+kind: ClusterRole
 metadata:
-  namespace: wandb-launch-agent
-  name: mlops
+  name: wandb-job-creator
 rules:
 - apiGroups: [""]
-  resources: ["pods", "configmaps", "secrets", "pods/log"]
+  resources: ["pods", "pods/log", "secrets"]
   verbs: ["create", "get", "watch", "list", "update", "delete", "patch"]
 - apiGroups: ["batch"]
   resources: ["jobs", "jobs/status"]
