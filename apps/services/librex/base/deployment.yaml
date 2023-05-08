@@ -35,10 +35,3 @@ spec:
           limits:
             cpu: 350m
             memory: 400Mi
-        volumeMounts:
-        - name: config-storage
-          mountPath: /var
-      volumes:
-      - name: config-storage
-        persistentVolumeClaim:
-          claimName: librex-storage
