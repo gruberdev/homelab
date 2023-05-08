@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: librex-cm
+  labels:
+    app: librex
+data:
+  PUID: "1000"
+  PGID: "1000"
+  VERSION: "docker"
+  TZ: "America/Sao_Paulo"
+  CONFIG_GOOGLE_DOMAIN: "com"
+  CONFIG_GOOGLE_LANGUAGE_SITE: "en"
+  CONFIG_GOOGLE_LANGUAGE_RESULTS: "en"
+  CONFIG_WIKIPEDIA_LANGUAGE: "en"

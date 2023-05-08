@@ -73,6 +73,7 @@ resources:
 - base/services/archivebox.yaml
 - base/services/jupyterlab.yaml
 - base/services/taskwarrior.yaml
+- base/services/librex.yaml
 # - base/services/rss-hub.yaml
 # - base/services/feedpushr.yaml
 # - base/services/grocy.yaml
