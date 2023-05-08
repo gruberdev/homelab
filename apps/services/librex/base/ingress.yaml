@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: librex
+  labels:
+    app: librex
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: g.gruber.dev.br
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
+    external-dns.alpha.kubernetes.io/ttl: "120"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: g.gruber.dev.br
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: librex-tailscale
+            port:
+              name: web
+  tls:
+  - hosts:
+    - g.gruber.dev.br
+    secretName: librex-tls

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: librex-storage
+  namespace: services
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: iscsi
+  resources:
+    requests:
+      storage: 3Gi
