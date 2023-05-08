@@ -33,6 +33,7 @@ resources:
 - base/milvus.yaml
 - base/actual.yaml
 - base/jupyterlab.yaml
+- base/librex.yaml
 
 #  Postgres Storage
 - base/postgres/ha.yaml

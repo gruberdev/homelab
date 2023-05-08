@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: librex-tailscale
+  labels:
+    app: librex
+  annotations:
+    tailscale.com/hostname: "librex"
+spec:
+  selector:
+    app: librex
+  ports:
+  - name: web
+    port: 80
+    targetPort: 8080
+    protocol: TCP
+  loadBalancerClass: tailscale
+  type: LoadBalancer

@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: librex
+  labels:
+    app: librex
+  annotations:
+    link.argocd.argoproj.io/external-link: http://g.gruber.dev.br
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: librex
+  template:
+    metadata:
+      labels:
+        app: librex
+    spec:
+      containers:
+      - name: librex
+        image: librex/librex:latest@sha256:f78bc8a29587421da96a80310ce942e5ebca1a05b32a7a39d2264c0a3a55a8db
+        envFrom:
+        - configMapRef:
+            name: librex-cm
+        ports:
+        - name: web
+          containerPort: 8080
+          protocol: TCP
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 350m
+            memory: 400Mi
+        volumeMounts:
+        - name: config-storage
+          mountPath: /var/log
+      volumes:
+      - name: config-storage
+        persistentVolumeClaim:
+          claimName: librex-storage
