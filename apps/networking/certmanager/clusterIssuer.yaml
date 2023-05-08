@@ -32,6 +32,7 @@ spec:
         - n8n.gruber.dev.br
         - unifi.gruber.dev.br
         - lab.gruber.dev.br
+        - g.gruber.dev.br
       dns01:
         cloudflare:
           email: rpg.gruber@gmail.com
