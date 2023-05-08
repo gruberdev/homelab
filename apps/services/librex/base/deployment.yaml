@@ -37,7 +37,7 @@ spec:
             memory: 400Mi
         volumeMounts:
         - name: config-storage
-          mountPath: /var/log
+          mountPath: /var
       volumes:
       - name: config-storage
         persistentVolumeClaim:
