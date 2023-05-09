@@ -25,7 +25,6 @@
 > |             **Application**            |   **Category**  |                       **Info**                      |     **Deployment Status**    | **Latest Semver**
 > |:--------------------------------------:|:---------------:|:---------------------------------------------------:|:----------------------------:|:----------------------:|
 > |          [ArgoCD][argocd-uri]          |    `GitOps`     |      <sub>[More details][homelab-argocd]</sub>      |       ![][argocd-core]       | ![][argo-badge]        |
-> |    [Crossplane][crossplane-uri]        |    `GitOps`     |      <sub>[More details][homelab-crossplane]</sub>  |       ![][argocd-crossplane] | ![][crossplane-badge]  |
 > |     [Hashicorp's Vault][vault-uri]     |    `Security`   |       <sub>[Chart values][homelab-vault]</sub>      |       ![][argocd-vault]      |  ![][vault-badge]    |
 > | [<sub>Zalando PostgreSQL Operator</sub>][p-uri] |   `Databases`   |      <sub>[More details][homelab-zalando]</sub>     |      ![][argocd-zalando]     | ![][zalando-badge]  |
 > |       [Redis Operator][redis-uri]      |   `Databases`   |       <sub>[More details][homelab-redis]</sub>      |       ![][argocd-redis]      |  ![][redis-badge]    |
@@ -49,6 +48,7 @@
 > |   [Cloudflared <sub>(as proxies)</sub>][cf-uri]  |   `Networking`  | <sub>[More details][homelab-cloudflared]</sub>  |                        |   ![][cfd-badge]     |
 
 <!-- >
+> |    [Crossplane][crossplane-uri]        |    `GitOps`     |      <sub>[More details][homelab-crossplane]</sub>  |       ![][argocd-crossplane] | ![][crossplane-badge]  |
 > |           [Beets][service-beets]       |   `Media`       |  <sub>[More details][homelab-beets]</sub>           |       ![][argocd-beets]      |   ![][beets-badge]   |
 > |           [Lidarr][service-lidarr]     |   `Media`       |  <sub>[More details][homelab-lidarr]</sub>          |  ![][argocd-lidarr]          |  ![][lidarr-badge]   |
 > |    [Metabase][service-metabase]        |   `Analytics`   |       <sub>[More details][homelab-metabase]</sub>   |   ![][argocd-metabase]       | ![][metabase-badge] |
