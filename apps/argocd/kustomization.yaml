@@ -16,7 +16,6 @@ resources:
 - base/core/redis.yaml
 - base/core/redis-crd.yaml
 - base/core/storage.yaml
-- base/core/crossplane.yaml
 - base/core/tailscale-operator.yaml
 - base/core/external-dns.yaml
 - base/core/nginx-ingress.yaml
@@ -70,7 +69,6 @@ resources:
 - base/services/n8n.yaml
 - base/services/onchange.yaml
 - base/services/actual.yaml
-- base/services/archivebox.yaml
 - base/services/jupyterlab.yaml
 - base/services/taskwarrior.yaml
 - base/services/librex.yaml
@@ -79,6 +77,7 @@ resources:
 # - base/services/grocy.yaml
 # - base/services/wallabag.yaml
 # - base/services/metabase.yaml
+# - base/services/archivebox.yaml
 
 # ChatGPT-related Applications
 - base/services/chatgpt/discord-bot.yaml
