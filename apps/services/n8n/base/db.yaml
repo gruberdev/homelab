@@ -2,6 +2,8 @@ apiVersion: "acid.zalan.do/v1"
 kind: postgresql
 metadata:
   name: db-n8n
+  annotations:
+    argocd.argoproj.io/sync-options: Delete=false
 spec:
   dockerImage: registry.opensource.zalan.do/acid/spilo-14:2.1-p6
   teamId: "db"
@@ -19,18 +21,18 @@ spec:
     size: 1Gi
     storageClass: iscsi
   additionalVolumes:
-    - name: data
-      mountPath: /home/postgres/pgdata/partitions
-      targetContainers:
-        - postgres
-      volumeSource:
-        PersistentVolumeClaim:
-          claimName: n8n-postgres
+  - name: data
+    mountPath: /home/postgres/pgdata/partitions
+    targetContainers:
+    - postgres
+    volumeSource:
+      PersistentVolumeClaim:
+        claimName: n8n-postgres
   nodeAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:
       nodeSelectorTerms:
-        - matchExpressions:
-            - key: postgres-operator
-              operator: In
-              values:
-                - enabled
+      - matchExpressions:
+        - key: postgres-operator
+          operator: In
+          values:
+          - enabled
