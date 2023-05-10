@@ -44,4 +44,4 @@ commonAnnotations:
   reloader.stakater.com/auto: "true"
 images:
 - name: n8nio/n8n
-  newTag: 0.227.0
+  newTag: 1.0.0-rc
