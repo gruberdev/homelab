@@ -55,3 +55,6 @@ resources:
 # - base/matrix/telegram.yaml
 # - base/postgres/bridges.yaml
 # - base/postgres/synapse.yaml
+
+commonAnnotations:
+  argocd.argoproj.io/sync-options: Delete=false
