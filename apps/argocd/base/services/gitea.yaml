@@ -9,7 +9,7 @@ spec:
     chart: gitea
     targetRevision: 8.3.0
     helm:
-      releaseName: descheduler
+      releaseName: gitea
       values: |
         checkDeprecation: true
         clusterDomain: cluster.local
