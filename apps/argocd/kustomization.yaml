@@ -123,11 +123,6 @@ resources:
 # Image Updater
 - https://github.com/argoproj-labs/argocd-image-updater/manifests/base
 
-# Metrics
-- https://raw.githubusercontent.com/argoproj-labs/argocd-extension-metrics/main/manifests/install.yaml
-- https://raw.githubusercontent.com/argoproj-labs/argocd-extension-metrics/main/manifests/configmap.yaml
-- https://raw.githubusercontent.com/argoproj-labs/argocd-extension-metrics/main/manifests/extension.yaml
-
 components:
 # Extensions controller component
 - https://github.com/argoproj-labs/argocd-extensions/manifests
