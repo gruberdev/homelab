@@ -471,9 +471,9 @@ spec:
           replicas: 1
           resources:
             limits:
-              cpu: 550m
+              cpu: 1000m
               ephemeral-storage: 35Gi
-              memory: 1024Mi
+              memory: 2048Mi
             requests:
               cpu: 350m
               memory: 512Mi
