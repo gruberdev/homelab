@@ -1,0 +1,143 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gitea
+spec:
+  project: apps
+  source:
+    repoURL: https://dl.gitea.io/charts/
+    chart: gitea
+    targetRevision: 8.3.0
+    helm:
+      releaseName: descheduler
+      values: |
+        checkDeprecation: true
+        clusterDomain: cluster.local
+        gitea:
+          admin:
+            email: <path:kv/data/gitea#email>
+            password: <path:kv/data/gitea#password>
+            username: <path:kv/data/gitea#username>
+          livenessProbe:
+            enabled: true
+            failureThreshold: 10
+            initialDelaySeconds: 200
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: http
+            timeoutSeconds: 1
+          metrics:
+            enabled: true
+            serviceMonitor:
+              enabled: true
+          readinessProbe:
+            enabled: true
+            failureThreshold: 3
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: http
+            timeoutSeconds: 1
+          ssh:
+            logLevel: INFO
+          startupProbe:
+            enabled: true
+            failureThreshold: 10
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: http
+            timeoutSeconds: 1
+        image:
+          pullPolicy: Always
+          repository: gitea/gitea
+          rootless: false
+        ingress:
+          enabled: false
+        initContainers:
+          resources:
+            limits:
+              cpu: 350m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 256Mi
+        memcached:
+          enabled: true
+          service:
+            ports:
+              memcached: 11211
+        persistence:
+          accessModes:
+          - ReadWriteOnce
+          annotations:
+            argocd.argoproj.io/sync-options: Delete=false
+          enabled: true
+          size: 10Gi
+          storageClass: iscsi
+        podSecurityContext:
+          fsGroup: 1000
+        postgresql:
+          enabled: true
+          global:
+            postgresql:
+              auth:
+                database: gitea
+                password: <path:kv/data/gitea#db-username>
+                username: <path:kv/data/gitea#db-password>
+              service:
+                ports:
+                  postgresql: 5432
+          primary:
+            persistence:
+              size: 15Gi
+        replicaCount: 1
+        resources:
+          limits:
+            cpu: 350m
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            memory: 256Mi
+        service:
+          http:
+            port: 3000
+            type: ClusterIP
+          ssh:
+            port: 22
+            type: ClusterIP
+        signing:
+          enabled: false
+          gpgHome: /data/git/.gnupg
+        statefulset:
+          terminationGracePeriodSeconds: 60
+        test:
+          enabled: true
+          image:
+            name: busybox
+            tag: latest
+
+  destination:
+    namespace: gitea
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: false
+    syncOptions:
+    - Validate=false
+    - CreateNamespace=true
+    - PrunePropagationPolicy=foreground
+    - PruneLast=true
+    - ApplyOutOfSyncOnly=false
+    - Prune=true
+    retry:
+      limit: 10
+      backoff:
+        duration: 30s
+        factor: 2
+        maxDuration: 60m
