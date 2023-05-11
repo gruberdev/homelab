@@ -72,6 +72,7 @@ resources:
 - base/services/jupyterlab.yaml
 - base/services/taskwarrior.yaml
 - base/services/librex.yaml
+- base/services/gitea.yaml
 # - base/services/rss-hub.yaml
 # - base/services/feedpushr.yaml
 # - base/services/grocy.yaml
@@ -121,6 +122,11 @@ resources:
 
 # Image Updater
 - https://github.com/argoproj-labs/argocd-image-updater/manifests/base
+
+# Metrics
+- https://raw.githubusercontent.com/argoproj-labs/argocd-extension-metrics/main/manifests/install.yaml
+- https://raw.githubusercontent.com/argoproj-labs/argocd-extension-metrics/main/manifests/configmap.yaml
+- https://raw.githubusercontent.com/argoproj-labs/argocd-extension-metrics/main/manifests/extension.yaml
 
 components:
 # Extensions controller component
