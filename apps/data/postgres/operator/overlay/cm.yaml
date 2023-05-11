@@ -24,7 +24,7 @@ data:
   # enable_init_containers: "true"
   # enable_lazy_spilo_upgrade: "false"
   # enable_pod_antiaffinity: "false"
-  pod_environment_secret: "databases/postgres-pod-secrets"
+  pod_environment_secret: "postgres-pod-secrets"
   pod_environment_configmap: "databases/postgresql-pod-environment"
   # enable_pod_disruption_budget: "true"
   # enable_postgres_team_crd: "false"
