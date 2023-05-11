@@ -7,6 +7,7 @@ bases:
 - base/rb.yaml
 - base/cm.yaml
 - base/svc.yaml
+- base/secret.yaml
 patchesStrategicMerge:
 - overlay/ui-deployment.yaml
 - overlay/ui-ingress.yaml
