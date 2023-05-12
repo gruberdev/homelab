@@ -1,4 +1,3 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -18,22 +17,22 @@ spec:
         app: chatgpt-plugin
     spec:
       containers:
+      - name: server
+        image: docker.io/grubertech/chatgpt-plugin:latest
+        imagePullPolicy: Always
+        envFrom:
+        - configMapRef:
+            name: chatgpt-plugin-config
+        - secretRef:
+            name: chatgpt-plugin-vars
+        ports:
         - name: server
-          image: docker.io/grubertech/chatgpt-plugin:latest
-          imagePullPolicy: Always
-          envFrom:
-            - configMapRef:
-                name: chatgpt-plugin-config
-            - secretRef:
-                name: chatgpt-plugin-vars
-          ports:
-            - name: server
-              containerPort: 8080
-              protocol: TCP
-          resources:
-            requests:
-              cpu: 80m
-              memory: 128Mi
-            limits:
-              cpu: 160m
-              memory: 256Mi
+          containerPort: 8080
+          protocol: TCP
+        resources:
+          requests:
+            cpu: 250m
+            memory: 256Mi
+          limits:
+            cpu: 550m
+            memory: 1024Mi
