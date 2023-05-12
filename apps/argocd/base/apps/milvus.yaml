@@ -67,7 +67,7 @@ spec:
           - name: ETCD_ELECTION_TIMEOUT
             value: "2500"
           image:
-            pullPolicy: IfNotPresent
+            pullPolicy: Always
             repository: milvusdb/etcd
             tag: 3.5.5-r2
           name: etcd
