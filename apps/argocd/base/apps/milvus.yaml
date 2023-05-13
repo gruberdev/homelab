@@ -47,8 +47,8 @@ spec:
           replicas: 1
           resources:
             limits:
-              cpu: 350m
-              memory: 1024Mi
+              cpu: 550m
+              memory: 2048Mi
             requests:
               cpu: 150m
               memory: 512Mi
@@ -123,12 +123,12 @@ spec:
           replicas: 1
           resources:
             limits:
-              cpu: 350m
+              cpu: 550m
               ephemeral-storage: 35Gi
-              memory: 1024Mi
+              memory: 2048Mi
             requests:
-              cpu: 150m
-              memory: 128Mi
+              cpu: 250m
+              memory: 512Mi
         ingress:
           enabled: false
         kafka:
@@ -262,10 +262,10 @@ spec:
           resources:
             limits:
               cpu: 350m
-              memory: 512Mi
+              memory: 1024Mi
             requests:
               cpu: 150m
-              memory: 128Mi
+              memory: 2568Mi
         pulsar:
           affinity:
             anti_affinity: false
@@ -323,10 +323,10 @@ spec:
             resources:
               limits:
                 cpu: 350m
-                memory: 512Mi
+                memory: 1024Mi
               requests:
                 cpu: 150m
-                memory: 128Mi
+                memory: 256Mi
           components:
             autorecovery: true
             bookkeeper: true
