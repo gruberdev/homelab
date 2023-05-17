@@ -3,7 +3,7 @@ terraform {
   required_providers {
     vault = {
       source  = "hashicorp/vault"
-      version = "3.15.0"
+      version = "3.15.2"
     }
     unifi = {
       source  = "paultyng/unifi"
