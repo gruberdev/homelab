@@ -71,7 +71,7 @@ resources:
 - base/services/actual.yaml
 - base/services/jupyterlab.yaml
 - base/services/taskwarrior.yaml
-- base/services/librex.yaml
+# - base/services/librex.yaml
 - base/services/gitea.yaml
 # - base/services/rss-hub.yaml
 # - base/services/feedpushr.yaml
@@ -81,7 +81,7 @@ resources:
 # - base/services/archivebox.yaml
 
 # ChatGPT-related Applications
-- base/services/chatgpt/discord-bot.yaml
+# - base/services/chatgpt/discord-bot.yaml
 - base/services/chatgpt/memory-plugin.yaml
 
 # Media Services
@@ -118,7 +118,7 @@ resources:
 - https://github.com/gruberdev/homelab/apps/networking/tailscale
 - https://github.com/gruberdev/homelab/apps/networking/cloudflared
 
-- https://raw.githubusercontent.com/argoproj/argo-cd/v2.7.1/manifests/install.yaml
+- https://raw.githubusercontent.com/argoproj/argo-cd/v2.7.2/manifests/install.yaml
 
 # Image Updater
 - https://github.com/argoproj-labs/argocd-image-updater/manifests/base
