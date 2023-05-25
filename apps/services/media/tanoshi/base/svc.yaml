@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: tanoshi-svc
+  labels:
+    app: tanoshi
+  annotations:
+    tailscale.com/hostname: "read"
+spec:
+  selector:
+    app: tanoshi
+  ports:
+  - name: web
+    port: 80
+    targetPort: 80
+    protocol: TCP
+  loadBalancerClass: tailscale
+  type: LoadBalancer

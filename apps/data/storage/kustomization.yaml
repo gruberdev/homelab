@@ -20,6 +20,7 @@ resources:
 # - base/lidarr.yaml
 # - base/jellyfin.yaml
 - base/mango.yaml
+- base/tanoshi.yaml
 
 # Services
 - base/n8n.yaml
