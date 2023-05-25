@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tanoshi
+  labels:
+    app: tanoshi
+  annotations:
+    link.argocd.argoproj.io/external-link: https://read.gruber.dev.br
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: tanoshi
+  template:
+    metadata:
+      labels:
+        app: tanoshi
+    spec:
+      containers:
+      - name: tanoshi
+        image: faldez/tanoshi:0.29.2
+        imagePullPolicy: IfNotPresent
+        envFrom:
+        - configMapRef:
+            name: tanoshi-cm
+        ports:
+        - name: web
+          containerPort: 80
+          protocol: TCP
+        resources:
+          requests:
+            cpu: "200m"
+            memory: "256Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+        volumeMounts:
+        - name: config
+          mountPath: /tanoshi
+        - name: library
+          mountPath: /tanoshi/manga
+      volumes:
+      - name: library
+        persistentVolumeClaim:
+          claimName: tanoshi-library
+      - name: config
+        persistentVolumeClaim:
+          claimName: tanoshi-storage
