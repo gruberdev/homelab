@@ -12,28 +12,28 @@ jobs:
           fetch-depth: 0
       - name: Check if Services have changed
         id: changed-services
-        uses: tj-actions/changed-files@v35
+        uses: tj-actions/changed-files@v36
         with:
           files: |
             apps/**/svc.yaml
             apps/**/*-svc.yaml
       - name: Check if Deployments/Statefulsets have changed
         id: changed-workloads
-        uses: tj-actions/changed-files@v35
+        uses: tj-actions/changed-files@v36
         with:
           files: |
             apps/**/deployment.yaml
             apps/**/statefulset.yaml
       - name: Check if configMap/Secrets have changed
         id: changed-configs
-        uses: tj-actions/changed-files@v35
+        uses: tj-actions/changed-files@v36
         with:
           files: |
             apps/**/cm.yaml
             apps/**/secret.yaml
       - name: Check if Permissions have changed
         id: changed-rbac
-        uses: tj-actions/changed-files@v35
+        uses: tj-actions/changed-files@v36
         with:
           files: |
             apps/**/rb.yaml
@@ -42,7 +42,7 @@ jobs:
             apps/**/cr.yaml
       - name: Check if Storage resources have changed
         id: changed-storage
-        uses: tj-actions/changed-files@v35
+        uses: tj-actions/changed-files@v36
         with:
           files: |
             apps/**/pvc.yaml
