@@ -18,60 +18,81 @@ tasks:
   init:
     dir: terraform
     cmds:
-      - terraform init -upgrade -backend-config="conn_str=${TF_CONN_STR}"
+    - terraform init -upgrade -backend-config="conn_str=${TF_CONN_STR}"
 
   init:vault:
     dir: terraform/modules/vault
     cmds:
-      - terraform init -upgrade -backend-config="conn_str=${TF_CONN_STR}"
+    - terraform init -upgrade -backend-config="conn_str=${TF_CONN_STR}"
 
   init:unifi:
     dir: terraform/modules/unifi
     cmds:
-      - terraform init -upgrade -backend-config="conn_str=${TF_CONN_STR}"
+    - terraform init -upgrade -backend-config="conn_str=${TF_CONN_STR}"
+
+  init:vultr:
+    dir: terraform/modules/vultr
+    cmds:
+    - terraform init -upgrade -backend-config="conn_str=${TF_CONN_STR}"
 
   plan:
     dir: terraform
     cmds:
-      - terraform plan
+    - terraform plan
 
   plan:vault:
     dir: terraform/modules/vault
     cmds:
-      - terraform plan
+    - terraform plan
 
   plan:unifi:
     dir: terraform/modules/unifi
     cmds:
-      - terraform plan
+    - terraform plan
+
+  plan:vultr:
+    dir: terraform/modules/vultr
+    cmds:
+    - terraform plan
 
   apply:
     dir: terraform
     cmds:
-      - terraform apply -auto-approve
+    - terraform apply -auto-approve
 
   apply:vault:
     dir: terraform/modules/vault
     cmds:
-      - terraform apply -auto-approve
+    - terraform apply -auto-approve
 
   apply:unifi:
     dir: terraform/modules/unifi
     cmds:
-      - terraform apply -auto-approve
+    - terraform apply -auto-approve
+
+  apply:vultr:
+    dir: terraform/modules/vultr
+    cmds:
+    - terraform apply -auto-approve
 
   destroy:
     dir: terraform
     cmds:
-      - terraform destroy -auto-approve
+    - terraform destroy -auto-approve
 
   destroy:vault:
     dir: terraform/modules/vault
     cmds:
-      - terraform destroy -auto-approve
+    - terraform destroy -auto-approve
+
+  destroy:vultr:
+    dir: terraform/modules/vultr
+    cmds:
+    - terraform destroy -auto-approve
 
   docs:
     cmds:
-      - terraform-docs markdown -c ./terraform/.terraform-docs.yaml ./terraform --output-file README.md
-      - terraform-docs markdown -c ./terraform/.terraform-docs.yaml ./terraform/modules/vault --output-file README.md
-      - terraform-docs markdown -c ./terraform/.terraform-docs.yaml ./terraform/modules/unifi --output-file README.md
+    - terraform-docs markdown -c ./terraform/.terraform-docs.yaml ./terraform --output-file README.md
+    - terraform-docs markdown -c ./terraform/.terraform-docs.yaml ./terraform/modules/vault --output-file README.md
+    - terraform-docs markdown -c ./terraform/.terraform-docs.yaml ./terraform/modules/unifi --output-file README.md
+    - terraform-docs markdown -c ./terraform/.terraform-docs.yaml ./terraform/modules/vultr --output-file README.md
