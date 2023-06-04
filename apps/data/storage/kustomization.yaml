@@ -41,6 +41,9 @@ resources:
 - base/postgres/n8n.yaml
 - base/postgres/wallabag.yaml
 
+# Redis
+- base/postgres/nitter.yaml
+
 # Matrix
 # - base/matrix/synapse.yaml
 # - base/matrix/bridges.yaml
