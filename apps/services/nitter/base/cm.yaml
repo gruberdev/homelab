@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nitter-config
+data:
+  nitter.conf: |
+    [Server]
+    hostname = "twitter.gruber.dev.br"
+    title = "twitter"
+    address = "0.0.0.0"
+    port = 8080
+    https = false
+    httpMaxConnections = 1000
+    staticDir = "./public"
+
+    [Cache]
+    listMinutes = 240
+    rssMinutes = 10
+    redisHost = "nitter-internal.services.svc.cluster.local"
+    redisPort = 6379
+    redisPassword = ""
+    redisConnections = 20
+    redisMaxConnections = 30
+
+    [Config]
+    hmacKey = "secretkey"
+    base64Media = false
+    enableRSS = true
+    enableDebug = false
+    proxy = ""
+    proxyAuth = ""
+    tokenCount = 10
+
+    [Preferences]
+    theme = "Nitter"
+    replaceTwitter = "nitter.net"
+    replaceYouTube = "piped.video"
+    replaceReddit = "teddit.net"
+    proxyVideos = true
+    hlsPlayback = true
+    infiniteScroll = false

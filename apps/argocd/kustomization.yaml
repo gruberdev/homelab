@@ -71,6 +71,7 @@ resources:
 - base/services/actual.yaml
 - base/services/jupyterlab.yaml
 - base/services/taskwarrior.yaml
+- base/services/nitter.yaml
 # - base/services/librex.yaml
 - base/services/gitea.yaml
 # - base/services/rss-hub.yaml
