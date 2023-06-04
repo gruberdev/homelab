@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nitter
+  labels:
+    app: nitter
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: twitter.gruber.dev.br
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
+    external-dns.alpha.kubernetes.io/ttl: "120"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: twitter.gruber.dev.br
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nitter-tailscale
+            port:
+              name: web
+  tls:
+  - hosts:
+    - twitter.gruber.dev.br
+    secretName: nitter-tls
