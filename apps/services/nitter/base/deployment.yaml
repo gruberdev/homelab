@@ -21,9 +21,6 @@ spec:
       containers:
       - name: nitter
         image: docker.io/zedeus/nitter:38985af6ed30f050201b15425cdac0dc2e286b6d
-        envFrom:
-        - configMapRef:
-            name: nitter-cm
         ports:
         - name: web
           containerPort: 8080
@@ -31,7 +28,7 @@ spec:
         volumeMounts:
         - name: nitter-conf
           mountPath: /src/nitter.conf
-          readOnly: true
+          subPath: nitter.conf
         securityContext:
           capabilities:
             drop: ["ALL"]
@@ -45,4 +42,4 @@ spec:
       volumes:
       - name: nitter-conf
         configMap:
-          name: nitter-config
+          name: nitter-cm
