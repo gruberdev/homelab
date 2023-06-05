@@ -16,7 +16,7 @@ data:
     [Cache]
     listMinutes = 240
     rssMinutes = 10
-    redisHost = "nitter-internal.services.svc.cluster.local"
+    redisHost = "redis-nitter.services.svc.cluster.local"
     redisPort = 6379
     redisPassword = ""
     redisConnections = 20
