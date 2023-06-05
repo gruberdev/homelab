@@ -7,6 +7,6 @@ spec:
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
-  commonName: twitter.gruber.dev.br
+  commonName: twt.gruber.dev.br
   dnsNames:
-  - twitter.gruber.dev.br
+  - twt.gruber.dev.br
