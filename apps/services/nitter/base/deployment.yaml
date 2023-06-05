@@ -5,7 +5,7 @@ metadata:
   labels:
     app: nitter
   annotations:
-    link.argocd.argoproj.io/external-link: https://twitter.gruber.dev.br
+    link.argocd.argoproj.io/external-link: https://twt.gruber.dev.br
 spec:
   replicas: 1
   strategy:
