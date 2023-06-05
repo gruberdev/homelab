@@ -29,6 +29,7 @@ spec:
         - name: nitter-conf
           mountPath: /src/nitter.conf
           subPath: nitter.conf
+          readOnly: true
         securityContext:
           capabilities:
             drop: ["ALL"]

@@ -6,3 +6,4 @@ resources:
 - cm.yaml
 - ingress.yaml
 - certificate.yaml
+- redis.yaml
