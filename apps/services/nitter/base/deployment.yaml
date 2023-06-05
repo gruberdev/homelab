@@ -32,22 +32,6 @@ spec:
         - name: nitter-conf
           mountPath: /src/nitter.conf
           readOnly: true
-        livenessProbe:
-          httpGet:
-            path: /Jack/status/20
-            port: 8080
-          initialDelaySeconds: 30
-          periodSeconds: 30
-          timeoutSeconds: 5
-          failureThreshold: 2
-        readinessProbe:
-          httpGet:
-            path: /Jack/status/20
-            port: 8080
-          initialDelaySeconds: 30
-          periodSeconds: 30
-          timeoutSeconds: 5
-          failureThreshold: 2
         securityContext:
           capabilities:
             drop: ["ALL"]
