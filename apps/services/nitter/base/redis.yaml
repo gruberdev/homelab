@@ -21,3 +21,5 @@ spec:
         resources:
           requests:
             storage: 1Gi
+  nodeSelector:
+    kubernetes.io/arch: amd64
