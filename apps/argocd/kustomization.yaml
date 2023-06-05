@@ -140,7 +140,7 @@ patchesStrategicMerge:
 namespace: argocd
 images:
 - name: quay.io/argoproj/argocd
-  newTag: v2.7.3
+  newTag: v2.7.4
 
 patches:
 - patch: |-
