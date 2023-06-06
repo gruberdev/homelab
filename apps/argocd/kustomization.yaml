@@ -86,7 +86,6 @@ resources:
 - base/services/chatgpt/memory-plugin.yaml
 
 # Media Services
-- base/services/media/mango.yaml
 - base/services/media/tanoshi.yaml
 # - base/services/media/beets.yaml
 # - base/services/media/lidarr.yaml
