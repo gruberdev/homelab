@@ -4,6 +4,8 @@ metadata:
   name: argocd
   labels:
     app: argocd
+  annotations:
+    pref.argocd.argoproj.io/default-view: network
 spec:
   project: core
   source:
