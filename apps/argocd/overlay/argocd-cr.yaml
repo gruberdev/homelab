@@ -8,8 +8,14 @@ metadata:
     app.kubernetes.io/part-of: argocd
 rules:
 - apiGroups:
-  - ""
+  - '*'
   resources:
-  - pods/exec
+  - '*'
   verbs:
   - create
+  - get
+  - list
+  - watch
+  - update
+  - patch
+  - delete
