@@ -1,4 +1,3 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -6,7 +5,7 @@ metadata:
   labels:
     app: unifi-controller
   annotations:
-    link.argocd.argoproj.io/external-link: http://unifi
+    link.argocd.argoproj.io/external-link: https://unifi.gruber.dev.br
 spec:
   replicas: 1
   strategy:
@@ -21,84 +20,84 @@ spec:
     spec:
       terminationGracePeriodSeconds: 5
       containers:
-        - name: unifi-controller
-          image: jacobalberty/unifi:v7.2.92
-          securityContext:
-            runAsUser: 0
-            allowPrivilegeEscalation: true
-          envFrom:
-            - configMapRef:
-                name: unifi-controller-cm
-          ports:
-            - containerPort: 8443
-              name: web-https
-              protocol: TCP
-            - containerPort: 8080
-              name: devices
-              protocol: TCP
-            - containerPort: 8843
-              name: guest-https
-              protocol: TCP
-            - containerPort: 8880
-              name: guest-http
-              protocol: TCP
-            - containerPort: 6789
-              name: mobile-test
-              protocol: TCP
-            - containerPort: 3478
-              name: stun
-              protocol: UDP
-            - containerPort: 10001
-              name: discovery
-              protocol: UDP
-            - containerPort: 1900
-              name: ddiscoveryl2
-              protocol: UDP
-            - containerPort: 5514
-              name: syslog
-              protocol: UDP
-          volumeMounts:
-            - mountPath: /unifi/data
-              name: data
-            - mountPath: /unifi/log
-              name: logs
-            - mountPath: /unifi/cert
-              name: certs
-            # - mountPath: /unifi/data/sites/default/config.gateway.json
-            #   subPath: gateway.config.json
-            #   name: default
-          resources:
-            limits:
-              cpu: "450m"
-              memory: "1500Mi"
-            requests:
-              cpu: "200m"
-              memory: "1024Mi"
-          livenessProbe:
-            tcpSocket:
-              port: 8443
-            initialDelaySeconds: 30
-            periodSeconds: 15
-          startupProbe:
-            tcpSocket:
-              port: 8443
-            initialDelaySeconds: 60
-            periodSeconds: 30
-          readinessProbe:
-            tcpSocket:
-              port: 8443
-            initialDelaySeconds: 15
-            periodSeconds: 5
+      - name: unifi-controller
+        image: jacobalberty/unifi:v7.2.92
+        securityContext:
+          runAsUser: 0
+          allowPrivilegeEscalation: true
+        envFrom:
+        - configMapRef:
+            name: unifi-controller-cm
+        ports:
+        - containerPort: 8443
+          name: web-https
+          protocol: TCP
+        - containerPort: 8080
+          name: devices
+          protocol: TCP
+        - containerPort: 8843
+          name: guest-https
+          protocol: TCP
+        - containerPort: 8880
+          name: guest-http
+          protocol: TCP
+        - containerPort: 6789
+          name: mobile-test
+          protocol: TCP
+        - containerPort: 3478
+          name: stun
+          protocol: UDP
+        - containerPort: 10001
+          name: discovery
+          protocol: UDP
+        - containerPort: 1900
+          name: ddiscoveryl2
+          protocol: UDP
+        - containerPort: 5514
+          name: syslog
+          protocol: UDP
+        volumeMounts:
+        - mountPath: /unifi/data
+          name: data
+        - mountPath: /unifi/log
+          name: logs
+        - mountPath: /unifi/cert
+          name: certs
+          # - mountPath: /unifi/data/sites/default/config.gateway.json
+          #   subPath: gateway.config.json
+          #   name: default
+        resources:
+          limits:
+            cpu: "450m"
+            memory: "1500Mi"
+          requests:
+            cpu: "200m"
+            memory: "1024Mi"
+        livenessProbe:
+          tcpSocket:
+            port: 8443
+          initialDelaySeconds: 30
+          periodSeconds: 15
+        startupProbe:
+          tcpSocket:
+            port: 8443
+          initialDelaySeconds: 60
+          periodSeconds: 30
+        readinessProbe:
+          tcpSocket:
+            port: 8443
+          initialDelaySeconds: 15
+          periodSeconds: 5
       volumes:
-        - name: data
-          persistentVolumeClaim:
-            claimName: unifi-storage
-        - name: logs
-          persistentVolumeClaim:
-            claimName: unifi-logs
-        - name: certs
-          persistentVolumeClaim:
-            claimName: unifi-certificates
-        # - name: default
-        #   configMap:
-        #     name: unifi-controller-cm
+      - name: data
+        persistentVolumeClaim:
+          claimName: unifi-storage
+      - name: logs
+        persistentVolumeClaim:
+          claimName: unifi-logs
+      - name: certs
+        persistentVolumeClaim:
+          claimName: unifi-certificates
+      # - name: default
+      #   configMap:
+      #     name: unifi-controller-cm
