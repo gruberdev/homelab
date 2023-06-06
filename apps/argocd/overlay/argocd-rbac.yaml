@@ -10,9 +10,12 @@ metadata:
     app.kubernetes.io/part-of: argocd
   name: argocd-rbac-cm
 data:
-  policy.default: role:readonly
+  policy.default: role:admin
   policy.csv: |
     p, role:image-updater, applications, get, */*, allow
     p, role:image-updater, applications, update, */*, allow
     g, image-updater, role:image-updater
     p, role:admin, exec, create, */*, allow
+    g, ext, role:extension
+    p, role:extension, applications, get, default/httpbin-app, allow
+    p, role:extension, extensions, invoke, httpbin, allow
