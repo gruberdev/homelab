@@ -26,8 +26,6 @@ spec:
           containerPort: 8080
           protocol: TCP
         volumeMounts:
-        - name: config
-          mountPath: /src
         - name: nitter-conf
           mountPath: /src/nitter.conf
           subPath: nitter.conf
@@ -42,6 +40,3 @@ spec:
       - name: nitter-conf
         configMap:
           name: nitter-cm
-      - name: config
-        persistentVolumeClaim:
-          claimName: nitter-storage
