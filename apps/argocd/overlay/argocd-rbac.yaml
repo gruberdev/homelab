@@ -15,3 +15,4 @@ data:
     p, role:image-updater, applications, get, */*, allow
     p, role:image-updater, applications, update, */*, allow
     g, image-updater, role:image-updater
+    p, role:admin, exec, create, */*, allow
