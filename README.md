@@ -34,11 +34,9 @@
 > |     [Unifi Poller][poller-uri]         |   `Monitoring`  |      <sub>[More details][homelab-poller]</sub>      |      ![][argocd-poller]      | ![][poller-badge]    |
 > |     [Uptime Kuma][kuma-uri]            |   `Monitoring`  |      <sub>[More details][homelab-kuma]</sub>          |      ![][argocd-kuma]      | ![][kuma-badge]      |
 > |       [Agones][agones-uri]             |    `Services`   |        <sub>[More details][homelab-agones]</sub>    |        ![][argocd-agones]    |  ![][agones-badge]   |
-> | <sub>[ChatGPT Discord Bot][service-chatgpt]</sub> |  `Services`   |  <sub>[More details][homelab-chatgpt]</sub>    |  ![][argocd-chatgpt] | ![][chatgpt-badge]    |
 > | <sub>[ChatGPT Retrieval Plugin][service-p-chatgpt]</sub> |  `Services`   |  <sub>[More details][homelab-p-chatgpt]</sub>    |  ![][argocd-p-chatgpt] | ![][chatgpt-p-badge]    |
 > |            [n8n][n8n-uri]              |    `Services`   |        <sub>[More details][homelab-n8n]</sub>       |        ![][argocd-n8n]       |  ![][n8n-badge]      |
 > |   [Changedetection.io][change-uri]     |   `Services`   |       <sub>[More details][homelab-change]</sub>      |        ![][argocd-change]    |  ![][change-badge]   |
-> |           [Mango][service-mango]       |   `Media`       |  <sub>[More details][homelab-mango]</sub>           |  ![][argocd-mango]           |  ![][mango-badge]    |
 > |      [Home Assistant][service-ha]      |   `Smart Home`   |        <sub>[More details][homelab-ha]</sub>        |        ![][argocd-ha]        |    ![][ha-badge]     |
 > |   [Wyze API Bridge][service-wyze]      |   `Smart Home`   |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-wyze]      |  ![][wyze-badge]     |
 > |     [Unifi Controller][unifi-uri]      |   `Networking`  |      <sub>[More details][homelab-unifi]</sub>      |      ![][argocd-unifi]      | ![][unifi-badge]    |
@@ -64,6 +62,8 @@
 > |   [Wallabag][wallabag-uri]             |   `Services`   |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-wallabag]  |  ![][wallabag-badge] |
 > |   [Wavy][wavy-uri]                     |   `Services`   |        <sub>[More details][homelab-wavy]</sub>      |        ![][argocd-wavy]       |  ![][wavy-badge] |
 > |   [Grocy][grocy-uri]                   |   `Services`   |        <sub>[More details][homelab-grocy]</sub>      |        ![][argocd-grocy]  |  ![][grocy-badge] |
+> | <sub>[ChatGPT Discord Bot][service-chatgpt]</sub> |  `Services`   |  <sub>[More details][homelab-chatgpt]</sub>    |  ![][argocd-chatgpt] | ![][chatgpt-badge]    |
+
 
 #### Matrix-related
 
@@ -172,7 +172,6 @@
 [cf-uri]: https://github.com/cloudflare/cloudflared
 [service-sonarr]: https://github.com/Sonarr/Sonarr
 [service-prowlarr]: https://github.com/Prowlarr/Prowlarr
-[service-mango]: https://github.com/getmango/Mango
 [service-jellyfin]: https://github.com/jellyfin/jellyfin
 [wallabag-uri]: https://github.com/wallabag/wallabag
 [nvidia-exp-uri]: https://github.com/utkuozdemir/nvidia_gpu_exporter
@@ -234,7 +233,6 @@
 [homelab-beets]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/beets
 [homelab-lidarr]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/lidarr
 [homelab-metabase]: https://github.com/gruberdev/homelab/tree/main/apps/data/metabase
-[homelab-mango]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/mango
 [homelab-certmanager]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/core/external-dns.yaml
 [homelab-externaldns]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/core/external-dns.yaml
 [homelab-jellyfin]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/jellyfin
@@ -280,7 +278,6 @@
 [argocd-metabase]: https://argo.gruber.dev.br/api/badge?name=metabase
 [argocd-prowlarr]: https://argo.gruber.dev.br/api/badge?name=prowlarr
 [argocd-sonarr]: https://argo.gruber.dev.br/api/badge?name=sonarr
-[argocd-mango]: https://argo.gruber.dev.br/api/badge?name=mango
 [argocd-jellyfin]: https://argo.gruber.dev.br/api/badge?name=jellyfin
 [argocd-wallabag]: https://argo.gruber.dev.br/api/badge?name=wallabag
 [argocd-crossplane]: https://argo.gruber.dev.br/api/badge?name=crossplane
@@ -324,7 +321,6 @@
 [wallabag-badge]: https://img.shields.io/docker/v/wallabag/wallabag?label=Docker&color=blue&logo=docker&sort=semver&style=flat-square
 [rsshub-badge]: https://img.shields.io/static/v1?label=No&message=version%20provided&color=gray&labelColor=gray&style=flat-square
 [feedpushr-badge]: https://img.shields.io/github/v/release/ncarlier/feedpushr?label=Github&color=blue&logo=github&sort=semver&style=flat-square
-[mango-badge]: https://img.shields.io/github/v/release/getmango/mango?label=Github&logo=github&style=flat-square
 [jellyfin-badge]: https://img.shields.io/github/v/release/jellyfin/jellyfin?label=Github&logo=github&style=flat-square
 [agones-badge]: https://img.shields.io/github/v/release/googleforgames/agones?label=Github&color=blue&logo=github&sort=semver&style=flat-square
 [gpu-exporter-badge]: https://img.shields.io/github/v/release/utkuozdemir/nvidia_gpu_exporter?label=Github&logo=github&style=flat-square
