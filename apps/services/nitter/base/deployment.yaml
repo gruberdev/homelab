@@ -26,13 +26,11 @@ spec:
           containerPort: 8080
           protocol: TCP
         volumeMounts:
+        - name: config
+          mountPath: /src
         - name: nitter-conf
           mountPath: /src/nitter.conf
           subPath: nitter.conf
-          readOnly: true
-        securityContext:
-          capabilities:
-            drop: ["ALL"]
         resources:
           limits:
             cpu: 250m
@@ -44,3 +42,6 @@ spec:
       - name: nitter-conf
         configMap:
           name: nitter-cm
+      - name: config
+        persistentVolumeClaim:
+          claimName: nitter-config
