@@ -12,6 +12,8 @@ spec:
       releaseName: nginx
       values: |
         controller:
+          extraArgs:
+            enable-ssl-passthrough: ""
           admissionWebhooks:
             certManager:
               enabled: false
