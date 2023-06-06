@@ -30,6 +30,7 @@ resources:
 - base/archivebox.yaml
 - base/change.yaml
 - base/taskwarrior.yaml
+- base/nitter.yaml
 - base/wallabag.yaml
 - base/milvus.yaml
 - base/actual.yaml
