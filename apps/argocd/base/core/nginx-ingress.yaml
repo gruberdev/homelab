@@ -6,7 +6,7 @@ spec:
   project: cluster
   source:
     repoURL: https://github.com/LucasBoisserie/ingress-nginx.git
-    targetRevision: 769856a
+    targetRevision: ef561f8
     path: charts/ingress-nginx
     helm:
       releaseName: nginx
