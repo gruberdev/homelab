@@ -44,4 +44,4 @@ spec:
           name: nitter-cm
       - name: config
         persistentVolumeClaim:
-          claimName: nitter-config
+          claimName: nitter-storage
