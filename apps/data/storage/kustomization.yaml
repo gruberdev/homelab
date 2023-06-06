@@ -19,7 +19,6 @@ resources:
 # - base/media.yaml
 # - base/lidarr.yaml
 # - base/jellyfin.yaml
-- base/mango.yaml
 - base/tanoshi.yaml
 
 # Services

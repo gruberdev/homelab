@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: mango-cm
-data:
-  TZ: "America/Sao_Paulo"
-  PORT: "9000"
-  DISABLE_SSL_VERIFICATION: "true"
