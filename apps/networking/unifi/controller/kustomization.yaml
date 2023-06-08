@@ -18,4 +18,4 @@ commonAnnotations:
 
 images:
 - name: jacobalberty/unifi
-  newTag: v7.3.83
+  newTag: v7.4.156
