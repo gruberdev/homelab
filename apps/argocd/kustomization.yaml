@@ -72,9 +72,9 @@ resources:
 - base/services/taskwarrior.yaml
 - base/services/nitter.yaml
 - base/services/gitea.yaml
+- base/services/rss-hub.yaml
 # - base/services/jupyterlab.yaml
 # - base/services/librex.yaml
-# - base/services/rss-hub.yaml
 # - base/services/feedpushr.yaml
 # - base/services/grocy.yaml
 # - base/services/wallabag.yaml

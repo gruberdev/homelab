@@ -35,6 +35,7 @@ spec:
         - lab.gruber.dev.br
         - g.gruber.dev.br
         - twt.gruber.dev.br
+        - hub.gruber.dev.br
       dns01:
         cloudflare:
           email: rpg.gruber@gmail.com
