@@ -1,4 +1,3 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -6,7 +5,7 @@ metadata:
   labels:
     app: rss-hub
   annotations:
-    link.argocd.argoproj.io/external-link: http://hub.rss
+    link.argocd.argoproj.io/external-link: https://hub.gruber.dev.br
 spec:
   replicas: 1
   strategy:
@@ -20,69 +19,56 @@ spec:
         app: rss-hub
     spec:
       containers:
-        - name: rss-hub
-          image: diygod/rsshub:latest
-          envFrom:
-            - configMapRef:
-                name: rsshub-cm
-            - secretRef:
-                name: rsshub-vars
-          ports:
-            - name: web
-              containerPort: 1200
-              protocol: TCP
-          resources:
-            requests:
-              cpu: 60m
-              memory: 128Mi
-            limits:
-              cpu: 120m
-              memory: 256Mi
-          livenessProbe:
-            tcpSocket:
-              port: 1200
-            timeoutSeconds: 1
-            periodSeconds: 10
-            initialDelaySeconds: 60
-            failureThreshold: 3
-          readinessProbe:
-            tcpSocket:
-              port: 1200
-            timeoutSeconds: 1
-            periodSeconds: 10
-            initialDelaySeconds: 3
-            failureThreshold: 3
-          startupProbe:
-            tcpSocket:
-              port: 1200
-            timeoutSeconds: 5
-            periodSeconds: 10
-            successThreshold: 1
-            initialDelaySeconds: 60
-            failureThreshold: 30
-        - name: puppeteer
-          image: browserless/chrome:latest
-          ports:
-            - name: richpuppeteer
-              containerPort: 3000
-              protocol: TCP
-          resources:
-            requests:
-              cpu: "64m"
-              memory: "128Mi"
-            limits:
-              cpu: "128m"
-              memory: "512Mi"
-        - name: redis
-          image: redis:alpine
-          ports:
-            - name: cache
-              containerPort: 6379
-              protocol: TCP
-          resources:
-            requests:
-              cpu: "64m"
-              memory: "128Mi"
-            limits:
-              cpu: "128m"
-              memory: "256Mi"
+      - name: rss-hub
+        image: diygod/rsshub:latest
+        envFrom:
+        - configMapRef:
+            name: rsshub-cm
+        - secretRef:
+            name: rsshub-vars
+        ports:
+        - name: web
+          containerPort: 1200
+          protocol: TCP
+        resources:
+          requests:
+            cpu: 60m
+            memory: 128Mi
+          limits:
+            cpu: 120m
+            memory: 256Mi
+        livenessProbe:
+          tcpSocket:
+            port: 1200
+          timeoutSeconds: 1
+          periodSeconds: 10
+          initialDelaySeconds: 60
+          failureThreshold: 3
+        readinessProbe:
+          tcpSocket:
+            port: 1200
+          timeoutSeconds: 1
+          periodSeconds: 10
+          initialDelaySeconds: 3
+          failureThreshold: 3
+        startupProbe:
+          tcpSocket:
+            port: 1200
+          timeoutSeconds: 5
+          periodSeconds: 10
+          successThreshold: 1
+          initialDelaySeconds: 60
+          failureThreshold: 30
+      - name: puppeteer
+        image: browserless/chrome:latest
+        ports:
+        - name: richpuppeteer
+          containerPort: 3000
+          protocol: TCP
+        resources:
+          requests:
+            cpu: "64m"
+            memory: "128Mi"
+          limits:
+            cpu: "128m"
+            memory: "512Mi"

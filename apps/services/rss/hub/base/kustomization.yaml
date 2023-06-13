@@ -4,3 +4,6 @@ resources:
 - deployment.yaml
 - svc.yaml
 - cm.yaml
+- redis.yaml
+- ingress.yaml
+- certificate.yaml
