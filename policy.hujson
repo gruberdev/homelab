@@ -1,126 +1,99 @@
- {
- 	"acls": [
- 		{
- 			"action": "accept",
- 			"src":    ["*"],
- 			"dst":    ["*:*"],
- 		},
- 		// Admin users can access all groups and tags
- 		{
- 		 "action": "accept", "src": ["group:admins"], "dst": ["*:*"]},
- 		// Cluster applications can access all databases
- 		{
- 		 "action": "accept",
- 		 "src": ["tag:cluster"],
- 		 "dst": ["tag:database:*"]
- 		},
- 		// Databases can access all the cluster applications
- 		{
- 		 "action": "accept",
- 		 "src": ["tag:database"],
- 		 "dst": ["tag:cluster:*"]
- 		},
- 		// All clients can access cluster applications
- 		{
- 		 "action": "accept",
- 		 "src": ["tag:clients"],
- 		 "dst": ["tag:cluster:*"]
- 		},
- 		// Clients access all the networking hardware
- 		{
- 		 "action": "accept",
- 		 "src": ["tag:clients"],
- 		 "dst": ["tag:network:*"]
- 		},
- 		// Clients can access all the matrix applications
- 		{
- 		 "action": "accept",
- 		 "src": ["tag:clients"],
- 		 "dst": ["tag:matrix:*"]
- 		},
- 		// Clients can access all the nodes
- 		{
- 		 "action": "accept",
- 		 "src": ["tag:clients"],
- 		 "dst": ["tag:nodes:*"]
- 		 },
- 		// Matrix related applications can access databases
- 		{
- 		 "action": "accept",
- 		 "src": ["tag:matrix"],
- 		 "dst": ["tag:database:*"]
- 		 },
- 		// Network hardware can access all the nodes
- 		{
- 		 "action": "accept",
- 		 "src": ["tag:network"],
- 		 "dst": ["tag:nodes:*"]
- 	 },
- 	 // All the nodes can access the networking hardware
- 		{
- 		 "action": "accept",
- 		 "src": ["tag:nodes"],
- 		 "dst": ["tag:network:*"]
- 	 },
- 	 // Clusters applications can query DNS on k8s node port
- 		{
- 		 "action": "accept",
- 		 "src": ["tag:cluster"],
- 		 "dst": ["tag:nodes:*"]
- 	 },
- 	],
- 	"groups": {
- 		"group:admins": [
- 			"rpg.gruber@gmail.com",
- 		],
- 	},
- 	"tagOwners": {
- 		"tag:database":     ["group:admins"],
- 		"tag:network":      ["group:admins"],
- 		"tag:clients":      ["group:admins"],
- 		"tag:nodes":        ["group:admins"],
- 		"tag:matrix":       ["group:admins"],
- 		"tag:cluster":      ["group:admins"],
- 		"tag:internal":     ["group:admins"],
- 		"tag:exit":         ["group:admins"],
-   "tag:k8s":          ["tag:k8s-operator"],
-   "tag:k8s-operator": [],
- 	},
-  "autoApprovers": {
-   "routes": {
-     "192.168.0.0/24": [
-      "tag:internal",
-     ],
-					"192.168.1.0/24": [
-      "tag:internal"
-     ],
-					"10.43.0.0/16": [
-      "tag:cluster",
-     ],
-					"10.42.0.0/16": [
-      "tag:cluster",
-     ],
-   },
-   "exitNode": ["tag:exit"],
-  },
- 	"ssh": [
- 		{
- 			"action": "accept",
- 			"src":    ["tag:internal", "tag:clients"],
- 			"dst":    ["tag:cluster", "tag:nodes"],
- 			"users":  ["autogroup:nonroot", "root"],
- 		},
- 		{
- 			"action": "accept",
- 			"src":    ["autogroup:members"],
- 			"dst":    ["autogroup:self"],
- 			"users":  ["autogroup:nonroot", "root"],
- 		},
- 	],
-			"nodeAttrs": [
-							{
-											"target": ["group:admins", "tag:k8s-operator", "k8s"],
-											"attr":   ["funnel"],
-							},
+{
+	"acls": [
+		// Admin users can access all groups and tags
+		{
+			"action": "accept",
+			"src":    ["group:admins"],
+			"dst":    ["*:*"],
+		},
+		// All clients can access cluster applications
+		{
+			"action": "accept",
+			"src":    ["tag:clients"],
+			"dst":    ["tag:cluster:*", "tag:k8s:*", "tag:k8s-operator:*", "tag:nodes:*"],
+		},
+		// Clients can access all the matrix applications
+		{
+			"action": "accept",
+			"src":    ["tag:clients"],
+			"dst":    ["tag:matrix:*"],
+		},
+		// Clients can access all the nodes
+		// Matrix related applications can access databases
+		{
+			"action": "accept",
+			"src":    ["tag:matrix"],
+			"dst":    ["tag:database:*"],
+		},
+		// Network hardware can access all the nodes
+		{
+			"action": "accept",
+			"src":    ["tag:nodes"],
+			"dst":    ["*:*"],
+		},
+		{
+			"action": "accept",
+			"src":    ["tag:k8s"],
+			"dst":    ["tag:k8s:*", "tag:k8s-operator:*", "tag:database:*"],
+		},
+		{
+			"action": "accept",
+			"src":    ["tag:k8s-operator"],
+			"dst":    ["tag:k8s:*", "tag:k8s-operator:*"],
+		},
+	],
+	"groups": {
+		"group:admins": [
+			"rpg.gruber@gmail.com",
+		],
+	},
+	"tagOwners": {
+		"tag:database":     ["group:admins"],
+		"tag:network":      ["group:admins"],
+		"tag:clients":      ["group:admins"],
+		"tag:nodes":        ["group:admins"],
+		"tag:matrix":       ["group:admins"],
+		"tag:cluster":      ["group:admins"],
+		"tag:internal":     ["group:admins"],
+		"tag:exit":         ["group:admins"],
+		"tag:k8s":          ["tag:k8s-operator"],
+		"tag:k8s-operator": [],
+	},
+	"autoApprovers": {
+		"routes": {
+			"192.168.0.0/24": [
+				"tag:internal",
 			],
- }
+			"192.168.1.0/24": [
+				"tag:internal",
+			],
+			"10.43.0.0/16": [
+				"tag:cluster",
+			],
+			"10.42.0.0/16": [
+				"tag:cluster",
+			],
+		},
+		"exitNode": ["tag:exit"],
+	},
+	"ssh": [
+		{
+			"action": "accept",
+			"src":    ["tag:internal", "tag:clients"],
+			"dst":    ["tag:cluster", "tag:nodes"],
+			"users":  ["autogroup:nonroot", "root"],
+		},
+		{
+			"action": "accept",
+			"src":    ["autogroup:members"],
+			"dst":    ["autogroup:self"],
+			"users":  ["autogroup:nonroot", "root"],
+		},
+	],
+	"nodeAttrs": [
+		{
+			"target": ["group:admins", "autogroup:members", "tag:nodes"],
+			"attr":   ["funnel"],
+		},
+	],
+}
