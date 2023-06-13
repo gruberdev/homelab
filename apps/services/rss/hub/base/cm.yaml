@@ -12,7 +12,7 @@ data:
   CACHE_TYPE: "redis"
   CACHE_EXPIRE: "5*60"
   MEMORY_MAX: "256"
-  REDIS_URL: "redis://127.0.0.1:6379"
+  REDIS_URL: "redis://redis-rsshub.rss.svc.cluster.local:6379"
   PUPPETEER_WS_ENDPOINT: "ws://127.0.0.1:3000"
   ALLOW_LOCALHOST: "true"
   DISALLOW_ROBOT: "true"

@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: rsshub-cloudflare
+spec:
+  secretName: rsshub-tls
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: hub.gruber.dev.br
+  dnsNames:
+  - hub.gruber.dev.br
