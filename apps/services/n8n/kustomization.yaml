@@ -3,7 +3,11 @@ kind: Kustomization
 bases:
 - ./base
 - github.com/gruberdev/homelab/apps/data/postgres/exporter
+- https://github.com/gruberdev/homelab/apps/networking/cloudflared
+patchesStrategicMerge:
+- overlay/cloudflared-cm.yaml
 namespace: services
+
 patches:
 - patch: |-
     - op: replace
@@ -40,8 +44,17 @@ patches:
   target:
     kind: Deployment
     name: n8n-server
+- patch: |-
+    - op: replace
+      path: "/spec/template/spec/volumes/0/secret/secretName"
+      value: "n8n-tunnel"
+  target:
+    kind: Deployment
+    name: cloudflared
+
 commonAnnotations:
   reloader.stakater.com/auto: "true"
+
 images:
 - name: n8nio/n8n
   newTag: 1.0.0-rc
