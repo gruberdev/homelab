@@ -20,38 +20,38 @@ spec:
         secret:
           secretName: operator-oauth
       containers:
-        - name: operator
-          image: grubertech/tailscale-operator:latest
-          imagePullPolicy: Always
-          resources:
-            requests:
-              cpu: 220m
-              memory: 200Mi
-            limits:
-              cpu: 400m
-              memory: 500Mi
-          env:
-            - name: OPERATOR_HOSTNAME
-              value: tailscale-operator
-            - name: OPERATOR_SECRET
-              value: operator
-            - name: OPERATOR_LOGGING
-              value: debug
-            - name: OPERATOR_NAMESPACE
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.namespace
-            - name: CLIENT_ID_FILE
-              value: /oauth/client_id
-            - name: CLIENT_SECRET_FILE
-              value: /oauth/client_secret
-            - name: PROXY_IMAGE
-              value: tailscale/tailscale:unstable-v1.39
-            - name: PROXY_TAGS
-              value: tag:k8s
-            - name: AUTH_PROXY
-              value: "false"
-          volumeMounts:
-          - name: oauth
-            mountPath: /oauth
-            readOnly: true
+      - name: operator
+        image: grubertech/tailscale-operator:latest
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 250m
+            memory: 256Mi
+          limits:
+            cpu: 400m
+            memory: 512Mi
+        env:
+        - name: OPERATOR_HOSTNAME
+          value: tailscale-operator
+        - name: OPERATOR_SECRET
+          value: operator
+        - name: OPERATOR_LOGGING
+          value: debug
+        - name: OPERATOR_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: CLIENT_ID_FILE
+          value: /oauth/client_id
+        - name: CLIENT_SECRET_FILE
+          value: /oauth/client_secret
+        - name: PROXY_IMAGE
+          value: tailscale/tailscale:unstable-v1.39
+        - name: PROXY_TAGS
+          value: tag:k8s
+        - name: AUTH_PROXY
+          value: "true"
+        volumeMounts:
+        - name: oauth
+          mountPath: /oauth
+          readOnly: true
