@@ -61,4 +61,4 @@ commonAnnotations:
 
 images:
 - name: n8nio/n8n
-  newTag: 1.0.0-rc
+  newTag: 0.232.0
