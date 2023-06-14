@@ -3,7 +3,6 @@ kind: Kustomization
 bases:
 - github.com/zalando/postgres-operator/manifests
 - github.com/zalando/postgres-operator/ui/manifests
-- github.com/gruberdev/homelab/apps/networking/tailscale
 - base/rb.yaml
 - base/cm.yaml
 - base/svc.yaml
@@ -14,25 +13,6 @@ patchesStrategicMerge:
 - overlay/operator-deployment.yaml
 - overlay/cm.yaml
 namespace: databases
-patches:
-- path: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/tailscale/patch.yaml
-  target:
-    kind: Deployment
-    name: postgres-operator-ui
-- patch: |-
-    - op: replace
-      path: "/spec/template/spec/containers/0/env/2"
-      value:
-        name: TS_HOSTNAME
-        value: "databases"
-    - op: replace
-      path: "/spec/template/spec/containers/0/env/3"
-      value:
-        name: DEST_PORT
-        value: "80"
-  target:
-    kind: Deployment
-    name: postgres-operator-ui
 images:
 - name: registry.opensource.zalan.do/acid/postgres-operator-ui
   newTag: v1.10.0
