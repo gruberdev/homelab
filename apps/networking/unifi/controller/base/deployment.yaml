@@ -63,9 +63,8 @@ spec:
           name: logs
         - mountPath: /unifi/cert
           name: certs
-          # - mountPath: /unifi/data/sites/default/config.gateway.json
-          #   subPath: gateway.config.json
-          #   name: default
+        - mountPath: /unifi/data/sites
+          name: config
         resources:
           limits:
             cpu: "450m"
@@ -98,6 +97,9 @@ spec:
       - name: certs
         persistentVolumeClaim:
           claimName: unifi-certificates
-      # - name: default
-      #   configMap:
-      #     name: unifi-controller-cm
+      - name: config
+        configMap:
+          name: unifi-controller-cm
+          items:
+          - key: gateway.config.json
+            path: gateway.config.json
