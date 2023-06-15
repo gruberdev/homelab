@@ -3,7 +3,6 @@ kind: Kustomization
 bases:
 - github.com/zalando/postgres-operator/manifests
 - github.com/zalando/postgres-operator/ui/manifests
-- base/rb.yaml
 - base/cm.yaml
 - base/svc.yaml
 - base/secret.yaml
