@@ -1,4 +1,3 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -20,33 +19,33 @@ spec:
         app: n8n-server
     spec:
       containers:
-        - name: n8n
-          image: n8nio/n8n:0.191.1
-          env:
-            - name: DB_POSTGRESDB_USER
-              valueFrom: { secretKeyRef: { name: postgres.db-n8n.credentials.postgresql.acid.zalan.do, key: username } }
-            - name: DB_POSTGRESDB_PASSWORD
-              valueFrom: { secretKeyRef: { name: postgres.db-n8n.credentials.postgresql.acid.zalan.do, key: password } }
-          envFrom:
-            - configMapRef:
-                name: n8n-cm
-            - secretRef:
-                name: n8n-vars
-          ports:
-            - name: web
-              containerPort: 5678
-              protocol: TCP
-          resources:
-            requests:
-              cpu: 100m
-              memory: 128Mi
-            limits:
-              cpu: 350m
-              memory: 400Mi
-          volumeMounts:
-            - name: config-storage
-              mountPath: /home/node
-      volumes:
+      - name: n8n
+        image: n8nio/n8n:0.191.1
+        env:
+        - name: DB_POSTGRESDB_USER
+          valueFrom: {secretKeyRef: {name: postgres.db-n8n.credentials.postgresql.acid.zalan.do, key: username}}
+        - name: DB_POSTGRESDB_PASSWORD
+          valueFrom: {secretKeyRef: {name: postgres.db-n8n.credentials.postgresql.acid.zalan.do, key: password}}
+        envFrom:
+        - configMapRef:
+            name: n8n-cm
+        - secretRef:
+            name: n8n-vars
+        ports:
+        - name: web
+          containerPort: 5678
+          protocol: TCP
+        resources:
+          requests:
+            cpu: 150m
+            memory: 512Mi
+          limits:
+            cpu: 550m
+            memory: 768Mi
+        volumeMounts:
         - name: config-storage
-          persistentVolumeClaim:
-            claimName: n8n-storage
+          mountPath: /home/node
+      volumes:
+      - name: config-storage
+        persistentVolumeClaim:
+          claimName: n8n-storage
