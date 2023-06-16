@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ganymede-backend
+data:
+  TZ: "America/Sao_Paulo"
+  DB_HOST: "db-gaynmede.media.svc.cluster.local"
+  DB_PORT: "5432"
+  DB_NAME: vods
+  DB_SSL: require
+  FRONTEND_HOST: "http://ganymede-internal.media.svc.cluster.local"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ganymede-frontend
+data:
+  TZ: "America/Sao_Paulo"
+  API_URL: "http://ganymede-backend-internal.media.svc.cluster.local"
+  SHOW_SSO_LOGIN_BUTTON: "true"
+  FORCE_SSO_AUTH: "false"
+  REQUIRE_LOGIN: "false"
