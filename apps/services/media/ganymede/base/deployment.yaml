@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ganymede
+  labels:
+    app: ganymede
+  annotations:
+    link.argocd.argoproj.io/external-link: https://vods.gruber.dev.br
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: ganymede
+  template:
+    metadata:
+      labels:
+        app: ganymede
+    spec:
+      containers:
+      - name: backend
+        image: ghcr.io/zibbp/ganymede:v1.3.1
+        env:
+        - name: DB_USER
+          valueFrom: {secretKeyRef: {name: twitch.db-ganymede.credentials.postgresql.acid.zalan.do, key: username}}
+        - name: DB_PASS
+          valueFrom: {secretKeyRef: {name: twitch.db-ganymede.credentials.postgresql.acid.zalan.do, key: password}}
+        envFrom:
+        - configMapRef:
+            name: ganymede-cm
+        - secretRef:
+            name: ganymede-backend
+        ports:
+        - name: http
+          containerPort: 4000
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 350m
+            memory: 768Mi
+          requests:
+            cpu: 250m
+            memory: 512Mi
+        volumeMounts:
+        - name: config
+          mountPath: /data
+        - name: logs
+          mountPath: /logs
+        - name: vods
+          mountPath: /vods
+      - name: frontend
+        image: ghcr.io/zibbp/ganymede-frontend:latest
+        envFrom:
+        - configMapRef:
+            name: ganymede-frontend
+        ports:
+        - name: web
+          containerPort: 3000
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 350m
+            memory: 512Mi
+          requests:
+            cpu: 250m
+            memory: 256Mi
+      volumes:
+      - name: config
+        persistentVolumeClaim:
+          claimName: ganymede-storage
+      - name: logs
+        persistentVolumeClaim:
+          claimName: ganymede-logs
+      - name: vods
+        persistentVolumeClaim:
+          claimName: ganymede-vods
