@@ -15,6 +15,7 @@ spec:
     metadata:
       labels:
         app: squid
+    spec:
       containers:
       - name: squid
         image: ubuntu/squid:5.2-22.04_edge
