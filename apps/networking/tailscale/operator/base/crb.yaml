@@ -19,7 +19,7 @@ subjects:
 - kind: ServiceAccount
   name: operator
   namespace: tailscale
-  roleRef:
-    kind: ClusterRole
-    name: tailscale-auth-proxy
-    apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: tailscale-auth-proxy
+  apiGroup: rbac.authorization.k8s.io
