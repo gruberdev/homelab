@@ -1,6 +1,5 @@
 data "unifi_ap_group" "default" {
-  site = unifi_site.default.name
-  name = "default"
+  site = "default"
 }
 
 resource "unifi_wlan" "main_wifi" {
@@ -16,7 +15,7 @@ resource "unifi_wlan" "main_wifi" {
   network_id    = unifi_network.main.id
   ap_group_ids  = [data.unifi_ap_group.default.id]
   user_group_id = unifi_user_group.unlimited.id
-  site          = unifi_site.default.name
+  site          = "default"
 }
 
 resource "unifi_wlan" "guest_wifi" {
@@ -33,7 +32,7 @@ resource "unifi_wlan" "guest_wifi" {
   network_id    = unifi_network.main.id
   ap_group_ids  = [data.unifi_ap_group.default.id]
   user_group_id = unifi_user_group.guests.id
-  site          = unifi_site.default.name
+  site          = "default"
 }
 
 resource "unifi_wlan" "smartDevices" {
@@ -41,13 +40,13 @@ resource "unifi_wlan" "smartDevices" {
   passphrase = var.smart_wlan_password
   security   = "wpapsk"
 
-  wpa3_support    = false
-  pmf_mode        = "disabled"
-  no2ghz_oui      = false
-  wlan_band       = "2g"
+  wpa3_support = false
+  pmf_mode     = "disabled"
+  no2ghz_oui   = false
+  wlan_band    = "2g"
 
   network_id    = unifi_network.main.id
   ap_group_ids  = [data.unifi_ap_group.default.id]
   user_group_id = unifi_user_group.smart.id
-  site          = unifi_site.default.name
+  site          = "default"
 }

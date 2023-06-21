@@ -1,14 +1,14 @@
 module "unifi" {
-  source               = "./modules/unifi"
-  site_name            = var.unifi_site_name
-  admin_username       = var.unifi_username
-  admin_password       = var.unifi_password
-  api_url              = var.unifi_api_url
-  controller_sec       = var.unifi_insecure
-  upstream_dns         = var.unifi_upstream_dns
-  wlan_password        = var.unifi_wlan_pass
-  guest_wlan_password  = var.unifi_guest_pass
-  smart_wlan_password  = var.unifi_smart_pass
+  source              = "./modules/unifi"
+  site_name           = var.unifi_site_name
+  admin_username      = var.unifi_username
+  admin_password      = var.unifi_password
+  api_url             = var.unifi_api_url
+  controller_sec      = var.unifi_insecure
+  upstream_dns        = var.unifi_upstream_dns
+  wlan_password       = var.unifi_wlan_pass
+  guest_wlan_password = var.unifi_guest_pass
+  smart_wlan_password = var.unifi_smart_pass
 }
 
 resource "unifi_network" "vlan" {
@@ -16,7 +16,7 @@ resource "unifi_network" "vlan" {
   purpose            = "corporate"
   subnet             = "192.168.1.0/24"
   dhcp_start         = "192.168.1.6"
-  dhcp_stop          = "192.168.1.254"
+  dhcp_stop          = "192.168.1.135"
   dhcp_enabled       = true
   dhcp_relay_enabled = false
   network_group      = "LAN"
