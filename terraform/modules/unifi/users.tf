@@ -15,7 +15,7 @@ resource "unifi_user_group" "smart" {
   name = "smart"
 
   qos_rate_max_down = 10000 # 10mbps
-  qos_rate_max_up   = 1000 # 1mbps
+  qos_rate_max_up   = 1000  # 1mbps
   site              = unifi_site.default.name
 }
 
