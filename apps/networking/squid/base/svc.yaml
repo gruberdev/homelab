@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: squid
+  labels:
+    app: squid
+  annotations:
+    tailscale.com/hostname: "proxy"
+spec:
+  selector:
+    app: squid
+  ports:
+  - name: proxy
+    protocol: TCP
+    port: 80
+    targetPort: 3128
+  loadBalancerClass: tailscale
+  type: LoadBalancer

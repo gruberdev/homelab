@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: squid-proxy-cloudflare
+spec:
+  secretName: proxy-tls
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: proxy.gruber.dev.br
+  dnsNames:
+  - proxy.gruber.dev.br

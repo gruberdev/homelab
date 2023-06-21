@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: squid
+  labels:
+    app: squid
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: squid
+  template:
+    metadata:
+      labels:
+        app: squid
+      containers:
+      - name: squid
+        image: ubuntu/squid:5.2-22.04_edge
+        livenessProbe:
+          tcpSocket:
+            port: 3128
+          initialDelaySeconds: 25
+          periodSeconds: 10
+        readinessProbe:
+          tcpSocket:
+            port: 3128
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        envFrom:
+        - configMapRef:
+            name: squid-config
+        ports:
+        - name: proxy
+          containerPort: 3128
+          protocol: TCP
+        resources:
+          requests:
+            cpu: 80m
+            memory: 64Mi
+          limits:
+            cpu: 150m
+            memory: 256Mi
+        volumeMounts:
+        - name: squid-config-volume
+          mountPath: /etc/squid/squid.conf
+          subPath: squid.conf
+      volumes:
+      - name: squid-config-volume
+        configMap:
+          name: squid-config
+          items:
+          - key: squid
+            path: squid.conf

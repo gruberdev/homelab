@@ -70,6 +70,7 @@ resources:
 - base/services/onchange.yaml
 - base/services/actual.yaml
 - base/services/taskwarrior.yaml
+- base/services/squid.yaml
 - base/services/nitter.yaml
 - base/services/gitea.yaml
 - base/services/rss-hub.yaml

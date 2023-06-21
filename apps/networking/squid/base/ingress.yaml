@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: squid-proxy
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: proxy.gruber.dev.br
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
+    external-dns.alpha.kubernetes.io/ttl: "120"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: proxy.gruber.dev.br
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: squid
+            port:
+              name: proxy
+  tls:
+  - hosts:
+    - proxy.gruber.dev.br
+    secretName: proxy-tls

@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: squid-config
+data:
+  squid.conf: |
+    http_port 3128
+    acl twitch dstdom_regex video-weaver.*.ttvnw.net
+    http_access allow twitch
+    acl twitchusher dstdom_regex usher.ttvnw.net
+    http_access allow twitchusher
+    acl twitchgql dstdom_regex gql.twitch.tv
+    http_access allow twitchgql
+    acl twitchpassport dstdom_regex passport.twitch.tv
+    http_access allow twitchpassport
+    acl twitchwww dstdom_regex www.twitch.tv
+    http_access allow twitchwww
