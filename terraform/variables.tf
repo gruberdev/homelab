@@ -1,7 +1,7 @@
 variable "unifi_site_name" {
   type        = string
   description = "<sub>Unifi site name. [Reference](https://registry.terraform.io/providers/paultyng/unifi/latest/docs/resources/site#name)</sub>"
-  default     = "main"
+  default     = "default"
 }
 
 variable "unifi_username" {
@@ -37,7 +37,7 @@ variable "unifi_insecure" {
 }
 
 variable "unifi_upstream_dns" {
-  type        = list
+  type        = list(any)
   description = "<sub>Skip TLS verification when trying to access the API. [Reference](https://registry.terraform.io/providers/paultyng/unifi/latest/docs#allow_insecure)</sub>"
   default     = ["8.8.8.8", "1.1.1.1"]
   sensitive   = true

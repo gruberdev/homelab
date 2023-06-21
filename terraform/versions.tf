@@ -27,5 +27,5 @@ provider "unifi" {
   password       = var.unifi_password
   api_url        = var.unifi_api_url
   allow_insecure = var.unifi_insecure
-  site           = var.unifi_site_name
+  site           = "default"
 }
