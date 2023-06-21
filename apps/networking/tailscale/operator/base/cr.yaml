@@ -11,7 +11,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: tailscale-auth-proxy
-  rules:
-  - apiGroups: [""]
-    resources: ["users"]
-    verbs: ["impersonate"]
+rules:
+- apiGroups: [""]
+  resources: ["users"]
+  verbs: ["impersonate"]
