@@ -52,5 +52,5 @@ spec:
         configMap:
           name: squid-config
           items:
-          - key: squid
+          - key: squid.conf
             path: squid.conf
