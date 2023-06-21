@@ -1,4 +1,6 @@
 terraform {
+  backend "local" {
+  }
   required_version = ">= 0.13"
   required_providers {
     unifi = {
@@ -13,5 +15,5 @@ provider "unifi" {
   password       = var.admin_password
   api_url        = var.api_url
   allow_insecure = var.controller_sec
-  site           = var.site_name
+  site           = "default"
 }
