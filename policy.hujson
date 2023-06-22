@@ -1,4 +1,4 @@
-`{
+{
 	"acls": [
 		// Admin users can access all groups and tags
 		{
@@ -12,18 +12,12 @@
 			"src":    ["tag:clients"],
 			"dst":    ["tag:cluster:*", "tag:k8s:*", "tag:k8s-operator:*", "tag:nodes:*"],
 		},
-		// Clients can access all the matrix applications
-		{
-			"action": "accept",
-			"src":    ["tag:clients"],
-			"dst":    ["tag:matrix:*"],
-		},
 		// Clients can access all the nodes
 		// Matrix related applications can access databases
 		{
 			"action": "accept",
-			"src":    ["tag:matrix"],
-			"dst":    ["tag:database:*"],
+			"src":    ["tag:matrix", "tag:database"],
+			"dst":    ["tag:database:*", "tag:k8s:*", "tag:matrix:*"],
 		},
 		// Network hardware can access all the nodes
 		{
@@ -49,21 +43,29 @@
 	},
 	"tagOwners": {
 		"tag:database":     ["group:admins"],
-		"tag:network":      ["group:admins"],
 		"tag:clients":      ["group:admins"],
 		"tag:nodes":        ["group:admins"],
 		"tag:matrix":       ["group:admins"],
 		"tag:cluster":      ["group:admins"],
 		"tag:internal":     ["group:admins"],
 		"tag:exit":         ["group:admins"],
+		"tag:vultr":        ["group:admins"],
 		"tag:k8s":          ["tag:k8s-operator"],
 		"tag:k8s-operator": [],
 	},
+	"hosts": {
+		"node-one":     "192.168.1.2",
+		"node-two":     "192.168.1.10",
+		"node-three":   "192.168.1.4",
+		"steamdeck":    "192.168.1.12",
+		"lan-internal": "192.168.1.0/24",
+		"k8s-svc-ipv4": "10.43.0.0/16",
+		"k8s-svc-ipv6": "2001:cafe:42:1::/112",
+		"k8s-pod-ipv4": "10.42.0.0/16",
+		"k8s-pod-ipv6": "2001:cafe:42:0::/56",
+	},
 	"autoApprovers": {
 		"routes": {
-			"192.168.0.0/24": [
-				"tag:internal",
-			],
 			"192.168.1.0/24": [
 				"tag:internal",
 			],
@@ -74,7 +76,7 @@
 				"tag:cluster",
 			],
 		},
-		"exitNode": ["tag:exit"],
+		"exitNode": ["tag:exit", "tag:vultr"],
 	},
 	"ssh": [
 		{
@@ -92,8 +94,27 @@
 	],
 	"nodeAttrs": [
 		{
-			"target": ["group:admins", "autogroup:members", "tag:nodes"],
+			"target": ["group:admins", "autogroup:members", "tag:nodes", "tag:clients"],
 			"attr":   ["funnel"],
+		},
+	],
+	"tests": [
+		{
+			"src":  "tag:internal",
+			"deny": ["tag:k8s:5678", "tag:nodes:5678", "tag:clients:80"],
+		},
+		{
+			"src":    "tag:database",
+			"accept": ["tag:k8s:5432", "tag:matrix:5432"],
+			"deny":   ["tag:nodes:5432"],
+		},
+		{
+			"src":  "tag:k8s",
+			"deny": ["tag:clients:22"],
+		},
+		{
+			"src":  "tag:matrix",
+			"deny": ["tag:clients:80"],
 		},
 	],
 }
