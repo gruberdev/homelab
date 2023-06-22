@@ -10,10 +10,11 @@
 
 ### Reasons I chose ArgoCD over Flux
 
-> - Built on top of Kubernetes, which means that it is natively integrated with the Kubernetes ecosystem and can take advantage of Kubernetes features such as RBAC and custom resource definitions.
-> - Uses a declarative configuration file to specify the desired state of your applications, which makes it easier to manage and reason about the state of your applications.
 > - Provides an intuitive web-based user interface that allows you to view and manage the state of your applications, which makes it easier to use and collaborate on with your team.
-> - It also provides an API that allows you to integrate it with other tools and systems, which gives you more flexibility and allows you to automate your continuous delivery workflow.
+> - Provides granular permissions to internal and external resources to the tool's control plane.
+> - It also provides an API that allows you to integrate it with other tools and systems, which gives you more flexibility and allows you to automate your continuous delivery workflow. Provides more synergy with other Argo branded tools.
+> - Synchronization options for ArgoCD are more detailed healthchecks, thus providing a more reliable information when reporting application deployment status. Self-healing using FluxCD is also limited when compared to ArgoCD. Sync hooks on FluxCD only support Helm charts, for example.
+
 Overall, ArgoCD offers a more robust and feature-rich solution for managing and automating the deployment of your applications on Kubernetes.
 
 - [Website][website-uri]
