@@ -10,13 +10,20 @@
 
 ### Reasons I chose ArgoCD over Flux
 
-> - Provides an intuitive web-based user interface that allows you to view and manage the state of your applications, which makes it easier to use and collaborate on with your team.
-> - Provides granular permissions to internal and external resources to the tool's control plane.
-> - It also provides an API that allows you to integrate it with other tools and systems, which gives you more flexibility and allows you to automate your continuous delivery workflow. Provides more synergy with other Argo branded tools.
-> - Synchronization options for ArgoCD are more detailed healthchecks, thus providing a more reliable information when reporting application deployment status. Self-healing using FluxCD is also limited when compared to ArgoCD. Sync hooks on FluxCD only support Helm charts, for example.
+> - ArgoCD features a user-friendly web-based User Interface (UI) designed to facilitate the viewing and management of application states, promoting efficient team collaboration.
+> - It implements fine-grained permission control, extending access rights to both internal and external resources within its control plane, offering enhanced security and resource management.
+> - The provision of an Application Programming Interface (API) in ArgoCD allows for seamless integration with various tools and systems. This enhances workflow automation capabilities in continuous delivery and fosters interoperability with other Argo-branded tools.
+> - The synchronization capabilities of ArgoCD include comprehensive health checks, ensuring reliable data reporting for application deployment status. Compared to FluxCD, ArgoCD's self-healing features are more extensive. It should be noted that FluxCD's sync hooks are limited to supporting Helm charts exclusively.
+>
+> **In summary, ArgoCD presents a comprehensive and feature-intensive solution for the management and automation of Kubernetes-based application deployments.**
+>
+> &nbsp;
 
-Overall, ArgoCD offers a more robust and feature-rich solution for managing and automating the deployment of your applications on Kubernetes.
 
+&nbsp;
+
+
+### Relevant Links
 - [Website][website-uri]
 - [Official Documentation][docs-uri]
 - [Awesome ArgoCD][awesome-uri]
