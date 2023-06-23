@@ -28,7 +28,7 @@ spec:
           valueFrom: {secretKeyRef: {name: twitch.db-ganymede.credentials.postgresql.acid.zalan.do, key: password}}
         envFrom:
         - configMapRef:
-            name: ganymede-cm
+            name: ganymede-backend
         - secretRef:
             name: ganymede-backend
         ports:
