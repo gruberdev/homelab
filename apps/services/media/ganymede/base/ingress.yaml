@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ganymede
+  name: ganymede-frontend
   annotations:
     external-dns.alpha.kubernetes.io/hostname: vods.gruber.dev.br
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
@@ -24,3 +24,30 @@ spec:
   - hosts:
     - vods.gruber.dev.br
     secretName: vods-tls
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ganymede-backend
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: backend-vods.gruber.dev.br
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
+    external-dns.alpha.kubernetes.io/ttl: "120"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: backend-vods.gruber.dev.br
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ganymede-backend-ts
+            port:
+              name: http
+  tls:
+  - hosts:
+    - backend-vods.gruber.dev.br
+    secretName: backend-vods-tls

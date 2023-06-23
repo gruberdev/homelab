@@ -20,6 +20,25 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  name: backend-vods-tls
+  labels:
+    app: ganymede
+  annotations:
+    tailscale.com/hostname: "backend-vods"
+spec:
+  selector:
+    app: ganymede
+  ports:
+  - name: http
+    port: 80
+    targetPort: 4000
+    protocol: TCP
+  loadBalancerClass: tailscale
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
   name: ganymede-backend-internal
   labels:
     app: ganymede
