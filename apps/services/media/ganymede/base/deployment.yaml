@@ -37,8 +37,8 @@ spec:
           protocol: TCP
         resources:
           limits:
-            cpu: 350m
-            memory: 768Mi
+            cpu: 1500m
+            memory: 1576Mi
           requests:
             cpu: 250m
             memory: 512Mi
@@ -60,11 +60,11 @@ spec:
           protocol: TCP
         resources:
           limits:
-            cpu: 350m
+            cpu: 200m
             memory: 512Mi
           requests:
-            cpu: 250m
-            memory: 256Mi
+            cpu: 80m
+            memory: 128Mi
       volumes:
       - name: config
         persistentVolumeClaim:
