@@ -5,8 +5,8 @@ metadata:
 spec:
   project: cluster
   source:
-    repoURL: https://github.com/LucasBoisserie/ingress-nginx.git
-    targetRevision: ef561f8
+    repoURL: https://github.com/gruberdev/ingress-nginx.git
+    targetRevision: a87d38d
     path: charts/ingress-nginx
     helm:
       releaseName: nginx
