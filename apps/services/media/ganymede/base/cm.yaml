@@ -4,7 +4,7 @@ metadata:
   name: ganymede-backend
 data:
   TZ: "America/Sao_Paulo"
-  DB_HOST: "db-gaynmede.media.svc.cluster.local"
+  DB_HOST: "db-ganymede.media.svc.cluster.local"
   DB_PORT: "5432"
   DB_NAME: vods
   DB_SSL: require
