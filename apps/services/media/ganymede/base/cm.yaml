@@ -8,7 +8,7 @@ data:
   DB_PORT: "5432"
   DB_NAME: vods
   DB_SSL: require
-  FRONTEND_HOST: "http://ganymede-internal.media.svc.cluster.local"
+  FRONTEND_HOST: "http://localhost:4000"
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -16,7 +16,8 @@ metadata:
   name: ganymede-frontend
 data:
   TZ: "America/Sao_Paulo"
-  API_URL: "http://ganymede-backend-internal.media.svc.cluster.local"
+  API_URL: "http://localhost:4000"
+  CDN_URL: "https://vods.gruber.dev.br"
   SHOW_SSO_LOGIN_BUTTON: "true"
   FORCE_SSO_AUTH: "false"
   REQUIRE_LOGIN: "false"
