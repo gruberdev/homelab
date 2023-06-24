@@ -10,5 +10,5 @@ data:
     no-autoupdate: true
     ingress:
     - hostname: n8ni.gruber.dev.br
-      service: http://n8n:80
+      service: http://n8n.services.svc.cluster.local:80
     - service: http_status:404
