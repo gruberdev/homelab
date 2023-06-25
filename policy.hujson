@@ -72,14 +72,19 @@
 	"autoApprovers": {
 		"routes": {
 			"192.168.1.0/24": [
-				"tag:internal",
+				"tag:internal"
 			],
 			"10.43.0.0/16": [
-				"tag:cluster",
+				"tag:cluster"
 			],
 			"10.42.0.0/16": [
-				"tag:cluster",
+				"rpg.gruber@gmail.com",
+				"tag:cluster"
 			],
+			"2001:cafe:42:0::/56": [
+				"rpg.gruber@gmail.com",
+				"tag:cluster"
+			]
 		},
 		"exitNode": ["tag:exit", "tag:vultr"],
 	},
