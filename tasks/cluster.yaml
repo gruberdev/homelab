@@ -16,9 +16,9 @@ vars:
   POD_IPV4_CIDR: 10.42.0.0/16
   POD_IPV6_CIDR: 2001:cafe:42:0::/56
   IPV4_NETWORK: 192.168.1.0/24
-  IPV6_NETWORK: fe80::b62e:99ff:fef4:b3e6
-  NODE_TWO_IPV6: fe80::2d4d:d619:fc4c:e686
-  NODE_THREE_IPV6: fe80::b30a:f66e:dc95:ca3a
+  IPV6_NETWORK: fd12:3456:789a:1:b62e:99ff:fef4:b3e6
+  NODE_TWO_IPV6: fd12:3456:789a:1:f2b8:bc22:c21c:9c79
+  NODE_THREE_IPV6: fd12:3456:789a:1:b584:6586:17ff:4de3
   CLUSTER_DOMAIN: cluster.local
   HA_DB_NAME: k3s
   KUBECONFIG_MODE: 0777
@@ -32,595 +32,566 @@ vars:
   NODE_ARCH: linux_x86_64
   CONTAINERD_PATH: /run/k3s/containerd/containerd.sock
   NETWORKING: calico
-  DUALSTACK: true
   KOORDINATOR: false
   ETCD: true
   S3_BACKUP: true
   S3_ADDRESS: ewr1.vultrobjects.com
 env:
-  NODE_TWO_IP: 192.168.1.8
+  NODE_TWO_IP: 192.168.1.10
   NODE_ONE_IP: 192.168.1.2
-  NODE_THREE_IP: 192.168.1.105
-  VIP: 192.168.1.8
+  NODE_THREE_IP: 192.168.1.4
+  VIP: 192.168.1.2
   INTERFACE: enp1s0
   KVVERSION: v0.5.7
   K3D_VERSION: v5.4.6
-  INSTALL_K3S_VERSION: v1.26.3+k3s1
+  INSTALL_K3S_VERSION: v1.27.3-rc1+k3s1
 
 silent: true
 
 tasks:
   server:
     cmds:
-      - |
-        sudo curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server" sh -s - -c {{.K3S_CONFIG}}
+    - |
+      sudo curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="${INSTALL_K3S_VERSION}" INSTALL_K3S_EXEC="server" sh -s - -c {{.K3S_CONFIG}} --vpn-auth="name=tailscale,joinKey=$TAILSCALE_KEY
     ignore_error: true
     interactive: true
 
   agent:
     cmds:
-      - |
-        sudo curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="v1.26.1+k3s1" INSTALL_K3S_EXEC="agent" sh -s - -c {{.K3S_CONFIG}}
+    - |
+      sudo curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="${INSTALL_K3S_VERSION}" INSTALL_K3S_EXEC="agent" sh -s - -c {{.K3S_CONFIG}} --vpn-auth="name=tailscale,joinKey=$TAILSCALE_KEY
     ignore_error: true
     interactive: true
 
   dns:update:
     cmds:
-      - |
-        kubectl get cm -n kube-system kubelet-config -o=json | \
-        jq 'del(.metadata.resourceVersion,.metadata.uid,.metadata.selfLink,.metadata.creationTimestamp,.metadata.annotations,.metadata.generation,.metadata.ownerReferences,.status)' | \
-        sed -E 's#resolvConf: [^\n ]*\\n#resolvConf: /etc/kubeadm-resolv.conf\\n#' | \
-        kubectl replace -f -
+    - |
+      kubectl get cm -n kube-system kubelet-config -o=json | \
+      jq 'del(.metadata.resourceVersion,.metadata.uid,.metadata.selfLink,.metadata.creationTimestamp,.metadata.annotations,.metadata.generation,.metadata.ownerReferences,.status)' | \
+      sed -E 's#resolvConf: [^\n ]*\\n#resolvConf: /etc/kubeadm-resolv.conf\\n#' | \
+      kubectl replace -f -
     ignore_error: true
 
   dns:restart:
     cmds:
-      - kubectl -n kube-system rollout restart daemonset/kube-proxy
-      - kubectl get pod -n kube-system -l k8s-app=kube-dns --no-headers | awk '{print $1}' | xargs -I{} kubectl delete pod -n kube-system {}
-      - kubectl wait deployment -n kube-system coredns --for condition=Available=True --timeout=90s
-      - kubectl logs deployment/coredns -n kube-system -f
+    - kubectl -n kube-system rollout restart daemonset/kube-proxy
+    - kubectl get pod -n kube-system -l k8s-app=kube-dns --no-headers | awk '{print $1}' | xargs -I{} kubectl delete pod -n kube-system {}
+    - kubectl wait deployment -n kube-system coredns --for condition=Available=True --timeout=90s
+    - kubectl logs deployment/coredns -n kube-system -f
     ignore_error: true
 
   # Debian fix
   # https://docs.k3s.io/advanced#additional-os-preparations
   fwd:fix:
     cmds:
-      - sudo iptables -F
-      - sudo update-alternatives --set iptables /usr/sbin/iptables-legacy
-      - sudo update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
-      - echo "Reboot your machine."
+    - sudo iptables -F
+    - sudo update-alternatives --set iptables /usr/sbin/iptables-legacy
+    - sudo update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
+    - echo "Reboot your machine."
     ignore_error: true
 
   fwd:replace:
     cmds:
-      - sudo apt remove iptables nftables -y
-      - echo "Reboot your machine."
-      - Add to your startup script or terminal "'export PATH='/var/lib/rancher/k3s/data/current/bin/:/var/lib/rancher/k3s/data/current/bin/aux:$PATH'"
+    - sudo apt remove iptables nftables -y
+    - echo "Reboot your machine."
+    - Add to your startup script or terminal "'export PATH='/var/lib/rancher/k3s/data/current/bin/:/var/lib/rancher/k3s/data/current/bin/aux:$PATH'"
     ignore_error: true
 
   gen:clean:
     dir: /usr/local/bin
     cmds:
-      - sh k3s-killall.sh
-      - sh k3s-uninstall.sh
-      - rm -rf /var/lib/rancher /etc/rancher ~/.kube/*
-      - ip addr flush dev lo
-      - ip addr add 127.0.0.1/8 dev lo
+    - sh k3s-killall.sh
+    - sh k3s-uninstall.sh
+    - rm -rf /var/lib/rancher /etc/rancher ~/.kube/*
+    - ip addr flush dev lo
+    - ip addr add 127.0.0.1/8 dev lo
     ignore_error: true
 
   gen:files:
     cmds:
-      - task: gen:manifests
-      - task: gen:calico
-      - task: gen:vip
+    - task: gen:manifests
+    - task: gen:calico
+    - task: gen:vip
 
   backup:sealed:
     cmds:
-      - kubectl get secret -n kube-system sealed-secrets-key -o yaml >>main.key
-      - kubectl get secret -n kube-system -l sealedsecrets.bitnami.com/sealed-secrets-key -o yaml >main.key
+    - kubectl get secret -n kube-system sealed-secrets-key -o yaml >>main.key
+    - kubectl get secret -n kube-system -l sealedsecrets.bitnami.com/sealed-secrets-key -o yaml >main.key
     ignore_error: true
 
   gen:manifests:
     cmds:
-      - mkdir -p {{.K3S_PATH}}/server/manifests/
+    - mkdir -p {{.K3S_PATH}}/server/manifests/
     ignore_error: true
 
   gen:calico:
     cmds:
-      - task: gen:calico:1
-      - task: gen:calico:2
-      - task: gen:calico:3
+    - task: gen:calico:1
+    - task: gen:calico:2
+    - task: gen:calico:3
 
   gen:calico:1:
     cmds:
-      - wget https://raw.githubusercontent.com/projectcalico/calico/{{.CALICO_VERSION}}/manifests/tigera-operator.yaml
-      - mv tigera-operator.yaml {{.K3S_PATH}}/server/manifests/tigera-operator.yaml
+    - wget https://raw.githubusercontent.com/projectcalico/calico/{{.CALICO_VERSION}}/manifests/tigera-operator.yaml
+    - mv tigera-operator.yaml {{.K3S_PATH}}/server/manifests/tigera-operator.yaml
     ignore_error: true
 
   gen:calico:2:
     cmds:
-      - rm {{.K3S_PATH}}/server/manifests/calico.yaml
-      - |
-        cat << EOF > {{.K3S_PATH}}/server/manifests/calico.yaml
-        apiVersion: operator.tigera.io/v1
-        kind: Installation
-        metadata:
-          name: default
-        spec:
-          calicoNetwork:
-            containerIPForwarding: Enabled
-            nodeAddressAutodetectionV4:
-              cidrs:
-                - "{{.IPV4_NETWORK}}"
-            nodeAddressAutodetectionV6: {}
-            ipPools:
-              - blockSize: 26
-                cidr: "{{.POD_IPV4_CIDR}}"
-                encapsulation: "VXLANCrossSubnet"
-                natOutgoing: Enabled
-                nodeSelector: all()
-              - blockSize: 122
-                cidr: "{{.POD_IPV6_CIDR}}"
-                encapsulation: "VXLANCrossSubnet"
-                natOutgoing: Enabled
-                nodeSelector: all()
-          nodeMetricsPort: 9091
-          typhaMetricsPort: 9093
-        EOF
+    - rm {{.K3S_PATH}}/server/manifests/calico.yaml
+    - |
+      cat << EOF > {{.K3S_PATH}}/server/manifests/calico.yaml
+      apiVersion: operator.tigera.io/v1
+      kind: Installation
+      metadata:
+        name: default
+      spec:
+        calicoNetwork:
+          containerIPForwarding: Enabled
+          nodeAddressAutodetectionV4:
+            cidrs:
+              - "{{.IPV4_NETWORK}}"
+          nodeAddressAutodetectionV6: {}
+          ipPools:
+            - blockSize: 26
+              cidr: "{{.POD_IPV4_CIDR}}"
+              encapsulation: "VXLANCrossSubnet"
+              natOutgoing: Enabled
+              nodeSelector: all()
+            - blockSize: 122
+              cidr: "{{.POD_IPV6_CIDR}}"
+              encapsulation: "VXLANCrossSubnet"
+              natOutgoing: Enabled
+              nodeSelector: all()
+        nodeMetricsPort: 9091
+        typhaMetricsPort: 9093
+      EOF
     ignore_error: true
 
   gen:vip:
     cmds:
-      - rm {{.K3S_PATH}}/server/manifests/kube-vip.yaml
-      - rm {{.K3S_PATH}}/server/manifests/kube-rbac.yaml
-      - curl https://kube-vip.io/manifests/rbac.yaml > {{.K3S_PATH}}/server/manifests/kube-rbac.yaml
-      - |
-        cat << EOF > {{.K3S_PATH}}/server/manifests/kube-vip.yaml
-        apiVersion: apps/v1
-        kind: DaemonSet
-        metadata:
-          name: kube-vip
-          namespace: kube-system
-          labels:
+    - rm {{.K3S_PATH}}/server/manifests/kube-vip.yaml
+    - rm {{.K3S_PATH}}/server/manifests/kube-rbac.yaml
+    - curl https://kube-vip.io/manifests/rbac.yaml > {{.K3S_PATH}}/server/manifests/kube-rbac.yaml
+    - |
+      cat << EOF > {{.K3S_PATH}}/server/manifests/kube-vip.yaml
+      apiVersion: apps/v1
+      kind: DaemonSet
+      metadata:
+        name: kube-vip
+        namespace: kube-system
+        labels:
+          app.kubernetes.io/instance: kube-vip
+          app.kubernetes.io/name: kube-vip
+      spec:
+        selector:
+          matchLabels:
             app.kubernetes.io/instance: kube-vip
             app.kubernetes.io/name: kube-vip
-        spec:
-          selector:
-            matchLabels:
+        template:
+          metadata:
+            labels:
               app.kubernetes.io/instance: kube-vip
               app.kubernetes.io/name: kube-vip
-          template:
-            metadata:
-              labels:
-                app.kubernetes.io/instance: kube-vip
-                app.kubernetes.io/name: kube-vip
-            spec:
-              containers:
-                - name: kube-vip
-                  image: ghcr.io/kube-vip/kube-vip:${KVVERSION}
-                  imagePullPolicy: IfNotPresent
-                  args:
-                    - manager
-                  env:
-                    - name: vip_arp
-                      value: "true"
-                    - name: port
-                      value: "6443"
-                    - name: vip_cidr
-                      value: "32"
-                    - name: cp_enable
-                      value: "true"
-                    - name: cp_namespace
-                      value: kube-system
-                    - name: svc_enable
-                      value: "false"
-                    - name: vip_leaderelection
-                      value: "true"
-                    - name: vip_leaseduration
-                      value: "15"
-                    - name: vip_renewdeadline
-                      value: "10"
-                    - name: vip_retryperiod
-                      value: "2"
-                    - name: address
-                      value: "${NODE_SERVER_IP}"
-                  securityContext:
-                    capabilities:
-                      add:
-                        - NET_ADMIN
-                        - NET_RAW
-              hostAliases:
-                - hostnames:
-                    - kubernetes
-                  ip: 127.0.0.1
-              hostNetwork: true
-              serviceAccountName: kube-vip
-              affinity:
-                nodeAffinity:
-                  requiredDuringSchedulingIgnoredDuringExecution:
-                    nodeSelectorTerms:
-                      - matchExpressions:
-                          - key: node-role.kubernetes.io/master
-                            operator: Exists
-                      - matchExpressions:
-                          - key: node-role.kubernetes.io/control-plane
-                            operator: Exists
-              tolerations:
-                - effect: NoSchedule
-                  operator: Exists
-                - effect: NoExecute
-                  operator: Exists
-        EOF
+          spec:
+            containers:
+              - name: kube-vip
+                image: ghcr.io/kube-vip/kube-vip:${KVVERSION}
+                imagePullPolicy: IfNotPresent
+                args:
+                  - manager
+                env:
+                  - name: vip_arp
+                    value: "true"
+                  - name: port
+                    value: "6443"
+                  - name: vip_cidr
+                    value: "32"
+                  - name: cp_enable
+                    value: "true"
+                  - name: cp_namespace
+                    value: kube-system
+                  - name: svc_enable
+                    value: "false"
+                  - name: vip_leaderelection
+                    value: "true"
+                  - name: vip_leaseduration
+                    value: "15"
+                  - name: vip_renewdeadline
+                    value: "10"
+                  - name: vip_retryperiod
+                    value: "2"
+                  - name: address
+                    value: "${NODE_SERVER_IP}"
+                securityContext:
+                  capabilities:
+                    add:
+                      - NET_ADMIN
+                      - NET_RAW
+            hostAliases:
+              - hostnames:
+                  - kubernetes
+                ip: 127.0.0.1
+            hostNetwork: true
+            serviceAccountName: kube-vip
+            affinity:
+              nodeAffinity:
+                requiredDuringSchedulingIgnoredDuringExecution:
+                  nodeSelectorTerms:
+                    - matchExpressions:
+                        - key: node-role.kubernetes.io/master
+                          operator: Exists
+                    - matchExpressions:
+                        - key: node-role.kubernetes.io/control-plane
+                          operator: Exists
+            tolerations:
+              - effect: NoSchedule
+                operator: Exists
+              - effect: NoExecute
+                operator: Exists
+      EOF
     ignore_error: true
 
   gen:calico:3:
     cmds:
-      - rm {{.K3S_PATH}}/server/manifests/calico-2.yaml
-      - |
-        cat << EOF > {{.K3S_PATH}}/server/manifests/calico-2.yaml
-        kind: ConfigMap
-        apiVersion: v1
-        metadata:
-          name: calico-config
-          namespace: kube-system
-        data:
-          cni_network_config: |-
-            {
-              "name": "k8s-pod-network",
-              "cniVersion": "0.3.1",
-              "plugins": [
-                {
-                  "type": "calico",
-                  "log_level": "info",
-                  "log_file_path": "/var/log/calico/cni/cni.log",
-                  "datastore_type": "kubernetes",
-                  "nodename": "__KUBERNETES_NODE_NAME__",
-                  "mtu": __CNI_MTU__,
-                  "ipam": {
-                      "type": "calico-ipam"
-                  },
-                  "policy": {
-                      "type": "k8s"
-                  },
-                  "kubernetes": {
-                      "kubeconfig": "/etc/rancher/k3s/k3s.yaml"
-                  },
-                  "container_settings": {
-                    "allow_ip_forwarding": true
-                  }
+    - rm {{.K3S_PATH}}/server/manifests/calico-2.yaml
+    - |
+      cat << EOF > {{.K3S_PATH}}/server/manifests/calico-2.yaml
+      kind: ConfigMap
+      apiVersion: v1
+      metadata:
+        name: calico-config
+        namespace: kube-system
+      data:
+        cni_network_config: |-
+          {
+            "name": "k8s-pod-network",
+            "cniVersion": "0.3.1",
+            "plugins": [
+              {
+                "type": "calico",
+                "log_level": "info",
+                "log_file_path": "/var/log/calico/cni/cni.log",
+                "datastore_type": "kubernetes",
+                "nodename": "__KUBERNETES_NODE_NAME__",
+                "mtu": __CNI_MTU__,
+                "ipam": {
+                    "type": "calico-ipam"
                 },
-                {
-                  "type": "portmap",
-                  "snat": true,
-                  "capabilities": {"portMappings": true}
+                "policy": {
+                    "type": "k8s"
                 },
-                {
-                  "type": "bandwidth",
-                  "capabilities": {"bandwidth": true}
+                "kubernetes": {
+                    "kubeconfig": "/etc/rancher/k3s/k3s.yaml"
+                },
+                "container_settings": {
+                  "allow_ip_forwarding": true
                 }
-              ]
-            }
-        EOF
+              },
+              {
+                "type": "portmap",
+                "snat": true,
+                "capabilities": {"portMappings": true}
+              },
+              {
+                "type": "bandwidth",
+                "capabilities": {"bandwidth": true}
+              }
+            ]
+          }
+      EOF
     ignore_error: true
 
   gen:node:one:
     cmds:
-      - sleep 0.01 && [ ! -d "/etc/rancher/k3s/" ] && mkdir -p /etc/rancher/k3s
-      - rm {{.K3S_CONFIG}}
-      - |
-        cat << EOF > {{.K3S_CONFIG}}
-        node-name: "node-one"
-        node-ip: "${NODE_ONE_IP},{{.IPV6_NETWORK}}"
-        cluster-init: true
-        tls-san:
-          - "${NODE_ONE_IP}"
-          - "${NODE_TWO_IP}"
-          - "${NODE_THREE_IP}"
+    - sleep 0.01 && [ ! -d "/etc/rancher/k3s/" ] && mkdir -p /etc/rancher/k3s
+    - rm {{.K3S_CONFIG}}
+    - |
+      cat << EOF > {{.K3S_CONFIG}}
+      node-name: "node-one"
+      node-ip: "${NODE_ONE_IP},{{.IPV6_NETWORK}}"
+      cluster-init: true
+      tls-san:
+        - "${NODE_ONE_IP}"
+        - "${NODE_TWO_IP}"
+        - "${NODE_THREE_IP}"
 
-        {{- if eq .NETWORKING "calico"}}
-        # Networking
-        flannel-backend: "none"
-        disable-network-policy: true
-        disable-cloud-controller: true
-        {{- end}}
+      {{- if eq .NETWORKING "calico"}}
+      # Networking
+      flannel-backend: "none"
+      disable-network-policy: true
+      disable-cloud-controller: true
+      {{- end}}
 
-        {{- if eq .S3_BACKUP "true"}}
-        etcd-s3: true
-        etcd-snapshot-schedule-cron: "0 */12 * * *"
-        etcd-snapshot-retention: "20"
-        etcd-s3-endpoint: "${S3_ADDRESS}"
-        etcd-s3-skip-ssl-verify: "true"
-        etcd-s3-access-key: "${S3_ID}"
-        etcd-s3-secret-key: "${S3_SECRET}"
-        etcd-s3-bucket: "${S3_BUCKET}"
-        etcd-s3-folder: "backups"
-        {{- end}}
+      {{- if eq .S3_BACKUP "true"}}
+      etcd-s3: true
+      etcd-snapshot-schedule-cron: "0 */12 * * *"
+      etcd-snapshot-retention: "20"
+      etcd-s3-endpoint: "${S3_ADDRESS}"
+      etcd-s3-skip-ssl-verify: "true"
+      etcd-s3-access-key: "${S3_ID}"
+      etcd-s3-secret-key: "${S3_SECRET}"
+      etcd-s3-bucket: "${S3_BUCKET}"
+      etcd-s3-folder: "backups"
+      {{- end}}
 
-        # Internal Networking
+      # Internal Networking
 
-        {{- if eq .DUALSTACK "true"}}
-        cluster-cidr: "{{.POD_IPV4_CIDR}},{{.POD_IPV6_CIDR}}"
-        service-cidr: "{{.SVC_IPV4_CIDR}},{{.SVC_IPV6_CIDR}}"
-        {{- else }}
-        cluster-cidr: "{{.POD_IPV4_CIDR}}"
-        service-cidr: "{{.SVC_IPV4_CIDR}}"
-        {{- end}}
-        cluster-domain: "{{.CLUSTER_DOMAIN}}"
+      {{- if eq .DUALSTACK "true"}}
+      cluster-cidr: "{{.POD_IPV4_CIDR}},{{.POD_IPV6_CIDR}}"
+      service-cidr: "{{.SVC_IPV4_CIDR}},{{.SVC_IPV6_CIDR}}"
+      {{- else }}
+      cluster-cidr: "{{.POD_IPV4_CIDR}}"
+      service-cidr: "{{.SVC_IPV4_CIDR}}"
+      {{- end}}
+      cluster-domain: "{{.CLUSTER_DOMAIN}}"
 
-        # ETCD
-        {{- if eq .ETCD "true"}}
-        etcd-expose-metrics: true
-        {{- end}}
+      # ETCD
+      {{- if eq .ETCD "true"}}
+      etcd-expose-metrics: true
+      {{- end}}
 
-        # Auth
-        write-kubeconfig-mode: "{{.KUBECONFIG_MODE}}"
-        write-kubeconfig: "${KUBECONFIG_PATH}"
+      # Auth
+      write-kubeconfig-mode: "{{.KUBECONFIG_MODE}}"
+      write-kubeconfig: "${KUBECONFIG_PATH}"
 
-        # Advanced Parameters
-        kubelet-arg:
-          - "node-ip=0.0.0.0"
-          - "container-runtime=remote"
-          - "node-status-update-frequency=4s"
-          - "eviction-soft=memory.available<1Gi"
-          - "kube-reserved=cpu=200m,memory=300Mi"
-          - "system-reserved=cpu=6000m,memory=14Gi"
-        {{- if eq .DUALSTACK "true"}}
-          - "feature-gates=MixedProtocolLBService=true"
-        {{- end}}
-          - "feature-gates=GracefulNodeShutdown=true"
-        kube-controller-manager-arg:
-          - "bind-address=0.0.0.0"
-          - "node-monitor-period=4s"
-          - "node-monitor-grace-period=16s"
-          - "pod-eviction-timeout=20s"
-        {{- if eq .DUALSTACK "true"}}
-          - "feature-gates=MixedProtocolLBService=true"
-        {{- end}}
-          - "feature-gates=GracefulNodeShutdown=true"
-        kube-proxy-arg:
-          - "metrics-bind-address=0.0.0.0"
-        {{- if eq .DUALSTACK "true"}}
-          - "feature-gates=MixedProtocolLBService=true"
-        {{- end}}
-          - "feature-gates=GracefulNodeShutdown=true"
-        kube-scheduler-arg:
-          - "bind-address=0.0.0.0"
-        {{- if eq .DUALSTACK "true"}}
-          - "feature-gates=MixedProtocolLBService=true"
-        {{- end}}
-          - "feature-gates=GracefulNodeShutdown=true"
-        kube-apiserver-arg:
-          - "default-not-ready-toleration-seconds=20"
-          - "default-unreachable-toleration-seconds=20"
-        {{- if eq .DUALSTACK "true"}}
-          - "feature-gates=MixedProtocolLBService=true"
-        {{- end}}
-          - "feature-gates=GracefulNodeShutdown=true"
-          - "feature-gates=ReadWriteOncePod=true"
-          - "anonymous-auth=true"
-        disable:
-          - traefik
-          - local-storage
-          - servicelb
-        EOF
+      # Advanced Parameters
+      kubelet-arg:
+        - "node-ip=0.0.0.0"
+        - "container-runtime=remote"
+        - "node-status-update-frequency=4s"
+        - "eviction-soft=memory.available<1Gi"
+        - "kube-reserved=cpu=200m,memory=300Mi"
+        - "system-reserved=cpu=6000m,memory=17Gi"
+        - "feature-gates=InPlacePodVerticalScaling=true"
+      kube-controller-manager-arg:
+        - "bind-address=0.0.0.0"
+        - "node-monitor-period=4s"
+        - "node-monitor-grace-period=16s"
+        - "pod-eviction-timeout=20s"
+        - "feature-gates=InPlacePodVerticalScaling=true"
+      kube-proxy-arg:
+        - "metrics-bind-address=0.0.0.0"
+      kube-scheduler-arg:
+        - "bind-address=0.0.0.0"
+      kube-apiserver-arg:
+        - "feature-gates=InPlacePodVerticalScaling=true"
+        - "default-not-ready-toleration-seconds=20"
+        - "default-unreachable-toleration-seconds=20"
+      # https://github.com/kubernetes/enhancements/issues/3488
+        - "feature-gates=ValidatingAdmissionPolicy=true"
+      # https://github.com/kubernetes/enhancements/blob/master/keps/sig-api-machinery/3157-watch-list/README.md#summary
+        - "feature-gates=WatchList=true"
+        - "anonymous-auth=true"
+      disable:
+        - traefik
+        - local-storage
+        - servicelb
+      EOF
     ignore_error: true
 
   gen:node:one:dry:
     cmds:
-      - |
-        cat << EOF > example.yaml
-        node-name: "node-one"
-        node-ip: "${NODE_ONE_IP},{{.IPV6_NETWORK}}"
-        cluster-init: true
-        tls-san:
-          - "${NODE_ONE_IP}"
-          - "${NODE_TWO_IP}"
-          - "${NODE_THREE_IP}"
+    - |
+      cat << EOF > example.yaml
+      node-name: "node-one"
+      node-ip: "${NODE_ONE_IP},{{.IPV6_NETWORK}}"
+      cluster-init: true
+      tls-san:
+        - "${NODE_ONE_IP}"
+        - "${NODE_TWO_IP}"
+        - "${NODE_THREE_IP}"
 
-        {{- if eq .NETWORKING "calico"}}
-        # Networking
-        flannel-backend: "none"
-        disable-network-policy: true
-        disable-cloud-controller: true
-        {{- end}}
+      {{- if eq .NETWORKING "calico"}}
+      # Networking
+      flannel-backend: "none"
+      disable-network-policy: true
+      disable-cloud-controller: true
+      {{- end}}
 
-        {{- if eq .S3_BACKUP "true"}}
-        etcd-s3: true
-        etcd-snapshot-schedule-cron: "0 */12 * * *"
-        etcd-snapshot-retention: "20"
-        etcd-s3-endpoint: "${S3_ADDRESS}"
-        etcd-s3-skip-ssl-verify: "true"
-        etcd-s3-access-key: "${S3_ID}"
-        etcd-s3-secret-key: "${S3_SECRET}"
-        etcd-s3-bucket: "${S3_BUCKET}"
-        etcd-s3-folder: "backups"
-        {{- end}}
+      {{- if eq .S3_BACKUP "true"}}
+      etcd-s3: true
+      etcd-snapshot-schedule-cron: "0 */12 * * *"
+      etcd-snapshot-retention: "20"
+      etcd-s3-endpoint: "${S3_ADDRESS}"
+      etcd-s3-skip-ssl-verify: "true"
+      etcd-s3-access-key: "${S3_ID}"
+      etcd-s3-secret-key: "${S3_SECRET}"
+      etcd-s3-bucket: "${S3_BUCKET}"
+      etcd-s3-folder: "backups"
+      {{- end}}
 
-        {{- if eq .DUALSTACK "true"}}
+      # Internal Networking
 
-        # Internal Networking
+      {{- if eq .DUALSTACK "true"}}
+      cluster-cidr: "{{.POD_IPV4_CIDR}},{{.POD_IPV6_CIDR}}"
+      service-cidr: "{{.SVC_IPV4_CIDR}},{{.SVC_IPV6_CIDR}}"
+      {{- else }}
+      cluster-cidr: "{{.POD_IPV4_CIDR}}"
+      service-cidr: "{{.SVC_IPV4_CIDR}}"
+      {{- end}}
+      cluster-domain: "{{.CLUSTER_DOMAIN}}"
 
-        {{- if eq .DUALSTACK "true"}}
-        cluster-cidr: "{{.POD_IPV4_CIDR}},{{.POD_IPV6_CIDR}}"
-        service-cidr: "{{.SVC_IPV4_CIDR}},{{.SVC_IPV6_CIDR}}"
-        {{- else }}
-        cluster-cidr: "{{.POD_IPV4_CIDR}}"
-        service-cidr: "{{.SVC_IPV4_CIDR}}"
-        {{- end}}
-        cluster-domain: "{{.CLUSTER_DOMAIN}}"
+      # ETCD
+      {{- if eq .ETCD "true"}}
+      etcd-expose-metrics: true
+      {{- end}}
 
-        # ETCD
-        {{- if eq .ETCD "true"}}
-        etcd-expose-metrics: true
-        {{- end}}
+      # Auth
+      write-kubeconfig-mode: "{{.KUBECONFIG_MODE}}"
+      write-kubeconfig: "${KUBECONFIG_PATH}"
 
-        # Auth
-        write-kubeconfig-mode: "{{.KUBECONFIG_MODE}}"
-        write-kubeconfig: "${KUBECONFIG_PATH}"
-
-        # Advanced Parameters
-        kubelet-arg:
-          - "node-ip=0.0.0.0"
-          - "container-runtime=remote"
-          - "node-status-update-frequency=4s"
-          - "eviction-soft=memory.available<1Gi"
-          - "kube-reserved=cpu=200m,memory=300Mi"
-          - "system-reserved=cpu=6000m,memory=14Gi"
-        {{- if eq .DUALSTACK "true"}}
-          - "feature-gates=MixedProtocolLBService=true"
-        {{- end}}
-          - "feature-gates=GracefulNodeShutdown=true"
-        kube-controller-manager-arg:
-          - "bind-address=0.0.0.0"
-          - "node-monitor-period=4s"
-          - "node-monitor-grace-period=16s"
-          - "pod-eviction-timeout=20s"
-        {{- if eq .DUALSTACK "true"}}
-          - "feature-gates=MixedProtocolLBService=true"
-        {{- end}}
-          - "feature-gates=GracefulNodeShutdown=true"
-        kube-proxy-arg:
-          - "metrics-bind-address=0.0.0.0"
-        {{- if eq .DUALSTACK "true"}}
-          - "feature-gates=MixedProtocolLBService=true"
-        {{- end}}
-          - "feature-gates=GracefulNodeShutdown=true"
-        kube-scheduler-arg:
-          - "bind-address=0.0.0.0"
-        {{- if eq .DUALSTACK "true"}}
-          - "feature-gates=MixedProtocolLBService=true"
-        {{- end}}
-          - "feature-gates=GracefulNodeShutdown=true"
-        kube-apiserver-arg:
-          - "default-not-ready-toleration-seconds=20"
-          - "default-unreachable-toleration-seconds=20"
-        {{- if eq .DUALSTACK "true"}}
-          - "feature-gates=MixedProtocolLBService=true"
-        {{- end}}
-          - "feature-gates=GracefulNodeShutdown=true"
-          - "feature-gates=ReadWriteOncePod=true"
-          - "anonymous-auth=true"
-        disable:
-          - traefik
-          - local-storage
-          - servicelb
-        EOF
-      - cat example.yaml
-      - rm example.yaml
+      # Advanced Parameters
+      kubelet-arg:
+        - "node-ip=0.0.0.0"
+        - "container-runtime=remote"
+        - "node-status-update-frequency=4s"
+        - "eviction-soft=memory.available<1Gi"
+        - "kube-reserved=cpu=200m,memory=300Mi"
+        - "system-reserved=cpu=6000m,memory=17Gi"
+        - "feature-gates=InPlacePodVerticalScaling=true"
+      kube-controller-manager-arg:
+        - "bind-address=0.0.0.0"
+        - "node-monitor-period=4s"
+        - "node-monitor-grace-period=16s"
+        - "pod-eviction-timeout=20s"
+        - "feature-gates=InPlacePodVerticalScaling=true"
+      kube-proxy-arg:
+        - "metrics-bind-address=0.0.0.0"
+      kube-scheduler-arg:
+        - "bind-address=0.0.0.0"
+      kube-apiserver-arg:
+        - "feature-gates=InPlacePodVerticalScaling=true"
+        - "default-not-ready-toleration-seconds=20"
+        - "default-unreachable-toleration-seconds=20"
+      # https://github.com/kubernetes/enhancements/issues/3488
+        - "feature-gates=ValidatingAdmissionPolicy=true"
+      # https://github.com/kubernetes/enhancements/blob/master/keps/sig-api-machinery/3157-watch-list/README.md#summary
+        - "feature-gates=WatchList=true"
+        - "anonymous-auth=true"
+      disable:
+        - traefik
+        - local-storage
+        - servicelb
+      EOF
+    - cat example.yaml
+    - rm example.yaml
     ignore_error: true
 
   gen:node:two:
     cmds:
-      - sleep 0.01 && [ ! -d "/etc/rancher/k3s/" ] && mkdir -p /etc/rancher/k3s
-      - rm {{.K3S_CONFIG}}
-      - |
-        cat << EOF > {{.K3S_CONFIG}}
-        node-name: "node-two"
-        server: https://${NODE_ONE_IP}:6443
-        {{- if eq .DUALSTACK "true"}}
-        node-ip: "${NODE_TWO_IP},{{.NODE_TWO_IPV6}}"
-        {{- else }}
-        node-ip: "${NODE_TWO_IP}"
-        {{- end}}
+    - sleep 0.01 && [ ! -d "/etc/rancher/k3s/" ] && mkdir -p /etc/rancher/k3s
+    - rm {{.K3S_CONFIG}}
+    - |
+      cat << EOF > {{.K3S_CONFIG}}
+      node-name: "node-two"
+      server: https://${NODE_ONE_IP}:6443
+      {{- if eq .DUALSTACK "true"}}
+      node-ip: "${NODE_TWO_IP},{{.NODE_TWO_IPV6}}"
+      {{- else }}
+      node-ip: "${NODE_TWO_IP}"
+      {{- end}}
 
-        tls-san:
-          - "${NODE_ONE_IP}"
-          - "${NODE_TWO_IP}"
-          - "${NODE_THREE_IP}"
+      tls-san:
+        - "${NODE_ONE_IP}"
+        - "${NODE_TWO_IP}"
+        - "${NODE_THREE_IP}"
 
-        {{- if eq .NETWORKING "calico"}}
-        # Calico networking
-        flannel-backend: "none"
-        disable-network-policy: true
-        disable-cloud-controller: true
-        {{- end}}
+      {{- if eq .NETWORKING "calico"}}
+      # Calico networking
+      flannel-backend: "none"
+      disable-network-policy: true
+      disable-cloud-controller: true
+      {{- end}}
 
-        # Internal Networking
+      # Internal Networking
 
-        {{- if eq .DUALSTACK "true"}}
-        cluster-cidr: "{{.POD_IPV4_CIDR}},{{.POD_IPV6_CIDR}}"
-        service-cidr: "{{.SVC_IPV4_CIDR}},{{.SVC_IPV6_CIDR}}"
-        {{- else }}
-        cluster-cidr: "{{.POD_IPV4_CIDR}}"
-        service-cidr: "{{.SVC_IPV4_CIDR}}"
-        {{- end}}
+      {{- if eq .DUALSTACK "true"}}
+      cluster-cidr: "{{.POD_IPV4_CIDR}},{{.POD_IPV6_CIDR}}"
+      service-cidr: "{{.SVC_IPV4_CIDR}},{{.SVC_IPV6_CIDR}}"
+      {{- else }}
+      cluster-cidr: "{{.POD_IPV4_CIDR}}"
+      service-cidr: "{{.SVC_IPV4_CIDR}}"
+      {{- end}}
 
-        cluster-domain: "{{.CLUSTER_DOMAIN}}"
+      cluster-domain: "{{.CLUSTER_DOMAIN}}"
 
-        # Auth
-        write-kubeconfig-mode: "{{.KUBECONFIG_MODE}}"
-        write-kubeconfig: "${KUBECONFIG_PATH}"
-        token: "${K3S_NODE_TOKEN}"
+      # Auth
+      write-kubeconfig-mode: "{{.KUBECONFIG_MODE}}"
+      write-kubeconfig: "${KUBECONFIG_PATH}"
+      token: "${K3S_NODE_TOKEN}"
 
-        # Advanced Parameters
-        kubelet-arg:
-          - "node-ip=0.0.0.0"
-          - "node-status-update-frequency=4s"
-        {{- if eq .DUALSTACK "true"}}
-          - "feature-gates=MixedProtocolLBService=true"
-        {{- end}}
-          - "feature-gates=GracefulNodeShutdown=true"
-        kube-controller-manager-arg:
-          - "bind-address=0.0.0.0"
-          - "node-monitor-period=4s"
-          - "node-monitor-grace-period=16s"
-          - "pod-eviction-timeout=20s"
-        {{- if eq .DUALSTACK "true"}}
-          - "feature-gates=MixedProtocolLBService=true"
-        {{- end}}
-          - "feature-gates=GracefulNodeShutdown=true"
-        kube-proxy-arg:
-          - "metrics-bind-address=0.0.0.0"
-        {{- if eq .DUALSTACK "true"}}
-          - "feature-gates=MixedProtocolLBService=true"
-        {{- end}}
-          - "feature-gates=GracefulNodeShutdown=true"
-        kube-scheduler-arg:
-          - "bind-address=0.0.0.0"
-        {{- if eq .DUALSTACK "true"}}
-          - "feature-gates=MixedProtocolLBService=true"
-        {{- end}}
-          - "feature-gates=MixedProtocolLBService=true"
-          - "feature-gates=GracefulNodeShutdown=true"
-        kube-apiserver-arg:
-          - "default-not-ready-toleration-seconds=20"
-          - "default-unreachable-toleration-seconds=20"
-        {{- if eq .DUALSTACK "true"}}
-          - "feature-gates=MixedProtocolLBService=true"
-        {{- end}}
-          - "feature-gates=GracefulNodeShutdown=true"
-          - "feature-gates=ReadWriteOncePod=true"
-          - "anonymous-auth=true"
-        disable:
-          - traefik
-          - local-storage
-          - metrics-server
-          - servicelb
-        EOF
+      # Advanced Parameters
+      kubelet-arg:
+        - "node-ip=0.0.0.0"
+        - "node-status-update-frequency=4s"
+      {{- if eq .DUALSTACK "true"}}
+        - "feature-gates=CloudDualStackNodeIPs=true"
+        - "feature-gates=MixedProtocolLBService=true"
+      {{- end}}
+        - "feature-gates=GracefulNodeShutdown=true"
+      kube-controller-manager-arg:
+        - "bind-address=0.0.0.0"
+        - "node-monitor-period=4s"
+        - "node-monitor-grace-period=16s"
+        - "pod-eviction-timeout=20s"
+      {{- if eq .DUALSTACK "true"}}
+        - "feature-gates=MixedProtocolLBService=true"
+      {{- end}}
+        - "feature-gates=GracefulNodeShutdown=true"
+      kube-proxy-arg:
+        - "metrics-bind-address=0.0.0.0"
+      {{- if eq .DUALSTACK "true"}}
+        - "feature-gates=MixedProtocolLBService=true"
+      {{- end}}
+        - "feature-gates=GracefulNodeShutdown=true"
+      kube-scheduler-arg:
+        - "bind-address=0.0.0.0"
+      {{- if eq .DUALSTACK "true"}}
+        - "feature-gates=MixedProtocolLBService=true"
+      {{- end}}
+        - "feature-gates=MixedProtocolLBService=true"
+        - "feature-gates=GracefulNodeShutdown=true"
+      kube-apiserver-arg:
+        - "default-not-ready-toleration-seconds=20"
+        - "default-unreachable-toleration-seconds=20"
+      {{- if eq .DUALSTACK "true"}}
+        - "feature-gates=CloudDualStackNodeIPs=true"
+        - "feature-gates=MixedProtocolLBService=true"
+      {{- end}}
+        - "feature-gates=GracefulNodeShutdown=true"
+        - "feature-gates=ReadWriteOncePod=true"
+        - "anonymous-auth=true"
+      disable:
+        - traefik
+        - local-storage
+        - metrics-server
+        - servicelb
+      EOF
     ignore_error: true
 
   gen:node:three:
     cmds:
-      - sleep 0.01 && [ ! -d "/etc/rancher/k3s/" ] && mkdir -p /etc/rancher/k3s
-      - rm {{.K3S_CONFIG}}
-      - |
-        cat << EOF > {{.K3S_CONFIG}}
-        node-name: "node-three"
-        server: "https://${NODE_ONE_IP}:6443"
-        token: "${K3S_NODE_TOKEN}"
-        node-ip: "${NODE_THREE_IP},{{.NODE_THREE_IPV6}}"
-        kubelet-arg:
-          - "node-ip=0.0.0.0"
-          - "node-status-update-frequency=4s"
-        {{- if eq .DUALSTACK "true"}}
-          - "feature-gates=MixedProtocolLBService=true"
-        {{- end}}
-          - "feature-gates=GracefulNodeShutdown=true"
-        kube-proxy-arg:
-          - "metrics-bind-address=0.0.0.0"
-        {{- if eq .DUALSTACK "true"}}
-          - "feature-gates=MixedProtocolLBService=true"
-        {{- end}}
-          - "feature-gates=GracefulNodeShutdown=true"
-        EOF
+    - sleep 0.01 && [ ! -d "/etc/rancher/k3s/" ] && mkdir -p /etc/rancher/k3s
+    - rm {{.K3S_CONFIG}}
+    - |
+      cat << EOF > {{.K3S_CONFIG}}
+      node-name: "node-three"
+      server: "https://${NODE_ONE_IP}:6443"
+      token: "${K3S_NODE_TOKEN}"
+      node-ip: "${NODE_THREE_IP},{{.NODE_THREE_IPV6}}"
+      kubelet-arg:
+        - "node-ip=0.0.0.0"
+        - "node-status-update-frequency=4s"
+      {{- if eq .DUALSTACK "true"}}
+        - "feature-gates=MixedProtocolLBService=true"
+      {{- end}}
+        - "feature-gates=GracefulNodeShutdown=true"
+      kube-proxy-arg:
+        - "metrics-bind-address=0.0.0.0"
+      {{- if eq .DUALSTACK "true"}}
+        - "feature-gates=MixedProtocolLBService=true"
+      {{- end}}
+        - "feature-gates=GracefulNodeShutdown=true"
+      EOF
     ignore_error: true
