@@ -52,14 +52,14 @@ tasks:
   server:
     cmds:
     - |
-      sudo curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="${INSTALL_K3S_VERSION}" INSTALL_K3S_EXEC="server" sh -s - -c {{.K3S_CONFIG}} --vpn-auth="name=tailscale,joinKey=$TAILSCALE_KEY
+      sudo curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="${INSTALL_K3S_VERSION}" INSTALL_K3S_EXEC="server" sh -s - -c {{.K3S_CONFIG}} --vpn-auth="name=tailscale,joinKey=$TAILSCALE_KEY"
     ignore_error: true
     interactive: true
 
   agent:
     cmds:
     - |
-      sudo curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="${INSTALL_K3S_VERSION}" INSTALL_K3S_EXEC="agent" sh -s - -c {{.K3S_CONFIG}} --vpn-auth="name=tailscale,joinKey=$TAILSCALE_KEY
+      sudo curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="${INSTALL_K3S_VERSION}" INSTALL_K3S_EXEC="agent" sh -s - -c {{.K3S_CONFIG}} --vpn-auth="name=tailscale,joinKey=$TAILSCALE_KEY"
     ignore_error: true
     interactive: true
 
