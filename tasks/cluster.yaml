@@ -33,6 +33,7 @@ vars:
   CONTAINERD_PATH: /run/k3s/containerd/containerd.sock
   NETWORKING: calico
   KOORDINATOR: false
+  DUALSTACK: true
   ETCD: true
   S3_BACKUP: true
   S3_ADDRESS: ewr1.vultrobjects.com
@@ -44,7 +45,7 @@ env:
   INTERFACE: enp1s0
   KVVERSION: v0.5.7
   K3D_VERSION: v5.4.6
-  INSTALL_K3S_VERSION: v1.27.3-rc1+k3s1
+  INSTALL_K3S_VERSION: v1.27.3+k3s1
 
 silent: true
 
@@ -358,7 +359,6 @@ tasks:
       # Advanced Parameters
       kubelet-arg:
         - "node-ip=0.0.0.0"
-        - "container-runtime=remote"
         - "node-status-update-frequency=4s"
         - "eviction-soft=memory.available<1Gi"
         - "kube-reserved=cpu=200m,memory=300Mi"
@@ -368,7 +368,6 @@ tasks:
         - "bind-address=0.0.0.0"
         - "node-monitor-period=4s"
         - "node-monitor-grace-period=16s"
-        - "pod-eviction-timeout=20s"
         - "feature-gates=InPlacePodVerticalScaling=true"
       kube-proxy-arg:
         - "metrics-bind-address=0.0.0.0"
@@ -378,10 +377,6 @@ tasks:
         - "feature-gates=InPlacePodVerticalScaling=true"
         - "default-not-ready-toleration-seconds=20"
         - "default-unreachable-toleration-seconds=20"
-      # https://github.com/kubernetes/enhancements/issues/3488
-        - "feature-gates=ValidatingAdmissionPolicy=true"
-      # https://github.com/kubernetes/enhancements/blob/master/keps/sig-api-machinery/3157-watch-list/README.md#summary
-        - "feature-gates=WatchList=true"
         - "anonymous-auth=true"
       disable:
         - traefik
