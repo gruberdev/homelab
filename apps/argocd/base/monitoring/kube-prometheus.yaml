@@ -304,11 +304,18 @@ spec:
             enabled: true
             portName: service
             type: ClusterIP
+          # https://github.com/k3s-io/k3s/issues/3619#issuecomment-1425852034
           serviceMonitor:
-            enabled: true
-            path: /metrics
-            scheme: http
-            scrapeTimeout: 30s
+            metricRelabelings:
+              # k3s exposes all metrics on all endpoints, relabel jobs that belong to other components
+              - sourceLabels: [__name__]
+                regex: "scheduler_(.+)"
+                targetLabel: "job"
+                replacement: "kube-scheduler"
+              - sourceLabels: [__name__]
+                regex: "kubeproxy_(.+)"
+                targetLabel: "job"
+                replacement: "kube-proxy"
           sidecar:
             dashboards:
               enabled: true
@@ -345,33 +352,14 @@ spec:
           selfMonitor:
             enabled: false
         kubeApiServer:
-          enabled: true
-          serviceMonitor:
-            jobLabel: component
-            labelLimit: 0
-            labelNameLengthLimit: 0
-            labelValueLengthLimit: 0
-            metricRelabelings:
-            - action: drop
-              regex: apiserver_request_duration_seconds_bucket;(0.15|0.2|0.3|0.35|0.4|0.45|0.6|0.7|0.8|0.9|1.25|1.5|1.75|2|3|3.5|4|4.5|6|7|8|9|15|25|40|50)
-              sourceLabels:
-              - __name__
-              - le
-            sampleLimit: 0
-            selector:
-              matchLabels:
-                component: apiserver
-                provider: kubernetes
-            targetLimit: 0
-          tlsConfig:
-            insecureSkipVerify: true
-            serverName: kubernetes
+          enabled: false
         kubeControllerManager:
           enabled: true
           service:
             enabled: true
           serviceMonitor:
             enabled: true
+            https: false
             labelLimit: 0
             labelNameLengthLimit: 0
             labelValueLengthLimit: 0
@@ -379,19 +367,6 @@ spec:
             targetLimit: 0
         kubeDns:
           enabled: false
-          service:
-            dnsmasq:
-              port: 10054
-              targetPort: 10054
-            skydns:
-              port: 10055
-              targetPort: 10055
-          serviceMonitor:
-            labelLimit: 0
-            labelNameLengthLimit: 0
-            labelValueLengthLimit: 0
-            sampleLimit: 0
-            targetLimit: 0
         kubeEtcd:
           enabled: true
           service:
@@ -426,6 +401,7 @@ spec:
           service:
             enabled: true
           serviceMonitor:
+            https: false
             enabled: true
             labelLimit: 0
             labelNameLengthLimit: 0
@@ -689,30 +665,16 @@ spec:
           service:
             portName: http-metrics
         prometheusOperator:
+          tlsProxy:
+            enabled: false
+          tls:
+            enabled: false
           admissionWebhooks:
             certManager:
               enabled: false
-            enabled: true
+            enabled: false
             patch:
-              enabled: true
-              image:
-                pullPolicy: IfNotPresent
-                registry: registry.k8s.io
-                repository: ingress-nginx/kube-webhook-certgen
-                tag: v1.3.0
-              nodeSelector:
-                kubernetes.io/arch: amd64
-              resources:
-                limits:
-                  cpu: 350m
-                  memory: 512Mi
-                requests:
-                  cpu: 150m
-                  memory: 256Mi
-              securityContext:
-                runAsGroup: 2000
-                runAsNonRoot: true
-                runAsUser: 2000
+              enabled: false
             timeoutSeconds: 10
           containerSecurityContext:
             allowPrivilegeEscalation: false
