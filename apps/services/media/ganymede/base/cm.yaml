@@ -17,7 +17,7 @@ metadata:
   name: ganymede-frontend
 data:
   TZ: "America/Sao_Paulo"
-  API_URL: "https://vods.gruber.dev.br/api"
+  API_URL: "https://vods.gruber.dev.br"
   FRONTEND_HOST: "https://vods.gruber.dev.br"
   NUXT_PUBLIC_CDN_URL: "https://vods.gruber.dev.br"
   NUXT_PUBLIC_API_URL: "https://vods.gruber.dev.br"
