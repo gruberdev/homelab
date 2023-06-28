@@ -9,7 +9,7 @@ data:
   DB_NAME: vods
   DB_SSL: require
   FRONTEND_HOST: "https://vods.gruber.dev.br"
-  NUXT_PUBLIC_API_URL: "https://vods.gruber.dev.br/api"
+  NUXT_PUBLIC_API_URL: "https://vods.gruber.dev.br"
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -20,7 +20,7 @@ data:
   API_URL: "https://vods.gruber.dev.br/api"
   FRONTEND_HOST: "https://vods.gruber.dev.br"
   NUXT_PUBLIC_CDN_URL: "https://vods.gruber.dev.br"
-  NUXT_PUBLIC_API_URL: "https://vods.gruber.dev.br/api"
+  NUXT_PUBLIC_API_URL: "https://vods.gruber.dev.br"
   COOKIE_DOMAIN: "vods.gruber.dev.br"
   SHOW_SSO_LOGIN_BUTTON: "true"
   FORCE_SSO_AUTH: "false"
