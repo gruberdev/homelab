@@ -30,14 +30,14 @@ kind: Ingress
 metadata:
   name: ganymede-backend
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: api.vods.gruber.dev.br
+    external-dns.alpha.kubernetes.io/hostname: api-vods.gruber.dev.br
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
     external-dns.alpha.kubernetes.io/ttl: "120"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
   ingressClassName: nginx
   rules:
-  - host: api.vods.gruber.dev.br
+  - host: api-vods.gruber.dev.br
     http:
       paths:
       - path: /
@@ -49,5 +49,5 @@ spec:
               name: http
   tls:
   - hosts:
-    - api.vods.gruber.dev.br
+    - api-vods.gruber.dev.br
     secretName: backend-vods-tls
