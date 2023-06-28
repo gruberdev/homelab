@@ -20,27 +20,10 @@ spec:
             name: ganymede-taiscale
             port:
               name: web
-  tls:
-  - hosts:
-    - vods.gruber.dev.br
-    secretName: vods-tls
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: ganymede-backend
-  annotations:
-    external-dns.alpha.kubernetes.io/hostname: api-vods.gruber.dev.br
-    external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
-    external-dns.alpha.kubernetes.io/ttl: "120"
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
-spec:
-  ingressClassName: nginx
-  rules:
-  - host: api-vods.gruber.dev.br
+  - host: vods.gruber.dev.br
     http:
       paths:
-      - path: /
+      - path: /api
         pathType: Prefix
         backend:
           service:
@@ -49,5 +32,5 @@ spec:
               name: http
   tls:
   - hosts:
-    - api-vods.gruber.dev.br
-    secretName: backend-vods-tls
+    - vods.gruber.dev.br
+    secretName: vods-tls

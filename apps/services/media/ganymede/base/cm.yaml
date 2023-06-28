@@ -9,7 +9,7 @@ data:
   DB_NAME: vods
   DB_SSL: require
   FRONTEND_HOST: "https://vods.gruber.dev.br"
-  NUXT_PUBLIC_API_URL: "https://api-vods.gruber.dev.br"
+  NUXT_PUBLIC_API_URL: "https://vods.gruber.dev.br/api"
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -17,10 +17,10 @@ metadata:
   name: ganymede-frontend
 data:
   TZ: "America/Sao_Paulo"
-  API_URL: "https://api-vods.gruber.dev.br"
+  API_URL: "https://vods.gruber.dev.br/api"
   FRONTEND_HOST: "https://vods.gruber.dev.br"
   NUXT_PUBLIC_CDN_URL: "https://vods.gruber.dev.br"
-  NUXT_PUBLIC_API_URL: "https://api-vods.gruber.dev.br"
+  NUXT_PUBLIC_API_URL: "https://vods.gruber.dev.br/api"
   COOKIE_DOMAIN: "vods.gruber.dev.br"
   SHOW_SSO_LOGIN_BUTTON: "true"
   FORCE_SSO_AUTH: "false"
