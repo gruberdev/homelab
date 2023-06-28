@@ -10,16 +10,3 @@ spec:
   commonName: vods.gruber.dev.br
   dnsNames:
   - vods.gruber.dev.br
----
-apiVersion: cert-manager.io/v1
-kind: Certificate
-metadata:
-  name: ganymede-backend-cloudflare
-spec:
-  secretName: backend-vods-tls
-  issuerRef:
-    name: letsencrypt-production
-    kind: ClusterIssuer
-  commonName: api-vods.gruber.dev.br
-  dnsNames:
-  - api-vods.gruber.dev.br
