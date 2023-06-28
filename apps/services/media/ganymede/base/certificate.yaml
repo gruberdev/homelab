@@ -20,6 +20,6 @@ spec:
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
-  commonName: api.vods.gruber.dev.br
+  commonName: api-vods.gruber.dev.br
   dnsNames:
-  - api.vods.gruber.dev.br
+  - api-vods.gruber.dev.br
