@@ -6,7 +6,7 @@ spec:
   project: monitoring
   source:
     repoURL: 'https://github.com/prometheus-community/helm-charts.git'
-    targetRevision: kube-prometheus-stack-43.2.1
+    targetRevision: kube-prometheus-stack-47.1.0
     path: charts/kube-prometheus-stack
     helm:
       skipCrds: true
@@ -535,7 +535,7 @@ spec:
             image:
               registry: quay.io
               repository: prometheus/prometheus
-              tag: v2.41.0
+              tag: v2.45.0
             listenLocal: false
             logFormat: logfmt
             logLevel: info
