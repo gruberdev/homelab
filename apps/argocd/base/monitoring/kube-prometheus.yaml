@@ -306,6 +306,10 @@ spec:
             type: ClusterIP
           # https://github.com/k3s-io/k3s/issues/3619#issuecomment-1425852034
           serviceMonitor:
+            enabled: true
+            path: /metrics
+            scheme: http
+            scrapeTimeout: 60s
             metricRelabelings:
               # k3s exposes all metrics on all endpoints, relabel jobs that belong to other components
               - sourceLabels: [__name__]
