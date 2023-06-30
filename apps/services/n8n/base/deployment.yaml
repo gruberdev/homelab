@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: n8n
-        image: n8nio/n8n:0.191.1
+        image: n8nio/n8n:1.0.0
         env:
         - name: DB_POSTGRESDB_USER
           valueFrom: {secretKeyRef: {name: postgres.db-n8n.credentials.postgresql.acid.zalan.do, key: username}}
