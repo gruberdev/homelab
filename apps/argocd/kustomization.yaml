@@ -87,7 +87,7 @@ resources:
 
 # Media Services
 - base/services/media/tanoshi.yaml
-- base/services/media/ganymede.yaml
+# - base/services/media/ganymede.yaml
 # - base/services/media/beets.yaml
 # - base/services/media/lidarr.yaml
 # - base/services/media/bazarr.yaml
