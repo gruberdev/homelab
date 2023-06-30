@@ -2,12 +2,6 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: n8n
-  annotations:
-    argocd-image-updater.argoproj.io/write-back-method: git
-    argocd-image-updater.argoproj.io/write-back-target: kustomization
-    argocd-image-updater.argoproj.io/git-branch: main
-    argocd-image-updater.argoproj.io/image-list: n8n=n8nio/n8n
-    argocd-image-updater.argoproj.io/n8n.platforms: linux/arm64,linux/amd64
 spec:
   project: apps
   source:
