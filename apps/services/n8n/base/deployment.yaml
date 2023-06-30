@@ -23,9 +23,9 @@ spec:
         image: n8nio/n8n:1.0.0
         env:
         - name: DB_POSTGRESDB_USER
-          valueFrom: {secretKeyRef: {name: postgres.db-n8n.credentials.postgresql.acid.zalan.do, key: username}}
+          valueFrom: {secretKeyRef: {name: automateuser.db-n8n.credentials.postgresql.acid.zalan.do, key: username}}
         - name: DB_POSTGRESDB_PASSWORD
-          valueFrom: {secretKeyRef: {name: postgres.db-n8n.credentials.postgresql.acid.zalan.do, key: password}}
+          valueFrom: {secretKeyRef: {name: automateuser.db-n8n.credentials.postgresql.acid.zalan.do, key: password}}
         envFrom:
         - configMapRef:
             name: n8n-cm
@@ -46,12 +46,12 @@ spec:
           httpGet:
             path: /healthz
             port: 5678
-          initialDelaySeconds: 30
+          initialDelaySeconds: 60
         startupProbe:
           httpGet:
             path: /healthz
             port: 5678
-          initialDelaySeconds: 30
+          initialDelaySeconds: 120
         volumeMounts:
         - name: config-storage
           mountPath: /home/node/.n8n
