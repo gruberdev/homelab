@@ -49,7 +49,6 @@ resources:
 - base/apps/agones.yaml
 - base/apps/agones-crd.yaml
 - base/apps/mongodb-crds.yaml
-- base/apps/dbs.yaml
 # - base/apps/wandb.yaml
 # - base/apps/mongodb.yaml
 # - base/apps/adguard.yaml
@@ -88,7 +87,7 @@ resources:
 
 # Media Services
 - base/services/media/tanoshi.yaml
-# - base/services/media/ganymede.yaml
+- base/services/media/ganymede.yaml
 # - base/services/media/beets.yaml
 # - base/services/media/lidarr.yaml
 # - base/services/media/bazarr.yaml
