@@ -5,7 +5,7 @@ metadata:
   labels:
     app: n8n-server
   annotations:
-    link.argocd.argoproj.io/external-link: http://n8n
+    link.argocd.argoproj.io/external-link: https://n8n.gruber.dev.br
 spec:
   replicas: 1
   strategy:
@@ -42,9 +42,19 @@ spec:
           limits:
             cpu: 550m
             memory: 768Mi
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 5678
+          initialDelaySeconds: 30
+        startupProbe:
+          httpGet:
+            path: /healthz
+            port: 5678
+          initialDelaySeconds: 30
         volumeMounts:
         - name: config-storage
-          mountPath: /home/node
+          mountPath: /home/node/.n8n
       volumes:
       - name: config-storage
         persistentVolumeClaim:
