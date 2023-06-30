@@ -6,7 +6,6 @@ data:
   GENERIC_TIMEZONE: "America/Sao_Paulo"
   TZ: "America/Sao_Paulo"
   DB_POSTGRESDB_SSL_REJECT_UNAUTHORIZED: "false"
-  DB_POSTGRESDB_HOST: "db-n8n.databases.svc.cluster.local"
   DB_POSTGRESDB_SCHEMA: "public"
   N8N_LISTEN_ADDRESS: "0.0.0.0"
   N8N_BASIC_AUTH_ACTIVE: "true"
