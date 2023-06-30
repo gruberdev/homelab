@@ -55,9 +55,6 @@ spec:
         volumeMounts:
         - name: config-storage
           mountPath: /home/node/.n8n
-        securityContext:
-          runAsUser: 1000
-          runAsGroup: 1000
       volumes:
       - name: config-storage
         persistentVolumeClaim:
