@@ -523,7 +523,7 @@ spec:
                 - targets: ['kuma-svc.monitoring.svc.cluster.local:8080']
               basic_auth:
                 username: <path:kv/data/kuma#username>
-                password: <path:kv/data/kuma#password
+                password: <path:kv/data/kuma#password>
             allowOverlappingBlocks: false
             arbitraryFSAccessThroughSMs: false
             disableCompaction: false
@@ -677,6 +677,7 @@ spec:
             certManager:
               enabled: false
             enabled: false
+            failurePolicy: ""
             patch:
               enabled: false
             timeoutSeconds: 10
