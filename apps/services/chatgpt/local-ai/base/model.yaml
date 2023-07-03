@@ -7,7 +7,7 @@ urls:
 config_file: |
   backend: llama
   parameters:
-    model: vicuna-7b
+    model: gpt-3.5-turbo
     top_k: 80
     temperature: 0.2
     top_p: 0.7
@@ -17,7 +17,7 @@ config_file: |
     chat: vicuna-chat
 
 files:
-- filename: "ggml-vicuna-7b-uncensored"
+- filename: "gpt-3.5-turbo"
   uri: "https://huggingface.co/TheBloke/Wizard-Vicuna-7B-Uncensored-GGML/resolve/main/Wizard-Vicuna-7B-Uncensored.ggmlv3.q5_0.bin"
 
 
