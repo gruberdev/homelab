@@ -38,6 +38,7 @@ spec:
         - hub.gruber.dev.br
         - proxy.gruber.dev.br
         - vods.gruber.dev.br
+        - openai.gruber.dev.br
         - api.vods.gruber.dev.br
       dns01:
         cloudflare:
