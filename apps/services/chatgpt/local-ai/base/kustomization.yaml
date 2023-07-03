@@ -5,4 +5,4 @@ resources:
 - svc.yaml
 - cm.yaml
 - ingress.yaml
-- certficate.yaml
+- certificate.yaml
