@@ -5,17 +5,21 @@ license: "Apache 2.0"
 urls:
 - https://github.com/lm-sys/FastChat
 config_file: |
-  gpu_layers: 5
+  gpu_layers: 25
   debug: true
+  mmap: false
   embeddings: true
   prompt_cache_all: true
   prompt_cache_ro: false
+  mirostat_eta: 0.8
+  mirostat_tau: 0.9
+  mirostat: 1
   f16: true
   backend: llama
   parameters:
     model: gpt-3.5-turbo
     top_k: 80
-    temperature: 0.2
+    temperature: 1
     top_p: 0.7
   context_size: 1024
   template:
@@ -24,7 +28,7 @@ config_file: |
 
 files:
 - filename: "gpt-3.5-turbo"
-  uri: "https://huggingface.co/TheBloke/Wizard-Vicuna-7B-Uncensored-GGML/resolve/main/Wizard-Vicuna-7B-Uncensored.ggmlv3.q5_0.bin"
+  uri: "https://huggingface.co/TheBloke/Wizard-Vicuna-7B-Uncensored-GGML/resolve/main/Wizard-Vicuna-7B-Uncensored.ggmlv3.q4_1.bin"
 
 
 prompt_templates:
