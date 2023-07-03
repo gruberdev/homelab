@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: localai-storage
+  namespace: mlops
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: iscsi
+  resources:
+    requests:
+      storage: 20Gi
