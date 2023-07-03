@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: local-ai
+  labels:
+    app: local-ai
+spec:
+  selector:
+    matchLabels:
+      app: local-ai
+  replicas: 1
+  template:
+    metadata:
+      name: local-ai
+      labels:
+        app: local-ai
+    spec:
+      runtimeClassName: nvidia
+      initContainers:
+      - name: download-model
+        image: busybox
+        command: ["/bin/sh", "-c"]
+        args:
+        - |
+          MODEL_DIR=/models
+          FORCE_DOWNLOAD=false
+          URLS="https://huggingface.co/TheBloke/Wizard-Vicuna-7B-Uncensored-GGML/blob/main/Wizard-Vicuna-7B-Uncensored.ggmlv3.q5_0.bin ,"
+
+          mkdir -p "$MODEL_DIR"
+
+          # Split urls on commas
+          echo "$URLS" | awk -F, '{for (i=1; i<=NF; i++) print $i}' | while read -r line; do
+              url=$(echo "$line" | awk '{print $1}')
+              auth=$(echo "$line" | awk '{print $2}')
+
+              if [ -n "$url" ]; then
+                  filename=$(basename "$url")
+
+                  if [ "$FORCE_DOWNLOAD" = false ] && [ -f "$MODEL_DIR/$filename" ]; then
+                      echo "File $filename already exists. Skipping download."
+                      continue
+                  fi
+
+                  rm -f "$MODEL_DIR/$filename"
+
+                  echo "Downloading $filename"
+
+                  if [ -n "$auth" ]; then
+                      wget -P "$MODEL_DIR" --header "Authorization: Basic $auth" "$url"
+                  else
+                      wget -P "$MODEL_DIR" "$url"
+                  fi
+
+                  if [ "$?" -ne 0 ]; then
+                      echo "Download failed."
+                  else
+                      echo "Download completed."
+                  fi
+              fi
+          done
+        volumeMounts:
+        - mountPath: /models
+          name: models
+      containers:
+      - name: local-ai
+        image: quay.io/go-skynet/local-ai:v1.20.0-cublas-cuda11-ffmpeg
+        resources:
+          limits:
+            cpu: 4000m
+            memory: 14Gi
+          requests:
+            cpu: 1000m
+            memory: 2Gi
+        envFrom:
+        - configMapRef:
+            name: localai-config
+        volumeMounts:
+        - mountPath: /models
+          name: models
+      volumes:
+      - name: models
+        persistentVolumeClaim:
+          claimName: localai-storage
+      - name: prompt-templates
+        configMap:
+          name: local-ai-prompt-templates
