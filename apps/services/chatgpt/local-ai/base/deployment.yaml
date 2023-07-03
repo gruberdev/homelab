@@ -15,7 +15,7 @@ spec:
       labels:
         app: local-ai
     spec:
-      runtimeClassName: nvidia
+      # runtimeClassName: nvidia
       initContainers:
       - name: download-model
         image: busybox
@@ -63,7 +63,12 @@ spec:
           name: models
       containers:
       - name: local-ai
-        image: quay.io/go-skynet/local-ai:v1.20.0-cublas-cuda11-ffmpeg
+        image: quay.io/go-skynet/local-ai:latest
+        # v1.20.0-cublas-cuda11-ffmpeg
+        ports:
+          - name: http
+            containerPort: 8080
+            protocol: TCP
         resources:
           limits:
             cpu: 4000m
