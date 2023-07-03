@@ -40,6 +40,7 @@ spec:
         - vods.gruber.dev.br
         - openai.gruber.dev.br
         - api.vods.gruber.dev.br
+        - gpt.gruber.dev.br
       dns01:
         cloudflare:
           email: rpg.gruber@gmail.com
