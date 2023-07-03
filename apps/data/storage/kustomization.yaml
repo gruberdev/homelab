@@ -36,7 +36,7 @@ resources:
 - base/actual.yaml
 - base/jupyterlab.yaml
 - base/librex.yaml
-- base/localai.yaml
+- base/local-ai.yaml
 
 #  Postgres Storage
 - base/postgres/ha.yaml
