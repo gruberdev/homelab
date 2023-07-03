@@ -1,4 +1,4 @@
-name: "vicuna"
+name: "gpt-3.5-turbo"
 description: |
   Example Model
 license: "Apache 2.0"
