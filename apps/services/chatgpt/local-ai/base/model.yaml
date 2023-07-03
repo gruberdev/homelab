@@ -5,6 +5,12 @@ license: "Apache 2.0"
 urls:
 - https://github.com/lm-sys/FastChat
 config_file: |
+  gpu_layers: 5
+  debug: true
+  embeddings: true
+  prompt_cache_all: true
+  prompt_cache_ro: false
+  f16: true
   backend: llama
   parameters:
     model: gpt-3.5-turbo
