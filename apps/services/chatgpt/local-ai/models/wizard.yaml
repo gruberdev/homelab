@@ -12,7 +12,7 @@ urls:
 config_file: |
   gpu_layers: 35
   debug: true
-  mmap: false
+  mmap: true
   embeddings: true
   prompt_cache_all: true
   prompt_cache_ro: false
