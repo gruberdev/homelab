@@ -9,13 +9,15 @@ spec:
     matchLabels:
       app: local-ai
   replicas: 1
+  strategy:
+    type: Recreate
   template:
     metadata:
       name: local-ai
       labels:
         app: local-ai
     spec:
-      # runtimeClassName: nvidia
+      runtimeClassName: nvidia
       initContainers:
       - name: download-model
         image: busybox
@@ -63,8 +65,7 @@ spec:
           name: models
       containers:
       - name: local-ai
-        image: quay.io/go-skynet/local-ai:latest
-        # v1.20.0-cublas-cuda11-ffmpeg
+        image: quay.io/go-skynet/local-ai:sha-70674d3-cublas-cuda11-ffmpeg
         ports:
           - name: http
             containerPort: 8080
