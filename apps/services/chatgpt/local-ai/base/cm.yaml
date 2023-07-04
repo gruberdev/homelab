@@ -4,7 +4,7 @@ metadata:
   name: localai-config
 data:
   CONTEXT_SIZE: "1024"
-  THREADS: "8"
+  THREADS: "6"
   MODELS_PATH: "/models"
   CORS: "true"
   CORS_ALLOWS_ORIGINS: "*"
@@ -13,5 +13,6 @@ data:
   NVIDIA_VISIBLE_DEVICES: "all"
   NVIDIA_DRIVER_CAPABILITIES: "all"
   NVIDIA_REQUIRE_CUDA: "cuda>=11.0"
-  REBUILD: "false"
+  REBUILD: "true"
   GALLERIES: "[{\"name\":\"model-gallery\", \"url\":\"github:gruberdev/homelab/apps/services/chatgpt/local-ai/models/index.yaml\"}]"
+  PRELOAD_MODELS: "[{\"url\": \"github:gruberdev/homelab/apps/services/chatgpt/local-ai/models/wizard.yaml\", \"name\": \"gpt-3.5-turbo\", \"overrides\": { \"f16\":true, \"gpu_layers\": 35, \"mmap\": true, \"batch\": 512 } } ]"
