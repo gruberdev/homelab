@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: nitter
-        image: docker.io/zedeus/nitter:38985af6ed30f050201b15425cdac0dc2e286b6d
+        image: ghcr.io/privacydevel/nitter@sha256:325bd66f0196f8d8686e5f6370810d82e66f09f66d041813cb4272492ff366e1
         ports:
         - name: web
           containerPort: 8080
