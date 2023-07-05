@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: nitter
-        image: ghcr.io/privacydevel/nitter@sha256:325bd66f0196f8d8686e5f6370810d82e66f09f66d041813cb4272492ff366e1
+        image: docker.io/grubertech/nitter:latest
         ports:
         - name: web
           containerPort: 8080
