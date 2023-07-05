@@ -5,6 +5,8 @@ metadata:
   annotations:
     redis.opstreelabs.in/recreate-statefulset: "true"
 spec:
+  redisConfig:
+    additionalRedisConfig: nitter-redis-config
   kubernetesConfig:
     image: quay.io/opstree/redis:v7.0.5
     imagePullPolicy: IfNotPresent
