@@ -46,5 +46,4 @@ metadata:
   name: nitter-redis-config
 data:
   redis-additional.conf: |
-    appendonly yes
-    appendfilename "appendonly.aof"
+    appendonly no
