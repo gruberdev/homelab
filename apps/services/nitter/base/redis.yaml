@@ -19,13 +19,14 @@ spec:
     runAsUser: 1000
     fsGroup: 1000
   storage:
-    volumeClaimTemplate:
-      spec:
-        storageClassName: iscsi
-        accessModes: ["ReadWriteOnce"]
-        resources:
-          requests:
-            storage: 1Gi
+    volumeMount:
+      volume:
+        - name: data
+          emptyDir:
+            sizeLimit: 1Gi
+      mountPath:
+        - mountPath: /data
+          name: data
   nodeSelector:
     kubernetes.io/arch: amd64
   redisExporter:
