@@ -2,6 +2,8 @@ apiVersion: redis.redis.opstreelabs.in/v1beta1
 kind: Redis
 metadata:
   name: redis-nitter
+  annotations:
+    redis.opstreelabs.in/recreate-statefulset: "true"
 spec:
   kubernetesConfig:
     image: quay.io/opstree/redis:v7.0.5
@@ -14,8 +16,8 @@ spec:
         cpu: 250m
         memory: 256Mi
   podSecurityContext:
-    runAsUser: 0
-    fsGroup: 0
+    runAsUser: 1000
+    fsGroup: 1000
   storage:
     volumeClaimTemplate:
       spec:
@@ -26,3 +28,7 @@ spec:
             storage: 1Gi
   nodeSelector:
     kubernetes.io/arch: amd64
+  redisExporter:
+    enabled: false
+    image: quay.io/opstree/redis-exporter:v1.44.0
+  priorityClassName: system-cluster-critical
