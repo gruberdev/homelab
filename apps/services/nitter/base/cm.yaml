@@ -39,3 +39,12 @@ data:
     proxyVideos = true
     hlsPlayback = true
     infiniteScroll = false
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nitter-redis-config
+data:
+  redis-additional.conf: |
+    appendonly yes
+    appendfilename "appendonly.aof"
