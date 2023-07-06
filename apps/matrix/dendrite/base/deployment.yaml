@@ -1,0 +1,150 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dendrite
+  labels:
+    app: dendrite
+spec:
+  selector:
+    matchLabels:
+      app: dendrite
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: dendrite
+    spec:
+      initContainers:
+        - name: load-config
+          image: docker.io/grubertech/envsubst:v1.2.0
+          imagePullPolicy: IfNotPresent
+          command: ["sh"]
+          args:
+            - -c
+            - |
+              envsubst -no-empty -i /template/config.yaml.tmpl -o /tmp/dendrite.yaml \
+              && cp -f /tmp/dendrite.yaml /etc/dendrite/dendrite.yaml \
+              && envsubst -no-empty -i /template/whats.yaml.tmpl -o /tmp/whats.yaml \
+              && cp -f /tmp/whats.yaml /bridges/whatsapp.yaml
+          env:
+            - name: POSTGRES_USER
+              valueFrom: { secretKeyRef: { name: synapse.db-matrix.credentials.postgresql.acid.zalan.do, key: username } }
+            - name: POSTGRES_PASSWORD
+              valueFrom: { secretKeyRef: { name: synapse.db-matrix.credentials.postgresql.acid.zalan.do, key: password } }
+            - name: SHARED_SECRET
+              valueFrom: { secretKeyRef: { name: synapse-shared, key: SHARED_SECRET } }
+            - name: AS_TOKEN
+              valueFrom: { secretKeyRef: { name: synapse-shared, key: AS_TOKEN } }
+            - name: HS_TOKEN
+              valueFrom: { secretKeyRef: { name: synapse-shared, key: HS_TOKEN } }
+          envFrom:
+            - configMapRef:
+                name: dendrite-config
+          volumeMounts:
+            - name: dendrite-conf-vol
+              mountPath: /etc/dendrite
+            - name: temp-dir
+              mountPath: /tmp
+            - name: template
+              mountPath: /template/config.yaml.tmpl
+              subPath: config.yaml.tmpl
+              readOnly: true
+            - name: template
+              mountPath: /template/whats.yaml.tmpl
+              subPath: whats.yaml.tmpl
+              readOnly: true
+          resources:
+            limits:
+              cpu: 150m
+              memory: 512Mi
+            requests:
+              cpu: 50m
+              memory: 128Mi
+          securityContext:
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+      containers:
+      - name: dendrite
+        image: ghcr.io/matrix-org/dendrite-monolith:v0.13.0
+        imagePullPolicy: IfNotPresent
+        args:
+          - '--config'
+          - '/etc/dendrite/dendrite.yaml'
+          - '-really-enable-open-registration'
+        ports:
+          - name: http
+            containerPort: 8008
+            protocol: TCP
+        resources:
+          requests:
+            cpu: 150m
+            memory: 256Mi
+          limits:
+            cpu: 500m
+            memory: 2048Mi
+        volumeMounts:
+        - mountPath: /etc/dendrite/
+          name: dendrite-conf-vol
+        - mountPath: /etc/dendrite/secrets/
+          name: dendrite-signing-key
+        - mountPath: /data/media_store
+          name: dendrite-media
+        - mountPath: /data/jetstream
+          name: dendrite-jetstream
+        - mountPath: /data/search
+          name: dendrite-search
+        - name: bridges
+          mountPath: /bridges
+        livenessProbe:
+          initialDelaySeconds: 15
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 10
+          httpGet:
+            path: /_dendrite/monitor/health
+            port: http
+        readinessProbe:
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 10
+          httpGet:
+            path: /_dendrite/monitor/health
+            port: http
+        startupProbe:
+          initialDelaySeconds: 35
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 10
+          httpGet:
+            path: /_dendrite/monitor/up
+            port: http
+      volumes:
+      - name: template
+        secret:
+          secretName: dendrite-vars
+      - name: dendrite-conf-vol
+        persistentVolumeClaim:
+          claimName: "matrix-config"
+      - name: dendrite-signing-key
+        secret:
+          secretName: "dendrite-signing-key"
+      - name: dendrite-jetstream
+        persistentVolumeClaim:
+          claimName: "matrix-jetstream"
+      - name: dendrite-media
+        persistentVolumeClaim:
+          claimName: "matrix-media"
+      - name: dendrite-search
+        persistentVolumeClaim:
+          claimName: "matrix-search"
+      - name: temp-dir
+        emptyDir: {}
+      - name: bridges
+        persistentVolumeClaim:
+          claimName: bridge-config-storage

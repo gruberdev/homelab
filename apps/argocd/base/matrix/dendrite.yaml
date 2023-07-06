@@ -1,12 +1,12 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: whatsapp-bridge
+  name: dendrite
 spec:
   project: matrix
   source:
     repoURL: 'https://github.com/gruberdev/homelab.git'
-    path: apps/matrix/bridges/whatsapp
+    path: apps/matrix/dendrite
     targetRevision: main
   destination:
     namespace: matrix1
