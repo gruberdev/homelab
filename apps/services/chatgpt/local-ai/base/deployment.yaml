@@ -26,7 +26,7 @@ spec:
         - |
           MODEL_DIR=/models
           FORCE_DOWNLOAD=false
-          URLS="https://huggingface.co/TheBloke/WizardLM-13B-V1.0-Uncensored-GGML/raw/main/wizardlm-13b-v1.0-uncensored.ggmlv3.q4_1.bin,"
+          URLS="https://huggingface.co/TheBloke/WizardLM-13B-Uncensored-GGML/resolve/main/wizardLM-13B-Uncensored.ggmlv3.q5_0.bin"
 
           mkdir -p "$MODEL_DIR"
 
