@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloudflared
+data:
+  config.yaml: |
+    tunnel: flame-tunnel
+    credentials-file: /etc/cloudflared/creds/credentials.json
+    no-autoupdate: true
+    ingress:
+    - hostname: flame.gruber.dev.br
+      service: http://flame-svc:5005
+    - service: http_status:404
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cf-configs
+data:
+  TUNNEL_METRICS_UPDATE_FREQ: "120s"
+  TUNNEL_METRICS: "0.0.0.0:2000"
+  TUNNEL_RETRIES: "5"
+  TUNNEL_LOGLEVEL: "warn"
+  TUNNEL_PROTO_LOGLEVEL: "warn"
+  TUNNEL_TRANSPORT_PROTOCOL: "auto"
+  TUNNEL_ORIGIN_CERT: "~/.cloudflared/cert.pem"
