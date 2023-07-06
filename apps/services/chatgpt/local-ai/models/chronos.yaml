@@ -31,7 +31,7 @@ config_file: |
 
 files:
 - filename: "chronos"
-  uri: "https://huggingface.co/TheBloke/chronos-hermes-13B-GGML/raw/main/chronos-hermes-13b.ggmlv3.q5_0.bin"
+  uri: "https://huggingface.co/TheBloke/chronos-hermes-13B-GGML/resolve/main/chronos-hermes-13b.ggmlv3.q5_0.bin"
 
 prompt_templates:
 - name: "chronos-completion"
