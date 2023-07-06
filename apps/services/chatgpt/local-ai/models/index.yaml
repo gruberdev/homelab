@@ -11,7 +11,7 @@
   name: Vicuna-13B-Uncensored-GGML-q41
   license: other
   urls:
-    - https://huggingface.co/TheBloke/Wizard-Vicuna-7B-Uncensored-GGML
+    - https://huggingface.co/TheBloke/Wizard-Vicuna-13B-Uncensored-GGML
   tags:
     - en
     - adapter-transformers
@@ -21,11 +21,11 @@
     - uncensored
   overrides:
     parameters:
-      model: wizardlm-13b-v1.0-uncensored.ggmlv3.q4_1.bin
+      model: Wizard-Vicuna-13B-Uncensored.ggmlv3.q5_0.bin
   files:
-    - filename: wizardlm-13b-v1.0-uncensored.ggmlv3.q4_1.bin
-      sha256: 3d0fc4d4a08e15aeef3053be18003ea1d743e66c2f913ff1f2ff2bb43d97e42a
-      uri: https://huggingface.co/TheBloke/WizardLM-13B-V1.0-Uncensored-GGML/raw/main/wizardlm-13b-v1.0-uncensored.ggmlv3.q4_1.bin
+    - filename: Wizard-Vicuna-13B-Uncensored.ggmlv3.q5_0.bin
+      sha256: 550ed0bd50acace2940bc39a1da89706cb6afd514deb481dacf54e4ccc56d0f8
+      uri: https://huggingface.co/TheBloke/Wizard-Vicuna-13B-Uncensored-GGML/resolve/main/Wizard-Vicuna-13B-Uncensored.ggmlv3.q5_0.bin
 - url: "github:gruberdev/homelab/apps/services/chatgpt/local-ai/models/chronos.yaml"
   name: chronos-hermes-13B-q50
   license: other
@@ -44,4 +44,4 @@
   files:
     - filename: chronos-hermes-13b.ggmlv3.q5_0.bin
       sha256: 5230b3a9b633ce90dfb3298d95f4ba9826ffd398cb23177b37507f6df61cc189
-      uri: https://huggingface.co/TheBloke/chronos-hermes-13B-GGML/raw/main/chronos-hermes-13b.ggmlv3.q5_0.bin
+      uri: https://huggingface.co/TheBloke/chronos-hermes-13B-GGML/resolve/main/chronos-hermes-13b.ggmlv3.q5_0.bin
