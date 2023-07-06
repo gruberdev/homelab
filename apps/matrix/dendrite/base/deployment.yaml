@@ -55,6 +55,8 @@ spec:
               mountPath: /template/whats.yaml.tmpl
               subPath: whats.yaml.tmpl
               readOnly: true
+            - mountPath: /bridges
+              name: bridges
           resources:
             limits:
               cpu: 150m
@@ -98,8 +100,8 @@ spec:
           name: dendrite-jetstream
         - mountPath: /data/search
           name: dendrite-search
-        - name: bridges
-          mountPath: /bridges
+        - mountPath: /bridges
+          name: bridges
         livenessProbe:
           initialDelaySeconds: 15
           periodSeconds: 10
