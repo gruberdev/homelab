@@ -130,7 +130,7 @@ data:
       encryption:
         allow: true
         default: false
-        appservice: false
+        appservice: true
         require: false
         allow_key_sharing: true
         plaintext_mentions: false
