@@ -84,7 +84,7 @@ data:
             batch_delay: 10
       user_avatar_sync: true
       bridge_matrix_leave: true
-      sync_with_custom_puppets: false
+      sync_with_custom_puppets: true
       sync_direct_chat_list: true
       sync_manual_marked_unread: true
       default_bridge_receipts: true
@@ -99,7 +99,7 @@ data:
       private_chat_portal_meta: default
       parallel_member_sync: false
       bridge_notices: true
-      resend_bridge_info: false
+      resend_bridge_info: true
       mute_bridging: false
       archive_tag: null
       pinned_tag: null
@@ -128,9 +128,9 @@ data:
         welcome_unconnected: Use `help` for help or `login` to log in.
         additional_help: ''
       encryption:
-        allow: false
+        allow: true
         default: false
-        appservice: true
+        appservice: false
         require: false
         allow_key_sharing: true
         plaintext_mentions: false
@@ -146,7 +146,7 @@ data:
         verification_levels:
           receive: unverified
           send: unverified
-          share: cross-signed-tofu
+          share: unverified
         rotation:
           enable_custom: false
           milliseconds: 604800000
