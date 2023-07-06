@@ -63,7 +63,7 @@ data:
           storage_quota_mb: null
         unread_hours_threshold: 0
         media_requests:
-          auto_request_media: true
+          auto_request_media: false
           request_method: immediate
           request_local_time: 120
         immediate:
@@ -85,7 +85,7 @@ data:
       user_avatar_sync: true
       bridge_matrix_leave: true
       sync_with_custom_puppets: true
-      sync_direct_chat_list: true
+      sync_direct_chat_list: false
       sync_manual_marked_unread: true
       default_bridge_receipts: true
       default_bridge_presence: true
@@ -110,13 +110,13 @@ data:
       status_broadcast_tag: m.lowpriority
       whatsapp_thumbnail: false
       allow_user_invite: true
-      federate_rooms: true
+      federate_rooms: false
       disable_bridge_alerts: false
       crash_on_stream_replaced: false
       url_previews: true
       caption_in_message: false
       extev_polls: false
-      cross_room_replies: true
+      cross_room_replies: false
       disable_reply_fallbacks: false
       message_handling_timeout:
         error_after: null
