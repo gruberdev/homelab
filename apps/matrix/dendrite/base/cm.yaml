@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dendrite-config
+data:
+  POSTGRES_HOST: "db-matrix.matrix1.svc.cluster.local"
+  POSTGRES_DB: "matrix"
