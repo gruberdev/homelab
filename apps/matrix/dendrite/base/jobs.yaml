@@ -1,0 +1,86 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: dendrite-signing-key
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: dendrite-signing-key
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - secrets
+    resourceNames:
+      - dendrite-signing-key
+    verbs:
+      - get
+      - update
+      - patch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: dendrite-signing-key
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: dendrite-signing-key
+subjects:
+  - kind: ServiceAccount
+    name: dendrite-signing-key
+    namespace: matrix1
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: generate-signing-key
+spec:
+  template:
+    spec:
+      restartPolicy: "Never"
+      serviceAccount: dendrite-signing-key
+      containers:
+      - name: upload-key
+        image: bitnami/kubectl
+        command:
+        - sh
+        - -c
+        - |
+          # check if key already exists
+          key=$(kubectl get secret dendrite-signing-key -o jsonpath="{.data['signing\.key']}" 2> /dev/null)
+          [ $? -ne 0 ] && echo "Failed to get existing secret" && exit 1
+          [ -n "$key" ] && echo "Key already created, exiting." && exit 0
+          # wait for signing key
+          while [ ! -f /etc/dendrite/signing-key.pem ]; do
+            echo "Waiting for signing key.."
+            sleep 5;
+          done
+          # update secret
+          kubectl patch secret dendrite-signing-key -p "{\"data\":{\"signing.key\":\"$(base64 /etc/dendrite/signing-key.pem | tr -d '\n')\"}}"
+          [ $? -ne 0 ] && echo "Failed to update secret." && exit 1
+          echo "Signing key successfully created."
+        volumeMounts:
+        - mountPath: /etc/dendrite/
+          name: signing-key
+          readOnly: true
+      - name: generate-key
+        image: ghcr.io/matrix-org/dendrite-monolith:v0.13.0
+        imagePullPolicy: IfNotPresent
+        command:
+        - sh
+        - -c
+        - |
+          /usr/bin/generate-keys -private-key /etc/dendrite/signing-key.pem
+          chown 1001:1001 /etc/dendrite/signing-key.pem
+        volumeMounts:
+        - mountPath: /etc/dendrite/
+          name: signing-key
+      volumes:
+      - name: signing-key
+        emptyDir: {}
+  parallelism: 1
+  completions: 1
+  backoffLimit: 1

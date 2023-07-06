@@ -2,124 +2,90 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: whats-bridge
+  labels:
+    app: whats-bridge
 spec:
-  replicas: 1
-  strategy:
-    type: Recreate
   selector:
     matchLabels:
       app: whats-bridge
+  replicas: 1
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
         app: whats-bridge
     spec:
-      securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
       initContainers:
-        - name: load-config
-          image: docker.io/grubertech/envsubst:v1.2.0
-          imagePullPolicy: IfNotPresent
-          command: ["sh"]
-          args:
-            - -c
-            - |
-              envsubst -no-empty -i /template/config.yaml.tmpl -o /load/config.yaml \
-              && cp -f /load/config.yaml /data/config.yaml
-          env:
-            - name: BRIDGE_DB_USERNAME
-              valueFrom: { secretKeyRef: { name: matrix.db-bridges.credentials.postgresql.acid.zalan.do, key: username } }
-            - name: BRIDGE_DB_PASSWORD
-              valueFrom: { secretKeyRef: { name: matrix.db-bridges.credentials.postgresql.acid.zalan.do, key: password } }
-            - name: SHARED_SECRET
-              valueFrom: { secretKeyRef: { name: synapse-shared, key: SHARED_SECRET } }
-          volumeMounts:
-            - name: config
-              mountPath: /data
-            - name: temp-dir
-              mountPath: /load
-            - name: template
-              mountPath: /template
-              readOnly: true
-          resources:
-            limits:
-              cpu: 400m
-              memory: 512Mi
-            requests:
-              cpu: 300m
-              memory: 512Mi
-          securityContext:
-            capabilities:
-              drop:
-                - ALL
-            readOnlyRootFilesystem: true
-            allowPrivilegeEscalation: false
-        - name: generate-config
-          image: dock.mau.dev/mautrix/whatsapp:v0.7.1
-          imagePullPolicy: IfNotPresent
-          command: ["mautrix-whatsapp"]
-          args: ["-g", "-c", "/data/config.yaml", "-r", "/bridges/whatsapp.yaml"]
-          volumeMounts:
-            - name: config
-              mountPath: /data
-            - name: bridges
-              mountPath: /bridges
-          resources:
-            limits:
-              cpu: 400m
-              memory: 512Mi
-            requests:
-              cpu: 300m
-              memory: 512Mi
-          securityContext:
-            capabilities:
-              drop:
-                - ALL
-            readOnlyRootFilesystem: true
-            allowPrivilegeEscalation: false
+      - name: load-config
+        image: docker.io/grubertech/envsubst:v1.2.0
+        imagePullPolicy: IfNotPresent
+        command: ["sh"]
+        args:
+        - -c
+        - |
+          envsubst -no-empty -i /template/config.yaml.tmpl -o /load/config.yaml \
+          && cp -f /load/config.yaml /data/config.yaml
+        env:
+          - name: POSTGRES_USER
+            valueFrom: { secretKeyRef: { name: synapse.db-matrix.credentials.postgresql.acid.zalan.do, key: username } }
+          - name: POSTGRES_PASSWORD
+            valueFrom: { secretKeyRef: { name: synapse.db-matrix.credentials.postgresql.acid.zalan.do, key: password } }
+          - name: SHARED_SECRET
+            valueFrom: { secretKeyRef: { name: synapse-shared, key: SHARED_SECRET } }
+          - name: AS_TOKEN
+            valueFrom: { secretKeyRef: { name: synapse-shared, key: AS_TOKEN } }
+          - name: HS_TOKEN
+            valueFrom: { secretKeyRef: { name: synapse-shared, key: HS_TOKEN } }
+        volumeMounts:
+        - name: config
+          mountPath: /data
+        - name: temp-dir
+          mountPath: /load
+        - name: template
+          mountPath: /template
+          readOnly: true
+        resources:
+          limits:
+            cpu: 400m
+            memory: 512Mi
+          requests:
+            cpu: 300m
+            memory: 256Mi
       containers:
-        - name: whats
-          image: dock.mau.dev/mautrix/whatsapp:v0.7.1
-          imagePullPolicy: IfNotPresent
-          command: ["mautrix-whatsapp"]
-          args: ["-n", "-c", "/data/config.yaml"]
-          ports:
-            - name: bridge
-              containerPort: 29318
-              protocol: TCP
-          livenessProbe:
-            tcpSocket:
-              port: 29318
-            periodSeconds: 15
-            initialDelaySeconds: 30
-          readinessProbe:
-            tcpSocket:
-              port: 29318
-            periodSeconds: 5
-            initialDelaySeconds: 10
-          startupProbe:
-            tcpSocket:
-              port: 29318
-            periodSeconds: 30
-            initialDelaySeconds: 120
-          volumeMounts:
-            - name: config
-              mountPath: /data
-          resources:
-            limits:
-              cpu: 400m
-              memory: 512Mi
-            requests:
-              cpu: 300m
-              memory: 256Mi
-          securityContext:
-            capabilities:
-              drop:
-                - ALL
-            readOnlyRootFilesystem: true
-            allowPrivilegeEscalation: false
+      - name: whats
+        image: dock.mau.dev/mautrix/whatsapp:v0.8.6
+        imagePullPolicy: IfNotPresent
+        command: ["mautrix-whatsapp"]
+        args: ["-n", "-c", "/data/config.yaml", "--ignore-unsupported-database", " --ignore-foreign-tables"]
+        securityContext:
+          privileged: true
+        ports:
+        - name: bridge
+          containerPort: 8200
+          protocol: TCP
+        volumeMounts:
+        - name: config
+          mountPath: /data
+        resources:
+          limits:
+            cpu: 400m
+            memory: 722Mi
+          requests:
+            cpu: 300m
+            memory: 256Mi
+        livenessProbe:
+          httpGet:
+            path: /_matrix/mau/live
+            port: 8200
+          initialDelaySeconds: 60
+          periodSeconds: 15
+        startupProbe:
+          httpGet:
+            path: /_matrix/mau/live
+            port: 8200
+          initialDelaySeconds: 300
+          periodSeconds: 15
       volumes:
       - name: template
         configMap:

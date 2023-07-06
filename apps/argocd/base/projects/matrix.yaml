@@ -9,6 +9,8 @@ spec:
   destinations:
   - namespace: matrix
     server: https://kubernetes.default.svc
+  - namespace: matrix1
+    server: https://kubernetes.default.svc
   - namespace: matrix-bots
     server: https://kubernetes.default.svc
   clusterResourceWhitelist:

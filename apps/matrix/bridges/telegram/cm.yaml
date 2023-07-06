@@ -20,7 +20,7 @@ data:
       hostname: 0.0.0.0
       port: 29317
       max_body_size: 1
-      database: postgres://${BRIDGE_DB_USERNAME}:${BRIDGE_DB_PASSWORD}@db-bridges.matrix.svc.cluster.local:5432/telegram?sslmode=require
+      database: postgres://${POSTGRES_USER}:${BRIDGE_DB_PASSWORD}@db-bridges.matrix.svc.cluster.local:5432/telegram?sslmode=require
       database_opts:
         min_size: 1
         max_size: 10
