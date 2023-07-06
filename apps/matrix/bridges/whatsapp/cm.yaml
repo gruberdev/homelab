@@ -5,19 +5,22 @@ metadata:
 data:
   config.yaml.tmpl: |
     homeserver:
-      address: http://matrix-matrix-synapse.matrix.svc.cluster.local:8008
+      address: 'http://dendrite.matrix1.svc.cluster.local:8008'
       domain: matrix.gruber.dev.br
       software: standard
       status_endpoint: null
       message_send_checkpoint_endpoint: null
       async_media: false
+      websocket: false
+      ping_interval_seconds: 0
     appservice:
-      address: http://whats-bridge.matrix.svc.cluster.local:80
+      address: 'http://whats-bridge.matrix1.svc.cluster.local:8200'
       hostname: 0.0.0.0
-      port: 29318
+      port: 8200
       database:
         type: postgres
-        uri: postgres://${BRIDGE_DB_USERNAME}:${BRIDGE_DB_PASSWORD}@db-bridges.matrix.svc.cluster.local:5432/whats?sslmode=require
+        uri: >-
+          postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db-matrix.matrix1.svc.cluster.local:5432/whats?sslmode=require
         max_open_conns: 20
         max_idle_conns: 2
         max_conn_idle_time: null
@@ -26,38 +29,43 @@ data:
       bot:
         username: whatsappbot
         displayname: WhatsApp bridge bot
-        avatar: mxc://maunium.net/NeXNQarUbrlYBiPCpprYsRqr
+        avatar: 'mxc://maunium.net/NeXNQarUbrlYBiPCpprYsRqr'
       ephemeral_events: true
-      as_token: This value is generated when generating the registration
-      hs_token: This value is generated when generating the registration
+      async_transactions: false
+      as_token: ${AS_TOKEN}
+      hs_token: ${HS_TOKEN}
     segment_key: null
+    segment_user_id: null
     metrics:
-      enabled: enabled
-      listen: 0.0.0.0:8001
+      enabled: true
+      listen: '127.0.0.1:8001'
     whatsapp:
       os_name: Mautrix-WhatsApp bridge
       browser_name: unknown
     bridge:
-      username_template: whatsapp_{{.}}
-      displayname_template: '{{if .BusinessName}}{{.BusinessName}}{{else if .PushName}}{{.PushName}}{{else}}{{.JID}}{{end}} (WA)'
+      username_template: 'whatsapp_{{.}}'
+      displayname_template: '{{or .BusinessName .PushName .JID}} (WA)'
       personal_filtering_spaces: false
-      delivery_receipts: false
+      delivery_receipts: true
       message_status_events: false
       message_error_notices: true
       call_start_notices: true
       identity_change_notices: true
       portal_message_buffer: 128
       history_sync:
-        create_portals: true
         backfill: false
-        double_puppet_backfill: false
-        request_full_sync: true
+        max_initial_conversations: -1
+        message_count: 50
+        request_full_sync: false
+        full_sync_config:
+          days_limit: null
+          size_mb_limit: null
+          storage_quota_mb: null
+        unread_hours_threshold: 0
         media_requests:
           auto_request_media: true
           request_method: immediate
           request_local_time: 120
-        max_initial_conversations: -1
-        unread_hours_threshold: 0
         immediate:
           worker_count: 1
           max_events: 10
@@ -76,19 +84,19 @@ data:
             batch_delay: 10
       user_avatar_sync: true
       bridge_matrix_leave: true
-      sync_with_custom_puppets: true
+      sync_with_custom_puppets: false
       sync_direct_chat_list: true
       sync_manual_marked_unread: true
       default_bridge_receipts: true
       default_bridge_presence: true
-      send_presence_on_typing: false
+      send_presence_on_typing: true
       force_active_delivery_receipts: false
       double_puppet_server_map:
-        matrix.gruber.dev.br: http://matrix-matrix-synapse.matrix.svc.cluster.local:8008
-      double_puppet_allow_discovery: false
+        matrix.gruber.dev.br: 'http://dendrite.matrix1.svc.cluster.local:8008'
+      double_puppet_allow_discovery: true
       login_shared_secret_map:
-        matrix.gruber.dev.br: ${SHARED_SECRET}
-      private_chat_portal_meta: false
+        matrix.gruber.dev.br: '${SHARED_SECRET}'
+      private_chat_portal_meta: default
       parallel_member_sync: false
       bridge_notices: true
       resend_bridge_info: false
@@ -101,29 +109,40 @@ data:
       mute_status_broadcast: true
       status_broadcast_tag: m.lowpriority
       whatsapp_thumbnail: false
-      allow_user_invite: false
+      allow_user_invite: true
       federate_rooms: true
-      disappearing_messages_in_groups: false
       disable_bridge_alerts: false
       crash_on_stream_replaced: false
-      url_previews: false
+      url_previews: true
       caption_in_message: false
-      send_whatsapp_edits: false
+      extev_polls: false
+      cross_room_replies: false
+      disable_reply_fallbacks: false
       message_handling_timeout:
         error_after: null
         deadline: 120s
       command_prefix: '!wa'
       management_room_text:
-        welcome: Hello, I'm a WhatsApp bridge bot.
+        welcome: 'Hello, I''m a WhatsApp bridge bot.'
         welcome_connected: Use `help` for help.
         welcome_unconnected: Use `help` for help or `login` to log in.
         additional_help: ''
       encryption:
         allow: false
-        default: false
-        appservice: false
+        default: true
+        appservice: true
         require: false
-        allow_key_sharing: false
+        allow_key_sharing: true
+        plaintext_mentions: false
+        delete_keys:
+          delete_outbound_on_ack: false
+          dont_store_outbound: false
+          ratchet_on_decrypt: false
+          delete_fully_used_on_decrypt: false
+          delete_prev_on_new_session: false
+          delete_on_device_delete: false
+          periodically_delete_expired: false
+          delete_outdated_inbound: false
         verification_levels:
           receive: unverified
           send: unverified
@@ -132,12 +151,13 @@ data:
           enable_custom: false
           milliseconds: 604800000
           messages: 100
+          disable_device_change_key_rotation: false
       provisioning:
         prefix: /_matrix/provision
-        shared_secret: ${SHARED_SECRET}
+        shared_secret: '${SHARED_SECRET}'
       permissions:
-        '*': relay
-        'matrix.gruber.dev.br': user
+        '*': relaybot
+        matrix.gruber.dev.br: user
         '@gruber:matrix.gruber.dev.br': admin
       relay:
         enabled: false
@@ -146,15 +166,13 @@ data:
           m.text: '<b>{{ .Sender.Displayname }}</b>: {{ .Message }}'
           m.notice: '<b>{{ .Sender.Displayname }}</b>: {{ .Message }}'
           m.emote: '* <b>{{ .Sender.Displayname }}</b> {{ .Message }}'
-          m.file: <b>{{ .Sender.Displayname }}</b> sent a file
-          m.image: <b>{{ .Sender.Displayname }}</b> sent an image
-          m.audio: <b>{{ .Sender.Displayname }}</b> sent an audio file
-          m.video: <b>{{ .Sender.Displayname }}</b> sent a video
-          m.location: <b>{{ .Sender.Displayname }}</b> sent a location
+          m.file: '<b>{{ .Sender.Displayname }}</b> sent a file'
+          m.image: '<b>{{ .Sender.Displayname }}</b> sent an image'
+          m.audio: '<b>{{ .Sender.Displayname }}</b> sent an audio file'
+          m.video: '<b>{{ .Sender.Displayname }}</b> sent a video'
+          m.location: '<b>{{ .Sender.Displayname }}</b> sent a location'
     logging:
-      directory: /tmp
-      file_name_format: ""
-      file_date_format: '2006-01-02'
-      file_mode: 384
-      timestamp_format: Jan _2, 2006 15:04:05
-      print_level: debug
+      min_level: debug
+      writers:
+        - type: stdout
+          format: pretty-colored

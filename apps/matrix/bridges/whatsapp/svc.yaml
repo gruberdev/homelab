@@ -1,3 +1,5 @@
+---
+# Source: dendrite/templates/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -5,11 +7,11 @@ metadata:
   labels:
     app: whats-bridge
 spec:
-  type: ClusterIP
   selector:
     app: whats-bridge
   ports:
     - name: bridge
-      port: 80
-      targetPort: 29318
       protocol: TCP
+      port: 8200
+      targetPort: 8200
+  publishNotReadyAddresses: True
