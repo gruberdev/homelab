@@ -5,7 +5,7 @@ metadata:
 data:
   config.yaml.tmpl: |
     homeserver:
-      address: 'http://dendrite.matrix1.svc.cluster.local:8008'
+      address: 'http://dendrite.matrix1.svc.cluster.local:80'
       domain: matrix.gruber.dev.br
       software: standard
       status_endpoint: null
@@ -92,7 +92,7 @@ data:
       send_presence_on_typing: true
       force_active_delivery_receipts: false
       double_puppet_server_map:
-        matrix.gruber.dev.br: 'http://dendrite.matrix1.svc.cluster.local:8008'
+        matrix.gruber.dev.br: 'http://dendrite.matrix1.svc.cluster.local:80'
       double_puppet_allow_discovery: true
       login_shared_secret_map:
         matrix.gruber.dev.br: '${SHARED_SECRET}'
