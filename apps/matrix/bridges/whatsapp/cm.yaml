@@ -116,7 +116,7 @@ data:
       url_previews: true
       caption_in_message: false
       extev_polls: false
-      cross_room_replies: false
+      cross_room_replies: true
       disable_reply_fallbacks: false
       message_handling_timeout:
         error_after: null
@@ -129,7 +129,7 @@ data:
         additional_help: ''
       encryption:
         allow: false
-        default: true
+        default: false
         appservice: true
         require: false
         allow_key_sharing: true
