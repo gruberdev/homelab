@@ -7,3 +7,13 @@ namespace: matrix1
 
 commonAnnotations:
   reloader.stakater.com/auto: "true"
+
+patches:
+- patch: |-
+    - op: add
+      path: "/spec/template/spec/nodeSelector"
+      value:
+        kubernetes.io/hostname: node-one
+  target:
+    kind: Deployment
+    name: dendrite
