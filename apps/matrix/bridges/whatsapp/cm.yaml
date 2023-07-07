@@ -129,7 +129,7 @@ data:
         additional_help: ''
       encryption:
         allow: false
-        default: true
+        default: false
         appservice: true
         require: false
         allow_key_sharing: true
