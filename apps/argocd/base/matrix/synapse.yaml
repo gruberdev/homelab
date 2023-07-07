@@ -125,7 +125,7 @@ spec:
             tolerations: []
             affinity: {}
           generic_worker:
-            enabled: false
+            enabled: true
             generic: true
             listeners: [client, federation]
             csPaths:
