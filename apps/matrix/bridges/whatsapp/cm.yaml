@@ -20,7 +20,7 @@ data:
     push_ephemeral: true
   config.yaml.tmpl: |
     homeserver:
-      address: 'http://dendrite.matrix1.svc.cluster.local:80'
+      address: 'http://matrix-matrix-synapse.matrix1.svc.cluster.local:8008'
       domain: matrix.gruber.dev.br
       software: standard
       status_endpoint: null
@@ -68,7 +68,7 @@ data:
       identity_change_notices: true
       portal_message_buffer: 128
       history_sync:
-        backfill: false
+        backfill: true
         max_initial_conversations: -1
         message_count: 50
         request_full_sync: false
@@ -107,7 +107,7 @@ data:
       send_presence_on_typing: true
       force_active_delivery_receipts: false
       double_puppet_server_map:
-        matrix.gruber.dev.br: 'http://dendrite.matrix1.svc.cluster.local:80'
+        matrix.gruber.dev.br: 'http://matrix-matrix-synapse.matrix1.svc.cluster.local:8008'
       double_puppet_allow_discovery: true
       login_shared_secret_map:
         matrix.gruber.dev.br: '${SHARED_SECRET}'
