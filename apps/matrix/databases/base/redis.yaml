@@ -10,6 +10,9 @@ spec:
   kubernetesConfig:
     image: quay.io/opstree/redis:v7.0.5
     imagePullPolicy: IfNotPresent
+    redisSecret:
+      name: synapse-redis
+      key: passkey
     updateStrategy:
       type: OnDelete
     resources:
