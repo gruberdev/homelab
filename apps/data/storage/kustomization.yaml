@@ -19,7 +19,6 @@ resources:
 # - base/media.yaml
 # - base/lidarr.yaml
 # - base/jellyfin.yaml
-- base/dendrite.yaml
 - base/tanoshi.yaml
 - base/ganymede.yaml
 
@@ -46,9 +45,9 @@ resources:
 - base/postgres/ganymede.yaml
 
 # Matrix
-# - base/matrix/synapse.yaml
-# - base/matrix/bridges.yaml
-# - base/matrix/whats.yaml
+- base/matrix/synapse.yaml
+- base/matrix/bridges.yaml
+- base/matrix/whats.yaml
 # - base/matrix/linkedin.yaml
 # - base/matrix/messenger.yaml
 # - base/matrix/discord.yaml
