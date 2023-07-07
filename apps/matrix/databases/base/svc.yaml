@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: synapse-tailscale
+  labels:
+    app: synapse
+    app.kubernetes.io/instance: matrix
+  annotations:
+    tailscale.com/hostname: "matrix"
+spec:
+  selector:
+    app.kubernetes.io/component: synapse
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8008
+  loadBalancerClass: tailscale
+  type: LoadBalancer
