@@ -63,7 +63,7 @@ data:
           storage_quota_mb: null
         unread_hours_threshold: 0
         media_requests:
-          auto_request_media: false
+          auto_request_media: true
           request_method: immediate
           request_local_time: 120
         immediate:
@@ -84,8 +84,8 @@ data:
             batch_delay: 10
       user_avatar_sync: true
       bridge_matrix_leave: true
-      sync_with_custom_puppets: true
-      sync_direct_chat_list: false
+      sync_with_custom_puppets: false
+      sync_direct_chat_list: true
       sync_manual_marked_unread: true
       default_bridge_receipts: true
       default_bridge_presence: true
@@ -99,7 +99,7 @@ data:
       private_chat_portal_meta: default
       parallel_member_sync: false
       bridge_notices: true
-      resend_bridge_info: true
+      resend_bridge_info: false
       mute_bridging: false
       archive_tag: null
       pinned_tag: null
@@ -110,7 +110,7 @@ data:
       status_broadcast_tag: m.lowpriority
       whatsapp_thumbnail: false
       allow_user_invite: true
-      federate_rooms: false
+      federate_rooms: true
       disable_bridge_alerts: false
       crash_on_stream_replaced: false
       url_previews: true
@@ -128,8 +128,8 @@ data:
         welcome_unconnected: Use `help` for help or `login` to log in.
         additional_help: ''
       encryption:
-        allow: true
-        default: false
+        allow: false
+        default: true
         appservice: true
         require: false
         allow_key_sharing: true
@@ -146,7 +146,7 @@ data:
         verification_levels:
           receive: unverified
           send: unverified
-          share: unverified
+          share: cross-signed-tofu
         rotation:
           enable_custom: false
           milliseconds: 604800000
@@ -176,3 +176,4 @@ data:
       writers:
         - type: stdout
           format: pretty-colored
+    version: 2
