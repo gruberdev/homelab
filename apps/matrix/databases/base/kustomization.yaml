@@ -4,3 +4,4 @@ resources:
 - cm.yaml
 - matrix.yaml
 - redis.yaml
+- secret.yaml
