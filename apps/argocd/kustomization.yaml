@@ -97,7 +97,7 @@ resources:
 # - base/services/media/jellyfin.yaml
 
 # Matrix & utilities
-# - base/matrix/synapse.yaml
+- base/matrix/synapse.yaml
 # - base/matrix/dendrite.yaml
 # - base/matrix/element.yaml
 - base/matrix/dbs.yaml

@@ -3,6 +3,21 @@ kind: ConfigMap
 metadata:
   name: whats-bridge-config
 data:
+  whats.yaml.tmpl: |
+    id: whatsapp
+    url: 'http://whats-bridge.matrix1.svc.cluster.local:8200'
+    as_token: ${AS_TOKEN}
+    hs_token: ${HS_TOKEN}
+    sender_localpart: JIwoVfi2DvXlo3T5TBTctbpfI8KpqWAp
+    rate_limited: false
+    namespaces:
+      users:
+        - regex: '^@whatsappbot:matrix\.gruber\.dev\.br$'
+          exclusive: false
+        - regex: '^@whatsapp_.*:matrix\.gruber\.dev\.br$'
+          exclusive: false
+    de.sorunome.msc2409.push_ephemeral: true
+    push_ephemeral: true
   config.yaml.tmpl: |
     homeserver:
       address: 'http://dendrite.matrix1.svc.cluster.local:80'
