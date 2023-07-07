@@ -25,7 +25,9 @@ spec:
         - -c
         - |
           envsubst -no-empty -i /template/config.yaml.tmpl -o /load/config.yaml \
-          && cp -f /load/config.yaml /data/config.yaml
+          && cp -f /load/config.yaml /data/config.yaml \
+          && envsubst -no-empty -i /template/whats.yaml.tmpl -o /tmp/whats.yaml \
+          && cp -f /tmp/whats.yaml /bridges/whatsapp.yaml
         env:
           - name: POSTGRES_USER
             valueFrom: { secretKeyRef: { name: synapse.db-matrix.credentials.postgresql.acid.zalan.do, key: username } }
@@ -42,8 +44,15 @@ spec:
           mountPath: /data
         - name: temp-dir
           mountPath: /load
+        - name: bridges
+          mountPath: /bridges
         - name: template
-          mountPath: /template
+          mountPath: /template/config.yaml.tmpl
+          subPath: config.yaml.tmpl
+          readOnly: true
+        - name: template
+          mountPath: /template/whats.yaml.tmpl
+          subPath: whats.yaml.tmpl
           readOnly: true
         resources:
           limits:
@@ -90,9 +99,6 @@ spec:
       - name: template
         configMap:
           name: whats-bridge-config
-          items:
-          - key: config.yaml.tmpl
-            path: config.yaml.tmpl
       - name: temp-dir
         emptyDir: {}
       - name: config
