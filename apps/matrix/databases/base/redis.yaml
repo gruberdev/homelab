@@ -1,0 +1,50 @@
+apiVersion: redis.redis.opstreelabs.in/v1beta1
+kind: Redis
+metadata:
+  name: matrix-redis
+  annotations:
+    redis.opstreelabs.in/recreate-statefulset: "true"
+spec:
+  redisConfig:
+    additionalRedisConfig: matrix-redis-config
+  kubernetesConfig:
+    image: quay.io/opstree/redis:v7.0.5
+    imagePullPolicy: IfNotPresent
+    updateStrategy:
+      type: OnDelete
+    resources:
+      requests:
+        cpu: 150m
+        memory: 128Mi
+      limits:
+        cpu: 250m
+        memory: 256Mi
+  podSecurityContext:
+    runAsUser: 1000
+    fsGroup: 1000
+  storage:
+    volumeClaimTemplate:
+      spec:
+        storageClassName: iscsi
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 1Gi
+  nodeSelector:
+    kubernetes.io/arch: amd64
+  redisExporter:
+    enabled: false
+    image: quay.io/opstree/redis-exporter:v1.44.0
+  priorityClassName: system-cluster-critical
+  readinessProbe:
+    failureThreshold: 5
+    initialDelaySeconds: 15
+    periodSeconds: 15
+    successThreshold: 1
+    timeoutSeconds: 5
+  livenessProbe:
+    failureThreshold: 5
+    initialDelaySeconds: 15
+    periodSeconds: 15
+    successThreshold: 1
+    timeoutSeconds: 5
