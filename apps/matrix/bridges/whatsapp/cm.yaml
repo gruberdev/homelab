@@ -160,7 +160,7 @@ data:
         matrix.gruber.dev.br: user
         '@gruber:matrix.gruber.dev.br': admin
       relay:
-        enabled: false
+        enabled: true
         admin_only: true
         message_formats:
           m.text: '<b>{{ .Sender.Displayname }}</b>: {{ .Message }}'
