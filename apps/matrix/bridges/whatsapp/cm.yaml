@@ -99,7 +99,7 @@ data:
       private_chat_portal_meta: default
       parallel_member_sync: false
       bridge_notices: true
-      resend_bridge_info: false
+      resend_bridge_info: true
       mute_bridging: false
       archive_tag: null
       pinned_tag: null
@@ -128,7 +128,7 @@ data:
         welcome_unconnected: Use `help` for help or `login` to log in.
         additional_help: ''
       encryption:
-        allow: true
+        allow: false
         default: false
         appservice: true
         require: false
