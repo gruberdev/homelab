@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: matrix-cloudflare
+spec:
+  secretName: matrix-tls
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: matrix.gruber.dev.br
+  dnsNames:
+    - matrix.gruber.dev.br
