@@ -28,8 +28,8 @@ spec:
           publicBaseurl: 'https://matrix.gruber.dev.br'
           reportStats: false
           enableRegistration: false
-          registrationSharedSecret: <path:kv/data/synapse#registrationSharedSecret>
-          macaroonSecretKey: <path:kv/data/synapse#macaroonSecretKey>
+          registrationSharedSecret: <path:kv/data/matrix#shared-secret>
+          macaroonSecretKey: <path:kv/data/matrix#macaroon-key>
           trustedKeyServers:
             - server_name: matrix.org
           extraListeners: []
@@ -37,17 +37,7 @@ spec:
           enable_registration_without_verification: true
           app_service_config_files:
             - /bridges/whatsapp.yaml
-            - /bridges/telegram.yaml
-            - /bridges/steam.yaml
-            - /bridges/instagram.yaml
-            - /bridges/linkedin.yaml
-            - /bridges/discord.yaml
-            - /bridges/signal.yaml
         extraSecrets: {}
-        #  password_config:
-        #    pepper: ''
-        ## Configuration to apply to the main Synapse pod.
-        ##
         synapse:
           strategy:
             type: Recreate
@@ -87,8 +77,6 @@ spec:
               port: http
             periodSeconds: 5
             initialDelaySeconds: 10
-          nodeSelector:
-            kubernetes.io/hostname: node-one
           tolerations: []
           affinity: {}
         workers:
@@ -136,8 +124,6 @@ spec:
                 path: /health
                 port: metrics
             initialDelaySeconds: 120
-            nodeSelector:
-              kubernetes.io/hostname: node-one
             tolerations: []
             affinity: {}
           generic_worker:
@@ -231,11 +217,11 @@ spec:
           pusher:
             enabled: false
           appservice:
-            enabled: false
+            enabled: true
           federation_sender:
             enabled: false
           media_repository:
-            enabled: false
+            enabled: true
             listeners: [media]
             csPaths:
               - "/_matrix/media/.*"
@@ -286,76 +272,35 @@ spec:
           ## A custom htdocs path, useful when running another image.
           ##
           htdocsPath: /var/www/localhost/htdocs
-          ## The lighttpd image to run.
-          ##
           image:
             repository: m4rcu5/lighttpd
             tag: latest
             pullPolicy: IfNotPresent
-            ## Optionally specify an array of imagePullSecrets.
-            ## Secrets must be manually created in the namespace.
-            ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-            ##
-            # pullSecrets:
-            #   - myRegistryKeySecretName
-          ## Configuration for the pod security policy.
-          ##
           podSecurityContext: {}
-          #  fsGroup: 101
-          #  runAsGroup: 101
-          #  runAsUser: 100
-          ## Configuration for the container security policy.
-          ##
           securityContext: {}
-          #  capabilities:
-          #    drop:
-          #    - ALL
-          #  readOnlyRootFilesystem: true
-          #  runAsNonRoot: true
-          #  runAsUser: 100
-          ## Resource configuration to apply to the well-known server.
-          ##
           resources: {}
-          #  limits:
-          #    cpu: 5m
-          #    memory: 15Mi
-          #  requests:
-          #    cpu: 5m
-          #    memory: 15Mi
-          nodeSelector:
-            kubernetes.io/hostname: node-one
           tolerations: []
           affinity: {}
         postgresql:
           enabled: false
         externalPostgresql:
-          host: db-synapse.matrix.svc.cluster.local
+          host: db-matrix.matrix1.svc.cluster.local
           port: 5432
           user: synapse
-          existingSecret: synapse.db-synapse.credentials.postgresql.acid.zalan.do
+          existingSecret: synapse.db-matrix.credentials.postgresql.acid.zalan.do
           existingSecretPasswordKey: password
-          database: synapse
+          database: matrix
           sslmode: require
           extraArgs: {}
         redis:
-          enabled: true
-          auth:
-            enabled: true
-            password: synapse
-          architecture: standalone
-          master:
-            persistence:
-              enabled: false
-            service:
-              port: 6379
-            statefulset:
-              updateStrategy: Recreate
+          enabled: false
         externalRedis:
+          host: matrix-redis.matrix1.svc.cluster.local
           port: 6379
         persistence:
           enabled: true
           existingClaim: synapse-data
-          storageClass: "longhorn"
+          storageClass: "iscsi"
           accessMode: ReadWriteOnce
           size: 15Gi
         volumePermissions:
@@ -381,7 +326,7 @@ spec:
           enabled: false
 
   destination:
-    namespace: matrix
+    namespace: matrix1
     name: in-cluster
   syncPolicy:
     automated:
@@ -397,7 +342,7 @@ spec:
     - Prune=true
     - Replace=true
     retry:
-      limit: -1
+      limit: 5
       backoff:
         duration: 5s
         factor: 2
