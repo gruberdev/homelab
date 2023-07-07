@@ -4,4 +4,4 @@ metadata:
   name: matrix-redis-config
 data:
   redis-additional.conf: |
-    appendonly no
+    appendonly yes
