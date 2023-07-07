@@ -1,0 +1,49 @@
+apiVersion: "acid.zalan.do/v1"
+kind: postgresql
+metadata:
+  name: db-matrix
+  annotations:
+    argocd.argoproj.io/sync-options: Delete=false
+spec:
+  dockerImage: registry.opensource.zalan.do/acid/spilo-14:2.1-p6
+  teamId: "db"
+  numberOfInstances: 1
+  users:
+    admin:
+    - superuser
+    - createdb
+    synapse: []
+  databases:
+    matrix: synapse
+    discord: synapse
+    whats: synapse
+    instagram: synapse
+    linkedin: synapse
+    telegram: synapse
+    signal: synapse
+    steam: synapse
+  postgresql:
+    version: "14"
+  volume:
+    size: 1Gi
+    storageClass: iscsi
+  additionalVolumes:
+  - name: data
+    mountPath: /home/postgres/pgdata/partitions
+    targetContainers:
+    - postgres
+    volumeSource:
+      PersistentVolumeClaim:
+        claimName: dendrite-storage
+  patroni:
+    initdb:
+      encoding: "UTF8"
+      locale: "C"
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: postgres-operator
+          operator: In
+          values:
+          - enabled

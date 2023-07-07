@@ -3,7 +3,7 @@ kind: Kustomization
 bases:
 - ./base
 
-namespace: matrix
+namespace: matrix1
 
 commonAnnotations:
   reloader.stakater.com/auto: "true"
