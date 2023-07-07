@@ -295,6 +295,8 @@ spec:
         externalRedis:
           host: matrix-redis.matrix1.svc.cluster.local
           port: 6379
+          existingSecret: synapse-redis
+          existingSecretPasswordKey: passkey
         persistence:
           enabled: true
           existingClaim: synapse-data
