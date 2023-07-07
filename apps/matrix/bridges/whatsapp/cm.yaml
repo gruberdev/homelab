@@ -128,7 +128,7 @@ data:
         welcome_unconnected: Use `help` for help or `login` to log in.
         additional_help: ''
       encryption:
-        allow: false
+        allow: true
         default: false
         appservice: true
         require: false
