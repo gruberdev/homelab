@@ -24,8 +24,8 @@ spec:
         args:
         - -c
         - |
-          envsubst -no-empty -i /template/config.yaml.tmpl -o /load/config.yaml \
-          && cp -f /load/config.yaml /data/config.yaml \
+          envsubst -no-empty -i /template/config.yaml.tmpl -o /tmp/config.yaml \
+          && cp -f /tmp/config.yaml /data/config.yaml \
           && envsubst -no-empty -i /template/whats.yaml.tmpl -o /tmp/whats.yaml \
           && cp -f /tmp/whats.yaml /bridges/whatsapp.yaml
         env:
@@ -43,7 +43,7 @@ spec:
         - name: config
           mountPath: /data
         - name: temp-dir
-          mountPath: /load
+          mountPath: /tmp
         - name: bridges
           mountPath: /bridges
         - name: template
