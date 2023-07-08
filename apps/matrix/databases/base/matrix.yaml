@@ -15,6 +15,7 @@ spec:
     synapse: []
   databases:
     matrix: synapse
+    media: synapse
     discord: synapse
     whats: synapse
     instagram: synapse
