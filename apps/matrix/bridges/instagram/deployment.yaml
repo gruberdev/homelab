@@ -22,8 +22,8 @@ spec:
           args:
             - -c
             - |
-              envsubst -no-empty -i /template/config.yaml.tmpl -o /tmp/config.yaml \
-              && cp -f /tmp/config.yaml /data/config.yaml \
+              envsubst -no-empty -i /template/insta-config.yaml.tmpl -o /tmp/insta-config.yaml \
+              && cp -f /tmp/insta-config.yaml /data/config.yaml \
               && envsubst -no-empty -i /template/instagram.yaml.tmpl -o /tmp/instagram.yaml \
               && cp -f /tmp/instagram.yaml /bridges/instagram.yaml
           env:
@@ -47,8 +47,8 @@ spec:
             - name: bridges
               mountPath: /bridges
             - name: template
-              mountPath: /template/config.yaml.tmpl
-              subPath: config.yaml.tmpl
+              mountPath: /template/insta-config.yaml.tmpl
+              subPath: insta-config.yaml.tmpl
               readOnly: true
             - name: template
               mountPath: /template/instagram.yaml.tmpl
