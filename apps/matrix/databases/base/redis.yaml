@@ -23,8 +23,8 @@ spec:
         cpu: 250m
         memory: 256Mi
   podSecurityContext:
-    runAsUser: 1000
-    fsGroup: 1000
+    runAsUser: 65532
+    fsGroup: 65532
   storage:
     volumeClaimTemplate:
       spec:
