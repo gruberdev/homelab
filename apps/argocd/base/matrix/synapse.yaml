@@ -21,7 +21,9 @@ spec:
         publicServerName: 'matrix.gruber.dev.br'
         signingkey:
           job:
-            enabled: true
+            enabled: false
+          existingSecret: matrix-signingkey
+          existingSecretKey: signing.key
         config:
           publicBaseurl: 'https://matrix.gruber.dev.br'
           reportStats: false
