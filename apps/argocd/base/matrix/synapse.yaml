@@ -29,6 +29,7 @@ spec:
           reportStats: false
           enableRegistration: false
           registrationSharedSecret: <path:kv/data/matrix#shared-secret>
+          macaroonSecretKey: <path:kv/data/matrix#shared-secret>
           trustedKeyServers:
             - server_name: matrix.org
           extraListeners: []
@@ -36,6 +37,7 @@ spec:
           enable_registration_without_verification: true
           app_service_config_files:
             - /bridges/whatsapp.yaml
+            - /bridges/instagram.yaml
         extraSecrets: {}
         synapse:
           strategy:
