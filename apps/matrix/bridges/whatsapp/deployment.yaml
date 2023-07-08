@@ -36,9 +36,9 @@ spec:
           - name: SHARED_SECRET
             valueFrom: { secretKeyRef: { name: synapse-shared, key: SHARED_SECRET } }
           - name: AS_TOKEN
-            valueFrom: { secretKeyRef: { name: synapse-shared, key: AS_TOKEN } }
+            valueFrom: { secretKeyRef: { name: synapse-shared, key: AS_WHATS_TOKEN } }
           - name: HS_TOKEN
-            valueFrom: { secretKeyRef: { name: synapse-shared, key: HS_TOKEN } }
+            valueFrom: { secretKeyRef: { name: synapse-shared, key: HS_WHATS_TOKEN } }
         volumeMounts:
         - name: config
           mountPath: /data
