@@ -19,9 +19,6 @@
     - ggml
     - conversational
     - uncensored
-  overrides:
-    parameters:
-      model: Wizard-Vicuna-13B-Uncensored.ggmlv3.q5_0.bin
   files:
     - filename: Wizard-Vicuna-13B-Uncensored.ggmlv3.q5_0.bin
       sha256: 550ed0bd50acace2940bc39a1da89706cb6afd514deb481dacf54e4ccc56d0f8
