@@ -14,6 +14,7 @@ patches:
       path: "/spec/template/spec/nodeSelector"
       value:
         kubernetes.io/arch: amd64
+        kubernetes.io/hostname: node-two
   target:
     kind: Deployment
     name: instagram-bridge

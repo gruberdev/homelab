@@ -29,7 +29,6 @@ spec:
           reportStats: false
           enableRegistration: false
           registrationSharedSecret: <path:kv/data/matrix#shared-secret>
-          macaroonSecretKey: <path:kv/data/matrix#macaroon-key>
           trustedKeyServers:
             - server_name: matrix.org
           extraListeners: []
@@ -47,6 +46,8 @@ spec:
             prometheus.io/port: "9090"
             reloader.stakater.com/auto: "true"
           labels: {}
+          nodeSelector:
+            kubernetes.io/hostname: node-two
           extraEnv: []
           extraVolumes:
             - name: bridges
