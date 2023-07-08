@@ -24,8 +24,8 @@ spec:
         args:
         - -c
         - |
-          envsubst -no-empty -i /template/config.yaml.tmpl -o /tmp/config.yaml \
-          && cp -f /tmp/config.yaml /data/config.yaml \
+          envsubst -no-empty -i /template/config.yaml.tmpl -o /tmp/whats-config.yaml \
+          && cp -f /tmp/whats-config.yaml /data/config.yaml \
           && envsubst -no-empty -i /template/whats.yaml.tmpl -o /tmp/whats.yaml \
           && cp -f /tmp/whats.yaml /bridges/whatsapp.yaml
         env:
@@ -47,8 +47,8 @@ spec:
         - name: bridges
           mountPath: /bridges
         - name: template
-          mountPath: /template/config.yaml.tmpl
-          subPath: config.yaml.tmpl
+          mountPath: /template/whats-config.yaml.tmpl
+          subPath: whats-config.yaml.tmpl
           readOnly: true
         - name: template
           mountPath: /template/whats.yaml.tmpl
