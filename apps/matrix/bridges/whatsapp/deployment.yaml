@@ -27,15 +27,17 @@ spec:
           echo "Substituting variables in /template/whats-config.yaml.tmpl to /tmp/whats-config.yaml" \
           && envsubst -no-empty -i /template/whats-config.yaml.tmpl -o /tmp/whats-config.yaml \
           && echo "Removing /data/config.yaml" \
-          && rm -rf /data/config.yaml || true \
+          && rm -vrf /data/config.yaml || true \
           && echo "Copying /tmp/whats-config.yaml to /data/config.yaml" \
-          && cp -f /tmp/whats-config.yaml /data/config.yaml \
+          && cp -fv /tmp/whats-config.yaml /data/config.yaml \
           && echo "Substituting variables in /template/whats.yaml.tmpl to /tmp/whats.yaml" \
           && envsubst -no-empty -i /template/whats.yaml.tmpl -o /tmp/whats.yaml \
           && echo "Removing /bridges/whatsapp.yaml" \
-          && rm -rf /bridges/whatsapp.yaml || true \
+          && rm -vrf /bridges/whatsapp.yaml || true \
           && echo "Copying /tmp/whats.yaml to /bridges/whatsapp.yaml" \
-          && cp -f /tmp/whats.yaml /bridges/whatsapp.yaml
+          && echo "Files in /bridges before copying:" \
+          && ls -l /bridges \
+          && cp -fv /tmp/whats.yaml /bridges/whatsapp.yaml
         env:
           - name: POSTGRES_USER
             valueFrom: { secretKeyRef: { name: synapse.db-matrix.credentials.postgresql.acid.zalan.do, key: username } }
