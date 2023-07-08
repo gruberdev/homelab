@@ -19,7 +19,7 @@ spec:
           service:
             name: synapse-media-tailscale
             port:
-              name: listener
+              name: web
       - path: /
         pathType: Prefix
         backend:

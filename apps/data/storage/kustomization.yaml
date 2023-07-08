@@ -48,6 +48,7 @@ resources:
 - base/matrix/synapse.yaml
 - base/matrix/bridges.yaml
 - base/matrix/whats.yaml
+- base/matrix/media.yaml
 # - base/matrix/linkedin.yaml
 # - base/matrix/messenger.yaml
 # - base/matrix/discord.yaml
