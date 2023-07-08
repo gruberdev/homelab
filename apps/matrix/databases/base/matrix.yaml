@@ -35,7 +35,7 @@ spec:
     - postgres
     volumeSource:
       PersistentVolumeClaim:
-        claimName: dendrite-storage
+        claimName: synapse-database
   patroni:
     initdb:
       encoding: "UTF8"
