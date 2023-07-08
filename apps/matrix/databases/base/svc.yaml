@@ -17,3 +17,23 @@ spec:
       targetPort: 8008
   loadBalancerClass: tailscale
   type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: synapse-media-tailscale
+  labels:
+    app: synapse
+    app.kubernetes.io/instance: matrix
+  annotations:
+    tailscale.com/hostname: "matrix-media"
+spec:
+  selector:
+    app.kubernetes.io/component: media-repository
+  ports:
+    - name: listener
+      protocol: TCP
+      port: 80
+      targetPort: 8083
+  loadBalancerClass: tailscale
+  type: LoadBalancer
