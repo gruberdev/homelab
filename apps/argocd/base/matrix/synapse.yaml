@@ -219,18 +219,7 @@ spec:
           federation_sender:
             enabled: false
           media_repository:
-            enabled: true
-            listeners: [media]
-            csPaths:
-              - "/_matrix/media/.*"
-              - "/_synapse/admin/v1/purge_media_cache$"
-              - "/_synapse/admin/v1/room/.*/media"
-              - "/_synapse/admin/v1/user/.*/media"
-              - "/_synapse/admin/v1/media/"
-              - "/_synapse/admin/v1/quarantine_media/"
-              - "/_synapse/admin/v1/users/.*/media$"
-            paths:
-              - "/_matrix/media/.*"
+            enabled: false
           user_dir:
             enabled: true
             listeners: [client]
@@ -340,7 +329,6 @@ spec:
     - PruneLast=true
     - ApplyOutOfSyncOnly=false
     - Prune=true
-    - Replace=true
     retry:
       limit: 5
       backoff:
