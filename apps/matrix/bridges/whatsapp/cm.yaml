@@ -99,7 +99,7 @@ data:
             batch_delay: 10
       user_avatar_sync: true
       bridge_matrix_leave: true
-      sync_with_custom_puppets: false
+      sync_with_custom_puppets: true
       sync_direct_chat_list: true
       sync_manual_marked_unread: true
       default_bridge_receipts: true
@@ -111,7 +111,7 @@ data:
       double_puppet_allow_discovery: true
       login_shared_secret_map:
         matrix.gruber.dev.br: '${SHARED_SECRET}'
-      private_chat_portal_meta: default
+      private_chat_portal_meta: always
       parallel_member_sync: false
       bridge_notices: true
       resend_bridge_info: true
