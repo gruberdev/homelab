@@ -68,7 +68,7 @@ data:
       identity_change_notices: true
       portal_message_buffer: 128
       history_sync:
-        backfill: false
+        backfill: true
         max_initial_conversations: -1
         message_count: 50
         request_full_sync: false

@@ -63,7 +63,7 @@ spec:
             memory: 256Mi
       containers:
       - name: whats
-        image: dock.mau.dev/mautrix/whatsapp:v0.8.6
+        image: docker.io/grubertech/whatsapp:v0.9.0
         imagePullPolicy: IfNotPresent
         command: ["mautrix-whatsapp"]
         args: ["-n", "-c", "/data/config.yaml", "--ignore-unsupported-database", " --ignore-foreign-tables"]
