@@ -99,7 +99,7 @@ resources:
 # Matrix & utilities
 - base/matrix/synapse.yaml
 # - base/matrix/dendrite.yaml
-# - base/matrix/element.yaml
+- base/matrix/media.yaml
 - base/matrix/dbs.yaml
 # - base/matrix/proxies.yaml
 
