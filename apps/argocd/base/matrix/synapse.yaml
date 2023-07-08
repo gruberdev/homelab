@@ -129,11 +129,11 @@ spec:
           pusher:
             enabled: false
           appservice:
-            enabled: true
+            enabled: false
           federation_sender:
             enabled: false
           media_repository:
-            enabled: true
+            enabled: false
             listeners: [media]
             csPaths:
               - "/_matrix/media/.*"
@@ -146,7 +146,7 @@ spec:
             paths:
               - "/_matrix/media/.*"
           user_dir:
-            enabled: true
+            enabled: false
             listeners: [client]
             csPaths:
               - "/_matrix/client/(api/v1|r0|v3|unstable)/user_directory/search$"

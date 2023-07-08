@@ -13,13 +13,6 @@ spec:
   - host: matrix.gruber.dev.br
     http:
       paths:
-      - path: /_matrix/media
-        pathType: Prefix
-        backend:
-          service:
-            name: synapse-media-tailscale
-            port:
-              name: web
       - path: /
         pathType: Prefix
         backend:
