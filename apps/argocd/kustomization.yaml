@@ -99,16 +99,15 @@ resources:
 # Matrix & utilities
 - base/matrix/synapse.yaml
 # - base/matrix/dendrite.yaml
-- base/matrix/media.yaml
 - base/matrix/dbs.yaml
 # - base/matrix/proxies.yaml
 
 # Matrix bridges
 - base/matrix/whats.yaml
+- base/matrix/instagram.yaml
 # - base/matrix/telegram.yaml
 # - base/matrix/steam.yaml
 # - base/matrix/linkedin.yaml
-# - base/matrix/instagram.yaml
 # - base/matrix/signal.yaml
 # - base/matrix/discord.yaml
 
