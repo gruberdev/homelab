@@ -8,7 +8,7 @@ spec:
   redisConfig:
     additionalRedisConfig: matrix-redis-config
   kubernetesConfig:
-    image: quay.io/opstree/redis:v7.0.5
+    image: docker.io/grubertech/redis:v7.0.5
     imagePullPolicy: IfNotPresent
     redisSecret:
       name: synapse-redis
@@ -22,9 +22,6 @@ spec:
       limits:
         cpu: 250m
         memory: 256Mi
-  podSecurityContext:
-    runAsUser: 65532
-    fsGroup: 65532
   storage:
     volumeClaimTemplate:
       spec:
