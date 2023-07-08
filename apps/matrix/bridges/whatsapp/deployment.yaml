@@ -25,8 +25,10 @@ spec:
         - -c
         - |
           envsubst -no-empty -i /template/whats-config.yaml.tmpl -o /tmp/whats-config.yaml \
+          && rm -rf /data/config.yaml \
           && cp -f /tmp/whats-config.yaml /data/config.yaml \
           && envsubst -no-empty -i /template/whats.yaml.tmpl -o /tmp/whats.yaml \
+          && rm -rf /bridges/whatsapp.yaml \
           && cp -f /tmp/whats.yaml /bridges/whatsapp.yaml
         env:
           - name: POSTGRES_USER
