@@ -14,10 +14,6 @@ spec:
       labels:
         app: instagram-bridge
     spec:
-      securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
       initContainers:
         - name: load-config
           image: docker.io/grubertech/envsubst:v1.2.0
@@ -26,22 +22,33 @@ spec:
           args:
             - -c
             - |
-              envsubst -no-empty -i /template/config.yaml.tmpl -o /load/config.yaml \
-              && cp -f /load/config.yaml /data/config.yaml
+              envsubst -no-empty -i /template/config.yaml.tmpl -o /tmp/config.yaml \
+              && cp -f /tmp/config.yaml /data/config.yaml \
+              && envsubst -no-empty -i /template/instagram.yaml.tmpl -o /tmp/instagram.yaml \
+              && cp -f /tmp/instagram.yaml /bridges/instagram.yaml
           env:
-            - name: BRIDGE_DB_USERNAME
-              valueFrom: { secretKeyRef: { name: matrix.db-bridges.credentials.postgresql.acid.zalan.do, key: username } }
-            - name: BRIDGE_DB_PASSWORD
-              valueFrom: { secretKeyRef: { name: matrix.db-bridges.credentials.postgresql.acid.zalan.do, key: password } }
-            - name: SHARED_SECRET
-              valueFrom: { secretKeyRef: { name: synapse-shared, key: SHARED_SECRET } }
+          - name: POSTGRES_USER
+            valueFrom: { secretKeyRef: { name: synapse.db-matrix.credentials.postgresql.acid.zalan.do, key: username } }
+          - name: POSTGRES_PASSWORD
+            valueFrom: { secretKeyRef: { name: synapse.db-matrix.credentials.postgresql.acid.zalan.do, key: password } }
+          - name: SHARED_SECRET
+            valueFrom: { secretKeyRef: { name: synapse-shared, key: SHARED_SECRET } }
+          - name: AS_TOKEN
+            valueFrom: { secretKeyRef: { name: synapse-shared, key: AS_TOKEN } }
+          - name: HS_TOKEN
+            valueFrom: { secretKeyRef: { name: synapse-shared, key: HS_TOKEN } }
+          - name: INSTA_SEED
+            valueFrom: { secretKeyRef: { name: synapse-shared, key: INSTA_SEED } }
           volumeMounts:
             - name: config
               mountPath: /data
             - name: temp-dir
-              mountPath: /load
+              mountPath: /tmp
+            - name: bridges
+              mountPath: /bridges
             - name: template
-              mountPath: /template
+              mountPath: /template/instagram.yaml.tmpl
+              subPath: instagram.yaml.tmpl
               readOnly: true
           resources:
             limits:
@@ -50,46 +57,9 @@ spec:
             requests:
               cpu: 150m
               memory: 512Mi
-          securityContext:
-            capabilities:
-              drop:
-                - ALL
-            readOnlyRootFilesystem: true
-            allowPrivilegeEscalation: false
-        - name: generate-config
-          image: dock.mau.dev/mautrix/instagram:v0.2.2
-          imagePullPolicy: IfNotPresent
-          command: ["sh"]
-          env:
-            - name: MAUTRIX_DIRECT_STARTUP
-              value: "true"
-          args:
-            - -c
-            - |
-              python3 -m mautrix_instagram \
-              -g -c "/data/config.yaml" \
-              -r "/bridges/instagram.yaml"
-          volumeMounts:
-            - name: config
-              mountPath: /data
-            - name: bridges
-              mountPath: /bridges
-          resources:
-            limits:
-              cpu: 400m
-              memory: 512Mi
-            requests:
-              cpu: 300m
-              memory: 512Mi
-          securityContext:
-            capabilities:
-              drop:
-                - ALL
-            readOnlyRootFilesystem: true
-            allowPrivilegeEscalation: false
       containers:
         - name: bridge
-          image: dock.mau.dev/mautrix/instagram:v0.2.2
+          image: dock.mau.dev/mautrix/instagram:v0.3.0
           imagePullPolicy: IfNotPresent
           command: ["sh"]
           env:
@@ -101,24 +71,24 @@ spec:
               python3 -m mautrix_instagram \
               -n -c "/data/config.yaml"
           ports:
-            - name: bridge
-              containerPort: 29330
+            - name: http
+              containerPort: 8201
               protocol: TCP
           livenessProbe:
             tcpSocket:
-              port: 29330
+              port: 8201
             periodSeconds: 15
             initialDelaySeconds: 30
           readinessProbe:
             tcpSocket:
-              port: 29330
+              port: 8201
             periodSeconds: 5
             initialDelaySeconds: 10
           startupProbe:
             tcpSocket:
-              port: 29330
+              port: 8201
             periodSeconds: 30
-            initialDelaySeconds: 120
+            initialDelaySeconds: 60
           volumeMounts:
             - name: config
               mountPath: /data
@@ -129,19 +99,10 @@ spec:
             requests:
               cpu: 200m
               memory: 256Mi
-          securityContext:
-            capabilities:
-              drop:
-                - ALL
-            readOnlyRootFilesystem: true
-            allowPrivilegeEscalation: false
       volumes:
       - name: template
-        configMap:
-          name: instagram-bridge-config
-          items:
-          - key: config.yaml.tmpl
-            path: config.yaml.tmpl
+        secret:
+          secretName: instagram-bridge-config
       - name: temp-dir
         emptyDir: {}
       - name: config
