@@ -35,6 +35,7 @@ spec:
           enable_registration_without_verification: true
           app_service_config_files:
             - /bridges/whatsapp.yaml
+            - /bridges/instagram.yaml
         extraSecrets: {}
         synapse:
           strategy:
