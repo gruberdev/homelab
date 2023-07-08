@@ -47,6 +47,10 @@ spec:
             - name: bridges
               mountPath: /bridges
             - name: template
+              mountPath: /template/config.yaml.tmpl
+              subPath: config.yaml.tmpl
+              readOnly: true
+            - name: template
               mountPath: /template/instagram.yaml.tmpl
               subPath: instagram.yaml.tmpl
               readOnly: true
