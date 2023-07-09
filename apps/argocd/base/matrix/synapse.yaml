@@ -58,7 +58,7 @@ spec:
             - name: instagram-bridge
               persistentVolumeClaim:
                 claimName: registration-instagram-matrix
-          volumeMounts:
+          extraVolumeMounts:
             - name: bridges
               mountPath: /bridges
             - name: instagram-bridge
@@ -103,8 +103,18 @@ spec:
               prometheus.io/port: "9090"
               reloader.stakater.com/auto: "true"
             extraEnv: []
-            volumes: []
-            volumeMounts: []
+            volumes:
+              - name: bridges
+                persistentVolumeClaim:
+                  claimName: bridge-config-storage
+              - name: instagram-bridge
+                persistentVolumeClaim:
+                  claimName: registration-instagram-matrix
+            volumeMounts:
+              - name: bridges
+                mountPath: /bridges
+              - name: instagram-bridge
+                mountPath: /instagram
             podSecurityContext: {}
             securityContext: {}
             resources:
