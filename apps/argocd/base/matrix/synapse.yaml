@@ -65,9 +65,12 @@ spec:
               mountPath: /instagram
           extraCommands: []
           podSecurityContext:
-            allowPrivilegeEscalation: true
+            fsGroup: 0
+            runAsGroup: 0
+            runAsUser: 0
           securityContext:
-            allowPrivilegeEscalation: true
+            runAsNonRoot: true
+            runAsUser: 0
           resources:
             limits:
               cpu: 800m
@@ -225,9 +228,9 @@ spec:
           accessMode: ReadWriteOnce
           size: 15Gi
         volumePermissions:
-          enabled: false
-          uid: 666
-          gid: 666
+          enabled: true
+          uid: 0
+          gid: 0
           image:
             repository: alpine
             tag: latest
