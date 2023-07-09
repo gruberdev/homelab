@@ -17,7 +17,7 @@ spec:
           repository: matrixdotorg/synapse
           # tag: ''
           pullPolicy: IfNotPresent
-        serverName: 'matrix.gruber.dev.br'
+        serverName: 'matrsx.gruber.dev.br'
         publicServerName: 'matrix.gruber.dev.br'
         signingkey:
           job:
@@ -27,7 +27,7 @@ spec:
         config:
           publicBaseurl: 'https://matrix.gruber.dev.br'
           reportStats: false
-          enableRegistration: false
+          enableRegistration: true
           registrationSharedSecret: <path:kv/data/matrix#shared-secret>
           macaroonSecretKey: <path:kv/data/matrix#shared-secret>
           trustedKeyServers:
