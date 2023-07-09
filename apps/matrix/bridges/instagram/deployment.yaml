@@ -105,8 +105,8 @@ spec:
               memory: 256Mi
       volumes:
       - name: template
-        secret:
-          secretName: instagram-bridge-config
+        configMap:
+          name: instagram-bridge-config
       - name: temp-dir
         emptyDir: {}
       - name: config
