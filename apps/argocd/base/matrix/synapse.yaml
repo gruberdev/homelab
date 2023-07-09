@@ -17,7 +17,7 @@ spec:
           repository: matrixdotorg/synapse
           # tag: ''
           pullPolicy: IfNotPresent
-        serverName: 'matrsx.gruber.dev.br'
+        serverName: 'matrix.gruber.dev.br'
         publicServerName: 'matrix.gruber.dev.br'
         signingkey:
           job:
