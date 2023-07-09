@@ -64,8 +64,10 @@ spec:
             - name: instagram-bridge
               mountPath: /instagram
           extraCommands: []
-          podSecurityContext: {}
-          securityContext: {}
+          podSecurityContext:
+            allowPrivilegeEscalation: true
+          securityContext:
+            allowPrivilegeEscalation: true
           resources:
             limits:
               cpu: 800m
@@ -98,18 +100,8 @@ spec:
               prometheus.io/port: "9090"
               reloader.stakater.com/auto: "true"
             extraEnv: []
-            volumes:
-              - name: bridges
-                persistentVolumeClaim:
-                  claimName: bridge-config-storage
-              - name: instagram-bridge
-                persistentVolumeClaim:
-                  claimName: registration-instagram-matrix
-            volumeMounts:
-              - name: bridges
-                mountPath: /bridges
-              - name: instagram-bridge
-                mountPath: /instagram
+            volumes: []
+            volumeMounts: []
             podSecurityContext: {}
             securityContext: {}
             resources:
