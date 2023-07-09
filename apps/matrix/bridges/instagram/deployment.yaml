@@ -114,4 +114,4 @@ spec:
           claimName: instagram-bridge-data
       - name: bridges
         persistentVolumeClaim:
-          claimName: bridge-config-storage
+          claimName: registration-instagram-matrix

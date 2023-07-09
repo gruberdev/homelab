@@ -37,7 +37,7 @@ spec:
           enable_registration_without_verification: true
           app_service_config_files:
             - /bridges/whatsapp.yaml
-            - /bridges/instagram.yaml
+            - /instagram/instagram.yaml
         extraSecrets: {}
         synapse:
           strategy:
@@ -55,9 +55,14 @@ spec:
             - name: bridges
               persistentVolumeClaim:
                 claimName: bridge-config-storage
-          extraVolumeMounts:
+            - name: instagram-bridge
+              persistentVolumeClaim:
+                claimName: registration-instagram-matrix
+          volumeMounts:
             - name: bridges
               mountPath: /bridges
+            - name: instagram-bridge
+              mountPath: /instagram
           extraCommands: []
           podSecurityContext: {}
           securityContext: {}
@@ -97,9 +102,14 @@ spec:
               - name: bridges
                 persistentVolumeClaim:
                   claimName: bridge-config-storage
+              - name: instagram-bridge
+                persistentVolumeClaim:
+                  claimName: registration-instagram-matrix
             volumeMounts:
               - name: bridges
                 mountPath: /bridges
+              - name: instagram-bridge
+                mountPath: /instagram
             podSecurityContext: {}
             securityContext: {}
             resources:
