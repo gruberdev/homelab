@@ -69,7 +69,7 @@ spec:
             runAsGroup: 0
             runAsUser: 0
           securityContext:
-            runAsNonRoot: true
+            runAsNonRoot: false
             runAsUser: 0
           resources:
             limits:
