@@ -22,4 +22,4 @@ spec:
   storageClassName: iscsi
   resources:
     requests:
-      storage: 50Mi
+      storage: 1Gi
