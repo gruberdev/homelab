@@ -106,10 +106,10 @@ resources:
 - base/matrix/whats.yaml
 - base/matrix/instagram.yaml
 - base/matrix/linkedin.yaml
+- base/matrix/discord.yaml
 # - base/matrix/telegram.yaml
 # - base/matrix/steam.yaml
 # - base/matrix/signal.yaml
-# - base/matrix/discord.yaml
 
 # Vault plugin
 - base/cmp-plugin.yaml

@@ -3,40 +3,63 @@ kind: ConfigMap
 metadata:
   name: discord-bridge-config
 data:
-  config.yaml.tmpl: |
+  discord.yaml.tmpl: |
+    as_token: ${AS_TOKEN}
+    hs_token: ${HS_TOKEN}
+    id: discord-puppet
+    namespaces:
+      users:
+        - exclusive: false
+          regex: '@_discordpuppet_.*'
+      rooms: []
+      aliases:
+        - exclusive: false
+          regex: '#_discordpuppet_.*'
+    protocols: []
+    rate_limited: false
+    sender_localpart: _discordpuppet_bot
+    url: 'http://discord-bridge.matrix1.svc.cluster.local:8203'
+    de.sorunome.msc2409.push_ephemeral: true
+  discord-config.yaml.tmpl: |
     bridge:
-      port: 29334
+      port: 8203
       bindAddress: 0.0.0.0
       domain: matrix.gruber.dev.br
-      homeserverUrl: http://matrix-matrix-synapse.matrix.svc.cluster.local:8008
+      homeserverUrl: 'http://matrix-matrix-synapse.matrix1.svc.cluster.local:8008'
       loginSharedSecretMap:
-        matrix.gruber.dev.br "${SHARED_SECRET}"
+        matrix.gruber.dev.br: '${SHARED_SECRET}'
       displayname: Discord Puppet Bridge
       enableGroupSync: true
-      presence:
-        enabled: true
-        interval: 500
+    presence:
+      enabled: true
+      interval: 500
     provisioning:
       whitelist:
-        - "@gruber:matrix.gruber.dev.br"
-        - "@.*:matrix.gruber.dev.br"
+        - .*
+    relay:
+      whitelist:
+        - '@.*:matrix\.gruber\.dev\.br'
+    selfService:
+      whitelist:
+        - '@.*:matrix\.gruber\.dev\.br'
     homeserverUrlMap:
-      matrix.gruber.dev.br: http://matrix-matrix-synapse.matrix.svc.cluster.local:8008
+      matrix.gruber.dev.br: 'http://matrix-matrix-synapse.matrix1.svc.cluster.local:8008'
     namePatterns:
-      user: :name
-      userOverride: :displayname
-      room: :name
-      group: :name
+      user: ':name'
+      userOverride: ':displayname'
+      room: ':name'
+      group: ':name'
     database:
-      filename: /data/database.db
+      connString: >-
+        postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db-matrix.matrix1.svc.cluster.local:5432/discord?sslmode=require
     limits:
-      maxAutojoinUsers: 20
-      roomUserAutojoinDelay: 1000
+      maxAutojoinUsers: 100
+      roomUserAutojoinDelay: 5000
     logging:
       console: info
-      lineDateFormat: MMM-D HH:mm:ss.SSS
+      lineDateFormat: 'MMM-D HH:mm:ss.SSS'
       files:
-        - file: '/data/bridge.log'
+        - file: bridge.log
           level: info
           datePattern: YYYY-MM-DD
           maxFiles: 14d
