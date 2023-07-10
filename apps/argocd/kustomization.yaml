@@ -36,7 +36,7 @@ resources:
 - base/utilities/kured.yaml
 - base/utilities/kube-fledged.yaml
 - base/utilities/descheduler.yaml
-- base/utilities/gfd.yaml
+# - base/utilities/gfd.yaml
 # - base/utilities/wavy.yaml
 # - base/utilities/eraser.yaml
 # - base/utilities/chaos.yaml
@@ -120,7 +120,7 @@ resources:
 - https://github.com/gruberdev/homelab/apps/networking/tailscale
 - https://github.com/gruberdev/homelab/apps/networking/cloudflared
 
-- https://raw.githubusercontent.com/argoproj/argo-cd/v2.7.6/manifests/install.yaml
+- https://raw.githubusercontent.com/argoproj/argo-cd/v2.7.7/manifests/install.yaml
 
 # Image Updater
 - https://github.com/argoproj-labs/argocd-image-updater/manifests/base
@@ -141,7 +141,7 @@ patchesStrategicMerge:
 namespace: argocd
 images:
 - name: quay.io/argoproj/argocd
-  newTag: v2.7.6
+  newTag: v2.7.7
 
 patches:
 - patch: |-
