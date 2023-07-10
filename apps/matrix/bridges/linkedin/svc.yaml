@@ -9,7 +9,7 @@ spec:
   selector:
     app: linkedin-bridge
   ports:
-    - name: bridge
-      port: 80
-      targetPort: 29319
+    - name: http
+      port: 8202
+      targetPort: 8202
       protocol: TCP
