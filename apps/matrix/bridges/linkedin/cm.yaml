@@ -17,7 +17,7 @@ data:
     url: http://linkedin-bridge.matrix1.svc.cluster.local:8202
     sender_localpart: M_RbjmixHLPrAlHKuj90r9MP1Wcq-gR7DA4_Jdr_SsNJUeUzTAho7yY51vb8LxE3
     rate_limited: false
-  config.yaml.tmpl: |
+  linkedin-config.yaml.tmpl: |
     homeserver:
       address: 'http://matrix-matrix-synapse.matrix1.svc.cluster.local:8008'
       domain: matrix.gruber.dev.br
