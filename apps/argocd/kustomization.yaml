@@ -48,7 +48,7 @@ resources:
 - base/apps/unifi.yaml
 - base/apps/agones.yaml
 - base/apps/agones-crd.yaml
-- base/apps/mongodb-crds.yaml
+# - base/apps/mongodb-crds.yaml
 # - base/apps/wandb.yaml
 # - base/apps/mongodb.yaml
 # - base/apps/adguard.yaml
@@ -69,9 +69,9 @@ resources:
 - base/services/n8n.yaml
 - base/services/onchange.yaml
 - base/services/actual.yaml
-- base/services/nitter.yaml
 - base/services/gitea.yaml
 - base/services/rss-hub.yaml
+# - base/services/nitter.yaml
 # - base/services/squid.yaml
 # - base/services/jupyterlab.yaml
 # - base/services/librex.yaml
@@ -105,9 +105,9 @@ resources:
 # Matrix bridges
 - base/matrix/whats.yaml
 - base/matrix/instagram.yaml
+- base/matrix/linkedin.yaml
 # - base/matrix/telegram.yaml
 # - base/matrix/steam.yaml
-# - base/matrix/linkedin.yaml
 # - base/matrix/signal.yaml
 # - base/matrix/discord.yaml
 
