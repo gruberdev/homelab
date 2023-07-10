@@ -3,47 +3,62 @@ kind: ConfigMap
 metadata:
   name: linkedin-bridge-config
 data:
+  linkedin.yaml.tmpl: |
+    id: linkedin
+    as_token: ${AS_TOKEN}
+    hs_token: ${HS_TOKEN}
+    namespaces:
+        users:
+        - exclusive: false
+          regex: '@linkedin_.*:matrix\.gruber\.dev\.br'
+        - exclusive: false
+          regex: '@linkedinbot:matrix\.gruber\.dev\.br'
+        aliases: []
+    url: http://linkedin-bridge.matrix1.svc.cluster.local:8202
+    sender_localpart: M_RbjmixHLPrAlHKuj90r9MP1Wcq-gR7DA4_Jdr_SsNJUeUzTAho7yY51vb8LxE3
+    rate_limited: false
   config.yaml.tmpl: |
     homeserver:
-      address: http://matrix-matrix-synapse.matrix.svc.cluster.local:8008
+      address: 'http://matrix-matrix-synapse.matrix1.svc.cluster.local:8008'
       domain: matrix.gruber.dev.br
       verify_ssl: false
-      asmux: false
+      software: standard
       http_retry_count: 4
       status_endpoint: null
       message_send_checkpoint_endpoint: null
       async_media: false
     appservice:
-      address: http://linkedin-bridge.matrix.svc.cluster.local:80
+      address: 'http://linkedin-bridge.matrix1.svc.cluster.local:8202'
       hostname: 0.0.0.0
-      port: 29319
+      port: 8202
       max_body_size: 1
-      database: postgres://${BRIDGE_DB_USERNAME}:${BRIDGE_DB_PASSWORD}@db-bridges.matrix.svc.cluster.local:5432/linkedin?sslmode=require
+      database: >-
+        postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db-matrix.matrix1.svc.cluster.local:5432/linkedin?sslmode=require
       database_opts:
-        min_size: 5
+        min_size: 1
         max_size: 10
       provisioning:
         enabled: true
         prefix: /_matrix/provision/v1
-        shared_secret: ${SHARED_SECRET}
+        shared_secret: '${SHARED_SECRET}'
+        segment_key: null
+        segment_user_id: null
       id: linkedin
       bot_username: linkedinbot
       bot_displayname: LinkedIn bridge bot
-      bot_avatar: mxc://sumnerevans.com/XMtwdeUBnxYvWNFFrfeTSHqB
+      bot_avatar: 'mxc://nevarro.space/cwsWnmeMpWSMZLUNblJHaIvP'
       ephemeral_events: false
-      as_token: This value is generated when generating the registration
-      hs_token: This value is generated when generating the registration
+      as_token: '${AS_TOKEN}'
+      hs_token: '${HS_TOKEN}'
     metrics:
       enabled: false
-      listen_port: 8000
     manhole:
       enabled: false
-      path: /var/tmp/linkedin-matrix.manhole
-      whitelist:
-        - 0
     bridge:
-      username_template: linkedin_{userid}
-      community_template: null
+      username_template: 'linkedin_{userid}'
+      space_support:
+        enable: true
+        name: LinkedIn
       displayname_template: '{displayname} (LinkedIn)'
       displayname_preference:
         - name
@@ -55,18 +70,28 @@ data:
       sync_with_custom_puppets: true
       sync_direct_chat_list: false
       double_puppet_server_map:
-        matrix.gruber.dev.br: http://matrix-matrix-synapse.matrix.svc.cluster.local:8008
-      double_puppet_allow_discovery: false
+        matrix.gruber.dev.br: 'http://matrix-matrix-synapse.matrix1.svc.cluster.local:8008'
+      double_puppet_allow_discovery: true
       login_shared_secret_map:
-        matrix.gruber.dev.br: ${SHARED_SECRET}
+        matrix.gruber.dev.br: '${SHARED_SECRET}'
       presence: true
       update_avatar_initial_sync: true
       federate_rooms: true
+      private_chat_portal_meta: always
       encryption:
         allow: false
         default: false
+        appservice: true
         require: false
-        allow_key_sharing: false
+        allow_key_sharing: true
+        delete_keys:
+          delete_outbound_on_ack: false
+          dont_store_outbound: false
+          ratchet_on_decrypt: false
+          delete_fully_used_on_decrypt: false
+          delete_prev_on_new_session: false
+          delete_on_device_delete: false
+          periodically_delete_expired: false
         verification_levels:
           receive: unverified
           send: unverified
@@ -75,8 +100,9 @@ data:
           enable_custom: false
           milliseconds: 604800000
           messages: 100
-      delivery_receipts: false
-      allow_invites: false
+          disable_device_change_key_rotation: false
+      delivery_receipts: true
+      allow_invites: true
       backfill:
         invite_own_puppet: true
         initial_limit: 0
@@ -86,14 +112,15 @@ data:
       periodic_reconnect:
         interval: -1
         mode: refresh
-        always: false
+        always: true
       resync_max_disconnected_time: 5
       temporary_disconnect_notices: true
-      refresh_on_reconnection_fail: false
+      refresh_on_reconnection_fail: true
       resend_bridge_info: false
       mute_bridging: false
       tag_only_on_create: true
       permissions:
+        '*': relaybot
         matrix.gruber.dev.br: user
         '@gruber:matrix.gruber.dev.br': admin
     logging:
@@ -111,8 +138,6 @@ data:
       loggers:
         mau:
           level: DEBUG
-        paho:
-          level: INFO
         aiohttp:
           level: INFO
       root:
