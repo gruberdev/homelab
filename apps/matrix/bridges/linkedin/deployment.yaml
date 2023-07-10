@@ -34,11 +34,9 @@ spec:
           - name: SHARED_SECRET
             valueFrom: { secretKeyRef: { name: synapse-shared, key: SHARED_SECRET } }
           - name: AS_TOKEN
-            valueFrom: { secretKeyRef: { name: synapse-shared, key: AS_linkedin_TOKEN } }
+            valueFrom: { secretKeyRef: { name: synapse-shared, key: AS_LINKEDIN_TOKEN } }
           - name: HS_TOKEN
-            valueFrom: { secretKeyRef: { name: synapse-shared, key: HS_linkedin_TOKEN } }
-          - name: INSTA_SEED
-            valueFrom: { secretKeyRef: { name: synapse-shared, key: INSTA_SEED } }
+            valueFrom: { secretKeyRef: { name: synapse-shared, key: HS_LINKEDIN_TOKEN } }
           volumeMounts:
             - name: config
               mountPath: /data
