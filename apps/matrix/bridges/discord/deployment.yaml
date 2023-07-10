@@ -2,141 +2,116 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: discord-bridge
+  labels:
+    app: discord-bridge
 spec:
-  replicas: 1
-  strategy:
-    type: Recreate
   selector:
     matchLabels:
       app: discord-bridge
+  replicas: 1
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
         app: discord-bridge
     spec:
-      securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
       initContainers:
-        - name: load-config
-          image: docker.io/grubertech/envsubst:v1.2.0
-          imagePullPolicy: IfNotPresent
-          command: ["sh"]
-          args:
-            - -c
-            - |
-              envsubst -no-empty -i /template/config.yaml.tmpl -o /load/config.yaml \
-              && cp -f /load/config.yaml /data/config.yaml
-          env:
-            - name: SHARED_SECRET
-              valueFrom: { secretKeyRef: { name: synapse-shared, key: SHARED_SECRET } }
-          volumeMounts:
-            - name: config
-              mountPath: /data
-            - name: temp-dir
-              mountPath: /load
-            - name: template
-              mountPath: /template
-              readOnly: true
-          resources:
-            limits:
-              cpu: 400m
-              memory: 512Mi
-            requests:
-              cpu: 300m
-              memory: 512Mi
-          securityContext:
-            capabilities:
-              drop:
-                - ALL
-            readOnlyRootFilesystem: true
-            allowPrivilegeEscalation: false
-        - name: generate-config
-          image: docker.io/grubertech/discord-bridge:v0.1.1
-          imagePullPolicy: Always
-          command: ["sh"]
-          args:
-            - -c
-            - |
-              /usr/local/bin/node \
-              /opt/mx-puppet-discord/build/index.js -r
-          env:
-            - name: CONFIG_PATH
-              value: "/data/config.yaml"
-            - name: REGISTRATION_PATH
-              value: "/bridges/discord.yaml"
-          volumeMounts:
-            - name: config
-              mountPath: /data
-            - name: bridges
-              mountPath: /bridges
-          resources:
-            limits:
-              cpu: 320m
-              memory: 512Mi
-            requests:
-              cpu: 150m
-              memory: 512Mi
-          securityContext:
-            capabilities:
-              drop:
-                - ALL
-            readOnlyRootFilesystem: true
-            allowPrivilegeEscalation: false
+      - name: load-config
+        image: docker.io/grubertech/envsubst:v1.2.0
+        imagePullPolicy: IfNotPresent
+        command: ["sh"]
+        args:
+        - -c
+        - |
+          echo "Substituting variables in /template/discord-config.yaml.tmpl to /tmp/discord-config.yaml" \
+          && envsubst -no-empty -i /template/discord-config.yaml.tmpl -o /tmp/discord-config.yaml \
+          && echo "Removing /data/config.yaml" \
+          && rm -vrf /data/config.yaml || true \
+          && echo "Copying /tmp/discord-config.yaml to /data/config.yaml" \
+          && cp -fv /tmp/discord-config.yaml /data/config.yaml \
+          && echo "Substituting variables in /template/discord.yaml.tmpl to /tmp/discord.yaml" \
+          && envsubst -no-empty -i /template/discord.yaml.tmpl -o /tmp/discord.yaml \
+          && echo "Removing /bridges/discorda.yaml" \
+          && rm -vrf /bridges/discord.yaml || true \
+          && echo "Copying /tmp/discord.yaml to /bridges/discord.yaml" \
+          && echo "Files in /bridges before copying:" \
+          && ls -l /bridges \
+          && cp -fv /tmp/discord.yaml /bridges/discord.yaml
+        env:
+          - name: POSTGRES_USER
+            valueFrom: { secretKeyRef: { name: synapse.db-matrix.credentials.postgresql.acid.zalan.do, key: username } }
+          - name: POSTGRES_PASSWORD
+            valueFrom: { secretKeyRef: { name: synapse.db-matrix.credentials.postgresql.acid.zalan.do, key: password } }
+          - name: SHARED_SECRET
+            valueFrom: { secretKeyRef: { name: synapse-shared, key: SHARED_SECRET } }
+          - name: AS_TOKEN
+            valueFrom: { secretKeyRef: { name: synapse-shared, key: AS_DISCORD_TOKEN } }
+          - name: HS_TOKEN
+            valueFrom: { secretKeyRef: { name: synapse-shared, key: HS_DISCORD_TOKEN } }
+        volumeMounts:
+        - name: config
+          mountPath: /data
+        - name: temp-dir
+          mountPath: /tmp
+        - name: bridges
+          mountPath: /bridges
+        - name: template
+          mountPath: /template/discord-config.yaml.tmpl
+          subPath: discord-config.yaml.tmpl
+          readOnly: true
+        - name: template
+          mountPath: /template/discord.yaml.tmpl
+          subPath: discord.yaml.tmpl
+          readOnly: true
+        resources:
+          limits:
+            cpu: 400m
+            memory: 512Mi
+          requests:
+            cpu: 300m
+            memory: 256Mi
       containers:
-        - name: bridge
-          image: docker.io/grubertech/discord-bridge:v0.1.1
-          imagePullPolicy: Always
-          env:
-            - name: CONFIG_PATH
-              value: "/data/config.yaml"
-            - name: REGISTRATION_PATH
-              value: "/bridges/discord.yaml"
-          ports:
-            - name: bridge
-              containerPort: 29334
-              protocol: TCP
-          livenessProbe:
-            tcpSocket:
-              port: 29334
-            periodSeconds: 15
-            initialDelaySeconds: 30
-          readinessProbe:
-            tcpSocket:
-              port: 29334
-            periodSeconds: 5
-            initialDelaySeconds: 10
-          startupProbe:
-            tcpSocket:
-              port: 29334
-            periodSeconds: 30
-            initialDelaySeconds: 120
-          volumeMounts:
-            - name: config
-              mountPath: /data
-            - name: bridges
-              mountPath: /bridges
-          resources:
-            requests:
-              cpu: 350m
-              memory: 600Mi
-            limits:
-              cpu: 500m
-              memory: 1Gi
-          securityContext:
-            capabilities:
-              drop:
-                - ALL
-            readOnlyRootFilesystem: true
-            allowPrivilegeEscalation: false
+      - name: discord
+        image: docker.io/grubertech/discord:v0.1.0
+        imagePullPolicy: IfNotPresent
+        command: ["/usr/local/bin/node"]
+        args: ["/opt/mx-puppet-discord/build/index.js", "-c", "/data/config.yaml", "-f", "/bridges/discord.yaml"]
+        ports:
+        - name: http
+          containerPort: 8203
+          protocol: TCP
+        volumeMounts:
+        - name: config
+          mountPath: /data
+        - name: bridges
+          mountPath: /bridges
+        resources:
+          limits:
+            cpu: 400m
+            memory: 512Mi
+          requests:
+            cpu: 300m
+            memory: 256Mi
+        livenessProbe:
+          tcpSocket:
+            port: 8203
+          periodSeconds: 15
+          initialDelaySeconds: 30
+        readinessProbe:
+          tcpSocket:
+            port: 8203
+          periodSeconds: 5
+          initialDelaySeconds: 10
+        startupProbe:
+          tcpSocket:
+            port: 8203
+          periodSeconds: 30
+          initialDelaySeconds: 60
       volumes:
       - name: template
         configMap:
           name: discord-bridge-config
-          items:
-          - key: config.yaml.tmpl
-            path: config.yaml.tmpl
       - name: temp-dir
         emptyDir: {}
       - name: config
@@ -144,4 +119,4 @@ spec:
           claimName: discord-bridge-data
       - name: bridges
         persistentVolumeClaim:
-          claimName: bridge-config-storage
+          claimName: registration-discord-matrix

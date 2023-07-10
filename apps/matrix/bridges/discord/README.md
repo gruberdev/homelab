@@ -1,1 +1,1 @@
-## Matrix Telegram Bridge
+## Matrix Discord Bridge
