@@ -51,7 +51,7 @@ data:
       group: ':name'
     database:
       connString: >-
-        postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db-matrix.matrix1.svc.cluster.local:5432/discord?sslmode=require
+        postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db-matrix.matrix1.svc.cluster.local:5432/discord?sslmode=disable
     limits:
       maxAutojoinUsers: 100
       roomUserAutojoinDelay: 5000
