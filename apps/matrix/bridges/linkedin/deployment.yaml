@@ -14,10 +14,6 @@ spec:
       labels:
         app: linkedin-bridge
     spec:
-      securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
       initContainers:
         - name: load-config
           image: docker.io/grubertech/envsubst:v1.2.0
@@ -26,93 +22,77 @@ spec:
           args:
             - -c
             - |
-              envsubst -no-empty -i /template/config.yaml.tmpl -o /load/config.yaml \
-              && cp -f /load/config.yaml /data/config.yaml
+              envsubst -no-empty -i /template/linkedin-config.yaml.tmpl -o /tmp/linkedin-config.yaml \
+              && cp -f /tmp/linkedin-config.yaml /data/config.yaml \
+              && envsubst -no-empty -i /template/linkedin.yaml.tmpl -o /tmp/linkedin.yaml \
+              && cp -f /tmp/linkedin.yaml /bridges/linkedin.yaml
           env:
-            - name: BRIDGE_DB_USERNAME
-              valueFrom: { secretKeyRef: { name: matrix.db-bridges.credentials.postgresql.acid.zalan.do, key: username } }
-            - name: BRIDGE_DB_PASSWORD
-              valueFrom: { secretKeyRef: { name: matrix.db-bridges.credentials.postgresql.acid.zalan.do, key: password } }
-            - name: SHARED_SECRET
-              valueFrom: { secretKeyRef: { name: synapse-shared, key: SHARED_SECRET } }
+          - name: POSTGRES_USER
+            valueFrom: { secretKeyRef: { name: synapse.db-matrix.credentials.postgresql.acid.zalan.do, key: username } }
+          - name: POSTGRES_PASSWORD
+            valueFrom: { secretKeyRef: { name: synapse.db-matrix.credentials.postgresql.acid.zalan.do, key: password } }
+          - name: SHARED_SECRET
+            valueFrom: { secretKeyRef: { name: synapse-shared, key: SHARED_SECRET } }
+          - name: AS_TOKEN
+            valueFrom: { secretKeyRef: { name: synapse-shared, key: AS_linkedin_TOKEN } }
+          - name: HS_TOKEN
+            valueFrom: { secretKeyRef: { name: synapse-shared, key: HS_linkedin_TOKEN } }
+          - name: INSTA_SEED
+            valueFrom: { secretKeyRef: { name: synapse-shared, key: INSTA_SEED } }
           volumeMounts:
             - name: config
               mountPath: /data
             - name: temp-dir
-              mountPath: /load
+              mountPath: /tmp
+            - name: bridges
+              mountPath: /bridges
             - name: template
-              mountPath: /template
+              mountPath: /template/linkedin-config.yaml.tmpl
+              subPath: linkedin-config.yaml.tmpl
+              readOnly: true
+            - name: template
+              mountPath: /template/linkedin.yaml.tmpl
+              subPath: linkedin.yaml.tmpl
               readOnly: true
           resources:
             limits:
-              cpu: 400m
+              cpu: 320m
               memory: 512Mi
             requests:
-              cpu: 300m
+              cpu: 150m
               memory: 512Mi
-          securityContext:
-            capabilities:
-              drop:
-                - ALL
-            readOnlyRootFilesystem: true
-            allowPrivilegeEscalation: false
-        - name: generate-config
-          image: ghcr.io/beeper/linkedin:latest
-          imagePullPolicy: IfNotPresent
-          command: ["sh"]
-          args:
-            - -c
-            - |
-              python3 -m linkedin_matrix \
-              -g -c "/data/config.yaml" \
-              -r "/bridges/linkedin.yaml"
-          volumeMounts:
-            - name: config
-              mountPath: /data
-            - name: bridges
-              mountPath: /bridges
-          resources:
-            limits:
-              cpu: 400m
-              memory: 512Mi
-            requests:
-              cpu: 300m
-              memory: 512Mi
-          securityContext:
-            capabilities:
-              drop:
-                - ALL
-            readOnlyRootFilesystem: true
-            allowPrivilegeEscalation: false
       containers:
         - name: bridge
-          image: ghcr.io/beeper/linkedin:latest
+          image: ghcr.io/beeper/linkedin:168399d77f81d5c3bcbb22fb40ced814774ec770
           imagePullPolicy: IfNotPresent
           command: ["sh"]
+          env:
+            - name: MAUTRIX_DIRECT_STARTUP
+              value: "true"
           args:
             - -c
             - |
               python3 -m linkedin_matrix \
               -n -c "/data/config.yaml"
           ports:
-            - name: bridge
-              containerPort: 29319
+            - name: http
+              containerPort: 8202
               protocol: TCP
           livenessProbe:
             tcpSocket:
-              port: 29319
+              port: 8202
             periodSeconds: 15
             initialDelaySeconds: 30
           readinessProbe:
             tcpSocket:
-              port: 29319
+              port: 8202
             periodSeconds: 5
             initialDelaySeconds: 10
           startupProbe:
             tcpSocket:
-              port: 29319
+              port: 8202
             periodSeconds: 30
-            initialDelaySeconds: 120
+            initialDelaySeconds: 60
           volumeMounts:
             - name: config
               mountPath: /data
@@ -121,21 +101,12 @@ spec:
               cpu: 320m
               memory: 512Mi
             requests:
-              cpu: 150m
+              cpu: 200m
               memory: 256Mi
-          securityContext:
-            capabilities:
-              drop:
-                - ALL
-            readOnlyRootFilesystem: true
-            allowPrivilegeEscalation: false
       volumes:
       - name: template
         configMap:
           name: linkedin-bridge-config
-          items:
-          - key: config.yaml.tmpl
-            path: config.yaml.tmpl
       - name: temp-dir
         emptyDir: {}
       - name: config
@@ -143,4 +114,4 @@ spec:
           claimName: linkedin-bridge-data
       - name: bridges
         persistentVolumeClaim:
-          claimName: bridge-config-storage
+          claimName: registration-linkedin-matrix
