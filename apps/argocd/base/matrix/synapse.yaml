@@ -39,6 +39,7 @@ spec:
             - /bridges/whatsapp.yaml
             - /instagram/instagram.yaml
             - /linkedin/linkedin.yaml
+            - /discord/discord.yaml
         extraSecrets: {}
         synapse:
           strategy:
@@ -62,6 +63,9 @@ spec:
             - name: linkedin-bridge
               persistentVolumeClaim:
                 claimName: registration-linkedin-matrix
+            - name: discord-bridge
+              persistentVolumeClaim:
+                claimName: registration-discord-matrix
           extraVolumeMounts:
             - name: bridges
               mountPath: /bridges
@@ -69,6 +73,8 @@ spec:
               mountPath: /instagram
             - name: linkedin-bridge
               mountPath: /linkedin
+            - name: discord-bridge
+              mountPath: /discord
           extraCommands: []
           podSecurityContext:
             fsGroup: 0
@@ -119,6 +125,9 @@ spec:
               - name: linkedin-bridge
                 persistentVolumeClaim:
                   claimName: registration-linkedin-matrix
+              - name: discord-bridge
+                persistentVolumeClaim:
+                  claimName: registration-discord-matrix
             volumeMounts:
               - name: bridges
                 mountPath: /bridges
@@ -126,6 +135,8 @@ spec:
                 mountPath: /instagram
               - name: linkedin-bridge
                 mountPath: /linkedin
+              - name: discord-bridge
+                mountPath: /discord
             podSecurityContext: {}
             securityContext: {}
             resources:
