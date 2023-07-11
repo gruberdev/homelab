@@ -38,10 +38,10 @@ data:
         - .*
     relay:
       whitelist:
-        - '@.*:matrix\.gruber\.dev\.br'
+        - '@.*'
     selfService:
       whitelist:
-        - '@.*:matrix\.gruber\.dev\.br'
+        - '@.*'
     homeserverUrlMap:
       matrix.gruber.dev.br: 'http://matrix-matrix-synapse.matrix1.svc.cluster.local:8008'
     namePatterns:
