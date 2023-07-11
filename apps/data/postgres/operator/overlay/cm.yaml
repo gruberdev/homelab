@@ -10,10 +10,10 @@ data:
   cluster_name_label: cluster-name
   crd_categories: "all"
   db_hosted_zone: db.example.com
-  default_cpu_limit: 350m
-  default_cpu_request: 200m
-  default_memory_limit: 400Mi
-  default_memory_request: 200Mi
+  default_cpu_limit: 500m
+  default_cpu_request: 350m
+  default_memory_limit: 712Mi
+  default_memory_request: 512Mi
   docker_image: ghcr.io/zalando/spilo-15:3.0-p1
   connection_pooler_image: "registry.opensource.zalan.do/acid/pgbouncer:master-27"
   # downscaler_annotations: "deployment-time,downscaler/*"
@@ -45,19 +45,19 @@ data:
   # kube_iam_role: ""
   # kubernetes_use_configmaps: "false"
   # log_s3_bucket: ""
-  logical_backup_docker_image: "registry.opensource.zalan.do/acid/logical-backup:v1.10.0"
+  # logical_backup_docker_image: "registry.opensource.zalan.do/acid/logical-backup:v1.10.0"
   # logical_backup_google_application_credentials: ""
-  logical_backup_job_prefix: "logical-backup-"
-  logical_backup_provider: "s3"
+  # logical_backup_job_prefix: "logical-backup-"
+  # logical_backup_provider: "s3"
   # logical_backup_s3_access_key_id: ""
-  logical_backup_s3_bucket: "my-bucket-url"
+  # logical_backup_s3_bucket: "my-bucket-url"
   # logical_backup_s3_region: ""
   # logical_backup_s3_endpoint: ""
   # logical_backup_s3_secret_access_key: ""
   # logical_backup_s3_retention_time: ""
-  logical_backup_schedule: "30 00 * * *"
-  max_cpu_request: 450m
-  max_memory_request: 500Mi
+  # logical_backup_schedule: "30 00 * * *"
+  max_cpu_request: 1000m
+  max_memory_request: 1024Mi
   min_cpu_limit: 100m
   min_memory_limit: 250Mi
   password_rotation_interval: "90"
