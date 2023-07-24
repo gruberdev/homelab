@@ -14,6 +14,6 @@ patches:
     name: wallabag
 images:
 - name: wallabag/wallabag
-  newTag: 2.6.1
+  newTag: 2.6.2
 commonAnnotations:
   reloader.stakater.com/auto: "true"
