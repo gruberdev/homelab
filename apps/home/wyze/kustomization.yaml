@@ -16,4 +16,4 @@ commonAnnotations:
   reloader.stakater.com/auto: "true"
 images:
 - name: mrlt8/wyze-bridge
-  newTag: 2.3.11
+  newTag: 2.3.12-hw
