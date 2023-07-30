@@ -2,26 +2,24 @@ apiVersion: v1
 kind: Service
 metadata:
   name: nginx-test
-  namespace: kube-system
   annotations:
     kube-vip.io/vipHost: nginx-test
-    kube-vip.io/loadbalancerIPs: 192.168.1.56
 spec:
   ports:
   - name: http
     port: 80
+    targetPort: 80
     protocol: TCP
   selector:
     app: nginx
   type: LoadBalancer
-  loadBalancerIP: 192.168.1.56
+  loadBalancerIP: "0.0.0.0"
   loadBalancerClass: kube-vip.io/kube-vip-class
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx-test-deployment
-  namespace: kube-system
   labels:
     app: nginx
 spec:
@@ -38,7 +36,9 @@ spec:
       - name: nginx
         image: nginx:1.21
         ports:
-          - containerPort: 80
+          - name: http
+            containerPort: 80
+            protocol: TCP
         resources:
           requests:
             cpu: 50m
