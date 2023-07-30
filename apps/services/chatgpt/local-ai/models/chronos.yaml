@@ -28,10 +28,6 @@ config_file: |
   template:
     completion: chronos-completion
     chat: chronos-chat
-  roles:
-    user: "User:"
-    system: "System:"
-    assistant: "Assistant:"
 
 files:
 - filename: "chronos-hermes-13b.ggmlv3.q5_0.bin"
