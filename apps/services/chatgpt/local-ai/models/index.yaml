@@ -6,7 +6,7 @@
 - url: "github:gruberdev/homelab/apps/services/chatgpt/local-ai/models/embeddings.yaml"
   name: "embeddings"
   license: other
-  ## Stable Diffusion
+ ## Stable Diffusion
 - url: "github:gruberdev/homelab/apps/services/chatgpt/local-ai/models/wizard.yaml"
   name: Vicuna-13B-Uncensored-GGML-q41
   license: other
@@ -42,3 +42,24 @@
     - filename: chronos-hermes-13b.ggmlv3.q5_0.bin
       sha256: 5230b3a9b633ce90dfb3298d95f4ba9826ffd398cb23177b37507f6df61cc189
       uri: https://huggingface.co/TheBloke/chronos-hermes-13B-GGML/resolve/main/chronos-hermes-13b.ggmlv3.q5_0.bin
+- url: "github:gruberdev/homelab/apps/services/chatgpt/local-ai/models/llama2.yaml"
+  name: llama2
+  license: other
+  urls:
+    - https://huggingface.co/TheBloke/Llama-2-13B-chat-GGML
+    - https://huggingface.co/meta-llama/Llama-2-13b-chat-hf
+    - https://huggingface.co/TheBloke/Llama-2-13B-chat-GPTQ
+  tags:
+    - en
+    - llama
+    - ggml
+    - conversational
+    - vanilla
+    - chat
+  overrides:
+    parameters:
+      model: llama-2-13b-chat.ggmlv3.q4_K_M.bin
+  files:
+    - filename: llama-2-13b-chat.ggmlv3.q4_K_M.bin
+      sha256: 41d647de4f9700aeaff878805ba68d603a53ea50d4580e72d1ca503d886a4f03
+      uri: https://huggingface.co/TheBloke/Llama-2-13B-chat-GGML/resolve/main/llama-2-13b-chat.ggmlv3.q4_K_M.bin
