@@ -1,20 +1,9 @@
-# apiVersion: v1
-# kind: ConfigMap
-# metadata:
-#   name: chatui-config
-# data:
-#   OPENAI_API_HOST: "http://local-ai.mlops.svc.cluster.local"
-#   OPENAI_API_TYPE: "openai"
-#   OPENAI_API_KEY: ""
-#   DEFAULT_MODEL: "wizard"
-#   NEXT_PUBLIC_DEFAULT_TEMPERATURE: "1"
----
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: chatui-config
 data:
-  BASE_URL: "http://local-ai.mlops.svc.cluster.local"
-  HIDE_USER_API_KEY: "1"
-  DISABLE_GPT4: "0"
-  HIDE_BALANCE_QUERY: "0"
+  OPENAI_API_HOST: "http://local-ai.mlops.svc.cluster.local"
+  OPENAI_API_TYPE: "openai"
+  DEFAULT_MODEL: "wizard"
+  NEXT_PUBLIC_DEFAULT_TEMPERATURE: "1"
