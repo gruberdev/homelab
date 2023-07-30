@@ -36,6 +36,13 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: nginx:1.21 # You can specify any version you prefer
+        image: nginx:1.21
         ports:
-        - containerPort: 80
+          - containerPort: 80
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            cpu: 200m
+            memory: 256Mi

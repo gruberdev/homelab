@@ -25,24 +25,25 @@
 
 > |             **Application**            |   **Category**  |                       **Info**                      |     **Deployment Status**    | **Latest Semver**
 > |:--------------------------------------:|:---------------:|:---------------------------------------------------:|:----------------------------:|:----------------------:|
+> |          [Agones][agones-uri]             |            `Services`   |        <sub>[More details][homelab-agones]</sub>    |        ![][argocd-agones]    |  ![][agones-badge]   |
 > |          [ArgoCD][argocd-uri]          |             `GitOps`     |      <sub>[More details][homelab-argocd]</sub>      |       ![][argocd-core]       | ![][argo-badge]        |
-> |     [Hashicorp's Vault][vault-uri]     |            `Security`   |       <sub>[Chart values][homelab-vault]</sub>      |       ![][argocd-vault]      |  ![][vault-badge]    |
-> | [<sub>Zalando PostgreSQL Operator</sub>][p-uri] |   `Databases`   |      <sub>[More details][homelab-zalando]</sub>     |      ![][argocd-zalando]     | ![][zalando-badge]  |
-> |       [Redis Operator][redis-uri]      |            `Databases`   |       <sub>[More details][homelab-redis]</sub>      |       ![][argocd-redis]      |  ![][redis-badge]    |
-> |    [Milvus][service-milvus]            |            `Databases`  |        <sub>[More details][homelab-milvus]</sub>    |        ![][argocd-milvus]   | ![][milvus-badge]    |
-> |     [kube-prometheus][service-kube]    |            `Monitoring`  |  <sub>[More details][homelab-kube]</sub>            |       ![][argocd-kube]       |   ![][kube-badge]    |
-> |     [Unifi Poller][poller-uri]         |            `Monitoring`  |      <sub>[More details][homelab-poller]</sub>      |      ![][argocd-poller]      | ![][poller-badge]    |
-> |     [Uptime Kuma][kuma-uri]            |            `Monitoring`  |      <sub>[More details][homelab-kuma]</sub>          |      ![][argocd-kuma]      | ![][kuma-badge]      |
-> |       [Agones][agones-uri]             |            `Services`   |        <sub>[More details][homelab-agones]</sub>    |        ![][argocd-agones]    |  ![][agones-badge]   |
-> |            [n8n][n8n-uri]              |            `Services`   |        <sub>[More details][homelab-n8n]</sub>       |        ![][argocd-n8n]       |  ![][n8n-badge]      |
+> |   [CertManager][service-certmanager] |               `Networking`   |  <sub>[More details][homelab-certmanager]</sub>    |  ![][argocd-certmanager] | ![][certmanager-badge]    |
 > |   [Changedetection.io][change-uri]     |             `Services`   |       <sub>[More details][homelab-change]</sub>      |        ![][argocd-change]    |  ![][change-badge]   |
-> |      [Home Assistant][service-ha]      |            `Smart Home`   |        <sub>[More details][homelab-ha]</sub>        |        ![][argocd-ha]        |    ![][ha-badge]     |
-> |   [Wyze API Bridge][service-wyze]      |            `Smart Home`   |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-wyze]      |  ![][wyze-badge]     |
-> |     [Unifi Controller][unifi-uri]      |            `Networking`  |      <sub>[More details][homelab-unifi]</sub>      |      ![][argocd-unifi]      | ![][unifi-badge]    |
 > | [ExternalDNS][service-externaldns] |               `Networking`   |  <sub>[More details][homelab-externaldns]</sub>    |  ![][argocd-externaldns] | ![][externaldns-badge]    |
-> | [CertManager][service-certmanager] |               `Networking`   |  <sub>[More details][homelab-certmanager]</sub>    |  ![][argocd-certmanager] | ![][certmanager-badge]    |
+> |     [Hashicorp's Vault][vault-uri]     |            `Security`   |       <sub>[Chart values][homelab-vault]</sub>      |       ![][argocd-vault]      |  ![][vault-badge]    |
+> |      [Home Assistant][service-ha]      |            `Smart Home`   |        <sub>[More details][homelab-ha]</sub>        |        ![][argocd-ha]        |    ![][ha-badge]     |
+> | [Kube-vip][kubevip-uri]            |            `Networking`  |      <sub>[More details][homelab-kubevip]</sub>      |      ![][argocd-kubevip]      | ![][kubevip-badge]    |
+> |     [kube-prometheus][service-kube]    |            `Monitoring`  |  <sub>[More details][homelab-kube]</sub>            |       ![][argocd-kube]       |   ![][kube-badge]    |
+> |    [Milvus][service-milvus]            |            `Databases`  |        <sub>[More details][homelab-milvus]</sub>    |        ![][argocd-milvus]   | ![][milvus-badge]    |
+> |            [n8n][n8n-uri]              |            `Services`   |        <sub>[More details][homelab-n8n]</sub>       |        ![][argocd-n8n]       |  ![][n8n-badge]      |
+> | [Redis Operator][redis-uri]      |            `Databases`   |       <sub>[More details][homelab-redis]</sub>      |       ![][argocd-redis]      |  ![][redis-badge]    |
+> |    [Unifi Controller][unifi-uri]      |            `Networking`  |      <sub>[More details][homelab-unifi]</sub>      |      ![][argocd-unifi]      | ![][unifi-badge]    |
+> |     [Unifi Poller][poller-uri]         |            `Monitoring`  |      <sub>[More details][homelab-poller]</sub>      |      ![][argocd-poller]      | ![][poller-badge]    |
+> | [Uptime Kuma][kuma-uri]            |            `Monitoring`  |      <sub>[More details][homelab-kuma]</sub>          |      ![][argocd-kuma]      | ![][kuma-badge]      |
+> |   [Wyze API Bridge][service-wyze]      |            `Smart Home`   |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-wyze]      |  ![][wyze-badge]     |
+> | [<sub>Zalando PostgreSQL Operator</sub>][p-uri] |   `Databases`   |      <sub>[More details][homelab-zalando]</sub>     |      ![][argocd-zalando]     | ![][zalando-badge]  |
+> |     [Tailscale-operator][tail-uri]        |         `Networking`  | <sub>[More details][homelab-tailscale]</sub>         |                          |![][tailscale-badge]  |
 > |   [Cloudflared <sub>(as proxies)</sub>][cf-uri]  | `Networking`  | <sub>[More details][homelab-cloudflared]</sub>      |                        |   ![][cfd-badge]     |
-> |    [Tailscale-operator][tail-uri]        |         `Networking`  | <sub>[More details][homelab-tailscale]</sub>         |                          |![][tailscale-badge]  |
 
 <!-- >
 > |    [Crossplane][crossplane-uri]        |    `GitOps`     |      <sub>[More details][homelab-crossplane]</sub>  |       ![][argocd-crossplane] | ![][crossplane-badge]  |
@@ -167,6 +168,7 @@
 [vault-uri]: https://github.com/hashicorp/vault
 [grocy-uri]: https://github.com/grocy/grocy
 [flame-uri]: https://github.com/pawelmalak/flame
+[kubevip-uri]: https://github.com/kube-vip/kube-vip
 [wavy-uri]: https://github.com/wavyland/wavy
 [unifi-uri]: https://github.com/jacobalberty/unifi-docker
 [poller-uri]: https://github.com/unpoller/unpoller
@@ -223,6 +225,7 @@
 [homelab-flame]: https://github.com/gruberdev/homelab/tree/main/apps/monitoring/flame
 [homelab-poller]: https://github.com/gruberdev/homelab/tree/main/apps/networking/unifi/poller
 [homelab-cloudflared]: https://github.com/gruberdev/homelab/tree/main/apps/networking/cloudflared
+[homelab-kubevip]: https://github.com/gruberdev/homelab/tree/main/apps/networking/kube-vip
 [homelab-rssgen]: https://github.com/gruberdev/homelab/tree/main/apps/services/rss/gen
 [homelab-chatgpt]: https://github.com/gruberdev/homelab/tree/main/apps/services/chatgpt/discord-bot
 [homelab-p-chatgpt]: https://github.com/gruberdev/homelab/tree/main/apps/services/chatgpt/memory-plugin
@@ -277,6 +280,7 @@
 [argocd-beets]: https://argo.gruber.dev.br/api/badge?name=beets
 [argocd-lidarr]: https://argo.gruber.dev.br/api/badge?name=lidarr
 [argocd-metabase]: https://argo.gruber.dev.br/api/badge?name=metabase
+[argocd-kubevip]: https://argo.gruber.dev.br/api/badge?name=kube-vip
 [argocd-prowlarr]: https://argo.gruber.dev.br/api/badge?name=prowlarr
 [argocd-sonarr]: https://argo.gruber.dev.br/api/badge?name=sonarr
 [argocd-jellyfin]: https://argo.gruber.dev.br/api/badge?name=jellyfin
@@ -292,6 +296,7 @@
 <!-- Badge Images -->
 
 [argo-badge]: https://img.shields.io/github/v/release/argoproj/argo-cd?label=Github&logo=github&style=flat-square
+[kubevip-badge]: https://img.shields.io/github/v/release/kube-vip/kube-vip?label=Github&logo=github&style=flat-square
 [kube-badge]: https://img.shields.io/github/v/release/prometheus-operator/kube-prometheus?label=Github&logo=github&style=flat-square
 [democratic-csi-badge]: https://img.shields.io/github/v/tag/longhorn/longhorn?label=Github&logo=github&style=flat-square
 [zalando-badge]: https://img.shields.io/github/v/tag/zalando/postgres-operator?label=Github&logo=github&style=flat-square
