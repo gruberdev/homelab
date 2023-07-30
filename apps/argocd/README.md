@@ -1,5 +1,5 @@
 <p align="center">
-<img width="350" height="250" src="https://cncf-branding.netlify.app/img/projects/argo/horizontal/color/argo-horizontal-color.svg"></br><img src="https://img.shields.io/github/v/release/argoproj/argo-cd?label=Latest%20Version&logo=github&style=for-the-badge">
+<img width="350" height="250" src="../../docs/assets/logos/argo.svg"></br><img src="https://img.shields.io/github/v/release/argoproj/argo-cd?label=Latest%20Version&logo=github&style=for-the-badge">
 </p>
 
 ### Description
@@ -16,8 +16,6 @@
 > - The synchronization capabilities of ArgoCD include comprehensive health checks, ensuring reliable data reporting for application deployment status. Compared to FluxCD, ArgoCD's self-healing features are more extensive. It should be noted that FluxCD's sync hooks are limited to supporting Helm charts exclusively.
 >
 > **In summary, ArgoCD presents a comprehensive and feature-intensive solution for the management and automation of Kubernetes-based application deployments.**
->
-> &nbsp;
 
 
 &nbsp;
