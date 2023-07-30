@@ -1,0 +1,30 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  annotations:
+    rbac.authorization.kubernetes.io/autoupdate: "true"
+  name: system:kube-vip-role
+rules:
+- apiGroups: [""]
+  resources: ["services", "services/status", "nodes", "endpoints"]
+  verbs: ["list", "get", "watch", "update"]
+- apiGroups: ["*"]
+  resources: ["*"]
+  verbs: ["list", "get", "watch", "update", "create"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  annotations:
+    rbac.authorization.kubernetes.io/autoupdate: "true"
+  name: system:kube-vip-cloud-controller-role
+rules:
+  - apiGroups: ["*"]
+    resources: ["*"]
+    verbs: ["*"]
+  - apiGroups: [""]
+    resources: ["configmaps", "endpoints","events","services/status", "leases"]
+    verbs: ["*"]
+  - apiGroups: [""]
+    resources: ["nodes", "services"]
+    verbs: ["list","get","watch","update"]
