@@ -5,8 +5,7 @@ metadata:
   name: chatgpt-discord
   labels:
     app: chatgpt-discord
-  annotations:
-    link.argocd.argoproj.io/external-link: http://chatgpt
+
 spec:
   replicas: 1
   strategy:
@@ -21,7 +20,7 @@ spec:
     spec:
       containers:
         - name: bot
-          image: docker.io/grubertech/chatgpt:v1.2.1
+          image: quay.io/go-skynet/gpt-discord-bot:main
           imagePullPolicy: Always
           envFrom:
             - configMapRef:
@@ -30,7 +29,7 @@ spec:
                 name: chatgpt-discord-vars
           ports:
             - name: web
-              containerPort: 80
+              containerPort: 8080
               protocol: TCP
           resources:
             requests:

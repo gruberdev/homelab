@@ -4,8 +4,4 @@ metadata:
   name: chatgpt-discord-config
 data:
   TZ: "America/Sao_Paulo"
-  CHAT_MODEL: "OFFICIAL"
-  GPT_ENGINE: "gpt-3.5-turbo"
-  UNOFFICIAL_PAID: "True"
-  LOGGING: "True"
-  REPLYING_ALL: "False"
+  OPENAI_API_BASE: "http://local-ai.mlops.svc.cluster.local"
