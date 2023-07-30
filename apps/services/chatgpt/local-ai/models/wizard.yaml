@@ -30,10 +30,6 @@ config_file: |
   template:
     completion: wizardlm-completion
     chat: wizardlm-chat
-  roles:
-    user: "User:"
-    system: "System:"
-    assistant: "Assistant:"
 
 files:
 - filename: "Wizard-Vicuna-13B-Uncensored.ggmlv3.q5_0.bin"
