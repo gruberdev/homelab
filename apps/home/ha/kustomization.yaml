@@ -18,7 +18,7 @@ patches:
 
 images:
 - name: homeassistant/home-assistant
-  newTag: "2023.6"
+  newTag: "2023.7"
 
 commonAnnotations:
   reloader.stakater.com/auto: 'true'
