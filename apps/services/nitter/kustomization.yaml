@@ -1,9 +1,0 @@
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-bases:
-- ./base
-
-namespace: services
-
-commonAnnotations:
-  reloader.stakater.com/auto: "true"
