@@ -1,0 +1,50 @@
+name: "llama2"
+
+description: |
+    Meta's Llama 2 13B-chat GGML
+
+license: "Other"
+urls:
+- https://huggingface.co/TheBloke/Llama-2-13B-chat-GGML
+- https://huggingface.co/meta-llama/Llama-2-13b-chat-hf
+- https://huggingface.co/TheBloke/Llama-2-13B-chat-GPTQ
+
+config_file: |
+  name: llama2
+  gpu_layers: 1000
+  debug: true
+  mmap: true
+  embeddings: true
+  prompt_cache_all: true
+  prompt_cache_ro: false
+  mirostat_eta: 0.8
+  mirostat_tau: 0.9
+  mirostat: 1
+  f16: true
+  backend: llama
+  parameters:
+    model: llama-2-13b-chat.ggmlv3.q4_K_M.bin
+    top_k: 80
+    temperature: 1
+    top_p: 0.7
+  context_size: 1024
+  template:
+    chat_message: llama2-chat-message
+  system_prompt: |
+    You are a helpful, respectful and honest assistant. Always answer as helpfully as possible, while being safe.  Your answers should not include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal content. Please ensure that your responses are socially unbiased and positive in nature.
+    If a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct. If you don't know the answer to a question, please don't share false information.
+
+files:
+- filename: "llama-2-13b-chat.ggmlv3.q4_K_M.bin"
+  uri: "https://huggingface.co/TheBloke/Llama-2-13B-chat-GGML/resolve/main/llama-2-13b-chat.ggmlv3.q4_K_M.bin"
+
+prompt_templates:
+- name: "llama2-chat-message"
+  content: |
+    {{if eq .RoleName "assistant"}}{{.Content}}{{else}}
+    [INST]
+    {{if .SystemPrompt}}{{.SystemPrompt}}{{else if eq .RoleName "system"}}<<SYS>>{{.Content}}<</SYS>>
+
+    {{else if .Content}}{{.Content}}{{end}}
+    [/INST]
+    {{end}}
