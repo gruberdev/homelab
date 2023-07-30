@@ -84,7 +84,8 @@ resources:
 
 # ChatGPT-related Applications
 # - base/services/chatgpt/discord-bot.yaml
-#- base/services/chatgpt/memory-plugin.yaml
+- base/services/chatgpt/k8sgpt.yaml
+# - base/services/chatgpt/memory-plugin.yaml
 
 # Media Services
 - base/services/media/tanoshi.yaml
