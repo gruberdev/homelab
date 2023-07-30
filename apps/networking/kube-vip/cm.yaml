@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kubevip
+data:
+  cidr-default: 192.168.0.200/29
+  range-development: 192.168.0.210-192.168.0.219
+  cidr-finance: 192.168.0.220/29,192.168.0.230/29
+  cidr-global: 192.168.0.240/29

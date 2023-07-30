@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: kube-vip
+spec:
+  selector:
+    matchLabels:
+      name: kube-vip
+  template:
+    metadata:
+      labels:
+        name: kube-vip
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: node-role.kubernetes.io/master
+                operator: Exists
+            - matchExpressions:
+              - key: node-role.kubernetes.io/control-plane
+                operator: Exists
+      containers:
+      - args:
+        - manager
+        env:
+        - name: vip_arp
+          value: "false"
+        - name: port
+          value: "6443"
+        - name: vip_interface
+          value: eno1
+        - name: vip_cidr
+          value: "32"
+        - name: cp_enable
+          value: "true"
+        - name: enableUPNP
+          value: "true"
+        - name: cp_namespace
+          value: kube-system
+        - name: vip_ddns
+          value: "false"
+        - name: svc_enable
+          value: "true"
+        - name: bgp_enable
+          value: "true"
+        - name: enableServicesElection
+          value: "true"
+        - name: bgp_routerid
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        - name: bgp_as
+          value: "64501"
+        - name: bgp_peeraddress
+        - name: bgp_peerpass
+        - name: bgp_peeras
+          value: "65000"
+        - name: bgp_peers
+          value: "192.168.1.2:64500::false,192.168.1.4:64512::false,192.168.1.10:64500::false"
+        - name: address
+          value: "192.168.0.40"
+        image: ghcr.io/kube-vip/kube-vip:v0.6.0
+        imagePullPolicy: Always
+        name: kube-vip
+        resources:
+          limits:
+            cpu: 300m
+            memory: 360Mi
+          requests:
+            cpu: 50m
+            memory: 150Mi
+        securityContext:
+          capabilities:
+            add:
+            - NET_ADMIN
+            - NET_RAW
+            - SYS_TIME
+      hostNetwork: true
+      serviceAccountName: kube-vip
+      tolerations:
+      - effect: NoSchedule
+        operator: Exists
+      - effect: NoExecute
+        operator: Exists

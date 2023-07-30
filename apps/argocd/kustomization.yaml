@@ -21,6 +21,7 @@ resources:
 - base/core/nginx-ingress.yaml
 - base/core/certmanager.yaml
 - base/core/issuer.yaml
+- base/core/kube-vip.yaml
 # - base/core/sealed.yaml
 # - base/core/tailscale.yaml
 # - base/core/velero.yaml
@@ -120,7 +121,7 @@ resources:
 - https://github.com/gruberdev/homelab/apps/networking/tailscale
 - https://github.com/gruberdev/homelab/apps/networking/cloudflared
 
-- https://raw.githubusercontent.com/argoproj/argo-cd/v2.7.7/manifests/install.yaml
+- https://raw.githubusercontent.com/argoproj/argo-cd/v2.7.9/manifests/install.yaml
 
 # Image Updater
 - https://github.com/argoproj-labs/argocd-image-updater/manifests/base
@@ -141,7 +142,7 @@ patchesStrategicMerge:
 namespace: argocd
 images:
 - name: quay.io/argoproj/argocd
-  newTag: v2.7.7
+  newTag: v2.7.9
 
 patches:
 - patch: |-
