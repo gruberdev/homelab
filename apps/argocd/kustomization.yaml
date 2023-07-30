@@ -83,7 +83,7 @@ resources:
 # - base/services/archivebox.yaml
 
 # ChatGPT-related Applications
-# - base/services/chatgpt/discord-bot.yaml
+- base/services/chatgpt/discord-bot.yaml
 - base/services/chatgpt/k8sgpt.yaml
 # - base/services/chatgpt/memory-plugin.yaml
 
