@@ -3,7 +3,7 @@ kind: Kustomization
 bases:
 - ./base
 
-namespace: chatgpt
+namespace: mlops
 
 commonAnnotations:
   reloader.stakater.com/auto: "true"
