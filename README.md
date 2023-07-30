@@ -25,25 +25,25 @@
 
 > |             **Application**            |   **Category**  |                       **Info**                      |     **Deployment Status**    | **Latest Semver**
 > |:--------------------------------------:|:---------------:|:---------------------------------------------------:|:----------------------------:|:----------------------:|
+> |          [Agones][agones-uri]             |            `Services`   |        <sub>[More details][homelab-agones]</sub>    |        ![][argocd-agones]    |  ![][agones-badge]   |
 > |          [ArgoCD][argocd-uri]          |             `GitOps`     |      <sub>[More details][homelab-argocd]</sub>      |       ![][argocd-core]       | ![][argo-badge]        |
-> |     [Hashicorp's Vault][vault-uri]     |            `Security`   |       <sub>[Chart values][homelab-vault]</sub>      |       ![][argocd-vault]      |  ![][vault-badge]    |
-> | [<sub>Zalando PostgreSQL Operator</sub>][p-uri] |   `Databases`   |      <sub>[More details][homelab-zalando]</sub>     |      ![][argocd-zalando]     | ![][zalando-badge]  |
-> |       [Redis Operator][redis-uri]      |            `Databases`   |       <sub>[More details][homelab-redis]</sub>      |       ![][argocd-redis]      |  ![][redis-badge]    |
-> |    [Milvus][service-milvus]            |            `Databases`  |        <sub>[More details][homelab-milvus]</sub>    |        ![][argocd-milvus]   | ![][milvus-badge]    |
-> |     [kube-prometheus][service-kube]    |            `Monitoring`  |  <sub>[More details][homelab-kube]</sub>            |       ![][argocd-kube]       |   ![][kube-badge]    |
-> |     [Unifi Poller][poller-uri]         |            `Monitoring`  |      <sub>[More details][homelab-poller]</sub>      |      ![][argocd-poller]      | ![][poller-badge]    |
-> |     [Uptime Kuma][kuma-uri]            |            `Monitoring`  |      <sub>[More details][homelab-kuma]</sub>          |      ![][argocd-kuma]      | ![][kuma-badge]      |
-> |       [Agones][agones-uri]             |            `Services`   |        <sub>[More details][homelab-agones]</sub>    |        ![][argocd-agones]    |  ![][agones-badge]   |
-> |            [n8n][n8n-uri]              |            `Services`   |        <sub>[More details][homelab-n8n]</sub>       |        ![][argocd-n8n]       |  ![][n8n-badge]      |
+> |   [CertManager][service-certmanager] |               `Networking`   |  <sub>[More details][homelab-certmanager]</sub>    |  ![][argocd-certmanager] | ![][certmanager-badge]    |
 > |   [Changedetection.io][change-uri]     |             `Services`   |       <sub>[More details][homelab-change]</sub>      |        ![][argocd-change]    |  ![][change-badge]   |
-> |      [Home Assistant][service-ha]      |            `Smart Home`   |        <sub>[More details][homelab-ha]</sub>        |        ![][argocd-ha]        |    ![][ha-badge]     |
-> |   [Wyze API Bridge][service-wyze]      |            `Smart Home`   |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-wyze]      |  ![][wyze-badge]     |
-> |     [Unifi Controller][unifi-uri]      |            `Networking`  |      <sub>[More details][homelab-unifi]</sub>      |      ![][argocd-unifi]      | ![][unifi-badge]    |
-> |     [Kube-vip][kubevip-uri]            |            `Networking`  |      <sub>[More details][homelab-kubevip]</sub>      |      ![][argocd-kubevip]      | ![][kubevip-badge]    |
 > | [ExternalDNS][service-externaldns] |               `Networking`   |  <sub>[More details][homelab-externaldns]</sub>    |  ![][argocd-externaldns] | ![][externaldns-badge]    |
-> | [CertManager][service-certmanager] |               `Networking`   |  <sub>[More details][homelab-certmanager]</sub>    |  ![][argocd-certmanager] | ![][certmanager-badge]    |
+> |     [Hashicorp's Vault][vault-uri]     |            `Security`   |       <sub>[Chart values][homelab-vault]</sub>      |       ![][argocd-vault]      |  ![][vault-badge]    |
+> |      [Home Assistant][service-ha]      |            `Smart Home`   |        <sub>[More details][homelab-ha]</sub>        |        ![][argocd-ha]        |    ![][ha-badge]     |
+> | [Kube-vip][kubevip-uri]            |            `Networking`  |      <sub>[More details][homelab-kubevip]</sub>      |      ![][argocd-kubevip]      | ![][kubevip-badge]    |
+> |     [kube-prometheus][service-kube]    |            `Monitoring`  |  <sub>[More details][homelab-kube]</sub>            |       ![][argocd-kube]       |   ![][kube-badge]    |
+> |    [Milvus][service-milvus]            |            `Databases`  |        <sub>[More details][homelab-milvus]</sub>    |        ![][argocd-milvus]   | ![][milvus-badge]    |
+> |            [n8n][n8n-uri]              |            `Services`   |        <sub>[More details][homelab-n8n]</sub>       |        ![][argocd-n8n]       |  ![][n8n-badge]      |
+> | [Redis Operator][redis-uri]      |            `Databases`   |       <sub>[More details][homelab-redis]</sub>      |       ![][argocd-redis]      |  ![][redis-badge]    |
+> |    [Unifi Controller][unifi-uri]      |            `Networking`  |      <sub>[More details][homelab-unifi]</sub>      |      ![][argocd-unifi]      | ![][unifi-badge]    |
+> |     [Unifi Poller][poller-uri]         |            `Monitoring`  |      <sub>[More details][homelab-poller]</sub>      |      ![][argocd-poller]      | ![][poller-badge]    |
+> | [Uptime Kuma][kuma-uri]            |            `Monitoring`  |      <sub>[More details][homelab-kuma]</sub>          |      ![][argocd-kuma]      | ![][kuma-badge]      |
+> |   [Wyze API Bridge][service-wyze]      |            `Smart Home`   |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-wyze]      |  ![][wyze-badge]     |
+> | [<sub>Zalando PostgreSQL Operator</sub>][p-uri] |   `Databases`   |      <sub>[More details][homelab-zalando]</sub>     |      ![][argocd-zalando]     | ![][zalando-badge]  |
+> |     [Tailscale-operator][tail-uri]        |         `Networking`  | <sub>[More details][homelab-tailscale]</sub>         |                          |![][tailscale-badge]  |
 > |   [Cloudflared <sub>(as proxies)</sub>][cf-uri]  | `Networking`  | <sub>[More details][homelab-cloudflared]</sub>      |                        |   ![][cfd-badge]     |
-> |    [Tailscale-operator][tail-uri]        |         `Networking`  | <sub>[More details][homelab-tailscale]</sub>         |                          |![][tailscale-badge]  |
 
 <!-- >
 > |    [Crossplane][crossplane-uri]        |    `GitOps`     |      <sub>[More details][homelab-crossplane]</sub>  |       ![][argocd-crossplane] | ![][crossplane-badge]  |
