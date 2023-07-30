@@ -9,14 +9,14 @@ jobs:
           fetch-depth: 0
       - name: Check if Terraform files changed
         id: terraform-changes
-        uses: tj-actions/changed-files@v36
+        uses: tj-actions/changed-files@v37
         with:
           files: |
             terraform/**
 
       - name: Tailscale
         if: steps.terraform-changes.outputs.any_changed == 'true'
-        uses: tailscale/github-action@v1
+        uses: tailscale/github-action@v2
         with:
           authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
       - name: Clone repo
