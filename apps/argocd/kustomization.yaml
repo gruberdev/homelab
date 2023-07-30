@@ -22,12 +22,12 @@ resources:
 - base/core/certmanager.yaml
 - base/core/issuer.yaml
 - base/core/kube-vip.yaml
+- base/core/nvidia.yaml
+- base/core/nvidia-extra.yaml
 # - base/core/sealed.yaml
 # - base/core/tailscale.yaml
 # - base/core/velero.yaml
 # - base/core/private.yaml
-# - base/core/nvidia.yaml
-# - base/core/nvidia-extra.yaml
 # - base/core/democratic-csi.yaml
 # - base/core/router.yaml
 
@@ -45,11 +45,11 @@ resources:
 # Applications
 - base/apps/vault.yaml
 - base/apps/ha.yaml
-- base/apps/wyze.yaml
+# - base/apps/wyze.yaml
 - base/apps/unifi.yaml
-- base/apps/agones.yaml
-- base/apps/agones-crd.yaml
-- base/apps/milvus.yaml
+# - base/apps/agones.yaml
+# - base/apps/agones-crd.yaml
+# - base/apps/milvus.yaml
 # - base/apps/mongodb-crds.yaml
 # - base/apps/wandb.yaml
 # - base/apps/mongodb.yaml
