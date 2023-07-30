@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kube-vip-cloud-provider
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kube-vip
+      component: kube-vip-cloud-provider
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: kube-vip
+        component: kube-vip-cloud-provider
+    spec:
+      containers:
+      - command:
+        - /kube-vip-cloud-provider
+        - --leader-elect-resource-name=kube-vip-cloud-controller
+        image: ghcr.io/kube-vip/kube-vip-cloud-provider:v0.0.7
+        name: kube-vip-cloud-provider
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            cpu: 200m
+            memory: 256Mi
+        imagePullPolicy: Always
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      serviceAccountName: kube-vip-cloud-controller
+      tolerations:
+      - key: node-role.kubernetes.io/master
+        effect: NoSchedule
+      - key: node-role.kubernetes.io/control-plane
+        effect: NoSchedule
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 10
+            preference:
+              matchExpressions:
+              - key: node-role.kubernetes.io/control-plane
+                operator: Exists
+          - weight: 10
+            preference:
+              matchExpressions:
+              - key: node-role.kubernetes.io/master
+                operator: Exists
