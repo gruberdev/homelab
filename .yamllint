@@ -1,7 +1,7 @@
 ignore: |
   .github/workflows/*
   apps/services/agones/*
-
+  apps/networking/kube-vip/*
 rules:
   braces: disable
   brackets: enable

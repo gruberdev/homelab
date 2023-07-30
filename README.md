@@ -1,7 +1,8 @@
 <br>
 <p align="center">
-  <img width="220" height="100" src="https://cncf-branding.netlify.app/img/projects/k3s/icon/black/k3s-icon-black.svg">
+  <img width="220" height="100" src="./docs/assets/logos/logo.svg">
 </p>
+
 
 <h3 align="center">Homelab</h3>
 
@@ -24,26 +25,24 @@
 
 > |             **Application**            |   **Category**  |                       **Info**                      |     **Deployment Status**    | **Latest Semver**
 > |:--------------------------------------:|:---------------:|:---------------------------------------------------:|:----------------------------:|:----------------------:|
-> |          [ArgoCD][argocd-uri]          |    `GitOps`     |      <sub>[More details][homelab-argocd]</sub>      |       ![][argocd-core]       | ![][argo-badge]        |
-> |     [Hashicorp's Vault][vault-uri]     |    `Security`   |       <sub>[Chart values][homelab-vault]</sub>      |       ![][argocd-vault]      |  ![][vault-badge]    |
+> |          [ArgoCD][argocd-uri]          |             `GitOps`     |      <sub>[More details][homelab-argocd]</sub>      |       ![][argocd-core]       | ![][argo-badge]        |
+> |     [Hashicorp's Vault][vault-uri]     |            `Security`   |       <sub>[Chart values][homelab-vault]</sub>      |       ![][argocd-vault]      |  ![][vault-badge]    |
 > | [<sub>Zalando PostgreSQL Operator</sub>][p-uri] |   `Databases`   |      <sub>[More details][homelab-zalando]</sub>     |      ![][argocd-zalando]     | ![][zalando-badge]  |
-> |       [Redis Operator][redis-uri]      |   `Databases`   |       <sub>[More details][homelab-redis]</sub>      |       ![][argocd-redis]      |  ![][redis-badge]    |
-> |    [Milvus][service-milvus]            |    `Databases`  |        <sub>[More details][homelab-milvus]</sub>    |        ![][argocd-milvus]   | ![][milvus-badge]    |
-> | [<sub>MongoDB Community Operator</sub>][service-mongo] | `Databases` | <sub>[More details][homelab-mongo]</sub> |       ![][argocd-mongo]     | ![][mongo-badge]     |
-> |     [kube-prometheus][service-kube]    |   `Monitoring`  |  <sub>[More details][homelab-kube]</sub>            |       ![][argocd-kube]       |   ![][kube-badge]    |
-> |     [Unifi Poller][poller-uri]         |   `Monitoring`  |      <sub>[More details][homelab-poller]</sub>      |      ![][argocd-poller]      | ![][poller-badge]    |
-> |     [Uptime Kuma][kuma-uri]            |   `Monitoring`  |      <sub>[More details][homelab-kuma]</sub>          |      ![][argocd-kuma]      | ![][kuma-badge]      |
-> |       [Agones][agones-uri]             |    `Services`   |        <sub>[More details][homelab-agones]</sub>    |        ![][argocd-agones]    |  ![][agones-badge]   |
-> | <sub>[ChatGPT Retrieval Plugin][service-p-chatgpt]</sub> |  `Services`   |  <sub>[More details][homelab-p-chatgpt]</sub>    |  ![][argocd-p-chatgpt] | ![][chatgpt-p-badge]    |
-> |            [n8n][n8n-uri]              |    `Services`   |        <sub>[More details][homelab-n8n]</sub>       |        ![][argocd-n8n]       |  ![][n8n-badge]      |
-> |   [Changedetection.io][change-uri]     |   `Services`   |       <sub>[More details][homelab-change]</sub>      |        ![][argocd-change]    |  ![][change-badge]   |
-> |      [Home Assistant][service-ha]      |   `Smart Home`   |        <sub>[More details][homelab-ha]</sub>        |        ![][argocd-ha]        |    ![][ha-badge]     |
-> |   [Wyze API Bridge][service-wyze]      |   `Smart Home`   |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-wyze]      |  ![][wyze-badge]     |
-> |     [Unifi Controller][unifi-uri]      |   `Networking`  |      <sub>[More details][homelab-unifi]</sub>      |      ![][argocd-unifi]      | ![][unifi-badge]    |
-> |    [Tailscale-operator][tail-uri]        | `Networking`  | <sub>[More details][homelab-tailscale]</sub>         |     ![][argocd-tailscale]   |![][tailscale-badge]  |
-> | [ExternalDNS][service-externaldns] |  `Networking`   |  <sub>[More details][homelab-externaldns]</sub>    |  ![][argocd-externaldns] | ![][externaldns-badge]    |
-> | [CertManager][service-certmanager] |  `Networking`   |  <sub>[More details][homelab-certmanager]</sub>    |  ![][argocd-certmanager] | ![][certmanager-badge]    |
-> |   [Cloudflared <sub>(as proxies)</sub>][cf-uri]  |   `Networking`  | <sub>[More details][homelab-cloudflared]</sub>  |                        |   ![][cfd-badge]     |
+> |       [Redis Operator][redis-uri]      |            `Databases`   |       <sub>[More details][homelab-redis]</sub>      |       ![][argocd-redis]      |  ![][redis-badge]    |
+> |    [Milvus][service-milvus]            |            `Databases`  |        <sub>[More details][homelab-milvus]</sub>    |        ![][argocd-milvus]   | ![][milvus-badge]    |
+> |     [kube-prometheus][service-kube]    |            `Monitoring`  |  <sub>[More details][homelab-kube]</sub>            |       ![][argocd-kube]       |   ![][kube-badge]    |
+> |     [Unifi Poller][poller-uri]         |            `Monitoring`  |      <sub>[More details][homelab-poller]</sub>      |      ![][argocd-poller]      | ![][poller-badge]    |
+> |     [Uptime Kuma][kuma-uri]            |            `Monitoring`  |      <sub>[More details][homelab-kuma]</sub>          |      ![][argocd-kuma]      | ![][kuma-badge]      |
+> |       [Agones][agones-uri]             |            `Services`   |        <sub>[More details][homelab-agones]</sub>    |        ![][argocd-agones]    |  ![][agones-badge]   |
+> |            [n8n][n8n-uri]              |            `Services`   |        <sub>[More details][homelab-n8n]</sub>       |        ![][argocd-n8n]       |  ![][n8n-badge]      |
+> |   [Changedetection.io][change-uri]     |             `Services`   |       <sub>[More details][homelab-change]</sub>      |        ![][argocd-change]    |  ![][change-badge]   |
+> |      [Home Assistant][service-ha]      |            `Smart Home`   |        <sub>[More details][homelab-ha]</sub>        |        ![][argocd-ha]        |    ![][ha-badge]     |
+> |   [Wyze API Bridge][service-wyze]      |            `Smart Home`   |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-wyze]      |  ![][wyze-badge]     |
+> |     [Unifi Controller][unifi-uri]      |            `Networking`  |      <sub>[More details][homelab-unifi]</sub>      |      ![][argocd-unifi]      | ![][unifi-badge]    |
+> | [ExternalDNS][service-externaldns] |               `Networking`   |  <sub>[More details][homelab-externaldns]</sub>    |  ![][argocd-externaldns] | ![][externaldns-badge]    |
+> | [CertManager][service-certmanager] |               `Networking`   |  <sub>[More details][homelab-certmanager]</sub>    |  ![][argocd-certmanager] | ![][certmanager-badge]    |
+> |   [Cloudflared <sub>(as proxies)</sub>][cf-uri]  | `Networking`  | <sub>[More details][homelab-cloudflared]</sub>      |                        |   ![][cfd-badge]     |
+> |    [Tailscale-operator][tail-uri]        |         `Networking`  | <sub>[More details][homelab-tailscale]</sub>         |                          |![][tailscale-badge]  |
 
 <!-- >
 > |    [Crossplane][crossplane-uri]        |    `GitOps`     |      <sub>[More details][homelab-crossplane]</sub>  |       ![][argocd-crossplane] | ![][crossplane-badge]  |
@@ -63,6 +62,8 @@
 > |   [Wavy][wavy-uri]                     |   `Services`   |        <sub>[More details][homelab-wavy]</sub>      |        ![][argocd-wavy]       |  ![][wavy-badge] |
 > |   [Grocy][grocy-uri]                   |   `Services`   |        <sub>[More details][homelab-grocy]</sub>      |        ![][argocd-grocy]  |  ![][grocy-badge] |
 > | <sub>[ChatGPT Discord Bot][service-chatgpt]</sub> |  `Services`   |  <sub>[More details][homelab-chatgpt]</sub>    |  ![][argocd-chatgpt] | ![][chatgpt-badge]    |
+> | <sub>[ChatGPT Retrieval Plugin][service-p-chatgpt]</sub> |  `Services`   |  <sub>[More details][homelab-p-chatgpt]</sub>    |  ![][argocd-p-chatgpt] | ![][chatgpt-p-badge]    |
+> | [<sub>MongoDB Community Operator</sub>][service-mongo] | `Databases` | <sub>[More details][homelab-mongo]</sub> |       ![][argocd-mongo]     | ![][mongo-badge]     |
 
 
 #### Matrix-related
