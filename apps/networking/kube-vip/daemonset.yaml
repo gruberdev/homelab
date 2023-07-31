@@ -24,6 +24,8 @@ spec:
       containers:
       - args:
         - manager
+        - --prometheusHTTPServer
+        - ""
         env:
         - name: vip_arp
           value: "false"
@@ -64,12 +66,6 @@ spec:
         image: ghcr.io/kube-vip/kube-vip:v0.6.0
         imagePullPolicy: Always
         name: kube-vip
-        spec:
-          containers:
-          - args:
-            - manager
-            - --prometheusHTTPServer
-            - ""
         resources:
           limits:
             cpu: 300m
