@@ -12,6 +12,7 @@ config_file: |
   gpu_layers: 1000
   debug: true
   mmap: true
+  low_vram: true
   embeddings: true
   prompt_cache_all: true
   prompt_cache_ro: false
