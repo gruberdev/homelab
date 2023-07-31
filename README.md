@@ -25,7 +25,6 @@
 
 > |             **Application**            |   **Category**  |                       **Info**                      |     **Deployment Status**    | **Latest Semver**
 > |:--------------------------------------:|:---------------:|:---------------------------------------------------:|:----------------------------:|:----------------------:|
-> |          [Agones][agones-uri]             |            `Services`   |        <sub>[More details][homelab-agones]</sub>    |        ![][argocd-agones]    |  ![][agones-badge]   |
 > |          [ArgoCD][argocd-uri]          |             `GitOps`     |      <sub>[More details][homelab-argocd]</sub>      |       ![][argocd-core]       | ![][argo-badge]        |
 > |   [CertManager][service-certmanager] |               `Networking`   |  <sub>[More details][homelab-certmanager]</sub>    |  ![][argocd-certmanager] | ![][certmanager-badge]    |
 > |   [Changedetection.io][change-uri]     |             `Services`   |       <sub>[More details][homelab-change]</sub>      |        ![][argocd-change]    |  ![][change-badge]   |
@@ -35,6 +34,7 @@
 > | [Kube-vip][kubevip-uri]            |            `Networking`  |      <sub>[More details][homelab-kubevip]</sub>      |      ![][argocd-kubevip]      | ![][kubevip-badge]    |
 > |     [kube-prometheus][service-kube]    |            `Monitoring`  |  <sub>[More details][homelab-kube]</sub>            |       ![][argocd-kube]       |   ![][kube-badge]    |
 > |    [Milvus][service-milvus]            |            `Databases`  |        <sub>[More details][homelab-milvus]</sub>    |        ![][argocd-milvus]   | ![][milvus-badge]    |
+> |          [Gitea][gitea-uri]          |             `GitOps`     |      <sub>[More details][homelab-gitea]</sub>      |       ![][argocd-gitea]       | ![][gitea-badge]        |
 > |            [n8n][n8n-uri]              |            `Services`   |        <sub>[More details][homelab-n8n]</sub>       |        ![][argocd-n8n]       |  ![][n8n-badge]      |
 > | [Redis Operator][redis-uri]      |            `Databases`   |       <sub>[More details][homelab-redis]</sub>      |       ![][argocd-redis]      |  ![][redis-badge]    |
 > |    [Unifi Controller][unifi-uri]      |            `Networking`  |      <sub>[More details][homelab-unifi]</sub>      |      ![][argocd-unifi]      | ![][unifi-badge]    |
@@ -50,6 +50,7 @@
 > |           [Beets][service-beets]       |   `Media`       |  <sub>[More details][homelab-beets]</sub>           |       ![][argocd-beets]      |   ![][beets-badge]   |
 > |           [Lidarr][service-lidarr]     |   `Media`       |  <sub>[More details][homelab-lidarr]</sub>          |  ![][argocd-lidarr]          |  ![][lidarr-badge]   |
 > |    [Metabase][service-metabase]        |   `Analytics`   |       <sub>[More details][homelab-metabase]</sub>   |   ![][argocd-metabase]       | ![][metabase-badge] |
+> |          [Agones][agones-uri]             |            `Services`   |        <sub>[More details][homelab-agones]</sub>    |        ![][argocd-agones]    |  ![][agones-badge]   |
 > |       [Matrix Synapse][matrix-uri]     |    `Services`   |        <sub>[More details][homelab-matrix]</sub>    |        ![][argocd-matrix]    |  ![][matrix-badge]   |
 > |         botdarr         |                    | `Utilities` |                   |                       |
 > | [Nvidia GPU Exporter][nvidia-exp-uri]  |   `Monitoring`  | <sub>[Chart values][homelab-gpu-exporter]</sub>     | ![][argocd-gpu-exporter]  | ![][gpu-exporter-badge] |
@@ -172,6 +173,7 @@
 [wavy-uri]: https://github.com/wavyland/wavy
 [unifi-uri]: https://github.com/jacobalberty/unifi-docker
 [poller-uri]: https://github.com/unpoller/unpoller
+[gitea-uri]: https://about.gitea.com
 [cf-uri]: https://github.com/cloudflare/cloudflared
 [service-sonarr]: https://github.com/Sonarr/Sonarr
 [service-prowlarr]: https://github.com/Prowlarr/Prowlarr
@@ -214,6 +216,7 @@
 [homelab-wavy]: https://github.com/gruberdev/homelab/tree/main/apps/services/wavy
 [homelab-unifi-controller]: https://github.com/gruberdev/homelab/tree/main/apps/networking/unifi/controller
 [homelab-zalando]: https://github.com/gruberdev/homelab/tree/main/apps/data/postgres/operator
+[homelab-gitea]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/services/gitea.yaml
 [homelab-change]: https://github.com/gruberdev/homelab/tree/main/apps/services/changedetection
 [homelab-redis]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/core/redis.yaml
 [homelab-grocy]: https://github.com/gruberdev/homelab/tree/main/apps/services/grocy
@@ -268,6 +271,7 @@
 [argocd-changedetection]: https://argo.gruber.dev.br/api/badge?name=changedetection
 [argocd-tailscale]: https://argo.gruber.dev.br/api/badge?name=tailscale
 [argocd-chatgpt]: https://argo.gruber.dev.br/api/badge?name=discord-bot-gpt
+[argocd-gitea]: https://argo.gruber.dev.br/api/badge?name=gitea
 [argocd-p-chatgpt]: https://argo.gruber.dev.br/api/badge?name=memory-plugin-gpt
 [argocd-milvus]: https://argo.gruber.dev.br/api/badge?name=milvus
 [argocd-mongo]: https://argo.gruber.dev.br/api/badge?name=mongodb-operator
@@ -296,6 +300,7 @@
 <!-- Badge Images -->
 
 [argo-badge]: https://img.shields.io/github/v/release/argoproj/argo-cd?label=Github&logo=github&style=flat-square
+[gitea-badge]: https://img.shields.io/github/v/release/go-gitea/gitea?label=Github&logo=github&style=flat-square
 [kubevip-badge]: https://img.shields.io/github/v/release/kube-vip/kube-vip?label=Github&logo=github&style=flat-square
 [kube-badge]: https://img.shields.io/github/v/release/prometheus-operator/kube-prometheus?label=Github&logo=github&style=flat-square
 [democratic-csi-badge]: https://img.shields.io/github/v/tag/longhorn/longhorn?label=Github&logo=github&style=flat-square
