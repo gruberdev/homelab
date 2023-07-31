@@ -2,12 +2,6 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: postgres
-  annotations:
-    argocd-image-updater.argoproj.io/write-back-method: git
-    argocd-image-updater.argoproj.io/write-back-target: kustomization
-    argocd-image-updater.argoproj.io/git-branch: main
-    argocd-image-updater.argoproj.io/image-list: operatorui=registry.opensource.zalan.do/acid/postgres-operator-ui
-    argocd-image-updater.argoproj.io/operatorui.platforms: linux/amd64
 spec:
   project: cluster
   source:
