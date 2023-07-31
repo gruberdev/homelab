@@ -2,6 +2,8 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: eraser
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
 spec:
   project: cluster
   source:
@@ -12,6 +14,9 @@ spec:
       releaseName: eraser
       values: |
         runtimeConfig:
+        runtimeConfig:
+          apiVersion: eraser.sh/v1alpha2
+          kind: EraserConfig
           health: {}
             # healthProbeBindAddress: :8081
           metrics: {}
@@ -47,46 +52,48 @@ spec:
             collector:
               enabled: true
               image:
-                tag: "v1.1.0-beta.0"
-              limits:
-                cpu: 150m
-                memory: 256Mi
-              requests:
+                # repo: ""
+                tag: "v1.1.1"
+              request:
                 cpu: 50m
+                memory: 64Mi
+              limit:
+                cpu: 180m
                 memory: 128Mi
             scanner:
               enabled: true
               image:
-                tag: "v1.1.0-beta.0"
-              limits:
-                cpu: 150m
-                memory: 256Mi
-              requests:
+                # repo: ""
+                tag: "v1.1.1"
+              request:
                 cpu: 50m
+                memory: 64Mi
+              limit:
+                cpu: 180m
                 memory: 128Mi
               config: ""
-            eraser:
+            remover:
               image:
-                tag: "v1.1.0-beta.0"
-              limits:
-                cpu: 150m
-                memory: 256Mi
-              requests:
+                tag: "v1.1.1"
+              request:
                 cpu: 50m
+                memory: 64Mi
+              limit:
+                cpu: 180m
                 memory: 128Mi
         deploy:
           image:
             repo: ghcr.io/azure/eraser-manager
             pullPolicy: IfNotPresent
-            # Overrides the image tag whose default is the chart appVersion.
-            tag: "v1.1.0-beta.0"
+            tag: "v1.1.1"
           additionalArgs: []
           priorityClassName: ""
           securityContext:
-            allowPrivilegeEscalati
+            allowPrivilegeEscalation: false
           resources:
             limits:
-              memory: 30Mi
+              memory: 128Mi
+              cpu: 150m
             requests:
               cpu: 100m
               memory: 20Mi
@@ -94,7 +101,7 @@ spec:
             kubernetes.io/os: linux
           tolerations: []
           affinity: {}
-
+        nameOverride: ""
   destination:
     namespace: eraser-system
     name: in-cluster
