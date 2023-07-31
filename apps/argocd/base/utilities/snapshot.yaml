@@ -1,0 +1,56 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: snapshot-controller
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: cluster
+  source:
+    repoURL: 'https://github.com/senthilrch/kube-fledged.git'
+    targetRevision: snapshot-controller-0.2.4
+    path: stable/snapshot-controller
+    helm:
+      releaseName: snapshot-controller
+      values: |
+        controller:
+          enabled: true
+          rbac:
+            enabled: true
+          replicaCount: 1
+          image:
+            repository: registry.k8s.io/sig-storage/snapshot-controller
+            pullPolicy: IfNotPresent
+          args:
+          - "--v=5"
+          - "--leader-election=true"
+          - "--enable-distributed-snapshotting"
+        validatingWebhook:
+          enabled: false
+          rbac:
+            enabled: true
+          replicaCount: 1
+          image:
+            repository: registry.k8s.io/sig-storage/snapshot-validation-webhook
+            pullPolicy: IfNotPresent
+  destination:
+    namespace: kube-system
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: false
+    syncOptions:
+    - Validate=false
+    - CreateNamespace=false
+    - PrunePropagationPolicy=background
+    - PruneLast=true
+    - ApplyOutOfSyncOnly=false
+    - Prune=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 15s
+        factor: 2
+        maxDuration: 15m

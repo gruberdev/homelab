@@ -63,3 +63,22 @@
     - filename: llama-2-13b-chat.ggmlv3.q4_K_M.bin
       sha256: 41d647de4f9700aeaff878805ba68d603a53ea50d4580e72d1ca503d886a4f03
       uri: https://huggingface.co/TheBloke/Llama-2-13B-chat-GGML/resolve/main/llama-2-13b-chat.ggmlv3.q4_K_M.bin
+- url: "github:gruberdev/homelab/apps/services/chatgpt/local-ai/models/orca.yaml"
+  name: orca
+  license: other
+  urls:
+    - https://huggingface.co/TheBloke/OpenAssistant-Llama2-13B-Orca-8K-3319-GGML
+  tags:
+    - en
+    - llama2
+    - roleplay
+    - ggml
+    - conversational
+    - chat
+  overrides:
+    parameters:
+      model: openassistant-llama2-13b-orca-8k-3319.ggmlv3.q4_K_M.bin
+  files:
+    - filename: openassistant-llama2-13b-orca-8k-3319.ggmlv3.q4_K_M.bin
+      sha256: a97f818ff741b02482807b0ec829da0f3fc837e1da427a0f1730cca4bb3b8698
+      uri: https://huggingface.co/TheBloke/OpenAssistant-Llama2-13B-Orca-8K-3319-GGML/resolve/main/openassistant-llama2-13b-orca-8k-3319.ggmlv3.q4_K_M.bin
