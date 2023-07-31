@@ -46,11 +46,11 @@ resources:
 # Applications
 - base/apps/vault.yaml
 - base/apps/ha.yaml
-# - base/apps/wyze.yaml
 - base/apps/unifi.yaml
+- base/apps/milvus.yaml
+- base/apps/wyze.yaml
 # - base/apps/agones.yaml
 # - base/apps/agones-crd.yaml
-# - base/apps/milvus.yaml
 # - base/apps/mongodb-crds.yaml
 # - base/apps/wandb.yaml
 # - base/apps/mongodb.yaml
