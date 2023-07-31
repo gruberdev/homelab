@@ -7,7 +7,7 @@ metadata:
 spec:
   project: cluster
   source:
-    repoURL: 'https://github.com/senthilrch/kube-fledged.git'
+    repoURL: 'https://github.com/democratic-csi/charts.git'
     targetRevision: snapshot-controller-0.2.4
     path: stable/snapshot-controller
     helm:
