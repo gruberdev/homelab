@@ -1,13 +1,11 @@
-name: "llama2"
+name: "orca"
 
 description: |
-    Meta's Llama 2 13B-chat GGML
+    OpenAssistant-Llama2-13B-Orca-8K-3319-GGML
 
 license: "Other"
 urls:
-- https://huggingface.co/TheBloke/Llama-2-13B-chat-GGML
-- https://huggingface.co/meta-llama/Llama-2-13b-chat-hf
-- https://huggingface.co/TheBloke/Llama-2-13B-chat-GPTQ
+- https://huggingface.co/TheBloke/OpenAssistant-Llama2-13B-Orca-8K-3319-GGML
 
 config_file: |
   name: llama2
@@ -23,7 +21,7 @@ config_file: |
   f16: true
   backend: llama
   parameters:
-    model: llama-2-13b-chat.ggmlv3.q4_K_M.bin
+    model: openassistant-llama2-13b-orca-8k-3319.ggmlv3.q4_K_M.bin
     top_k: 80
     temperature: 1
     top_p: 0.7
@@ -33,8 +31,8 @@ config_file: |
   system_prompt: |
     You are an AI assistant. You should describe the task and explain your answer. While answering a multiple choice question, first output the correct answer(s). Then explain why other answers are wrong. You might need to use additional knowledge to answer the question.
 files:
-- filename: "llama-2-13b-chat.ggmlv3.q4_K_M.bin"
-  uri: "https://huggingface.co/TheBloke/Llama-2-13B-chat-GGML/resolve/main/llama-2-13b-chat.ggmlv3.q4_K_M.bin"
+- filename: "openassistant-llama2-13b-orca-8k-3319.ggmlv3.q4_K_M.bin"
+  uri: "https://huggingface.co/TheBloke/OpenAssistant-Llama2-13B-Orca-8K-3319-GGML/resolve/main/openassistant-llama2-13b-orca-8k-3319.ggmlv3.q4_K_M.bin"
 
 prompt_templates:
 - name: "llama2-chat-message"
