@@ -28,7 +28,7 @@ config_file: |
     top_p: 0.7
   context_size: 1024
   template:
-    chat_message: llama2-chat-message
+    chat_message: llama2-input
   system_prompt: |
     You are an AI assistant. You should describe the task and explain your answer. While answering a multiple choice question, first output the correct answer(s). Then explain why other answers are wrong. You might need to use additional knowledge to answer the question.
 files:
@@ -36,11 +36,11 @@ files:
   uri: "https://huggingface.co/TheBloke/OpenAssistant-Llama2-13B-Orca-8K-3319-GGML/resolve/main/openassistant-llama2-13b-orca-8k-3319.ggmlv3.q4_K_M.bin"
 
 prompt_templates:
-- name: "llama2-chat-message"
+- name: "llama2-input"
   content: |
-    {{if eq .RoleName "assistant"}}{{.Content}}{{else}}
-    [INST]
-    {{if eq .RoleName "system"}}<<SYS>>{{.Content}}<</SYS>>{{else if and (.SystemPrompt) (eq .MessageIndex 0)}}<<SYS>>{{.SystemPrompt}}<</SYS>>{{end}}
-    {{if .Content}}{{.Content}}{{end}}
-    [/INST]
-    {{end}}
+    You are an AI assistant. You should describe the task and explain your answer. While answering a multiple choice question, first output the correct answer(s). Then explain why other answers are wrong. You might need to use additional knowledge to answer the question.
+
+    ### Prompt:
+    {{.Input}}
+
+    ### Response:
