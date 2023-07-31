@@ -7,7 +7,7 @@ spec:
   source:
     repoURL: https://dl.gitea.io/charts/
     chart: gitea
-    targetRevision: 8.3.0
+    targetRevision: 9.0.4
     helm:
       releaseName: gitea
       values: |
