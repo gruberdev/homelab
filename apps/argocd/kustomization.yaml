@@ -37,6 +37,7 @@ resources:
 - base/utilities/kured.yaml
 - base/utilities/kube-fledged.yaml
 - base/utilities/descheduler.yaml
+- base/utilities/snapshot.yaml
 # - base/utilities/gfd.yaml
 # - base/utilities/wavy.yaml
 # - base/utilities/eraser.yaml
