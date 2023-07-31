@@ -20,7 +20,7 @@ resources:
 # - base/lidarr.yaml
 # - base/jellyfin.yaml
 - base/tanoshi.yaml
-- base/ganymede.yaml
+# - base/ganymede.yaml
 
 # Services
 - base/n8n.yaml
@@ -29,9 +29,9 @@ resources:
 - base/grocy.yaml
 - base/archivebox.yaml
 - base/change.yaml
-- base/taskwarrior.yaml
-- base/nitter.yaml
-- base/wallabag.yaml
+# - base/taskwarrior.yaml
+# - base/nitter.yaml
+# - base/wallabag.yaml
 - base/milvus.yaml
 - base/actual.yaml
 - base/jupyterlab.yaml
@@ -41,8 +41,8 @@ resources:
 #  Postgres Storage
 - base/postgres/ha.yaml
 - base/postgres/n8n.yaml
-- base/postgres/wallabag.yaml
-- base/postgres/ganymede.yaml
+# - base/postgres/wallabag.yaml
+# - base/postgres/ganymede.yaml
 
 # Matrix
 - base/matrix/synapse.yaml
