@@ -294,6 +294,14 @@ spec:
           ingress:
             enabled: false
           namespaceOverride: monitoring
+          grafana.ini:
+            security:
+              cookie_secure: false
+            server:
+              domain: grafana.gruber.dev.br
+              protocol: http
+              root_url: "%(protocol)s://%(domain)s:%(http_port)s/grafana/"
+              serve_from_sub_path: true
           plugins:
           - grafana-image-renderer
           - grafana-piechart-panel
