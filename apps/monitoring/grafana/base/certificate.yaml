@@ -7,6 +7,6 @@ spec:
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
-  commonName: grafana.xn--qck4cud2cb.com
+  commonName: grafana.gruber.dev.br
   dnsNames:
-    - grafana.xn--qck4cud2cb.com
+  - grafana.gruber.dev.br
