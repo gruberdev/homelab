@@ -128,6 +128,13 @@ resources:
 # Image Updater
 - https://github.com/argoproj-labs/argocd-image-updater/manifests/base
 
+# Custom CSS Styles
+- base/styles-cm.yaml
+
+# Internal Tailscale resources
+- base/tailscale-svc.yaml
+- base/tailscale-ingress.yaml
+
 components:
 # Extensions controller component
 - https://github.com/argoproj-labs/argocd-extensions/manifests
@@ -135,6 +142,7 @@ components:
 patchesStrategicMerge:
 - overlay/argocd-svc.yaml
 - overlay/argocd-deployment.yaml
+- overlay/argocd-repo-deployment.yaml
 - overlay/argocd-cm.yaml
 - overlay/cloudflared-cm.yaml
 - overlay/argocd-rbac.yaml

@@ -27,7 +27,7 @@ spec:
     - ApplyOutOfSyncOnly=false
     - Prune=true
     retry:
-      limit: -1
+      limit: 5
       backoff:
         duration: 20s
         factor: 2

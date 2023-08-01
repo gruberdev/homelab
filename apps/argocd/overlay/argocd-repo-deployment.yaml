@@ -1,0 +1,96 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argocd-repo-server
+  annotations:
+    link.argocd.argoproj.io/external-link: http://argo.gruber.dev.br
+  labels:
+    app.kubernetes.io/name: argocd-repo-server
+    app.kubernetes.io/part-of: argocd
+spec:
+  template:
+    spec:
+      automountServiceAccountToken: true
+      volumes:
+        - configMap:
+            name: cmp-plugin
+          name: cmp-plugin
+        - name: custom-tools
+          emptyDir: {}
+      initContainers:
+      - name: download-tools
+        image: docker.io/grubertech/argocd-sidecar:v2.6.2
+        imagePullPolicy: Always
+        env:
+          - name: AVP_VERSION
+            value: 1.13.1
+        command: [sh, -c]
+        args:
+          - >-
+            curl -L https://github.com/argoproj-labs/argocd-vault-plugin/releases/download/v$(AVP_VERSION)/argocd-vault-plugin_$(AVP_VERSION)_linux_amd64 -o argocd-vault-plugin &&
+            chmod +x argocd-vault-plugin &&
+            mv argocd-vault-plugin /custom-tools/
+        volumeMounts:
+          - mountPath: /custom-tools
+            name: custom-tools
+      containers:
+      - name: avp-helm
+        command: [/var/run/argocd/argocd-cmp-server]
+        image: docker.io/grubertech/argocd-sidecar:v2.6.2
+        imagePullPolicy: Always
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 999
+        volumeMounts:
+          - mountPath: /var/run/argocd
+            name: var-files
+          - mountPath: /home/argocd/cmp-server/plugins
+            name: plugins
+          - mountPath: /tmp
+            name: tmp
+          - mountPath: /home/argocd/cmp-server/config/plugin.yaml
+            subPath: avp-helm.yaml
+            name: cmp-plugin
+          - name: custom-tools
+            subPath: argocd-vault-plugin
+            mountPath: /usr/local/bin/argocd-vault-plugin
+      - name: avp-kustomize
+        command: [/var/run/argocd/argocd-cmp-server]
+        image: docker.io/grubertech/argocd-sidecar:v2.6.2
+        imagePullPolicy: Always
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 999
+        volumeMounts:
+          - mountPath: /var/run/argocd
+            name: var-files
+          - mountPath: /home/argocd/cmp-server/plugins
+            name: plugins
+          - mountPath: /tmp
+            name: tmp
+          - mountPath: /home/argocd/cmp-server/config/plugin.yaml
+            subPath: avp-kustomize.yaml
+            name: cmp-plugin
+          - name: custom-tools
+            subPath: argocd-vault-plugin
+            mountPath: /usr/local/bin/argocd-vault-plugin
+      - name: avp
+        command: [/var/run/argocd/argocd-cmp-server]
+        image: docker.io/grubertech/argocd-sidecar:v2.6.2
+        imagePullPolicy: Always
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 999
+        volumeMounts:
+          - mountPath: /var/run/argocd
+            name: var-files
+          - mountPath: /home/argocd/cmp-server/plugins
+            name: plugins
+          - mountPath: /tmp
+            name: tmp
+          - mountPath: /home/argocd/cmp-server/config/plugin.yaml
+            subPath: avp.yaml
+            name: cmp-plugin
+          - name: custom-tools
+            subPath: argocd-vault-plugin
+            mountPath: /usr/local/bin/argocd-vault-plugin
