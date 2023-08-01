@@ -16,8 +16,9 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: grafana-tailscale
+  name: grafana-internal
   annotations:
+    kube-vip.io/vipHost: grafana
     tailscale.com/hostname: grafana
   labels:
     app.kubernetes.io/instance: kube-prometheus
@@ -31,4 +32,5 @@ spec:
     port: 80
     targetPort: 3000
   type: LoadBalancer
-  loadBalancerClass: tailscale
+  loadBalancerIP: "192.168.1.180"
+  loadBalancerClass: kube-vip.io/kube-vip-class
