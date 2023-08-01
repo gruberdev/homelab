@@ -42,6 +42,9 @@ spec:
         - api.vods.gruber.dev.br
         - gpt.gruber.dev.br
         - matrix.gruber.dev.br
+        - argocd.gruber.dev.br
+        - langflow.gruber.dev.br
+        - lanchain.gruber.dev.br
       dns01:
         cloudflare:
           email: rpg.gruber@gmail.com
