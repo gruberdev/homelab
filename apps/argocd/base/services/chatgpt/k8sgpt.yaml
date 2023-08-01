@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: https://charts.k8sgpt.ai/
     chart: k8sgpt-operator
-    targetRevision: 0.0.19
+    targetRevision: 0.0.20
     helm:
       releaseName: k8sgpt
       values: |
