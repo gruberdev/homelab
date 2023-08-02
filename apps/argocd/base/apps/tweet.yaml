@@ -1,0 +1,65 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: twitter-delete
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: apps
+  source:
+    repoURL: https://github.com/brndnmtthws/tweet-delete.git
+    targetRevision: v0.3.0
+    path: helm/tweet-delete
+    helm:
+      releaseName: tweet-delete
+      values: |
+        replicaCount: 1
+        image:
+          repository: brndnmtthws/tweet-delete
+          tag: latest
+          pullPolicy: IfNotPresent
+        resources:
+          limits:
+            cpu: 250m
+            memory: 256Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+        nodeSelector: {}
+        envVars: {}
+        cmdArgs:
+          - "--consumer_key"
+          - "<path:kv/data/twitter#api-key>"
+          - "--consumer_secret"
+          - "<path:kv/data/twitter#api-secret>"
+          - "--access_token_key"
+          - "<path:kv/data/twitter#access-token>"
+          - "--access_token_secret"
+          - "<path:kv/data/twitter#access-secret>"
+          - "--delete_older_than"
+          - "24h"
+          - "--delete_everything_after"
+          - "March 21, 2006"
+          - "--minimum_engagement"
+          - "5"
+  destination:
+    namespace: services
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: true
+    syncOptions:
+    - Validate=false
+    - CreateNamespace=false
+    - PrunePropagationPolicy=foreground
+    - PruneLast=true
+    - ApplyOutOfSyncOnly=false
+    - Prune=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m

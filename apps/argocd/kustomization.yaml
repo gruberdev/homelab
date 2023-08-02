@@ -48,6 +48,7 @@ resources:
 - base/apps/ha.yaml
 - base/apps/unifi.yaml
 - base/apps/milvus.yaml
+- base/apps/tweet.yaml
 - base/apps/wyze.yaml
 # - base/apps/agones.yaml
 # - base/apps/agones-crd.yaml
