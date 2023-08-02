@@ -8,7 +8,7 @@ spec:
   project: apps
   source:
     repoURL: https://github.com/googleforgames/agones.git
-    targetRevision: release-1.31.0
+    targetRevision: v1.33.0
     path: install/helm/agones
     helm:
       skipCrds: true
