@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: local-ai
+  name: discord-bot-gpt
   finalizers:
-  - resources-finalizer.argocd.argoproj.io
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: apps
   source:
     repoURL: 'https://github.com/gruberdev/homelab.git'
-    path: apps/services/chatgpt/local-ai
+    path: apps/services/mlops/discord-bot
     targetRevision: main
   destination:
     namespace: mlops
@@ -25,6 +25,7 @@ spec:
     - PruneLast=true
     - ApplyOutOfSyncOnly=false
     - Prune=true
+    - Replace=true
     retry:
       limit: 5
       backoff:

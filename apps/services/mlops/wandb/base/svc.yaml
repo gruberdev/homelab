@@ -1,11 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: wandb
-  labels:
-    app: wandb
+  name: wanddb-external
   annotations:
-    tailscale.com/hostname: "wandb"
+    kube-vip.io/vipHost: wandb
 spec:
   selector:
     app: wandb
@@ -14,8 +12,9 @@ spec:
       port: 80
       targetPort: 8080
       protocol: TCP
-  loadBalancerClass: tailscale
   type: LoadBalancer
+  loadBalancerIP: "192.168.1.113"
+  loadBalancerClass: kube-vip.io/kube-vip-class
 ---
 apiVersion: v1
 kind: Service

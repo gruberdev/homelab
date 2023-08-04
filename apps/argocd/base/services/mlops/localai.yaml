@@ -1,12 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: wandb
+  name: local-ai
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
 spec:
   project: apps
   source:
     repoURL: 'https://github.com/gruberdev/homelab.git'
-    path: apps/services/wandb
+    path: apps/services/mlops/local-ai
     targetRevision: main
   destination:
     namespace: mlops
@@ -22,11 +24,10 @@ spec:
     - PrunePropagationPolicy=foreground
     - PruneLast=true
     - ApplyOutOfSyncOnly=false
-    - Replace=true
     - Prune=true
     retry:
-      limit: 10
+      limit: 5
       backoff:
-        duration: 60s
+        duration: 20s
         factor: 2
         maxDuration: 15m

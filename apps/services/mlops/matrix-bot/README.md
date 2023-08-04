@@ -1,0 +1,1 @@
+## ChatGPT bot for Discord
