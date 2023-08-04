@@ -48,7 +48,6 @@ resources:
 - base/apps/ha.yaml
 - base/apps/unifi.yaml
 - base/apps/milvus.yaml
-- base/apps/tweet.yaml
 - base/apps/wyze.yaml
 # - base/apps/agones.yaml
 # - base/apps/agones-crd.yaml
@@ -84,10 +83,10 @@ resources:
 # - base/services/metabase.yaml
 # - base/services/archivebox.yaml
 
-# ChatGPT-related Applications
-- base/services/chatgpt/discord-bot.yaml
-- base/services/chatgpt/k8sgpt.yaml
-# - base/services/chatgpt/memory-plugin.yaml
+# MLOps-related Applications
+- base/services/mlops/discord-bot.yaml
+- base/services/mlops/k8sgpt.yaml
+# - base/services/mlops/memory-plugin.yaml
 
 # Media Services
 - base/services/media/tanoshi.yaml
