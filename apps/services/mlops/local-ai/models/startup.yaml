@@ -1,0 +1,8 @@
+- url: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/services/mlops/local-ai/models/llama2.yaml
+  name: llama2-chat
+- url: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/services/mlops/local-ai/models/whisper.yaml
+  name: whisper
+- url: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/services/mlops/local-ai/models/embeddings.yaml
+  name: embeddings
+- url: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/services/mlops/local-ai/models/chronos.yaml
+  name: chronos

@@ -13,22 +13,19 @@ config_file: |
   name: llama2
   gpu_layers: 1000
   debug: true
-  mmap: true
+  mmap: false
+  f16: true
   embeddings: false
   prompt_cache_all: true
   prompt_cache_ro: false
-  mirostat_eta: 0.8
-  mirostat_tau: 0.9
-  mirostat: 1
   low_vram: true
-  f16: true
   backend: llama
   parameters:
     model: llama-2-13b-chat.ggmlv3.q4_K_M.bin
     top_k: 80
     temperature: 1
     top_p: 0.7
-  context_size: 1024
+  context_size: 2048
   template:
     chat_message: llama2-chat-message
   system_prompt: |
