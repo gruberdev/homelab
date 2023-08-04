@@ -9,6 +9,9 @@ metadata:
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     nginx.ingress.kubernetes.io/ssl-passthrough: "true"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    nginx.ingress.kubernetes.io/server-snippet: |
+      ssl_verify_client off;
 spec:
   ingressClassName: nginx
   rules:
@@ -19,7 +22,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: unifi-lb
+            name: unifi-controller
             port:
               name: devices
   tls:
