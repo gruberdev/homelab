@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: chatgpt-matrix-config
+data:
+  TZ: "America/Sao_Paulo"
+  MATRIX_WHITELIST: "matrix.gruber.dev.br"
+  CHATGPT_API_MODEL: "gpt-3.5-turbo"
+  CHATGPT_REVERSE_PROXY: "http://local-ai.mlops.svc.cluster.local/v1/chat/completions"
+  CHATGPT_CONTEXT: "room"
+  CHATGPT_IGNORE_MEDIA: "true"
+  CHATGPT_TEMPERATURE: "0.6"
+  MATRIX_HOMESERVER_URL: "http://dendrite.matrix1.svc.cluster.local"
+  MATRIX_BOT_USERNAME: "@chatgpt:matrix.gruber.dev.br"
+  MATRIX_DEFAULT_PREFIX: ""
+  MATRIX_DEFAULT_PREFIX_REPLY: "true"
+  MATRIX_AUTOJOIN: "true"
+  MATRIX_THREADS: "false"
+  MATRIX_PREFIX_DM: "false"
+  MATRIX_RICH_TEXT: "true"

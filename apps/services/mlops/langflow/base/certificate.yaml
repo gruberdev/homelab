@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: openai-internal-gpt
+spec:
+  secretName: gpt-tls
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: gpt.gruber.dev.br
+  dnsNames:
+  - gpt.gruber.dev.br

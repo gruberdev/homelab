@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: wanddb-external
+  annotations:
+    kube-vip.io/vipHost: wandb
+spec:
+  selector:
+    app: wandb
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+      protocol: TCP
+  type: LoadBalancer
+  loadBalancerIP: "192.168.1.113"
+  loadBalancerClass: kube-vip.io/kube-vip-class
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wandb-internal
+  labels:
+    app: wandb
+spec:
+  selector:
+    app: wandb
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+      protocol: TCP
+  type: ClusterIP

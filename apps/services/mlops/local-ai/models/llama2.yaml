@@ -1,0 +1,48 @@
+name: "llama2"
+
+description: |
+    Meta's Llama 2 13B-chat GGML
+
+license: "Other"
+urls:
+- https://huggingface.co/TheBloke/Llama-2-13B-chat-GGML
+- https://huggingface.co/meta-llama/Llama-2-13b-chat-hf
+- https://huggingface.co/TheBloke/Llama-2-13B-chat-GPTQ
+
+config_file: |
+  name: llama2
+  gpu_layers: 1000
+  debug: true
+  mmap: true
+  embeddings: false
+  prompt_cache_all: true
+  prompt_cache_ro: false
+  mirostat_eta: 0.8
+  mirostat_tau: 0.9
+  mirostat: 1
+  low_vram: true
+  f16: true
+  backend: llama
+  parameters:
+    model: llama-2-13b-chat.ggmlv3.q4_K_M.bin
+    top_k: 80
+    temperature: 1
+    top_p: 0.7
+  context_size: 1024
+  template:
+    chat_message: llama2-chat-message
+  system_prompt: |
+    You are an AI assistant. You should describe the task and explain your answer. While answering a multiple choice question, first output the correct answer(s). Then explain why other answers are wrong. You might need to use additional knowledge to answer the question.
+files:
+- filename: "llama-2-13b-chat.ggmlv3.q4_K_M.bin"
+  uri: "https://huggingface.co/TheBloke/Llama-2-13B-chat-GGML/resolve/main/llama-2-13b-chat.ggmlv3.q4_K_M.bin"
+
+prompt_templates:
+- name: "llama2-chat-message"
+  content: |
+    {{if eq .RoleName "assistant"}}{{.Content}}{{else}}
+    [INST]
+    {{if eq .RoleName "system"}}<<SYS>>{{.Content}}<</SYS>>{{else if and (.SystemPrompt) (eq .MessageIndex 0)}}<<SYS>>{{.SystemPrompt}}<</SYS>>{{end}}
+    {{if .Content}}{{.Content}}{{end}}
+    [/INST]
+    {{end}}
