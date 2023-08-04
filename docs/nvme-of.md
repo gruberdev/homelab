@@ -41,7 +41,11 @@ saveconfig /etc/nvmet/config.json
 
 
 https://www.linuxjournal.com/content/data-flash-part-iii-nvme-over-fabrics-using-tcp
+https://enterprise-support.nvidia.com/s/article/howto-configure-nvme-over-fabrics
+https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/managing_storage_devices/configuring-nvme-over-fabrics-using-nvme-rdma_managing-storage-devices
 https://documentation.suse.com/es-es/sles/15-SP1/html/SLES-all/cha-nvmeof.html
 https://github.com/democratic-csi/democratic-csi/blob/master/examples/zfs-generic-nvmeof.yaml
 https://github.com/democratic-csi/charts/blob/master/stable/democratic-csi/values.yaml
 https://www.mankier.com/8/nvmetcli
+https://pastebin.com/Xq8VhBak
+https://github.com/democratic-csi/democratic-csi#zol-zfs-generic-nfs-zfs-generic-iscsi-zfs-generic-smb-zfs-generic-nvmeof

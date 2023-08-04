@@ -2,11 +2,13 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: milvus
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: apps
   source:
     repoURL: https://github.com/milvus-io/milvus-helm.git
-    targetRevision: milvus-4.0.12
+    targetRevision: milvus-4.0.29
     path: charts/milvus
     helm:
       releaseName: milvus
@@ -402,8 +404,8 @@ spec:
           zookeeper:
             configData:
               PULSAR_GC: |
-                -Dcom.sun.management.jmxremote -Djute.maxbuffer=10485760 -XX:+ParallelRefProcEnabled -XX:+UnlockExperimentalVMOptions -XX:+DoEscapeAnalysis -XX:+DisableExplicitGC -XX:+PerfDisableSharedMem -Dzookeeper.forceSync=no
               PULSAR_MEM: |
+                -Dcom.sun.management.jmxremote -Djute.maxbuffer=10485760 -XX:+ParallelRefProcEnabled -XX:+UnlockExperimentalVMOptions -XX:+DoEscapeAnalysis -XX:+DisableExplicitGC -XX:+PerfDisableSharedMem -Dzookeeper.forceSync=no
                 -Xms2048m -Xmx2048m
             pdb:
               usePolicy: false

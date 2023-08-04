@@ -1,14 +1,12 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: discord-bot-gpt
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
+  name: wandb
 spec:
   project: apps
   source:
     repoURL: 'https://github.com/gruberdev/homelab.git'
-    path: apps/services/chatgpt/discord-bot
+    path: apps/services/mlops/wandb
     targetRevision: main
   destination:
     namespace: mlops
@@ -25,10 +23,9 @@ spec:
     - PruneLast=true
     - ApplyOutOfSyncOnly=false
     - Prune=true
-    - Replace=true
     retry:
-      limit: 5
+      limit: 10
       backoff:
-        duration: 20s
+        duration: 60s
         factor: 2
         maxDuration: 15m

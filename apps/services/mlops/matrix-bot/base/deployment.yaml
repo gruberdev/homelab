@@ -1,0 +1,39 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chatgpt-matrix
+  labels:
+    app: chatgpt-matrix
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: chatgpt-matrix
+  template:
+    metadata:
+      labels:
+        app: chatgpt-matrix
+    spec:
+      containers:
+        - name: bot
+          image: ghcr.io/matrixgpt/matrix-chatgpt-bot:3.1.2
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: chatgpt-matrix-config
+            - secretRef:
+                name: chatgpt-matrix-vars
+          ports:
+            - name: web
+              containerPort: 80
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 120m
+              memory: 256Mi
+            limits:
+              cpu: 220m
+              memory: 512Mi

@@ -8,7 +8,7 @@ spec:
   project: apps
   source:
     repoURL: 'https://github.com/gruberdev/homelab.git'
-    path: apps/services/chatgpt/memory-plugin
+    path: apps/services/mlops/memory-plugin
     targetRevision: main
   destination:
     namespace: chatgpt
