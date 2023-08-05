@@ -5,14 +5,15 @@ metadata:
   labels:
     app: rss-hub
   annotations:
-    tailscale.com/hostname: "rsshub"
+    kube-vip.io/vipHost: rsshub
 spec:
+  ports:
+  - name: web
+    port: 80
+    targetPort: 1200
+    protocol: TCP
   selector:
     app: rss-hub
-  ports:
-    - name: web
-      port: 80
-      targetPort: 1200
-      protocol: TCP
-  loadBalancerClass: tailscale
   type: LoadBalancer
+  loadBalancerIP: "192.168.1.120"
+  loadBalancerClass: kube-vip.io/kube-vip-class
