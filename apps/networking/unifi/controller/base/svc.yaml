@@ -69,9 +69,9 @@ spec:
   selector:
     app: unifi-controller
   ports:
-  - name: devices
+  - name: web-https
     port: 80
-    targetPort: 8080
+    targetPort: 8443
     protocol: TCP
   type: LoadBalancer
   loadBalancerIP: "192.168.1.114"
