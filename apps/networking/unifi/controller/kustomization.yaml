@@ -15,7 +15,3 @@ patches:
 
 commonAnnotations:
   reloader.stakater.com/auto: "true"
-
-images:
-- name: jacobalberty/unifi
-  newTag: v7.4.162
