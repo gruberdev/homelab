@@ -1,21 +1,22 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: n8n-tailscale
+  app: n8n-server
   labels:
     app: n8n-server
   annotations:
-    tailscale.com/hostname: "n8n"
+    kube-vip.io/vipHost: n8n
 spec:
+  ports:
+  - name: web
+    port: 80
+    targetPort: 5678
+    protocol: TCP
   selector:
     app: n8n-server
-  ports:
-    - name: web
-      port: 80
-      targetPort: 5678
-      protocol: TCP
-  loadBalancerClass: tailscale
   type: LoadBalancer
+  loadBalancerIP: "192.168.1.120"
+  loadBalancerClass: kube-vip.io/kube-vip-class
 ---
 apiVersion: v1
 kind: Service

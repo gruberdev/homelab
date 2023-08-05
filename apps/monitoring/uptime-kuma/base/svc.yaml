@@ -1,18 +1,19 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: kuma-svc
+  name: kuma-internal
   labels:
-    name: kuma
+    app: kuma
   annotations:
-    tailscale.com/hostname: "kuma"
+    kube-vip.io/vipHost: kuma
 spec:
+  ports:
+    - name: web
+      protocol: TCP
+      port: 8080
+      targetPort: 3001
   selector:
     app: kuma
-  ports:
-  - name: web
-    protocol: TCP
-    port: 8080
-    targetPort: 3001
-  loadBalancerClass: tailscale
   type: LoadBalancer
+  loadBalancerIP: "192.168.1.121"
+  loadBalancerClass: kube-vip.io/kube-vip-class
