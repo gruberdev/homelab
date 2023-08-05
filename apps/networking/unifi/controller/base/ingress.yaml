@@ -24,7 +24,7 @@ spec:
           service:
             name: unifi-controller
             port:
-              name: devices
+              name: web-https
   tls:
   - hosts:
     - unifi.gruber.dev.br
