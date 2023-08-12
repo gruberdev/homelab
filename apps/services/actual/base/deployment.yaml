@@ -6,7 +6,7 @@ metadata:
   labels:
     app: actual
   annotations:
-    link.argocd.argoproj.io/external-link: http://actual
+    link.argocd.argoproj.io/external-link: https://finance.gruber.dev.br
 spec:
   replicas: 1
   strategy:
@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: actual
-          image: ghcr.io/actualbudget/actual-server:23.4.1
+          image: ghcr.io/actualbudget/actual-server:23.8.1
           envFrom:
             - configMapRef:
                 name: actual-cm
