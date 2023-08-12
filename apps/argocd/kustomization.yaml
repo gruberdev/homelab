@@ -47,7 +47,6 @@ resources:
 - base/apps/vault.yaml
 - base/apps/ha.yaml
 - base/apps/unifi.yaml
-- base/apps/milvus.yaml
 - base/apps/wyze.yaml
 # - base/apps/agones.yaml
 # - base/apps/agones-crd.yaml
@@ -86,6 +85,8 @@ resources:
 # MLOps-related Applications
 - base/services/mlops/discord-bot.yaml
 - base/services/mlops/k8sgpt.yaml
+- base/services/mlops/chroma.yaml
+# - base/services/mlops/milvus.yaml
 # - base/services/mlops/memory-plugin.yaml
 
 # Media Services
@@ -109,7 +110,7 @@ resources:
 - base/matrix/whats.yaml
 - base/matrix/instagram.yaml
 - base/matrix/linkedin.yaml
-#  base/matrix/discord.yaml
+# - base/matrix/discord.yaml
 # - base/matrix/telegram.yaml
 # - base/matrix/steam.yaml
 # - base/matrix/signal.yaml

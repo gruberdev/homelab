@@ -1,0 +1,91 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: chroma
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: apps
+  source:
+    repoURL: https://amikos-tech.github.io/chromadb-chart/
+    targetRevision: chromadb-0.1.10
+    path: charts/chromadb-chart
+    helm:
+      releaseName: chroma
+      values: |
+        replicaCount: 1
+        image:
+        #  repository: ghcr.io/chroma-core/chroma
+          repository: ghcr.io/amikos-tech/chromadb-chart/chroma
+          pullPolicy: Always
+        imagePullSecrets: [ ]
+        nameOverride: ""
+        fullnameOverride: ""
+        serviceAccount:
+          create: true
+          annotations: { }
+          name: ""
+        service:
+          type: ClusterIP
+        resources:
+          limits:
+            cpu: 1500m
+            memory: 2048Mi
+          requests:
+            cpu: 500m
+            memory: 512Mi
+        autoscaling:
+          enabled: false
+        nodeSelector: { }
+        podSpec:
+          terminationGracePeriodSeconds: 5
+          securityContext: { }
+          annotations: { }
+          initContainers: [ ]
+        readinessProbe:
+          failureThreshold: 20
+          timeoutSeconds: 10
+          periodSeconds: 5
+        livenessProbe:
+          failureThreshold: 40
+          timeoutSeconds: 10
+          periodSeconds: 5
+        startupProbe:
+          failureThreshold: 1000
+          periodSeconds: 5
+          initialDelaySeconds: 10
+        chromadb:
+          apiVersion: "0.4.3"
+          allowReset: false
+          isPersistent: true
+          persistDirectory: /index_data
+          logConfigFileLocation: config/log_config.yaml
+          anonymizedTelemetry: false
+          corsAllowOrigins:
+            - "*"
+          apiImpl: "chromadb.api.segment.SegmentAPI"
+          serverHost: "0.0.0.0"
+          serverHttpPort: 8000
+          dataVolumeSize: "1Gi"
+          dataVolumeStorageClass: "iscsi"
+  destination:
+    namespace: mlops
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: true
+    syncOptions:
+    - Validate=false
+    - CreateNamespace=false
+    - PrunePropagationPolicy=foreground
+    - PruneLast=false
+    - ApplyOutOfSyncOnly=false
+    - Prune=true
+    retry:
+      limit: 3
+      backoff:
+        duration: 60s
+        factor: 2
+        maxDuration: 15m
