@@ -7,7 +7,7 @@ metadata:
 spec:
   project: apps
   source:
-    repoURL: https://amikos-tech.github.io/chromadb-chart/
+    repoURL: https://github.com/amikos-tech/chromadb-chart.git
     targetRevision: chromadb-0.1.10
     path: charts/chromadb-chart
     helm:
