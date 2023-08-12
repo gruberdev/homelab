@@ -56,7 +56,7 @@ spec:
           initialDelaySeconds: 10
         chromadb:
           apiVersion: "0.4.3"
-          allowReset: false
+          allowReset: true
           isPersistent: true
           persistDirectory: /index_data
           logConfigFileLocation: config/log_config.yaml
@@ -66,7 +66,7 @@ spec:
           apiImpl: "chromadb.api.segment.SegmentAPI"
           serverHost: "0.0.0.0"
           serverHttpPort: 8000
-          dataVolumeSize: "1Gi"
+          dataVolumeSize: "15Gi"
           dataVolumeStorageClass: "iscsi"
   destination:
     namespace: mlops
