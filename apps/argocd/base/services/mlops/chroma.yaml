@@ -8,7 +8,7 @@ spec:
   project: apps
   source:
     repoURL: https://github.com/amikos-tech/chromadb-chart.git
-    targetRevision: chromadb-0.1.10
+    targetRevision: d5b9b61
     path: charts/chromadb-chart
     helm:
       releaseName: chroma
