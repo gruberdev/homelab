@@ -1,9 +1,11 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: chatui-config
+  name: langflow-config
 data:
-  OPENAI_API_HOST: "http://local-ai.mlops.svc.cluster.local"
-  OPENAI_API_TYPE: "openai"
-  DEFAULT_MODEL: "wizard"
-  NEXT_PUBLIC_DEFAULT_TEMPERATURE: "1"
+  LANGFLOW_LOG_LEVEL: "critical"
+  LANGFLOW_LOG_FILE: "logs/langflow.log"
+  LANGFLOW_HOST: "0.0.0.0"
+  LANGFLOW_DATABASE_URL: "sqlite:///./langflow.db"
+  LANGFLOW_OPEN_BROWSER: "false"
+  LANGFLOW_WORKERS: "1"

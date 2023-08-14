@@ -1,35 +1,26 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: gpt-internal
+  name: langflow-internal
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: gpt.gruber.dev.br
+    external-dns.alpha.kubernetes.io/hostname: lang.gruber.dev.br
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
     external-dns.alpha.kubernetes.io/ttl: "120"
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      proxy_set_header X-Real-IP $remote_addr;
-      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-      proxy_set_header Host $http_host;
-      proxy_cache off;
-      chunked_transfer_encoding on;
-      tcp_nopush on;
-      tcp_nodelay on;
-      keepalive_timeout 300;
 spec:
   ingressClassName: nginx
   rules:
-  - host: gpt.gruber.dev.br
+  - host: lang.gruber.dev.br
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: chatui-tailscale
+            name: lang-internal
             port:
               name: http
   tls:
   - hosts:
-    - gpt.gruber.dev.br
-    secretName: gpt-tls
+    - lang.gruber.dev.br
+    secretName: lang-tls
