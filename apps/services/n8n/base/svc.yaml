@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: n8n-server # Add this line
+  name: n8n-internal
   labels:
     app: n8n-server
   annotations:
