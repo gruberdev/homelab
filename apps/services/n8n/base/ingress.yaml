@@ -17,7 +17,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: n8n-tailscale
+            name: n8n-internal
             port:
               name: web
   tls:
