@@ -1,28 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: chatui
+  name: langflow
   labels:
-    app: chatui
+    app: langflow
 spec:
   selector:
     matchLabels:
-      app: chatui
+      app: langflow
   replicas: 1
   strategy:
     type: Recreate
   template:
     metadata:
-      name: chatui
+      name: langflow
       labels:
-        app: chatui
+        app: langflow
     spec:
       containers:
-      - name: chatbot-ui
-        image: ghcr.io/mckaywrigley/chatbot-ui:main
+      - name: langflow-server
+        image: docker.io/grubertech/langflow:v0.4.8
         ports:
           - name: http
-            containerPort: 3000
+            containerPort: 7860
             protocol: TCP
         resources:
           limits:
@@ -33,4 +33,4 @@ spec:
             memory: 256Mi
         envFrom:
         - configMapRef:
-            name: chatui-config
+            name: langflow-config
