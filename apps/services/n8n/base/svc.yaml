@@ -1,17 +1,17 @@
 apiVersion: v1
 kind: Service
 metadata:
-  app: n8n-server
+  name: n8n-server # Add this line
   labels:
     app: n8n-server
   annotations:
     kube-vip.io/vipHost: n8n
 spec:
   ports:
-  - name: web
-    port: 80
-    targetPort: 5678
-    protocol: TCP
+    - name: web
+      port: 80
+      targetPort: 5678
+      protocol: TCP
   selector:
     app: n8n-server
   type: LoadBalancer
