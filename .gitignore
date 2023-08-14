@@ -7,6 +7,7 @@ tilt_modules
 manifests/*.yaml
 config/tls/*.pem
 *-secret.yaml
+!/**/db.yaml
 cluster-keys*
 db.yaml
 sealed.yaml
