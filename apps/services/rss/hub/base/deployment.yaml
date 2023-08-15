@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: rss-hub
-        image: diygod/rsshub:sha256-f5f47fa4d9f57ee8d2feed315fd95de5bad142adb8b3d5ed50df341898dccffd.sig
+        image: docker.io/diygod/rsshub:chromium-bundled-2023-08-15
         envFrom:
         - configMapRef:
             name: rsshub-cm
