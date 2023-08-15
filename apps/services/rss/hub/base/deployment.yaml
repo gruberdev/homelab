@@ -33,10 +33,10 @@ spec:
         resources:
           requests:
             cpu: 60m
-            memory: 128Mi
-          limits:
-            cpu: 120m
             memory: 256Mi
+          limits:
+            cpu: 150m
+            memory: 512Mi
         livenessProbe:
           tcpSocket:
             port: 1200
@@ -67,8 +67,8 @@ spec:
           protocol: TCP
         resources:
           requests:
-            cpu: "64m"
-            memory: "128Mi"
+            cpu: "200m"
+            memory: "1024Mi"
           limits:
-            cpu: "128m"
-            memory: "512Mi"
+            cpu: "500m"
+            memory: "2048Mi"
