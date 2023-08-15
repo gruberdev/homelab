@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: rss-hub
-        image: diygod/rsshub@sha256:sha256:3eb69643fcab735aa3ee01c1ba8237230cdab4fa035d210d9d5e68d5d7e007a1
+        image: diygod/rsshub:sha256-f5f47fa4d9f57ee8d2feed315fd95de5bad142adb8b3d5ed50df341898dccffd.sig
         envFrom:
         - configMapRef:
             name: rsshub-cm
