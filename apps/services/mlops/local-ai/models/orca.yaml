@@ -1,0 +1,45 @@
+name: "orca"
+
+description: |
+    OpenOrca-Platypus2-13B is a merge of garage-bAInd/Platypus2-13B and Open-Orca/OpenOrcaxOpenChat-Preview2-13B.
+
+license: "Other"
+urls:
+- https://huggingface.co/Open-Orca/OpenOrca-Platypus2-13B
+
+config_file: |
+  name: orca
+  gpu_layers: 1000
+  debug: true
+  mmap: false
+  f16: true
+  embeddings: false
+  prompt_cache_all: true
+  prompt_cache_ro: false
+  low_vram: true
+  backend: llama
+  parameters:
+    model: openorca-platypus2-13b.ggmlv3.q5_K_M.bin
+    top_k: 80
+    temperature: 1
+    top_p: 0.7
+  context_size: 1024
+  template:
+    completion: orca-completion
+    chat: orca-chat
+
+files:
+- filename: "openorca-platypus2-13b.ggmlv3.q5_K_M.bin"
+  uri: "https://huggingface.co/TheBloke/OpenOrca-Platypus2-13B-GGML/resolve/main/openorca-platypus2-13b.ggmlv3.q5_K_M.bin"
+
+prompt_templates:
+- name: "orca-completion"
+  content: |
+      {{.Input}}
+
+- name: "orca-chat"
+  content: |
+    The prompt below is a question to answer, a task to complete, or a conversation to respond to; decide which and write an appropriate response.
+    ### Prompt:
+    {{.Input}}
+    ### Response:
