@@ -9,6 +9,8 @@ data:
   cluster_labels: application:spilo
   cluster_name_label: cluster-name
   crd_categories: "all"
+  debug_logging: "true"
+  watched_namespace: "*"
   db_hosted_zone: db.example.com
   default_cpu_limit: 500m
   default_cpu_request: 350m
