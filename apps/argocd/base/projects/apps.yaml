@@ -3,7 +3,7 @@ kind: AppProject
 metadata:
   name: apps
 spec:
-  description: Applications Example Project
+  description: Applications General Project
   sourceRepos:
   - '*'
   destinations:
@@ -40,6 +40,8 @@ spec:
   - namespace: mlops
     server: https://kubernetes.default.svc
   - namespace: gitea
+    server: https://kubernetes.default.svc
+  - namespace: crossplane
     server: https://kubernetes.default.svc
   clusterResourceWhitelist:
   - group: '*'

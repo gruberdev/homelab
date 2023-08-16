@@ -48,6 +48,7 @@ resources:
 - base/apps/ha.yaml
 - base/apps/unifi.yaml
 - base/apps/wyze.yaml
+- base/apps/uxp.yaml
 # - base/apps/agones.yaml
 # - base/apps/agones-crd.yaml
 # - base/apps/mongodb-crds.yaml
