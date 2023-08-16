@@ -4,9 +4,9 @@ metadata:
   name: postgresql-pod-environment
 data:
   ALLOW_NOSSL: "true"
-  WAL_S3_BUCKET: db-backups-grwtf
-  # WAL_BUCKET_SCOPE_PREFIX: ""
-  # WAL_BUCKET_SCOPE_SUFFIX: ""
+  # WAL_S3_BUCKET: db-backups-grwtf
+  # WAL_BUCKET_SCOPE_PREFIX: ""  USE_WALG_BACKUP: "false"
+  USE_WALG_RESTORE: "false"
   USE_WALG_BACKUP: "false"
   # USE_WALG_RESTORE: "false"
   # BACKUP_SCHEDULE: '00 12 * * *'
