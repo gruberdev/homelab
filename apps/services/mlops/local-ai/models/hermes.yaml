@@ -1,0 +1,45 @@
+name: "hermes"
+
+description: |
+    Nous Hermes Llama 2 13B GGML
+
+license: "Other"
+urls:
+- https://huggingface.co/TheBloke/Nous-Hermes-Llama2-GGML
+
+config_file: |
+  name: hermes
+  gpu_layers: 1000
+  debug: true
+  mmap: false
+  f16: true
+  embeddings: false
+  prompt_cache_all: true
+  prompt_cache_ro: false
+  low_vram: true
+  backend: llama
+  parameters:
+    model: nous-hermes-llama2-13b.ggmlv3.q5_K_M.bin
+    top_k: 80
+    temperature: 1
+    top_p: 0.7
+  context_size: 1024
+  template:
+    completion: hermes-completion
+    chat: hermes-chat
+
+files:
+- filename: "nous-hermes-llama2-13b.ggmlv3.q5_K_M.bin"
+  uri: "https://huggingface.co/TheBloke/Nous-Hermes-Llama2-GGML/resolve/main/nous-hermes-llama2-13b.ggmlv3.q5_K_M.bin"
+
+prompt_templates:
+- name: "hermes-completion"
+  content: |
+      {{.Input}}
+
+- name: "hermes-chat"
+  content: |
+    The prompt below is a question to answer, a task to complete, or a conversation to respond to; decide which and write an appropriate response.
+    ### Prompt:
+    {{.Input}}
+    ### Response:

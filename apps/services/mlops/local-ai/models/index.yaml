@@ -57,3 +57,37 @@
     - filename: llama-2-13b-chat.ggmlv3.q4_K_M.bin
       sha256: 41d647de4f9700aeaff878805ba68d603a53ea50d4580e72d1ca503d886a4f03
       uri: https://huggingface.co/TheBloke/Llama-2-13B-chat-GGML/resolve/main/llama-2-13b-chat.ggmlv3.q4_K_M.bin
+- url: "github:gruberdev/homelab/apps/services/chatgpt/local-ai/models/hermes.yaml"
+  name: hermes
+  license: other
+  urls:
+    - https://huggingface.co/TheBloke/Nous-Hermes-Llama2-GGML
+  tags:
+    - en
+    - llama2
+    - ggml
+    - conversational
+    - vanilla
+    - roleplay
+    - chat
+  files:
+    - filename: nous-hermes-llama2-13b.ggmlv3.q5_K_M.bin
+      sha256: 7b339c3db12a2d49786388a3221911de67ab24d155e640f6024a5a96110be5da
+      uri: https://huggingface.co/TheBloke/Nous-Hermes-Llama2-GGML/resolve/main/nous-hermes-llama2-13b.ggmlv3.q5_K_M.bin
+- url: "github:gruberdev/homelab/apps/services/chatgpt/local-ai/models/orca.yaml"
+  name: orca
+  license: other
+  urls:
+    - https://huggingface.co/TheBloke/OpenOrca-Platypus2-13B-GGML
+  tags:
+    - en
+    - llama2
+    - ggml
+    - conversational
+    - vanilla
+    - censured
+    - chat
+  files:
+    - filename: openorca-platypus2-13b.ggmlv3.q5_K_M.bin
+      sha256: c887fc1d8ae0511ec3fe677027625359a51c5672602fce83293584a8c5e941c7
+      uri: https://huggingface.co/TheBloke/OpenOrca-Platypus2-13B-GGML/resolve/main/openorca-platypus2-13b.ggmlv3.q5_K_M.bin
