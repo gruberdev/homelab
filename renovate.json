@@ -11,7 +11,10 @@
     {
       "paths": [
         "apps/networking/unifi/**",
-        "apps/argocd/base/services/mlops/localai.yaml"
+        "apps/argocd/base/services/mlops/localai.yaml",
+        "apps/argocd/kustomization.yaml",
+        "apps/argocd/base/core/argocd.yaml",
+        "apps/argocd/Dockerfile"
       ],
       "enabled": false
     }
