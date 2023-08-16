@@ -1,0 +1,50 @@
+name: "mythos"
+
+description: |
+    An improved, potentially even perfected variant of MythoMix,
+    my MythoLogic-L2 and Huginn merge using a highly experimental
+    tensor type merge technique. The main difference with MythoMix
+    is that I allowed more of Huginn to intermingle with the single
+    tensors located at the front and end of a model, resulting in
+    increased coherency across the entire structure.
+
+license: "Other"
+urls:
+- https://huggingface.co/TheBloke/MythoMax-L2-13B-GGML
+
+config_file: |
+  name: mythos
+  gpu_layers: 1000
+  debug: true
+  mmap: false
+  f16: true
+  embeddings: false
+  prompt_cache_all: true
+  prompt_cache_ro: false
+  low_vram: true
+  backend: llama
+  parameters:
+    model: mythomax-l2-13b.ggmlv3.q5_K_M.bin
+    top_k: 80
+    temperature: 1
+    top_p: 0.7
+  context_size: 1024
+  template:
+    completion: mythomax-completion
+    chat: mythomax-chat
+
+files:
+- filename: "mythomax-l2-13b.ggmlv3.q5_K_M.bin"
+  uri: "https://huggingface.co/TheBloke/MythoMax-L2-13B-GGML/resolve/main/mythomax-l2-13b.ggmlv3.q5_K_M.bin"
+
+prompt_templates:
+- name: "mythomax-completion"
+  content: |
+      {{.Input}}
+
+- name: "mythomax-chat"
+  content: |
+    The prompt below is a question to answer, a task to complete, or a conversation to respond to; decide which and write an appropriate response.
+    ### Prompt:
+    {{.Input}}
+    ### Response:

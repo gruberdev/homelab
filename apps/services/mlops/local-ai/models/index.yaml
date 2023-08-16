@@ -49,7 +49,7 @@
   tags:
     - en
     - llama
-    - ggml
+    - ggmlC
     - conversational
     - vanilla
     - chat
@@ -91,3 +91,20 @@
     - filename: openorca-platypus2-13b.ggmlv3.q5_K_M.bin
       sha256: c887fc1d8ae0511ec3fe677027625359a51c5672602fce83293584a8c5e941c7
       uri: https://huggingface.co/TheBloke/OpenOrca-Platypus2-13B-GGML/resolve/main/openorca-platypus2-13b.ggmlv3.q5_K_M.bin
+- url: "github:gruberdev/homelab/apps/services/chatgpt/local-ai/models/mythos.yaml"
+  name: mythos
+  license: other
+  urls:
+    - https://huggingface.co/TheBloke/MythoMax-L2-13B-GGML
+    - https://huggingface.co/Gryphe/MythoMax-L2-13b
+  tags:
+    - en
+    - llama2
+    - ggml
+    - conversational
+    - roleplay
+    - chat
+  files:
+    - filename: mythomax-l2-13b.ggmlv3.q5_K_M.bin
+      sha256: c3ddd2874e4b9a7d8ba43f227929f1e0b947b39bf9c46c1343f5f94cf0469910
+      uri: https://huggingface.co/TheBloke/MythoMax-L2-13B-GGML/resolve/main/mythomax-l2-13b.ggmlv3.q5_K_M.bin
