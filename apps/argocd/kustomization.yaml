@@ -124,7 +124,7 @@ resources:
 - https://github.com/gruberdev/homelab/apps/networking/tailscale
 - https://github.com/gruberdev/homelab/apps/networking/cloudflared
 
-- https://raw.githubusercontent.com/argoproj/argo-cd/v2.7.9/manifests/install.yaml
+- https://raw.githubusercontent.com/argoproj/argo-cd/v2.7.10/manifests/install.yaml
 
 # Image Updater
 - https://github.com/argoproj-labs/argocd-image-updater/manifests/base
@@ -153,7 +153,7 @@ patchesStrategicMerge:
 namespace: argocd
 images:
 - name: quay.io/argoproj/argocd
-  newTag: v2.7.9
+  newTag: v2.7.10
 
 patches:
 - patch: |-
