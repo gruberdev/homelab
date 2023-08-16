@@ -26,7 +26,7 @@ spec:
         - |
           MODEL_DIR=/models
           FORCE_DOWNLOAD=false
-          URLS="https://huggingface.co/TheBloke/Llama-2-13B-chat-GGML/resolve/main/llama-2-13b-chat.ggmlv3.q4_K_M.bin"
+          URLS="https://huggingface.co/TheBloke/MythoMax-L2-13B-GGML/resolve/main/mythomax-l2-13b.ggmlv3.q5_K_M.bin"
 
           mkdir -p "$MODEL_DIR"
 
@@ -65,7 +65,7 @@ spec:
           name: models
       containers:
       - name: local-ai
-        image: quay.io/go-skynet/local-ai:sha-70674d3-cublas-cuda11-ffmpeg
+        image: quay.io/go-skynet/local-ai:sha-0c73a63-cublas-cuda11-ffmpeg
         ports:
           - name: http
             containerPort: 8080
