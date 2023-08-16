@@ -8,7 +8,7 @@ spec:
   dockerImage: ghcr.io/zalando/spilo-15:3.0-p1
   teamId: "db"
   numberOfInstances: 1
-  users:
+  userss:
     admin:
     - superuser
     - createdb
@@ -18,16 +18,8 @@ spec:
   postgresql:
     version: "15"
   volume:
-    size: 1Gi
+    size: 5Gi
     storageClass: iscsi
-  additionalVolumes:
-  - name: data
-    mountPath: /home/postgres/pgdata/partitions
-    targetContainers:
-    - postgres
-    volumeSource:
-      PersistentVolumeClaim:
-        claimName: n8n-postgres
   nodeAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:
       nodeSelectorTerms:
