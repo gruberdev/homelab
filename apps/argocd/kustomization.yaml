@@ -96,11 +96,11 @@ resources:
 - base/services/media/jellyfin.yaml
 - base/services/media/prowlarr.yaml
 - base/services/media/sonarr.yaml
+- base/services/media/qbittorrent.yaml
 # - base/services/media/ganymede.yaml
 # - base/services/media/beets.yaml
 # - base/services/media/lidarr.yaml
 # - base/services/media/bazarr.yaml
-# - base/services/media/qbittorrent.yaml
 
 # Matrix & utilities
 - base/matrix/synapse.yaml
