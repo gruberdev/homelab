@@ -1,0 +1,114 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: qdrant
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: apps
+  source:
+    repoURL: https://qdrant.github.io/qdrant-helm
+    chart: qdrant
+    targetRevision: 0.2.10
+    helm:
+      releaseName: qdrant
+      values: |
+        replicaCount: 1
+        image:
+          repository: qdrant/qdrant
+          pullPolicy: IfNotPresent
+          tag: v1.4.1
+        args:
+          - ./config/initialize.sh
+        service:
+          type: ClusterIP
+          ports:
+            - name: http
+              port: 6333
+              targetPort: 6333
+              protocol: TCP
+              checksEnabled: true
+            - name: grpc
+              port: 6334
+              targetPort: 6334
+              protocol: TCP
+              checksEnabled: false
+            - name: p2p
+              port: 6335
+              targetPort: 6335
+              protocol: TCP
+              checksEnabled: false
+        ingress:
+          enabled: false
+        livenessProbe:
+          enabled: true
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 1
+          failureThreshold: 6
+          successThreshold: 1
+        readinessProbe:
+          enabled: true
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 1
+          failureThreshold: 6
+          successThreshold: 1
+        startupProbe:
+          enabled: true
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 1
+          failureThreshold: 30
+          successThreshold: 1
+        resources:
+          limits:
+            cpu: 300m
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+        persistence:
+          accessModes:
+            - ReadWriteOnce
+          size: 10Gi
+          storageClassName: iscsi
+        snapshotRestoration:
+          enabled: false
+        config:
+          cluster:
+            enabled: true
+            p2p:
+              port: 6335
+            consensus:
+              tick_period_ms: 100
+        updateConfigurationOnChange: true
+        metrics:
+          enabled: true
+          serviceMonitor:
+            enabled: true
+            scrapeInterval: 30s
+            scrapeTimeout: 10s
+            targetPort: rest
+            targetPath: /metrics
+  destination:
+    namespace: mlops
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: true
+    syncOptions:
+    - Validate=false
+    - CreateNamespace=false
+    - PrunePropagationPolicy=foreground
+    - PruneLast=false
+    - ApplyOutOfSyncOnly=false
+    - Prune=true
+    retry:
+      limit: 3
+      backoff:
+        duration: 60s
+        factor: 2
+        maxDuration: 15m
