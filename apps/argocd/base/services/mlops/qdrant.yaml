@@ -41,21 +41,21 @@ spec:
         ingress:
           enabled: false
         livenessProbe:
-          enabled: true
+          enabled: false
           initialDelaySeconds: 5
           periodSeconds: 5
           timeoutSeconds: 1
           failureThreshold: 6
           successThreshold: 1
         readinessProbe:
-          enabled: true
+          enabled: false
           initialDelaySeconds: 5
           periodSeconds: 5
           timeoutSeconds: 1
           failureThreshold: 6
           successThreshold: 1
         startupProbe:
-          enabled: true
+          enabled: false
           initialDelaySeconds: 10
           periodSeconds: 5
           timeoutSeconds: 1
