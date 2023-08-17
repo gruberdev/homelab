@@ -53,8 +53,6 @@ spec:
               mountPath: /downloads
             - name: downloads-cache
               mountPath: /cache
-            - name: music-library
-              mountPath: /music
             - name: movies
               mountPath: /movies
             - name: anime
@@ -63,9 +61,6 @@ spec:
         - name: config
           persistentVolumeClaim:
             claimName: sonarr-storage
-        - name: music-library
-          persistentVolumeClaim:
-            claimName: music-storage
         - name: movies
           persistentVolumeClaim:
             claimName: movie-library
