@@ -45,6 +45,14 @@ spec:
         - argocd.gruber.dev.br
         - langflow.gruber.dev.br
         - lanchain.gruber.dev.br
+        - lang.gruber.dev.br
+        - tv.gruber.dev.br
+        - sonarr.gruber.dev.br
+        - prowlarr.gruber.dev.br
+        - downloads.gruber.dev.br
+        - lidarr.gruber.dev.br
+        - music.gruber.dev.br
+        - bazarr.gruber.dev.br
       dns01:
         cloudflare:
           email: rpg.gruber@gmail.com

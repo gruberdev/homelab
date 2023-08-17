@@ -6,7 +6,7 @@ metadata:
   labels:
     app: jellyfin
   annotations:
-    link.argocd.argoproj.io/external-link: http://media.tv
+    link.argocd.argoproj.io/external-link: https://tv.gruber.dev.br
 spec:
   replicas: 1
   strategy:
@@ -19,9 +19,10 @@ spec:
       labels:
         app: jellyfin
     spec:
+      runtimeClassName: nvidia
       containers:
         - name: jellyfin
-          image: jellyfin/jellyfin:10.8.9
+          image: docker.io/jellyfin/jellyfin:20230807.3-unstable
           imagePullPolicy: IfNotPresent
           livenessProbe:
             httpGet:
@@ -35,11 +36,6 @@ spec:
           envFrom:
             - configMapRef:
                 name: jellyfin-cm
-          env:
-          - name: NVIDIA_VISIBLE_DEVICES
-            value: all
-          - name: NVIDIA_DRIVER_CAPABILITIES
-            value: all
           ports:
             - name: http
               containerPort: 8096
@@ -54,13 +50,12 @@ spec:
               containerPort: 1900
               protocol: UDP
           resources:
-            limits:
-              cpu: 300m
-              memory: 400Mi
-              nvidia.com/gpu: "1"
             requests:
               cpu: 150m
-              memory: 200Mi
+              memory: 512Mi
+            limits:
+              cpu: 500m
+              memory: 2048Mi
           volumeMounts:
             - name: movies
               mountPath: /movies
@@ -72,7 +67,6 @@ spec:
               mountPath: /config
           securityContext:
             privileged: true
-      runtimeClassName: nvidia
       volumes:
         - name: config
           persistentVolumeClaim:

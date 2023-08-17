@@ -15,11 +15,11 @@ resources:
 - base/unifi-poller.yaml
 
 # Media Services
-# - base/beets.yaml
-# - base/media.yaml
-# - base/lidarr.yaml
-# - base/jellyfin.yaml
+- base/jellyfin.yaml
 - base/tanoshi.yaml
+- base/media.yaml
+# - base/beets.yaml
+# - base/lidarr.yaml
 # - base/ganymede.yaml
 
 # Services

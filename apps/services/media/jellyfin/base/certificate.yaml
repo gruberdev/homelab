@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: jellyfin
+spec:
+  secretName: jellyfin-tls
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: tv.gruber.dev.br
+  dnsNames:
+  - tv.gruber.dev.br

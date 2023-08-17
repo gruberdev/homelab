@@ -4,3 +4,6 @@ metadata:
   name: jellyfin-cm
 data:
   TZ: "America/Sao_Paulo"
+  NVIDIA_VISIBLE_DEVICES: "all"
+  NVIDIA_DRIVER_CAPABILITIES: "all"
+  NVIDIA_REQUIRE_CUDA: "cuda>=11.0"
