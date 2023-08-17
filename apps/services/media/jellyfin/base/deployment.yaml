@@ -22,7 +22,7 @@ spec:
       runtimeClassName: nvidia
       containers:
         - name: jellyfin
-          image: docker.io/jellyfin/jellyfin:20230807.3-unstable
+          image: cr.hotio.dev/hotio/jellyfin:10.8.10-1
           imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef:
@@ -53,9 +53,9 @@ spec:
             - name: anime
               mountPath: /anime
             - name: cache
-              mountPath: /cache
+              mountPath: /config/cache
             - name: config
-              mountPath: /config
+              mountPath: /config/data
           securityContext:
             privileged: true
       volumes:
