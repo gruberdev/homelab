@@ -33,10 +33,7 @@ spec:
               containerPort: 9898
               protocol: TCP
           securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
-            fsGroup: 1000
-            supplementalGroups: [1000]
+            allowPrivilegeEscalation: true
           livenessProbe:
             httpGet:
               path: /

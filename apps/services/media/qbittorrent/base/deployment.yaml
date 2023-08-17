@@ -36,8 +36,7 @@ spec:
               containerPort: 6881
               protocol: UDP
           securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
+            allowPrivilegeEscalation: true
           startupProbe:
             httpGet:
               path: /
