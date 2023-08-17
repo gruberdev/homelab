@@ -8,12 +8,12 @@ metadata:
     kube-vip.io/vipHost: sonarr
 spec:
   ports:
-  - name: web
+  - name: https
     port: 80
-    targetPort: 8989
+    targetPort: 9898
     protocol: TCP
   selector:
     app: sonarr
   type: LoadBalancer
-  loadBalancerIP: "192.168.1.106"
+  loadBalancerIP: "192.168.1.99"
   loadBalancerClass: kube-vip.io/kube-vip-class

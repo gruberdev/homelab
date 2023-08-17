@@ -26,8 +26,11 @@ spec:
             - configMapRef:
                 name: sonarr-cm
           ports:
-            - name: web
+            - name: http
               containerPort: 8989
+              protocol: TCP
+            - name: https
+              containerPort: 9898
               protocol: TCP
           livenessProbe:
             httpGet:
