@@ -60,20 +60,6 @@ spec:
               protocol: UDP
           securityContext:
             allowPrivilegeEscalation: true
-          startupProbe:
-            httpGet:
-              path: /
-              port: web
-            failureThreshold: 30
-            periodSeconds: 10
-          livenessProbe:
-            httpGet:
-              path: /
-              port: web
-          readinessProbe:
-            httpGet:
-              path: /
-              port: web
           resources:
             limits:
               cpu: 350m
