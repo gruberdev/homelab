@@ -62,11 +62,11 @@ spec:
             allowPrivilegeEscalation: true
           resources:
             limits:
-              cpu: 350m
-              memory: 512Mi
+              cpu: 550m
+              memory: 1024Mi
             requests:
-              cpu: 250m
-              memory: 256Mi
+              cpu: 450m
+              memory: 768Mi
           volumeMounts:
             - name: config
               mountPath: /config
