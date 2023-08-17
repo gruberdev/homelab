@@ -26,8 +26,7 @@ spec:
             - configMapRef:
                 name: prowlarr-cm
           securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
+            allowPrivilegeEscalation: true
           ports:
             - name: web
               containerPort: 9696
