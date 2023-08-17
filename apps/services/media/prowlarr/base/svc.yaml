@@ -1,18 +1,19 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: prowlarr
+  name: prowlarr-internal
   labels:
     app: prowlarr
   annotations:
-    tailscale.com/hostname: "prowlarr"
+    kube-vip.io/vipHost: prowlarr
 spec:
+  ports:
+  - name: web
+    port: 80
+    targetPort: 9696
+    protocol: TCP
   selector:
     app: prowlarr
-  ports:
-    - name: web
-      port: 80
-      targetPort: 9696
-      protocol: TCP
-  loadBalancerClass: tailscale
   type: LoadBalancer
+  loadBalancerIP: "192.168.1.105"
+  loadBalancerClass: kube-vip.io/kube-vip-class

@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: sonarr
+spec:
+  secretName: sonarr-tls
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: sonarr.gruber.dev.br
+  dnsNames:
+  - sonarr.gruber.dev.br

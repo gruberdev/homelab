@@ -1,18 +1,19 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: sonarr
+  name: sonarr-internal
   labels:
     app: sonarr
   annotations:
-    tailscale.com/hostname: "sonarr"
+    kube-vip.io/vipHost: sonarr
 spec:
+  ports:
+  - name: web
+    port: 80
+    targetPort: 8989
+    protocol: TCP
   selector:
     app: sonarr
-  ports:
-    - name: web
-      port: 80
-      targetPort: 8989
-      protocol: TCP
-  loadBalancerClass: tailscale
   type: LoadBalancer
+  loadBalancerIP: "192.168.1.106"
+  loadBalancerClass: kube-vip.io/kube-vip-class

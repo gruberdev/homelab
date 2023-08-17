@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: prowlarr
+spec:
+  secretName: prowlarr-tls
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: prowlarr.gruber.dev.br
+  dnsNames:
+  - prowlarr.gruber.dev.br

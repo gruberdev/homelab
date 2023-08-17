@@ -6,7 +6,7 @@ metadata:
   labels:
     app: sonarr
   annotations:
-    link.argocd.argoproj.io/external-link: http://sonarr
+    link.argocd.argoproj.io/external-link: https://sonarr.gruber.dev.br
 spec:
   replicas: 1
   strategy:
@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: sonarr
-          image: linuxserver/sonarr:amd64-3.0.9
+          image: linuxserver/sonarr:amd64-3.0.10.1567-ls202
           envFrom:
             - configMapRef:
                 name: sonarr-cm
