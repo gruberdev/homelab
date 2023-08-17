@@ -19,7 +19,7 @@ spec:
           service:
             name: sonarr-internal
             port:
-              name: web
+              name: https
   tls:
   - hosts:
     - sonarr.gruber.dev.br
