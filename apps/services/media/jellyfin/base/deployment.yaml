@@ -24,15 +24,6 @@ spec:
         - name: jellyfin
           image: docker.io/jellyfin/jellyfin:20230807.3-unstable
           imagePullPolicy: IfNotPresent
-          livenessProbe:
-            httpGet:
-              path: /
-              port: 8096
-            initialDelaySeconds: 60
-            timeoutSeconds: 5
-            successThreshold: 1
-            failureThreshold: 3
-            periodSeconds: 30
           envFrom:
             - configMapRef:
                 name: jellyfin-cm
