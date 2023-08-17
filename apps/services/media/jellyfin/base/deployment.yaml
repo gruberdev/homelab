@@ -52,12 +52,8 @@ spec:
               mountPath: /movies
             - name: anime
               mountPath: /anime
-            - name: cache
-              mountPath: /config/cache
             - name: config
-              mountPath: /config/data
-          securityContext:
-            privileged: true
+              mountPath: /config
       volumes:
         - name: config
           persistentVolumeClaim:
