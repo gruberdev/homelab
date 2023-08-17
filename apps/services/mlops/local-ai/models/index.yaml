@@ -108,3 +108,17 @@
     - filename: mythomax-l2-13b.ggmlv3.q5_K_M.bin
       sha256: c3ddd2874e4b9a7d8ba43f227929f1e0b947b39bf9c46c1343f5f94cf0469910
       uri: https://huggingface.co/TheBloke/MythoMax-L2-13B-GGML/resolve/main/mythomax-l2-13b.ggmlv3.q5_K_M.bin
+- url: "github:gruberdev/homelab/apps/services/chatgpt/local-ai/models/wizardcoder.yaml"
+  name: wizardcoder
+  license: other
+  urls:
+    - https://huggingface.co/TheBloke/WizardCoder-Guanaco-15B-V1.0-GGML
+  tags:
+    - en
+    - codegen
+    - ggml
+    - conversational
+  files:
+    - filename: wizardcoder-guanaco-15b-v1.0.ggmlv1.q4_0.bin
+      sha256: 4708d9248b85b76a7bb85ac9bb586cacac4df8923dda9b09189babe326a61d94
+      uri: https://huggingface.co/TheBloke/WizardCoder-Guanaco-15B-V1.0-GGML/resolve/main/wizardcoder-guanaco-15b-v1.0.ggmlv1.q4_0.bin
