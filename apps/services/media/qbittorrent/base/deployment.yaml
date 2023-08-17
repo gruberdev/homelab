@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: qbittorrent
-          image: emmercm/qbittorrent:4.5.1
+          image: ghcr.io/hotio/qbittorrent:release-4.5.4
           envFrom:
             - configMapRef:
                 name: qbittorrent-cm
@@ -35,6 +35,11 @@ spec:
             - name: traffic-udp
               containerPort: 6881
               protocol: UDP
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            supplementalGroups: [1000]
           startupProbe:
             httpGet:
               path: /

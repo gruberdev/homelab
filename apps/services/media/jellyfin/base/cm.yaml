@@ -4,6 +4,10 @@ metadata:
   name: jellyfin-cm
 data:
   TZ: "America/Sao_Paulo"
+  PUID: "1000"
+  PGID: "1000"
+  UMASK: "002"
   NVIDIA_VISIBLE_DEVICES: "all"
   NVIDIA_DRIVER_CAPABILITIES: "all"
   NVIDIA_REQUIRE_CUDA: "cuda>=11.0"
+  DOMAIN_NAME: "tv.gruber.dev.br"

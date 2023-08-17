@@ -40,12 +40,16 @@ spec:
             - name: dnla
               containerPort: 1900
               protocol: UDP
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
           resources:
             requests:
-              cpu: 150m
-              memory: 512Mi
+              cpu: 450m
+              memory: 1024Mi
             limits:
-              cpu: 500m
+              cpu: 1000m
               memory: 2048Mi
           volumeMounts:
             - name: movies
