@@ -41,8 +41,7 @@ spec:
               containerPort: 1900
               protocol: UDP
           securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
+            allowPrivilegeEscalation: true
           resources:
             requests:
               cpu: 450m
