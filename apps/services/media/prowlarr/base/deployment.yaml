@@ -21,10 +21,13 @@ spec:
     spec:
       containers:
         - name: prowlarr
-          image: linuxserver/prowlarr:amd64-1.1.3
+          image: ghcr.io/hotio/prowlarr:release-1.7.4.3769
           envFrom:
             - configMapRef:
                 name: prowlarr-cm
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
           ports:
             - name: web
               containerPort: 9696

@@ -4,3 +4,6 @@ metadata:
   name: prowlarr-cm
 data:
   TZ: "America/Sao_Paulo"
+  PUID: "1000"
+  PGID: "1000"
+  UMASK: "002"
