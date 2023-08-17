@@ -13,7 +13,7 @@ spec:
   - host: sonarr.gruber.dev.br
     http:
       paths:
-      - path: /sonarr
+      - path: /
         pathType: Prefix
         backend:
           service:
