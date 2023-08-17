@@ -13,13 +13,13 @@ spec:
   - host: sonarr.gruber.dev.br
     http:
       paths:
-      - path: /
+      - path: /sonarr
         pathType: Prefix
         backend:
           service:
             name: sonarr-internal
             port:
-              name: https
+              name: http
   tls:
   - hosts:
     - sonarr.gruber.dev.br

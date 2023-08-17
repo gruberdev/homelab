@@ -8,8 +8,12 @@ metadata:
     kube-vip.io/vipHost: sonarr
 spec:
   ports:
-  - name: https
+  - name: http
     port: 80
+    targetPort: 8989
+    protocol: TCP
+  - name: https
+    port: 443
     targetPort: 9898
     protocol: TCP
   selector:
