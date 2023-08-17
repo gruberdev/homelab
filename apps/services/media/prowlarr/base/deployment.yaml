@@ -52,8 +52,6 @@ spec:
               mountPath: /config
             - name: downloads
               mountPath: /downloads
-            - name: music-library
-              mountPath: /music
             - name: movies
               mountPath: /movies
             - name: anime
@@ -62,9 +60,6 @@ spec:
         - name: config
           persistentVolumeClaim:
             claimName: prowlarr-storage
-        - name: music-library
-          persistentVolumeClaim:
-            claimName: music-storage
         - name: movies
           persistentVolumeClaim:
             claimName: movie-library
