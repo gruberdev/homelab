@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: sonarr
-          image: ghcr.io/hotio/prowlarr:release-1.7.4.3769
+          image: ghcr.io/hotio/sonarr:v4-9892b99
           envFrom:
             - configMapRef:
                 name: sonarr-cm
