@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: sonarr
-          image: linuxserver/sonarr:amd64-3.0.10.1567-ls202
+          image: ghcr.io/hotio/prowlarr:release-1.7.4.3769
           envFrom:
             - configMapRef:
                 name: sonarr-cm
@@ -32,6 +32,11 @@ spec:
             - name: https
               containerPort: 9898
               protocol: TCP
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            supplementalGroups: [1000]
           livenessProbe:
             httpGet:
               path: /

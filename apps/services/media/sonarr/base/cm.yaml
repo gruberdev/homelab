@@ -3,6 +3,7 @@ kind: ConfigMap
 metadata:
   name: sonarr-cm
 data:
-  PUID: "0"
-  PGID: "0"
+  PUID: "1000"
+  PGID: "1000"
+  UMASK: "002"
   TZ: "America/Sao_Paulo"
