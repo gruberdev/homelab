@@ -22,7 +22,7 @@ spec:
       runtimeClassName: nvidia
       containers:
         - name: jellyfin
-          image: cr.hotio.dev/hotio/jellyfin:10.8.10-1
+          image: ghcr.io/hotio/jellyfin:release-10.8.10-1
           imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef:
