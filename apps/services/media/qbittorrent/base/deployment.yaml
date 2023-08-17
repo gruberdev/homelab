@@ -6,7 +6,7 @@ metadata:
   labels:
     app: qbittorrent
   annotations:
-    link.argocd.argoproj.io/external-link: http://torrent
+    link.argocd.argoproj.io/external-link: https://downloads.gruber.dev.br
 spec:
   replicas: 1
   strategy:
