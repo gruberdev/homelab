@@ -19,6 +19,26 @@ spec:
       labels:
         app: qbittorrent
     spec:
+      initContainers:
+      - name: init-permissions
+        image: busybox
+        command:
+        - sh
+        - -c
+        - |
+          echo "Applying permissions to folders"
+          chmod -R "=rwx" /downloads /data /incomplete
+          chown -R hotio:hotio /downloads /data /incomplete
+        securityContext:
+          allowPrivilegeEscalation: true
+          runAsUser: 0
+        volumeMounts:
+          - name: downloads
+            mountPath: /downloads
+          - name: cache
+            mountPath: /data
+          - name: incomplete
+            mountPath: /incomplete
       containers:
         - name: qbittorrent
           image: ghcr.io/hotio/qbittorrent:release-4.5.4
