@@ -44,11 +44,11 @@ spec:
             allowPrivilegeEscalation: true
           resources:
             requests:
-              cpu: 450m
-              memory: 1024Mi
-            limits:
-              cpu: 1000m
+              cpu: 850m
               memory: 2048Mi
+            limits:
+              cpu: 1500m
+              memory: 4096Mi
           volumeMounts:
             - name: movies
               mountPath: /movies
