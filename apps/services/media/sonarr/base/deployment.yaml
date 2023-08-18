@@ -79,8 +79,6 @@ spec:
               mountPath: /config
             - name: downloads
               mountPath: /downloads
-            - name: downloads-cache
-              mountPath: /cache
             - name: movies
               mountPath: /movies
             - name: anime
@@ -95,9 +93,6 @@ spec:
         - name: downloads
           persistentVolumeClaim:
             claimName: downloads-storage
-        - name: downloads-cache
-          persistentVolumeClaim:
-            claimName: cache-storage
         - name: anime
           persistentVolumeClaim:
             claimName: anime-library
