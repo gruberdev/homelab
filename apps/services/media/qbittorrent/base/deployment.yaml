@@ -20,7 +20,6 @@ spec:
         app: qbittorrent
     spec:
       securityContext:
-        fsGroup: 1000
         sysctls:
           - name: net.ipv4.conf.all.src_valid_mark
             value: "1"
@@ -45,10 +44,8 @@ spec:
         volumeMounts:
           - name: downloads
             mountPath: /downloads
-          - name: cache
-            mountPath: /data
           - name: incomplete
-            mountPath: /incomplete
+            mountPath: /data
       containers:
         - name: qbittorrent
           image: ghcr.io/hotio/qbittorrent:release-4.5.4
