@@ -44,7 +44,6 @@ spec:
             - secretRef:
                 name: git-vars
                 optional: true
-
       containers:
         - env:
           - name: TZ
