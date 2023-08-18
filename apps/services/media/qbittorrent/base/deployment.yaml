@@ -19,12 +19,6 @@ spec:
       labels:
         app: qbittorrent
     spec:
-      securityContext:
-        sysctls:
-          - name: net.ipv4.conf.all.src_valid_mark
-            value: "1"
-          - name: net.ipv6.conf.all.disable_ipv6
-            value: "1"
       initContainers:
       - name: init-permissions
         image: busybox
@@ -69,9 +63,6 @@ spec:
               containerPort: 50000
               protocol: UDP
           securityContext:
-            capabilities:
-              add:
-                - NET_ADMIN
             allowPrivilegeEscalation: true
           resources:
             limits:
