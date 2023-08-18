@@ -17,7 +17,6 @@ spec:
   type: LoadBalancer
   loadBalancerIP: "192.168.1.103"
   loadBalancerClass: kube-vip.io/kube-vip-class
-
 ---
 apiVersion: v1
 kind: Service
@@ -25,15 +24,19 @@ metadata:
   name: torrent-tcp
   labels:
     app: qbittorrent
+  annotations:
+    kube-vip.io/vipHost: torrent-tcp
 spec:
-  type: ClusterIP
+  ports:
+  - name: traffic
+    port: 6881
+    targetPort: 6881
+    protocol: TCP
   selector:
     app: qbittorrent
-  ports:
-    - name: traffic
-      port: 6881
-      targetPort: 6881
-      protocol: TCP
+  type: LoadBalancer
+  loadBalancerIP: "192.168.1.97"
+  loadBalancerClass: kube-vip.io/kube-vip-class
 ---
 apiVersion: v1
 kind: Service
@@ -41,12 +44,56 @@ metadata:
   name: torrent-udp
   labels:
     app: qbittorrent
+  annotations:
+    kube-vip.io/vipHost: torrent-udp
 spec:
-  type: ClusterIP
+  ports:
+  - name: traffic-udp
+    port: 6881
+    targetPort: 6881
+    protocol: UDP
   selector:
     app: qbittorrent
+  type: LoadBalancer
+  loadBalancerIP: "192.168.1.97"
+  loadBalancerClass: kube-vip.io/kube-vip-class
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: torrent-external-tcp
+  labels:
+    app: qbittorrent
+  annotations:
+    kube-vip.io/vipHost: torrent-external-tcp
+spec:
   ports:
-    - name: traffic-udp
-      port: 6881
-      targetPort: 6881
-      protocol: UDP
+  - name: entry-tcp
+    port: 50000
+    targetPort: 50000
+    protocol: TCP
+  selector:
+    app: qbittorrent
+  type: LoadBalancer
+  loadBalancerIP: "192.168.1.96"
+  loadBalancerClass: kube-vip.io/kube-vip-class
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: torrent-external-udp
+  labels:
+    app: qbittorrent
+  annotations:
+    kube-vip.io/vipHost: torrent-external-udp
+spec:
+  ports:
+  - name: entry-udp
+    port: 50000
+    targetPort: 50000
+    protocol: TCP
+  selector:
+    app: qbittorrent
+  type: LoadBalancer
+  loadBalancerIP: "192.168.1.96"
+  loadBalancerClass: kube-vip.io/kube-vip-class

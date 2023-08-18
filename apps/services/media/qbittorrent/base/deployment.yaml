@@ -19,6 +19,13 @@ spec:
       labels:
         app: qbittorrent
     spec:
+      securityContext:
+        fsGroup: 1000
+        sysctls:
+          - name: net.ipv4.conf.all.src_valid_mark
+            value: "1"
+          - name: net.ipv6.conf.all.disable_ipv6
+            value: "1"
       initContainers:
       - name: init-permissions
         image: busybox
@@ -30,8 +37,8 @@ spec:
           addgroup -g 1000 hotio
           adduser -D -u 1000 -G hotio hotio
           echo "Applying permissions to folders"
-          chmod -R "=rwx" /downloads /data /incomplete
-          chown -R hotio:hotio /downloads /data /incomplete
+          chmod -R "=rwx" /downloads /data
+          chown -R hotio:hotio /downloads /data
         securityContext:
           allowPrivilegeEscalation: true
           runAsUser: 0
@@ -58,31 +65,35 @@ spec:
             - name: traffic-udp
               containerPort: 6881
               protocol: UDP
+            - name: entry-tcp
+              containerPort: 50000
+              protocol: TCP
+            - name: entry-udp
+              containerPort: 50000
+              protocol: UDP
           securityContext:
+            capabilities:
+              add:
+                - NET_ADMIN
             allowPrivilegeEscalation: true
           resources:
             limits:
-              cpu: 550m
+              cpu: 1000m
               memory: 1024Mi
             requests:
               cpu: 450m
-              memory: 768Mi
+              memory: 1024Mi
           volumeMounts:
             - name: config
               mountPath: /config
-            - name: cache
-              mountPath: /data
             - name: downloads
               mountPath: /downloads
             - name: incomplete
-              mountPath: /incomplete
+              mountPath: /data
       volumes:
         - name: config
           persistentVolumeClaim:
             claimName: qbittorrent-storage
-        - name: cache
-          persistentVolumeClaim:
-            claimName: qbittorrent-data
         - name: downloads
           persistentVolumeClaim:
             claimName: downloads-storage
