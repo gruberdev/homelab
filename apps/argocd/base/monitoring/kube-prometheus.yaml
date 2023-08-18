@@ -6,7 +6,7 @@ spec:
   project: monitoring
   source:
     repoURL: 'https://github.com/prometheus-community/helm-charts.git'
-    targetRevision: kube-prometheus-stack-47.1.0
+    targetRevision: kube-prometheus-stack-48.3.1
     path: charts/kube-prometheus-stack
     helm:
       skipCrds: true
@@ -698,7 +698,7 @@ spec:
             pullPolicy: IfNotPresent
             registry: quay.io
             repository: prometheus-operator/prometheus-operator
-            tag: v0.62.0
+            tag: v0.67.1
           kubeletService:
             enabled: true
             namespace: kube-system
@@ -716,7 +716,7 @@ spec:
             image:
               registry: quay.io
               repository: prometheus-operator/prometheus-config-reloader
-              tag: v0.62.0
+              tag: v0.67.1
             resources:
               limits:
                 cpu: 80m
