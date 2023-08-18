@@ -26,16 +26,16 @@ resources:
 - base/n8n.yaml
 - base/wandb.yaml
 - base/feedpushr.yaml
-- base/grocy.yaml
-- base/archivebox.yaml
+# - base/grocy.yaml
+# - base/archivebox.yaml
 - base/change.yaml
 # - base/taskwarrior.yaml
 # - base/nitter.yaml
 # - base/wallabag.yaml
-- base/milvus.yaml
+# - base/milvus.yaml
 - base/actual.yaml
-- base/jupyterlab.yaml
-- base/librex.yaml
+# - base/jupyterlab.yaml
+# - base/librex.yaml
 - base/local-ai.yaml
 
 #  Postgres Storage
