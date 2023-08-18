@@ -87,7 +87,7 @@ spec:
   storageClassName: iscsi
   resources:
     requests:
-      storage: 2Gi
+      storage: 30Gi
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -100,20 +100,7 @@ spec:
   storageClassName: iscsi
   resources:
     requests:
-      storage: 100Gi
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: cache-storage
-  namespace: media
-spec:
-  accessModes:
-    - ReadWriteOnce
-  storageClassName: iscsi
-  resources:
-    requests:
-      storage: 50Gi
+      storage: 150Gi
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -126,4 +113,4 @@ spec:
   storageClassName: iscsi
   resources:
     requests:
-      storage: 150Gi
+      storage: 100Gi

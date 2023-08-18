@@ -19,30 +19,9 @@ spec:
       labels:
         app: qbittorrent
     spec:
-      initContainers:
-      - name: init-permissions
-        image: busybox
-        command:
-        - sh
-        - -c
-        - |
-          echo "Creating user/group hotio"
-          addgroup -g 1000 hotio
-          adduser -D -u 1000 -G hotio hotio
-          echo "Applying permissions to folders"
-          chmod -R "=rwx" /downloads /data
-          chown -R hotio:hotio /downloads /data
-        securityContext:
-          allowPrivilegeEscalation: true
-          runAsUser: 0
-        volumeMounts:
-          - name: downloads
-            mountPath: /downloads
-          - name: incomplete
-            mountPath: /data
       containers:
         - name: qbittorrent
-          image: ghcr.io/hotio/qbittorrent:release-4.5.4
+          image: emmercm/qbittorrent:4.5.1
           envFrom:
             - configMapRef:
                 name: qbittorrent-cm
@@ -62,6 +41,27 @@ spec:
             - name: entry-udp
               containerPort: 50000
               protocol: UDP
+          startupProbe:
+            httpGet:
+              path: /
+              port: web
+            failureThreshold: 60
+            periodSeconds: 20
+            initialDelaySeconds: 60
+          livenessProbe:
+            httpGet:
+              path: /
+              port: web
+            failureThreshold: 60
+            periodSeconds: 20
+            initialDelaySeconds: 60
+          readinessProbe:
+            httpGet:
+              path: /
+              port: web
+            failureThreshold: 15
+            periodSeconds: 5
+            initialDelaySeconds: 15
           securityContext:
             allowPrivilegeEscalation: true
           resources:
@@ -74,14 +74,19 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /config
+            - name: cache
+              mountPath: /data
             - name: downloads
               mountPath: /downloads
             - name: incomplete
-              mountPath: /data
+              mountPath: /incomplete
       volumes:
         - name: config
           persistentVolumeClaim:
             claimName: qbittorrent-storage
+        - name: cache
+          persistentVolumeClaim:
+            claimName: qbittorrent-data
         - name: downloads
           persistentVolumeClaim:
             claimName: downloads-storage
