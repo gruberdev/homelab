@@ -30,16 +30,12 @@ spec:
           addgroup -g 1000 hotio
           adduser -D -u 1000 -G hotio hotio
           echo "Applying permissions to folders"
-          chmod -R "=rwx" /downloads /downloads-cache /anime
-          chown -R hotio:hotio /downloads /downloads-cache /anime
+          chmod -R "=rwx" /anime
+          chown -R hotio:hotio /anime
         securityContext:
           allowPrivilegeEscalation: true
           runAsUser: 0
         volumeMounts:
-          - name: downloads
-            mountPath: /downloads
-          - name: downloads-cache
-            mountPath: /downloads-cache
           - name: anime
             mountPath: /anime
       containers:
