@@ -19,3 +19,17 @@ data:
     g, ext, role:extension
     p, role:extension, applications, get, default/httpbin-app, allow
     p, role:extension, extensions, invoke, httpbin, allow
+    p, role:action-runner, applications, action/argoproj.io/Rollout/abort, *, allow
+    p, role:action-runner, applications, action/argoproj.io/Rollout/promote-full, *, allow
+    p, role:action-runner, applications, action/argoproj.io/Rollout/retry, *, allow
+    p, role:action-runner, applications, action/argoproj.io/Rollout/resume, *, allow
+    p, role:action-runner, applications, action/argoproj.io/Rollout/restart, *, allow
+    p, role:action-runner, applications, action/argoproj.io/AnalysisRun/terminate, *, allow
+    p, role:action-runner, applications, action/apps/DaemonSet/restart, *, allow
+    p, role:action-runner, applications, action/apps/StatefulSet/restart, *, allow
+    p, role:action-runner, applications, action/apps/Deployment/pause, *, allow
+    p, role:action-runner, applications, action/apps/Deployment/resume, *, allow
+    p, role:action-runner, applications, action/apps/Deployment/restart, *, allow
+    p, role:action-runner, applications, action/argoproj.io/WorkflowTemplate/create-workflow, *, allow
+    p, role:action-runner, applications, action/argoproj.io/CronWorkflow/create-workflow, *, allow
+    p, role:action-runner, applications, action/batch/CronJob/create-job, *, allow
