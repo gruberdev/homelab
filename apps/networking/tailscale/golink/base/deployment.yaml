@@ -21,6 +21,10 @@ spec:
       containers:
       - name: golinks-main
         image: docker.io/grubertech/golinks:v0.0.1
+        args:
+          - "-verbose"
+          - "-sqlitedb"
+          - "/home/nonroot/golink.db"
         envFrom:
         - secretRef:
             name: golinks-vars
@@ -28,6 +32,8 @@ spec:
         - name: web
           containerPort: 8080
           protocol: TCP
+          securityContext:
+            runAsUser: 0
         resources:
           requests:
             cpu: 50m
