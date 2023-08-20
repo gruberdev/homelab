@@ -40,7 +40,9 @@ metadata:
   name: golinks-ts
   labels:
     app: golinks
-    tailscale.com/hostname: "links"
+    external-dns.alpha.kubernetes.io/hostname: links.gruber.dev.br
+    external-dns.alpha.kubernetes.io/ttl: "600"
+    tailscale.com/hostname: "go"
 spec:
   selector:
     app: golinks
