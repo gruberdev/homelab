@@ -31,10 +31,10 @@ spec:
         resources:
           requests:
             cpu: 50m
-            memory: 64Mi
+            memory: 256Mi
           limits:
             cpu: 150m
-            memory: 256Mi
+            memory: 512Mi
         volumeMounts:
         - name: config-storage
           mountPath: /home/nonroot
