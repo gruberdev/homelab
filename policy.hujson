@@ -27,6 +27,11 @@
 		},
 		{
 			"action": "accept",
+			"src": ["tag:links"],
+			"dst": ["*:*"],
+		},
+		{
+			"action": "accept",
 			"src":    ["tag:k8s", "tag:k8s-operator", "tag:clients", "tag:nodes"],
 			"dst":    ["tag:exit:*", "tag:vultr:*"],
 		},
@@ -54,6 +59,7 @@
 		"tag:cluster":      ["group:admins"],
 		"tag:internal":     ["group:admins"],
 		"tag:exit":         ["group:admins"],
+		"tag:links":        ["group:admins"],
 		"tag:vultr":        ["group:admins"],
 		"tag:k8s":          ["tag:k8s-operator"],
 		"tag:k8s-operator": [],
