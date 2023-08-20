@@ -25,8 +25,6 @@ spec:
           - "-verbose"
           - "-sqlitedb"
           - "/root/golink.db"
-          - "-allow-unknown-users"
-          - "true"
         envFrom:
         - secretRef:
             name: golinks-vars
