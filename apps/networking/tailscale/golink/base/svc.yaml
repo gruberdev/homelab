@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: golinks-internal
+  name: golinks-lan
   labels:
     app: golinks
   annotations:
@@ -21,7 +21,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: n8n
+  name: golinks-internal
   labels:
     app: golinks
 spec:
