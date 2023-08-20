@@ -24,7 +24,7 @@ spec:
         args:
           - "-verbose"
           - "-sqlitedb"
-          - "/home/nonroot/golink.db"
+          - "/root/golink.db"
         envFrom:
         - secretRef:
             name: golinks-vars
@@ -43,7 +43,7 @@ spec:
             memory: 512Mi
         volumeMounts:
         - name: config-storage
-          mountPath: /home/nonroot
+          mountPath: /root
       volumes:
       - name: config-storage
         persistentVolumeClaim:
