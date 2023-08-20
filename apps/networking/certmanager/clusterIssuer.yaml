@@ -53,6 +53,7 @@ spec:
         - lidarr.gruber.dev.br
         - music.gruber.dev.br
         - bazarr.gruber.dev.br
+        - links.gruber.dev.br
       dns01:
         cloudflare:
           email: rpg.gruber@gmail.com

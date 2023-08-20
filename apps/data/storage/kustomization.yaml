@@ -25,6 +25,7 @@ resources:
 # Services
 - base/n8n.yaml
 - base/wandb.yaml
+- base/links.yaml
 - base/feedpushr.yaml
 # - base/grocy.yaml
 # - base/archivebox.yaml

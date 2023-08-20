@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: golinks-internal
+  labels:
+    app: golinks
+  annotations:
+    kube-vip.io/vipHost: golinks
+spec:
+  ports:
+    - name: web
+      port: 80
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: golinks
+  type: LoadBalancer
+  loadBalancerIP: "192.168.1.89"
+  loadBalancerClass: kube-vip.io/kube-vip-class
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: n8n
+  labels:
+    app: golinks
+spec:
+  selector:
+    app: golinks
+  ports:
+    - name: web
+      port: 80
+      targetPort: 8080
+      protocol: TCP
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: golinks-ts
+  labels:
+    app: golinks
+    tailscale.com/hostname: "links"
+spec:
+  selector:
+    app: golinks
+  ports:
+    - name: web
+      port: 80
+      targetPort: 8080
+      protocol: TCP
+  loadBalancerClass: tailscale
+  type: LoadBalancer

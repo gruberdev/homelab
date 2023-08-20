@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: golinks
+  labels:
+    app: golinks
+  annotations:
+    link.argocd.argoproj.io/external-link: https://links.gruber.dev.br
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: golinks
+  template:
+    metadata:
+      labels:
+        app: golinks
+    spec:
+      containers:
+      - name: golinks-main
+        image: docker.io/grubertech/golinks:v0.0.1
+        envFrom:
+        - secretRef:
+            name: golinks-vars
+        ports:
+        - name: web
+          containerPort: 8080
+          protocol: TCP
+        resources:
+          requests:
+            cpu: 50m
+            memory: 64Mi
+          limits:
+            cpu: 150m
+            memory: 256Mi
+        volumeMounts:
+        - name: config-storage
+          mountPath: /home/nonroot
+      volumes:
+      - name: config-storage
+        persistentVolumeClaim:
+          claimName: golinks-storage
