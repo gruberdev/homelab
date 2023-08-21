@@ -68,7 +68,7 @@ spec:
               cpu: 100m
               memory: 256Mi
         redis-cluster:
-          enabled: true
+          enabled: false
           usePassword: false
         persistence:
           accessModes:
