@@ -7,12 +7,14 @@ spec:
   source:
     repoURL: https://dl.gitea.io/charts/
     chart: gitea
-    targetRevision: 8.3.0
+    targetRevision: 9.2.0
     helm:
       releaseName: gitea
       values: |
         checkDeprecation: true
         clusterDomain: cluster.local
+        strategy:
+          type: "Recreate"
         gitea:
           admin:
             email: <path:kv/data/gitea#email>
@@ -65,11 +67,9 @@ spec:
             requests:
               cpu: 100m
               memory: 256Mi
-        memcached:
+        redis-cluster:
           enabled: true
-          service:
-            ports:
-              memcached: 11211
+          usePassword: false
         persistence:
           accessModes:
           - ReadWriteOnce
@@ -80,6 +80,8 @@ spec:
           storageClass: iscsi
         podSecurityContext:
           fsGroup: 1000
+        postgresql-ha:
+          enabled: false
         postgresql:
           enabled: true
           global:
