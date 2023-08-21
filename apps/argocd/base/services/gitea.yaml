@@ -14,10 +14,18 @@ spec:
       releaseName: gitea
       values: |
         checkDeprecation: true
+        replicaCount: 1
         clusterDomain: cluster.local
         strategy:
           type: "Recreate"
         gitea:
+          additionalConfigSources:
+            - configMap:
+                name: gitea-app-ini
+          config:
+            APP_NAME: "Gitea"
+            server:
+              SSH_PORT: 22
           admin:
             email: <path:kv/data/gitea#email>
             password: <path:kv/data/gitea#password>
@@ -73,11 +81,15 @@ spec:
           enabled: false
           usePassword: false
         persistence:
+          create: false
+          mount: true
+          enabled: true
+          claimName: gitea-shared-storage
           accessModes:
           - ReadWriteOnce
           annotations:
+            helm.sh/resource-policy: keep
             argocd.argoproj.io/sync-options: Delete=false
-          enabled: true
           size: 10Gi
           storageClass: iscsi
         podSecurityContext:
@@ -116,9 +128,8 @@ spec:
         signing:
           enabled: false
           gpgHome: /data/git/.gnupg
-        statefulset:
+        deployment:
           terminationGracePeriodSeconds: 60
-        test:
           enabled: true
           image:
             name: busybox
