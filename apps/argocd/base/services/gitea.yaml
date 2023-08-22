@@ -81,7 +81,7 @@ spec:
           enabled: false
           usePassword: false
         persistence:
-          create: false
+          create: true
           mount: true
           enabled: true
           claimName: gitea-shared-storage
