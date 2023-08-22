@@ -19,7 +19,7 @@ spec:
         extraVolumes:
           - name: gitea-themes
             configMap:
-              name: gitea-themes
+              name: gitea-app-ini
               items:
               - key: theme-catppuccin-latte-blue.css
                 path: theme-catppuccin-latte-blue.css
