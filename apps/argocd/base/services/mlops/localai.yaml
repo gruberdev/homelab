@@ -3,7 +3,7 @@ kind: Application
 metadata:
   name: local-ai
   finalizers:
-  - resources-finalizer.argocd.argoproj.io
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: apps
   source:
