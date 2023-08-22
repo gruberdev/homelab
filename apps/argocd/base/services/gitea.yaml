@@ -103,10 +103,10 @@ spec:
           annotations:
             helm.sh/resource-policy: keep
             argocd.argoproj.io/sync-options: Delete=false
-          podSecurityContext:
-            fsGroup: 1000
           size: 10Gi
           storageClass: iscsi
+        podSecurityContext:
+          fsGroup: 1000
         postgresql-ha:
           enabled: false
         postgresql:
