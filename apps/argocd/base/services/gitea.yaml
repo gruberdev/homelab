@@ -136,9 +136,6 @@ spec:
         deployment:
           terminationGracePeriodSeconds: 60
           enabled: true
-          image:
-            name: busybox
-            tag: latest
 
   destination:
     namespace: gitea
