@@ -21,8 +21,8 @@ data:
     DEFAULT_INTERVAL=3h
     ENABLED=true
   ui: |
-    THEMES=auto,gitea,arc-green,catppuccin-latte-blue
-    DEFAULT_THEME=catppuccin-latte-blue
+    THEMES=auto,gitea,arc-green,catppuccin-mocha-blue
+    DEFAULT_THEME=catppuccin-mocha-blue
     SHOW_USER_EMAIL=false
 ---
 apiVersion: v1
@@ -30,186 +30,210 @@ kind: ConfigMap
 metadata:
   name: gitea-themes
 data:
-  theme-catppuccin-latte-blue.css: |
+  theme-catppuccin-mocha-blue.css: |
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap');
     :root {
-    --fonts-proportional: 'Inter', sans-serif; !important;
-    color-scheme: light;
-    --is-dark-theme: false;
-    accent-color: #1e66f5;
-    --color-primary: #1e66f5;
-    --color-primary-contrast: #eff1f5;
-    --color-primary-dark-1: #2d70f6;
-    --color-primary-dark-2: #3b7af6;
-    --color-primary-dark-3: #4a84f7;
-    --color-primary-dark-4: #598ef8;
-    --color-primary-dark-5: #6798f8;
-    --color-primary-dark-6: #76a2f9;
-    --color-primary-dark-7: #85acfa;
-    --color-primary-light-1: #0f5cf4;
-    --color-primary-light-2: #0a55ea;
-    --color-primary-light-3: #0a50db;
-    --color-primary-light-4: #094bcd;
-    --color-primary-light-5: #0845be;
-    --color-primary-light-6: #0840af;
-    --color-primary-light-7: #073ba1;
-    --color-primary-alpha-10: rgba(30, 102, 245, 0.1);
-    --color-primary-alpha-20: rgba(30, 102, 245, 0.2);
-    --color-primary-alpha-30: rgba(30, 102, 245, 0.3);
-    --color-primary-alpha-40: rgba(30, 102, 245, 0.4);
-    --color-primary-alpha-50: rgba(30, 102, 245, 0.5);
-    --color-primary-alpha-60: rgba(30, 102, 245, 0.6);
-    --color-primary-alpha-70: rgba(30, 102, 245, 0.7);
-    --color-primary-alpha-80: rgba(30, 102, 245, 0.8);
-    --color-primary-alpha-90: rgba(30, 102, 245, 0.9);
-    --color-secondary: #bcc0cc;
-    --color-secondary-dark-1: #c3c8d4;
-    --color-secondary-dark-2: #bac0cd;
-    --color-secondary-dark-3: #b1b7c7;
-    --color-secondary-dark-4: #a9afc0;
-    --color-secondary-dark-5: #a0a7ba;
-    --color-secondary-dark-6: #979fb3;
-    --color-secondary-dark-7: #8e97ad;
-    --color-secondary-dark-8: #858fa7;
-    --color-secondary-dark-9: #7c86a0;
-    --color-secondary-dark-10: #737e9a;
-    --color-secondary-dark-11: #6b7693;
-    --color-secondary-dark-12: #646f8a;
-    --color-secondary-dark-13: #5e6881;
-    --color-secondary-light-1: #d5d8e0;
-    --color-secondary-light-2: #dee0e7;
-    --color-secondary-light-3: #e7e9ed;
-    --color-secondary-light-4: #eff1f4;
-    --color-secondary-alpha-10: rgba(204, 208, 218, 0.1);
-    --color-secondary-alpha-20: rgba(204, 208, 218, 0.2);
-    --color-secondary-alpha-30: rgba(204, 208, 218, 0.3);
-    --color-secondary-alpha-40: rgba(204, 208, 218, 0.4);
-    --color-secondary-alpha-50: rgba(204, 208, 218, 0.5);
-    --color-secondary-alpha-60: rgba(204, 208, 218, 0.6);
-    --color-secondary-alpha-70: rgba(204, 208, 218, 0.7);
-    --color-secondary-alpha-80: rgba(204, 208, 218, 0.8);
-    --color-secondary-alpha-90: rgba(204, 208, 218, 0.9);
-    /* colors */
-    --color-red: #d20f39;
-    --color-orange: #fe640b;
-    --color-yellow: #df8e1d;
-    --color-olive: #40a02b;
-    --color-green: #40a02b;
-    --color-teal: #179299;
-    --color-blue: #1e66f5;
-    --color-violet: #7287fd;
-    --color-purple: #8839ef;
-    --color-pink: #ea76cb;
-    --color-brown: #dd7878;
-    --color-grey: #7c7f93;
-    --color-black: #e6e9ef;
-    /* light variants - produced via Sass scale-color(color, $lightness: -10%) */
-    --color-red-light: #ef2550;
-    --color-orange-light: #fe843e;
-    --color-yellow-light: #e7a548;
-    --color-olive-light: #50c836;
-    --color-green-light: #50c836;
-    --color-teal-light: #1ebcc5;
-    --color-blue-light: #4f87f7;
-    --color-violet-light: #a4b2fe;
-    --color-purple-light: #a468f3;
-    --color-pink-light: #f1a2dc;
-    --color-brown-light: #e7a1a1;
-    --color-grey-light: #989aaa;
-    --color-black-light: white;
-    /* other colors */
-    --color-gold: #dc8a78;
-    --color-white: #4c4f69;
-    --color-diff-removed-word-bg: rgba(210, 15, 57, 0.15);
-    --color-diff-added-word-bg: rgba(64, 160, 43, 0.15);
-    --color-diff-removed-row-bg: rgba(210, 15, 57, 0.07);
-    --color-diff-moved-row-bg: rgba(223, 142, 29, 0.07);
-    --color-diff-added-row-bg: rgba(64, 160, 43, 0.07);
-    --color-diff-removed-row-border: rgba(210, 15, 57, 0.07);
-    --color-diff-moved-row-border: rgba(223, 142, 29, 0.07);
-    --color-diff-added-row-border: rgba(64, 160, 43, 0.07);
-    --color-diff-inactive: #7c7f93;
-    --color-error-border: #d20f39;
-    --color-error-bg: #d20f39;
-    --color-error-bg-active: #ea113f;
-    --color-error-bg-hover: #ef2550;
-    --color-error-text: #eff1f5;
-    --color-success-border: #50c836;
-    --color-success-bg: #40a02b;
-    --color-success-text: #eff1f5;
-    --color-warning-border: #e7a548;
-    --color-warning-bg: #df8e1d;
-    --color-warning-text: #eff1f5;
-    --color-info-border: #4f87f7;
-    --color-info-bg: #eff1f5;
-    --color-info-text: #4c4f69;
-    --color-red-badge: #ef2550;
-    --color-red-badge-bg: #eff1f5;
-    --color-red-badge-hover-bg: #ea113f;
-    --color-green-badge: #40a02b;
-    --color-green-badge-bg: #eff1f5;
-    --color-green-badge-hover-bg: #48b430;
-    --color-yellow-badge: #df8e1d;
-    --color-yellow-badge-bg: #eff1f5;
-    --color-yellow-badge-hover-bg: #e49a31;
-    --color-orange-badge: #fe640b;
-    --color-orange-badge-bg: #eff1f5;
-    --color-orange-badge-hover-bg: #fe7424;
-    --color-git: #fe640b;
-    /* target-based colors */
-    --color-body: #eff1f5;
-    --color-box-header: #e6e9ef;
-    --color-box-body: #e6e9ef;
-    --color-box-body-highlight: #ccd0da;
-    --color-text-dark: #6c6f85;
-    --color-text: #4c4f69;
-    --color-text-light: #5c5f77;
-    --color-text-light-1: #5c5f77;
-    --color-text-light-2: #5c5f77;
-    --color-text-light-3: #5c5f77;
-    --color-footer: #e6e9ef;
-    --color-timeline: #ccd0da;
-    --color-input-text: #4c4f69;
-    --color-input-background: #ccd0da;
-    --color-input-toggle-background: #ccd0da;
-    --color-input-border: #bcc0cc;
-    --color-input-border-hover: #acb0be;
-    --color-navbar: #e6e9ef;
-    --color-navbar-transparent: rgba(239, 241, 245, 0);
-    --color-light: rgba(172, 176, 190, 0.3);
-    --color-light-mimic-enabled: rgba(
-      0,
-      0,
-      0,
-      calc(40 / 255 * 222 / 255 / var(--opacity-disabled))
-    );
-    --color-light-border: #acb0be;
-    --color-hover: rgba(156, 160, 176, 0.1);
-    --color-active: rgba(76, 79, 105, 0.1);
-    --color-menu: #ccd0da;
-    --color-card: #ccd0da;
-    --color-markup-table-row: rgba(76, 79, 105, 0.02);
-    --color-markup-code-block: rgba(76, 79, 105, 0.05);
-    --color-button: #ccd0da;
-    --color-code-bg: #eff1f5;
-    --color-code-sidebar-bg: #ccd0da;
-    --color-shadow: rgba(239, 241, 245, 0.1);
-    --color-secondary-bg: #ccd0da;
-    --color-text-focus: #4c4f69;
-    --color-expand-button: #acb0be;
-    --color-placeholder-text: #acb0be;
-    --color-editor-line-highlight: var(--color-primary-light-5);
-    --color-project-board-bg: var(--color-secondary-light-2);
-    /* gitea source code: */
-    /* should ideally be --color-text-dark, see go-gitea/gitea#15651 */
-    --color-caret: var(--color-text);
-    --color-reaction-bg: rgba(76, 79, 105, 0.07);
-    --color-reaction-active-bg: var(--color-primary-alpha-40);
-    --color-header-bar: #e6e9ef;
-    --color-label-active-bg: #acb0be;
-    --color-accent: var(--color-primary-light-1);
-    --color-small-accent: var(--color-primary-light-5);
-    --color-active-line: #bcc0cc;
+      --fonts-proportional: 'Inter', sans-serif; !important;
+      color-scheme: dark;
+      --is-dark-theme: true;
+      accent-color: #89b4fa;
+      --color-primary: #89b4fa;
+      --color-primary-contrast: #11111b;
+      --color-primary-dark-1: #7aabf9;
+      --color-primary-dark-2: #6ca1f9;
+      --color-primary-dark-3: #5d98f8;
+      --color-primary-dark-4: #4e8ff8;
+      --color-primary-dark-5: #4085f7;
+      --color-primary-dark-6: #317cf6;
+      --color-primary-dark-7: #2273f6;
+      --color-primary-light-1: #98bdfb;
+      --color-primary-light-2: #a6c7fb;
+      --color-primary-light-3: #b5d0fc;
+      --color-primary-light-4: #c4d9fc;
+      --color-primary-light-5: #d2e3fd;
+      --color-primary-light-6: #e1ecfe;
+      --color-primary-light-7: #f0f5fe;
+      --color-primary-alpha-10: rgba(137, 180, 250, 0.1);
+      --color-primary-alpha-20: rgba(137, 180, 250, 0.2);
+      --color-primary-alpha-30: rgba(137, 180, 250, 0.3);
+      --color-primary-alpha-40: rgba(137, 180, 250, 0.4);
+      --color-primary-alpha-50: rgba(137, 180, 250, 0.5);
+      --color-primary-alpha-60: rgba(137, 180, 250, 0.6);
+      --color-primary-alpha-70: rgba(137, 180, 250, 0.7);
+      --color-primary-alpha-80: rgba(137, 180, 250, 0.8);
+      --color-primary-alpha-90: rgba(137, 180, 250, 0.9);
+      --color-secondary: #45475a;
+      --color-secondary-dark-1: #37394d;
+      --color-secondary-dark-2: #3e3f56;
+      --color-secondary-dark-3: #44465f;
+      --color-secondary-dark-4: #4b4c68;
+      --color-secondary-dark-5: #515370;
+      --color-secondary-dark-6: #575979;
+      --color-secondary-dark-7: #5e6082;
+      --color-secondary-dark-8: #64668b;
+      --color-secondary-dark-9: #6b6d94;
+      --color-secondary-dark-10: #74769a;
+      --color-secondary-dark-11: #7c7ea1;
+      --color-secondary-dark-12: #8587a7;
+      --color-secondary-dark-13: #8e90ae;
+      --color-secondary-light-1: #2b2b3b;
+      --color-secondary-light-2: #242532;
+      --color-secondary-light-3: #1e1e29;
+      --color-secondary-light-4: #171820;
+      --color-secondary-alpha-10: rgba(49, 50, 68, 0.1);
+      --color-secondary-alpha-20: rgba(49, 50, 68, 0.2);
+      --color-secondary-alpha-30: rgba(49, 50, 68, 0.3);
+      --color-secondary-alpha-40: rgba(49, 50, 68, 0.4);
+      --color-secondary-alpha-50: rgba(49, 50, 68, 0.5);
+      --color-secondary-alpha-60: rgba(49, 50, 68, 0.6);
+      --color-secondary-alpha-70: rgba(49, 50, 68, 0.7);
+      --color-secondary-alpha-80: rgba(49, 50, 68, 0.8);
+      --color-secondary-alpha-90: rgba(49, 50, 68, 0.9);
+      /* colors */
+      --color-red: #f38ba8;
+      --color-orange: #fab387;
+      --color-yellow: #f9e2af;
+      --color-olive: #a6e3a1;
+      --color-green: #a6e3a1;
+      --color-teal: #94e2d5;
+      --color-blue: #89b4fa;
+      --color-violet: #b4befe;
+      --color-purple: #cba6f7;
+      --color-pink: #f5c2e7;
+      --color-brown: #f2cdcd;
+      --color-grey: #9399b2;
+      --color-black: #181825;
+      /* light variants - produced via Sass scale-color(color, $lightness: -10%) */
+      --color-red-light: #ee5d85;
+      --color-orange-light: #f89456;
+      --color-yellow-light: #f5d180;
+      --color-olive-light: #81d77a;
+      --color-green-light: #81d77a;
+      --color-teal-light: #6cd7c5;
+      --color-blue-light: #5895f8;
+      --color-violet-light: #8292fd;
+      --color-purple-light: #b077f3;
+      --color-pink-light: #ee96d6;
+      --color-brown-light: #e7a5a5;
+      --color-grey-light: #757d9d;
+      --color-black-light: #040406;
+      /* other colors */
+      --color-gold: #f5e0dc;
+      --color-white: #cdd6f4;
+      --color-diff-removed-word-bg: rgba(243, 139, 168, 0.15);
+      --color-diff-added-word-bg: rgba(166, 227, 161, 0.15);
+      --color-diff-removed-row-bg: rgba(243, 139, 168, 0.07);
+      --color-diff-moved-row-bg: rgba(249, 226, 175, 0.07);
+      --color-diff-added-row-bg: rgba(166, 227, 161, 0.07);
+      --color-diff-removed-row-border: rgba(243, 139, 168, 0.07);
+      --color-diff-moved-row-border: rgba(249, 226, 175, 0.07);
+      --color-diff-added-row-border: rgba(166, 227, 161, 0.07);
+      --color-diff-inactive: #9399b2;
+      --color-error-border: #f38ba8;
+      --color-error-bg: #f38ba8;
+      --color-error-bg-active: #f17497;
+      --color-error-bg-hover: #ee5d85;
+      --color-error-text: #11111b;
+      --color-success-border: #81d77a;
+      --color-success-bg: #a6e3a1;
+      --color-success-text: #11111b;
+      --color-warning-border: #f5d180;
+      --color-warning-bg: #f9e2af;
+      --color-warning-text: #11111b;
+      --color-info-border: #5895f8;
+      --color-info-bg: #11111b;
+      --color-info-text: #cdd6f4;
+      --color-red-badge: #ee5d85;
+      --color-red-badge-bg: #11111b;
+      --color-red-badge-hover-bg: #f17497;
+      --color-green-badge: #a6e3a1;
+      --color-green-badge-bg: #11111b;
+      --color-green-badge-hover-bg: #93dd8d;
+      --color-yellow-badge: #f9e2af;
+      --color-yellow-badge-bg: #11111b;
+      --color-yellow-badge-hover-bg: #f7d997;
+      --color-orange-badge: #fab387;
+      --color-orange-badge-bg: #11111b;
+      --color-orange-badge-hover-bg: #f9a36f;
+      --color-git: #fab387;
+      /* target-based colors */
+      --color-body: #11111b;
+      --color-box-header: #181825;
+      --color-box-body: #181825;
+      --color-box-body-highlight: #313244;
+      --color-text-dark: #a6adc8;
+      --color-text: #cdd6f4;
+      --color-text-light: #bac2de;
+      --color-text-light-1: #bac2de;
+      --color-text-light-2: #bac2de;
+      --color-text-light-3: #bac2de;
+      --color-footer: #181825;
+      --color-timeline: #313244;
+      --color-input-text: #cdd6f4;
+      --color-input-background: #313244;
+      --color-input-toggle-background: #313244;
+      --color-input-border: #45475a;
+      --color-input-border-hover: #585b70;
+      --color-navbar: #181825;
+      --color-navbar-transparent: rgba(17, 17, 27, 0);
+      --color-light: rgba(88, 91, 112, 0.3);
+      --color-light-mimic-enabled: rgba(
+        0,
+        0,
+        0,
+        calc(40 / 255 * 222 / 255 / var(--opacity-disabled))
+      );
+      --color-light-border: #585b70;
+      --color-hover: rgba(108, 112, 134, 0.1);
+      --color-active: rgba(205, 214, 244, 0.1);
+      --color-menu: #313244;
+      --color-card: #313244;
+      --color-markup-table-row: rgba(205, 214, 244, 0.02);
+      --color-markup-code-block: rgba(205, 214, 244, 0.05);
+      --color-button: #313244;
+      --color-code-bg: #1e1e2e;
+      --color-code-sidebar-bg: #313244;
+      --color-shadow: rgba(17, 17, 27, 0.1);
+      --color-secondary-bg: #313244;
+      --color-text-focus: #cdd6f4;
+      --color-expand-button: #585b70;
+      --color-placeholder-text: #585b70;
+      --color-editor-line-highlight: var(--color-primary-light-5);
+      --color-project-board-bg: var(--color-secondary-light-2);
+      /* gitea source code: */
+      /* should ideally be --color-text-dark, see go-gitea/gitea#15651 */
+      --color-caret: var(--color-text);
+      --color-reaction-bg: rgba(205, 214, 244, 0.07);
+      --color-reaction-active-bg: var(--color-primary-alpha-40);
+      --color-header-bar: #181825;
+      --color-label-active-bg: #585b70;
+      --color-accent: var(--color-primary-light-1);
+      --color-small-accent: var(--color-primary-light-5);
+      --color-active-line: #45475a;
+    }
+
+    /* invert emojis that are hard to read otherwise */
+    .emoji[aria-label="check mark"],
+    .emoji[aria-label="currency exchange"],
+    .emoji[aria-label="TOP arrow"],
+    .emoji[aria-label="END arrow"],
+    .emoji[aria-label="ON! arrow"],
+    .emoji[aria-label="SOON arrow"],
+    .emoji[aria-label="heavy dollar sign"],
+    .emoji[aria-label=copyright],
+    .emoji[aria-label=registered],
+    .emoji[aria-label="trade mark"],
+    .emoji[aria-label=multiply],
+    .emoji[aria-label=plus],
+    .emoji[aria-label=minus],
+    .emoji[aria-label=divide],
+    .emoji[aria-label="curly loop"],
+    .emoji[aria-label="double curly loop"],
+    .emoji[aria-label="wavy dash"],
+    .emoji[aria-label="paw prints"],
+    .emoji[aria-label="musical note"],
+    .emoji[aria-label="musical notes"] {
+      filter: invert(100%) hue-rotate(180deg);
     }
 
     .ui.ui.ui.button:not(.inverted, .basic).primary, .ui.ui.ui.button:not(.inverted, .basic).green, .ui.ui.ui.button:not(.inverted, .basic).red, .ui.ui.ui.button:not(.inverted, .basic).teal,
@@ -217,92 +241,92 @@ data:
     .ui.ui.ui.label:not(.inverted, .basic).green,
     .ui.ui.ui.label:not(.inverted, .basic).red,
     .ui.ui.ui.label:not(.inverted, .basic).teal {
-      color: #eff1f5;
+      color: #11111b;
     }
     .ui.ui.ui.button:not(.inverted, .basic).primary:hover, .ui.ui.ui.button:not(.inverted, .basic).green:hover, .ui.ui.ui.button:not(.inverted, .basic).red:hover, .ui.ui.ui.button:not(.inverted, .basic).teal:hover,
     .ui.ui.ui.label:not(.inverted, .basic).primary:hover,
     .ui.ui.ui.label:not(.inverted, .basic).green:hover,
     .ui.ui.ui.label:not(.inverted, .basic).red:hover,
     .ui.ui.ui.label:not(.inverted, .basic).teal:hover {
-      color: #dce0e8;
+      color: #1e1e2e;
     }
 
     .ui.basic.modal {
-      background-color: #dce0e8;
+      background-color: #1e1e2e;
     }
 
     .ui.commit-header-row .svg.gitea-lock ~ a {
-      color: #eff1f5;
+      color: #11111b;
     }
 
     .ui.sha.isSigned.isVerified:hover .shortsha {
-      color: #eff1f5;
+      color: #11111b;
     }
     .ui.sha.isSigned.isVerified:hover svg.gitea-lock {
-      fill: #eff1f5;
+      fill: #11111b;
     }
 
     .ui.basic.modal,
     .ui.basic.modal > .header,
     .ui.inverted.button {
-      color: #4c4f69 !important;
+      color: #cdd6f4 !important;
     }
 
     ::selection {
-      background: rgba(220, 138, 120, 0.3) !important;
+      background: rgba(245, 224, 220, 0.3) !important;
     }
 
     /* NameBuiltinPseudo */
     .chroma .bp {
-      color: #fe640b;
+      color: #fab387;
     }
 
     /* Comment */
     .chroma .c {
-      color: #9ca0b0;
+      color: #6c7086;
     }
 
     /* CommentSingle */
     .chroma .c1 {
-      color: #9ca0b0;
+      color: #6c7086;
     }
 
     /* CommentHashbang */
     .chroma .ch {
-      color: #9ca0b0;
+      color: #6c7086;
     }
 
     /* CommentMultiline */
     .chroma .cm {
-      color: #9ca0b0;
+      color: #6c7086;
     }
 
     /* CommentPreproc */
     .chroma .cp {
-      color: #1e66f5;
+      color: #89b4fa;
     }
 
     /* CommentPreprocFile */
     .chroma .cpf {
-      color: #1e66f5;
+      color: #89b4fa;
     }
 
     /* CommentSpecial */
     .chroma .cs {
-      color: #9ca0b0;
+      color: #6c7086;
     }
 
     /* LiteralStringDelimiter */
     .chroma .dl {
-      color: #1e66f5;
+      color: #89b4fa;
     }
 
     /* NameFunctionMagic */
     /* Generic */
     /* GenericDeleted */
     .chroma .gd {
-      color: #4c4f69;
-      background-color: rgba(210, 15, 57, 0.15);
+      color: #cdd6f4;
+      background-color: rgba(243, 139, 168, 0.15);
     }
 
     /* GenericEmph */
@@ -312,30 +336,30 @@ data:
 
     /* GenericHeading */
     .chroma .gh {
-      color: #04a5e5;
+      color: #89dceb;
     }
 
     /* GenericInserted */
     .chroma .gi {
-      color: #4c4f69;
-      background-color: rgba(64, 160, 43, 0.15);
+      color: #cdd6f4;
+      background-color: rgba(166, 227, 161, 0.15);
     }
 
     /* GenericUnderline */
     /* GenericOutput */
     .chroma .go {
-      color: #fe640b;
+      color: #fab387;
     }
 
     /* GenericPrompt */
     .chroma .gp {
-      color: #9ca0b0;
+      color: #6c7086;
       font-weight: bold;
     }
 
     /* GenericError */
     .chroma .gr {
-      color: #e64553;
+      color: #eba0ac;
     }
 
     /* GenericStrong */
@@ -345,367 +369,367 @@ data:
 
     /* GenericTraceback */
     .chroma .gt {
-      color: #e64553;
+      color: #eba0ac;
     }
 
     /* GenericSubheading */
     .chroma .gu {
-      color: #04a5e5;
+      color: #89dceb;
     }
 
     /* LiteralNumberIntegerLong */
     .chroma .il {
-      color: #fe640b;
+      color: #fab387;
     }
 
     /* Keyword */
     .chroma .k {
-      color: #8839ef;
+      color: #cba6f7;
     }
 
     /* KeywordConstant */
     .chroma .kc {
-      color: #df8e1d;
+      color: #f9e2af;
     }
 
     /* KeywordDeclaration */
     .chroma .kd {
-      color: #8839ef;
+      color: #cba6f7;
     }
 
     /* KeywordNamespace */
     .chroma .kn {
-      color: #df8e1d;
+      color: #f9e2af;
     }
 
     /* KeywordPseudo */
     .chroma .kp {
-      color: #8839ef;
+      color: #cba6f7;
       font-weight: bold;
     }
 
     /* KeywordReserved */
     .chroma .kr {
-      color: #8839ef;
+      color: #cba6f7;
     }
 
     /* KeywordType */
     .chroma .kt {
-      color: #df8e1d;
+      color: #f9e2af;
     }
 
     /* Literal */
     /* LiteralDate */
     /* LiteralNumber */
     .chroma .m {
-      color: #fe640b;
+      color: #fab387;
     }
 
     /* LiteralNumberBin */
     .chroma .mb {
-      color: #fe640b;
+      color: #fab387;
     }
 
     /* LiteralNumberFloat */
     .chroma .mf {
-      color: #fe640b;
+      color: #fab387;
     }
 
     /* LiteralNumberHex */
     .chroma .mh {
-      color: #fe640b;
+      color: #fab387;
     }
 
     /* LiteralNumberInteger */
     .chroma .mi {
-      color: #fe640b;
+      color: #fab387;
     }
 
     /* LiteralNumberOct */
     .chroma .mo {
-      color: #fe640b;
+      color: #fab387;
     }
 
     /* Name */
     .chroma .n {
-      color: #7287fd;
+      color: #b4befe;
     }
 
     /* NameAttribute */
     .chroma .na {
-      color: #df8e1d;
+      color: #f9e2af;
     }
 
     /* NameBuiltin */
     .chroma .nb {
-      color: #fe640b;
+      color: #fab387;
     }
 
     /* NameClass */
     .chroma .nc {
-      color: #df8e1d;
+      color: #f9e2af;
     }
 
     /* NameDecorator */
     .chroma .nd {
-      color: #ea76cb;
+      color: #f5c2e7;
     }
 
     /* NameException */
     .chroma .ne {
-      color: #e64553;
+      color: #eba0ac;
     }
 
     /* NameFunction */
     .chroma .nf {
-      color: #1e66f5;
+      color: #89b4fa;
     }
 
     /* NameEntity */
     .chroma .ni {
-      color: #ea76cb;
+      color: #f5c2e7;
     }
 
     /* NameLabel */
     .chroma .nl {
-      color: #df8e1d;
+      color: #f9e2af;
     }
 
     /* NameNamespace */
     .chroma .nn {
-      color: #df8e1d;
+      color: #f9e2af;
     }
 
     /* NameConstant */
     .chroma .no {
-      color: #df8e1d;
+      color: #f9e2af;
     }
 
     /* NameTag */
     .chroma .nt {
-      color: #8839ef;
+      color: #cba6f7;
     }
 
     /* NameVariable */
     .chroma .nv {
-      color: #fe640b;
+      color: #fab387;
     }
 
     /* NameOther */
     .chroma .nx {
-      color: #fe640b;
+      color: #fab387;
     }
 
     /* Operator */
     .chroma .o {
-      color: #04a5e5;
+      color: #89dceb;
     }
 
     /* OperatorWord */
     .chroma .ow {
-      color: #04a5e5;
+      color: #89dceb;
       font-weight: bold;
     }
 
     /* Punctuation */
     .chroma .p {
-      color: #7c7f93;
+      color: #9399b2;
     }
 
     /* NameProperty */
     /* LiteralString */
     .chroma .s {
-      color: #40a02b;
+      color: #a6e3a1;
     }
 
     /* LiteralStringSingle */
     .chroma .s1 {
-      color: #40a02b;
+      color: #a6e3a1;
     }
 
     /* LiteralStringDouble */
     .chroma .s2 {
-      color: #40a02b;
+      color: #a6e3a1;
     }
 
     /* LiteralStringAffix */
     .chroma .sa {
-      color: #40a02b;
+      color: #a6e3a1;
     }
 
     /* LiteralStringBacktick */
     .chroma .sb {
-      color: #40a02b;
+      color: #a6e3a1;
     }
 
     /* LiteralStringChar */
     .chroma .sc {
-      color: #40a02b;
+      color: #a6e3a1;
     }
 
     /* LiteralStringDoc */
     .chroma .sd {
-      color: #40a02b;
+      color: #a6e3a1;
     }
 
     /* LiteralStringEscape */
     .chroma .se {
-      color: #1e66f5;
+      color: #89b4fa;
     }
 
     /* LiteralStringHeredoc */
     .chroma .sh {
-      color: #40a02b;
+      color: #a6e3a1;
     }
 
     /* LiteralStringInterpol */
     .chroma .si {
-      color: #40a02b;
+      color: #a6e3a1;
     }
 
     /* LiteralStringRegex */
     .chroma .sr {
-      color: #1e66f5;
+      color: #89b4fa;
     }
 
     /* LiteralStringSymbol */
     .chroma .ss {
-      color: #40a02b;
+      color: #a6e3a1;
     }
 
     /* LiteralStringOther */
     .chroma .sx {
-      color: #40a02b;
+      color: #a6e3a1;
     }
 
     /* NameVariableClass */
     .chroma .vc {
-      color: #df8e1d;
+      color: #f9e2af;
     }
 
     /* NameVariableGlobal */
     .chroma .vg {
-      color: #fe640b;
+      color: #fab387;
     }
 
     /* NameVariableInstance */
     .chroma .vi {
-      color: #df8e1d;
+      color: #f9e2af;
     }
 
     /* NameVariableMagic */
     /* TextWhitespace */
     .chroma .w {
-      color: #ccd0da;
+      color: #313244;
     }
 
     .CodeMirror .cm-property,
     .CodeMirror.cm-s-default .cm-property,
     .CodeMirror.cm-s-paper .cm-property {
-      color: #4c4f69;
+      color: #cdd6f4;
     }
     .CodeMirror .cm-header,
     .CodeMirror.cm-s-default .cm-header,
     .CodeMirror.cm-s-paper .cm-header {
-      color: #4c4f69;
+      color: #cdd6f4;
     }
     .CodeMirror .cm-quote,
     .CodeMirror.cm-s-default .cm-quote,
     .CodeMirror.cm-s-paper .cm-quote {
-      color: #40a02b;
+      color: #a6e3a1;
     }
     .CodeMirror .cm-keyword,
     .CodeMirror.cm-s-default .cm-keyword,
     .CodeMirror.cm-s-paper .cm-keyword {
-      color: #8839ef;
+      color: #cba6f7;
     }
     .CodeMirror .cm-atom,
     .CodeMirror.cm-s-default .cm-atom,
     .CodeMirror.cm-s-paper .cm-atom {
-      color: #d20f39;
+      color: #f38ba8;
     }
     .CodeMirror .cm-number,
     .CodeMirror.cm-s-default .cm-number,
     .CodeMirror.cm-s-paper .cm-number {
-      color: #fe640b;
+      color: #fab387;
     }
     .CodeMirror .cm-def,
     .CodeMirror.cm-s-default .cm-def,
     .CodeMirror.cm-s-paper .cm-def {
-      color: #4c4f69;
+      color: #cdd6f4;
     }
     .CodeMirror .cm-variable-2,
     .CodeMirror.cm-s-default .cm-variable-2,
     .CodeMirror.cm-s-paper .cm-variable-2 {
-      color: #04a5e5;
+      color: #89dceb;
     }
     .CodeMirror .cm-variable-3,
     .CodeMirror.cm-s-default .cm-variable-3,
     .CodeMirror.cm-s-paper .cm-variable-3 {
-      color: #179299;
+      color: #94e2d5;
     }
     .CodeMirror .cm-comment,
     .CodeMirror.cm-s-default .cm-comment,
     .CodeMirror.cm-s-paper .cm-comment {
-      color: #acb0be;
+      color: #585b70;
     }
     .CodeMirror .cm-string,
     .CodeMirror.cm-s-default .cm-string,
     .CodeMirror.cm-s-paper .cm-string {
-      color: #40a02b;
+      color: #a6e3a1;
     }
     .CodeMirror .cm-string-2,
     .CodeMirror.cm-s-default .cm-string-2,
     .CodeMirror.cm-s-paper .cm-string-2 {
-      color: #40a02b;
+      color: #a6e3a1;
     }
     .CodeMirror .cm-meta,
     .CodeMirror.cm-s-default .cm-meta,
     .CodeMirror.cm-s-paper .cm-meta {
-      color: #fe640b;
+      color: #fab387;
     }
     .CodeMirror .cm-qualifier,
     .CodeMirror.cm-s-default .cm-qualifier,
     .CodeMirror.cm-s-paper .cm-qualifier {
-      color: #fe640b;
+      color: #fab387;
     }
     .CodeMirror .cm-builtin,
     .CodeMirror.cm-s-default .cm-builtin,
     .CodeMirror.cm-s-paper .cm-builtin {
-      color: #fe640b;
+      color: #fab387;
     }
     .CodeMirror .cm-bracket,
     .CodeMirror.cm-s-default .cm-bracket,
     .CodeMirror.cm-s-paper .cm-bracket {
-      color: #4c4f69;
+      color: #cdd6f4;
     }
     .CodeMirror .cm-tag,
     .CodeMirror.cm-s-default .cm-tag,
     .CodeMirror.cm-s-paper .cm-tag {
-      color: #df8e1d;
+      color: #f9e2af;
     }
     .CodeMirror .cm-attribute,
     .CodeMirror.cm-s-default .cm-attribute,
     .CodeMirror.cm-s-paper .cm-attribute {
-      color: #df8e1d;
+      color: #f9e2af;
     }
     .CodeMirror .cm-hr,
     .CodeMirror.cm-s-default .cm-hr,
     .CodeMirror.cm-s-paper .cm-hr {
-      color: #7c7f93;
+      color: #9399b2;
     }
     .CodeMirror .cm-url,
     .CodeMirror.cm-s-default .cm-url,
     .CodeMirror.cm-s-paper .cm-url {
-      color: #1e66f5;
+      color: #89b4fa;
     }
     .CodeMirror .cm-link,
     .CodeMirror.cm-s-default .cm-link,
     .CodeMirror.cm-s-paper .cm-link {
-      color: #1e66f5;
+      color: #89b4fa;
     }
     .CodeMirror .cm-error,
     .CodeMirror.cm-s-default .cm-error,
     .CodeMirror.cm-s-paper .cm-error {
-      color: #d20f39;
+      color: #f38ba8;
     }
