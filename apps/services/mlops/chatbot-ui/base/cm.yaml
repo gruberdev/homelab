@@ -3,7 +3,5 @@ kind: ConfigMap
 metadata:
   name: chatui-config
 data:
-  OPENAI_API_HOST: "http://local-ai.mlops.svc.cluster.local"
-  OPENAI_API_TYPE: "openai"
-  DEFAULT_MODEL: "wizard"
-  NEXT_PUBLIC_DEFAULT_TEMPERATURE: "1"
+  OPENAI_API_BASE_URL: "http://local-ai.mlops.svc.cluster.local"
+  OPENAI_API_MODEL: "gpt-3.5-turbo"
