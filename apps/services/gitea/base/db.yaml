@@ -1,0 +1,30 @@
+apiVersion: "acid.zalan.do/v1"
+kind: postgresql
+metadata:
+  name: db-gitea
+  annotations:
+    argocd.argoproj.io/sync-options: Delete=false
+spec:
+  dockerImage: ghcr.io/zalando/spilo-15:3.0-p1
+  teamId: "db"
+  numberOfInstances: 1
+  users:
+    admin:
+    - superuser
+    - createdb
+    gitea: []
+  databases:
+    gitea: gitea
+  postgresql:
+    version: "15"
+  volume:
+    size: 15Gi
+    storageClass: iscsi
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: postgres-operator
+          operator: In
+          values:
+          - enabled
