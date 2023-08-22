@@ -94,16 +94,16 @@ spec:
           enabled: false
           usePassword: false
         persistence:
-          create: false
+          create: true
           mount: true
           enabled: true
           claimName: gitea-shared-storage
           accessModes:
-          - ReadWriteOnce
+            - ReadWriteOnce
           annotations:
             helm.sh/resource-policy: keep
             argocd.argoproj.io/sync-options: Delete=false
-          size: 10Gi
+          size: 20Gi
           storageClass: iscsi
         podSecurityContext:
           fsGroup: 1000
