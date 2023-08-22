@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gitea-app-ini
+  namespace: gitea
+data:
+  session: |
+    PROVIDER=redis
+    PROVIDER_CONFIG=redis://:gitea@gitea-redis.gitea.svc.cluster.local:6379/0?pool_size=100&idle_timeout=180s&
+  cache: |
+    ENABLED=true
+    ADAPTER=redis
+    HOST=redis://:gitea@gitea-redis.gitea.svc.cluster.local:6379/0?pool_size=100&idle_timeout=180s&
+  queue: |
+    TYPE=redis
+    CONN_STR=redis://:gitea@gitea-redis.gitea.svc.cluster.local:6379/0?pool_size=100&idle_timeout=180s&

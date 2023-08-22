@@ -73,6 +73,7 @@ resources:
 - base/services/onchange.yaml
 - base/services/actual.yaml
 - base/services/gitea.yaml
+- base/services/gitea-utils.yaml
 - base/services/rss-hub.yaml
 - base/services/nitter.yaml
 # - base/services/squid.yaml

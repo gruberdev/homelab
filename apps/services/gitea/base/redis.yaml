@@ -1,0 +1,28 @@
+apiVersion: redis.redis.opstreelabs.in/v1beta1
+kind: Redis
+metadata:
+  name: gitea-redis
+  namespace: gitea
+spec:
+  kubernetesConfig:
+    image: docker.io/grubertech/redis:v7.0.5
+    imagePullPolicy: IfNotPresent
+    updateStrategy:
+      type: OnDelete
+    resources:
+      requests:
+        cpu: 150m
+        memory: 128Mi
+      limits:
+        cpu: 250m
+        memory: 256Mi
+  storage:
+    volumeClaimTemplate:
+      spec:
+        storageClassName: iscsi
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 2Gi
+  nodeSelector:
+    kubernetes.io/arch: amd64
