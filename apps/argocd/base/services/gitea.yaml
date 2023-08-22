@@ -19,6 +19,19 @@ spec:
         strategy:
           type: "Recreate"
         gitea:
+          additionalConfigFromEnvs:
+            - name: GITEA__DATABASE__HOST
+              value: db-gitea.gitea.svc.cluster.local
+            - name: GITEA__DATABASE__USER
+              valueFrom:
+                secretKeyRef:
+                  name: gitea.db-gitea.credentials.postgresql.acid.zalan.do
+                  key: username
+            - name: GITEA__DATABASE__PASSWD
+              valueFrom:
+                secretKeyRef:
+                  name: gitea.db-gitea.credentials.postgresql.acid.zalan.do
+                  key: password
           additionalConfigSources:
             - configMap:
                 name: gitea-app-ini
@@ -92,24 +105,10 @@ spec:
             argocd.argoproj.io/sync-options: Delete=false
           size: 10Gi
           storageClass: iscsi
-        podSecurityContext:
-          fsGroup: 1000
         postgresql-ha:
           enabled: false
         postgresql:
-          enabled: true
-          global:
-            postgresql:
-              auth:
-                database: gitea
-                password: <path:kv/data/gitea#db-username>
-                username: <path:kv/data/gitea#db-password>
-              service:
-                ports:
-                  postgresql: 5432
-          primary:
-            persistence:
-              size: 15Gi
+          enabled: false
         replicaCount: 1
         resources:
           limits:
