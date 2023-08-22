@@ -4,8 +4,7 @@ metadata:
   name: gitea-app-ini
 data:
   session: |
-    PROVIDER=redis
-    PROVIDER_CONFIG=redis://:gitea@gitea-redis.gitea.svc.cluster.local:6379/0?pool_size=100&idle_timeout=180s&
+    PROVIDER=db
   cache: |
     ENABLED=true
     ADAPTER=redis
@@ -13,6 +12,11 @@ data:
   queue: |
     TYPE=redis
     CONN_STR=redis://:gitea@gitea-redis.gitea.svc.cluster.local:6379/0?pool_size=100&idle_timeout=180s&
+  indexer: |
+    ISSUE_INDEXER_TYPE=db
+    REPO_INDEXER_ENABLED=true
+    REPO_INDEXER_REPO_TYPES=sources,forks,mirrors,templates
+    REPO_INDEXER_EXCLUDE_VENDORED=false
   service: |
     DISABLE_REGISTRATION=true
   server: |
@@ -20,6 +24,13 @@ data:
   mirror: |
     DEFAULT_INTERVAL=3h
     ENABLED=true
+    DISABLE_NEW_PUSH=false
+    DISABLE_NEW_PULL=false
+  migrations: |
+    MAX_ATTEMPTS=15
+    RETRY_BACKOFF=15
+    ALLOW_LOCALNETWORKS=true
+    SKIP_TLS_VERIFY=true
   ui: |
     THEMES=auto,gitea,arc-green,catppuccin-mocha-blue
     DEFAULT_THEME=catppuccin-mocha-blue
