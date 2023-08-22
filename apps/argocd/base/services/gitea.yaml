@@ -109,13 +109,6 @@ spec:
           mount: true
           enabled: true
           claimName: gitea-shared-storage
-          accessModes:
-            - ReadWriteOnce
-          annotations:
-            helm.sh/resource-policy: keep
-            argocd.argoproj.io/sync-options: Delete=false
-          size: 20Gi
-          storageClass: iscsi
         podSecurityContext:
           fsGroup: 1000
         postgresql-ha:
