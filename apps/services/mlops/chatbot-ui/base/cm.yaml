@@ -5,3 +5,5 @@ metadata:
 data:
   OPENAI_API_BASE_URL: "http://local-ai.mlops.svc.cluster.local"
   OPENAI_API_MODEL: "gpt-3.5-turbo"
+  OPENAI_API_KEY: "example"
+  HTTPS_PROXY: ""
