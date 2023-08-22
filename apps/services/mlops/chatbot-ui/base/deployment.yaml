@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: chatbot-ui
-        image: ghcr.io/mckaywrigley/chatbot-ui:main
+        image: docker.io/ddiu8081/chatgpt-demo:latest
         ports:
           - name: http
             containerPort: 3000
