@@ -21,8 +21,8 @@ spec:
             configMap:
               name: gitea-themes
               items:
-              - key: theme-catppuccin-latte-blue.css
-                path: theme-catppuccin-latte-blue.css
+              - key: theme-catppuccin-mocha-blue.css
+                path: theme-catppuccin-mocha-blue.css
         extraVolumeMounts:
           - name: gitea-themes
             readOnly: true
