@@ -18,9 +18,11 @@ spec:
       labels:
         app: nitter
     spec:
+      imagePullSecrets:
+      - name: canistry
       containers:
       - name: nitter
-        image: docker.io/zedeus/nitter:d7ca353a55ea3440a2ec1f09155951210a374cc7
+        image: cloud.canister.io:5000/gr/nitter
         ports:
         - name: web
           containerPort: 8080
