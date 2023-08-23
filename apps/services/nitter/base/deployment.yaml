@@ -22,7 +22,7 @@ spec:
         - name: canistry
       containers:
         - name: nitter
-          image: cloud.canister.io:5000/gr/nitter
+          image: cloud.canister.io:5000/gr/nitter:latest
           ports:
           - name: web
             containerPort: 8080
