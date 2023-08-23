@@ -1,14 +1,19 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: kube-prometheus-crds
+  name: kubePrometheus
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: monitoring
   source:
-    repoURL: https://github.com/prometheus-community/helm-charts.git
-    path: charts/kube-prometheus-stack/charts/crds/crds
-    targetRevision: kube-prometheus-stack-48.3.1
+    repoURL: 'https://github.com/gruberdev/homelab.git'
+    path: apps/monitoring/kube-prometheus
+    targetRevision: main
     directory:
+      jsonnet:
+        libs:
+          - vendored
       recurse: true
   destination:
     namespace: monitoring
@@ -16,16 +21,13 @@ spec:
   syncPolicy:
     automated:
       prune: true
-      selfHeal: false
+      selfHeal: true
       allowEmpty: true
     syncOptions:
-    - Validate=false
     - CreateNamespace=false
     - PrunePropagationPolicy=foreground
-    - PruneLast=true
     - ApplyOutOfSyncOnly=false
     - Prune=true
-    - Replace=true
     retry:
       limit: 5
       backoff:
