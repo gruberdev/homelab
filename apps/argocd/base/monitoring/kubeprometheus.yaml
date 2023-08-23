@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: kubePrometheus
+  name: kubeprometheus
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
