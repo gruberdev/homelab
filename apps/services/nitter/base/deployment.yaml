@@ -19,26 +19,18 @@ spec:
         app: nitter
     spec:
       imagePullSecrets:
-      - name: canistry
+        - name: canistry
       containers:
-      - name: nitter
-        image: cloud.canister.io:5000/gr/nitter
-        ports:
-        - name: web
-          containerPort: 8080
-          protocol: TCP
-        volumeMounts:
-        - name: nitter-conf
-          mountPath: /src/nitter.conf
-          subPath: nitter.conf
-        resources:
-          limits:
-            cpu: 250m
-            memory: 512Mi
-          requests:
-            cpu: 100m
-            memory: 256Mi
-      volumes:
-      - name: nitter-conf
-        configMap:
-          name: nitter-cm
+        - name: nitter
+          image: cloud.canister.io:5000/gr/nitter
+          ports:
+          - name: web
+            containerPort: 8080
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 250m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 256Mi
