@@ -13,7 +13,7 @@ metadata:
     nginx.ingress.kubernetes.io/server-snippet: |
       ssl_verify_client off;
 spec:
-  ingressClassName: nginx
+  ingressClassName: traefik
   rules:
   - host: unifi.gruber.dev.br
     http:

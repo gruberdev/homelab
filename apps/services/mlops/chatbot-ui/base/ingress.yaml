@@ -9,7 +9,7 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
 
 spec:
-  ingressClassName: nginx
+  ingressClassName: traefik
   rules:
   - host: gpt.gruber.dev.br
     http:
