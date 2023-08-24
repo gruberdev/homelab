@@ -18,12 +18,12 @@ resources:
 - base/core/storage.yaml
 - base/core/tailscale-operator.yaml
 - base/core/external-dns.yaml
+- base/core/nginx-ingress.yaml
 - base/core/certmanager.yaml
 - base/core/issuer.yaml
 - base/core/kube-vip.yaml
 - base/core/nvidia.yaml
 - base/core/nvidia-extra.yaml
-# - base/core/nginx-ingress.yaml
 # - base/core/sealed.yaml
 # - base/core/tailscale.yaml
 # - base/core/velero.yaml

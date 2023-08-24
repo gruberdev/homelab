@@ -1,0 +1,254 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nginx-ingress
+spec:
+  project: cluster
+  source:
+    repoURL: https://github.com/gruberdev/ingress-nginx.git
+    targetRevision: a87d38d
+    path: charts/ingress-nginx
+    helm:
+      releaseName: nginx
+      values: |
+        controller:
+          extraArgs:
+            enable-ssl-passthrough: ""
+          admissionWebhooks:
+            certManager:
+              enabled: false
+            certificate: /usr/local/certificates/cert
+            createSecretJob:
+              securityContext:
+                allowPrivilegeEscalation: false
+            enabled: true
+            failurePolicy: Fail
+            key: /usr/local/certificates/key
+            networkPolicyEnabled: false
+            patch:
+              enabled: true
+              image:
+                digest: sha256:01d181618f270f2a96c04006f33b2699ad3ccb02da48d0f89b22abce084b292f
+                image: ingress-nginx/kube-webhook-certgen
+                pullPolicy: IfNotPresent
+                registry: registry.k8s.io
+                tag: v20230312-helm-chart-4.5.2-28-g66a760794
+              nodeSelector:
+                kubernetes.io/os: linux
+              securityContext:
+                fsGroup: 2000
+                runAsNonRoot: true
+                runAsUser: 2000
+            patchWebhookJob:
+              securityContext:
+                allowPrivilegeEscalation: false
+            port: 8443
+            service:
+              servicePort: 443
+              type: ClusterIP
+          allowSnippetAnnotations: true
+          autoscaling:
+            apiVersion: autoscaling/v2
+            enabled: false
+            maxReplicas: 11
+            minReplicas: 1
+            targetCPUUtilizationPercentage: 50
+            targetMemoryUtilizationPercentage: 50
+          containerName: controller
+          containerPort:
+            http: 80
+            https: 443
+          dnsPolicy: ClusterFirst
+          enableMimalloc: true
+          enableTopologyAwareRouting: false
+          healthCheckPath: /healthz
+          hostNetwork: false
+          hostPort:
+            enabled: false
+            ports:
+              http: 80
+              https: 443
+          image:
+            allowPrivilegeEscalation: true
+            chroot: false
+            digest: sha256:7612338342a1e7b8090bef78f2a04fffcadd548ccaabe8a47bf7758ff549a5f7
+            digestChroot: sha256:e84ef3b44c8efeefd8b0aa08770a886bfea1f04c53b61b4ba9a7204e9f1a7edc
+            image: ingress-nginx/controller
+            pullPolicy: IfNotPresent
+            registry: registry.k8s.io
+            runAsUser: 101
+            tag: v1.7.0
+          ingressClass: nginx
+          ingressClassByName: false
+          ingressClassResource:
+            controllerValue: k8s.io/ingress-nginx
+            default: true
+            enabled: true
+            name: nginx
+          keda:
+            apiVersion: keda.sh/v1alpha1
+            cooldownPeriod: 300
+            enabled: false
+            maxReplicas: 11
+            minReplicas: 1
+            pollingInterval: 30
+            restoreToOriginalReplicaCount: false
+          kind: Deployment
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                - /wait-shutdown
+          livenessProbe:
+            failureThreshold: 5
+            httpGet:
+              path: /healthz
+              port: 10254
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          metrics:
+            enabled: false
+            port: 10254
+            portName: metrics
+            prometheusRule:
+              enabled: false
+            service:
+              servicePort: 10254
+              type: ClusterIP
+            serviceMonitor:
+              enabled: false
+              scrapeInterval: 30s
+          minAvailable: 1
+          minReadySeconds: 0
+          name: controllers
+          nodeSelector:
+            kubernetes.io/os: linux
+          opentelemetry:
+            containerSecurityContext:
+              allowPrivilegeEscalation: false
+            enabled: false
+            image: registry.k8s.io/ingress-nginx/opentelemetry:v20230312-helm-chart-4.5.2-28-g66a760794@sha256:40f766ac4a9832f36f217bb0e98d44c8d38faeccbfe861fbc1a76af7e9ab257f
+          publishService:
+            enabled: true
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: 10254
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          replicaCount: 1
+          reportNodeInternalIp: true
+          resources:
+            limits:
+              cpu: 300m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 256Mi
+          scope:
+            enabled: false
+          service:
+            appProtocol: true
+            enableHttp: true
+            enableHttps: false
+            enabled: true
+            external:
+              enabled: true
+            externalTrafficPolicy: Cluster
+            internal:
+              enabled: false
+            ipFamilies:
+            - IPv4
+            - IPv6
+            ipFamilyPolicy: PreferDualStack
+            loadBalancerClass: tailscale
+            ports:
+              http: 80
+              https: 443
+            targetPorts:
+              http: http
+              https: https
+            type: LoadBalancer
+          shareProcessNamespace: false
+          terminationGracePeriodSeconds: 300
+          watchIngressWithoutClass: true
+        defaultBackend:
+          autoscaling:
+            apiVersion: autoscaling/v2
+            enabled: false
+            maxReplicas: 2
+            minReplicas: 1
+            targetCPUUtilizationPercentage: 50
+            targetMemoryUtilizationPercentage: 50
+          enabled: false
+          image:
+            allowPrivilegeEscalation: false
+            image: defaultbackend-amd64
+            pullPolicy: IfNotPresent
+            readOnlyRootFilesystem: true
+            registry: registry.k8s.io
+            runAsNonRoot: true
+            runAsUser: 65534
+            tag: "1.5"
+          livenessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          minAvailable: 1
+          minReadySeconds: 0
+          name: defaultbackend
+          nodeSelector:
+            kubernetes.io/os: linux
+          port: 8080
+          readinessProbe:
+            failureThreshold: 6
+            initialDelaySeconds: 0
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 5
+          replicaCount: 1
+          service:
+            servicePort: 80
+            type: ClusterIP
+          serviceAccount:
+            automountServiceAccountToken: true
+            create: true
+        podSecurityPolicy:
+          enabled: false
+        rbac:
+          create: true
+          scope: false
+        revisionHistoryLimit: 10
+        serviceAccount:
+          automountServiceAccountToken: true
+          create: true
+  destination:
+    namespace: networking
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: true
+    syncOptions:
+    - Validate=false
+    - CreateNamespace=false
+    - PrunePropagationPolicy=foreground
+    - PruneLast=true
+    - ApplyOutOfSyncOnly=false
+    - Prune=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 60s
+        factor: 2
+        maxDuration: 15m
