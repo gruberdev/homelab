@@ -123,7 +123,7 @@ spec:
               scrapeInterval: 30s
           minAvailable: 1
           minReadySeconds: 0
-          name: controller
+          name: controllers
           nodeSelector:
             kubernetes.io/os: linux
           opentelemetry:
@@ -157,7 +157,7 @@ spec:
           service:
             appProtocol: true
             enableHttp: true
-            enableHttps: true
+            enableHttps: false
             enabled: true
             external:
               enabled: true
@@ -166,7 +166,8 @@ spec:
               enabled: false
             ipFamilies:
             - IPv4
-            ipFamilyPolicy: SingleStack
+            - IPv6
+            ipFamilyPolicy: PreferDualStack
             loadBalancerClass: tailscale
             ports:
               http: 80
