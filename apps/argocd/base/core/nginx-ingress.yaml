@@ -2,6 +2,8 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: nginx-ingress
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: cluster
   source:
@@ -94,6 +96,8 @@ spec:
             pollingInterval: 30
             restoreToOriginalReplicaCount: false
           kind: Deployment
+          updateStrategy:
+            type: Recreate
           lifecycle:
             preStop:
               exec:
@@ -110,16 +114,16 @@ spec:
             successThreshold: 1
             timeoutSeconds: 1
           metrics:
-            enabled: false
+            enabled: true
             port: 10254
             portName: metrics
             prometheusRule:
-              enabled: false
+              enabled: true
             service:
               servicePort: 10254
               type: ClusterIP
             serviceMonitor:
-              enabled: false
+              enabled: true
               scrapeInterval: 30s
           minAvailable: 1
           minReadySeconds: 0
@@ -157,7 +161,7 @@ spec:
           service:
             appProtocol: true
             enableHttp: true
-            enableHttps: false
+            enableHttps: true
             enabled: true
             external:
               enabled: true
