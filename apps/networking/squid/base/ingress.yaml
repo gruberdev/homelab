@@ -8,7 +8,7 @@ metadata:
     external-dns.alpha.kubernetes.io/ttl: "120"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
-  ingressClassName: traefik
+  ingressClassName: nginx
   rules:
   - host: proxy.gruber.dev.br
     http:
