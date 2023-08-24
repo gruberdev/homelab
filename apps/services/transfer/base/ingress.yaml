@@ -8,7 +8,7 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
     cert-manager.io/cluster-issuer: letsencrypt-staging
 spec:
-  ingressClassName: nginx
+  ingressClassName: traefik
   rules:
   - host: onchange.gruber.dev.br
     http:
