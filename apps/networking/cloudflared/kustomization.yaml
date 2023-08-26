@@ -5,4 +5,4 @@ resources:
 - deployment.yaml
 images:
 - name: erisamoe/cloudflared
-  newTag: 2023.7.3
+  newTag: 2023.8.0
