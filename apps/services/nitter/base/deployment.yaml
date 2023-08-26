@@ -27,6 +27,10 @@ spec:
           - name: web
             containerPort: 8080
             protocol: TCP
+          volumeMounts:
+          - name: nitter-conf
+            mountPath: /src/nitter.conf
+            subPath: nitter.conf
           resources:
             limits:
               cpu: 250m
@@ -34,3 +38,7 @@ spec:
             requests:
               cpu: 100m
               memory: 256Mi
+      volumes:
+      - name: nitter-conf
+        configMap:
+          name: nitter-cm
