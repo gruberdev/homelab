@@ -31,5 +31,5 @@ spec:
     port: 80
     targetPort: 3000
   type: LoadBalancer
-  loadBalancerIP: "192.168.1.180"
+  loadBalancerIP: "192.168.1.138"
   loadBalancerClass: kube-vip.io/kube-vip-class

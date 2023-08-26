@@ -34,5 +34,5 @@ spec:
   selector:
     app: gitea
   type: LoadBalancer
-  loadBalancerIP: "192.168.1.87"
+  loadBalancerIP: "192.168.1.142"
   loadBalancerClass: kube-vip.io/kube-vip-class

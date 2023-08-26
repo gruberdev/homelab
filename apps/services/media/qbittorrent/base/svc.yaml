@@ -15,7 +15,7 @@ spec:
   selector:
     app: qbittorrent
   type: LoadBalancer
-  loadBalancerIP: "192.168.1.103"
+  loadBalancerIP: "192.168.1.145"
   loadBalancerClass: kube-vip.io/kube-vip-class
 ---
 apiVersion: v1
@@ -35,7 +35,7 @@ spec:
   selector:
     app: qbittorrent
   type: LoadBalancer
-  loadBalancerIP: "192.168.1.97"
+  loadBalancerIP: "192.168.1.146"
   loadBalancerClass: kube-vip.io/kube-vip-class
 ---
 apiVersion: v1
@@ -55,7 +55,7 @@ spec:
   selector:
     app: qbittorrent
   type: LoadBalancer
-  loadBalancerIP: "192.168.1.97"
+  loadBalancerIP: "192.168.1.147"
   loadBalancerClass: kube-vip.io/kube-vip-class
 ---
 apiVersion: v1
@@ -75,7 +75,7 @@ spec:
   selector:
     app: qbittorrent
   type: LoadBalancer
-  loadBalancerIP: "192.168.1.96"
+  loadBalancerIP: "192.168.1.148"
   loadBalancerClass: kube-vip.io/kube-vip-class
 ---
 apiVersion: v1
@@ -95,5 +95,5 @@ spec:
   selector:
     app: qbittorrent
   type: LoadBalancer
-  loadBalancerIP: "192.168.1.96"
+  loadBalancerIP: "192.168.1.149"
   loadBalancerClass: kube-vip.io/kube-vip-class
