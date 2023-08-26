@@ -36,13 +36,13 @@ spec:
         - name: vip_loglevel
           value: "5"
         - name: vip_cidr
-          value: "32"
+          value: "24"
         - name: cp_enable
           value: "true"
         - name: enableUPNP
           value: "true"
         - name: cp_namespace
-          value: kube-system
+          value: "kube-system"
         - name: vip_ddns
           value: "false"
         - name: svc_enable
@@ -58,11 +58,12 @@ spec:
             fieldRef:
               fieldPath: status.podIP
         - name: bgp_as
-          value: "64501"
+          value: "64500"
         - name: bgp_peeraddress
+          value: "192.168.1.1"
         - name: bgp_peerpass
         - name: bgp_peeras
-          value: "65000"
+          value: "65001"
         - name: bgp_peers
           value: "192.168.1.2:64500::false,192.168.1.10:64500::false"
         - name: address
