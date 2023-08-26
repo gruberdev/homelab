@@ -15,7 +15,7 @@ spec:
   selector:
     app: n8n-server
   type: LoadBalancer
-  loadBalancerIP: "192.168.1.125"
+  loadBalancerIP: "192.168.1.153"
   loadBalancerClass: kube-vip.io/kube-vip-class
 ---
 apiVersion: v1
