@@ -49,7 +49,7 @@ resources:
 - base/apps/unifi.yaml
 - base/apps/wyze.yaml
 - base/apps/uxp.yaml
-- base/apps/golinks.yaml
+# - base/apps/golinks.yaml
 # - base/apps/agones.yaml
 # - base/apps/agones-crd.yaml
 # - base/apps/mongodb-crds.yaml
