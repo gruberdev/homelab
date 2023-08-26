@@ -2,8 +2,6 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: nginx-ingress
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
 spec:
   project: cluster
   source:
@@ -96,8 +94,6 @@ spec:
             pollingInterval: 30
             restoreToOriginalReplicaCount: false
           kind: Deployment
-          updateStrategy:
-            type: Recreate
           lifecycle:
             preStop:
               exec:
@@ -127,7 +123,7 @@ spec:
               scrapeInterval: 30s
           minAvailable: 1
           minReadySeconds: 0
-          name: controllers
+          name: controller
           nodeSelector:
             kubernetes.io/os: linux
           opentelemetry:
@@ -170,8 +166,7 @@ spec:
               enabled: false
             ipFamilies:
             - IPv4
-            - IPv6
-            ipFamilyPolicy: PreferDualStack
+            ipFamilyPolicy: SingleStack
             loadBalancerClass: tailscale
             ports:
               http: 80
