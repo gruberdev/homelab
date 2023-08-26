@@ -16,5 +16,5 @@ spec:
   selector:
     app: langflow
   type: LoadBalancer
-  loadBalancerIP: "192.168.1.122"
+  loadBalancerIP: "192.168.1.151"
   loadBalancerClass: kube-vip.io/kube-vip-class

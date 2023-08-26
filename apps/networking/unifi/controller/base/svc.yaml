@@ -74,5 +74,5 @@ spec:
     targetPort: 8443
     protocol: TCP
   type: LoadBalancer
-  loadBalancerIP: "192.168.1.114"
+  loadBalancerIP: "192.168.1.141"
   loadBalancerClass: kube-vip.io/kube-vip-class

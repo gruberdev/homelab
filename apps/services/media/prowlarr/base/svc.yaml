@@ -15,5 +15,5 @@ spec:
   selector:
     app: prowlarr
   type: LoadBalancer
-  loadBalancerIP: "192.168.1.105"
+  loadBalancerIP: "192.168.1.144"
   loadBalancerClass: kube-vip.io/kube-vip-class
