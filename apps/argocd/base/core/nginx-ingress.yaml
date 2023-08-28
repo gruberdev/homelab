@@ -2,6 +2,8 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: nginx-ingress
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: cluster
   source:
@@ -186,7 +188,7 @@ spec:
             minReplicas: 1
             targetCPUUtilizationPercentage: 50
             targetMemoryUtilizationPercentage: 50
-          enabled: true
+          enabled: false
           image:
             allowPrivilegeEscalation: false
             image: defaultbackend-amd64
