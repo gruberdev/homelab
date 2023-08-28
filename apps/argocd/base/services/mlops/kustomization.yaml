@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+# MLOps-related Applications
+- base/services/mlops/localai.yaml
+# - base/services/mlops/discord-bot.yaml
+# - base/services/mlops/k8sgpt.yaml
+# - base/services/mlops/qdrant.yaml
+# - base/services/mlops/chroma.yaml
+# - base/services/mlops/milvus.yaml
+# - base/services/mlops/memory-plugin.yaml
