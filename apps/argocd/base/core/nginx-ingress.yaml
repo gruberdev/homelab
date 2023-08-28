@@ -115,7 +115,7 @@ spec:
             portName: metrics
             prometheusRule:
               enabled: false
-            service:s
+            service:
               servicePort: 10254
               type: ClusterIP
             serviceMonitor:
