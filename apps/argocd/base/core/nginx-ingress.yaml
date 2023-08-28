@@ -110,16 +110,16 @@ spec:
             successThreshold: 1
             timeoutSeconds: 1
           metrics:
-            enabled: true
+            enabled: false
             port: 10254
             portName: metrics
             prometheusRule:
-              enabled: true
-            service:
+              enabled: false
+            service:s
               servicePort: 10254
               type: ClusterIP
             serviceMonitor:
-              enabled: true
+              enabled: false
               scrapeInterval: 30s
           minAvailable: 1
           minReadySeconds: 0
