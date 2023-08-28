@@ -160,14 +160,13 @@ spec:
             enableHttps: true
             enabled: true
             external:
-              enabled: true
+              enabled: false
             externalTrafficPolicy: Cluster
             internal:
               enabled: false
             ipFamilies:
             - IPv4
-            - IPv6
-            ipFamilyPolicy: PreferDualStack
+            ipFamilyPolicy: SingleStack
             loadBalancerClass: kube-vip.io/kube-vip-class
             ports:
               http: 80
