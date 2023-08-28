@@ -186,7 +186,7 @@ spec:
             minReplicas: 1
             targetCPUUtilizationPercentage: 50
             targetMemoryUtilizationPercentage: 50
-          enabled: false
+          enabled: true
           image:
             allowPrivilegeEscalation: false
             image: defaultbackend-amd64
