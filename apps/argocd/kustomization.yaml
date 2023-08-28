@@ -127,7 +127,7 @@ resources:
 - https://raw.githubusercontent.com/argoproj/argo-cd/v2.8.0/manifests/install.yaml
 
 # Image Updater
-- https://github.com/argoproj-labs/argocd-image-updater/manifests/base
+# - https://github.com/argoproj-labs/argocd-image-updater/manifests/base
 
 # Custom CSS Styles
 - base/styles-cm.yaml
