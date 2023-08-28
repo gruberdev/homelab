@@ -167,7 +167,7 @@ spec:
             ipFamilies:
             - IPv4
             ipFamilyPolicy: SingleStack
-            loadBalancerClass: kube-vip.io/kube-vip-class
+            loadBalancerClass: tailscale
             ports:
               http: 80
               https: 443
