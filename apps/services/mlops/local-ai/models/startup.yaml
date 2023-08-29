@@ -4,5 +4,3 @@
   name: whisper
 - url: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/services/mlops/local-ai/models/embeddings.yaml
   name: embeddings
-- url: https://raw.githubusercontent.com/gruberdev/homelab/main/apps/services/mlops/local-ai/models/chronos.yaml
-  name: chronos
