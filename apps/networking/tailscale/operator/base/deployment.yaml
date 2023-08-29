@@ -46,7 +46,7 @@ spec:
         - name: CLIENT_SECRET_FILE
           value: /oauth/client_secret
         - name: PROXY_IMAGE
-          value: tailscale/tailscale-proxy:unstable
+          value: grubertech/tailscale-proxy:unstable
         - name: PROXY_TAGS
           value: tag:k8s
         - name: AUTH_PROXY
