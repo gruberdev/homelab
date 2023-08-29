@@ -26,7 +26,7 @@ spec:
         - |
           MODEL_DIR=/models
           FORCE_DOWNLOAD=false
-          URLS="https://huggingface.co/TheBloke/MythoMax-L2-13B-GGML/resolve/main/mythomax-l2-13b.ggmlv3.q5_K_M.bin"
+          URLS="https://huggingface.co/TheBloke/MythoMax-Kimiko-Mix-GGUF/blob/main/mythomax-kimiko-mix.Q5_K_M.gguf"
 
           mkdir -p "$MODEL_DIR"
 
@@ -65,14 +65,29 @@ spec:
           name: models
       containers:
       - name: local-ai
-        image: quay.io/go-skynet/local-ai:sha-0c73a63-cublas-cuda11-ffmpeg
+        image: quay.io/go-skynet/local-ai:sha-fe1b54b-cublas-cuda11-ffmpeg
         ports:
           - name: http
             containerPort: 8080
             protocol: TCP
+        livenessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        readinessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        startupProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 30
         resources:
           limits:
-            cpu: 4000m
+            cpu: 3000m
             memory: 14Gi
           requests:
             cpu: 1000m
