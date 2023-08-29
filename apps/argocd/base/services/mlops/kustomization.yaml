@@ -3,3 +3,5 @@ kind: Kustomization
 
 resources:
 - localai.yaml
+
+namespace: argocd
