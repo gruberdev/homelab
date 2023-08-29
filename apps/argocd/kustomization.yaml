@@ -60,8 +60,7 @@ resources:
 # Monitoring Resources
 - base/monitoring/kuma.yaml
 - base/monitoring/unifi-poller.yaml
-- base/monitoring/kubeprometheus.yaml
-# - base/monitoring/kube-prometheus.yaml
+- base/monitoring/kube-prometheus.yaml
 - base/monitoring/grafana.yaml
 - base/monitoring/nvidia.yaml
 # - base/monitoring/botkube.yaml
