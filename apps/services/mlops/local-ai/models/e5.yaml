@@ -1,0 +1,16 @@
+name: "e5-embeddings"
+license: "MIT"
+urls:
+- https://huggingface.co/gruber/e5-small-v2-ggml
+- https://huggingface.co/intfloat/e5-small-v2
+description: |
+    This model is based on intfloat/e5-small-v2 for sentence similarity and embedding texts on vector databases.
+config_file: |
+    parameters:
+      model: ggml-model-q4_0.bin
+    backend: bert-embeddings
+    embeddings: true
+files:
+- filename: "ggml-model-q4_0.bin"
+  sha256: "9b5a9eaf92eb990ebdac8d3c0795b8ed2ab40776ffb096104420f43850091cc5"
+  uri: "https://huggingface.co/gruber/e5-small-v2-ggml/resolve/main/ggml-model-q4_0.bin"
