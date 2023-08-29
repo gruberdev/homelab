@@ -9,7 +9,6 @@ spec:
     targetRevision: kube-prometheus-stack-48.3.1
     path: charts/kube-prometheus-stack
     helm:
-      skipCrds: true
       releaseName: kube-prometheus
       values: |
         alertmanager:
@@ -824,6 +823,7 @@ spec:
     syncOptions:
     - Validate=false
     - CreateNamespace=false
+    - ServerSideApply=true
     - PrunePropagationPolicy=foreground
     - PruneLast=true
     - ApplyOutOfSyncOnly=false
