@@ -26,7 +26,7 @@ spec:
         - |
           MODEL_DIR=/models
           FORCE_DOWNLOAD=false
-          URLS="https://huggingface.co/TheBloke/MythoMax-Kimiko-Mix-GGUF/resolve/main/mythomax-kimiko-mix.Q5_K_M.gguf"
+          URLS="https://huggingface.co/TheBloke/MythoMax-Kimiko-Mix-GGUF/resolve/main/mythomax-kimiko-mix.Q5_K_S.gguff"
 
           mkdir -p "$MODEL_DIR"
 
@@ -65,7 +65,7 @@ spec:
           name: models
       containers:
       - name: local-ai
-        image: quay.io/go-skynet/local-ai:sha-fe1b54b-cublas-cuda11-ffmpeg
+        image: quay.io/go-skynet/local-ai:sha-c64b59c-cublas-cuda11-ffmpeg
         ports:
           - name: http
             containerPort: 8080
