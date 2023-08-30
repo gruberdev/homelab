@@ -65,7 +65,7 @@ spec:
           name: models
       containers:
       - name: local-ai
-        image: quay.io/go-skynet/local-ai:sha-c64b59c-cublas-cuda11-ffmpeg
+        image: quay.io/go-skynet/local-ai:sha-b111423-cublas-cuda11-ffmpeg
         ports:
           - name: http
             containerPort: 8080
