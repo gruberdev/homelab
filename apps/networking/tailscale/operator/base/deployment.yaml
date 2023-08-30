@@ -21,7 +21,7 @@ spec:
           secretName: operator-oauth
       containers:
       - name: operator
-        image: grubertech/tailscale-operator:unstable
+        image: docker.io/grubertech/tailscale-operator:1.49
         imagePullPolicy: Always
         resources:
           requests:
@@ -35,6 +35,10 @@ spec:
           value: tailscale-operator
         - name: OPERATOR_SECRET
           value: operator
+        - name: TS_ACCEPT_DNS
+          value: "true"
+        - name: TS_ROUTES
+          value: "true"
         - name: OPERATOR_LOGGING
           value: debug
         - name: OPERATOR_NAMESPACE
@@ -46,7 +50,7 @@ spec:
         - name: CLIENT_SECRET_FILE
           value: /oauth/client_secret
         - name: PROXY_IMAGE
-          value: tailscale/tailscale:unstable
+          value: docker.io/grubertech/tailscale-proxy:1.49
         - name: PROXY_TAGS
           value: tag:k8s
         - name: AUTH_PROXY
