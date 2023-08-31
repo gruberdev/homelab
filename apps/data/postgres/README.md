@@ -1,7 +1,9 @@
 ## Zalando PostgreSQL Operator
 
 <p align="center">
-<img width="250" height="250" src="https://opensource.zalando.com/postgres-operator/docs/diagrams/logo.png"></br><img src="https://img.shields.io/github/v/release/zalando/postgres-operator?label=Latest%20Version&logo=github&style=for-the-badge">
+  <img width="250" height="250" src="https://opensource.zalando.com/postgres-operator/docs/diagrams/logo.png" />
+  <br />
+  <img src="https://img.shields.io/github/v/release/zalando/postgres-operator?label=Latest%20Version&logo=github&style=for-the-badge" />
 </p>
 
  ### Context and application description

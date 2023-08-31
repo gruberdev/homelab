@@ -1,7 +1,9 @@
 ## Home Assistant
 
 <p align="center">
-<img width="250" height="250" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Home_Assistant_Logo.svg/1200px-Home_Assistant_Logo.svg.png"></br><img src="https://img.shields.io/github/v/release/home-assistant/core?label=Latest%20Version&logo=github&style=for-the-badge">
+  <img width="250" height="250" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Home_Assistant_Logo.svg/1200px-Home_Assistant_Logo.svg.png" />
+  <br />
+  <img src="https://img.shields.io/github/v/release/home-assistant/core?label=Latest%20Version&logo=github&style=for-the-badge" />
 </p>
 
 ### What is Home Assistant?

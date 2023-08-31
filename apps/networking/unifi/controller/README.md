@@ -1,5 +1,7 @@
 <p align="center">
-<img width="350" height="250" src="https://www.logo.wine/a/logo/Ubiquiti_Networks/Ubiquiti_Networks-Logo.wine.svg"></br><img src="https://img.shields.io/github/v/release/jacobalberty/unifi-docker?label=Latest%20Version&logo=github&style=for-the-badge">
+  <img width="350" height="250" src="https://www.logo.wine/a/logo/Ubiquiti_Networks/Ubiquiti_Networks-Logo.wine.svg" />
+  <br />
+  <img src="https://img.shields.io/github/v/release/jacobalberty/unifi-docker?label=Latest%20Version&logo=github&style=for-the-badge" />
 </p>
 
 ### Description
