@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: turbopilot-internal
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: copilot.gruber.dev.br
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
+    external-dns.alpha.kubernetes.io/ttl: "120"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: copilot.gruber.dev.br
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: turbopilot-tailscale
+            port:
+              name: http
+  tls:
+  - hosts:
+    - copilot.gruber.dev.br
+    secretName: copilot-tls

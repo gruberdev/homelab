@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: copilot
+spec:
+  secretName: copilot-tls
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: copilot.gruber.dev.br
+  dnsNames:
+  - copilot.gruber.dev.br
