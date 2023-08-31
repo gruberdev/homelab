@@ -1,0 +1,97 @@
+apiVersion: apps/v1ai
+kind: Deployment
+metadata:
+  name: turbopilot
+  labels:
+    app: turbopilot
+spec:
+  selector:
+    matchLabels:
+      app: turbopilot
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      name: turbopilot
+      labels:
+        app: turbopilot
+    spec:
+      runtimeClassName: nvidia
+      initContainers:
+      - name: download-model
+        image: busybox
+        command: ["/bin/sh", "-c"]
+        args:
+        - |
+          MODEL_DIR=/models
+          FORCE_DOWNLOAD=false
+          URLS="https://huggingface.co/TheBloke/WizardCoder-15B-1.0-GGML/resolve/main/WizardCoder-15B-1.0.ggmlv3.q4_0.bin"
+
+          mkdir -p "$MODEL_DIR"
+          # Split urls on commas
+          echo "$URLS" | awk -F, '{for (i=1; i<=NF; i++) print $i}' | while read -r line; do
+              url=$(echo "$line" | awk '{print $1}')
+              auth=$(echo "$line" | awk '{print $2}')
+              if [ -n "$url" ]; then
+                  filename=$(basename "$url")
+                  if [ "$FORCE_DOWNLOAD" = false ] && [ -f "$MODEL_DIR/$filename" ]; then
+                      echo "File $filename already exists. Skipping download."
+                      continue
+                  fi
+                  rm -f "$MODEL_DIR/$filename"
+                  echo "Downloading $filename"
+                  if [ -n "$auth" ]; then
+                      wget -P "$MODEL_DIR" --header "Authorization: Basic $auth" "$url"
+                  else
+                      wget -P "$MODEL_DIR" "$url"
+                  fi
+                  if [ "$?" -ne 0 ]; then
+                      echo "Download failed."
+                  else
+                      echo "Download completed."
+                  fi
+              fi
+          done
+        volumeMounts:
+        - mountPath: /models
+          name: models
+      containers:
+      - name: turbopilot
+        image: ghcr.io/ravenscroftj/turbopilot:v0.2.0-cuda11-7
+        ports:
+          - name: http
+            containerPort: 18080
+            protocol: TCP
+        livenessProbe:
+          tcpSocket:
+            port: 18080
+          initialDelaySeconds: 35
+          periodSeconds: 10
+        readinessProbe:
+          tcpSocket:
+            port: 18080
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        startupProbe:
+          tcpSocket:
+            port: 18080
+          initialDelaySeconds: 30
+          periodSeconds: 30
+        resources:
+          limits:
+            cpu: 4000m
+            memory: 14Gi
+          requests:
+            cpu: 1000m
+            memory: 2Gi
+        envFrom:
+        - configMapRef:
+            name: turbopilot-config
+        volumeMounts:
+        - mountPath: /models
+          name: models
+      volumes:
+      - name: models
+        persistentVolumeClaim:
+          claimName: turbopilot-storage
