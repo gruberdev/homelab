@@ -58,7 +58,7 @@ spec:
           name: models
       containers:
       - name: turbopilot
-        image: ghcr.io/ravenscroftj/turbopilot:v0.2.0-cuda11-7
+        image: ghcr.io/ravenscroftj/turbopilot:v0.2.1-cuda11-7
         ports:
           - name: http
             containerPort: 18080
