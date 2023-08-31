@@ -26,7 +26,7 @@ spec:
         - |
           MODEL_DIR=/models
           FORCE_DOWNLOAD=false
-          URLS="https://huggingface.co/TheBloke/WizardCoder-15B-1.0-GGML/resolve/main/WizardCoder-15B-1.0.ggmlv3.q4_0.bin"
+          URLS="https://huggingface.co/TheBloke/stablecode-instruct-alpha-3b-GGML/resolve/main/stablecode-instruct-alpha-3b.ggmlv1.q4_0.bin"
 
           mkdir -p "$MODEL_DIR"
           # Split urls on commas
