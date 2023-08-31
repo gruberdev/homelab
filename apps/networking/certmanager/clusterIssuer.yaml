@@ -55,6 +55,7 @@ spec:
         - bazarr.gruber.dev.br
         - links.gruber.dev.br
         - git.gruber.dev.br
+        - copilot.gruber.dev.br
       dns01:
         cloudflare:
           email: rpg.gruber@gmail.com

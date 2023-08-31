@@ -39,6 +39,7 @@ resources:
 # - base/jupyterlab.yaml
 # - base/librex.yaml
 - base/local-ai.yaml
+- base/turobpilot.yaml
 
 #  Postgres Storage
 - base/postgres/ha.yaml
