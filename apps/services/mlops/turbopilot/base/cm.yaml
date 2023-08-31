@@ -6,7 +6,7 @@ data:
   THREADS: "6"
   MODEL: "/models/WizardCoder-15B-1.0.ggmlv3.q4_0.bin"
   GPU_LAYERS: "46"
-  MODEL_TYPE=starcoder: "wizardcoder"
+  MODEL_TYPE: "wizardcoder"
   NVIDIA_VISIBLE_DEVICES: "all"
   NVIDIA_DRIVER_CAPABILITIES: "all"
   NVIDIA_REQUIRE_CUDA: "cuda>=11.0"
