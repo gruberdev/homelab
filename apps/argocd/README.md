@@ -1,5 +1,6 @@
 <p align="center">
-<img width="350" height="250" src="../../docs/assets/logos/argo.svg"></br><img src="https://img.shields.io/github/v/release/argoproj/argo-cd?label=Latest%20Version&logo=github&style=for-the-badge">
+  <img width="350" height="250" src="../../docs/assets/logos/argo.svg"><br>
+  <img src="https://img.shields.io/github/v/release/argoproj/argo-cd?label=Latest%20Version&logo=github&style=for-the-badge">
 </p>
 
 ### Description
@@ -17,15 +18,13 @@
 >
 > **In summary, ArgoCD presents a comprehensive and feature-intensive solution for the management and automation of Kubernetes-based application deployments.**
 
-
 &nbsp;
 
-
 ### Relevant Links
+
 - [Website][website-uri]
 - [Official Documentation][docs-uri]
 - [Awesome ArgoCD][awesome-uri]
-
 
 ### Instructions for deployment
 
