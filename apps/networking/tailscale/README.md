@@ -25,12 +25,10 @@
 - [Awesome Wireguard list of resources][awesome-uri]
 - [Administrator login interface for Tailscale][admin-uri]
 
-<details>
+---
 
-<summary>
-Instructions for manual deployment
-</summary>
-
+## Instructions for manual deployment
+>
 > - On the repository root `.env` file, define the following environment variables:
 >
 > ```sh
