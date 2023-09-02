@@ -28,7 +28,7 @@
 <details>
 
 <summary>
-<b>Instructions for manual deployment</b>
+Instructions for manual deployment
 </summary>
 <br/>
 
