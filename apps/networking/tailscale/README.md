@@ -30,7 +30,6 @@
 <summary>
 Instructions for manual deployment
 </summary>
-<br/>
 
 > - On the repository root `.env` file, define the following environment variables:
 >
@@ -61,3 +60,5 @@ Instructions for manual deployment
 [inlets-uri]: https://inlets.dev/pricing/
 [zero-uri]: https://medium.com/netmaker/battle-of-the-vpns-which-one-is-fastest-speed-test-21ddc9cd50db
 [headscale-uri]: https://github.com/juanfont/headscale
+
+</details>
