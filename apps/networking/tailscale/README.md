@@ -1,7 +1,7 @@
 <p align="center">
-  <img width="375" height="120" src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Tailscale-Logo-Black.svg" />
+  <img width="370" height="120" src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Tailscale-Logo-Black.svg" />
   <br />
-  <img src="https://img.shields.io/github/v/release/tailscale/tailscale?label=Latest%20Version&logo=github&style=for-the-badge" />
+  <img src="https://img.shields.io/github/v/release/tailscale/tailscale?label=Latest%20Version&logo=github&style=for-the-badge"" />
 </p>
 
 ### Description
@@ -25,34 +25,10 @@
 - [Awesome Wireguard list of resources][awesome-uri]
 - [Administrator login interface for Tailscale][admin-uri]
 
----
-
-## Instructions for manual deployment
->
-> - On the repository root `.env` file, define the following environment variables:
->
-> ```sh
-> TAILSCALE_OAUTH2_CLIENT_ID=""
-> TAILSCALE_OAUTH2_CLIENT_SECRET=""
-> ```
->
-> - Then type the following command:
->
-> ```bash
-> task tailscale:operator
-> ```
->
-> **This will install the operator "manually"**
->
-> Any questions check the Operator's official documentation on Tailscale's website.
->
-> ### **However**, it is preferable to install it [using its ArgoCD Application resource instead][argocd-app-uri]
-
 [website-uri]: https://tailscale.com/
 [docs-uri]: https://tailscale.com/kb/
 [awesome-uri]: https://github.com/cedrickchee/awesome-wireguard
 [operator-docs-uri]: https://tailscale.com/kb/1236/kubernetes-operator/
-[argocd-app-uri]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/core/tailscale-operator.yaml
 [admin-uri]: https://login.tailscale.com/admin/machines
 [acl-uri]: https://github.com/gruberdev/homelab/blob/main/policy.hujson
 [inlets-uri]: https://inlets.dev/pricing/
