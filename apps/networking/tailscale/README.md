@@ -5,11 +5,13 @@
 </p>
 
 ### Description
+>
 > Tailscale is a secure and easy-to-use VPN for teams and individuals. It creates a private network between your devices, no matter where they are, and encrypts all traffic to keep your online activities private and secure.
 >
 > It provides a simple and intuitive user interface that allows you to easily manage and control your network, and it integrates seamlessly with your existing infrastructure and tools.
 
 ### Reasons I chose Tailscale over other VPN solutions
+>
 > - Tailscale is designed to be easy to use and set up, with no complicated configuration or management required. This applies to both controller, client applications and the Kubernetes operator.
 > - [It provides a way to configure ACL policy through infrastructure-as-code][acl-uri], allowing the network administrator to control how the nodes communicate between themselves through detailed instructions.
 > - Tailscale uses [Wireguard][awesome-uri], an industry-standard VPN protocol that is more lightweight than OpenVPN and at the same time allows for full encrypted communication between the network nodes.
@@ -23,12 +25,12 @@
 - [Awesome Wireguard list of resources][awesome-uri]
 - [Administrator login interface for Tailscale][admin-uri]
 
-
 <details>
 
-<summary> <b>Instructions for manual deployment</b>
+<summary>
+<b>Instructions for manual deployment</b>
 </summary>
-<br>
+<br/>
 
 > - On the repository root `.env` file, define the following environment variables:
 >
@@ -36,7 +38,9 @@
 > TAILSCALE_OAUTH2_CLIENT_ID=""
 > TAILSCALE_OAUTH2_CLIENT_SECRET=""
 > ```
+>
 > - Then type the following command:
+>
 > ```bash
 > task tailscale:operator
 > ```
@@ -45,7 +49,7 @@
 >
 > Any questions check the Operator's official documentation on Tailscale's website.
 >
-> ### **However**, it is preferable to install it [using its ArgoCD Application resource instead][argocd-app-uri].
+> ### **However**, it is preferable to install it [using its ArgoCD Application resource instead][argocd-app-uri]
 
 [website-uri]: https://tailscale.com/
 [docs-uri]: https://tailscale.com/kb/
