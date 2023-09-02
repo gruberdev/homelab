@@ -7,7 +7,7 @@ spec:
   source:
     repoURL: https://github.com/OT-CONTAINER-KIT/helm-charts.git
     path: charts/redis-operator/crds/
-    targetRevision: main
+    targetRevision: redis-operator-0.15.3
     directory:
       recurse: true
   destination:
