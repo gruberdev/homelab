@@ -89,25 +89,25 @@ resources:
 
 # Media Services
 - base/services/media/tanoshi.yaml
-- base/services/media/jellyfin.yaml
-- base/services/media/prowlarr.yaml
-- base/services/media/sonarr.yaml
-- base/services/media/qbittorrent.yaml
+# - base/services/media/jellyfin.yaml
+# - base/services/media/prowlarr.yaml
+# - base/services/media/sonarr.yaml
+# - base/services/media/qbittorrent.yaml
 # - base/services/media/ganymede.yaml
 # - base/services/media/beets.yaml
 # - base/services/media/lidarr.yaml
 # - base/services/media/bazarr.yaml
 
 # Matrix & utilities
-- base/matrix/synapse.yaml
-- base/matrix/dbs.yaml
+# - base/matrix/synapse.yaml
+# - base/matrix/dbs.yaml
 # - base/matrix/dendrite.yaml
 # - base/matrix/proxies.yaml
 
 # Matrix bridges
-- base/matrix/whats.yaml
-- base/matrix/instagram.yaml
-- base/matrix/linkedin.yaml
+# - base/matrix/whats.yaml
+# - base/matrix/instagram.yaml
+# - base/matrix/linkedin.yaml
 # - base/matrix/discord.yaml
 # - base/matrix/telegram.yaml
 # - base/matrix/steam.yaml
@@ -122,7 +122,7 @@ resources:
 - https://github.com/gruberdev/homelab/apps/networking/tailscale
 - https://github.com/gruberdev/homelab/apps/networking/cloudflared
 
-- https://raw.githubusercontent.com/argoproj/argo-cd/v2.8.0/manifests/install.yaml
+- https://raw.githubusercontent.com/argoproj/argo-cd/v2.7.9/manifests/install.yaml
 
 # Image Updater
 # - https://github.com/argoproj-labs/argocd-image-updater/manifests/base
@@ -147,7 +147,7 @@ patchesStrategicMerge:
 namespace: argocd
 images:
 - name: quay.io/argoproj/argocd
-  newTag: v2.8.0
+  newTag: v2.7.9
 
 patches:
 - patch: |-

@@ -5,11 +5,10 @@ metadata:
 spec:
   project: cluster
   source:
-    repoURL: https://github.com/OT-CONTAINER-KIT/helm-charts.git
-    targetRevision: redis-operator-0.15.3
-    path: charts/redis-operator/
+    repoURL: https://ot-container-kit.github.io/helm-charts
+    targetRevision: 0.15.3
+    path: redis-operator
     helm:
-      skipCrds: true
       releaseName: redis-operator
       values: |
           nodeSelector:
@@ -44,6 +43,7 @@ spec:
     - CreateNamespace=false
     - PrunePropagationPolicy=background
     - PruneLast=true
+    - ServerSideApply=true
     - ApplyOutOfSyncOnly=false
     - Prune=true
     retry:
