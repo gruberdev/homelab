@@ -6,7 +6,7 @@ spec:
   project: cluster
   source:
     repoURL: https://github.com/OT-CONTAINER-KIT/helm-charts.git
-    targetRevision: redis-operator-0.15.3
+    targetRevision: v1.0
     path: charts/redis-operator/
     helm:
       skipCrds: true
