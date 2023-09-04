@@ -33,3 +33,6 @@ spec:
         duration: 20s
         factor: 2
         maxDuration: 15m
+  ignoreDifferences:
+    - group: "redis.redis.opstreelabs.in"
+      kind: "Redis"
