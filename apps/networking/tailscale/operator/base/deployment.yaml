@@ -32,7 +32,7 @@ spec:
             memory: 512Mi
         env:
         - name: OPERATOR_HOSTNAME
-          value: tailscale-operator
+          value: operator
         - name: OPERATOR_SECRET
           value: operator
         - name: TS_ACCEPT_DNS
