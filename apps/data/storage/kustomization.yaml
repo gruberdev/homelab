@@ -15,9 +15,9 @@ resources:
 - base/unifi-poller.yaml
 
 # Media Services
-- base/jellyfin.yaml
+# - base/jellyfin.yaml
 - base/tanoshi.yaml
-- base/media.yaml
+# - base/media.yaml
 # - base/beets.yaml
 # - base/lidarr.yaml
 # - base/ganymede.yaml
@@ -48,12 +48,12 @@ resources:
 # - base/postgres/ganymede.yaml
 
 # Matrix
-- base/matrix/synapse.yaml
-- base/matrix/bridges.yaml
-- base/matrix/whats.yaml
-- base/matrix/instagram.yaml
-- base/matrix/linkedin.yaml
-- base/matrix/discord.yaml
+# - base/matrix/synapse.yaml
+# - base/matrix/bridges.yaml
+# - base/matrix/whats.yaml
+# - base/matrix/instagram.yaml
+# - base/matrix/linkedin.yaml
+# - base/matrix/discord.yaml
 # - base/matrix/messenger.yaml
 # - base/matrix/skype.yaml
 # - base/matrix/signal.yaml
