@@ -13,7 +13,7 @@ resources:
 # Core Applications
 - base/core/argocd.yaml
 - base/core/postgres.yaml
-# - base/core/redis.yaml
+- base/core/redis.yaml
 - base/core/storage.yaml
 - base/core/tailscale-operator.yaml
 - base/core/external-dns.yaml
