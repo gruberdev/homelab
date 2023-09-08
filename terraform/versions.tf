@@ -9,18 +9,19 @@ terraform {
       source  = "paultyng/unifi"
       version = "0.41.0"
     }
+    b2 = {
+      source  = "Backblaze/b2"
+      version = "0.8.4"
+    }
   }
   # backend "pg" {
   # }
 }
 
-
-
 provider "vault" {
   address = var.vault_api_url
   token   = var.vault_token
 }
-
 
 provider "unifi" {
   username       = var.unifi_username
