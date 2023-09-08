@@ -13,12 +13,13 @@ jobs:
         with:
           files: |
             terraform/**
-
       - name: Tailscale
         if: steps.terraform-changes.outputs.any_changed == 'true'
         uses: tailscale/github-action@v2
         with:
-          authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:clients
       - name: Clone repo
         if: steps.terraform-changes.outputs.any_changed == 'true'
         uses: actions/checkout@master
