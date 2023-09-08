@@ -9,10 +9,6 @@ terraform {
       source  = "paultyng/unifi"
       version = "0.41.0"
     }
-    b2 = {
-      source  = "Backblaze/b2"
-      version = "0.8.4"
-    }
   }
   # backend "pg" {
   # }
