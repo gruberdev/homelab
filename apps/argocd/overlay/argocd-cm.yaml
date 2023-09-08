@@ -7,7 +7,7 @@ metadata:
     app.kubernetes.io/part-of: argocd
 data:
   accounts.image-updater: apiKey
-  application.resourceTrackingMethod: annotation
+  application.resourceTrackingMethod: annotation+label
   url: https://argo.gruber.dev.br
   statusbadge.enabled: "true"
   statusbadge.url: "https://argo.gruber.dev.br/"
