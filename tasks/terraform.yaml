@@ -35,6 +35,11 @@ tasks:
     cmds:
     - terraform init -upgrade -backend-config="conn_str=${TF_CONN_STR}"
 
+  init:b2:
+    dir: terraform/modules/b2
+    cmds:
+    - terraform init -upgrade
+
   plan:
     dir: terraform
     cmds:
@@ -52,6 +57,11 @@ tasks:
 
   plan:vultr:
     dir: terraform/modules/vultr
+    cmds:
+    - terraform plan
+
+  plan:b2:
+    dir: terraform/modules/b2
     cmds:
     - terraform plan
 
@@ -75,6 +85,11 @@ tasks:
     cmds:
     - terraform apply -auto-approve
 
+  apply:b2:
+    dir: terraform/modules/b2
+    cmds:
+    - terraform apply -auto-approve
+
   destroy:
     dir: terraform
     cmds:
@@ -90,9 +105,15 @@ tasks:
     cmds:
     - terraform destroy -auto-approve
 
+  destroy:b2:
+    dir: terraform/modules/b2
+    cmds:
+    - terraform destroy -auto-approve
+
   docs:
     cmds:
     - terraform-docs markdown -c ./terraform/.terraform-docs.yaml ./terraform --output-file README.md
     - terraform-docs markdown -c ./terraform/.terraform-docs.yaml ./terraform/modules/vault --output-file README.md
     - terraform-docs markdown -c ./terraform/.terraform-docs.yaml ./terraform/modules/unifi --output-file README.md
     - terraform-docs markdown -c ./terraform/.terraform-docs.yaml ./terraform/modules/vultr --output-file README.md
+    - terraform-docs markdown -c ./terraform/.terraform-docs.yaml ./terraform/modules/b2 --output-file README.md
