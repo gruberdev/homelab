@@ -41,8 +41,8 @@ metadata:
     app.kubernetes.io/part-of: ingress-nginx
     app.kubernetes.io/component: admission-webhook
   annotations:
-    argocd.argoproj.io/hook: Sync
-    argocd.argoproj.io/sync-wave: "0"
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/sync-wave: "2"
   name: ingress-nginx-controller-admission
 spec:
   type: ClusterIP
