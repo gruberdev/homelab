@@ -8,4 +8,3 @@ resources:
 - jobs.yaml
 - role.yaml
 - sa.yaml
-- webhook.yaml
