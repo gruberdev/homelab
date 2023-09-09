@@ -25,6 +25,6 @@ webhooks:
       - v1
     clientConfig:
       service:
-        namespace: "ingress"
+        namespace: "networking"
         name: ingress-nginx-controller-admission
         path: /networking/v1/ingresses
