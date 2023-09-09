@@ -6,3 +6,6 @@ bases:
 
 resources:
 - webhook.yaml
+
+commonAnnotations:
+  argocd.argoproj.io/hook: PreSync
