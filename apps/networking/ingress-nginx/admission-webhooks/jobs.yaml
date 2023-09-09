@@ -4,7 +4,9 @@ kind: Job
 metadata:
   name: ingress-nginx-admission-create
   annotations:
-    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation,HookSucceeded,HookFailed
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
   labels:
     app.kubernetes.io/name: ingress-nginx
     app.kubernetes.io/part-of: ingress-nginx
@@ -52,7 +54,9 @@ metadata:
     app.kubernetes.io/part-of: ingress-nginx
     app.kubernetes.io/component: admission-webhook
   annotations:
-    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation,HookSucceeded,HookFailed
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
 spec:
   template:
     metadata:
