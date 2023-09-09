@@ -2,6 +2,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  annotations:
+    argocd.argoproj.io/hook: Sync
+    argocd.argoproj.io/sync-wave: "1"
   labels:
     app.kubernetes.io/name: ingress-nginx
     app.kubernetes.io/part-of: ingress-nginx
