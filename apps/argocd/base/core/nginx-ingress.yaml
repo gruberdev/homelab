@@ -9,7 +9,7 @@ spec:
     path: apps/networking/ingress-nginx
     targetRevision: main
   destination:
-    namespace: ingress
+    namespace: networking
     name: in-cluster
   syncPolicy:
     automated:
@@ -20,7 +20,7 @@ spec:
     - Validate=false
     - CreateNamespace=false
     - PrunePropagationPolicy=foreground
-    - PruneLast=false
+    - PruneLast=true
     - Prune=true
     retry:
       limit: 10
