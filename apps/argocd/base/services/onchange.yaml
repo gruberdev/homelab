@@ -25,10 +25,22 @@ spec:
     - PruneLast=true
     - ApplyOutOfSyncOnly=false
     - Prune=true
-    - Replace=true
     retry:
       limit: 5
       backoff:
         duration: 20s
         factor: 2
         maxDuration: 5m
+  info:
+    - name: 'Github Repository:'
+      value: >-
+        https://github.com/dgtlmoon/changedetection.io
+    - name: 'Official Wiki:'
+      value: >-
+        https://github.com/dgtlmoon/changedetection.io/wiki
+    - name: 'Community Watchlist:'
+      value: >-
+        https://github.com/dgtlmoon/changedetection.io/wiki/Community-watch-list
+    - name: 'API Reference:'
+      value: >-
+        https://changedetection.io/docs/api_v1/index.html
