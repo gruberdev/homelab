@@ -26,4 +26,4 @@ webhooks:
     admissionReviewVersions:
       - v1
     clientConfig:
-      url: "https://ingress-nginx-controller-admission.networking.svc.cluster.local/networking/v1/ingresses?timeout=35s"
+      url: "https://ingress-nginx-controller-admission.networking.svc.cluster.local/networking/v1/ingresses"
