@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: mlops
+spec:
+  description: AI-related umbrella project config
+  sourceRepos:
+  - '*'
+  destinations:
+  - namespace: mlops
+    server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  orphanedResources:
+    warn: true
