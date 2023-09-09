@@ -13,4 +13,4 @@ resources:
 - sa.yaml
 - ./admission-webhooks
 
-namespace: ingress
+namespace: networking
