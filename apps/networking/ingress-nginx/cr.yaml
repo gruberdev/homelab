@@ -19,15 +19,19 @@ rules:
       - secrets
       - namespaces
     verbs:
+      - get
       - list
       - watch
+      - update
   - apiGroups:
       - coordination.k8s.io
     resources:
       - leases
     verbs:
+      - get
       - list
       - watch
+      - update
   - apiGroups:
       - ""
     resources:
@@ -42,6 +46,7 @@ rules:
       - get
       - list
       - watch
+      - update
   - apiGroups:
       - networking.k8s.io
     resources:
@@ -50,6 +55,7 @@ rules:
       - get
       - list
       - watch
+      - update
   - apiGroups:
       - ""
     resources:
@@ -62,6 +68,9 @@ rules:
     resources:
       - ingresses/status
     verbs:
+      - get
+      - list
+      - watch
       - update
   - apiGroups:
       - networking.k8s.io
@@ -71,11 +80,13 @@ rules:
       - get
       - list
       - watch
+      - update
   - apiGroups:
       - discovery.k8s.io
     resources:
       - endpointslices
     verbs:
+      - get
       - list
       - watch
-      - get
+      - update
