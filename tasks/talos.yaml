@@ -1,0 +1,55 @@
+version: '3'
+
+silent: true
+
+vars:
+  CONTROLLER_IPV4: https://192.168.1.2:6443
+  BACKUP_TIME:
+    sh: echo $(date +%s)
+
+tasks:
+  gen:init:
+    dir: config/talos
+    cmds:
+    - task: gen:backup
+    - task: gen:clean
+    - talosctl gen config homelab {{.CONTROLLER_IPV4}}
+    ignore_error: true
+
+  gen:clean:
+    dir: config/talos
+    cmds:
+    - rm controlplane.yaml worker.yaml talosconfig
+
+  gen:init:patch:
+    dir: config/talos
+    cmds:
+    - task: gen:backup
+    - task: gen:clean
+    - |
+      talosctl gen config homelab {{.CONTROLLER_IPV4}} \
+            --config-patch @patch.yaml \
+            --config-patch-control-plane @controller-patch.yaml \
+            --config-patch-worker @worker-patch.yaml
+    ignore_error: true
+
+  gen:patch:
+    dir: config/talos
+    cmds:
+      - task: gen:backup
+      - talosctl machineconfig patch worker.yaml --patch @worker-patch.yaml -o worker.yaml
+      - talosctl machineconfig patch controlplane.yaml --patch @controller-patch.yaml -o controlplane.yaml
+    ignore_error: true
+
+  gen:backup:
+    dir: config/talos
+    cmds:
+      - |
+        for file in controller.yaml controlplane.yaml worker.yaml talosconfig; do
+          if [ -f "$file" ]; then
+            filename=$(basename -- "$file")
+            extension="${filename##*.}"
+            filename="${filename%.*}"
+            cp "$file" "backup/${filename}_{{.BACKUP_TIME}}.${extension}"
+          fi
+        done
