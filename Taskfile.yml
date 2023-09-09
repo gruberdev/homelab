@@ -14,6 +14,8 @@ includes:
   cluster: ./tasks/cluster.yaml
   matrix: ./tasks/matrix.yaml
   test: ./tasks/test.yaml
+  talos: ./tasks/talos.yaml
+  commit: ./tasks/commit.yaml
 
 vars:
   CYAN: tput setaf 6
@@ -27,7 +29,7 @@ vars:
   RESET: tput sgr0
   CLEAR: tput reset
   PATH_ERROR: is not installed or correctly configured in PATH.
-  K8S_VERSION: 1.26.1
+  K8S_VERSION: 1.28.1
 
 dotenv: ['.env']
 
@@ -124,8 +126,9 @@ tasks:
       - sh: "which kuota-calc"
         msg: "kuota-calc {{.PATH_ERROR}}"
     cmds:
-      - find . -maxdepth 20 -name deployment.yaml -exec cat {} \; | kuota-calc --detailed
-      - find . -maxdepth 20 -name statefulset.yaml -exec cat {} \; | kuota-calc --detailed
+      - find . -maxdepth 50 -name deployment.yaml -exec cat {} \; | kuota-calc --detailed
+      - find . -maxdepth 50 -name statefulset.yaml -exec cat {} \; | kuota-calc --detailed
+      - find . -maxdepth 50 -name daemonset.yaml -exec cat {} \; | kuota-calc --detailed
 
   test:k3d:
     desc: Starts your local k3d cluster.
@@ -196,6 +199,7 @@ tasks:
       - helm repo add pixie-operator https://pixie-operator-charts.storage.googleapis.com
       - helm repo add eraser https://azure.github.io/eraser/charts
       - helm repo add vmware-tanzu https://vmware-tanzu.github.io/helm-charts
+      - helm repo add mayastor https://openebs.github.io/mayastor-extensions/
       - task: clear
       - echo -e "This will add new repositories to your local Helm\n"
       - task: highlight_normal
@@ -224,3 +228,8 @@ tasks:
       - echo -e "Added 'k8s.localhost' and related domains to your hosts file!"
       - task: reset
     ignore_error: true
+
+  run:
+    cmds:
+      - task: validate
+      - task: commit
