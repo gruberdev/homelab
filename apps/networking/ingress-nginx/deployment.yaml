@@ -13,6 +13,8 @@ spec:
       app.kubernetes.io/name: ingress-nginx
       app.kubernetes.io/component: controller
   replicas: 1
+  strategy:
+    type: Recreate
   revisionHistoryLimit: 10
   minReadySeconds: 0
   template:
@@ -27,7 +29,7 @@ spec:
         - name: controller
           image: "registry.k8s.io/ingress-nginx/controller:v1.8.1@sha256:e5c4824e7375fcf2a393e1c03c293b69759af37a9ca6abdb91b13d78a93da8bd"
           imagePullPolicy: IfNotPresent
-          lifecycle: 
+          lifecycle:
             preStop:
               exec:
                 command:
@@ -99,7 +101,7 @@ spec:
             requests:
               cpu: 100m
               memory: 90Mi
-      nodeSelector: 
+      nodeSelector:
         kubernetes.io/os: linux
       serviceAccountName: ingress-nginx
       terminationGracePeriodSeconds: 300
