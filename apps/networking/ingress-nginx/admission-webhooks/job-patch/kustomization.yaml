@@ -8,6 +8,3 @@ resources:
 - jobs.yaml
 - role.yaml
 - sa.yaml
-
-commonAnnotations:
-  argocd.argoproj.io/hook: PreSync
