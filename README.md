@@ -232,7 +232,7 @@
 [homelab-rssgen]: https://github.com/gruberdev/homelab/tree/main/apps/services/rss/gen
 [homelab-chatgpt]: https://github.com/gruberdev/homelab/tree/main/apps/services/chatgpt/discord-bot
 [homelab-p-chatgpt]: https://github.com/gruberdev/homelab/tree/main/apps/services/chatgpt/memory-plugin
-[homelab-milvus]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/services/mlops/milvus.yaml
+[homelab-milvus]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/mlops/milvus.yaml
 [homelab-sonarr]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/sonarr
 [homelab-prowlarr]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/prowlarr
 [homelab-rsshub]: https://github.com/gruberdev/homelab/tree/main/apps/services/rss/hub
