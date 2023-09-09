@@ -8,6 +8,8 @@ metadata:
     app.kubernetes.io/component: controller
   annotations:
     tailscale.com/hostname: "nginx-controller"
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/sync-wave: "1"
   name: ingress-nginx-controller
 spec:
   type: LoadBalancer
@@ -38,6 +40,9 @@ metadata:
     app.kubernetes.io/name: ingress-nginx
     app.kubernetes.io/part-of: ingress-nginx
     app.kubernetes.io/component: admission-webhook
+  annotations:
+    argocd.argoproj.io/hook: Sync
+    argocd.argoproj.io/sync-wave: "0"
   name: ingress-nginx-controller-admission
 spec:
   type: ClusterIP
