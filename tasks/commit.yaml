@@ -1,0 +1,52 @@
+version: '3'
+vars:
+  CYAN: tput setaf 6
+  RED: tput setaf 1
+  YELLOW: tput setaf 3
+  GREEN: tput setaf 2
+  BLUE: tput setaf 1
+  PURPLE: tput setaf 5
+  BG_B: tput setab 0
+  BOLD: tput bold
+  RESET: tput sgr0
+  CLEAR: tput reset
+  PATH_ERROR: is not installed or correctly configured in PATH.
+env:
+  VERSION: "1.3.1"
+
+silent: true
+
+# Thanks https://avasdream.engineer/kubernetes-longhorn-stuck-terminating
+
+tasks:
+  install:
+    preconditions:
+      - sh: "which pre-commit"
+        msg: "pre-commit {{.PATH_ERROR}}"
+    cmds:
+      - pre-commit install
+      - pre-commit install-hooks
+    ignore_error: true
+
+  test:
+    preconditions:
+      - sh: "which pre-commit"
+        msg: "pre-commit {{.PATH_ERROR}}"
+    cmds:
+      - pre-commit run --all-files
+
+  update:
+    preconditions:
+      - sh: "which pre-commit"
+        msg: "pre-commit {{.PATH_ERROR}}"
+    cmds:
+      - pre-commit autoupdate
+
+  default:
+    preconditions:
+      - sh: "which pre-commit"
+        msg: "pre-commit {{.PATH_ERROR}}"
+    cmds:
+      - task: install
+      - task: update
+      - task: test
