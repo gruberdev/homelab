@@ -3,6 +3,9 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: ingress-nginx-admission-create
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation,HookSucceeded,HookFailed
   labels:
     app.kubernetes.io/name: ingress-nginx
     app.kubernetes.io/part-of: ingress-nginx
@@ -45,11 +48,13 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: ingress-nginx-admission-patch
-
   labels:
     app.kubernetes.io/name: ingress-nginx
     app.kubernetes.io/part-of: ingress-nginx
     app.kubernetes.io/component: admission-webhook
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation,HookSucceeded,HookFailed
 spec:
   template:
     metadata:
