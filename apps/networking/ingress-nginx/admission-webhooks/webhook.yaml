@@ -2,8 +2,7 @@ apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
 metadata:
   annotations:
-    argocd.argoproj.io/hook: PreSync
-    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-wave: "-1"
   labels:
     app.kubernetes.io/name: ingress-nginx
     app.kubernetes.io/part-of: ingress-nginx
@@ -27,7 +26,4 @@ webhooks:
     admissionReviewVersions:
       - v1
     clientConfig:
-      service:
-        namespace: "networking"
-        name: ingress-nginx-controller-admission
-        path: /networking/v1/ingresses
+      url: "https://ingress-nginx-controller-admission.networking.svc.cluster.local/networking/v1/ingresses?timeout=35s"
