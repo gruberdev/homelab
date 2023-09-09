@@ -3,7 +3,6 @@ apiVersion: networking.k8s.io/v1
 kind: IngressClass
 metadata:
   annotations:
-    argocd.argoproj.io/hook: Sync
     argocd.argoproj.io/sync-wave: "1"
   labels:
     app.kubernetes.io/name: ingress-nginx
