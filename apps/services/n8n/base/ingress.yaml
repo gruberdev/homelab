@@ -5,9 +5,9 @@ metadata:
   annotations:
     external-dns.alpha.kubernetes.io/hostname: n8n.gruber.dev.br
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
-    cert-manager.io/cluster-issuer: "letsencrypt-production"
-    external-dns.alpha.kubernetes.io/ttl: "120"
+    cert-manager.io/cluster-issuer: letsencrypt-production
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    external-dns.alpha.kubernetes.io/ttl: "120"
 spec:
   ingressClassName: nginx
   rules:
