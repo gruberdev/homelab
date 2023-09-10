@@ -86,9 +86,11 @@ config/k3s/*.yaml
 !config/k3s/.gitkeep
 
 # Talos files
+
 config/talos/**/*.yaml
 config/talos/**/*.talosconfig
 config/talos/**/talosconfig
 !config/talos/controller-patch.yaml
 !config/talos/patch.yaml
 !config/talos/worker-patch.yaml
+config/**/*.yaml

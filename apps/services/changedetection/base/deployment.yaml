@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: detector
-          image: ghcr.io/dgtlmoon/changedetection.io:latest
+          image: ghcr.io/dgtlmoon/changedetection.io:0.45.1
           envFrom:
             - configMapRef:
                 name: change-cm
