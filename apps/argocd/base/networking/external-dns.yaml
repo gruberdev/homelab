@@ -5,14 +5,6 @@ metadata:
 spec:
   project: networking
   sources:
-    - repoURL: https://github.com/gruberdev/homelab.git
-      path: apps/networking/external-dns
-      targetRevision: main
-      helm:
-        releaseName: external-dns
-        namespace: networking
-        valueFiles:
-        - https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/external-dns/cvalues.yaml
     - repoURL: https://kubernetes-sigs.github.io/external-dns/
       chart: external-dns
       targetRevision: 1.13.1
