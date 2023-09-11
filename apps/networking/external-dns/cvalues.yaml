@@ -35,22 +35,8 @@ infoblox:
   noSslVerify: false
   wapiUsername: admin
 interval: 1m
-livenessProbe:
-  enabled: true
-  failureThreshold: 2
-  initialDelaySeconds: 10
-  periodSeconds: 10
-  successThreshold: 1
-  timeoutSeconds: 5
 logFormat: text
 logLevel: debug
-metrics:
-  enabled: true
-  googlePodMonitor:
-    enabled: false
-  serviceMonitor:
-    enabled: true
-    honorLabels: false
 ns1:
   minTTL: 10
 pdns:
@@ -71,13 +57,6 @@ rbac:
   clusterRole: true
   create: true
   pspEnabled: false
-readinessProbe:
-  enabled: true
-  failureThreshold: 6
-  initialDelaySeconds: 5
-  periodSeconds: 10
-  successThreshold: 1
-  timeoutSeconds: 5
 registry: txt
 txtOwnerId: external-dns
 textPrefix: unique
@@ -124,13 +103,6 @@ args:
 sources:
   - service
   - ingress
-startupProbe:
-  enabled: true
-  failureThreshold: 6
-  initialDelaySeconds: 20
-  periodSeconds: 10
-  successThreshold: 1
-  timeoutSeconds: 5
 triggerLoopOnEvent: false
 useDaemonset: false
 watchReleaseNamespace: false
