@@ -42,10 +42,6 @@ ns1:
 pdns:
   apiPort: "8081"
 podAntiAffinityPreset: soft
-podSecurityContext:
-  enabled: true
-  fsGroup: 1001
-  runAsUser: 1001
 policy: sync
 podAnnotations:
   reloader.stakater.com/auto: "true"
