@@ -5,14 +5,14 @@ metadata:
 spec:
   project: networking
   sources:
-    - repoURL: https://kubernetes-sigs.github.io/external-dns/
+    - repoURL: https://kubernetes-sigs.github.io/external-dns
       chart: external-dns
       targetRevision: 1.13.1
       helm:
         releaseName: external-dns
         namespace: networking
         valueFiles:
-        - https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/external-dns/cvalues.yaml
+        - $values/apps/networking/external-dns/cvalues.yaml
     - repoURL: https://github.com/kubernetes-sigs/external-dns.git
       path: charts/external-dns
       targetRevision: v0.13.6
@@ -20,7 +20,10 @@ spec:
         releaseName: external-dns
         namespace: networking
         valueFiles:
-        - https://raw.githubusercontent.com/gruberdev/homelab/main/apps/networking/external-dns/cvalues.yaml
+        - $values/apps/networking/external-dns/cvalues.yaml
+    - repoURL: https://github.com/gruberdev/homelab.git
+      targetRevision: main
+      ref: values
   destination:
     namespace: networking
     name: in-cluster
