@@ -31,13 +31,14 @@ spec:
     automated:
       prune: true
       selfHeal: true
-      allowEmpty: true
+      allowEmpty: false
     syncOptions:
-    - Validate=true
+    - Validate=false
     - CreateNamespace=false
     - PrunePropagationPolicy=foreground
     - ApplyOutOfSyncOnly=false
     - Prune=true
+    - ServerSideApply=true
     retry:
       limit: 5
       backoff:
