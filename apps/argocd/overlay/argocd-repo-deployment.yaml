@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: argocd-repo-server
   annotations:
-    link.argocd.argoproj.io/external-link: http://argo.gruber.dev.br
+    link.argocd.argoproj.io/external-link: https://argo.gruber.dev.br
   labels:
     app.kubernetes.io/name: argocd-repo-server
     app.kubernetes.io/part-of: argocd
@@ -19,11 +19,11 @@ spec:
           emptyDir: {}
       initContainers:
       - name: download-tools
-        image: docker.io/grubertech/argocd-sidecar:v2.6.2
+        image: docker.io/grubertech/argocd-sidecar:v2.8.3
         imagePullPolicy: Always
         env:
           - name: AVP_VERSION
-            value: 1.13.1
+            value: 1.16.1
         command: [sh, -c]
         args:
           - >-
@@ -36,7 +36,7 @@ spec:
       containers:
       - name: avp-helm
         command: [/var/run/argocd/argocd-cmp-server]
-        image: docker.io/grubertech/argocd-sidecar:v2.6.2
+        image: docker.io/grubertech/argocd-sidecar:v2.8.3
         imagePullPolicy: Always
         securityContext:
           runAsNonRoot: true
@@ -56,7 +56,7 @@ spec:
             mountPath: /usr/local/bin/argocd-vault-plugin
       - name: avp-kustomize
         command: [/var/run/argocd/argocd-cmp-server]
-        image: docker.io/grubertech/argocd-sidecar:v2.6.2
+        image: docker.io/grubertech/argocd-sidecar:v2.8.3
         imagePullPolicy: Always
         securityContext:
           runAsNonRoot: true
@@ -76,7 +76,7 @@ spec:
             mountPath: /usr/local/bin/argocd-vault-plugin
       - name: avp
         command: [/var/run/argocd/argocd-cmp-server]
-        image: docker.io/grubertech/argocd-sidecar:v2.6.2
+        image: docker.io/grubertech/argocd-sidecar:v2.8.3
         imagePullPolicy: Always
         securityContext:
           runAsNonRoot: true

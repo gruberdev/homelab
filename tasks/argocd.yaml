@@ -12,7 +12,7 @@ vars:
   CLEAR: tput reset
   INT_REGISTRY: registry.localhost
   PATH_ERROR: is not installed or correctly configured in PATH.
-  ARGOCD_VERSION: 2.6.2
+  ARGOCD_VERSION: 2.8.3
 
 silent: true
 
