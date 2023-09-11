@@ -142,7 +142,6 @@ patchesStrategicMerge:
 - overlay/argocd-cm.yaml
 - overlay/cloudflared-cm.yaml
 - overlay/argocd-rbac.yaml
-- overlay/tailscale-rb.yaml
 - overlay/argocd-cr.yaml
 
 namespace: argocd
