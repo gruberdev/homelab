@@ -29,10 +29,10 @@ spec:
         namespace: networking
         valueFiles:
         - $values/apps/networking/external-dns/cvalues.yaml
+    - repoURL: https://github.com/gruberdev/homelab.git
+      targetRevision: main
+      ref: values
     # Awaiting this PR to be merged https://github.com/gczuczy/argo-cd/blob/multi-source-combine-signedoff/docs/user-guide/multiple_sources.md
-    # - repoURL: https://github.com/gruberdev/homelab.git
-    #   targetRevision: main
-    #   ref: values
     #   plugin:
     #     name: argocd-vault-plugin-helm
     #     env:
