@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    name: sealed-secrets-controller
+  name: sealed-secrets-controller
+spec:
+  selector:
+    matchLabels:
+      name: sealed-secrets-controller
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        name: sealed-secrets-controller
+    spec:
+      containers:
+      - name: sealed-secrets-controller
+        args: []
+        command:
+          - controller
+        image: docker.io/bitnami/sealed-secrets-controller:v0.23.1
+        imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: 8080
+            name: http
+        resources:
+          limits:
+            cpu: 120m
+            memory: 350Mi
+          requests:
+            cpu: 50m
+            memory: 256Mi
+        startupProbe:
+          httpGet:
+            path: /healthz
+            port: http
+          initialDelaySeconds: 60
+          periodSeconds: 15
+          timeoutSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: http
