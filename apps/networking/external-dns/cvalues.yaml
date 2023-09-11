@@ -9,9 +9,6 @@ domainFilters:
   - gruber.dev.br
 azure:
   useManagedIdentityExtension: false
-cloudflare:
-  apiKey: <path:kv/data/cloudflare#api-key>
-  email: <path:kv/data/cloudflare#email>
   proxied: false
 clusterDomain: cluster.local
 combineFQDNAnnotation: false

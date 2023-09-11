@@ -13,6 +13,14 @@ spec:
         namespace: networking
         valueFiles:
         - $values/apps/networking/external-dns/cvalues.yaml
+      plugin:
+        name: argocd-vault-plugin-helm
+        env:
+          - name: HELM_VALUES
+            value: |
+              cloudflare:
+                apiKey: <path:kv/data/cloudflare#api-key>
+                email: <path:kv/data/cloudflare#email>
     - repoURL: https://github.com/kubernetes-sigs/external-dns.git
       path: charts/external-dns
       targetRevision: v0.13.6
@@ -21,6 +29,14 @@ spec:
         namespace: networking
         valueFiles:
         - $values/apps/networking/external-dns/cvalues.yaml
+      plugin:
+        name: argocd-vault-plugin-helm
+        env:
+          - name: HELM_VALUES
+            value: |
+              cloudflare:
+                apiKey: <path:kv/data/cloudflare#api-key>
+                email: <path:kv/data/cloudflare#email>
     - repoURL: https://github.com/gruberdev/homelab.git
       targetRevision: main
       ref: values
