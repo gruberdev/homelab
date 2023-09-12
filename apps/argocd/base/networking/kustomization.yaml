@@ -3,5 +3,6 @@ kind: Kustomization
 
 resources:
 - external-dns.yaml
+- cert-manager.yaml
 
 namespace: argocd
