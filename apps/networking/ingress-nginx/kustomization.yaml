@@ -11,6 +11,5 @@ resources:
 - svc.yaml
 - role.yaml
 - sa.yaml
-- ./admission-webhooks
 
 namespace: networking
