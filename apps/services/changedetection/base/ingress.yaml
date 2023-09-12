@@ -7,6 +7,7 @@ metadata:
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
     external-dns.alpha.kubernetes.io/ttl: "120"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    tailscale.com/hostname: "onchange"
 spec:
   ingressClassName: nginx
   rules:
