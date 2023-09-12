@@ -3,7 +3,6 @@ kind: Ingress
 metadata:
   name: change-ingress
   annotations:
-    external-dns.alpha.kubernetes.io/target: services-change-svc.raptor-beta.ts.net
     external-dns.alpha.kubernetes.io/hostname: onchange.gruber.dev.br
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
     external-dns.alpha.kubernetes.io/ttl: "120"
