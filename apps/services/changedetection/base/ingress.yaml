@@ -9,7 +9,7 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     tailscale.com/hostname: "onchange"
 spec:
-  ingressClassName: nginx
+  ingressClassName: tailscale
   rules:
   - host: onchange.gruber.dev.br
     http:
