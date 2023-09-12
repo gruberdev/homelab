@@ -21,24 +21,23 @@ spec:
           secretName: operator-oauth
       containers:
       - name: operator
-        image: docker.io/grubertech/tailscale-operator:1.49
+        image: docker.io/grubertech/tailscale-operator:ingress
         imagePullPolicy: Always
         resources:
           requests:
-            cpu: 250m
+            cpu: 300m
             memory: 256Mi
           limits:
-            cpu: 400m
+            cpu: 700m
             memory: 512Mi
+        command:
+        - /usr/local/bin/operators
+        - --enable-dns=true
         env:
         - name: OPERATOR_HOSTNAME
           value: operator
         - name: OPERATOR_SECRET
           value: operator
-        - name: TS_ACCEPT_DNS
-          value: "true"
-        - name: TS_ROUTES
-          value: "true"
         - name: OPERATOR_LOGGING
           value: debug
         - name: OPERATOR_NAMESPACE
@@ -50,7 +49,7 @@ spec:
         - name: CLIENT_SECRET_FILE
           value: /oauth/client_secret
         - name: PROXY_IMAGE
-          value: docker.io/grubertech/tailscale-proxy:1.49
+          value: docker.io/grubertech/tailscale-proxy:ingress
         - name: PROXY_TAGS
           value: tag:k8s
         - name: AUTH_PROXY
@@ -59,3 +58,50 @@ spec:
         - name: oauth
           mountPath: /oauth
           readOnly: true
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nameserver
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: nameserver
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: nameserver
+    spec:
+      containers:
+      - image: docker.io/grubertech/tailscale-nameserver:ingress
+        imagePullPolicy: Always
+        name: nameserver
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        resources:
+          requests:
+            cpu: 250m
+            memory: 256Mi
+          limits:
+            cpu: 400m
+            memory: 512Mi
+        ports:
+        - name: udp
+          protocol: UDP
+          containerPort: 1053
+        volumeMounts:
+        - name: dnsconfig
+          mountPath: /config
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      serviceAccount: nameserver
+      serviceAccountName: nameserver
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: dnsconfig
+        configMap:
+          name: dnsconfig
