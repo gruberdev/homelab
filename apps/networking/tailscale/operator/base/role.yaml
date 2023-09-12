@@ -18,3 +18,14 @@ rules:
 - apiGroups: ["apps"]
   resources: ["statefulsets"]
   verbs: ["*"]
+- apiGroups:
+  - ""
+  resourceNames:
+  - dnsconfig
+  resources:
+  - configmaps
+  verbs:
+  - get
+  - watch
+  - list
+  - update
