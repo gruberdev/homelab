@@ -2,6 +2,8 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: external-dns
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: networking
   sources:
@@ -12,18 +14,8 @@ spec:
         releaseName: external-dns
         namespace: networking
         values: |
-          aws:
-            apiRetries: 3
-            batchChangeSize: 1000
-            credentials:
-              mountPath: /.aws
-            region: us-east-1
-            zonesCacheDuration: 0
           domainFilters:
             - gruber.dev.br
-          azure:
-            useManagedIdentityExtension: false
-            proxied: false
           clusterDomain: cluster.local
           combineFQDNAnnotation: false
           containerPorts:
@@ -58,10 +50,10 @@ spec:
             reloader.stakater.com/auto: "true"
           provider: cloudflare
           env:
-          - name: CF_API_KEY
-            value: "<path:kv/data/cloudflare#api-key>"
-          - name: CF_API_EMAIL
-            value: "<path:kv/data/cloudflare#email>"
+            - name: CF_API_KEY
+              value: "<path:kv/data/cloudflare#api-key>"
+            - name: CF_API_EMAIL
+              value: "<path:kv/data/cloudflare#email>"
           publishHostIP: false
           publishInternalServices: true
           rbac:
@@ -101,7 +93,7 @@ spec:
             type: Recreate
           args:
             - --events
-            - --log-level=debug
+            - --log-level=info
             - --policy=sync
             - --provider=cloudflare
             - --source=ingress
