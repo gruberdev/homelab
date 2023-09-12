@@ -7,6 +7,4 @@ resources:
 - rb.yaml
 - role.yaml
 - sa.yaml
-- svc.yaml
-- cm.yaml
 # - secret.yaml
