@@ -57,9 +57,11 @@ spec:
           podAnnotations:
             reloader.stakater.com/auto: "true"
           provider: cloudflare
-          cloudflare:
-            apiKey: <path:kv/data/cloudflare#api-key>
-            email: <path:kv/data/cloudflare#email>
+          env:
+          - name: CF_API_KEY
+            value: "<path:kv/data/cloudflare#api-key>"
+          - name: CF_API_EMAIL
+            value: "<path:kv/data/cloudflare#email>"
           publishHostIP: false
           publishInternalServices: true
           rbac:
