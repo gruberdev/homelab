@@ -46,7 +46,7 @@ env:
   INTERFACE: enp1s0
   KVVERSION: v0.5.7
   K3D_VERSION: v5.4.6
-  INSTALL_K3S_VERSION: v1.27.4+k3s1
+  INSTALL_K3S_VERSION: v1.28.1+k3s1
 
 silent: true
 
