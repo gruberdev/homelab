@@ -10,15 +10,16 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - http:
+  - host: read.gruber.dev.br
+    http:
       paths:
-      - backend:
+      - path: /
+        pathType: Prefix
+        backend:
           service:
             name: tanoshi-svc
             port:
               name: web
-        path: /
-        pathType: Exact
   tls:
   - hosts:
     - read.gruber.dev.br
