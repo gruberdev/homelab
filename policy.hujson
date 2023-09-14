@@ -9,8 +9,8 @@
 		// All clients can access cluster applications
 		{
 			"action": "accept",
-			"src":    ["tag:clients"],
-			"dst":    ["tag:cluster:*", "tag:k8s:*", "tag:k8s-operator:*", "tag:nodes:*"],
+			"src":    ["tag:clients", "10.43.0.0/16", "10.42.0.0/16", "2001:cafe:42:1::/112", "2001:cafe:42:0::/56"],
+			"dst":    ["tag:cluster:*", "tag:k8s:*", "tag:k8s-operator:*", "tag:nodes:*", "10.43.0.0/16:*", "10.42.0.0/16:*", "2001:cafe:42:1::/112:*", "2001:cafe:42:0::/56:*"],
 		},
 		// Clients can access all the nodes
 		// Matrix related applications can access databases
@@ -20,16 +20,6 @@
 			"dst":    ["tag:database:*", "tag:k8s:*", "tag:matrix:*"],
 		},
 		// Network hardware can access all the nodes
-		{
-			"action": "accept",
-			"src":    ["tag:nodes"],
-			"dst":    ["*:*"],
-		},
-		{
-			"action": "accept",
-			"src": ["tag:links"],
-			"dst": ["*:*"],
-		},
 		{
 			"action": "accept",
 			"src":    ["tag:k8s", "tag:k8s-operator", "tag:clients", "tag:nodes"],
@@ -42,8 +32,13 @@
 		},
 		{
 			"action": "accept",
+			"src":    ["tag:k8s"],
+			"dst":    ["tag:k8s:*", "tag:k8s-operator:*", "tag:database:*", "tag:nodes:*"],
+		},
+		{
+			"action": "accept",
 			"src":    ["tag:k8s-operator"],
-			"dst":    ["tag:k8s:*", "tag:k8s-operator:*", "tag:nodes:*"],
+			"dst": ["*:*"],
 		},
 	],
 	"groups": {
@@ -78,17 +73,21 @@
 	"autoApprovers": {
 		"routes": {
 			"192.168.1.0/24": [
-				"tag:internal"
+				"tag:internal",
+				"tag:nodes"
 			],
 			"10.43.0.0/16": [
-				"tag:cluster"
+				"tag:cluster",
+				"tag:k8s-operator"
 			],
 			"10.42.0.0/16": [
 				"rpg.gruber@gmail.com",
+				"tag:k8s-operator",
 				"tag:cluster"
 			],
 			"2001:cafe:42:0::/56": [
 				"rpg.gruber@gmail.com",
+				"tag:k8s-operator",
 				"tag:cluster"
 			]
 		},
