@@ -2,8 +2,10 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: certmanager
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
-  project: core
+  project: networking
   source:
     repoURL: https://charts.jetstack.io
     chart: cert-manager
@@ -14,6 +16,7 @@ spec:
         acmesolver:
           image:
             repository: quay.io/jetstack/cert-manager-acmesolver
+            tag: v1.12.4
         cainjector:
           containerSecurityContext:
             allowPrivilegeEscalation: false
@@ -24,6 +27,7 @@ spec:
           image:
             pullPolicy: IfNotPresent
             repository: quay.io/jetstack/cert-manager-cainjector
+            tag: v1.12.4
           nodeSelector:
             kubernetes.io/arch: amd64
             kubernetes.io/os: linux
@@ -60,6 +64,7 @@ spec:
         image:
           pullPolicy: IfNotPresent
           repository: quay.io/jetstack/cert-manager-controller
+          tag: v1.12.4
         installCRDs: true
         maxConcurrentChallenges: 60
         nodeSelector:
@@ -101,6 +106,7 @@ spec:
           image:
             pullPolicy: IfNotPresent
             repository: quay.io/jetstack/cert-manager-ctl
+            tag: v1.12.4
           jobAnnotations:
             helm.sh/hook: post-install
             helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
@@ -141,9 +147,10 @@ spec:
           image:
             pullPolicy: IfNotPresent
             repository: quay.io/jetstack/cert-manager-webhook
+            tag: v1.12.4
           livenessProbe:
             failureThreshold: 3
-            initialDelaySeconds: 60
+            initialDelaySeconds: 30
             periodSeconds: 10
             successThreshold: 1
             timeoutSeconds: 1
@@ -192,7 +199,6 @@ spec:
             create: true
           serviceType: ClusterIP
           timeoutSeconds: 10
-
   destination:
     namespace: cert-manager
     name: in-cluster
@@ -204,10 +210,9 @@ spec:
     syncOptions:
     - Validate=false
     - CreateNamespace=true
-    - PrunePropagationPolicy=foreground
-    - PruneLast=true
-    - ApplyOutOfSyncOnly=false
     - Prune=true
+    - RespectIgnoreDifferences=true
+    - ServerSideApply=true
     retry:
       limit: 5
       backoff:

@@ -4,14 +4,16 @@ metadata:
   name: change-svc
   labels:
     app: change-server
-    tailscale.com/hostname: "onchange"
 spec:
   selector:
     app: change-server
+  ipFamilyPolicy: PreferDualStack
+  ipFamilies:
+  - IPv4
+  - IPv6
   ports:
     - name: web
       port: 80
       targetPort: 5000
       protocol: TCP
-  loadBalancerClass: tailscale
-  type: LoadBalancer
+  type: ClusterIP

@@ -23,5 +23,12 @@
   "argocd": {
     "enabled": true,
     "fileMatch": ["apps/argocd/.+\\.yaml$"]
-  }
+  },
+  "kustomize": {
+    "fileMatch": [
+      "(^|/)kustomization\\.ya?ml$"
+    ],
+    "enabled": true
+  },
+  "pinDigests":true
 }

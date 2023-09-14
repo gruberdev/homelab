@@ -4,6 +4,7 @@ metadata:
   labels:
     name: sealed-secrets-controller
   name: sealed-secrets-controller
+  namespace: kube-system
 spec:
   ports:
   - port: 8080

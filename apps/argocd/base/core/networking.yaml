@@ -1,15 +1,16 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: sealed-secrets
+  name: networking
+  namespace: argocd
 spec:
-  project: cluster
+  project: networking
   source:
     repoURL: 'https://github.com/gruberdev/homelab.git'
-    path: apps/monitoring/sealed-secrets
+    path: apps/argocd/base/networking
     targetRevision: main
   destination:
-    namespace: kube-system
+    namespace: networking
     name: in-cluster
   syncPolicy:
     automated:
@@ -17,9 +18,11 @@ spec:
       selfHeal: true
       allowEmpty: true
     syncOptions:
-    - RespectIgnoreDifferences=true
-    - ServerSideApply=true
     - Validate=false
+    - CreateNamespace=false
+    - PrunePropagationPolicy=foreground
+    - PruneLast=true
+    - ApplyOutOfSyncOnly=false
     retry:
       limit: 10
       backoff:

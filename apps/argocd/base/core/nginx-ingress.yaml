@@ -2,6 +2,8 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: ingress-nginx
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: cluster
   source:
@@ -17,11 +19,13 @@ spec:
       selfHeal: true
       allowEmpty: true
     syncOptions:
-    - Validate=true
+    - Validate=false
     - CreateNamespace=false
     - PrunePropagationPolicy=foreground
-    - PruneLast=true
+    - ApplyOutOfSyncOnly=false
     - Prune=true
+    - RespectIgnoreDifferences=true
+    - ServerSideApply=true
     retry:
       limit: 10
       backoff:

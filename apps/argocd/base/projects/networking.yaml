@@ -3,7 +3,7 @@ kind: AppProject
 metadata:
   name: networking
 spec:
-  description: Networking Project
+  description: Networking related Kubernetes resources
   sourceRepos:
   - '*'
   destinations:
@@ -17,8 +17,10 @@ spec:
     server: https://kubernetes.default.svc
   - namespace: networking
     server: https://kubernetes.default.svc
+  - namespace: external-dns
+    server: https://kubernetes.default.svc
   clusterResourceWhitelist:
   - group: '*'
     kind: '*'
   orphanedResources:
-    warn: false
+    warn: true

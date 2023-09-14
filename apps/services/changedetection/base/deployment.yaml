@@ -9,6 +9,7 @@ metadata:
     link.argocd.argoproj.io/external-link: http://onchange.gruber.dev.br
 spec:
   replicas: 1
+  revisionHistoryLimit: 0
   strategy:
     type: Recreate
   selector:

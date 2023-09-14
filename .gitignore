@@ -94,3 +94,4 @@ config/talos/**/talosconfig
 !config/talos/patch.yaml
 !config/talos/worker-patch.yaml
 config/**/*.yaml
+apps/services/changedetection/base/svc.yaml

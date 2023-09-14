@@ -16,19 +16,20 @@ resources:
 # - base/core/redis.yaml
 - base/core/storage.yaml
 - base/core/tailscale-operator.yaml
-- base/core/external-dns.yaml
 - base/core/nginx-ingress.yaml
-- base/core/certmanager.yaml
 - base/core/issuer.yaml
 - base/core/kube-vip.yaml
 - base/core/nvidia.yaml
 - base/core/nvidia-extra.yaml
-# - base/core/sealed.yaml
+- base/core/sealed.yaml
 # - base/core/tailscale.yaml
 # - base/core/velero.yaml
 # - base/core/private.yaml
 # - base/core/democratic-csi.yaml
 # - base/core/router.yaml
+
+# Networking AoA
+- base/core/networking.yaml
 
 # Utilities
 - base/utilities/reloader.yaml
@@ -140,7 +141,6 @@ patchesStrategicMerge:
 - overlay/argocd-cm.yaml
 - overlay/cloudflared-cm.yaml
 - overlay/argocd-rbac.yaml
-- overlay/tailscale-rb.yaml
 - overlay/argocd-cr.yaml
 
 namespace: argocd
