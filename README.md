@@ -240,8 +240,8 @@
 [homelab-beets]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/beets
 [homelab-lidarr]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/lidarr
 [homelab-metabase]: https://github.com/gruberdev/homelab/tree/main/apps/data/metabase
-[homelab-certmanager]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/core/external-dns.yaml
-[homelab-externaldns]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/core/external-dns.yaml
+[homelab-certmanager]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/networking/certmanager.yaml
+[homelab-externaldns]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/networking/external-dns.yaml
 [homelab-jellyfin]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/jellyfin
 [homelab-agones]: https://github.com/gruberdev/homelab/tree/main/apps/services/agones
 [homelab-gpu-exporter]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/monitoring/nvidia.yaml
