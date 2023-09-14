@@ -27,6 +27,11 @@
 		},
 		{
 			"action": "accept",
+			"src":    ["tag:nodes"],
+			"dst":    ["*:*"],
+		},
+		{
+			"action": "accept",
 			"src":    ["tag:k8s"],
 			"dst":    ["tag:k8s:*", "tag:k8s-operator:*", "tag:database:*", "tag:nodes:*"],
 		},
