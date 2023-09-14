@@ -32,7 +32,7 @@ spec:
             memory: 512Mi
         env:
           - name: OPERATOR_HOSTNAME
-            value: operator
+            value: k8s-operator
           - name: OPERATOR_SECRET
             value: operator
           - name: OPERATOR_LOGGING
@@ -46,7 +46,7 @@ spec:
           - name: CLIENT_SECRET_FILE
             value: /oauth/client_secret
           - name: PROXY_IMAGE
-            value: docker.io/grubertech/tailscale-proxy:latest
+            value: docker.io/tailscale/tailscale:unstable
           - name: PROXY_TAGS
             value: tag:k8s
           - name: AUTH_PROXY
