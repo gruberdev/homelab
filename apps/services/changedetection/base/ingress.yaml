@@ -10,16 +10,15 @@ metadata:
 spec:
   ingressClassName: tailscale
   rules:
-  - host: onchange.gruber.dev.br
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: change-svc
-            port:
-              name: web
+    - http:
+        paths:
+          - path: /
+            pathType: Exact
+            backend:
+              service:
+                name: change-svc
+                port:
+                  name: web
   tls:
   - hosts:
     - onchange.gruber.dev.br
