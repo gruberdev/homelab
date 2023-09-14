@@ -92,8 +92,7 @@ spec:
         persistentVolumeClaim:
           claimName: unifi-storage
       - name: logs
-        persistentVolumeClaim:
-          claimName: unifi-logs
+        emptyDir: {}
       - name: certs
         persistentVolumeClaim:
           claimName: unifi-certificates
