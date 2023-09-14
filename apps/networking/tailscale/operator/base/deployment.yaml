@@ -37,6 +37,10 @@ spec:
             value: operator
           - name: OPERATOR_LOGGING
             value: debug
+          - name: TS_ACCEPT_DNS
+            value: "true"
+          - name: TS_ROUTES
+            value: "true"
           - name: OPERATOR_NAMESPACE
             valueFrom:
               fieldRef:
