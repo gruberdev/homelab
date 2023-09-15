@@ -18,10 +18,11 @@ spec:
       allowEmpty: false
     syncOptions:
     - Validate=false
-    - CreateNamespace=false
+    - CreateNamespace=true
     - PrunePropagationPolicy=foreground
     - ApplyOutOfSyncOnly=false
     - Prune=true
+    - ServerSideApply=true
     retry:
       limit: 10
       backoff:
