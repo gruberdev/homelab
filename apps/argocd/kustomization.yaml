@@ -130,9 +130,9 @@ resources:
 # Custom CSS Styles
 - base/styles-cm.yaml
 
-components:
-# Extensions controller component
-- https://github.com/argoproj-labs/argocd-extensions/manifests
+# components:
+# # Extensions controller component
+# - https://github.com/argoproj-labs/argocd-extensions/manifests
 
 patchesStrategicMerge:
 - overlay/argocd-svc.yaml
