@@ -1,0 +1,35 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+helmCharts:
+- name: redis-operator
+  includeCRDs: true
+  valuesInline:
+    redisOperator:
+      name: redis-operator
+      imageName: quay.io/opstree/redis-operator
+      imageTag: v0.15.0
+      imagePullPolicy: IfNotPresent
+    resources:
+      limits:
+        cpu: 300m
+        memory: 600Mi
+      requests:
+        cpu: 100m
+        memory: 200Mi
+    replicas: 1
+    serviceAccountName: redis-operator
+    tolerateAllTaints: false
+    service:
+      name: webhook-service
+      namespace: redis-operator
+    certificate:
+      name: redis-self-cert
+      secretName: redis-webhook-cert
+    issuer:
+      type: selfSigned
+      name: redis-operator-issuer
+    cert-manager:
+      enabled: true
+  releaseName: redis-operator
+  version: 0.15.3
+  repo: https://ot-container-kit.github.io/helm-charts
