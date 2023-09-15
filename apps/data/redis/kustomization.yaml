@@ -33,5 +33,3 @@ helmCharts:
   releaseName: redis-operator
   version: 0.15.3
   repo: https://ot-container-kit.github.io/helm-charts
-
-namespace: redis-operator
