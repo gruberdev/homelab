@@ -5,33 +5,11 @@ metadata:
 spec:
   project: cluster
   source:
-    repoURL: https://ot-container-kit.github.io/helm-charts
-    targetRevision: 0.15.3
-    chart: redis-operator
-    helm:
-      releaseName: redis-operator
-      values: |
-          nodeSelector:
-            kubernetes.io/hostname: node-one
-          redisOperator:
-            imageName: quay.io/opstree/redis-operator
-            imagePullPolicy: Always
-            imageTag: v0.12.0
-            name: redis-operator
-            podAnnotations:
-              reloader.stakater.com/auto: "true"
-          replicas: 1
-          resources:
-            limits:
-              cpu: 300m
-              memory: 600Mi
-            requests:
-              cpu: 100m
-              memory: 200Mi
-          serviceAccountName: redis-operator
-          tolerateAllTaints: false
+    repoURL: 'https://github.com/gruberdev/homelab.git'
+    path: apps/data/redis
+    targetRevision: main
   destination:
-    namespace: databases
+    namespace: redis-operator
     name: in-cluster
   syncPolicy:
     automated:
@@ -40,15 +18,14 @@ spec:
       allowEmpty: true
     syncOptions:
     - Validate=false
-    - CreateNamespace=false
-    - PrunePropagationPolicy=background
-    - PruneLast=true
-    - ServerSideApply=true
+    - CreateNamespace=true
+    - PrunePropagationPolicy=foreground
     - ApplyOutOfSyncOnly=false
     - Prune=true
+    - ServerSideApply=true
     retry:
       limit: 10
       backoff:
-        duration: 5s
+        duration: 20s
         factor: 2
-        maxDuration: 3m
+        maxDuration: 15m
