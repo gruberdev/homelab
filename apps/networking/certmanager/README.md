@@ -1,5 +1,6 @@
+
 <p align="center">
-  <img width="350" height="250" src="https://raw.githubusercontent.com/gruberdev/homelab/main/docs/assets/logos/certmanager.svg" />
+  <img width="236" height="236" src="https://raw.githubusercontent.com/gruberdev/homelab/main/docs/assets/logos/certmanager.svg" />
   <br />
   <img src="https://img.shields.io/github/v/release/kubernetes-sigs/external-dns?label=Latest%20Version&logo=github&style=for-the-badge" />
 </p>
