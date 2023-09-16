@@ -293,14 +293,6 @@ spec:
           ingress:
             enabled: false
           namespaceOverride: monitoring
-          grafana.ini:
-            security:
-              cookie_secure: false
-            server:
-              domain: grafana.gruber.dev.br
-              protocol: https
-              root_url: "%(protocol)s://%(domain)"
-              serve_from_sub_path: true
           plugins:
           - grafana-image-renderer
           - grafana-piechart-panel
@@ -852,3 +844,22 @@ spec:
     name: kube-prometheus-kube-prome-admission
     jsonPointers:
     - /webhooks/0/failurePolicy
+info:
+  - name: 'Github Repository:'
+    value: >-
+      https://github.com/prometheus-operator/kube-prometheus
+  - name: 'Chart location:'
+    value: >-
+      https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack
+  - name: 'Official Website:'
+    value: >-
+      https://cert-manager.io/
+  - name: 'Documentation:'
+    value: >-
+      https://cert-manager.io/docs/
+  - name: 'Cloudflare issuer documentation:'
+    value: >-
+      https://cert-manager.io/docs/configuration/acme/dns01/cloudflare/
+  - name: 'Issuing certificates documentation:'
+    value: >-
+      https://cert-manager.io/docs/usage/certificate/
