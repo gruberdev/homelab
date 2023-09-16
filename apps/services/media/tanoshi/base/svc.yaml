@@ -31,4 +31,5 @@ spec:
     port: 32380
     targetPort: 80
     protocol: TCP
+  loadBalancerClass: kube-vip.io/kube-vip-class
   type: LoadBalancer
