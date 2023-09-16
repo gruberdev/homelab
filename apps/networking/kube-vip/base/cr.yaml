@@ -28,3 +28,6 @@ rules:
   - apiGroups: [""]
     resources: ["nodes", "services"]
     verbs: ["list","get","watch","update"]
+  - apiGroups: ["coordination.k8s.io"]
+    resources: ["leases"]
+    verbs: ["*"]
