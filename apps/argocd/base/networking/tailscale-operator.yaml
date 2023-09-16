@@ -11,18 +11,25 @@ spec:
   destination:
     namespace: tailscale
     name: in-cluster
+  info:
+    - name: 'Github Repository:'
+      value: >-
+        https://github.com/tailscale/tailscale
+    - name: 'Github feature issue:'
+      value: >-
+        https://github.com/tailscale/tailscale/issues/502
+    - name: 'Documentation:'
+      value: >-
+        https://tailscale.com/kb/1236/kubernetes-operator/
   syncPolicy:
     automated:
-      prune: false
+      prune: true
       selfHeal: true
       allowEmpty: true
     syncOptions:
     - Validate=false
     - CreateNamespace=true
     - PrunePropagationPolicy=foreground
-    - PruneLast=true
-    - ApplyOutOfSyncOnly=false
-    - Prune=true
     retry:
       limit: 5
       backoff:
