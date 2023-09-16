@@ -813,6 +813,22 @@ spec:
   destination:
     namespace: monitoring
     name: in-cluster
+  info:
+    - name: 'Github Repository:'
+      value: >-
+        https://github.com/prometheus-operator/kube-prometheus
+    - name: 'Chart location:'
+      value: >-
+        https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack
+    - name: 'Official Website:'
+      value: >-
+        https://prometheus-operator.dev/
+    - name: 'Documentation:'
+      value: >-
+        https://prometheus-operator.dev/docs/prologue/introduction/
+    - name: 'k3s useful documentation:'
+      value: >-
+        https://picluster.ricsanfre.com/docs/prometheus/#k3s-components-monitoring
   syncPolicy:
     automated:
       prune: true
@@ -844,19 +860,3 @@ spec:
     name: kube-prometheus-kube-prome-admission
     jsonPointers:
     - /webhooks/0/failurePolicy
-info:
-  - name: 'Github Repository:'
-    value: >-
-      https://github.com/prometheus-operator/kube-prometheus
-  - name: 'Chart location:'
-    value: >-
-      https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack
-  - name: 'Official Website:'
-    value: >-
-      https://prometheus-operator.dev/
-  - name: 'Documentation:'
-    value: >-
-      https://prometheus-operator.dev/docs/prologue/introduction/
-  - name: 'k3s useful documentation:'
-    value: >-
-      https://picluster.ricsanfre.com/docs/prometheus/#k3s-components-monitoring
