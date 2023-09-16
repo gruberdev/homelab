@@ -1,0 +1,127 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: external-dns-nextdns
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: networking
+  sources:
+    - repoURL: https://kubernetes-sigs.github.io/external-dns
+      chart: external-dns
+      targetRevision: 1.13.1
+      helm:
+        releaseName: external-dns-nextdns
+        namespace: networking
+        values: |
+          nameOverride: "external-dns-nextdns"
+          domainFilters:
+            - gruber.dev.br
+          clusterDomain: cluster.local
+          combineFQDNAnnotation: false
+          containerPorts:
+            http: 7979
+          crd:
+            create: true
+          designate:
+            customCA:
+              enabled: false
+              filename: designate-ca.pem
+              mountPath: /config/designate
+          dryRun: false
+          forceTxtOwnerId: false
+          ignoreHostnameAnnotation: false
+          image:
+            pullPolicy: Always
+            repository: docker.io/grubertech/external-dns
+            tag: v0.13.6
+          infoblox:
+            noSslVerify: false
+            wapiUsername: admin
+          interval: 1m
+          logFormat: text
+          logLevel: debug
+          ns1:
+            minTTL: 10
+          pdns:
+            apiPort: "8081"
+          podAntiAffinityPreset: soft
+          policy: sync
+          podAnnotations:
+            reloader.stakater.com/auto: "true"
+          provider: nextdns
+          env:
+            - name: EXTERNAL_DNS_NEXTDNS_PROFILE_ID
+              value: "<path:kv/data/nextdns#accountid>"
+            - name: EXTERNAL_DNS_NEXTDNS_API_KEY
+              value: "<path:kv/data/nextdns#apikey>"
+          publishHostIP: false
+          publishInternalServices: true
+          rbac:
+            apiVersion: v1
+            clusterRole: true
+            create: true
+            pspEnabled: false
+          registry: noop
+          replicaCount: 1
+          resources:
+            limits:
+              cpu: 250m
+              memory: 512Mi
+            requests:
+              cpu: 70m
+              memory: 150Mi
+          rfc2136:
+            minTTL: 0s
+            port: 53
+            rfc3645Enabled: false
+            tsigAxfr: true
+            tsigKeyname: externaldns-key
+            tsigSecretAlg: hmac-sha256
+          service:
+            enabled: true
+            externalTrafficPolicy: Cluster
+            ports:
+              http: 7979
+            sessionAffinity: None
+            type: ClusterIP
+          serviceAccount:
+            automountServiceAccountToken: true
+            create: true
+          updateStrategy:
+            type: Recreate
+          args:
+            - --events
+            - --log-level=info
+            - --source=ingress
+            - --provider=nextdns
+            - --registry=noop
+            - --interval=1m
+          sources:
+            - service
+            - ingress
+          triggerLoopOnEvent: false
+          useDaemonset: false
+          watchReleaseNamespace: false
+  destination:
+    namespace: networking
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: false
+    syncOptions:
+    - Validate=false
+    - CreateNamespace=false
+    - PrunePropagationPolicy=foreground
+    - ApplyOutOfSyncOnly=false
+    - Prune=true
+    - RespectIgnoreDifferences=true
+    - ServerSideApply=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 60s
+        factor: 2
+        maxDuration: 15m
