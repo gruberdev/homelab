@@ -298,8 +298,8 @@ spec:
               cookie_secure: false
             server:
               domain: grafana.gruber.dev.br
-              protocol: http
-              root_url: "%(protocol)s://%(domain)s:%(http_port)s/grafana/"
+              protocol: https
+              root_url: "%(protocol)s://%(domain)"
               serve_from_sub_path: true
           plugins:
           - grafana-image-renderer
