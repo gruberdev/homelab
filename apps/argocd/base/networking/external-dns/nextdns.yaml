@@ -16,7 +16,7 @@ spec:
         values: |
           nameOverride: "external-dns-nextdns"
           domainFilters:
-            - xn--q9jyb4c.com
+            - xn--lck4b9a0m.com
           clusterDomain: cluster.local
           combineFQDNAnnotation: false
           containerPorts:
@@ -94,11 +94,13 @@ spec:
             - --events
             - --log-level=info
             - --source=service
+            - --source=ingress
             - --provider=nextdns
             - --registry=noop
             - --interval=1m
           sources:
             - service
+            - ingress
           triggerLoopOnEvent: false
           useDaemonset: false
           watchReleaseNamespace: false
