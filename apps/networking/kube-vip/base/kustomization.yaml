@@ -6,3 +6,4 @@ resources:
 - daemonset.yaml
 - sa.yaml
 - deployment.yaml
+- cr.yaml
