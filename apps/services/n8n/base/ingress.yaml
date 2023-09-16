@@ -9,7 +9,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: n8n.gruber.dev.br
+  - host: n8n.xn--q9jyb4c.com
     http:
       paths:
       - path: /
@@ -19,7 +19,3 @@ spec:
             name: n8n-internal
             port:
               name: web
-  tls:
-  - hosts:
-    - n8n.gruber.dev.br
-    secretName: n8n-tls
