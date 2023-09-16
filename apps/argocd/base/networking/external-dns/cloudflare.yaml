@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: external-dns
+  name: external-dns-cloudflare
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
@@ -11,9 +11,10 @@ spec:
       chart: external-dns
       targetRevision: 1.13.1
       helm:
-        releaseName: external-dns
+        releaseName: external-dns-cloudflare
         namespace: networking
         values: |
+          nameOverride: "external-dns-cloudflare"
           domainFilters:
             - gruber.dev.br
           clusterDomain: cluster.local
