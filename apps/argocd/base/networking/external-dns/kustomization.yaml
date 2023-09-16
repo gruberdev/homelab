@@ -5,5 +5,5 @@ resources:
 - nextdns.yaml
 - cloudflare.yaml
 
-commonAnnotations:
+commonLabels:
   app.kubernetes.io/project: external-dns
