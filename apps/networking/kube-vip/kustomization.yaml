@@ -3,4 +3,4 @@ kind: Kustomization
 bases:
 - ./base
 
-namespace: networking
+namespace: kube-system
