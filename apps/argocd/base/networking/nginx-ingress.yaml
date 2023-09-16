@@ -5,7 +5,7 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: cluster
+  project: networking
   source:
     repoURL: 'https://github.com/gruberdev/homelab.git'
     path: apps/networking/ingress-nginx

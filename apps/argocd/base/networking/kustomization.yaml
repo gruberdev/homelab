@@ -6,6 +6,7 @@ resources:
 - cert-manager.yaml
 - nginx-ingress.yaml
 - tailscale-operator.yaml
+- tailscale.yaml
 - issuer.yaml
 - kube-vip.yaml
 

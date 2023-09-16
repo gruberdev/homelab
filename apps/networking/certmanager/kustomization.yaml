@@ -3,3 +3,6 @@ kind: Kustomization
 resources:
 - clusterIssuer.yaml
 - secret.yaml
+
+commonLabels:
+  app.kubernetes.io/category: networking
