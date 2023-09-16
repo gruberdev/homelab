@@ -6,6 +6,3 @@ resources:
 images:
 - name: erisamoe/cloudflared
   newTag: 2023.8.2
-
-commonLabels:
-  app.kubernetes.io/category: networking
