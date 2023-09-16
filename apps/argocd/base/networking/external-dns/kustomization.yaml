@@ -4,3 +4,6 @@ kind: Kustomization
 resources:
 - nextdns.yaml
 - cloudflare.yaml
+
+commonAnnotations:
+  app.kubernetes.io/project: external-dns

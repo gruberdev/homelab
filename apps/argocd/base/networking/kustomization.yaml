@@ -4,5 +4,12 @@ kind: Kustomization
 resources:
 - ./external-dns
 - cert-manager.yaml
+- nginx-ingress.yaml
+- tailscale-operator.yaml
+- issuer.yaml
+- kube-vip.yaml
 
 namespace: argocd
+
+commonAnnotations:
+  app.kubernetes.io/category: networking
