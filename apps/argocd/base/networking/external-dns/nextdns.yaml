@@ -16,7 +16,7 @@ spec:
         values: |
           nameOverride: "external-dns-nextdns"
           domainFilters:
-            - gruber.dev.br
+            - xn--q9jyb4c.com
           clusterDomain: cluster.local
           combineFQDNAnnotation: false
           containerPorts:
