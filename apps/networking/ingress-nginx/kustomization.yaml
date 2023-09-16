@@ -4,6 +4,3 @@ bases:
 - ./base
 
 namespace: kube-system
-
-commonLabels:
-  app.kubernetes.io/category: networking
