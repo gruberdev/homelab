@@ -93,13 +93,12 @@ spec:
           args:
             - --events
             - --log-level=info
-            - --source=ingress
+            - --source=service
             - --provider=nextdns
             - --registry=noop
             - --interval=1m
           sources:
             - service
-            - ingress
           triggerLoopOnEvent: false
           useDaemonset: false
           watchReleaseNamespace: false
