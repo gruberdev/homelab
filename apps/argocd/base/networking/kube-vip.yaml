@@ -3,7 +3,7 @@ kind: Application
 metadata:
   name: kube-vip
 spec:
-  project: cluster
+  project: networking
   source:
     repoURL: 'https://github.com/gruberdev/homelab.git'
     path: apps/networking/kube-vip

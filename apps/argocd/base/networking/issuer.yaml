@@ -3,7 +3,7 @@ kind: Application
 metadata:
   name: certmanager-clusterissuer
 spec:
-  project: core
+  project: networking
   source:
     repoURL: 'https://github.com/gruberdev/homelab.git'
     path: apps/networking/certmanager

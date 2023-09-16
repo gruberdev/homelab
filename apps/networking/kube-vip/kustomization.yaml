@@ -1,12 +1,9 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-resources:
-- cm.yaml
-- crb.yaml
-- daemonset.yaml
-- sa.yaml
-- deployment.yaml
+bases:
+- ./base
 
-namespace: kube-system
-commonAnnotations:
-  reloader.stakater.com/auto: "true"
+namespace: networking
+
+commonLabels:
+  app.kubernetes.io/category: networking
