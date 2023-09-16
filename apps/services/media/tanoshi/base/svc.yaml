@@ -16,3 +16,22 @@ spec:
     protocol: TCP
   loadBalancerClass: tailscale
   type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tanoshi-upnp
+  labels:
+    app: tanoshi
+  annotations:
+    kube-vip.io/vipHost: tanoshi
+spec:
+  selector:
+    app: tanoshi
+  ports:
+  - name: web
+    port: 60555
+    targetPort: 80
+    protocol: TCP
+  loadBalancerClass: kube-vip.io/kube-vip-class
+  type: LoadBalancer
