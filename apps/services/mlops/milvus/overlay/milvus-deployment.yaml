@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    helm.sh/chart: milvus-operator-0.8.1
+    app.kubernetes.io/name: milvus-operator
+    app.kubernetes.io/instance: milvus-operator
+    app.kubernetes.io/version: "0.8.1"
+    app.kubernetes.io/managed-by: Helm
+  name: "milvus-operator"
+  namespace: "milvus-operator"
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: milvus-operator
+      app.kubernetes.io/instance: milvus-operator
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: milvus-operator
+        app.kubernetes.io/instance: milvus-operator
+    spec:
+      containers:
+      - args:
+        - -namespace
+        - "milvus-operator"
+        - -name
+        - "milvus-operator"
+        - --health-probe-bind-address=:8081
+        - --metrics-bind-address=:8080
+        - --leader-elect
+        command:
+        - /manager
+        image: 'milvusdb/milvus-operator:v0.8.1'
+        imagePullPolicy: "IfNotPresent"
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8081
+          initialDelaySeconds: 15
+          periodSeconds: 20
+        name: manager
+        ports:
+        - containerPort: 9443
+          name: webhook-server
+          protocol: TCP
+        - containerPort: 8080
+          name: metrics
+          protocol: TCP
+        readinessProbe:
+          httpGet:
+            path: /readyz
+            port: 8081
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+          limits:
+            cpu: 350m
+            memory: 512Gi
+          requests:
+            cpu: 100m
+            memory: 128Mi

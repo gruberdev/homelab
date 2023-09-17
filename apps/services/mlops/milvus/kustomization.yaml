@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- https://raw.githubusercontent.com/zilliztech/milvus-operator/v0.8.1/deploy/manifests/deployment.yaml
+
+patchesStrategicMerge:
+- overlay/milvus-deployment.yaml
+- overlay/milvus-job.yaml
+
+namespace: milvus-operator
