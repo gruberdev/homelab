@@ -8,6 +8,7 @@ resources:
 - base/projects/monitoring.yaml
 - base/projects/networking.yaml
 - base/projects/apps.yaml
+- base/projects/mlops.yaml
 - base/projects/matrix.yaml
 
 # Core Applications
