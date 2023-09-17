@@ -28,7 +28,7 @@
 > |          [ArgoCD][argocd-uri]          |             `GitOps`     |      <sub>[More details][homelab-argocd]</sub>      |       ![][argocd-core]       | ![][argo-badge]        |
 > |   [CertManager][service-certmanager] |               `Networking`   |  <sub>[More details][homelab-certmanager]</sub>    |  ![][argocd-certmanager] | ![][certmanager-badge]    |
 > |   [Changedetection.io][change-uri]     |             `Services`   |       <sub>[More details][homelab-change]</sub>      |        ![][argocd-change]    |  ![][change-badge]   |
-> | [ExternalDNS][service-externaldns] |               `Networking`   |  <sub>[More details][homelab-externaldns]</sub>    |  ![][argocd-externaldns] | ![][externaldns-badge]    |
+> | [External-DNS][service-externaldns] |               `Networking`   |  <sub>[More details][homelab-externaldns]</sub>    |  ![][argocd-externaldns] | ![][externaldns-badge]    |
 > |     [Hashicorp's Vault][vault-uri]     |            `Security`   |       <sub>[Chart values][homelab-vault]</sub>      |       ![][argocd-vault]      |  ![][vault-badge]    |
 > |      [Home Assistant][service-ha]      |            `Smart Home`   |        <sub>[More details][homelab-ha]</sub>        |        ![][argocd-ha]        |    ![][ha-badge]     |
 > | [Kube-vip][kubevip-uri]            |            `Networking`  |      <sub>[More details][homelab-kubevip]</sub>      |      ![][argocd-kubevip]      | ![][kubevip-badge]    |
@@ -293,7 +293,7 @@
 [argocd-tailscale]: https://argo.gruber.dev.br/api/badge?name=tailscale-operator
 [argocd-agones]: https://argo.gruber.dev.br/api/badge?name=agones
 [argocd-gpu-exporter]: https://argo.gruber.dev.br/api/badge?name=nvidia-exporter
-[argocd-externaldns]: https://argo.gruber.dev.br/api/badge?name=external-dns
+[argocd-externaldns]: https://argo.gruber.dev.br/api/badge?name=external-dns-cloudflare
 [argocd-certmanager]: https://argo.gruber.dev.br/api/badge?name=certmanager
 [argocd-unifi]: https://argo.gruber.dev.br/api/badge?name=unifi-controller
 

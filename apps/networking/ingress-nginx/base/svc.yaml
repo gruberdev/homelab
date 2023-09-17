@@ -11,8 +11,6 @@ metadata:
     argocd.argoproj.io/sync-wave: "1"
   name: ingress-nginx-controller
 spec:
-  type: LoadBalancer
-  loadBalancerClass: tailscale
   ipFamilyPolicy: SingleStack
   ipFamilies:
     - IPv4
@@ -31,6 +29,42 @@ spec:
     app.kubernetes.io/name: ingress-nginx
     app.kubernetes.io/part-of: ingress-nginx
     app.kubernetes.io/component: controller
+  type: LoadBalancer
+  loadBalancerClass: tailscale
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
+    app.kubernetes.io/component: controller
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+    kube-vip.io/vipHost: nginx-vip
+  name: ingress-nginx-controller-vip
+spec:
+  ipFamilyPolicy: SingleStack
+  ipFamilies:
+    - IPv4
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: http
+      appProtocol: http
+    - name: https
+      port: 443
+      protocol: TCP
+      targetPort: https
+      appProtocol: https
+  selector:
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
+    app.kubernetes.io/component: controller
+  type: LoadBalancer
+  loadBalancerIP: "192.168.1.160"
+  loadBalancerClass: kube-vip.io/kube-vip-class
 ---
 apiVersion: v1
 kind: Service
