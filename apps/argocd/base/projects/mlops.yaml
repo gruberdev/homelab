@@ -7,6 +7,8 @@ spec:
   sourceRepos:
   - '*'
   destinations:
+  - namespace: milvus-operator
+    server: https://kubernetes.default.svc
   - namespace: mlops
     server: https://kubernetes.default.svc
   clusterResourceWhitelist:
