@@ -225,10 +225,6 @@ spec:
                 gnetId: 15760
                 revision: 15
             services:
-              adguardMonitoring:
-                datasource: Prometheus
-                gnetId: 13330
-                revision: 3
               argocdMonitoring:
                 datasource: Prometheus
                 gnetId: 14584
@@ -241,10 +237,6 @@ spec:
                 datasource: Prometheus
                 gnetId: 12203
                 revision: 2
-              longhornMonitoring:
-                datasource: Prometheus
-                gnetId: 16888
-                revision: 5
               nvidiaMonitoring:
                 datasource: Prometheus
                 gnetId: 14574
@@ -257,6 +249,10 @@ spec:
                 datasource: Prometheus
                 gnetId: 15124
                 revision: 2
+              certExporter:
+                datasource: Prometheus
+                gnetId: 12170
+                revision: 1
             unifi:
               unifiPollerClientDPI:
                 datasource: Prometheus
@@ -416,7 +412,16 @@ spec:
           namespace: kube-system
           serviceMonitor:
             metricRelabelings:
-              # Remove duplicate metrics
+              # k3s exposes all metrics on all endpoints, relabel jobs that belong to other components
+              - sourceLabels: [__name__]
+                regex: "scheduler_(.+)"
+                targetLabel: "job"
+                replacement: "kube-scheduler"
+              - sourceLabels: [__name__]
+                regex: "kubeproxy_(.+)"
+                targetLabel: "job"
+                replacement: "kube-proxy"
+                # Remove duplicate metrics
               - sourceLabels: ["__name__"]
                 regex: "(apiserver_audit|apiserver_client|apiserver_delegated|apiserver_envelope|apiserver_storage|apiserver_webhooks|authentication_token|cadvisor_version|container_blkio|container_cpu|container_fs|container_last|container_memory|container_network|container_oom|container_processes|container|csi_operations|disabled_metric|get_token|go|hidden_metric|kubelet_certificate|kubelet_cgroup|kubelet_container|kubelet_containers|kubelet_cpu|kubelet_device|kubelet_graceful|kubelet_http|kubelet_lifecycle|kubelet_managed|kubelet_node|kubelet_pleg|kubelet_pod|kubelet_run|kubelet_running|kubelet_runtime|kubelet_server|kubelet_started|kubelet_volume|kubernetes_build|kubernetes_feature|machine_cpu|machine_memory|machine_nvm|machine_scrape|node_namespace|plugin_manager|prober_probe|process_cpu|process_max|process_open|process_resident|process_start|process_virtual|registered_metric|rest_client|scrape_duration|scrape_samples|scrape_series|storage_operation|volume_manager|volume_operation|workqueue)_(.+)"
                 action: keep
