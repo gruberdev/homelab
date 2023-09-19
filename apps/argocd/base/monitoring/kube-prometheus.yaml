@@ -198,6 +198,22 @@ spec:
                   path: /var/lib/grafana/dashboards/kubernetes
                 orgId: 1
                 type: file
+              - disableDeletion: true
+                editable: true
+                folder: data
+                name: data
+                options:
+                  path: /var/lib/grafana/dashboards/data
+                orgId: 1
+                type: file
+              - disableDeletion: true
+                editable: true
+                folder: networking
+                name: networking
+                options:
+                  path: /var/lib/grafana/dashboards/networking
+                orgId: 1
+                type: file
           dashboards:
             kubernetes:
               apiServer:
@@ -224,15 +240,15 @@ spec:
                 datasource: Prometheus
                 gnetId: 15760
                 revision: 15
+              pvcs:
+                datasource: Prometheus
+                gnetId: 13646
+                revision: 2
             services:
               argocdMonitoring:
                 datasource: Prometheus
                 gnetId: 14584
                 revision: 1
-              calicoMonitoring:
-                datasource: Prometheus
-                gnetId: 12175
-                revision: 5
               grafanaImageRenderer:
                 datasource: Prometheus
                 gnetId: 12203
@@ -241,17 +257,46 @@ spec:
                 datasource: Prometheus
                 gnetId: 14574
                 revision: 8
-              postgresMonitoring:
-                datasource: Prometheus
-                gnetId: 12485
-                revision: 1
               vaultMonitoring:
                 datasource: Prometheus
                 gnetId: 15124
                 revision: 2
+              Sonarr:
+                datasource: Prometheus
+                gnetId: 12530
+                revision: 2
+            networking:
+              calicoMonitoring:
+                datasource: Prometheus
+                gnetId: 12175
+                revision: 5
               certExporter:
                 datasource: Prometheus
                 gnetId: 12170
+                revision: 1
+              certExpiration:
+                datasource: Prometheus
+                gnetId: 13922
+                revision: 3
+              nginxIngress:
+                datasource: Prometheus
+                gnetId: 14314
+                revision: 2
+              externalDNS:
+                datasource: Prometheus
+                gnetId: 15038
+                revision: 1
+            data:
+              Milvus:
+                datasource: Prometheus
+                url: https://raw.githubusercontent.com/milvus-io/milvus/2.3.0/deployments/monitor/grafana/milvus-dashboard.json
+              redisMonitoring:
+                datasource: Prometheus
+                gnetId: 763
+                revision: 5
+              postgresMonitoring:
+                datasource: Prometheus
+                gnetId: 12485
                 revision: 1
             unifi:
               unifiPollerClientDPI:
@@ -505,7 +550,7 @@ spec:
               scrape_interval: 30s
               static_configs:
               - targets:
-                - 192.168.1.10:32767
+                - unifi-poller-svc.unifi.svc.cluster.local:9130
             - authorization:
                 credentials: <path:kv/data/ha#auth-token>
               job_name: hass
@@ -514,7 +559,7 @@ spec:
               scrape_interval: 60s
               static_configs:
               - targets:
-                - 192.168.1.10:8123
+                - home-assistant.homeassistant.svc.cluster.local:8123
             - job_name: grafana-image-rendering-service
               static_configs:
               - targets:
@@ -530,7 +575,8 @@ spec:
               scrape_interval: 30s
               scheme: http
               static_configs:
-                - targets: ['kuma-svc.monitoring.svc.cluster.local:8080']
+                - targets:
+                  - kuma-svc.monitoring.svc.cluster.local:8080
               basic_auth:
                 username: <path:kv/data/kuma#username>
                 password: <path:kv/data/kuma#password>
@@ -709,6 +755,8 @@ spec:
             - kube-system
             - vault
             - agones-system
+            - milvus-operator
+            - monitoring
             releaseNamespace: true
           networkPolicy:
             enabled: false
