@@ -3,6 +3,7 @@ version: '3'
 silent: true
 
 includes:
+  cli: ./tasks/cli.yaml
   postgres: ./tasks/postgres.yaml
   tailscale: ./tasks/tailscale.yaml
   argocd: ./tasks/argocd.yaml
@@ -10,24 +11,14 @@ includes:
   vultr: ./tasks/vultr.yaml
   tf: ./tasks/terraform.yaml
   secrets: ./tasks/secrets.yaml
-  longhorn: ./tasks/longhorn.yaml
   cluster: ./tasks/cluster.yaml
   matrix: ./tasks/matrix.yaml
   test: ./tasks/test.yaml
   talos: ./tasks/talos.yaml
   commit: ./tasks/commit.yaml
+  milvus: ./tasks/milvus.yaml
 
 vars:
-  CYAN: tput setaf 6
-  RED: tput setaf 1
-  YELLOW: tput setaf 3
-  GREEN: tput setaf 2
-  BLUE: tput setaf 1
-  PURPLE: tput setaf 5
-  BG_B: tput setab 0
-  BOLD: tput bold
-  RESET: tput sgr0
-  CLEAR: tput reset
   PATH_ERROR: is not installed or correctly configured in PATH.
   K8S_VERSION: 1.28.1
 
@@ -35,28 +26,8 @@ dotenv: ['.env']
 
 tasks:
   clear:
-
     cmds:
       - sleep 0.1 && {{.CLEAR}}
-
-  highlight_bg:
-    cmds:
-      - |
-        sleep 0.1 && \
-        {{.CYAN}} && \
-        {{.BOLD}} && \
-        {{.BG_B}}
-  highlight_normal:
-    cmds:
-      - |
-        sleep 0.1 && \
-        {{.CYAN}} && \
-        {{.BOLD}}
-  reset:
-    cmds:
-      - |
-        sleep 0.1 && \
-        {{.RESET}}
 
   explain:
     desc: Explains a certain Task command more in-detail
@@ -94,31 +65,12 @@ tasks:
         msg: "kubeconform {{.PATH_ERROR}}"
     desc: Validates your Yaml objects in the repository using Kubeconform
     cmds:
-      # yamllint disable-line rule:line-length
-      - sleep 0.1 && {{.CYAN}} && {{.BOLD}} && {{.BG_B}} && echo -e "\nValidating Yaml files using Kubeconform..." && {{.RESET}}
-      - sleep 0.1 && {{.CYAN}} && echo -e "\nService object files" && {{.RESET}}
-      - find . -maxdepth 20 -name svc.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "{{.K8S_VERSION}}" -schema-location default {} \;
-      - sleep 0.1 && {{.CYAN}} && echo -e "\nDeployment object files" && {{.RESET}}
-      - find . -maxdepth 20 -name deployment.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "{{.K8S_VERSION}}" -schema-location default {} \;
-      - sleep 0.1 && {{.CYAN}} && echo -e "\nSecret object files" && {{.RESET}}
-      - find . -maxdepth 20 -name \*secret.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "{{.K8S_VERSION}}" -schema-location default {} \;
-      - sleep 0.1 && {{.CYAN}} && echo -e "\nconfigMap object files" && {{.RESET}}
-      - find . -maxdepth 20 -name cm.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "{{.K8S_VERSION}}" -schema-location default {} \;
-      - sleep 0.1 && {{.CYAN}} && echo -e "\nPVC object files" && {{.RESET}}
-      - find . -maxdepth 20 -name pvc.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "{{.K8S_VERSION}}" -schema-location default {} \;
-      - sleep 0.1 && {{.CYAN}} && echo -e "\nPV object files" && {{.RESET}}
-      - find . -maxdepth 10 -name pv.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "{{.K8S_VERSION}}" -schema-location default {} \;
-      # yamllint disable-line rule:line-length
-      # - sleep 0.1 && {{.CYAN}} && echo -e "\nCustomRoleBinding object files" && {{.RESET}}
-      # - find . -maxdepth 10 -name crb.yaml -exec kubeval {} \;
-      - sleep 0.1 && {{.CYAN}} && echo -e "\nRole object files" && {{.RESET}}
-      - find . -maxdepth 20 -name role.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "{{.K8S_VERSION}}" -schema-location default {} \;
-      - sleep 0.1 && {{.CYAN}} && echo -e "\nServiceAccount object files" && {{.RESET}}
-      - find . -maxdepth 20 -name sa.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "{{.K8S_VERSION}}" -schema-location default {} \;
-      - sleep 0.1 && {{.CYAN}} && echo -e "\nClusterRole object files" && {{.RESET}}
-      - find . -maxdepth 20 -name cr.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "{{.K8S_VERSION}}" -schema-location default {} \;
-      - sleep 0.1 && {{.CYAN}} && echo -e "\nRole Binding object files" && {{.RESET}}
-      - find . -maxdepth 20 -name rb.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "{{.K8S_VERSION}}" -schema-location default {} \;
+      - |
+        objectTypes=("svc" "deployment" "*secret" "cm" "pvc" "pv" "role" "sa" "cr" "rb");
+        for obj in "${objectTypes[@]}"; do
+          echo -e "\nValidating ${obj^} object files";
+          find . -maxdepth 20 -name ${obj}.yaml -exec kubeconform -summary -exit-on-error -ignore-missing-schemas -kubernetes-version "{{.K8S_VERSION}}" -schema-location default {} \;
+        done
     silent: true
 
   calc:
@@ -148,12 +100,12 @@ tasks:
       name configured on the file ('k3d-demo'), as to avoid creating those
       resoures on non-local clusters that may be on KUBECONFIG file as well.
     cmds:
-      - task: clear
+      - task: cli:clear
       - k3d cluster delete --config config/k3d.yaml
       - k3d cluster create --config config/k3d.yaml
-      - task: highlight_normal
+      - task: cli:highlight_normal
       - echo -e "\nYour cluster has been created. Type 'k3d cluster list' to confirm."
-      - task: reset
+      - task: cli:reset
     ignore_error: true
 
   test:k3d:destroy:
@@ -162,11 +114,11 @@ tasks:
       - sh: "which k3d"
         msg: "k3d {{.PATH_ERROR}}"
     cmds:
-      - task: clear
+      - task: cli:clear
       - k3d cluster delete --config config/k3d.yaml
-      - task: highlight_normal
+      - task: cli:highlight_normal
       - echo -e "\nYour cluster has been destroyed."
-      - task: reset
+      - task: cli:reset
     ignore_error: true
 
   repos:
@@ -175,10 +127,10 @@ tasks:
       - sh: "which helm"
         msg: "helm {{.PATH_ERROR}}"
     cmds:
-      - task: clear
-      - task: highlight_bg
+      - task: cli:clear
+      - task: cli:highlight_bg
       - echo -e "This will add new repositories to your local Helm\n"
-      - task: reset
+      - task: cli:reset
       - helm repo add chaos-mesh https://charts.chaos-mesh.org
       - helm repo add hashicorp https://helm.releases.hashicorp.com
       - helm repo add bitnami https://charts.bitnami.com/bitnami
@@ -200,11 +152,11 @@ tasks:
       - helm repo add eraser https://azure.github.io/eraser/charts
       - helm repo add vmware-tanzu https://vmware-tanzu.github.io/helm-charts
       - helm repo add mayastor https://openebs.github.io/mayastor-extensions/
-      - task: clear
+      - task: cli:clear
       - echo -e "This will add new repositories to your local Helm\n"
-      - task: highlight_normal
+      - task: cli:highlight_normal
       - echo -e "Finished adding repositories. Updating them now.\n"
-      - task: reset
+      - task: cli:reset
       - helm repo update
     ignore_error: true
 
@@ -222,11 +174,11 @@ tasks:
       user to reverse those changes, avoiding pollution on your hosts
       (or equivalent) file.
     cmds:
-      - task: clear
+      - task: cli:clear
       - sleep 0.01 && {{if eq OS "windows"}}hostctl add k8s -q < config/.etchosts{{else}}sudo hostctl add k8s -q < config/.etchosts{{end}}
-      - task: highlight_normal
+      - task: cli:highlight_normal
       - echo -e "Added 'k8s.localhost' and related domains to your hosts file!"
-      - task: reset
+      - task: cli:reset
     ignore_error: true
 
   run:

@@ -1,15 +1,5 @@
 version: '3'
 vars:
-  CYAN: tput setaf 6
-  RED: tput setaf 1
-  YELLOW: tput setaf 3
-  GREEN: tput setaf 2
-  BLUE: tput setaf 1
-  PURPLE: tput setaf 5
-  BG_B: tput setab 0
-  BOLD: tput bold
-  RESET: tput sgr0
-  CLEAR: tput reset
   PATH_ERROR: is not installed or correctly configured in PATH.
   SVC_IPV4_CIDR: 10.43.0.0/16
   SVC_IPV6_CIDR: 2001:cafe:42:1::/112
@@ -209,7 +199,7 @@ tasks:
                     "type": "k8s"
                 },
                 "kubernetes": {
-                    "kubeconfig": "/etc/rancher/k3s/k3s.yaml"
+                    "kubeconfig": "__KUBECONFIG_FILEPATH__"
                 },
                 "container_settings": {
                   "allow_ip_forwarding": true

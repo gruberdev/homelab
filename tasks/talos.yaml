@@ -53,3 +53,36 @@ tasks:
             cp "$file" "backup/${filename}_{{.BACKUP_TIME}}.${extension}"
           fi
         done
+
+  local:clean:
+    dir: config/docker
+    cmds:
+    - rm controlplane.yaml worker.yaml talosconfig
+
+  local:gen:
+    dir: config/docker
+    cmds:
+      - task: local:clean
+      - talosctl gen config local {{.CONTROLLER_IPV4}}
+      - talosctl machineconfig patch worker.yaml --patch @worker-patch.yaml -o worker.yaml
+      - talosctl machineconfig patch controlplane.yaml --patch @controller-patch.yaml -o controlplane.yaml
+    ignore_error: true
+
+  local:destroy:
+    cmds:
+      - sudo --preserve-env=HOME talosctl cluster destroy --name local --provisioner qemu
+    ignore_error: true
+
+  local:
+    dir: config/docker
+    cmds:
+      - task: local:destroy
+      - |
+        sudo --preserve-env=HOME talosctl cluster create  --config-patch @patch.yaml  \
+                                 --config-patch-control-plane @controller-patch.yaml \
+                                 --config-patch-worker @worker-patch.yaml  \
+                                 --name local --provisioner qemu \
+                                 --wait \
+                                 --workers 1 \
+                                 --controlplanes 1
+    ignore_error: true

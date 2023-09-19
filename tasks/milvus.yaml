@@ -1,0 +1,67 @@
+version: '3'
+
+silent: true
+includes:
+  cli: ./cli.yaml
+
+env:
+  MILVUS_STANDALONE: |
+    apiVersion: milvus.io/v1beta1
+    kind: Milvus
+    metadata:
+      name: data-example
+      namespace: milvus-operator
+      labels:
+        app: milvus
+    spec:
+      components:
+        resources:
+          limits:
+            cpu: 600m
+            memory: 1.5Gi
+          requests:
+            cpu: 100m
+            memory: 512Mi
+        standalone:
+          serviceType: ClusterIP
+      dependencies:
+        etcd:
+          inCluster:
+            values:
+              replicaCount: 1
+            deletionPolicy: Delete
+            pvcDeletion: true
+        storage:
+          inCluster:
+            values:
+              mode: standalone
+              resources:
+                requests:
+                  memory: 1Gi
+            deletionPolicy: Delete
+            pvcDeletion: true
+      config:
+        etcd:
+          rootPath: data-etcd
+        minio:
+          bucketName: data-s3
+        log:
+          level: debug
+
+tasks:
+  create:
+    cmds:
+      - task: cli:clear
+      - task: delete
+      - task: cli:highlight_normal
+      - echo -e "Creating Milvus standalone cluster..."
+      - task: cli:reset
+      - kubectl apply -f <(echo "$MILVUS_STANDALONE")
+
+  delete:
+    cmds:
+      - task: cli:highlight_normal
+      - echo -e "Deleting previous configured Milvus standalone cluster..."
+      - task: cli:reset
+      - kubectl delete -f <(echo "$MILVUS_STANDALONE")
+    ignore_error: true

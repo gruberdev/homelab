@@ -25,9 +25,22 @@ spec:
     - ApplyOutOfSyncOnly=false
     - Prune=true
     - ServerSideApply=true
-    retry:
-      limit: 5
-      backoff:
-        duration: 20s
-        factor: 2
-        maxDuration: 15m
+  info:
+    - name: 'Github Repository:'
+      value: >-
+        https://github.com/zilliztech/milvus-operator
+    - name: 'Manifests example folder:'
+      value: >-
+        https://github.com/zilliztech/milvus-operator/tree/main/config/samples
+    - name: 'Official Website:'
+      value: >-
+        https://milvus.io
+    - name: 'Documentation:'
+      value: >-
+        https://milvus.io/docs/install_standalone-operator.md
+  retry:
+    limit: 5
+    backoff:
+      duration: 20s
+      factor: 2
+      maxDuration: 15m

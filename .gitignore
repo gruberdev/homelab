@@ -90,8 +90,14 @@ config/k3s/*.yaml
 config/talos/**/*.yaml
 config/talos/**/*.talosconfig
 config/talos/**/talosconfig
+config/**/*.yaml
+config/docker/**/talosconfig
+apps/services/changedetection/base/svc.yaml
 !config/talos/controller-patch.yaml
 !config/talos/patch.yaml
 !config/talos/worker-patch.yaml
-config/**/*.yaml
-apps/services/changedetection/base/svc.yaml
+!config/docker/controller-patch.yaml
+!config/docker/patch.yaml
+!config/docker/worker-patch.yaml
+!config/manifests/calico.yaml
+aggregated_output.json
