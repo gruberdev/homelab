@@ -17,7 +17,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: ha-tailscale
+            name: homeassistant
             port:
               name: ha
   tls:
