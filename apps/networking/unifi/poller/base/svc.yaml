@@ -4,6 +4,8 @@ metadata:
   name: unifi-poller-svc
   labels:
     app: unifi-poller
+  annotations:
+    kube-vip.io/vipHost: unifi-poller
 spec:
   ports:
     - port: 9130
@@ -17,17 +19,6 @@ spec:
   selector:
     app: unifi-poller
     type: ClusterIP
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: unifi-poller-altsvc
-spec:
-  selector:
-    app: unifi-poller
-  type: NodePort
-  ports:
-    - port: 9130
-      nodePort: 32767
-      protocol: TCP
-      name: metrics
+  type: LoadBalancer
+  loadBalancerIP: "192.168.1.161"
+  loadBalancerClass: kube-vip.io/kube-vip-class

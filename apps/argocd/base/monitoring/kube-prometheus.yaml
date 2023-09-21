@@ -547,6 +547,7 @@ spec:
           prometheusSpec:
             additionalScrapeConfigs:
             - job_name: unifipoller
+              metrics_path: /metrics
               scrape_interval: 30s
               static_configs:
               - targets:
