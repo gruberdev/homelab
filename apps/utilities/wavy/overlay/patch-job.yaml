@@ -14,9 +14,9 @@ spec:
       - name: create
         args:
         - create
-        - --namespace=services
+        - --namespace=utilities
         - --secret-name=wavy-webhook-tls
-        - --host=wavy-webhook,wavy-webhook.services.svc
+        - --host=wavy-webhook,wavy-webhook.utilities.svc
         - --key-name=tls.key
         - --cert-name=tls.crt
       containers:
@@ -26,5 +26,5 @@ spec:
         - patch
         - --webhook-name=wavy.squat.ai
         - --secret-name=wavy-webhook-tls
-        - --namespace=services
+        - --namespace=uutilities
         - --patch-validating=false
