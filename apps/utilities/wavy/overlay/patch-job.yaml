@@ -26,5 +26,5 @@ spec:
         - patch
         - --webhook-name=wavy.squat.ai
         - --secret-name=wavy-webhook-tls
-        - --namespace=uutilities
+        - --namespace=utilities
         - --patch-validating=false
