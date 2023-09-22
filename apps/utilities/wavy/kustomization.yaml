@@ -55,6 +55,14 @@ patchesJson6902:
       - op: add
         path: /metadata/annotations/argocd.argoproj.io~1hook
         value: PreSync
+  - target:
+      version: v1
+      kind: ServiceAccount
+      name: wavy-webhook
+    patch: |-
+      - op: add
+        path: /metadata/annotations/argocd.argoproj.io~1hook
+        value: PreSync
 
 namespace: utilities
 
