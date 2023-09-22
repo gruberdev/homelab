@@ -25,20 +25,8 @@ resources:
 # - base/core/democratic-csi.yaml
 # - base/core/router.yaml
 
-# Networking AoA
 - base/core/networking.yaml
-
-# Utilities
-- base/utilities/reloader.yaml
-- base/utilities/reflector.yaml
-- base/utilities/kured.yaml
-- base/utilities/kube-fledged.yaml
-- base/utilities/descheduler.yaml
-- base/utilities/snapshot.yaml
-# - base/utilities/gfd.yaml
-# - base/utilities/wavy.yaml
-# - base/utilities/eraser.yaml
-# - base/utilities/chaos.yaml
+- base/core/utilities.yaml
 
 # Applications
 - base/apps/vault.yaml
