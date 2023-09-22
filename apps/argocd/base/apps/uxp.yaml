@@ -41,7 +41,7 @@ spec:
           deploy: true
           skipAggregatedClusterRoles: false
           replicas: 1
-          managementPolicy: Basic
+          managementPolicy: All
           leaderElection: true
           args: []
           nodeSelector: {}
