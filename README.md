@@ -273,7 +273,7 @@
 [argocd-chatgpt]: https://argo.gruber.dev.br/api/badge?name=discord-bot-gpt
 [argocd-gitea]: https://argo.gruber.dev.br/api/badge?name=gitea
 [argocd-p-chatgpt]: https://argo.gruber.dev.br/api/badge?name=memory-plugin-gpt
-[argocd-milvus]: https://argo.gruber.dev.br/api/badge?name=milvus
+[argocd-milvus]: https://argo.gruber.dev.br/api/badge?name=milvus-operator
 [argocd-mongo]: https://argo.gruber.dev.br/api/badge?name=mongodb-operator
 [argocd-wavy]: https://argo.gruber.dev.br/api/badge?name=wavy
 [argocd-poller]: https://argo.gruber.dev.br/api/badge?name=unifi-poller
