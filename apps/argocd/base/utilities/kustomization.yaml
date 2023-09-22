@@ -10,6 +10,7 @@ resources:
 - reloader.yaml
 - snapshot.yaml
 - wavy.yaml
+- sealed.yaml
 
 namespace: argocd
 
