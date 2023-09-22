@@ -18,51 +18,8 @@ patchesJson6902:
       name: cert-gen
     patch: |-
       - op: add
-        path: /metadata/annotations/argocd.argoproj.io~1hook
-        value: PreSync
-      - op: add
         path: /metadata/annotations/argocd.argoproj.io~1hook-delete-policy
         value: BeforeHookCreation
-  - target:
-      version: v1
-      kind: ClusterRole
-      name: wavy-webhook
-    patch: |-
-      - op: add
-        path: /metadata/annotations/argocd.argoproj.io~1hook
-        value: PreSync
-  - target:
-      version: v1
-      kind: ClusterRoleBinding
-      name: wavy-webhook
-    patch: |-
-      - op: add
-        path: /metadata/annotations/argocd.argoproj.io~1hook
-        value: PreSync
-  - target:
-      version: v1
-      kind: RoleBinding
-      name: wavy-webhook
-    patch: |-
-      - op: add
-        path: /metadata/annotations/argocd.argoproj.io~1hook
-        value: PreSync
-  - target:
-      version: v1
-      kind: Role
-      name: wavy-webhook
-    patch: |-
-      - op: add
-        path: /metadata/annotations/argocd.argoproj.io~1hook
-        value: PreSync
-  - target:
-      version: v1
-      kind: ServiceAccount
-      name: wavy-webhook
-    patch: |-
-      - op: add
-        path: /metadata/annotations/argocd.argoproj.io~1hook
-        value: PreSync
 
 namespace: utilities
 
