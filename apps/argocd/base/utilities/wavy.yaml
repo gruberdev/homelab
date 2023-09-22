@@ -8,10 +8,10 @@ spec:
   project: cluster
   source:
     repoURL: 'https://github.com/gruberdev/homelab.git'
-    path: apps/services/wavy
+    path: apps/utilities/wavy
     targetRevision: main
   destination:
-    namespace: wavy
+    namespace: utilities
     name: in-cluster
   syncPolicy:
     automated:

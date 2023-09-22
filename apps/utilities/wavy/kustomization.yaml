@@ -8,7 +8,7 @@ patchesStrategicMerge:
 - overlay/patch-deploy.yaml
 - overlay/patch-job.yaml
 
-namespace: wavy
+namespace: utilities
 
 commonAnnotations:
   reloader.stakater.com/auto: "true"
