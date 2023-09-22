@@ -1,6 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: tanoshi-cm
-data:
-  TZ: "America/Sao_Paulo"

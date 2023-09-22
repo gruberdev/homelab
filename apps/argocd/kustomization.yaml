@@ -72,7 +72,6 @@ resources:
 - base/services/mlops.yaml
 
 # Media Services
-- base/services/media/tanoshi.yaml
 # - base/services/media/jellyfin.yaml
 # - base/services/media/prowlarr.yaml
 # - base/services/media/sonarr.yaml
