@@ -5,5 +5,7 @@ resources:
 # - nextdns.yaml
 - cloudflare.yaml
 
+namespace: argocd
+
 commonLabels:
   app.kubernetes.io/project: external-dns
