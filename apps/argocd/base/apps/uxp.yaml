@@ -26,7 +26,7 @@ spec:
         serviceAccount:
           customAnnotations: {}
         leaderElection: true
-        args: []
+        args: ["--enable-composition-functions"]
         provider:
           packages: []
         configuration:
@@ -86,7 +86,7 @@ spec:
         extraVolumesCrossplane: {}
         extraVolumeMountsCrossplane: {}
         xfn:
-          enabled: false
+          enabled: true
         bootstrapper:
           image:
             repository: xpkg.upbound.io/upbound/uxp-bootstrapper
