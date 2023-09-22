@@ -7,6 +7,8 @@ patchesStrategicMerge:
 - overlay/namespace-delete.yaml
 - overlay/patch-deploy.yaml
 - overlay/patch-job.yaml
+- overlay/patch-rb.yaml
+- overlay/patch-crb.yaml
 
 namespace: utilities
 
