@@ -1,0 +1,89 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- github.com/crossplane/crossplane/cluster?ref=v1.13.2
+
+helmCharts:
+- name: crossplane
+  releaseName: crossplane
+  includeCRDs: false
+  version: 1.13.2
+  repo: https://charts.crossplane.io/stable
+  valuesInline:
+    replicas: 1
+    deploymentStrategy: Recreate
+    image:
+      repository: crossplane/crossplane
+      tag: v1.13.2
+      pullPolicy: IfNotPresent
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
+    hostNetwork: false
+    customLabels: {}
+    customAnnotations: {}
+    serviceAccount:
+      customAnnotations: {}
+    leaderElection: true
+    args: ["--enable-composition-functions"]
+    provider:
+      packages: []
+    configuration:
+      packages: []
+    imagePullSecrets: {}
+    registryCaBundleConfig:
+      name: ''
+      key: ''
+    webhooks:
+      enabled: true
+    rbacManager:
+      deploy: true
+      skipAggregatedClusterRoles: false
+      replicas: 1
+      managementPolicy: All
+      leaderElection: true
+      args: []
+      nodeSelector: {}
+      tolerations: []
+      affinity: {}
+    priorityClassName: ''
+    resourcesCrossplane:
+      limits:
+        cpu: 250m
+        memory: 512Mi
+      requests:
+        cpu: 500m
+        memory: 256Mi
+    securityContextCrossplane:
+      runAsUser: 65532
+      runAsGroup: 65532
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: true
+    packageCache:
+      medium: ''
+      sizeLimit: 20Mi
+      pvc: ''
+      configMap: ''
+    resourcesRBACManager:
+      limits:
+        cpu: 100m
+        memory: 512Mi
+      requests:
+        cpu: 100m
+        memory: 256Mi
+    securityContextRBACManager:
+      runAsUser: 65532
+      runAsGroup: 65532
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: true
+    metrics:
+      enabled: true
+    extraEnvVarsCrossplane: {}
+    extraEnvVarsRBACManager: {}
+    podSecurityContextCrossplane: {}
+    podSecurityContextRBACManager: {}
+    extraVolumesCrossplane: {}
+    extraVolumeMountsCrossplane: {}
+
+namespace: crossplane

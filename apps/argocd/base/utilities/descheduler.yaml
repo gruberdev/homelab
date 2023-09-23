@@ -116,7 +116,7 @@ spec:
     - Validate=false
     - CreateNamespace=false
     - PrunePropagationPolicy=foreground
-    - PruneLast=true
+    - ServerSideApply=true
     - ApplyOutOfSyncOnly=false
     - Prune=true
     retry:

@@ -1,0 +1,46 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: crossplane
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: apps
+  source:
+    repoURL: 'https://github.com/gruberdev/homelab.git'
+    path: apps/utilities/crossplane
+    targetRevision: main
+  destination:
+    namespace: crossplane
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: false
+    syncOptions:
+    - Validate=false
+    - CreateNamespace=true
+    - PrunePropagationPolicy=foreground
+    - ServerSideApply=true
+    - ApplyOutOfSyncOnly=false
+    - Prune=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 20s
+        factor: 2
+        maxDuration: 15m
+  info:
+    - name: 'Github Repository:'
+      value: >-
+        hhttps://github.com/crossplane/crossplane
+    - name: 'Providers marketplace:'
+      value: >-
+        https://marketplace.upbound.io/
+    - name: 'Helm chart Github path:'
+      value: >-
+        https://github.com/crossplane/crossplane/tree/master/cluster/charts/crossplane
+    - name: 'Official docs:'
+      value: >-
+        https://docs.crossplane.io/latest/

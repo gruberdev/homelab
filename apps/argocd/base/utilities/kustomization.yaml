@@ -11,6 +11,7 @@ resources:
 - snapshot.yaml
 - wavy.yaml
 - sealed.yaml
+- crossplane.yaml
 
 namespace: argocd
 
