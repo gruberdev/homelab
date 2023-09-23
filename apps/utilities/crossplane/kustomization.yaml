@@ -70,7 +70,7 @@ helmCharts:
         cpu: 150m
         memory: 256Mi
       requests:
-        cpu: 50m
+        cpu: 100m
         memory: 128Mi
     securityContextRBACManager:
       runAsUser: 65532
