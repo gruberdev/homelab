@@ -265,6 +265,10 @@ spec:
                 datasource: Prometheus
                 gnetId: 12530
                 revision: 2
+              Uptimekuma:
+                datasource: Prometheus
+                gnetId: 18278
+                revision: 1
             networking:
               calicoMonitoring:
                 datasource: Prometheus

@@ -20,6 +20,9 @@ spec:
       prune: true
       selfHeal: true
       allowEmpty: true
+    managedNamespaceMetadata:
+      labels:
+        prometheus: enabled
     syncOptions:
     - Validate=true
     - CreateNamespace=true
