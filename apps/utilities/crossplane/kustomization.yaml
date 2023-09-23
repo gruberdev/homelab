@@ -2,7 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-- github.com/crossplane/crossplane/cluster?ref=v1.13.2
+- github.com/crossplane/crossplane/cluster?ref=release-1.13
 
 helmCharts:
 - name: crossplane
