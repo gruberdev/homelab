@@ -1,21 +1,23 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  labels:
-    app: nginx
-    release: kube-prometheus-stack
-  name: nginx
+  name: nginx-svc-monitor
   namespace: monitoring
+  labels:
+    app: kube-prometheus-stack-prometheus
+    app.kubernetes.io/instance: kube-prometheus
+    app.kubernetes.io/part-of: kube-prometheus-stack
 spec:
   jobLabel: app.kubernetes.io/name
   endpoints:
-    - port: metrics
+    - port: prometheus
       path: /metrics
   namespaceSelector:
     matchNames:
-      - nginx
+      - networking
+      - ingress-operator
   selector:
     matchLabels:
-      app.kubernetes.io/instance: nginx
       app.kubernetes.io/name: ingress-nginx
+      app.kubernetes.io/part-of: ingress-nginx
       app.kubernetes.io/component: controller
