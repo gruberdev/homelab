@@ -18,13 +18,13 @@ spec:
   replicas: 1
   strategy:
     type: Recreate
-  revisionHistoryLimit: 10
+  revisionHistoryLimit: 3
   minReadySeconds: 0
   template:
     metadata:
       annotations:
         prometheus.io/scrape: "true"
-        prometheus.io/port: "9130"
+        prometheus.io/port: "9113"
         prometheus.io/scheme: http
       labels:
         app.kubernetes.io/name: ingress-nginx
@@ -51,9 +51,7 @@ spec:
             - --validating-webhook=:8443
             - --validating-webhook-certificate=/usr/local/certificates/cert
             - --validating-webhook-key=/usr/local/certificates/key
-            - --enable-prometheus-metrics=true
-            - --prometheus-metrics-listen-port=9130
-            - --enable-latency-metrics=true
+            - --enable-metrics=true
           securityContext:
             capabilities:
               drop:
@@ -104,12 +102,15 @@ spec:
               containerPort: 8443
               protocol: TCP
             - name: prometheus
-              containerPort: 9130
+              containerPort: 9113
               protocol: TCP
           resources:
             requests:
-              cpu: 100m
-              memory: 90Mi
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: 750m
+              memory: 1Gi
       nodeSelector:
         kubernetes.io/os: linux
       serviceAccountName: ingress-nginx
