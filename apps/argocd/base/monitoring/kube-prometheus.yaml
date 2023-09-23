@@ -562,7 +562,7 @@ spec:
               scrape_interval: 60s
               static_configs:
               - targets:
-                - home-assistant.homeassistant.svc.cluster.local:8123
+                - home-assistant.homeassistant.svc.cluster.local
             - job_name: grafana-image-rendering-service
               static_configs:
               - targets:
