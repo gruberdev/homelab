@@ -34,7 +34,7 @@ spec:
   info:
     - name: 'Github Repository:'
       value: >-
-        hhttps://github.com/crossplane/crossplane
+        https://github.com/crossplane/crossplane
     - name: 'Providers marketplace:'
       value: >-
         https://marketplace.upbound.io/

@@ -77,12 +77,12 @@ spec:
     automated:
       prune: true
       selfHeal: true
-      allowEmpty: true
+      allowEmpty: false
     syncOptions:
     - Validate=false
     - CreateNamespace=false
     - PrunePropagationPolicy=background
-    - PruneLast=true
+    - ServerSideApply=true
     - ApplyOutOfSyncOnly=false
     - Prune=true
     retry:
