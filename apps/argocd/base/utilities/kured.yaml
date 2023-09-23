@@ -8,7 +8,7 @@ spec:
   project: cluster
   source:
     repoURL: 'https://github.com/gruberdev/homelab.git'
-    path: apps/monitoring/kured
+    path: apps/utilities/kured
     targetRevision: main
   destination:
     namespace: kube-system
@@ -17,16 +17,15 @@ spec:
     automated:
       prune: true
       selfHeal: true
-      allowEmpty: true
+      allowEmpty: false
     syncOptions:
     - Validate=false
     - CreateNamespace=false
     - PrunePropagationPolicy=foreground
-    - PruneLast=true
     - ApplyOutOfSyncOnly=false
     - Prune=true
     retry:
-      limit: -1
+      limit: 5
       backoff:
         duration: 20s
         factor: 2
