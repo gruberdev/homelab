@@ -22,6 +22,10 @@ spec:
   minReadySeconds: 0
   template:
     metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9130"
+        prometheus.io/scheme: http
       labels:
         app.kubernetes.io/name: ingress-nginx
         app.kubernetes.io/part-of: ingress-nginx
@@ -47,6 +51,9 @@ spec:
             - --validating-webhook=:8443
             - --validating-webhook-certificate=/usr/local/certificates/cert
             - --validating-webhook-key=/usr/local/certificates/key
+            - --enable-prometheus-metrics=true
+            - --prometheus-metrics-listen-port=9130
+            - --enable-latency-metrics=true
           securityContext:
             capabilities:
               drop:
@@ -95,6 +102,9 @@ spec:
               protocol: TCP
             - name: webhook
               containerPort: 8443
+              protocol: TCP
+            - name: prometheus
+              containerPort: 9130
               protocol: TCP
           resources:
             requests:
