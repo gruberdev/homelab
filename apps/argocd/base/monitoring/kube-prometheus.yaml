@@ -562,7 +562,7 @@ spec:
               scrape_interval: 60s
               static_configs:
               - targets:
-                - home-assistant.homeassistant.svc.cluster.local
+                - homeassistant.homeassistant.svc.cluster.local:80
             - job_name: grafana-image-rendering-service
               static_configs:
               - targets:
@@ -579,7 +579,7 @@ spec:
               scheme: http
               static_configs:
                 - targets:
-                  - kuma-svc.monitoring.svc.cluster.local:8080
+                  - kuma-internal.monitoring.svc.cluster.local:80
               basic_auth:
                 username: <path:kv/data/kuma#username>
                 password: <path:kv/data/kuma#password>
