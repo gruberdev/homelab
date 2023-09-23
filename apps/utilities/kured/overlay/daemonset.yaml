@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: kured # Must match `--ds-name`
+  namespace: kube-system # Must match `--ds-namespace`
+spec:
+  selector:
+    matchLabels:
+      name: kured
+  updateStrategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        name: kured
+    spec:
+      serviceAccountName: kured
+      tolerations:
+        - key: node-role.kubernetes.io/control-plane
+          effect: NoSchedule
+        - key: node-role.kubernetes.io/master
+          effect: NoSchedule
+      hostPID: true # Facilitate entering the host mount namespace via init
+      restartPolicy: Always
+      containers:
+        - name: kured
+          image: ghcr.io/kubereboot/kured:1.14.0
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            privileged: true
+            readOnlyRootFilesystem: true
+          ports:
+            - containerPort: 8080
+              name: metrics
+          env:
+            - name: KURED_NODE_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+          command:
+            - /usr/bin/kured
+             - --drain-grace-period=-1
+             - --ds-namespace=kube-system
+             - --ds-name=kured
+             - --log-format=text
+             - --metrics-host="0.0.0.0"
+             - --metrics-port=8080
+             - --concurrency=1
+#            - --force-reboot=false
+#            - --skip-wait-for-delete-timeout=0
+#            - --drain-timeout=0
+#            - --drain-pod-selector=""
+#            - --period=1h
+#            - --lock-annotation=weave.works/kured-node-lock
+#            - --lock-ttl=0
+#            - --prometheus-url=http://prometheus.monitoring.svc.cluster.local
+#            - --alert-filter-regexp=^RebootRequired$
+#            - --alert-filter-match-only=false
+#            - --alert-firing-only=false
+#            - --reboot-sentinel=/var/run/reboot-required
+#            - --prefer-no-schedule-taint=""
+#            - --reboot-sentinel-command=""
+#            - --slack-hook-url=https://hooks.slack.com/...
+#            - --slack-username=prod
+#            - --slack-channel=alerting
+#            - --notify-url="" # See also shoutrrr url format
+#            - --message-template-drain=Draining node %s
+#            - --message-template-reboot=Rebooting node %s
+#            - --message-template-uncordon=Node %s rebooted & uncordoned successfully!
+#            - --blocking-pod-selector=runtime=long,cost=expensive
+#            - --blocking-pod-selector=name=temperamental
+#            - --blocking-pod-selector=...
+#            - --reboot-days=sun,mon,tue,wed,thu,fri,sat
+#            - --reboot-delay=90s
+#            - --start-time=0:00
+#            - --end-time=23:59:59
+#            - --time-zone=UTC
+#            - --annotate-nodes=false
+#            - --lock-release-delay=30m
