@@ -44,3 +44,11 @@ spec:
     - name: 'Official docs:'
       value: >-
         https://docs.crossplane.io/latest/
+  # https://github.com/crossplane/crossplane/issues/4509
+  # This was not fixed with the PR/fix and requires ArgoCD patching to sync.
+  ignoreDifferences:
+  - group: apps
+    kind: Deployment
+    jqPathExpressions:
+      - .spec.template.spec.containers[].env[].valueFrom.resourceFieldRef.divisor
+      - .spec.template.spec.initContainers[].env[].valueFrom.resourceFieldRef.divisor
