@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: kube-prometheus
+  name: kube-prometheus-core
 spec:
   project: monitoring
   source:
