@@ -16,7 +16,10 @@ patchesJson6902:
       name: milvus-operator-checker
     patch: |-
       - op: add
+        path: /metadata/annotations/argocd.argoproj.io~1hook
+        value: PostSync
+      - op: add
         path: /metadata/annotations/argocd.argoproj.io~1hook-delete-policy
-        value: HookSucceeded
+        value: BeforeHookCreation
 
 namespace: milvus-operator
