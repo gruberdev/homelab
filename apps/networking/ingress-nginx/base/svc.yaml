@@ -8,6 +8,7 @@ metadata:
     app.kubernetes.io/component: controller
   annotations:
     tailscale.com/hostname: "nginx-controller"
+    tailscale.com/tags: "tag:exit,tag:k8s,tag:vpn"
     argocd.argoproj.io/sync-wave: "1"
   name: ingress-nginx-controller
 spec:
