@@ -6,5 +6,17 @@ resources:
 patchesStrategicMerge:
 - overlay/milvus-deployment.yaml
 - overlay/milvus-job.yaml
+- overlay/namespace-delete.yaml
+
+patchesJson6902:
+  - target:
+      group: batch
+      version: v1
+      kind: Job
+      name: milvus-operator-checker
+    patch: |-
+      - op: add
+        path: /metadata/annotations/argocd.argoproj.io~1hook-delete-policy
+        value: HookSucceeded
 
 namespace: milvus-operator
