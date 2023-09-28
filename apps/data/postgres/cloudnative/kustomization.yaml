@@ -27,23 +27,27 @@ helmCharts:
         create: true
         failurePolicy: Fail
       livenessProbe:
-        initialDelaySeconds: 3
+        initialDelaySeconds: 35
       readinessProbe:
-        initialDelaySeconds: 3
+        initialDelaySeconds: 10
     config:
       create: true
       name: cnpg-controller-manager-config
       secret: false
-      data: {}
+      data:
+        ENABLE_INSTANCE_MANAGER_INPLACE_UPDATES: "true"
+        CREATE_ANY_SERVICE: "true"
     additionalArgs: []
     serviceAccount:
       create: true
       name: ''
     rbac:
       create: true
-      aggregateClusterRoles: false
-    commonAnnotations: {}
-    podAnnotations: {}
+      aggregateClusterRoles: true
+    commonAnnotations:
+      reloader.stakater.com/auto: "true"
+    podAnnotations:
+      reloader.stakater.com/auto: "true"
     podLabels: {}
     containerSecurityContext:
       allowPrivilegeEscalation: false
@@ -69,7 +73,8 @@ helmCharts:
       requests:
         cpu: 150m
         memory: 128Mi
-    nodeSelector: {}
+    nodeSelector:
+      kubernetes.io/arch: amd64
     tolerations: []
     affinity: {}
     monitoring:
