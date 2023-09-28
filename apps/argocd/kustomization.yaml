@@ -14,6 +14,7 @@ resources:
 # Core Applications
 - base/core/argocd.yaml
 - base/core/postgres.yaml
+- base/core/cloudnative.yaml
 - base/core/redis.yaml
 - base/core/storage.yaml
 # - base/core/nvidia.yaml
@@ -131,6 +132,12 @@ images:
   newTag: v2.8.4
 
 patches:
+- target:
+    kind: ServiceMonitor
+  patch: |-
+    - op: replace
+      path: "/metadata/namespace"
+      value: "monitoring"
 - patch: |-
     - op: add
       path: "/spec/strategy"

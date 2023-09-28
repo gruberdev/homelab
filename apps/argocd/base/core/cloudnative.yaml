@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cloudnative
+spec:
+  project: cluster
+  source:
+    repoURL: 'https://github.com/gruberdev/homelab.git'
+    path: apps/data/postgres/cloudnative
+    targetRevision: main
+  destination:
+    namespace: cnpg-system
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: false
+    syncOptions:
+    - Validate=false
+    - CreateNamespace=true
+    - PrunePropagationPolicy=foreground
+    - ServerSideApply=true
+    - Prune=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 20s
+        factor: 2
+        maxDuration: 15m
