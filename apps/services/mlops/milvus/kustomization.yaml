@@ -21,5 +21,7 @@ patchesJson6902:
       - op: add
         path: /metadata/annotations/argocd.argoproj.io~1hook-delete-policy
         value: BeforeHookCreation
+      - op: remove
+        path: /spec/ttlSecondsAfterFinished
 
 namespace: milvus-operator
