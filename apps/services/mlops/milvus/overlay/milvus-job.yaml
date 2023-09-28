@@ -10,7 +10,6 @@ metadata:
   name: "milvus-operator-checker"
   namespace: "milvus-operator"
 spec:
-  ttlSecondsAfterFinished: 100
   template:
     spec:
       securityContext:
