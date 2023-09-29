@@ -439,7 +439,6 @@ helmCharts:
             - replay_lag_seconds:
                 usage: "GAUGE"
                 description: "Time elapsed between flushing recent WAL locally and receiving notification that this standby server has written, flushed and applied it"
-
         pg_settings:
           query: |
             SELECT name,
