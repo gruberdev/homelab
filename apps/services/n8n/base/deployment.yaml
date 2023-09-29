@@ -23,9 +23,9 @@ spec:
         image: n8nio/n8n:0.230.3
         env:
         - name: DB_POSTGRESDB_USER
-          valueFrom: {secretKeyRef: {name: automateuser.db-n8n.credentials.postgresql.acid.zalan.do, key: username}}
+          valueFrom: {secretKeyRef: {name: n8n-database-app, key: username}}
         - name: DB_POSTGRESDB_PASSWORD
-          valueFrom: {secretKeyRef: {name: automateuser.db-n8n.credentials.postgresql.acid.zalan.do, key: password}}
+          valueFrom: {secretKeyRef: {name: n8n-database-app, key: password}}
         envFrom:
         - configMapRef:
             name: n8n-cm
