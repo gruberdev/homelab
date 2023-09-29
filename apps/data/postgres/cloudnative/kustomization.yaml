@@ -5,6 +5,7 @@ patchesStrategicMerge:
 helmCharts:
 - name: cloudnative-pg
   releaseName: cnpg
+  namespace: cnpg-system
   includeCRDs: true
   version: 0.18.2
   repo: https://cloudnative-pg.github.io/charts
