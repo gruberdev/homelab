@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: data
+  namespace: argocd
+  labels:
+    app.kubernetes.io/category: data
+spec:
+  project: cluster
+  source:
+    repoURL: 'https://github.com/gruberdev/homelab.git'
+    path: apps/argocd/base/data
+    targetRevision: main
+  destination:
+    namespace: argocd
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: false
+    syncOptions:
+    - Validate=false
+    - CreateNamespace=false
+    - PrunePropagationPolicy=foreground
+    - PruneLast=true
+    - ApplyOutOfSyncOnly=false
+    retry:
+      limit: 10
+      backoff:
+        duration: 20s
+        factor: 2
+        maxDuration: 15m

@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- cloudnative.yaml
+- postgres.yaml
+- redis.yaml
+- storage.yaml
+
+namespace: argocd
+
+commonLabels:
+  app.kubernetes.io/category: data
