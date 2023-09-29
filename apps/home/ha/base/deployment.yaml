@@ -26,11 +26,11 @@ spec:
             runAsUser: 65533
           env:
             - name: DB_USERNAME
-              valueFrom: { secretKeyRef: { name: homeuser.db-ha.credentials.postgresql.acid.zalan.do, key: username } }
+              valueFrom: { secretKeyRef: { name: home-database-app, key: username } }
             - name: DB_PASSWORD
-              valueFrom: { secretKeyRef: { name: homeuser.db-ha.credentials.postgresql.acid.zalan.do, key: password } }
+              valueFrom: { secretKeyRef: { name: home-database-app, key: password } }
             - name: DB_STRING
-              value: "postgresql://${DB_USERNAME}:${DB_PASSWORD}@db-ha.homeassistant.svc.cluster.local:5432/homeassistant?client_encoding=utf8&sslmode=require"
+              value: "postgresql://${DB_USERNAME}:${DB_PASSWORD}@home-database-rw.homeassistant.svc.cluster.local:5432/home?client_encoding=utf8&sslmode=require"
           volumeMounts:
           - name: temp-config
             mountPath: /tmp/git
@@ -44,6 +44,20 @@ spec:
             - secretRef:
                 name: git-vars
                 optional: true
+        - name: hacs-install
+          image: alpine:3.16.2
+          command: ["sh", "-c", "if [ ! -f /config/.hacs-installed ]; then apk add bash wget && wget -O - https://get.hacs.xyz | bash - && touch /config/.hacs-installed; fi"]
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 0
+            seccompProfile:
+              type: RuntimeDefault
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - mountPath: /config
+              name: config-volume
       containers:
         - env:
           - name: TZ
@@ -64,27 +78,35 @@ spec:
               protocol: TCP
           resources:
             limits:
-              cpu: 350m
-              memory: 800Mi
+              cpu: 750m
+              memory: 2Gi
             requests:
-              cpu: 200m
-              memory: 500Mi
+              cpu: 350m
+              memory: 1Gi
           livenessProbe:
-            tcpSocket:
-              port: 8123
-            periodSeconds: 20
-            initialDelaySeconds: 60
+            httpGet:
+              path: /
+              port: api
+              scheme: HTTP
+            initialDelaySeconds: 10
+            failureThreshold: 5
+            timeoutSeconds: 2
           readinessProbe:
-            tcpSocket:
-              port: 8123
-            periodSeconds: 10
-            initialDelaySeconds: 3
+            httpGet:
+              path: /
+              port: api
+              scheme: HTTP
+            initialDelaySeconds: 10
+            failureThreshold: 5
+            timeoutSeconds: 2
           startupProbe:
-            tcpSocket:
-              port: 8123
-            timeoutSeconds: 5
-            periodSeconds: 10
-            initialDelaySeconds: 60
+            httpGet:
+              path: /
+              port: api
+              scheme: HTTP
+            initialDelaySeconds: 25
+            failureThreshold: 5
+            timeoutSeconds: 2
           securityContext:
             privileged: true
           volumeMounts:
