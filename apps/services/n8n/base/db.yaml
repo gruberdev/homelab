@@ -1,30 +1,35 @@
-apiVersion: "acid.zalan.do/v1"
-kind: postgresql
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
 metadata:
-  name: db-n8n
+  name: n8n-database
+  namespace: services
   annotations:
     argocd.argoproj.io/sync-options: Delete=false
 spec:
-  dockerImage: ghcr.io/zalando/spilo-15:3.0-p1
-  teamId: "db"
-  numberOfInstances: 2
-  users:
-    admin:
-    - superuser
-    - createdb
-    automateuser: []
-  databases:
-    n8n: automateuser
+  imageName: ghcr.io/cloudnative-pg/postgresql:15.3
+  primaryUpdateStrategy: unsupervised
+  instances: 3
+  startDelay: 180
+  stopDelay: 180
+  resources:
+    requests:
+      memory: 128Mi
+      cpu: 100m
+    limits:
+      memory: 256Mi
+      cpu: 200m
   postgresql:
-    version: "15"
-  volume:
-    size: 5Gi
+    parameters:
+      shared_buffers: 128MB
+      pg_stat_statements.max: '10000'
+      pg_stat_statements.track: all
+      auto_explain.log_min_duration: '10s'
+  bootstrap:
+    initdb:
+      database: n8n
+      owner: n8n
+  storage:
     storageClass: iscsi
-  nodeAffinity:
-    requiredDuringSchedulingIgnoredDuringExecution:
-      nodeSelectorTerms:
-      - matchExpressions:
-        - key: postgres-operator
-          operator: In
-          values:
-          - enabled
+    size: 40Gi
+  monitoring:
+    enablePodMonitor: true
