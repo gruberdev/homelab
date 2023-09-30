@@ -141,7 +141,7 @@ spec:
             secretName: ha-secrets
         - name: config-volume
           persistentVolumeClaim:
-            claimName: ha-storage
+            claimName: ha-storage-new
         - hostPath:
             path: /dev/serial/by-id/usb-Silicon_Labs_HubZ_Smart_Home_Controller_C130205F-if00-port0
           name: zigbee-00
