@@ -14,11 +14,11 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: unifi-storage-pod
+  name: unifi-storage-new
   namespace: unifi
 spec:
   accessModes:
-    - ReadWriteOncePod
+    - ReadWriteOnce
   storageClassName: iscsi
   resources:
     requests:

@@ -14,11 +14,11 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: ha-storage-pod
+  name: ha-storage-new
   namespace: homeassistant
 spec:
   accessModes:
-    - ReadWriteOncePod
+    - ReadWriteOnce
   resources:
     requests:
       storage: 40Gi
