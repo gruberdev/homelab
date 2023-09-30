@@ -5,6 +5,19 @@ metadata:
   namespace: unifi
 spec:
   accessModes:
+    - ReadWriteOnce
+  storageClassName: iscsi
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: unifi-storage-pod
+  namespace: unifi
+spec:
+  accessModes:
     - ReadWriteOncePod
   storageClassName: iscsi
   resources:

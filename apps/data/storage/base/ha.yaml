@@ -5,6 +5,19 @@ metadata:
   namespace: homeassistant
 spec:
   accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: iscsi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ha-storage-pod
+  namespace: homeassistant
+spec:
+  accessModes:
     - ReadWriteOncePod
   resources:
     requests:
