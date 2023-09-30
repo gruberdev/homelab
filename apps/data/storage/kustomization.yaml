@@ -6,12 +6,12 @@ resources:
 - base/kuma.yaml
 
 # Home Assistant
-# - base/ha.yaml
+- base/ha.yaml
 - base/wyze.yaml
 
 # Networking
 # - base/adguard.yaml
-# - base/unifi.yaml
+- base/unifi.yaml
 - base/unifi-poller.yaml
 
 # Media Services
