@@ -101,3 +101,5 @@ apps/services/changedetection/base/svc.yaml
 !config/docker/worker-patch.yaml
 !config/manifests/calico.yaml
 aggregated_output.json
+
+!apps/argocd/base/utilities/sealed.yaml
