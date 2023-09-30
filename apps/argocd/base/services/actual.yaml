@@ -8,7 +8,7 @@ spec:
   project: apps
   source:
     repoURL: 'https://github.com/gruberdev/homelab.git'
-    path: apps/services/actual
+    path: apps/services/finances/actual
     targetRevision: main
   destination:
     namespace: services
