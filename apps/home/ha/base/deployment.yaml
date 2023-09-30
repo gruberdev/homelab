@@ -46,7 +46,7 @@ spec:
                 optional: true
         - name: hacs-install
           image: alpine:3.16.2
-          command: ["sh", "-c", "if [ ! -f /config/.hacs-installed ]; then apk add bash wget && wget -O - https://get.hacs.xyz | bash - && touch /config/.hacs-installed; fi"]
+          command: ["sh", "-c", "mkdir -p /config && cd /config && if [ ! -f /config/.hacs-installed ]; then apk add bash wget && wget -O - https://get.hacs.xyz | bash - && touch /config/.hacs-installed; fi"]
           securityContext:
             allowPrivilegeEscalation: false
             runAsUser: 0
