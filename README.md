@@ -218,7 +218,7 @@
 [homelab-zalando]: https://github.com/gruberdev/homelab/tree/main/apps/data/postgres/operator
 [homelab-gitea]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/services/gitea.yaml
 [homelab-change]: https://github.com/gruberdev/homelab/tree/main/apps/services/changedetection
-[homelab-redis]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/core/redis.yaml
+[homelab-redis]: https://github.com/gruberdev/homelab/tree/main/apps/data/redis
 [homelab-grocy]: https://github.com/gruberdev/homelab/tree/main/apps/services/grocy
 [homelab-mysql]: https://github.com/gruberdev/homelab/blob/main/docs/mysql.md
 [homelab-tailscale]: https://github.com/gruberdev/homelab/tree/main/apps/networking/tailscale
