@@ -19,6 +19,20 @@ spec:
         app: home-assistant
     spec:
       initContainers:
+        - name: hacs-install
+          image: alpine:3.16.2
+          command: ["sh", "-c", "if [ ! -d /config ]; then mkdir -p /config; fi; if [ -f /config/configuration.yaml ]; then if [ ! -f /config/.hacs-installed ]; then apk add bash wget && wget -O - https://get.hacs.xyz | bash - && touch /config/.hacs-installed; fi; else echo 'No Home Assistant database found. Skipping HACS installation.'; fi"]
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 0
+            seccompProfile:
+              type: RuntimeDefault
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - mountPath: /config
+              name: config-volume
         - name: git-sync
           image: k8s.gcr.io/git-sync/git-sync:v3.6.1
           imagePullPolicy: IfNotPresent
@@ -44,20 +58,6 @@ spec:
             - secretRef:
                 name: git-vars
                 optional: true
-        - name: hacs-install
-          image: alpine:3.16.2
-          command: ["sh", "-c", "if [ ! -d /config ]; then mkdir -p /config; fi; if [ -f /config/home-assistant_v2.db ]; then if [ ! -f /config/.hacs-installed ]; then apk add bash wget && wget -O - https://get.hacs.xyz | bash - && touch /config/.hacs-installed; fi; else echo 'No Home Assistant database found. Skipping HACS installation.'; fi"]
-          securityContext:
-            allowPrivilegeEscalation: false
-            runAsUser: 0
-            seccompProfile:
-              type: RuntimeDefault
-            capabilities:
-              drop:
-                - ALL
-          volumeMounts:
-            - mountPath: /config
-              name: config-volume
       containers:
         - env:
           - name: TZ
