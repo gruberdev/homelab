@@ -3,25 +3,31 @@ kind: CronJob
 metadata:
   name: ofx-exporter-job
 spec:
-  schedule: "*/10 * * * *"  # Run every 10 minutes
+  schedule: "0 0 * * *"
   jobTemplate:
     spec:
       template:
+        metadata:
+          annotations:
+            argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
         spec:
           containers:
             - name: ofx-exporter
               image: docker.io/grubertech/ofx-exporter:latest
               securityContext:
+                runAsUser: 999
                 capabilities:
                   add: ["SYS_ADMIN"]
               volumeMounts:
                 - name: extratos-volume
-                  mountPath: /home/pptruser/itauscrapper/download
+                  mountPath: /home/pptruser/itauscrapper/download/
               envFrom:
                 - configMapRef:
                     name: ofx-exporter-cm
                 - secretRef:
                     name: bnk-vars
+          securityContext:
+            fsGroup: 999
           volumes:
             - name: extratos-volume
               persistentVolumeClaim:
