@@ -51,6 +51,7 @@ resources:
 - base/services/n8n.yaml
 - base/services/onchange.yaml
 - base/services/actual.yaml
+- base/services/ofx-exporter.yaml
 - base/services/gitea.yaml
 - base/services/gitea-utils.yaml
 - base/services/rss-hub.yaml

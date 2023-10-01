@@ -36,6 +36,7 @@ resources:
 # - base/wallabag.yaml
 # - base/milvus.yaml
 - base/actual.yaml
+- base/finances.yaml
 # - base/jupyterlab.yaml
 # - base/librex.yaml
 - base/local-ai.yaml

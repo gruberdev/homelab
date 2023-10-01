@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: ofx-exporter-job
+spec:
+  schedule: "*/10 * * * *"  # Run every 10 minutes
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: ofx-exporter
+              image: docker.io/grubertech/ofx-exporter:latest
+              securityContext:
+                capabilities:
+                  add: ["SYS_ADMIN"]
+              volumeMounts:
+                - name: extratos-volume
+                  mountPath: /home/pptruser/itauscrapper/download
+              envFrom:
+                - configMapRef:
+                    name: ofx-exporter-cm
+                - secretRef:
+                    name: bnk-vars
+          volumes:
+            - name: extratos-volume
+              persistentVolumeClaim:
+                claimName: extratos-storage
+          restartPolicy: OnFailure

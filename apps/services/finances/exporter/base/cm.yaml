@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ofx-exporter-cm
+data:
+  FILE_FORMAT: 'ofx'
+  DAYS: '60'
