@@ -36,7 +36,7 @@ data:
   DJANGO_DB_HOST: "gym-database-rw.services.svc.cluster.local"
   DJANGO_DB_PORT: "5432"
   DJANGO_PERFORM_MIGRATIONS: "True"
-  USE_CELERY: "True"
+  USE_CELERY: "False"
   CELERY_BROKER: "redis://gym-redis.services.svc.cluster.local:6379/2"
   CELERY_BACKEND: "redis://gym-redis.services.svc.cluster.local:6379/2"
 ---
