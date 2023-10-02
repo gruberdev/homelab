@@ -2,7 +2,20 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: wger-storage
+  name: wger-static
+  namespace: services
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: iscsi
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: wger-media
   namespace: services
 spec:
   accessModes:

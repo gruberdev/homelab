@@ -25,6 +25,10 @@ spec:
         - name: nginx-config
           mountPath: /etc/nginx/conf.d/default.conf
           subPath: default.conf
+        - name: static
+          mountPath: /home/wger/static
+        - name: media
+          mountPath: /home/wger/media
         ports:
         - name: web
           containerPort: 80
@@ -60,12 +64,17 @@ spec:
             cpu: 450m
             memory: 768Mi
         volumeMounts:
-        - name: config-storage
-          mountPath: /home/wger
+        - name: static
+          mountPath: /home/wger/static
+        - name: media
+          mountPath: /home/wger/media
       volumes:
-        - name: config-storage
+        - name: static
           persistentVolumeClaim:
-            claimName: wger-storage
+            claimName: wger-static
+        - name: media
+          persistentVolumeClaim:
+            claimName: wger-media
         - name: nginx-config
           configMap:
             name: wger-proxy
