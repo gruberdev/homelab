@@ -65,7 +65,7 @@ spec:
       volumes:
         - name: config-storage
           persistentVolumeClaim:
-            claimName: wger-config
+            claimName: wger-storage
         - name: nginx-config
           configMap:
-            name: nginx-config
+            name: wger-proxy
