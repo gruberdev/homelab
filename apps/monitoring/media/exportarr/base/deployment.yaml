@@ -1,0 +1,52 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextdns-exporter
+  labels:
+    app: nextdns-exporter
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: nextdns-exporter
+  template:
+    metadata:
+      labels:
+        app: nextdns-exporter
+    spec:
+      containers:
+        - name: exportarr
+          image: ghcr.io/onedr0p/exportarr:v1.5.3
+          envFrom:
+            - configMapRef:
+                name: exportarr-cm
+            - secretRef:
+                name: exportarr-vars
+                optional: true
+          ports:
+            - name: metrics
+              containerPort: 9707
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /metrics
+              port: 9707
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 60
+            timeoutSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /metrics
+              port: 9707
+              scheme: HTTP
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 50m
+            limits:
+              memory: 256Mi
+              cpu: 100m
