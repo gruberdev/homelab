@@ -19,7 +19,7 @@ data:
   DOWNLOAD_INGREDIENTS_FROM: "WGER"
   ENABLE_EMAIL: "True"
   EMAIL_USE_TLS: "True"
-  FROM_EMAIL: 'wger Workout Manager <wger@example.com>'
+  FROM_EMAIL: 'Personal Workout Manager <gym@gruber.dev.brm>'
   ACCESS_TOKEN_LIFETIME: "20"
   REFRESH_TOKEN_LIFETIME: "60"
   DJANGO_DEBUG: "False"
@@ -33,7 +33,7 @@ data:
   DJANGO_CACHE_CLIENT_CLASS: "django_redis.client.DefaultClient"
   DJANGO_DB_ENGINE: "django.db.backends.postgresql"
   DJANGO_DB_DATABASE: "wger"
-  DJANGO_DB_HOST: "gym-database-rw.services.svc.cluster.local"
+  DJANGO_DB_HOST: "wger-database-rw.services.svc.cluster.local"
   DJANGO_DB_PORT: "5432"
   DJANGO_PERFORM_MIGRATIONS: "True"
   USE_CELERY: "False"
