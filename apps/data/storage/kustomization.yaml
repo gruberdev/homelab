@@ -28,6 +28,7 @@ resources:
 - base/wandb.yaml
 - base/links.yaml
 - base/feedpushr.yaml
+- base/wger.yaml
 # - base/grocy.yaml
 # - base/archivebox.yaml
 - base/change.yaml

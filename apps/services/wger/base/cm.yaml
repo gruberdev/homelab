@@ -1,0 +1,68 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: wger-cm
+data:
+  TIME_ZONE: "America/Sao_Paulo"
+  MEDIA_URL: "https://gym.gruber.dev.br/media/"
+  STATIC_URL: "https://gym.gruber.dev.br/static/"
+  WGER_INSTANCE: https://wger.de"
+  ALLOW_REGISTRATION: "True"
+  ALLOW_GUEST_USERS: "True"
+  ALLOW_UPLOAD_VIDEOS: "True"
+  MIN_ACCOUNT_AGE_TO_TRUST: "0"
+  SYNC_EXERCISES_ON_STARTUP: "True"
+  DOWNLOAD_EXERCISE_IMAGES_ON_STARTUP: "True"
+  SYNC_EXERCISES_CELERY: "True"
+  SYNC_EXERCISE_IMAGES_CELERY: "True"
+  SYNC_EXERCISE_VIDEOS_CELERY: "True"
+  DOWNLOAD_INGREDIENTS_FROM: "WGER"
+  ENABLE_EMAIL: "True"
+  EMAIL_USE_TLS: "True"
+  FROM_EMAIL: 'wger Workout Manager <wger@example.com>'
+  ACCESS_TOKEN_LIFETIME: "20"
+  REFRESH_TOKEN_LIFETIME: "60"
+  DJANGO_DEBUG: "False"
+  WGER_USE_GUNICORN: "True"
+  EXERCISE_CACHE_TTL: "18000"
+  SITE_URL: "https://gym.gruber.dev.br"
+  AXES_ENABLED: "False"
+  DJANGO_CACHE_BACKEND: "django_redis.cache.RedisCache"
+  DJANGO_CACHE_LOCATION: "redis://gym-redis.services.svc.cluster.local:6379/1"
+  DJANGO_CACHE_TIMEOUT: "1296000"
+  DJANGO_CACHE_CLIENT_CLASS: "django_redis.client.DefaultClient"
+  DJANGO_DB_ENGINE: "django.db.backends.postgresql"
+  DJANGO_DB_DATABASE: "wger"
+  DJANGO_DB_HOST: "gym-database-rw.services.svc.cluster.local"
+  DJANGO_DB_PORT: "5432"
+  DJANGO_PERFORM_MIGRATIONS: "True"
+  USE_CELERY: "True"
+  CELERY_BROKER: "redis://gym-redis.services.svc.cluster.local:6379/2"
+  CELERY_BACKEND: "redis://gym-redis.services.svc.cluster.local:6379/2"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: wger-proxy
+data:
+  default.conf: |
+    upstream wger {
+        server localhost:8000;
+    }
+    server {
+        listen 80;
+        location / {
+            proxy_pass http://wger;
+            proxy_set_header Host $host;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $http_x_forwarded_proto;
+            proxy_redirect off;
+        }
+        location /static/ {
+            alias /wger/static/;
+        }
+        location /media/ {
+            alias /wger/media/;
+        }
+        client_max_body_size 100M;
+    }

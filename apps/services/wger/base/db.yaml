@@ -1,0 +1,35 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: wger-database
+  namespace: services
+  annotations:
+    argocd.argoproj.io/sync-options: Delete=false
+spec:
+  imageName: ghcr.io/cloudnative-pg/postgresql:15.3
+  primaryUpdateStrategy: unsupervised
+  instances: 3
+  startDelay: 180
+  stopDelay: 180
+  resources:
+    requests:
+      memory: 128Mi
+      cpu: 100m
+    limits:
+      memory: 256Mi
+      cpu: 200m
+  postgresql:
+    parameters:
+      shared_buffers: 128MB
+      pg_stat_statements.max: '10000'
+      pg_stat_statements.track: all
+      auto_explain.log_min_duration: '10s'
+  bootstrap:
+    initdb:
+      database: wger
+      owner: wger
+  storage:
+    storageClass: iscsi
+    size: 20Gi
+  monitoring:
+    enablePodMonitor: true

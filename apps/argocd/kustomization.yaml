@@ -56,6 +56,7 @@ resources:
 - base/services/gitea-utils.yaml
 - base/services/rss-hub.yaml
 - base/services/nitter.yaml
+- base/services/wger.yaml
 # - base/services/squid.yaml
 # - base/services/jupyterlab.yaml
 # - base/services/librex.yaml
