@@ -62,6 +62,52 @@ spec:
         volumeMounts:
         - name: config-storage
           mountPath: /home/wger
+      - name: celery-worker
+        image: wger/server:latest
+        command: ["/start-worker"]
+        env:
+        - name: DJANGO_DB_USER
+          valueFrom: {secretKeyRef: {name: wger-database-app, key: username}}
+        - name: DJANGO_DB_PASSWORD
+          valueFrom: {secretKeyRef: {name: wger-database-app, key: password}}
+        envFrom:
+        - configMapRef:
+            name: wger-cm
+        - secretRef:
+            name: wger-vars
+        resources:
+          requests:
+            cpu: 150m
+            memory: 128Mi
+          limits:
+            cpu: 250m
+            memory: 256Mi
+        volumeMounts:
+        - name: config-storage
+          mountPath: /home/wger
+      - name: celery-beat
+        image: wger/server:latest
+        command: ["/start-beat"]
+        env:
+        - name: DJANGO_DB_USER
+          valueFrom: {secretKeyRef: {name: wger-database-app, key: username}}
+        - name: DJANGO_DB_PASSWORD
+          valueFrom: {secretKeyRef: {name: wger-database-app, key: password}}
+        envFrom:
+        - configMapRef:
+            name: wger-cm
+        - secretRef:
+            name: wger-vars
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 150m
+            memory: 256Mi
+        volumeMounts:
+        - name: config-storage
+          mountPath: /home/wger
       volumes:
         - name: config-storage
           persistentVolumeClaim:
