@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: exportarr-cm
+data:
+  PORT: "INFO"
+  URL: "9948"
+  INTERFACE: "0.0.0.0"
+  LOG_LEVEL: "info"
+  DISABLE_SSL_VERIFY: "true"
+  ENABLE_UNKNOWN_QUEUE_ITEMS: "false"
+  PROWLARR__BACKFILL: "false"
+  PROWLARR__BACKFILL_SINCE_DATE: "1970-01-01"
