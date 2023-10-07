@@ -70,5 +70,4 @@ data:
         location = /500.html {
           root /var/www/html/;
         }
-        client_max_body_size 100M;
     }
