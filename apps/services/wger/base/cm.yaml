@@ -23,7 +23,7 @@ data:
   FROM_EMAIL: 'Personal Workout Manager <gym@gruber.dev.brm>'
   ACCESS_TOKEN_LIFETIME: "20"
   REFRESH_TOKEN_LIFETIME: "60"
-  DJANGO_DEBUG: "False"
+  DJANGO_DEBUG: "True"
   WGER_USE_GUNICORN: "True"
   EXERCISE_CACHE_TTL: "18000"
   SITE_URL: "https://gym.gruber.dev.br"
@@ -48,22 +48,27 @@ metadata:
 data:
   default.conf: |
     upstream wger {
-        server localhost:8000;
+        server localhost:8000 fail_timeout=0;
     }
     server {
-        listen 80;
+        listen 8080;
+        client_max_body_size 4G;
+        keepalive_timeout 5;
+        root /var/www/html/;
         location / {
-            proxy_pass http://wger;
-            proxy_set_header Host $host;
-            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-            proxy_set_header X-Forwarded-Proto $http_x_forwarded_proto;
-            proxy_redirect off;
+          # checks for static file, if not found proxy to app
+          try_files $uri @proxy_to_app;
         }
-        location /static/ {
-            alias /wger/static/;
+        location @proxy_to_app {
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+          proxy_set_header Host $http_host;
+          proxy_redirect off;
+          proxy_pass http://wger;
         }
-        location /media/ {
-            alias /wger/media/;
+        error_page 500 502 503 504 /500.html;
+        location = /500.html {
+          root /var/www/html/;
         }
         client_max_body_size 100M;
     }

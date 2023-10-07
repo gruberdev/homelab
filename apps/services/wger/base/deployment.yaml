@@ -18,6 +18,8 @@ spec:
       labels:
         app: wger
     spec:
+      securityContext:
+        fsGroup: 1000
       containers:
       - name: frontend
         image: nginx:stable
@@ -27,8 +29,10 @@ spec:
           subPath: default.conf
         - name: static
           mountPath: /home/wger/static
+          readOnly: true
         - name: media
           mountPath: /home/wger/media
+          readOnly: true
         ports:
         - name: web
           containerPort: 80
