@@ -13,3 +13,10 @@ data:
   statusbadge.enabled: "true"
   statusbadge.url: "https://argo.gruber.dev.br/"
   exec.enabled: "true"
+  resource.exclusions: |
+    - apiGroups:
+      - "redis.redis.opstreelabs.in"
+      kinds:
+      - "Redis"
+      clusters:
+      - "*"
