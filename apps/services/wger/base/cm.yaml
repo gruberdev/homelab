@@ -51,7 +51,7 @@ data:
         server localhost:8000 fail_timeout=0;
     }
     server {
-        listen 8080;
+        listen 80;
         client_max_body_size 4G;
         keepalive_timeout 5;
         root /var/www/html/;
@@ -66,6 +66,11 @@ data:
           proxy_redirect off;
           proxy_pass http://wger;
         }
+        location /static/ {
+            alias /var/www/html/static/;
+        }
+        location /media/ {
+            alias /var/www/html/media/;
         error_page 500 502 503 504 /500.html;
         location = /500.html {
           root /var/www/html/;

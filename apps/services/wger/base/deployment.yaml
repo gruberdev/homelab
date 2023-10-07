@@ -27,11 +27,12 @@ spec:
         - name: nginx-config
           mountPath: /etc/nginx/conf.d/default.conf
           subPath: default.conf
+          readOnly: true
         - name: static
-          mountPath: /home/wger/static
+          mountPath: /var/www/html/static
           readOnly: true
         - name: media
-          mountPath: /home/wger/media
+          mountPath: /var/www/html/media
           readOnly: true
         ports:
         - name: web
