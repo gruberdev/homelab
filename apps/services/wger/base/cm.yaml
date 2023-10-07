@@ -18,6 +18,7 @@ data:
   SYNC_EXERCISE_VIDEOS_CELERY: "True"
   DOWNLOAD_INGREDIENTS_FROM: "WGER"
   ENABLE_EMAIL: "True"
+  EMAIL_USE_SSL: "False"
   EMAIL_USE_TLS: "True"
   FROM_EMAIL: 'Personal Workout Manager <gym@gruber.dev.brm>'
   ACCESS_TOKEN_LIFETIME: "20"
