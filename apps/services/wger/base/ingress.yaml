@@ -19,7 +19,7 @@ spec:
           service:
             name: wger-tailscale
             port:
-              name: web
+              number: 80
   tls:
   - hosts:
     - gym.gruber.dev.br
