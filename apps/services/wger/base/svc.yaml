@@ -8,11 +8,10 @@ metadata:
     tailscale.com/hostname: "gym"
 spec:
   selector:
-    app: wger
+    app: gym-server
   ports:
-    - name: web
-      port: 80
-      targetPort: 80
+    - port: 80
+      targetPort: 8080
       protocol: TCP
   loadBalancerClass: tailscale
   type: LoadBalancer

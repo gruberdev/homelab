@@ -46,33 +46,28 @@ kind: ConfigMap
 metadata:
   name: wger-proxy
 data:
-  default.conf: |
-    upstream wger {
-        server localhost:8000 fail_timeout=0;
+  wger-app.conf: |
+    upstream app_server {
+      server localhost:8000 fail_timeout=0;
     }
     server {
-        listen 80;
-        client_max_body_size 4G;
-        keepalive_timeout 5;
+      listen 8080;
+      client_max_body_size 4G;
+      server_name gym.gruber.dev.br;
+      keepalive_timeout 5;
+      root /var/www/html/;
+      location / {
+        try_files $uri @proxy_to_app;
+      }
+      location @proxy_to_app {
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Host $http_host;
+        proxy_redirect off;
+        proxy_pass http://app_server;
+      }
+      error_page 500 502 503 504 /500.html;
+      location = /500.html {
         root /var/www/html/;
-        location / {
-          # checks for static file, if not found proxy to app
-          try_files $uri @proxy_to_app;
-        }
-        location @proxy_to_app {
-          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-          proxy_set_header X-Forwarded-Proto $scheme;
-          proxy_set_header Host $http_host;
-          proxy_redirect off;
-          proxy_pass http://wger;
-        }
-        location /static/ {
-            alias /var/www/html/static/;
-        }
-        location /media/ {
-            alias /var/www/html/media/;
-        error_page 500 502 503 504 /500.html;
-        location = /500.html {
-          root /var/www/html/;
-        }
+      }
     }
