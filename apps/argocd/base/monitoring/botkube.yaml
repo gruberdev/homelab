@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: https://charts.botkube.io
     chart: botkube
-    targetRevision: v1.4.1
+    targetRevision: v1.5.0
     helm:
       releaseName: botkube
       values: |
