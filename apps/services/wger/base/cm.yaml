@@ -15,7 +15,7 @@ data:
   DOWNLOAD_EXERCISE_IMAGES_ON_STARTUP: "True"
   SYNC_EXERCISES_CELERY: "True"
   SYNC_EXERCISE_IMAGES_CELERY: "True"
-  CSRF_TRUSTED_ORIGINS: "http://127.0.0.1,https://127.0.0.1,http://localhost,https://localhost"
+  CSRF_TRUSTED_ORIGINS: "http://127.0.0.1,https://127.0.0.1,https://gym.gruber.dev.br,http://gym.gruber.dev.br,https://gruber.dev.br,http://gym.gruber.dev.br,http://localhost,https://localhost"
   SYNC_EXERCISE_VIDEOS_CELERY: "True"
   DOWNLOAD_INGREDIENTS_FROM: "WGER"
   ENABLE_EMAIL: "True"
