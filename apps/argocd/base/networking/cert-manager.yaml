@@ -34,11 +34,11 @@ spec:
           replicaCount: 1
           resources:
             limits:
+              cpu: 350m
+              memory: 512Mi
+            requests:
               cpu: 150m
               memory: 256Mi
-            requests:
-              cpu: 50m
-              memory: 128Mi
           securityContext:
             runAsNonRoot: true
             seccompProfile:
@@ -83,11 +83,11 @@ spec:
         replicaCount: 1
         resources:
           limits:
+            cpu: 350m
+            memory: 512i
+          requests:
             cpu: 150m
             memory: 256Mi
-          requests:
-            cpu: 50m
-            memory: 128Mi
         securityContext:
           runAsNonRoot: true
           seccompProfile:
@@ -96,7 +96,7 @@ spec:
           automountServiceAccountToken: true
           create: true
         startupapicheck:
-          backoffLimit: 4
+          backoffLimit: 10
           containerSecurityContext:
             allowPrivilegeEscalation: false
             capabilities:
@@ -108,23 +108,21 @@ spec:
             repository: quay.io/jetstack/cert-manager-ctl
             tag: v1.12.4
           jobAnnotations:
-            helm.sh/hook: post-install
-            helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
-            helm.sh/hook-weight: "1"
+            argocd.argoproj.io/hook: PostSync
+            argocd.argoproj.io/hook-delete-policy: HookSucceeded
           nodeSelector:
             kubernetes.io/os: linux
           rbac:
             annotations:
-              helm.sh/hook: post-install
-              helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
-              helm.sh/hook-weight: "-5"
+              argocd.argoproj.io/hook: PostSync
+              argocd.argoproj.io/hook-delete-policy: HookSucceeded              helm.sh/hook-weight: "-5"
           resources:
             limits:
+              cpu: 350m
+              memory: 512Mi
+            requests:
               cpu: 150m
               memory: 256Mi
-            requests:
-              cpu: 50m
-              memory: 128Mi
           securityContext:
             runAsNonRoot: true
             seccompProfile:
@@ -184,11 +182,11 @@ spec:
           replicaCount: 1
           resources:
             limits:
+              cpu: 350m
+              memory: 512Mi
+            requests:
               cpu: 150m
               memory: 256Mi
-            requests:
-              cpu: 50m
-              memory: 128Mi
           securePort: 10250
           securityContext:
             runAsNonRoot: true
