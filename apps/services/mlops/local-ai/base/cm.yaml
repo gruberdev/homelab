@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: localai-config
 data:
-  CONTEXT_SIZE: "4096"
+  CONTEXT_SIZE: "1024"
   THREADS: "6"
   MODELS_PATH: "/models"
   CORS: "true"
@@ -13,4 +13,4 @@ data:
   NVIDIA_VISIBLE_DEVICES: "all"
   NVIDIA_DRIVER_CAPABILITIES: "all"
   NVIDIA_REQUIRE_CUDA: "cuda>=11.0"
-  REBUILD: "true"
+  REBUILD: "false"
