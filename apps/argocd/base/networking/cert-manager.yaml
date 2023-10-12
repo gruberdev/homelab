@@ -112,15 +112,10 @@ spec:
             argocd.argoproj.io/hook-delete-policy: HookSucceeded
           nodeSelector:
             kubernetes.io/os: linux
-          rbac:
-            annotations:
-              argocd.argoproj.io/hook: PostSync
-              argocd.argoproj.io/hook-delete-policy: HookSucceeded
-              argocd.argoproj.io/sync-wave: "-2"
           resources:
             limits:
-              cpu: 350m
-              memory: 512Mi
+              cpu: 500m
+              memory: 1Gi
             requests:
               cpu: 150m
               memory: 256Mi
@@ -128,11 +123,6 @@ spec:
             runAsNonRoot: true
             seccompProfile:
               type: RuntimeDefault
-          serviceAccount:
-            annotations:
-              argocd.argoproj.io/hook: PostSync
-              argocd.argoproj.io/hook-delete-policy: HookSucceeded
-              argocd.argoproj.io/sync-wave: "-2"
             automountServiceAccountToken: true
             create: true
           timeout: 1m
@@ -149,7 +139,7 @@ spec:
             tag: v1.12.4
           livenessProbe:
             failureThreshold: 3
-            initialDelaySeconds: 30
+            initialDelaySeconds: 35
             periodSeconds: 10
             successThreshold: 1
             timeoutSeconds: 1
