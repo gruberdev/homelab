@@ -57,6 +57,9 @@ spec:
         - git.gruber.dev.br
         - copilot.gruber.dev.br
         - gym.gruber.dev.br
+        - dashboard.gruber.dev.br
+        - dash.gruber.dev.br
+        - hajimari.gruber.dev.br
       dns01:
         cloudflare:
           email: rpg.gruber@gmail.com
