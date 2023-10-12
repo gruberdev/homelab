@@ -14,4 +14,4 @@ patchesStrategicMerge:
 namespace: databases
 images:
 - name: registry.opensource.zalan.do/acid/postgres-operator-ui
-  newTag: v1.10.0
+  newTag: v1.10.1
