@@ -5,7 +5,7 @@ resources:
 - descheduler.yaml
 - eraser.yaml
 - kube-fledged.yaml
-- kured.yaml
+# - kured.yaml
 - reflector.yaml
 - reloader.yaml
 - snapshot.yaml
