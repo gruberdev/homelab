@@ -14,8 +14,8 @@ resources:
 # Core Applications
 - base/core/argocd.yaml
 - base/core/data.yaml
-# - base/core/nvidia.yaml
-# - base/core/nvidia-extra.yaml
+- base/core/nvidia.yaml
+- base/core/nvidia-extra.yaml
 # - base/core/tailscale.yaml
 # - base/core/private.yaml
 # - base/core/democratic-csi.yaml
