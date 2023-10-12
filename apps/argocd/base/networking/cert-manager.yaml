@@ -122,7 +122,7 @@ spec:
           securityContext:
             runAsNonRoot: true
             seccompProfile:
-              type: RuntimeDefaul
+              type: RuntimeDefault
           serviceAccount:
             automountServiceAccountToken: true
             create: true
