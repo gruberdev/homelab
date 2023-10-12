@@ -38,12 +38,13 @@ spec:
         startupProbe:
           tcpSocket:
             port: 8080
-          initialDelaySeconds: 120
+          initialDelaySeconds: 30
           periodSeconds: 30
+          failureThreshold: 10
         resources:
           limits:
             cpu: 4000m
-            memory: 14Gi
+            memory: 16Gi
           requests:
             cpu: 1000m
             memory: 2Gi
