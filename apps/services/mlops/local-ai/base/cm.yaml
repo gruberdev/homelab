@@ -13,5 +13,4 @@ data:
   NVIDIA_VISIBLE_DEVICES: "all"
   NVIDIA_DRIVER_CAPABILITIES: "all"
   NVIDIA_REQUIRE_CUDA: "cuda>=11.0"
-  REBUILD: "false"
-  GALLERIES: "[{\"name\":\"model-gallery\", \"url\":\"github:gruberdev/homelab/apps/services/chatgpt/local-ai/models/index.yaml\"}]"
+  REBUILD: "true"
