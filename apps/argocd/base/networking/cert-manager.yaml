@@ -13,6 +13,8 @@ spec:
     helm:
       releaseName: cert-manager
       values: |
+        startupapicheck:
+          enabled: false
         acmesolver:
           image:
             repository: quay.io/jetstack/cert-manager-acmesolver
@@ -95,38 +97,6 @@ spec:
         serviceAccount:
           automountServiceAccountToken: true
           create: true
-        startupapicheck:
-          backoffLimit: 10
-          containerSecurityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-              - ALL
-          enabled: true
-          image:
-            pullPolicy: IfNotPresent
-            repository: quay.io/jetstack/cert-manager-ctl
-            tag: v1.12.4
-          jobAnnotations:
-            argocd.argoproj.io/hook: PostSync
-            argocd.argoproj.io/hook-delete-policy: HookSucceeded
-          nodeSelector:
-            kubernetes.io/os: linux
-          resources:
-            limits:
-              cpu: 500m
-              memory: 1Gi
-            requests:
-              cpu: 150m
-              memory: 256Mi
-          securityContext:
-            runAsNonRoot: true
-            seccompProfile:
-              type: RuntimeDefault
-          serviceAccount:
-            automountServiceAccountToken: true
-            create: true
-          timeout: 1m
         webhook:
           containerSecurityContext:
             allowPrivilegeEscalation: false
