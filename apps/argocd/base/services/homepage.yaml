@@ -8,7 +8,7 @@ spec:
   project: apps
   source:
     repoURL: 'https://github.com/gruberdev/homelab.git'
-    path: apps/services/hajimari
+    path: apps/services/homepage
     targetRevision: main
   destination:
     namespace: services
