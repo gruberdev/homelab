@@ -1,9 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: homepage
-  labels:
-    app: homepage
+  name: homepage-tailscale
   annotations:
     tailscale.com/hostname: "dashboard"
 spec:
@@ -13,6 +11,7 @@ spec:
     targetPort: 3000
     protocol: TCP
   selector:
-    app: homepage
+    app.kubernetes.io/instance: homepage
+    app.kubernetes.io/name: homepage
   type: LoadBalancer
   loadBalancerClass: tailscale

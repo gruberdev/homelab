@@ -5,11 +5,10 @@ resources:
 - ./base
 
 helmCharts:
-- name: hompage
+- name: homepage
   releaseName: homepage
-  includeCRDs: true
   version: 1.2.3
-  repo: https://jameswynn.github.io/helm-charts
+  repo: https://jameswynn.github.io/helm-charts/
   valuesInline:
     image:
       repository: ghcr.io/benphelps/homepage
@@ -86,3 +85,7 @@ helmCharts:
         cpu: 350m
 
 namespace: services
+
+commonLabels:
+  app.kubernetes.io/instance: homepage
+  app.kubernetes.io/name: homepage
