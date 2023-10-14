@@ -36,11 +36,11 @@ helmCharts:
       services:
         - Services:
             - wger:
-              icon: https://raw.githubusercontent.com/gruberdev/homelab/main/docs/assets/logos/wger.png
-              href: "http://gym.gruber.dev.br"
-              description: A gym-tracking service
-              namespace: services
-              app: wger
+                icon: "https://raw.githubusercontent.com/gruberdev/homelab/main/docs/assets/logos/wger.png"
+                href: "http://gym.gruber.dev.br"
+                description: A gym-tracking service
+                namespace: services
+                app: wger
         - My Third Group:
             - My Third Service:
                 href: 'http://localhost/'
