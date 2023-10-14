@@ -34,14 +34,13 @@ helmCharts:
                 - abbr: GH
                   href: 'https://github.com/'
       services:
-        - My First Group:
-            - My First Service:
-                href: 'http://localhost/'
-                description: Homepage is awesome
-        - My Second Group:
-            - My Second Service:
-                href: 'http://localhost/'
-                description: Homepage is the best
+        - Services:
+            - wger:
+              icon: https://raw.githubusercontent.com/gruberdev/homelab/main/docs/assets/logos/wger.png
+              href: "http://gym.gruber.dev.br"
+              description: A gym-tracking service
+              namespace: services
+              app: wger
         - My Third Group:
             - My Third Service:
                 href: 'http://localhost/'

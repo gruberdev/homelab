@@ -7,3 +7,4 @@ namespace: services
 
 commonAnnotations:
   reloader.stakater.com/auto: "true"
+  app.kubernetes.io/name: "wger"
