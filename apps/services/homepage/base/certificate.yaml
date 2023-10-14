@@ -1,9 +1,9 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: hajimari
+  name: homepage
 spec:
-  secretName: hajimari-tls
+  secretName: homepage-tls
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer

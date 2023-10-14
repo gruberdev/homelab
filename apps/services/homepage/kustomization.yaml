@@ -1,0 +1,88 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ./base
+
+helmCharts:
+- name: hompage
+  releaseName: homepage
+  includeCRDs: true
+  version: 1.2.3
+  repo: https://jameswynn.github.io/helm-charts
+  valuesInline:
+    image:
+      repository: ghcr.io/benphelps/homepage
+      tag: v0.7.3
+    enableRbac: true
+    serviceAccount:
+      name: homepage
+      create: true
+    service:
+      main:
+        ports:
+          http:
+            port: 3000
+    controller:
+      strategy: Recreate
+    ingress:
+      main:
+        enabled: false
+    config:
+      bookmarks:
+        - Developer:
+            - Github:
+                - abbr: GH
+                  href: 'https://github.com/'
+      services:
+        - My First Group:
+            - My First Service:
+                href: 'http://localhost/'
+                description: Homepage is awesome
+        - My Second Group:
+            - My Second Service:
+                href: 'http://localhost/'
+                description: Homepage is the best
+        - My Third Group:
+            - My Third Service:
+                href: 'http://localhost/'
+                description: "Homepage is \U0001F60E"
+      widgets:
+        - resources:
+            backend: kubernetes
+            expanded: true
+            cpu: true
+            memory: true
+        - search:
+            provider: duckduckgo
+            target: _blank
+        - kubernetes:
+            cluster:
+              show: true
+              cpu: true
+              memory: true
+              showLabel: true
+              label: cluster
+            nodes:
+              show: true
+              cpu: true
+              memory: true
+              showLabel: true
+      kubernetes:
+        mode: cluster
+      docker: null
+      settings: null
+    persistence:
+      logs:
+        enabled: true
+        type: emptyDir
+        mountPath: /app/config/logs
+    resources:
+      requests:
+        memory: 256Mi
+        cpu: 150m
+      limits:
+        memory: 512Mi
+        cpu: 350m
+
+namespace: services
