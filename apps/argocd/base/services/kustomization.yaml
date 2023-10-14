@@ -11,7 +11,7 @@ resources:
 - onchange.yaml
 - rss-hub.yaml
 - gitea-utils.yaml
-- hajimari.yaml
+- homepage.yaml
 
 namespace: argocd
 
