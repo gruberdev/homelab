@@ -2,8 +2,6 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: homepage-ingress
-  labels:
-    app: homepage
   annotations:
     external-dns.alpha.kubernetes.io/hostname: dashboard.gruber.dev.br
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
