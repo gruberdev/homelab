@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: hajimari
+  name: homepage
   labels:
-    app: hajimari
+    app: homepage
   annotations:
     tailscale.com/hostname: "dashboard"
 spec:
@@ -13,6 +13,6 @@ spec:
     targetPort: 3000
     protocol: TCP
   selector:
-    app: hajimari
+    app: homepage
   type: LoadBalancer
   loadBalancerClass: tailscale
