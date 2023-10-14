@@ -48,6 +48,7 @@ kubectl apply -f https://raw.githubusercontent.com/gruberdev/homelab/main/apps/a
 
 ### Important notes regarding the chart deployment:
 
+<!-- markdown-link-check-enable -->
 [repo-uri]: https://github.com/cert-manager/cert-manager
 [website-uri]: https://cert-manager.io/
 [docs-uri]: https://cert-manager.io/docs/
@@ -55,8 +56,10 @@ kubectl apply -f https://raw.githubusercontent.com/gruberdev/homelab/main/apps/a
 [manifests-uri]: https://github.com/cert-manager/cert-manager/tree/master/deploy/manifests
 [argocd-file]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/networking/external-dns/cloudflare.yaml
 [tracking-error-explain]: https://foxutech.medium.com/how-to-fix-too-long-must-have-at-most-262144-bytes-in-argocd-2a00cddbbe99
-[mirror-explain-1]: https://web.archive.org/web/20230921184332/https://foxutech.medium.com/how-to-fix-too-long-must-have-at-most-262144-bytes-in-argocd-2a00cddbbe99
 [tracking-error-explain-2]: https://www.arthurkoziel.com/fixing-argocd-crd-too-long-error/
-[mirror-explain-2]: https://web.archive.org/web/20230921184359/https://www.arthurkoziel.com/fixing-argocd-crd-too-long-error/
 [original-github-crd-issue]: https://github.com/argoproj/argo-cd/issues/820
 [github-discussion-crd-size]: https://github.com/argoproj/argo-cd/issues/820#issuecomment-1371198413
+<!-- markdown-link-check-disable -->
+[mirror-explain-1]: https://web.archive.org/web/20230921184332/https://foxutech.medium.com/how-to-fix-too-long-must-have-at-most-262144-bytes-in-argocd-2a00cddbbe99
+[mirror-explain-2]: https://web.archive.org/web/20230921184359/https://www.arthurkoziel.com/fixing-argocd-crd-too-long-error/
+<!-- markdown-link-check-enable -->
