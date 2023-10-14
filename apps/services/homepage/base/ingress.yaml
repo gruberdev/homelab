@@ -1,9 +1,9 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: hajimari-ingress
+  name: homepage-ingress
   labels:
-    app: hajimari
+    app: homepage
   annotations:
     external-dns.alpha.kubernetes.io/hostname: dashboard.gruber.dev.br
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
@@ -19,10 +19,10 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: hajimari-tailscale
+            name: homepage-tailscale
             port:
               name: http
   tls:
   - hosts:
     - dashboard.gruber.dev.br
-    secretName: hajimari-tls
+    secretName: homepage-tls
