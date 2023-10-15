@@ -32,17 +32,12 @@ spec:
     size: 40Gi
   monitoring:
     enablePodMonitor: true
-  nodeMaintenanceWindow:
-    inProgress: false
-    reusePVC: true
-  affinity:
-    podAntiAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        - podAffinityTerm:
-            labelSelector:
-              matchExpressions:
-                - key: postgresql
-                  operator: In
-                  values:
-                    - node-one
-            topologyKey: kubernetes.io/hostname
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - node-one
