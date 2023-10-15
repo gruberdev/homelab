@@ -20,8 +20,6 @@ spec:
     - Validate=false
     - CreateNamespace=true
     - PrunePropagationPolicy=foreground
-    - PruneLast=true
-    - Replace=true
     - ApplyOutOfSyncOnly=false
     - Prune=true
     retry:
