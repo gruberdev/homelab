@@ -4,7 +4,7 @@ kind: Kustomization
 resources:
 - cloudnative.yaml
 - postgres.yaml
-- redis.yaml
+# - redis.yaml
 - storage.yaml
 
 namespace: argocd
