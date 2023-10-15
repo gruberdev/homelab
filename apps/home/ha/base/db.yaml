@@ -3,8 +3,6 @@ kind: Cluster
 metadata:
   name: home-database
   namespace: homeassistant
-  annotations:
-    argocd.argoproj.io/sync-options: Delete=false
 spec:
   imageName: ghcr.io/cloudnative-pg/postgresql:16.0
   primaryUpdateStrategy: unsupervised
