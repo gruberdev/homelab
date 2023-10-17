@@ -7,7 +7,7 @@ spec:
   source:
     repoURL: https://mongodb.github.io/helm-charts
     chart: community-operator
-    targetRevision: 0.8.2
+    targetRevision: 0.8.3
     helm:
       releaseName: mongodb-operator
       values: |
