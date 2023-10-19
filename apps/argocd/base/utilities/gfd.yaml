@@ -8,7 +8,7 @@ spec:
   project: cluster
   source:
     repoURL: https://github.com/NVIDIA/gpu-feature-discovery.git
-    targetRevision: v0.8.1
+    targetRevision: v0.8.2
     path: deployments/helm/gpu-feature-discovery
     helm:
       releaseName: nfd-gfd-discovery
