@@ -25,7 +25,6 @@ resources:
 # Services
 - base/n8n.yaml
 - base/gitea.yaml
-- base/wandb.yaml
 - base/links.yaml
 - base/feedpushr.yaml
 - base/wger.yaml
