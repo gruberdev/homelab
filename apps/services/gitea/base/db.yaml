@@ -1,30 +1,42 @@
-apiVersion: "acid.zalan.do/v1"
-kind: postgresql
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
 metadata:
-  name: db-gitea
-  annotations:
-    argocd.argoproj.io/sync-options: Delete=false
+  name: gitea-database
+  namespace: gitea
 spec:
-  dockerImage: ghcr.io/zalando/spilo-15:3.0-p1
-  teamId: "db"
-  numberOfInstances: 1
-  users:
-    admin:
-    - superuser
-    - createdb
-    gitea: []
-  databases:
-    gitea: gitea
+  imageName: ghcr.io/cloudnative-pg/postgresql:16.0
+  instances: 1
+  startDelay: 35
+  stopDelay: 35
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 300m
+    limits:
+      memory: 768Mi
+      cpu: 700m
   postgresql:
-    version: "15"
-  volume:
-    size: 15Gi
+    parameters:
+      shared_buffers: 256MB
+      timezone: "America/Sao_Paulo"
+      pg_stat_statements.max: '10000'
+      pg_stat_statements.track: all
+      auto_explain.log_min_duration: '10s'
+  bootstrap:
+    initdb:
+      database: gitea
+      owner: gitea
+  storage:
     storageClass: iscsi
-  nodeAffinity:
-    requiredDuringSchedulingIgnoredDuringExecution:
-      nodeSelectorTerms:
-      - matchExpressions:
-        - key: postgres-operator
-          operator: In
-          values:
-          - enabled
+    size: 20Gi
+  monitoring:
+    enablePodMonitor: true
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                  - node-one
