@@ -34,7 +34,6 @@ resources:
 # - base/apps/agones.yaml
 # - base/apps/agones-crd.yaml
 # - base/apps/mongodb-crds.yaml
-# - base/apps/wandb.yaml
 # - base/apps/mongodb.yaml
 # - base/apps/adguard.yaml
 
