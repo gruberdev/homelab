@@ -27,9 +27,7 @@ The Home Assistant depends on the operator to create and manage its main databas
 
 ```bash
 # Inside this folder
-kubectl apply -k ./
-# Using root folder as context
-kubectl apply -k ./apps/home/ha
+kubectl apply -k github.com/gruberdev/homelab/apps/home/ha
 ```
 
 ### HACS Integrations
