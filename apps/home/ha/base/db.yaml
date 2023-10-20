@@ -5,7 +5,6 @@ metadata:
   namespace: homeassistant
 spec:
   imageName: ghcr.io/cloudnative-pg/postgresql:16.0
-  primaryUpdateStrategy: unsupervised
   instances: 1
   startDelay: 35
   stopDelay: 35
@@ -32,12 +31,12 @@ spec:
     size: 40Gi
   monitoring:
     enablePodMonitor: true
-affinity:
-  nodeAffinity:
-    requiredDuringSchedulingIgnoredDuringExecution:
-      nodeSelectorTerms:
-        - matchExpressions:
-            - key: kubernetes.io/hostname
-              operator: In
-              values:
-                - node-one
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                  - node-one

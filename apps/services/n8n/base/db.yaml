@@ -3,24 +3,22 @@ kind: Cluster
 metadata:
   name: n8n-database
   namespace: services
-  annotations:
-    argocd.argoproj.io/sync-options: Delete=false
 spec:
-  imageName: ghcr.io/cloudnative-pg/postgresql:15.3
-  primaryUpdateStrategy: unsupervised
-  instances: 3
-  startDelay: 180
-  stopDelay: 180
+  imageName: ghcr.io/cloudnative-pg/postgresql:16.0
+  instances: 1
+  startDelay: 35
+  stopDelay: 35
   resources:
     requests:
-      memory: 128Mi
-      cpu: 100m
-    limits:
       memory: 256Mi
-      cpu: 200m
+      cpu: 300m
+    limits:
+      memory: 768Mi
+      cpu: 700m
   postgresql:
     parameters:
-      shared_buffers: 128MB
+      shared_buffers: 256MB
+      timezone: "America/Sao_Paulo"
       pg_stat_statements.max: '10000'
       pg_stat_statements.track: all
       auto_explain.log_min_duration: '10s'
@@ -33,3 +31,12 @@ spec:
     size: 40Gi
   monitoring:
     enablePodMonitor: true
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                  - node-one
