@@ -17,6 +17,7 @@ spec:
       labels:
         app: wyze-bridge
     spec:
+      runtimeClassName: nvidia
       containers:
         - name: wyze-bridge
           image: mrlt8/wyze-bridge:1.9.0
@@ -42,7 +43,7 @@ spec:
           startupProbe:
             tcpSocket:
               port: 5000
-            initialDelaySeconds: 15
+            initialDelaySeconds: 35
             timeoutSeconds: 1
             periodSeconds: 5
             successThreshold: 1
@@ -65,11 +66,11 @@ spec:
             failureThreshold: 3
           resources:
             requests:
-              cpu: 80m
+              cpu: 200m
               memory: 256Mi
             limits:
-              cpu: 180m
-              memory: 512Mi
+              cpu: 400m
+              memory: 768Mi
           volumeMounts:
             - mountPath: /tokens
               name: config
