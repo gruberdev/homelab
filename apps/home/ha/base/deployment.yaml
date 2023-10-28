@@ -5,7 +5,7 @@ metadata:
   labels:
     app: home-assistant
   annotations:
-    link.argocd.argoproj.io/external-link: http://homeassistant
+    link.argocd.argoproj.io/external-link: https://home.gruber.dev.br
 spec:
   replicas: 1
   strategy:
@@ -113,18 +113,20 @@ spec:
             - name: ha-secrets
               mountPath: /config/secrets.yaml
               subPath: secrets.yaml
-            - mountPath: /config
-              name: config-volume
-            - mountPath: /src
-              name: temp-config
-            - mountPath: /dev/ttyUSB0
-              name: dev-usb-00
-            - mountPath: /dev/ttyUSB1
-              name: dev-usb-01
-            - mountPath: /dev/serial/by-id/usb-Silicon_Labs_HubZ_Smart_Home_Controller_C130205F-if00-port0
-              name: zigbee-00
-            - mountPath: /dev/serial/by-id/usb-Silicon_Labs_HubZ_Smart_Home_Controller_C130205F-if01-port0
-              name: zigbee-01
+            - name: config-volume
+              mountPath: /config
+            - name: temp-config
+              mountPath: /src
+            - name: dev-usb-00
+              mountPath: /dev/ttyUSB0
+            - name: dev-usb-01
+              mountPath: /dev/ttyUSB1
+            - name: zigbee-00
+              mountPath: /dev/serial/by-id/usb-Silicon_Labs_HubZ_Smart_Home_Controller_C130205F-if00-port0
+            - name: zigbee-01
+              mountPath: /dev/serial/by-id/usb-Silicon_Labs_HubZ_Smart_Home_Controller_C130205F-if01-port0
+            - name: dbus
+              mountPath: /var/run/dbus
       dnsPolicy: ClusterFirstWithHostNet
       hostNetwork: true
       volumes:
@@ -142,17 +144,20 @@ spec:
         - name: config-volume
           persistentVolumeClaim:
             claimName: ha-storage-new
-        - hostPath:
+        - name: zigbee-00
+          hostPath:
             path: /dev/serial/by-id/usb-Silicon_Labs_HubZ_Smart_Home_Controller_C130205F-if00-port0
-          name: zigbee-00
-        - hostPath:
+        - name: zigbee-01
+          hostPath:
             path: /dev/serial/by-id/usb-Silicon_Labs_HubZ_Smart_Home_Controller_C130205F-if01-port0
-          name: zigbee-01
-        - hostPath:
+        - name: dbus
+          hostPath:
+            path: /var/run/dbus
+        - name: dev-usb-00
+          hostPath:
             path: /dev/ttyUSB0
-          name: dev-usb-00
-        - hostPath:
+        - name: dev-usb-01
+          hostPath:
             path: /dev/ttyUSB1
-          name: dev-usb-01
         - name: temp-config
           emptyDir: {}
