@@ -9,7 +9,7 @@ jobs:
           fetch-depth: 0
       - name: Check if Terraform files changed
         id: terraform-changes
-        uses: tj-actions/changed-files@v39
+        uses: tj-actions/changed-files@18c8a4ecebe93d32ed8a88e1d0c098f5f68c221b # v40
         with:
           files: |
             terraform/**
