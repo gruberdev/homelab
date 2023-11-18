@@ -13,3 +13,5 @@ data:
   statusbadge.enabled: "true"
   statusbadge.url: "https://argo.gruber.dev.br/"
   exec.enabled: "true"
+  # https://argo-cd.readthedocs.io/en/stable/operator-manual/reconcile/#system-level-configuration
+  resource.ignoreResourceUpdatesEnabled: "true"
