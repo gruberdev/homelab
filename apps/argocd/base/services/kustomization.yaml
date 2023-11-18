@@ -9,11 +9,10 @@ resources:
 - ofx-exporter.yaml
 - wger.yaml
 - onchange.yaml
-- rss-hub.yaml
 - gitea-utils.yaml
 - homepage.yaml
 
-namespace: argocd
+namespace: sevices
 
 commonLabels:
   app.kubernetes.io/category: services
