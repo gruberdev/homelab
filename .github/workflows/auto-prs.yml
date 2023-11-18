@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Generate branch name
-        uses: actions/github-script@e69ef5462fd455e02edcaf4dd7708eda96b9eda0 # v7
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7
         id: set-branch-name
         with:
           script: |
@@ -34,7 +34,7 @@ jobs:
           BRANCH_PREFIX: "feat/"
           PULL_REQUEST_BRANCH: "main"
       - name: Generate PR body
-        uses: actions/github-script@e69ef5462fd455e02edcaf4dd7708eda96b9eda0 # v7
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7
         id: set-pr-body
         with:
           script: |
@@ -57,7 +57,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Generate branch name
-        uses: actions/github-script@e69ef5462fd455e02edcaf4dd7708eda96b9eda0 # v7
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7
         id: set-branch-name
         with:
           script: |
@@ -84,7 +84,7 @@ jobs:
           BRANCH_PREFIX: "feat/"
           PULL_REQUEST_BRANCH: "main"
       - name: Generate PR body
-        uses: actions/github-script@e69ef5462fd455e02edcaf4dd7708eda96b9eda0 # v7
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7
         id: set-pr-body
         with:
           script: |
