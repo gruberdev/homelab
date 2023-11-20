@@ -3,7 +3,7 @@ kind: Kustomization
 
 resources:
 - cloudnative.yaml
-- postgres.yaml
+# - postgres.yaml
 - redis.yaml
 - storage.yaml
 
