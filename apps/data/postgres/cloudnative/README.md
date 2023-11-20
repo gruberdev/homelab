@@ -1,12 +1,10 @@
-## Cloudnative-pg PostgreSQL Operator
-
 <p align="center">
-  <img width="250" height="250" src="https://raw.githubusercontent.com/gruberdev/homelab/main/docs/assets/logos/cloudnative.png" />
+  <img width="550" height="100" src="https://raw.githubusercontent.com/gruberdev/homelab/main/docs/assets/logos/cloudnative.png" />
   <br />
   <img src="https://img.shields.io/github/v/release/cloudnative-pg/cloudnative-pg?label=Latest%20Version&logo=github&style=for-the-badge" />
 </p>
 
-### Context and application description
+### Application description
 
 > `Cloudnative-pg` is an open-source PostgreSQL operator created for Kubernetes, focusing on automation and high availability. It's designed to enable seamless management and operation of PostgreSQL clusters within Kubernetes environments.
 >
@@ -32,7 +30,6 @@
 ```bash
 kubectl apply -k github.com/gruberdev/homelab/apps/data/postgres/cloudnative
 ```
-
 
 [github-uri]: https://github.com/gruberdev/homelab
 [argo-uri]: https://github.com/gruberdev/homelab/tree/main/apps/argocd
