@@ -25,7 +25,7 @@
 
 > |             **Application**            |   **Category**  |                       **Info**                      |     **Deployment Status**    | **Latest Semver**
 > |:--------------------------------------:|:---------------:|:---------------------------------------------------:|:----------------------------:|:----------------------:|
-> |          [ArgoCD][argocd-uri]          |             `GitOps`     |      <sub>[More details][homelab-argocd]</sub>      |       ![][argocd-core]       | ![][argo-badge]        |
+> |          [ArgoCD][argocd-uri]          |             `Git https://github.com/gruberdev/homelab/tree/main/apps/data/postgres/operatorOps`     |      <sub>[More details][homelab-argocd]</sub>      |       ![][argocd-core]       | ![][argo-badge]        |
 > |   [CertManager][service-certmanager] |               `Networking`   |  <sub>[More details][homelab-certmanager]</sub>    |  ![][argocd-certmanager] | ![][certmanager-badge]    |
 > |   [Changedetection.io][change-uri]     |             `Services`   |       <sub>[More details][homelab-change]</sub>      |        ![][argocd-change]    |  ![][change-badge]   |
 > |    [Crossplane][crossplane-uri]        |    `GitOps`     |      <sub>[More details][homelab-crossplane]</sub>  |       ![][argocd-crossplane] | ![][crossplane-badge]  |
@@ -157,7 +157,6 @@
 [service-n8n]: https://n8n.io/
 [service-certmanager]: https://github.com/cert-manager/cert-manager
 [service-externaldns]: https://github.com/kubernetes-sigs/external-dns
-[p-uri]: https://github.com/zalando/postgres-operator
 [service-wyze]: https://github.com/mrlt8/docker-wyze-bridge
 [change-uri]: https://github.com/dgtlmoon/changedetection.io
 [redis-uri]: https://github.com/spotahome/redis-operator
@@ -215,7 +214,6 @@
 [homelab-mongo]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/apps/mongodb.yaml
 [homelab-wavy]: https://github.com/gruberdev/homelab/tree/main/apps/services/wavy
 [homelab-unifi-controller]: https://github.com/gruberdev/homelab/tree/main/apps/networking/unifi/controller
-[homelab-zalando]: https://github.com/gruberdev/homelab/tree/main/apps/data/postgres/operator
 [homelab-gitea]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/services/gitea.yaml
 [homelab-change]: https://github.com/gruberdev/homelab/tree/main/apps/services/changedetection
 [homelab-redis]: https://github.com/gruberdev/homelab/tree/main/apps/data/redis
@@ -265,7 +263,6 @@
 [argocd-ha]: https://argo.gruber.dev.br/api/badge?name=homeassistant
 [argocd-wyze]: https://argo.gruber.dev.br/api/badge?name=wyze-bridge
 [argocd-redis]: https://argo.gruber.dev.br/api/badge?name=redis
-[argocd-zalando]: https://argo.gruber.dev.br/api/badge?name=postgres
 [argocd-matrix]: https://argo.gruber.dev.br/api/badge?name=synapse
 [argocd-mysql]: https://argo.gruber.dev.br/api/badge?name=mysql-operator
 [argocd-changedetection]: https://argo.gruber.dev.br/api/badge?name=changedetection
@@ -304,7 +301,6 @@
 [kubevip-badge]: https://img.shields.io/github/v/release/kube-vip/kube-vip?label=Github&logo=github&style=flat-square
 [kube-badge]: https://img.shields.io/github/v/release/prometheus-operator/kube-prometheus?label=Github&logo=github&style=flat-square
 [democratic-csi-badge]: https://img.shields.io/github/v/tag/longhorn/longhorn?label=Github&logo=github&style=flat-square
-[zalando-badge]: https://img.shields.io/github/v/tag/zalando/postgres-operator?label=Github&logo=github&style=flat-square
 [redis-badge]: https://img.shields.io/github/v/tag/spotahome/redis-operator?label=Github&logo=github&style=flat-square
 [tailscale-badge]: https://img.shields.io/github/v/release/tailscale/tailscale?label=Github&logo=github&style=flat-square
 [nvidia-badge]: https://img.shields.io/github/v/release/NVIDIA/k8s-device-plugin?label=Github&logo=github&style=flat-square
