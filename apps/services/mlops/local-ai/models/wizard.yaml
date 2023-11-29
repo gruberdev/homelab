@@ -1,50 +1,52 @@
 name: "wizard"
 
 description: |
-    Eric Hartford's Wizard Vicuna 13B Uncensored GGML
+    Eric Hartford's Wizard Vicuna 13B Uncensored
 
 license: "Other"
 urls:
-- https://huggingface.co/TheBloke/Wizard-Vicuna-13B-Uncensored-GGML
-- https://huggingface.co/TheBloke/Wizard-Vicuna-13B-Uncensored-GPTQ
-- https://huggingface.co/TheBloke/Wizard-Vicuna-13B-Uncensored-HF
+  - https://huggingface.co/TheBloke/Wizard-Vicuna-13B-Uncensored-GGUF
 
 config_file: |
   gpu_layers: 1000
   debug: true
+  threads: 10
   mmap: true
   embeddings: true
   prompt_cache_all: true
   prompt_cache_ro: false
-  mirostat_eta: 0.8
-  mirostat_tau: 0.9
-  mirostat: 1
   f16: true
+  low_vram: true
   backend: llama
   parameters:
     model: Wizard-Vicuna-13B-Uncensored.ggmlv3.q5_0.bin
     top_k: 80
-    temperature: 1
+    temperature: 0.7
     top_p: 0.7
-  context_size: 1024
+  context_size: 2048
   template:
     completion: wizardlm-completion
     chat: wizardlm-chat
+    roles:
+      user: "USER:"
+      system: "SYSTEM:"
+      assistant: "ASSISTANT:"
 
 files:
-- filename: "Wizard-Vicuna-13B-Uncensored.ggmlv3.q5_0.bin"
-  uri: "https://huggingface.co/TheBloke/WizardLM-13B-Uncensored-GGML/resolve/main/wizardLM-13B-Uncensored.ggmlv3.q5_0.bin"
+- filename: "Wizard-Vicuna-13B-Uncensored.Q5_K_M.gguf"
+  uri: "https://huggingface.co/TheBloke/Wizard-Vicuna-13B-Uncensored-GGUF/resolve/main/Wizard-Vicuna-13B-Uncensored.Q5_K_M.gguf?download=true"
 
 prompt_templates:
 - name: "wizardlm-completion"
   content: |
-    {{.Input}}
+      ### Instruction: {{.Input}}
+
+      ### Assistant:
 
 - name: "wizardlm-chat"
   content: |
-    Below is an instruction that describes a task. Write a response that appropriately completes the request.
+    A chat between a curious user and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the user's questions.
 
-    ### Prompt:
-    {{.Input}}
+    USER: {{.Input}}
 
-    ### Response:
+    ASSISTANT:
