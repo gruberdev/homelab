@@ -2,6 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 bases:
 - ./base
+
 namespace: mlops
 
 commonAnnotations:
@@ -16,3 +17,7 @@ patches:
   target:
     kind: Deployment
     name: local-ai
+
+images:
+- name: quay.io/go-skynet/local-ai
+  newTag: sha-63e1f8f-cublas-cuda11-ffmpeg
