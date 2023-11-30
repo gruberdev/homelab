@@ -4,7 +4,7 @@ metadata:
   name: localai-config
 data:
   CONTEXT_SIZE: "2048"
-  THREADS: "6"
+  THREADS: "10"
   MODELS_PATH: "/models"
   CORS: "true"
   CORS_ALLOWS_ORIGINS: "*"
@@ -13,6 +13,6 @@ data:
   NVIDIA_VISIBLE_DEVICES: "all"
   NVIDIA_DRIVER_CAPABILITIES: "all"
   NVIDIA_REQUIRE_CUDA: "cuda>=11.0"
-  REBUILD: "true"
-  PRELOAD_MODELS: "[{\"url\": \"github:go-skynet/model-gallery/stablediffusion.yaml\"},{\"url\": \"github:go-skynet/model-gallery/whisper-base.yaml\", \"name\": \"whisper-1\"},{\"url\": \"github:go-skynet/bert-embeddings.yaml\", \"name\": \"text-embedding-ada-002\"},{\"url\": \"github:gruberdev/homelab/apps/services/mlops/local-ai/models/wizard.yam\", \"name\": \"gpt-3.5-turbo\"}]"
+  REBUILD: "false"
+  PRELOAD_MODELS: "[{\"url\": \"github:go-skynet/model-gallery/stablediffusion.yaml\"},{\"url\": \"github:go-skynet/model-gallery/whisper-base.yaml\", \"name\": \"whisper-1\"},{\"url\": \"github:go-skynet/bert-embeddings.yaml\", \"name\": \"text-embedding-ada-002\"},{\"url\": \"github:gruberdev/homelab/apps/services/mlops/local-ai/models/wizard.yaml\", \"name\": \"gpt-3.5-turbo\"}]"
   GALLERIES: "[{\"name\":\"model-gallery\", \"url\":\"github:go-skynet/model-gallery/index.yaml\"},{\"url\": \"github:go-skynet/model-gallery/huggingface.yaml\",\"name\":\"huggingface\"},{\"url\": \"github:gruberdev/homelab/apps/services/mlops/local-ai/models/index.yaml\",\"name\":\"personal\"}]"
