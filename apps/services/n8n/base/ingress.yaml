@@ -3,20 +3,24 @@ kind: Ingress
 metadata:
   name: n8n
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: n8n.xn--lck4b9a0m.com
+    external-dns.alpha.kubernetes.io/hostname: n8n.gruber.dev.br
     external-dns.alpha.kubernetes.io/target: 192.168.1.153
     cert-manager.io/cluster-issuer: letsencrypt-production
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
 spec:
   ingressClassName: nginx
   rules:
-  - host: n8n.xn--lck4b9a0m.com
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: n8n-internal
-            port:
-              name: web
+    - host: n8n.gruber.dev.br
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: n8n-internal
+                port:
+                  name: web
+  tls:
+    - hosts:
+        - n8n.gruber.dev.br
+      secretName: nitter-tls
