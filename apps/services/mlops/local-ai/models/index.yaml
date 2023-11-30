@@ -20,9 +20,9 @@
     - conversational
     - uncensored
   files:
-    - filename: Wizard-Vicuna-13B-Uncensored.ggmlv3.q5_0.bin
-      sha256: 550ed0bd50acace2940bc39a1da89706cb6afd514deb481dacf54e4ccc56d0f8
-      uri: https://huggingface.co/TheBloke/Wizard-Vicuna-13B-Uncensored-GGML/resolve/main/Wizard-Vicuna-13B-Uncensored.ggmlv3.q5_0.bin
+    - filename: Wizard-Vicuna-13B-Uncensored.Q5_K_M.gguf
+      sha256: d7aab1372891c3fefb9e6970adcfa06d7f8ee96e91c236751d77b7cdfc096be1
+      uri: https://huggingface.co/TheBloke/Wizard-Vicuna-13B-Uncensored-GGUF/resolve/main/Wizard-Vicuna-13B-Uncensored.Q5_K_M.gguf
 - url: "github:gruberdev/homelab/apps/services/chatgpt/local-ai/models/chronos.yaml"
   name: chronos-hermes-13B-q50
   license: other

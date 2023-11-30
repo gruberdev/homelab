@@ -139,7 +139,7 @@ spec:
             configReloaders: true
             etcd: false
             general: true
-            k8s: false
+            k8s: true
             kubeApiserverAvailability: false
             kubeApiserverBurnrate: false
             kubeApiserverHistogram: false
@@ -151,7 +151,7 @@ spec:
             kubeSchedulerAlerting: true
             kubeSchedulerRecording: true
             kubeStateMetrics: true
-            kubelet: false
+            kubelet: true
             kubernetesApps: false
             kubernetesResources: false
             kubernetesStorage: false
