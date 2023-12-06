@@ -20,7 +20,7 @@ spec:
       runtimeClassName: nvidia
       containers:
       - name: local-ai
-        image: quay.io/go-skynet/local-ai:sha-188301f-cublas-cuda11-ffmpeg
+        image: quay.io/go-skynet/local-ai:sha-238fec2-cublas-cuda11-ffmpeg
         ports:
           - name: http
             containerPort: 8080
