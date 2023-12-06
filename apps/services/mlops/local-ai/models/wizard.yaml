@@ -10,16 +10,16 @@ urls:
 config_file: |
   gpu_layers: 1000
   debug: true
-  threads: 10
-  mmap: true
+  threads: 6
+  mmap: false
   embeddings: true
   prompt_cache_all: true
   prompt_cache_ro: false
   f16: true
-  low_vram: true
+  low_vram: false
   backend: llama
   parameters:
-    model: Wizard-Vicuna-13B-Uncensored.ggmlv3.q5_0.bin
+    model: Wizard-Vicuna-13B-Uncensored.Q5_K_M.gguf
     top_k: 80
     temperature: 0.7
     top_p: 0.7
