@@ -13,6 +13,6 @@ data:
   NVIDIA_VISIBLE_DEVICES: "all"
   NVIDIA_DRIVER_CAPABILITIES: "all"
   NVIDIA_REQUIRE_CUDA: "cuda>=11.0"
-  REBUILD: "true"
+  REBUILD: "false"
   PRELOAD_MODELS: '[{"url": "github:gruberdev/homelab/apps/services/mlops/local-ai/models/wizard.yaml", "name": "gpt-3.5-turbo"}]'
   GALLERIES: '[{"name":"model-gallery", "url":"github:go-skynet/model-gallery/index.yaml"},{"url": "github:go-skynet/model-gallery/huggingface.yaml","name":"huggingface"},{"url": "github:gruberdev/homelab/apps/services/mlops/local-ai/models/index.yaml","name":"personal"}]'
