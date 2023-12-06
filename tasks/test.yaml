@@ -53,7 +53,7 @@ tasks:
           restartPolicy: Never
           containers:
             - name: gpu
-              image: "nvidia/cuda:12.3.0-base-ubuntu20.04@sha256:eaa6ecb974689231ed32dc842281ff0a86b69bcfb4a7568ea7093372a00cdbf2"
+              image: "nvidia/cuda:12.3.1-base-ubuntu20.04@sha256:0654b44e2515f03b811496d0e2d67e9e2b81ca1f6ed225361bb3e3bb67d22e18"
               command: [ "/bin/bash", "-c", "--" ]
               args: [ "while true; do sleep 30; done;" ]
               resources:
