@@ -19,4 +19,4 @@ commonAnnotations:
 
 images:
 - name: mrlt8/wyze-bridge
-  newTag: 2.5.3-hw
+  newTag: 2.6.0-hw
