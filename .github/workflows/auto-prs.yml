@@ -46,7 +46,7 @@ jobs:
       - name: Set PR body
         run: echo "PULL_REQUEST_BODY=${{steps.set-pr-body.outputs.result}}" >> $GITHUB_ENV
       - name: pull-request-action
-        uses: vsoch/pull-request-action@f9e7f419d6b44935f6b0458fad17077269caaf71 # 1.0.24
+        uses: vsoch/pull-request-action@0969c26295afdeffaab628fee287a98b27eca529 # 1.1.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH_PREFIX: fix
@@ -96,7 +96,7 @@ jobs:
       - name: Set PR body
         run: echo "PULL_REQUEST_BODY=${{steps.set-pr-body.outputs.result}}" >> $GITHUB_ENV
       - name: pull-request-action
-        uses: vsoch/pull-request-action@f9e7f419d6b44935f6b0458fad17077269caaf71 # 1.0.24
+        uses: vsoch/pull-request-action@0969c26295afdeffaab628fee287a98b27eca529 # 1.1.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH_PREFIX: feat
