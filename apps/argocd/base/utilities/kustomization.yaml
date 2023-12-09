@@ -3,7 +3,7 @@ kind: Kustomization
 
 resources:
 - descheduler.yaml
-- eraser.yaml
+# - eraser.yaml
 - kube-fledged.yaml
 # - kured.yaml
 - reflector.yaml
