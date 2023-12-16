@@ -46,9 +46,9 @@ spec:
         image: wger/server:latest
         env:
         - name: DJANGO_DB_USER
-          valueFrom: {secretKeyRef: {name: wger-database-app, key: username}}
+          valueFrom: {secretKeyRef: {name: wger-app, key: username}}
         - name: DJANGO_DB_PASSWORD
-          valueFrom: {secretKeyRef: {name: wger-database-app, key: password}}
+          valueFrom: {secretKeyRef: {name: wger-app, key: password}}
         envFrom:
         - configMapRef:
             name: wger-cm
