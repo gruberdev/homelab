@@ -1,58 +1,30 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 bases:
-- ./base
-- github.com/gruberdev/homelab/apps/data/postgres/exporter
+  - ./base
 resources:
-- https://github.com/gruberdev/homelab/apps/networking/cloudflared
+  - https://github.com/gruberdev/homelab/apps/networking/cloudflared
 patchesStrategicMerge:
-- overlay/cloudflared-cm.yaml
+  - overlay/cloudflared-cm.yaml
 namespace: services
 patches:
-- patch: |-
-    - op: replace
-      path: "/spec/template/spec/containers/0/env/0"
-      value:
-        name: DATA_SOURCE_URI
-        value: db-n8n.services.svc.cluster.local
-  target:
-    kind: Deployment
-    name: postgres-exporter
-- patch: |-
-    - op: replace
-      path: "/spec/template/spec/containers/0/env/1"
-      value:
-        name: DATA_SOURCE_USER
-        valueFrom: { secretKeyRef: { name: postgres.db-n8n.credentials.postgresql.acid.zalan.do, key: username } }
-  target:
-    kind: Deployment
-    name: postgres-exporter
-- patch: |-
-    - op: replace
-      path: "/spec/template/spec/containers/0/env/2"
-      value:
-        name: DATA_SOURCE_PASS
-        valueFrom: { secretKeyRef: { name: postgres.db-n8n.credentials.postgresql.acid.zalan.do, key: password } }
-  target:
-    kind: Deployment
-    name: postgres-exporter
-- patch: |-
-    - op: add
-      path: "/spec/template/spec/nodeSelector"
-      value:
-        kubernetes.io/arch: amd64
-  target:
-    kind: Deployment
-    name: n8n-server
-- patch: |-
-    - op: replace
-      path: "/spec/template/spec/volumes/0/secret/secretName"
-      value: "n8n-tunnel"
-  target:
-    kind: Deployment
-    name: cloudflared
+  - patch: |-
+      - op: add
+        path: "/spec/template/spec/nodeSelector"
+        value:
+          kubernetes.io/arch: amd64
+    target:
+      kind: Deployment
+      name: n8n-server
+  - patch: |-
+      - op: replace
+        path: "/spec/template/spec/volumes/0/secret/secretName"
+        value: "n8n-tunnel"
+    target:
+      kind: Deployment
+      name: cloudflared
 commonAnnotations:
   reloader.stakater.com/auto: "true"
 images:
-- name: n8nio/n8n
-  newTag: 0.237.0
+  - name: n8nio/n8n
+    newTag: 0.237.0
