@@ -2,33 +2,73 @@ apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
   name: n8n-database
-  namespace: services
 spec:
   imageName: ghcr.io/cloudnative-pg/postgresql:16.0
-  instances: 1
+  instances: 2
   startDelay: 35
   stopDelay: 35
+  managed:
+    roles:
+      - name: n8n
+        ensure: present
+        login: true
+        superuser: false
+  bootstrap:
+    initdb:
+      database: n8n
+      owner: n8n
   resources:
     requests:
       memory: 256Mi
       cpu: 300m
     limits:
-      memory: 768Mi
-      cpu: 700m
+      memory: 678Mi
+      cpu: 550m
   postgresql:
     parameters:
-      shared_buffers: 256MB
+      shared_buffers: 64MB
       timezone: "America/Sao_Paulo"
-      pg_stat_statements.max: '10000'
+      pg_stat_statements.max: "10000"
       pg_stat_statements.track: all
-      auto_explain.log_min_duration: '10s'
-  bootstrap:
-    initdb:
-      database: n8n
-      owner: n8n
+      auto_explain.log_min_duration: "10s"
+    pg_hba:
+      - host all all 10.244.0.0/16 md5
   storage:
-    storageClass: iscsi
-    size: 40Gi
+    pvcTemplate:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 30Gi
+      storageClassName: iscsi
+      volumeMode: Filesystem
+    size: 15Gi
+  walStorage:
+    size: 15Gi
+    pvcTemplate:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 15Gi
+      storageClassName: iscsi
+      volumeMode: Filesystem
+  backup:
+    volumeSnapshot:
+      className: iscsi
+    barmanObjectStore:
+      destinationPath: s3://cnpg-backups/
+      endpointURL: https://ewr1.vultrobjects.com
+      s3Credentials:
+        accessKeyId:
+          name: cnpg-s3
+          key: ACCESS_KEY_ID
+        secretAccessKey:
+          name: cnpg-s3
+          key: ACCESS_SECRET_KEY
+      wal:
+        compression: snappy
+        maxParallel: 2
   monitoring:
     enablePodMonitor: true
   affinity:
