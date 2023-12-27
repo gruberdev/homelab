@@ -19,13 +19,28 @@ spec:
         app: unifi-controller
     spec:
       terminationGracePeriodSeconds: 5
+      initContainers:
+        - name: volume-permissions
+          image: busybox
+          securityContext:
+            runAsUser: 0
+          command:
+            [
+              "/bin/sh",
+              "-c",
+              "chown -R 999:999 /unifi && cp /tmp-secrets/* /certs/",
+            ]
+          volumeMounts:
+            - name: data
+              mountPath: /unifi
+            - name: temp-secrets
+              mountPath: /tmp-secrets
+              readOnly: true
+            - name: certs
+              mountPath: /certs
       containers:
         - name: unifi-controller
           image: jacobalberty/unifi:v7.4.162
-          lifecycle:
-            postStart:
-              exec:
-                command: ["sudo", "chown", "-R", "/unifi"]
           securityContext:
             runAsUser: 999
             runAsGroup: 999
@@ -71,12 +86,6 @@ spec:
               mountPath: /unifi/data
             - name: logs
               mountPath: /unifi/log
-            - name: unifi-cert
-              mountPath: /unifi/cert/cert.pem
-              subPath: cert.pem
-            - name: unifi-key
-              mountPath: /unifi/cert/privkey.pem
-              subPath: privkey.pem
             - mountPath: /unifi/data/sites/default/gateway.config.json
               name: config
               subPath: gateway.config.json
@@ -108,18 +117,11 @@ spec:
             claimName: unifi-storage
         - name: logs
           emptyDir: {}
-        - name: unifi-cert
+        - name: temp-secrets
           secret:
             secretName: unifi-tls
-            items:
-              - key: tls.crt
-                path: cert.pem
-        - name: unifi-key
-          secret:
-            secretName: unifi-tls
-            items:
-              - key: tls.key
-                path: privkey.pem
+        - name: certs
+          emptyDir: {}
         - name: config
           configMap:
             name: unifi-controller-cm
