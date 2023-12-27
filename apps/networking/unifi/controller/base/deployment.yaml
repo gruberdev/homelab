@@ -22,10 +22,19 @@ spec:
       containers:
         - name: unifi-controller
           image: jacobalberty/unifi:v7.4.162
+          lifecycle:
+            postStart:
+              exec:
+                command: ["sudo", "chown", "-R", "/unifi"]
           securityContext:
             runAsUser: 999
+            runAsGroup: 999
             fsGroup: 999
-            fsGroupChangePolicy: OnRootMismatch
+            fsGroupChangePolicy: Always
+            allowPrivilegeEscalation: true
+            sysctls:
+              - name: net.ipv4.ip_unprivileged_port_start
+                value: "0"
           envFrom:
             - configMapRef:
                 name: unifi-controller-cm
