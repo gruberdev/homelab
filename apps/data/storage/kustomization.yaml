@@ -1,68 +1,70 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
+  # Monitoring
+  - base/kuma.yaml
 
-# Monitoring
-- base/kuma.yaml
+  # Home Assistant
+  - base/ha.yaml
+  - base/wyze.yaml
 
-# Home Assistant
-- base/ha.yaml
-- base/wyze.yaml
+  # Networking
+  # - base/adguard.yaml
+  - base/unifi.yaml
+  - base/unifi-poller.yaml
 
-# Networking
-# - base/adguard.yaml
-- base/unifi.yaml
-- base/unifi-poller.yaml
+  # Media Services
+  # - base/jellyfin.yaml
+  - base/tanoshi.yaml
+  # - base/media.yaml
+  # - base/beets.yaml
+  # - base/lidarr.yaml
+  # - base/ganymede.yaml
 
-# Media Services
-# - base/jellyfin.yaml
-- base/tanoshi.yaml
-# - base/media.yaml
-# - base/beets.yaml
-# - base/lidarr.yaml
-# - base/ganymede.yaml
+  # Services
+  - base/n8n.yaml
+  - base/gitea.yaml
+  - base/links.yaml
+  - base/feedpushr.yaml
+  - base/wger.yaml
+  # - base/grocy.yaml
+  # - base/archivebox.yaml
+  - base/change.yaml
+  # - base/taskwarrior.yaml
+  # - base/nitter.yaml
+  # - base/wallabag.yaml
+  # - base/milvus.yaml
+  - base/actual.yaml
+  - base/finances.yaml
+  # - base/jupyterlab.yaml
+  # - base/librex.yaml
+  - base/local-ai.yaml
+  - base/turbopilot.yaml
 
-# Services
-- base/n8n.yaml
-- base/gitea.yaml
-- base/links.yaml
-- base/feedpushr.yaml
-- base/wger.yaml
-# - base/grocy.yaml
-# - base/archivebox.yaml
-- base/change.yaml
-# - base/taskwarrior.yaml
-# - base/nitter.yaml
-# - base/wallabag.yaml
-# - base/milvus.yaml
-- base/actual.yaml
-- base/finances.yaml
-# - base/jupyterlab.yaml
-# - base/librex.yaml
-- base/local-ai.yaml
-- base/turbopilot.yaml
+  #  Postgres Storage
+  - base/postgres/ha.yaml
+  - base/postgres/n8n.yaml
+  # - base/postgres/wallabag.yaml
+  # - base/postgres/ganymede.yaml
 
-#  Postgres Storage
-- base/postgres/ha.yaml
-- base/postgres/n8n.yaml
-# - base/postgres/wallabag.yaml
-# - base/postgres/ganymede.yaml
+  # Matrix
+  # - base/matrix/synapse.yaml
+  # - base/matrix/bridges.yaml
+  # - base/matrix/whats.yaml
+  # - base/matrix/instagram.yaml
+  # - base/matrix/linkedin.yaml
+  # - base/matrix/discord.yaml
+  # - base/matrix/messenger.yaml
+  # - base/matrix/skype.yaml
+  # - base/matrix/signal.yaml
+  # - base/matrix/steam.yaml
 
-# Matrix
-# - base/matrix/synapse.yaml
-# - base/matrix/bridges.yaml
-# - base/matrix/whats.yaml
-# - base/matrix/instagram.yaml
-# - base/matrix/linkedin.yaml
-# - base/matrix/discord.yaml
-# - base/matrix/messenger.yaml
-# - base/matrix/skype.yaml
-# - base/matrix/signal.yaml
-# - base/matrix/steam.yaml
+  # - base/matrix/telegram.yaml
+  # - base/postgres/bridges.yaml
+  # - base/postgres/synapse.yaml
 
-# - base/matrix/telegram.yaml
-# - base/postgres/bridges.yaml
-# - base/postgres/synapse.yaml
+  # Snapshot class
+  - base/snapshot/iscsi.yaml
 
 commonAnnotations:
   argocd.argoproj.io/sync-options: Delete=false

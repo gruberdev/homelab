@@ -1,0 +1,6 @@
+apiVersion: snapshot.storage.k8s.io/v1
+kind: VolumeSnapshotClass
+metadata:
+  name: iscsi-snapshot
+driver: iscsi
+deletionPolicy: Delete

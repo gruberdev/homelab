@@ -20,85 +20,87 @@ spec:
     spec:
       terminationGracePeriodSeconds: 5
       containers:
-      - name: unifi-controller
-        image: jacobalberty/unifi:v7.4.162
-        securityContext:
-          runAsUser: 0
-          allowPrivilegeEscalation: true
-        envFrom:
-        - configMapRef:
-            name: unifi-controller-cm
-        ports:
-        - containerPort: 8443
-          name: web-https
-          protocol: TCP
-        - containerPort: 8080
-          name: devices
-          protocol: TCP
-        - containerPort: 8843
-          name: guest-https
-          protocol: TCP
-        - containerPort: 8880
-          name: guest-http
-          protocol: TCP
-        - containerPort: 6789
-          name: mobile-test
-          protocol: TCP
-        - containerPort: 3478
-          name: stun
-          protocol: UDP
-        - containerPort: 10001
-          name: discovery
-          protocol: UDP
-        - containerPort: 1900
-          name: ddiscoveryl2
-          protocol: UDP
-        - containerPort: 5514
-          name: syslog
-          protocol: UDP
-        volumeMounts:
-        - mountPath: /unifi/data
-          name: data
-        - mountPath: /unifi/log
-          name: logs
-        - mountPath: /unifi/cert
-          name: certs
-        - mountPath: /unifi/data/sites
-          name: config
-        resources:
-          limits:
-            cpu: "450m"
-            memory: "1500Mi"
-          requests:
-            cpu: "200m"
-            memory: "1024Mi"
-        livenessProbe:
-          tcpSocket:
-            port: 8443
-          initialDelaySeconds: 30
-          periodSeconds: 15
-        startupProbe:
-          tcpSocket:
-            port: 8443
-          initialDelaySeconds: 60
-          periodSeconds: 30
-        readinessProbe:
-          tcpSocket:
-            port: 8443
-          initialDelaySeconds: 15
-          periodSeconds: 5
+        - name: unifi-controller
+          image: jacobalberty/unifi:v7.4.162
+          securityContext:
+            runAsUser: 0
+            allowPrivilegeEscalation: true
+            fsGroupChangePolicy: OnRootMismatch
+          envFrom:
+            - configMapRef:
+                name: unifi-controller-cm
+          ports:
+            - containerPort: 8443
+              name: web-https
+              protocol: TCP
+            - containerPort: 8080
+              name: devices
+              protocol: TCP
+            - containerPort: 8843
+              name: guest-https
+              protocol: TCP
+            - containerPort: 8880
+              name: guest-http
+              protocol: TCP
+            - containerPort: 6789
+              name: mobile-test
+              protocol: TCP
+            - containerPort: 3478
+              name: stun
+              protocol: UDP
+            - containerPort: 10001
+              name: discovery
+              protocol: UDP
+            - containerPort: 1900
+              name: ddiscoveryl2
+              protocol: UDP
+            - containerPort: 5514
+              name: syslog
+              protocol: UDP
+          volumeMounts:
+            - mountPath: /unifi/data
+              name: data
+            - mountPath: /unifi/log
+              name: logs
+            - mountPath: /unifi/cert
+              name: certs
+            - mountPath: /unifi/data/sites/default/gateway.config.json
+              name: config
+              subPath: gateway.config.json
+          resources:
+            limits:
+              cpu: 400m
+              memory: 1.3Gi
+            requests:
+              cpu: 300m
+              memory: 1Gi
+          livenessProbe:
+            tcpSocket:
+              port: 8443
+            initialDelaySeconds: 25
+            periodSeconds: 10
+          startupProbe:
+            tcpSocket:
+              port: 8443
+            initialDelaySeconds: 30
+            periodSeconds: 15
+          readinessProbe:
+            tcpSocket:
+              port: 8443
+            initialDelaySeconds: 15
+            periodSeconds: 5
       volumes:
-      - name: data
-        persistentVolumeClaim:
-          claimName: unifi-storage-new
-      - name: logs
-        emptyDir: {}
-      - name: certs
-        persistentVolumeClaim:
-          claimName: unifi-certificates
-      - name: config
-        configMap:
-          name: unifi-controller-cm
-          items:
-          - key: gateway.config.json
-            path: gateway.config.json
+        - name: data
+          persistentVolumeClaim:
+            claimName: unifi-storage
+        - name: logs
+          emptyDir: {}
+        - name: certs
+          persistentVolumeClaim:
+            claimName: unifi-certificates
+        - name: config
+          configMap:
+            name: unifi-controller-cm
+            items:
+              - key: gateway.config.json
+                path: gateway.config.json
