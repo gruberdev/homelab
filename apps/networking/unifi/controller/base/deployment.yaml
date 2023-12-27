@@ -23,8 +23,8 @@ spec:
         - name: unifi-controller
           image: jacobalberty/unifi:v7.4.162
           securityContext:
-            runAsUser: 0
-            allowPrivilegeEscalation: true
+            runAsUser: 999
+            fsGroup: 999
             fsGroupChangePolicy: OnRootMismatch
           envFrom:
             - configMapRef:
@@ -58,12 +58,16 @@ spec:
               name: syslog
               protocol: UDP
           volumeMounts:
-            - mountPath: /unifi/data
-              name: data
-            - mountPath: /unifi/log
-              name: logs
-            - mountPath: /unifi/cert
-              name: certs
+            - name: data
+              mountPath: /unifi/data
+            - name: logs
+              mountPath: /unifi/log
+            - name: unifi-cert
+              mountPath: /unifi/cert/cert.pem
+              subPath: cert.pem
+            - name: unifi-key
+              mountPath: /unifi/cert/privkey.pem
+              subPath: privkey.pem
             - mountPath: /unifi/data/sites/default/gateway.config.json
               name: config
               subPath: gateway.config.json
@@ -95,9 +99,18 @@ spec:
             claimName: unifi-storage
         - name: logs
           emptyDir: {}
-        - name: certs
-          persistentVolumeClaim:
-            claimName: unifi-certificates
+        - name: unifi-cert
+          secret:
+            secretName: unifi-tls
+            items:
+              - key: tls.crt
+                path: cert.pem
+        - name: unifi-key
+          secret:
+            secretName: unifi-tls
+            items:
+              - key: tls.key
+                path: privkey.pem
         - name: config
           configMap:
             name: unifi-controller-cm

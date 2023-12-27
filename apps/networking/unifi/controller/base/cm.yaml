@@ -11,6 +11,7 @@ data:
   UNIFI_HTTPS_PORT: "8443"
   PORTAL_HTTP_PORT: "80"
   PORTAL_HTTPS_PORT: "8843"
+  CERT_IS_CHAIN: "true"
   UNIFI_STDOUT: ""
   gateway.config.json: |
     {
