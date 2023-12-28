@@ -1,1 +1,1 @@
-## LibreX
+## Gitea
