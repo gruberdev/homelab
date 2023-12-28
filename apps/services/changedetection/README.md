@@ -8,8 +8,6 @@
 
 > **changedetection.io** is a self-hosted service for monitoring changes to web pages. Built on Python and Flask, it uses headless browsing to capture snapshots of specified URLs at regular intervals. The service compares these snapshots to detect any changes and notifies users via various channels like email or webhooks. It's designed to be lightweight, running in a Docker container, making it ideal for homelab setups.
 
-&nbsp;
-
 ### Relevant Links
 
 - [Website][website-uri]
