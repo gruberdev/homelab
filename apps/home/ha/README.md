@@ -58,7 +58,6 @@ kubectl apply -k github.com/gruberdev/homelab/apps/home/ha
 - [energy-entity-row][energy-entity-row]
 - [layout-card][layout-card]
 
-<!---General Links-->
 
 [own-ha-uri]: https://github.com/gruberdev/homeassistant
 [website-uri]: https://www.home-assistant.io/
@@ -66,8 +65,6 @@ kubectl apply -k github.com/gruberdev/homelab/apps/home/ha
 [operator-uri]: https://github.com/gruberdev/homelab/tree/main/apps/data/postgres
 [argo-uri]: https://github.com/gruberdev/homelab/tree/main/apps/argocd
 [awesome-uri]: https://github.com/frenck/awesome-home-assistant
-
-<!---HACS Components-->
 
 [smartir-uri]: https://github.com/smartHomeHub/SmartIR
 [uptime-kuma]: https://github.com/meichthys/uptime_kuma
@@ -78,8 +75,6 @@ kubectl apply -k github.com/gruberdev/homelab/apps/home/ha
 [ha-dual-smart-thermostat]: https://github.com/swingerman/ha-dual-smart-thermostat
 [hass-openai-custom-conversation]: https://github.com/drndos/hass-openai-custom-conversation
 [iphonedetect]: https://github.com/mudape/iphonedetect
-
-<!---Frontend Components-->
 
 [vertical-stack-uri]: https://github.com/ofekashery/vertical-stack-in-card
 [mini-graph-uri]: https://github.com/kalkih/mini-graph-card
