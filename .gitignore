@@ -16,6 +16,7 @@ apps/argocd/overlay/*.json
 j*.pem
 .DS_Store
 .history
+**/charts/*
 
 # Crash log files
 crash.log
