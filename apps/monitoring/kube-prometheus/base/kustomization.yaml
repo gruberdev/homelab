@@ -5,3 +5,6 @@ resources:
 - prom-rule.yaml
 - svc-monitor.yaml
 - svc.yaml
+
+namespace: monitoring
+
