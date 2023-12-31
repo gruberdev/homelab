@@ -55,7 +55,7 @@ spec:
         global:
           rbac:
             create: true
-            createAggregateClusterRoles: false
+            createAggregateClusterRoles: true
             pspEnabled: false
         windowsMonitoring:
           enabled: false
