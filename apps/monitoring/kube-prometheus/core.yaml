@@ -564,7 +564,7 @@ spec:
                   resources:
                     requests:
                       storage: 100Gi
-                  storageClassName: mayastor-single-replica
+                  storageClassName: iscsi
             walCompression: true
           service:
             externalTrafficPolicy: Cluster
