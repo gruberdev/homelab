@@ -6,4 +6,3 @@ resources:
   - crds/
   - core.yaml
 
-namespace: monitoring
