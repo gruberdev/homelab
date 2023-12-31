@@ -5,7 +5,7 @@ metadata:
 spec:
   project: monitoring
   source:
-    repoURL: 'https://github.com/prometheus-community/helm-charts.git'
+    repoURL: "https://github.com/prometheus-community/helm-charts.git"
     targetRevision: kube-prometheus-stack-55.5.1
     path: charts/kube-prometheus-stack
     helm:
@@ -514,8 +514,8 @@ spec:
                     - ReadWriteOnce
                   resources:
                     requests:
-                      storage: 30Gi
-                  storageClassName: iscsi
+                      storage: 100Gi
+                  storageClassName: mayastor-single-replica
             walCompression: true
           service:
             externalTrafficPolicy: Cluster
@@ -592,19 +592,19 @@ spec:
     namespace: monitoring
     name: in-cluster
   info:
-    - name: 'Github Repository:'
+    - name: "Github Repository:"
       value: >-
         https://github.com/prometheus-operator/kube-prometheus
-    - name: 'Chart location:'
+    - name: "Chart location:"
       value: >-
         https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack
-    - name: 'Official Website:'
+    - name: "Official Website:"
       value: >-
         https://prometheus-operator.dev/
-    - name: 'Documentation:'
+    - name: "Documentation:"
       value: >-
         https://prometheus-operator.dev/docs/prologue/introduction/
-    - name: 'k3s useful documentation:'
+    - name: "k3s useful documentation:"
       value: >-
         https://picluster.ricsanfre.com/docs/prometheus/#k3s-components-monitoring
   syncPolicy:
@@ -613,13 +613,13 @@ spec:
       selfHeal: true
       allowEmpty: true
     syncOptions:
-    - Validate=false
-    - CreateNamespace=false
-    - ServerSideApply=true
-    - PrunePropagationPolicy=foreground
-    - PruneLast=true
-    - ApplyOutOfSyncOnly=false
-    - Prune=true
+      - Validate=false
+      - CreateNamespace=false
+      - ServerSideApply=true
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true
+      - ApplyOutOfSyncOnly=false
+      - Prune=true
     retry:
       limit: 15
       backoff:
@@ -628,13 +628,13 @@ spec:
         maxDuration: 20m
   # See: https://github.com/prometheus-community/helm-charts/issues/1041
   ignoreDifferences:
-  - group: admissionregistration.k8s.io
-    kind: MutatingWebhookConfiguration
-    name: kube-prometheus-kube-prome-admission
-    jsonPointers:
-    - /webhooks/0/failurePolicy
-  - group: admissionregistration.k8s.io
-    kind: ValidatingWebhookConfiguration
-    name: kube-prometheus-kube-prome-admission
-    jsonPointers:
-    - /webhooks/0/failurePolicy
+    - group: admissionregistration.k8s.io
+      kind: MutatingWebhookConfiguration
+      name: kube-prometheus-kube-prome-admission
+      jsonPointers:
+        - /webhooks/0/failurePolicy
+    - group: admissionregistration.k8s.io
+      kind: ValidatingWebhookConfiguration
+      name: kube-prometheus-kube-prome-admission
+      jsonPointers:
+        - /webhooks/0/failurePolicy
