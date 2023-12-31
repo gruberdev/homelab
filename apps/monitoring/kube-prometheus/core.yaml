@@ -1,4 +1,3 @@
----
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -6,26 +5,636 @@ metadata:
 spec:
   project: monitoring
   source:
-    repoURL: 'https://github.com/gruberdev/homelab.git'
-    path: apps/monitoring/kube-prometheus
-    targetRevision: main
+    repoURL: 'https://github.com/prometheus-community/helm-charts.git'
+    targetRevision: kube-prometheus-stack-55.5.1
+    path: charts/kube-prometheus-stack
+    helm:
+      releaseName: kube-prometheus
+      values: |
+        crds:
+          enabled: false
+        defaultRules:
+          create: true
+          rules:
+            alertmanager: true
+            etcd: true
+            configReloaders: true
+            general: true
+            k8sContainerCpuUsageSecondsTotal: true
+            k8sContainerMemoryCache: true
+            k8sContainerMemoryRss: true
+            k8sContainerMemorySwap: true
+            k8sContainerResource: true
+            k8sContainerMemoryWorkingSetBytes: true
+            k8sPodOwner: true
+            kubeApiserverAvailability: true
+            kubeApiserverBurnrate: true
+            kubeApiserverHistogram: true
+            kubeApiserverSlos: true
+            kubeControllerManager: true
+            kubelet: true
+            kubeProxy: true
+            kubePrometheusGeneral: true
+            kubePrometheusNodeRecording: true
+            kubernetesApps: true
+            kubernetesResources: true
+            kubernetesStorage: true
+            kubernetesSystem: true
+            kubeSchedulerAlerting: true
+            kubeSchedulerRecording: true
+            kubeStateMetrics: true
+            network: true
+            node: true
+            nodeExporterAlerting: true
+            nodeExporterRecording: true
+            prometheus: true
+            prometheusOperator: true
+            windows: true
+          appNamespacesTarget: .*
+          runbookUrl: 'https://runbooks.prometheus-operator.dev/runbooks'
+        global:
+          rbac:
+            create: true
+            createAggregateClusterRoles: false
+            pspEnabled: false
+        windowsMonitoring:
+          enabled: false
+        prometheus-windows-exporter:
+          prometheus:
+            monitor:
+              enabled: true
+              jobLabel: jobLabel
+          podLabels:
+            jobLabel: windows-exporter
+          config: |-
+            collectors:
+              enabled: '[defaults],memory,container'
+        alertmanager:
+          enabled: true
+          apiVersion: v2
+          serviceAccount:
+            create: true
+            automountServiceAccountToken: true
+          podDisruptionBudget:
+            enabled: false
+            minAvailable: 1
+          config:
+            global:
+              resolve_timeout: 5m
+            inhibit_rules:
+              - source_matchers:
+                  - severity = critical
+                target_matchers:
+                  - severity =~ warning|info
+                equal:
+                  - namespace
+                  - alertname
+              - source_matchers:
+                  - severity = warning
+                target_matchers:
+                  - severity = info
+                equal:
+                  - namespace
+                  - alertname
+              - source_matchers:
+                  - alertname = InfoInhibitor
+                target_matchers:
+                  - severity = info
+                equal:
+                  - namespace
+              - target_matchers:
+                  - alertname = InfoInhibitor
+            route:
+              group_by:
+                - namespace
+              group_wait: 30s
+              group_interval: 5m
+              repeat_interval: 12h
+              receiver: 'null'
+              routes:
+                - receiver: 'null'
+                  matchers:
+                    - alertname = "Watchdog"
+            receivers:
+              - name: 'null'
+            templates:
+              - /etc/alertmanager/config/*.tmpl
+          ingress:
+            enabled: false
+          service:
+            enabled: true
+            port: 9093
+            targetPort: 9093
+            nodePort: 30903
+            externalTrafficPolicy: Cluster
+            sessionAffinity: None
+            type: ClusterIP
+          serviceMonitor:
+            selfMonitor: true
+            enableHttp2: true
+        grafana:
+          adminPassword: <path:kv/data/kube-prometheus#grafana-admin-password>
+          dashboardProviders:
+            dashboardproviders.yaml:
+              apiVersion: 1
+              providers:
+                - disableDeletion: true
+                  editable: true
+                  folder: unifi
+                  name: unifi
+                  options:
+                    path: /var/lib/grafana/dashboards/unifi
+                  orgId: 1
+                  type: file
+                - disableDeletion: true
+                  editable: true
+                  folder: services
+                  name: services
+                  options:
+                    path: /var/lib/grafana/dashboards/services
+                  orgId: 1
+                  type: file
+                - disableDeletion: true
+                  editable: true
+                  folder: kubernetes
+                  name: kubernetes
+                  options:
+                    path: /var/lib/grafana/dashboards/kubernetes
+                  orgId: 1
+                  type: file
+                - disableDeletion: true
+                  editable: true
+                  folder: data
+                  name: data
+                  options:
+                    path: /var/lib/grafana/dashboards/data
+                  orgId: 1
+                  type: file
+                - disableDeletion: true
+                  editable: true
+                  folder: networking
+                  name: networking
+                  options:
+                    path: /var/lib/grafana/dashboards/networking
+                  orgId: 1
+                  type: file
+          dashboards:
+            kubernetes:
+              apiServer:
+                datasource: Prometheus
+                gnetId: 15761
+                revision: 11
+              coreDns:
+                datasource: Prometheus
+                gnetId: 15762
+                revision: 10
+              globalView:
+                datasource: Prometheus
+                gnetId: 15757
+                revision: 22
+              namespaces:
+                datasource: Prometheus
+                gnetId: 15758
+                revision: 15
+              nodes:
+                datasource: Prometheus
+                gnetId: 15759
+                revision: 14
+              pods:
+                datasource: Prometheus
+                gnetId: 15760
+                revision: 15
+              pvcs:
+                datasource: Prometheus
+                gnetId: 13646
+                revision: 2
+            services:
+              argocdMonitoring:
+                datasource: Prometheus
+                gnetId: 14584
+                revision: 1
+              grafanaImageRenderer:
+                datasource: Prometheus
+                gnetId: 12203
+                revision: 2
+              nvidiaMonitoring:
+                datasource: Prometheus
+                gnetId: 14574
+                revision: 8
+              vaultMonitoring:
+                datasource: Prometheus
+                gnetId: 15124
+                revision: 2
+              Sonarr:
+                datasource: Prometheus
+                gnetId: 12530
+                revision: 2
+              Uptimekuma:
+                datasource: Prometheus
+                gnetId: 18278
+                revision: 1
+            networking:
+              calicoMonitoring:
+                datasource: Prometheus
+                gnetId: 12175
+                revision: 5
+              certExporter:
+                datasource: Prometheus
+                gnetId: 12170
+                revision: 1
+              certExpiration:
+                datasource: Prometheus
+                gnetId: 13922
+                revision: 3
+              nginxIngress:
+                datasource: Prometheus
+                gnetId: 14314
+                revision: 2
+              externalDNS:
+                datasource: Prometheus
+                gnetId: 15038
+                revision: 1
+            data:
+              Milvus:
+                datasource: Prometheus
+                url: https://raw.githubusercontent.com/milvus-io/milvus/2.3.0/deployments/monitor/grafana/milvus-dashboard.json
+              redisMonitoring:
+                datasource: Prometheus
+                gnetId: 763
+                revision: 5
+              postgresMonitoring:
+                datasource: Prometheus
+                gnetId: 12485
+                revision: 1
+            unifi:
+              unifiPollerClientDPI:
+                datasource: Prometheus
+                gnetId: 11310
+                revision: 5
+              unifiPollerClientInsights:
+                datasource: Prometheus
+                gnetId: 11315
+                revision: 9
+              unifiPollerNetworkSites:
+                datasource: Prometheus
+                gnetId: 11311
+                revision: 5
+              unifiPollerUAPInsights:
+                datasource: Prometheus
+                gnetId: 11314
+                revision: 10
+              unifiPollerUSGInsights:
+                datasource: Prometheus
+                gnetId: 11313
+                revision: 9
+              unifiPollerUSWInsights:
+                datasource: Prometheus
+                gnetId: 11312
+                revision: 9
+          defaultDashboardsEnabled: true
+          defaultDashboardsTimezone: America/Sao_Paulo
+          enabled: true
+          env:
+            GF_RENDERING_CALLBACK_URL: http://kube-prometheus-grafana.monitoring.svc.cluster.local
+            GF_RENDERING_SERVER_URL: http://grafana-image-renderer.monitoring.svc.cluster.local/render
+          forceDeployDashboards: false
+          forceDeployDatasources: false
+          ingress:
+            enabled: false
+          namespaceOverride: monitoring
+          plugins:
+            - grafana-image-renderer
+            - grafana-piechart-panel
+            - grafana-clock-panel
+          rbac:
+            pspEnabled: false
+          service:
+            enabled: true
+            portName: service
+            type: ClusterIP
+          # https://github.com/k3s-io/k3s/issues/3619#issuecomment-1425852034
+          serviceMonitor:
+            enabled: true
+            path: /metrics
+            scheme: http
+            scrapeTimeout: 60s
+          sidecar:
+            dashboards:
+              enabled: true
+              label: grafana_dashboard
+              labelValue: "1"
+              multicluster:
+                etcd:
+                  enabled: false
+                global:
+                  enabled: false
+              provider:
+                allowUiUpdates: false
+            datasources:
+              createPrometheusReplicasDatasources: false
+              defaultDatasourceEnabled: true
+              enabled: true
+              isDefaultDatasource: true
+              label: grafana_datasource
+              labelValue: "1"
+              uid: prometheus
+        kubernetesServiceMonitors:
+          enabled: true
+        kubeApiServer:
+          enabled: false
+        kubelet:
+          enabled: true
+          namespace: kube-system
+          serviceMonitor:
+            cAdvisor: true
+            https: true
+            probes: true
+        coreDns:
+          enabled: true
+          service:
+            port: 9153
+            targetPort: 9153
+        kubeStateMetrics:
+          enabled: true
+        kube-state-metrics:
+          metricLabelsAllowlist:
+            - 'pods=[*]'
+            - 'deployments=[*]'
+            - 'statefulsets=[*]'
+            - 'persistentvolumeclaims=[*]'
+          prometheus:
+            monitor:
+              enabled: true
+          rbac:
+            create: true
+          releaseLabel: true
+          selfMonitor:
+            enabled: true
+        nodeExporter:
+          enabled: true
+          operatingSystems:
+            linux:
+              enabled: true
+            darwin:
+              enabled: true
+        prometheus-node-exporter:
+          extraArgs:
+            - >-
+              --collector.filesystem.mount-points-exclude=^/(dev|proc|sys|var/lib/docker/.+|var/lib/kubelet/.+)($|/)
+            - >-
+              --collector.filesystem.fs-types-exclude=^(autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|iso9660|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs)$
+          podLabels:
+            jobLabel: node-exporter
+          rbac:
+            pspEnabled: false
+          releaseLabel: true
+          service:
+            portName: http-metrics
+        prometheusOperator:
+          tlsProxy:
+            enabled: false
+          tls:
+            enabled: false
+          admissionWebhooks:
+            failurePolicy: ''
+          containerSecurityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+          enabled: true
+          hostNetwork: false
+          image:
+            pullPolicy: IfNotPresent
+            registry: quay.io
+            repository: prometheus-operator/prometheus-operator
+            tag: v0.70.0
+          kubeletService:
+            enabled: false
+          networkPolicy:
+            enabled: false
+          nodeSelector:
+            kubernetes.io/arch: amd64
+          prometheusConfigReloader:
+            image:
+              registry: quay.io
+              repository: prometheus-operator/prometheus-config-reloader
+              tag: v0.70.0
+            resources:
+              limits:
+                cpu: 80m
+                memory: 160Mi
+              requests:
+                cpu: 40m
+                memory: 80Mi
+          resources:
+            limits:
+              cpu: 400m
+              memory: 1Gi
+            requests:
+              cpu: 200m
+              memory: 512Mi
+          securityContext:
+            fsGroup: 65534
+            runAsGroup: 65534
+            runAsNonRoot: true
+            runAsUser: 65534
+          service:
+            externalTrafficPolicy: Cluster
+            nodePort: 30080
+            nodePortTls: 30443
+            type: ClusterIP
+          serviceAccount:
+            create: true
+          thanosImage:
+            registry: quay.io
+            repository: thanos/thanos
+            tag: v0.30.1
+          verticalPodAutoscaler:
+            enabled: false
+        prometheus:
+          enabled: true
+          ingress:
+            enabled: false
+          ingressPerReplica:
+            enabled: false
+          podDisruptionBudget:
+            enabled: false
+            minAvailable: 1
+          prometheusSpec:
+            allowOverlappingBlocks: false
+            arbitraryFSAccessThroughSMs: false
+            disableCompaction: false
+            enableAdminAPI: false
+            enableRemoteWriteReceiver: false
+            enforcedLabelLimit: false
+            enforcedLabelNameLengthLimit: false
+            enforcedLabelValueLengthLimit: false
+            enforcedSampleLimit: false
+            enforcedTargetLimit: false
+            hostNetwork: false
+            ignoreNamespaceSelectors: false
+            image:
+              registry: quay.io
+              repository: prometheus/prometheus
+              tag: v2.48.1
+            listenLocal: false
+            logFormat: logfmt
+            logLevel: info
+            minReadySeconds: 0
+            nodeSelector:
+              kubernetes.io/arch: amd64
+            overrideHonorLabels: false
+            overrideHonorTimestamps: false
+            paused: false
+            podAntiAffinityTopologyKey: kubernetes.io/hostname
+            podMonitorSelectorNilUsesHelmValues: false
+            portName: http-web
+            probeSelectorNilUsesHelmValues: false
+            prometheusExternalLabelNameClear: false
+            queryLogFile: false
+            remoteWriteDashboards: false
+            replicaExternalLabelNameClear: false
+            replicas: 1
+            retention: 10d
+            routePrefix: /
+            ruleSelectorNilUsesHelmValues: false
+            securityContext:
+              fsGroup: 2000
+              runAsGroup: 2000
+              runAsNonRoot: true
+              runAsUser: 1000
+            serviceMonitorNamespaceSelector:
+              matchLabels:
+                prometheus: enabled
+            serviceMonitorSelectorNilUsesHelmValues: false
+            shards: 1
+            storageSpec:
+              volumeClaimTemplate:
+                spec:
+                  accessModes:
+                    - ReadWriteOnce
+                  resources:
+                    requests:
+                      storage: 30Gi
+                  storageClassName: iscsi
+            walCompression: true
+          service:
+            externalTrafficPolicy: Cluster
+            nodePort: 30090
+            port: 9090
+            publishNotReadyAddresses: false
+            targetPort: 9090
+            type: ClusterIP
+          serviceAccount:
+            create: true
+          thanosIngress:
+            enabled: false
+            nodePort: 30901
+            servicePort: 10901
+          thanosService:
+            clusterIP: None
+            enabled: false
+            externalTrafficPolicy: Cluster
+            httpNodePort: 30902
+            httpPort: 10902
+            httpPortName: http
+            nodePort: 30901
+            port: 10901
+            portName: grpc
+            targetHttpPort: http
+            targetPort: grpc
+            type: ClusterIP
+          thanosServiceExternal:
+            enabled: false
+            externalTrafficPolicy: Cluster
+            httpNodePort: 30902
+            httpPort: 10902
+            httpPortName: http
+            nodePort: 30901
+            port: 10901
+            portName: grpc
+            targetHttpPort: http
+            targetPort: grpc
+            type: LoadBalancer
+        thanosRuler:
+          enabled: false
+          serviceAccount:
+            create: true
+          podDisruptionBudget:
+            enabled: false
+            minAvailable: 1
+          ingress:
+            enabled: false
+          service:
+            port: 10902
+            targetPort: 10902
+            nodePort: 30905
+            externalTrafficPolicy: Cluster
+            type: ClusterIP
+          serviceMonitor:
+            selfMonitor: true
+          thanosRulerSpec:
+            image:
+              registry: quay.io
+              repository: thanos/thanos
+              tag: v0.33.0
+            replicas: 1
+            retention: 24h
+            securityContext:
+              runAsGroup: 2000
+              runAsNonRoot: true
+              runAsUser: 1000
+              fsGroup: 2000
+              seccompProfile:
+                type: RuntimeDefault
+            portName: web
+        cleanPrometheusOperatorObjectNames: false
   destination:
     namespace: monitoring
     name: in-cluster
+  info:
+    - name: 'Github Repository:'
+      value: >-
+        https://github.com/prometheus-operator/kube-prometheus
+    - name: 'Chart location:'
+      value: >-
+        https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack
+    - name: 'Official Website:'
+      value: >-
+        https://prometheus-operator.dev/
+    - name: 'Documentation:'
+      value: >-
+        https://prometheus-operator.dev/docs/prologue/introduction/
+    - name: 'k3s useful documentation:'
+      value: >-
+        https://picluster.ricsanfre.com/docs/prometheus/#k3s-components-monitoring
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
-      allowEmpty: false
+      allowEmpty: true
     syncOptions:
-      - Validate=false
-      - CreateNamespace=false
-      - PrunePropagationPolicy=foreground
-      - ApplyOutOfSyncOnly=false
-      - Prune=true
+    - Validate=false
+    - CreateNamespace=false
+    - ServerSideApply=true
+    - PrunePropagationPolicy=foreground
+    - PruneLast=true
+    - ApplyOutOfSyncOnly=false
+    - Prune=true
     retry:
-      limit: 5
+      limit: 15
       backoff:
-        duration: 20s
+        duration: 15s
         factor: 2
-        maxDuration: 15m
+        maxDuration: 20m
+  # See: https://github.com/prometheus-community/helm-charts/issues/1041
+  ignoreDifferences:
+  - group: admissionregistration.k8s.io
+    kind: MutatingWebhookConfiguration
+    name: kube-prometheus-kube-prome-admission
+    jsonPointers:
+    - /webhooks/0/failurePolicy
+  - group: admissionregistration.k8s.io
+    kind: ValidatingWebhookConfiguration
+    name: kube-prometheus-kube-prome-admission
+    jsonPointers:
+    - /webhooks/0/failurePolicy
