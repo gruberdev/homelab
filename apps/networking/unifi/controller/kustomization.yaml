@@ -1,19 +1,19 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 bases:
-- ./base
+  - ./base
 
 namespace: unifi
 
 patches:
-- patch: |-
-    - op: add
-      path: "/spec/template/spec/nodeSelector"
-      value:
-        kubernetes.io/hostname: node-two
-  target:
-    kind: Deployment
-    name: unifi-controller
+  - patch: |-
+      - op: add
+        path: "/spec/template/spec/nodeSelector"
+        value:
+          kubernetes.io/hostname: node-two
+    target:
+      kind: Deployment
+      name: unifi-controller
 
 commonAnnotations:
   reloader.stakater.com/auto: "true"
