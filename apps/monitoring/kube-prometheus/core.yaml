@@ -59,6 +59,43 @@ spec:
             pspEnabled: false
         windowsMonitoring:
           enabled: false
+        kubeScheduler:
+          enabled: true
+          endpoints:
+            - 192.168.1.2
+            - 192.168.1.10
+          service:
+            enabled: true
+            port: 10259
+            targetPort: 10259
+          serviceMonitor:
+            enabled: true
+            https: true
+            insecureSkipVerify: true
+        kubeControllerManager:
+          enabled: true
+          endpoints:
+            - 192.168.1.2
+            - 192.168.1.10
+          service:
+            enabled: true
+            port: 10257
+            targetPort: 10257
+          serviceMonitor:
+            enabled: true
+            https: true
+            insecureSkipVerify: true
+        kubeEtcd:
+          enabled: true
+          endpoints:
+            - 192.168.1.2
+            - 192.168.1.10
+          service:
+            enabled: true
+            port: 2381
+            targetPort: 2381
+          serviceMonitor:
+            enabled: true
         prometheus-windows-exporter:
           prometheus:
             monitor:
@@ -339,6 +376,8 @@ spec:
           enabled: true
         kubeApiServer:
           enabled: false
+        nodeExporter:
+          enabled: true
         kubelet:
           enabled: true
           namespace: kube-system
@@ -375,25 +414,38 @@ spec:
             darwin:
               enabled: true
         prometheus-node-exporter:
+          fullnameOverride: node-exporter
           extraArgs:
-            - >-
-              --collector.filesystem.mount-points-exclude=^/(dev|proc|sys|var/lib/docker/.+|var/lib/kubelet/.+)($|/)
-            - >-
-              --collector.filesystem.fs-types-exclude=^(autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|iso9660|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs)$
-          podLabels:
-            jobLabel: node-exporter
-          rbac:
-            pspEnabled: false
-          releaseLabel: true
-          service:
-            portName: http-metrics
+            - --collector.filesystem.ignored-mount-points=^/(dev|proc|sys|var)($|/)
+            - --collector.filesystem.ignored-fs-types=^(autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|iso9660|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs|tmpfs)$
+          prometheus:
+            monitor:
+              enabled: true
+              # lens ide config
+              relabelings:
+                - action: replace
+                  regex: (.*)
+                  replacement: $1
+                  sourceLabels: [__meta_kubernetes_pod_node_name]
+                  targetLabel: kubernetes_node
+                # should be removed when https://github.com/lensapp/lens/issues/4851 is fixed
+                - sourceLabels: [__meta_kubernetes_namespace]
+                  action: replace
+                  regex: (.*)
+                  replacement: $1
+                  targetLabel: kubernetes_namespace
+                - sourceLabels: [__meta_kubernetes_service_name]
+                  action: replace
+                  regex: (.*)
+                  replacement: $1
+                  targetLabel: kubernetes_name
         prometheusOperator:
           tlsProxy:
             enabled: false
           tls:
             enabled: false
           admissionWebhooks:
-            failurePolicy: ''
+            enabled: false
           containerSecurityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
