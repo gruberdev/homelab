@@ -7,4 +7,3 @@ resources:
 - svc.yaml
 
 namespace: monitoring
-
