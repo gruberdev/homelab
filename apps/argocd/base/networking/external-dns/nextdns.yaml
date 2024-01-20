@@ -9,7 +9,7 @@ spec:
   sources:
     - repoURL: https://kubernetes-sigs.github.io/external-dns
       chart: external-dns
-      targetRevision: 1.14.0
+      targetRevision: 1.14.1
       helm:
         releaseName: external-dns-nextdns
         namespace: networking
