@@ -100,7 +100,7 @@ jobs:
             find . -maxdepth 15 -name clas.yaml -exec kubeconform --verbose -exit-on-error -ignore-missing-schemas -kubernetes-version "1.26.0" -schema-location default {} \;
 
       - name: Find Comment
-        uses: peter-evans/find-comment@v2
+        uses: peter-evans/find-comment@d5fe37641ad8451bdd80312415672ba26c86575e # v3
         id: fc
         with:
           issue-number: ${{ github.event.pull_request.number }}
