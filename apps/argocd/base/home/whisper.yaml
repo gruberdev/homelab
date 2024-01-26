@@ -2,8 +2,6 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: whisper
-  labels:
-    app.kubernetes.io/category: home
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:

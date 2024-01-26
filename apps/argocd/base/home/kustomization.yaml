@@ -1,8 +1,11 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- ha.yaml
-- openwakeword.yaml
-- piper.yaml
-- whisper.yaml
-- wyze.yaml
+  - ha.yaml
+  - openwakeword.yaml
+  - piper.yaml
+  - whisper.yaml
+  - wyze.yaml
+
+commonLabels:
+  app.kubernetes.io/category: home
