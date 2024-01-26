@@ -37,30 +37,45 @@ base:
     containers:
       - name: agent-core-grpc-probe
         image: busybox:latest
-        command: ['sh', '-c', 'trap "exit 1" TERM; until nc -vzw 5 {{ .Release.Name }}-agent-core 50051; do date; echo "Waiting for agent-core-grpc services..."; sleep 1; done;']
+        command:
+          [
+            "sh",
+            "-c",
+            'trap "exit 1" TERM; until nc -vzw 5 {{ .Release.Name }}-agent-core 50051; do date; echo "Waiting for agent-core-grpc services..."; sleep 1; done;',
+          ]
       - name: etcd-probe
         image: busybox:latest
-        command: ['sh', '-c', 'trap "exit 1" TERM; until nc -vzw 5 {{ .Release.Name }}-etcd {{ .Values.etcd.service.port }}; do date; echo "Waiting for etcd..."; sleep 1; done;']
+        command:
+          [
+            "sh",
+            "-c",
+            'trap "exit 1" TERM; until nc -vzw 5 {{ .Release.Name }}-etcd {{ .Values.etcd.service.port }}; do date; echo "Waiting for etcd..."; sleep 1; done;',
+          ]
   initHaNodeContainers:
     enabled: true
     containers:
       - name: agent-cluster-grpc-probe
         image: busybox:latest
-        command: ['sh', '-c', 'trap "exit 1" TERM; until nc -vzw 5 {{ .Release.Name }}-agent-core 50052; do date; echo "Waiting for agent-cluster-grpc services..."; sleep 1; done;']
+        command:
+          [
+            "sh",
+            "-c",
+            'trap "exit 1" TERM; until nc -vzw 5 {{ .Release.Name }}-agent-core 50052; do date; echo "Waiting for agent-cluster-grpc services..."; sleep 1; done;',
+          ]
   initCoreContainers:
     enabled: true
     containers:
       - name: etcd-probe
         image: busybox:latest
-        command: ['sh', '-c', 'trap "exit 1" TERM; until nc -vzw 5 {{ .Release.Name }}-etcd {{ .Values.etcd.service.port }}; do date; echo "Waiting for etcd..."; sleep 1; done;']
+        command:
+          [
+            "sh",
+            "-c",
+            'trap "exit 1" TERM; until nc -vzw 5 {{ .Release.Name }}-etcd {{ .Values.etcd.service.port }}; do date; echo "Waiting for etcd..."; sleep 1; done;',
+          ]
   # docker-secrets required to pull images if the container registry from image.Registry is protected
   imagePullSecrets:
-    # -- Enable imagePullSecrets for pulling our container images
     enabled: false
-    # Name of the imagePullSecret in the installed namespace
-    secrets:
-      - name: login
-
   metrics:
     # -- Enable the metrics exporter
     enabled: true
@@ -78,13 +93,23 @@ base:
       initContainer:
         - name: jaeger-probe
           image: busybox:latest
-          command: ['sh', '-c', 'trap "exit 1" TERM; until nc -vzw 5 -u {{.Values.base.jaeger.agent.name}} {{.Values.base.jaeger.agent.port}}; do date; echo "Waiting for jaeger..."; sleep 1; done;']
+          command:
+            [
+              "sh",
+              "-c",
+              'trap "exit 1" TERM; until nc -vzw 5 -u {{.Values.base.jaeger.agent.name}} {{.Values.base.jaeger.agent.port}}; do date; echo "Waiting for jaeger..."; sleep 1; done;',
+            ]
   initRestContainer:
     enabled: true
     initContainer:
       - name: api-rest-probe
         image: busybox:latest
-        command: ['sh', '-c', 'trap "exit 1" TERM; until nc -vzw 5 {{ .Release.Name }}-api-rest 8081; do date; echo "Waiting for REST API endpoint to become available"; sleep 1; done;']
+        command:
+          [
+            "sh",
+            "-c",
+            'trap "exit 1" TERM; until nc -vzw 5 {{ .Release.Name }}-api-rest 8081; do date; echo "Waiting for REST API endpoint to become available"; sleep 1; done;',
+          ]
 
 operators:
   pool:
@@ -122,12 +147,12 @@ agents:
     resources:
       limits:
         # -- Cpu limits for core agents
-        cpu: "1000m"
+        cpu: "700m"
         # -- Memory limits for core agents
         memory: "32Mi"
       requests:
         # -- Cpu requests for core agents
-        cpu: "500m"
+        cpu: "300m"
         # -- Memory requests for core agents
         memory: "16Mi"
   ha:
@@ -264,14 +289,14 @@ io_engine:
   resources:
     limits:
       # -- Cpu limits for the io-engine
-      cpu: ""
+      cpu: "800m"
       # -- Memory limits for the io-engine
       memory: "1Gi"
       # -- Hugepage size available on the nodes
       hugepages2Mi: "2Gi"
     requests:
       # -- Cpu requests for the io-engine
-      cpu: ""
+      cpu: "500m"
       # -- Memory requests for the io-engine
       memory: "1Gi"
       # -- Hugepage size available on the nodes

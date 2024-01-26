@@ -1,0 +1,66 @@
+machine:
+  features:
+    kubePrism:
+      enabled: true
+      port: 7445
+  registries:
+    mirrors:
+      docker.io:
+        endpoints:
+          - http://10.5.0.1:5000
+      gcr.io:
+        endpoints:
+          - http://10.5.0.1:5003
+      ghcr.io:
+        endpoints:
+          - http://10.5.0.1:5004
+      registry.k8s.io:
+        endpoints:
+          - http://10.5.0.1:5001
+  kubelet:
+    clusterDNS:
+      - 10.96.0.10
+    # https://www.talos.dev/v1.5/kubernetes-guides/configuration/deploy-metrics-server/#node-configuration
+    extraArgs:
+      rotate-server-certificates: true
+    # Democractic-CSI
+    # See: https://www.talos.dev/v1.5/kubernetes-guides/configuration/replicated-local-storage-with-openebs-jiva/#preparing-the-nodes
+    extraMounts:
+      - destination: /var/openebs/local
+        type: bind
+        source: /var/openebs/local
+        options:
+          - bind
+          - rshared
+          - rw
+  network:
+    nameservers:
+      - 45.90.28.173
+      - 45.90.30.173
+      - 2a07:a8c0::13:eefe
+      - 2a07:a8c1::13:eefe
+    extraHostEntries:
+      - ip: 192.168.1.2
+        # The host alias.
+        aliases:
+          - controlle-one.infra
+          - controller-1.infra
+          - node-one.infra
+          - node-one.local
+          - node-1.local
+      - ip: 192.168.1.10
+        # The host alias.
+        aliases:
+          - worker-two.infra
+          - worker-2.infra
+          - node-two.infra
+          - node-two.local
+          - node-2.local
+      - ip: 192.168.1.4
+        # The host alias.
+        aliases:
+          - worker-three.infra
+          - worker-3.infra
+          - node-three.infra
+          - node-three.local
+          - node-3.local

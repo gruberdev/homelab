@@ -1,9 +1,11 @@
-version: '3'
+version: "3"
 
 silent: true
 
 vars:
   CONTROLLER_IPV4: https://192.168.1.2:6443
+  CILIUM_VERSION: 1.14.6
+  MAYASTOR_VERSION: 2.5.0
   BACKUP_TIME:
     sh: echo $(date +%s)
 
@@ -11,26 +13,57 @@ tasks:
   gen:init:
     dir: config/talos
     cmds:
-    - task: gen:backup
-    - task: gen:clean
-    - talosctl gen config homelab {{.CONTROLLER_IPV4}}
+      - task: gen:backup
+      - task: gen:clean
+      - |
+        talosctl gen config homelab {{.CONTROLLER_IPV4}} \
+        --config-patch @patch.yaml \
+        --config-patch-control-plane @controller-patch.yaml \
+        --config-patch-worker @worker-patch.yaml
     ignore_error: true
 
   gen:clean:
     dir: config/talos
     cmds:
-    - rm controlplane.yaml worker.yaml talosconfig
+      - rm controlplane.yaml worker.yaml talosconfig
 
   gen:init:patch:
     dir: config/talos
     cmds:
-    - task: gen:backup
-    - task: gen:clean
-    - |
-      talosctl gen config homelab {{.CONTROLLER_IPV4}} \
-            --config-patch @patch.yaml \
-            --config-patch-control-plane @controller-patch.yaml \
-            --config-patch-worker @worker-patch.yaml
+      - task: gen:backup
+      - task: gen:clean
+      - |
+        talosctl gen config homelab {{.CONTROLLER_IPV4}} \
+              --config-patch @patch.yaml \
+              --config-patch-control-plane @controller-patch.yaml \
+              --config-patch-worker @worker-patch.yaml
+    ignore_error: true
+
+  gen:cilium:
+    dir: config
+    cmds:
+      - helm repo add cilium https://helm.cilium.io/
+      - helm repo update
+      - |
+        helm template \
+          cilium \
+          cilium/cilium \
+          --version {{.CILIUM_VERSION}} \
+          --namespace kube-system \
+          --values charts/cilium.yaml > manifests/cilium.yaml
+    ignore_error: true
+
+  gen:mayastor:
+    dir: config
+    cmds:
+      - helm repo add mayastor https://openebs.github.io/mayastor-extensions/
+      - helm repo update
+      - |
+        helm template \
+        mayastor mayastor/mayastor \
+        -n mayastor --create-namespace \
+        --version {{.MAYASTOR_VERSION}} \
+        --values charts/mayastor.yaml > manifests/mayastor.yaml
     ignore_error: true
 
   gen:patch:
@@ -57,7 +90,7 @@ tasks:
   local:clean:
     dir: config/docker
     cmds:
-    - rm controlplane.yaml worker.yaml talosconfig
+      - rm controlplane.yaml worker.yaml talosconfig
 
   local:gen:
     dir: config/docker
