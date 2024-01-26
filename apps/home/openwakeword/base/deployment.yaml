@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: openwakeword
+  labels:
+    app: openwakeword
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: openwakeword
+  template:
+    metadata:
+      labels:
+        app: openwakeword
+    spec:
+      containers:
+        - name: wyoming-openwakeword
+          image: docker.io/rhasspy/wyoming-openwakeword:1.4.0
+          command:
+            - "--preload-model"
+            - "ok_nabu"
+            - "--custom-model-dir"
+            - "/share/openwakeword"
+          ports:
+            - name: http
+              containerPort: 10400
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 350m
+              memory: 512Mi
+          volumeMounts:
+            - name: data
+              mountPath: /data
+            - name: models
+              mountPath: /share/openwakeword
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: openwakeword-data
+        - name: models
+          persistentVolumeClaim:
+            claimName: openwakeword-models-data
