@@ -2,8 +2,6 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: homeassistant
-  labels:
-    app.kubernetes.io/category: home
 spec:
   project: apps
   source:
