@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: piper
+  labels:
+    app: piper
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: piper
+  template:
+    metadata:
+      labels:
+        app: piper
+    spec:
+      containers:
+        - name: wyoming-piper
+          image: docker.io/rhasspy/wyoming-piper:1.4.0
+          command:
+            - "--voice"
+            - "en_US-lessac-medium"
+            - "--length-scale"
+            - "1"
+            - "--noise-scale"
+            - "0.667"
+            - "--max-piper-procs"
+            - "1"
+          ports:
+            - name: http
+              containerPort: 10200
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 350m
+              memory: 512Mi
+          volumeMounts:
+            - name: data
+              mountPath: /data
+            - name: voices
+              mountPath: /share/piper
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: piper-data
+        - name: voices
+          persistentVolumeClaim:
+            claimName: piper-voices-data
