@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: whisper
+  labels:
+    app: whisper
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: whisper
+  template:
+    metadata:
+      labels:
+        app: whisper
+    spec:
+      containers:
+        - name: wyoming-whisper
+          image: docker.io/rhasspy/wyoming-whisper:1.0.0
+          command:
+            - "--model"
+            - "small-int8"
+            - "--language"
+            - "en"
+            - "--data-dir"
+            - "/data"
+            - "--download-dir"
+            - "/data"
+          ports:
+            - name: http
+              containerPort: 10300
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: 700m
+              memory: 768Mi
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: whisper-data

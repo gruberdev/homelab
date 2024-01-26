@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: openwakeword-internal
+  labels:
+    app: openwakeword
+spec:
+  selector:
+    app: openwakeword
+  ports:
+    - name: http
+      port: 80
+      targetPort: 10400
+      protocol: TCP
+  type: ClusterIP
