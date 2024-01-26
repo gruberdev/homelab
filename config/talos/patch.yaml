@@ -20,11 +20,11 @@ machine:
   kubelet:
     clusterDNS:
       - 10.96.0.10
-    # https://www.talos.dev/v1.5/kubernetes-guides/configuration/deploy-metrics-server/#node-configuration
+    # https://www.talos.dev/v1.6/kubernetes-guides/configuration/deploy-metrics-server/#node-configuration
     extraArgs:
       rotate-server-certificates: true
     # Democractic-CSI
-    # See: https://www.talos.dev/v1.5/kubernetes-guides/configuration/replicated-local-storage-with-openebs-jiva/#preparing-the-nodes
+    # See: https://www.talos.dev/v1.6/kubernetes-guides/configuration/replicated-local-storage-with-openebs-jiva/#preparing-the-nodes
     extraMounts:
       - destination: /var/openebs/local
         type: bind
@@ -64,3 +64,10 @@ machine:
           - node-three.infra
           - node-three.local
           - node-3.local
+  # https://kubito.dev/posts/talos-linux-kubernetes-metrics-server/
+  files:
+    - content: |
+        [metrics]
+          address = "0.0.0.0:11234"
+      path: /var/cri/conf.d/metrics.toml
+      op: create
