@@ -41,9 +41,9 @@ cluster:
     certLifetime: 43800h0m0s
   extraManifests:
     # https://github.com/alex1989hu/kubelet-serving-cert-approver/releases
-    - https://raw.githubusercontent.com/alex1989hu/kubelet-serving-cert-approver/v0.7.3/deploy/standalone-install.yaml
+    - https://raw.githubusercontent.com/alex1989hu/kubelet-serving-cert-approver/v0.8.0/deploy/standalone-install.yaml
     # https://github.com/kubernetes-sigs/metrics-server/releases
-    - https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.6.4/components.yaml
+    - https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.7.0/components.yaml
 
 # iSCSi Democractic-CSI
 machine:
@@ -94,13 +94,6 @@ machine:
           - network: 192.168.1.0/24
             gateway: 192.168.1.1
   kubelet:
-    extraArgs:
-      feature-gates:
-        # https://sysdig.com/blog/kubernetes-1-27-whats-new
-        - KubeletPodResourcesGet=true
-        # https://sysdig.com/blog/kubernetes-1-26-whats-new
-        - KubeletPodResourcesDynamicResources=true
-        - KubeletPodResourcesGetAllocatable=true
     nodeIP:
       validSubnets:
         # Layer 2
