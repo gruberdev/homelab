@@ -45,8 +45,8 @@ spec:
             kubeStateMetrics: true
             network: true
             node: true
-            nodeExporterAlerting: true
-            nodeExporterRecording: true
+            nodeExporterAlerting: false
+            nodeExporterRecording: false
             prometheus: true
             prometheusOperator: true
             windows: true
@@ -377,7 +377,7 @@ spec:
         kubeApiServer:
           enabled: false
         nodeExporter:
-          enabled: true
+          enabled: false
         kubelet:
           enabled: true
           namespace: kube-system
@@ -407,7 +407,7 @@ spec:
           selfMonitor:
             enabled: true
         nodeExporter:
-          enabled: true
+          enabled: false
           operatingSystems:
             linux:
               enabled: true
