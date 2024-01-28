@@ -5,7 +5,7 @@ resources:
   - base/kuma.yaml
 
   # Home Assistant
-  - home/
+  - base/home/
 
   # Networking
   # - base/adguard.yaml
