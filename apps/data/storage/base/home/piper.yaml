@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: piper-data
+  namespace: homeassistant
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: mayastor-single-replica
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: piper-voices-data
+  namespace: homeassistant
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 35Gi
+  storageClassName: mayastor-single-replica
