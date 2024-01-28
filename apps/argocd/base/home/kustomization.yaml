@@ -9,3 +9,5 @@ resources:
 
 commonLabels:
   app.kubernetes.io/category: home
+
+namespace: argocd
