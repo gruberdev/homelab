@@ -2,17 +2,17 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-- actual.yaml
-- gitea.yaml
-- mlops.yaml
-- n8n.yaml
-- ofx-exporter.yaml
-- wger.yaml
-- onchange.yaml
-- gitea-utils.yaml
-- homepage.yaml
+  - actual.yaml
+  - gitea.yaml
+  - mlops.yaml
+  - n8n.yaml
+  - ofx-exporter.yaml
+  - onchange.yaml
+  - gitea-utils.yaml
+  - homepage.yaml
+#- wger.yaml
 
-namespace: sevices
+namespace: services
 
 commonLabels:
   app.kubernetes.io/category: services

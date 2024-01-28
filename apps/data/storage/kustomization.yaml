@@ -15,7 +15,7 @@ resources:
 
   # Media Services
   # - base/jellyfin.yaml
-  - base/tanoshi.yaml
+  # - base/tanoshi.yaml
   # - base/media.yaml
   # - base/beets.yaml
   # - base/lidarr.yaml
@@ -25,7 +25,6 @@ resources:
   - base/n8n.yaml
   - base/gitea.yaml
   - base/links.yaml
-  - base/feedpushr.yaml
   - base/wger.yaml
   # - base/grocy.yaml
   # - base/archivebox.yaml

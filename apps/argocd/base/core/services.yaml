@@ -8,7 +8,7 @@ metadata:
 spec:
   project: apps
   source:
-    repoURL: 'https://github.com/gruberdev/homelab.git'
+    repoURL: "https://github.com/gruberdev/homelab.git"
     path: apps/argocd/base/services
     targetRevision: main
   destination:
@@ -23,11 +23,12 @@ spec:
       labels:
         prometheus: enabled
     syncOptions:
-    - Validate=false
-    - CreateNamespace=true
-    - PrunePropagationPolicy=foreground
-    - PruneLast=true
-    - ApplyOutOfSyncOnly=false
+      - Validate=false
+      - CreateNamespace=true
+      - PrunePropagationPolicy=foreground
+      - ServerSideApply=true
+      - PruneLast=true
+      - ApplyOutOfSyncOnly=false
     retry:
       limit: 10
       backoff:
