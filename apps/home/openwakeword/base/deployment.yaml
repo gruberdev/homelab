@@ -18,8 +18,10 @@ spec:
     spec:
       containers:
         - name: wyoming-openwakeword
-          image: docker.io/rhasspy/wyoming-openwakeword:1.4.0
-          command:
+          image: docker.io/rhasspy/wyoming-openwakeword:1.9.0
+          args:
+            - "--uri"
+            - "tcp://0.0.0.0:10400"
             - "--preload-model"
             - "ok_nabu"
             - "--custom-model-dir"

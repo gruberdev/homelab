@@ -19,26 +19,30 @@ spec:
       containers:
         - name: wyoming-whisper
           image: docker.io/rhasspy/wyoming-whisper:1.0.0
-          command:
+          args:
+            - "--uri"
+            - "tcp://0.0.0.0:10300"
             - "--model"
-            - "small-int8"
+            - "small"
             - "--language"
             - "en"
             - "--data-dir"
             - "/data"
             - "--download-dir"
             - "/data"
+            - "--beam-size"
+            - "1"
           ports:
             - name: http
               containerPort: 10300
               protocol: TCP
           resources:
             requests:
-              cpu: 250m
-              memory: 512Mi
+              cpu: 500m
+              memory: 1Gi
             limits:
-              cpu: 700m
-              memory: 768Mi
+              cpu: 1500m
+              memory: 2Gi
           volumeMounts:
             - name: data
               mountPath: /data
