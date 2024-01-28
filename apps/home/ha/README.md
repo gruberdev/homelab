@@ -41,6 +41,7 @@ kubectl apply -k github.com/gruberdev/homelab/apps/home/ha
 - [ha-dual-smart-thermostat][ha-dual-smart-thermostat]
 - [hass-openai-custom-conversation][hass-openai-custom-conversation]
 - [iphonedetect][iphonedetect]
+- [extended_openai_conversation][extended-ai]
 
 ### Lovelace add-ons:
 
@@ -75,6 +76,7 @@ kubectl apply -k github.com/gruberdev/homelab/apps/home/ha
 [ha-dual-smart-thermostat]: https://github.com/swingerman/ha-dual-smart-thermostat
 [hass-openai-custom-conversation]: https://github.com/drndos/hass-openai-custom-conversation
 [iphonedetect]: https://github.com/mudape/iphonedetect
+[extended-ai]: https://github.com/jekalmin/extended_openai_conversation
 
 [vertical-stack-uri]: https://github.com/ofekashery/vertical-stack-in-card
 [mini-graph-uri]: https://github.com/kalkih/mini-graph-card
