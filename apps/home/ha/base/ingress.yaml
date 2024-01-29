@@ -20,4 +20,3 @@ spec:
                 name: ha-tailscale
                 port:
                   name: web
-                  port: 80
