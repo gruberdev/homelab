@@ -6,21 +6,18 @@ metadata:
     external-dns.alpha.kubernetes.io/hostname: home.gruber.dev.br
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
     external-dns.alpha.kubernetes.io/ttl: "120"
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    tailscale.com/funnel: "true"
 spec:
-  ingressClassName: nginx
+  ingressClassName: tailscale
   rules:
-  - host: home.gruber.dev.br
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: homeassistant
-            port:
-              name: ha
-  tls:
-  - hosts:
-    - home.gruber.dev.br
-    secretName: ha-tls
+    - host: home.gruber.dev.br
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ha-tailscale
+                port:
+                  name: web
+                  port: 80
