@@ -58,7 +58,6 @@ kubectl apply -k github.com/gruberdev/homelab/apps/home/ha
 - [decluttering-card][decluttering-card]
 - [energy-entity-row][energy-entity-row]
 - [layout-card][layout-card]
-- [tailwindcss-template-card][tailwind-card]
 
 ### General personal documentation
 
@@ -96,7 +95,6 @@ kubectl apply -k github.com/gruberdev/homelab/apps/home/ha
 [decluttering-card]: https://github.com/custom-cards/decluttering-card
 [energy-entity-row]: https://github.com/zeronounours/lovelace-energy-entity-row
 [layout-card]: https://github.com/thomasloven/lovelace-layout-card
-[tailwind-card]: https://github.com/usernein/tailwindcss-template-card
 
 [ha-samsung-uri]: https://github.com/home-assistant/core/issues/70777
 [broadlink-custom-uri]: https://github.com/usernein/tv-card/blob/c8f0a76424844772934613d45691d9b3860ff36b/README.md?plain=1#L88-L130
