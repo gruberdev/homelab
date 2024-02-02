@@ -6,6 +6,7 @@ resources:
   - piper.yaml
   - whisper.yaml
   - wyze.yaml
+  - external-mic.yaml
 
 commonLabels:
   app.kubernetes.io/category: home

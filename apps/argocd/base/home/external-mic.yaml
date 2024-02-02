@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: external-mic
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: apps
+  source:
+    repoURL: "https://github.com/gruberdev/homelab.git"
+    path: apps/home/external-mic
+    targetRevision: main
+  destination:
+    namespace: homeassistant
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - Prune=true
+      - ServerSideApply=true
+    retry:
+      limit: 10
+      backoff:
+        duration: 20s
+        factor: 2
+        maxDuration: 15m
+    kustomize:
+      commonLabels:
+        app.kubernetes.io/category: home
+  info:
+    - name: "Github Repository:"
+      value: >-
+        https://github.com/rhasspy/wyoming-mic-external
+    - name: "Homelab documentation:"
+      value: >-
+        https://github.com/gruberdev/homelab/tree/main/apps/home/external-mic

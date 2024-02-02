@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: external-mic
+  labels:
+    app: external-mic
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: external-mic
+  template:
+    metadata:
+      labels:
+        app: external-mic
+    spec:
+      securityContext:
+        fsGroup: 29
+        supplementalGroups: [29]
+      containers:
+        - name: server
+          image: grubertech/external-mic:v0.0.1
+          securityContext:
+            privileged: true
+          command: ["sh", "-c"]
+          args:
+            - |
+              pip install wyoming &&
+              python -m wyoming_mic_external \
+              --program "''arecord --device plughw:CARD=C920,DEV=0 -r 16000 -c 1 -f S16_LE -t raw''" \
+              --rate "16000" \
+              --width "2" \
+              --channels "1" \
+              --uri "tcp://0.0.0.0:10600" \
+              --debug
+          ports:
+            - name: http
+              containerPort: 10600
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 300m
+              memory: 256Mi
+          volumeMounts:
+            - name: dev-snd
+              mountPath: /dev/snd
+      volumes:
+        - name: dev-snd
+          hostPath:
+            path: /dev/snd
