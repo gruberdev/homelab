@@ -2,40 +2,44 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: tailscale-operator
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: networking
   source:
-    repoURL: 'https://github.com/gruberdev/homelab.git'
+    repoURL: "https://github.com/gruberdev/homelab.git"
     path: apps/networking/tailscale/operator
     targetRevision: main
+    kustomize:
+      commonLabels:
+        app.kubernetes.io/app: tailscale-operator
+        app.kubernetes.io/category: networking
   destination:
     namespace: tailscale
     name: in-cluster
-  info:
-    - name: 'Github Repository:'
-      value: >-
-        https://github.com/tailscale/tailscale
-    - name: 'Github feature issue:'
-      value: >-
-        https://github.com/tailscale/tailscale/issues/502
-    - name: 'Documentation:'
-      value: >-
-        https://tailscale.com/kb/1236/kubernetes-operator/
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
-      allowEmpty: false
     managedNamespaceMetadata:
       labels:
         prometheus: enabled
     syncOptions:
-    - Validate=false
-    - CreateNamespace=true
-    - PrunePropagationPolicy=foreground
+      - Prune=true
+      - ServerSideApply=true
     retry:
-      limit: 5
+      limit: 3
       backoff:
         duration: 20s
         factor: 2
         maxDuration: 15m
+  info:
+    - name: "Github Repository:"
+      value: >-
+        https://github.com/tailscale/tailscale
+    - name: "Github feature issue:"
+      value: >-
+        https://github.com/tailscale/tailscale/issues/502
+    - name: "Documentation:"
+      value: >-
+        https://tailscale.com/kb/1236/kubernetes-operator/
