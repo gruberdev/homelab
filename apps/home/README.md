@@ -50,12 +50,10 @@ flowchart TD
     style Whisper fill:#d7e3fc,stroke:#858585,stroke-width:1px
     style Host_Computer fill:#abc4ff,stroke:#858585,stroke-width:1px
 ```
-
-
-
 ### AI-Related resources
 
-- [Training a custom word to activate *openWakeWord*][oww-train-uri]
+- [Training a custom word to activate *openWakeWord*][oww-train-uri] 
+- [A technical introduction to training voices for *Piper*][piper-intro]
 
 ### General personal resources
 
@@ -66,3 +64,4 @@ flowchart TD
 [tizen-page-samsung]: https://www.samsung.com/us/support/answer/ANS00062224/
 [samsung-update-tv]: https://www.samsung.com/br/support/model/UN50AU8000GXZD/#tips
 [oww-train-uri]: https://colab.research.google.com/drive/1q1oe2zOyZp7UsB3jJiQ1IFn8z5YfjwEb?usp=sharing#scrollTo=1cbqBebHXjFD
+[piper-intro]: https://github.com/ZachB100/Piper-Training-Guide-with-Screen-Reader
