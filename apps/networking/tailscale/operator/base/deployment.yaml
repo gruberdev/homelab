@@ -21,8 +21,8 @@ spec:
             secretName: operator-oauth
       containers:
         - name: operator
-          image: docker.io/grubertech/tailscale-operator:latest
-          imagePullPolicy: Always
+          image: docker.io/tailscale/k8s-operator:unstable-v1.57.65
+          imagePullPolicy: IfNotPresent
           resources:
             requests:
               cpu: 300m
@@ -50,7 +50,7 @@ spec:
             - name: CLIENT_SECRET_FILE
               value: /oauth/client_secret
             - name: PROXY_IMAGE
-              value: docker.io/tailscale/tailscale:unstable-v1.57.56
+              value: docker.io/tailscale/tailscale:unstable-v1.57.65
             - name: PROXY_TAGS
               value: tag:k8s
             - name: AUTH_PROXY
