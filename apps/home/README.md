@@ -15,6 +15,7 @@ flowchart TD
         Piper["Piper"]
         Whisper["Whisper"]
   end
+    click HomeAssistant callback "Github link for Home-Assistant"
     click HomeAssistant "https://github.com/gruberdev/homelab/tree/main/apps/home/ha" "Github app path"
     click HomeAssistant "https://github.com/gruberdev/homelab/tree/main/apps/home/ha" "Github app path"
     click External-mic "https://github.com/gruberdev/homelab/tree/main/apps/home/external-mic" "Github app path"
