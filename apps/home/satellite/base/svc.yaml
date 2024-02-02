@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: satellite-internal
+  labels:
+    app: satellite
+spec:
+  selector:
+    app: satellite
+  ports:
+    - name: http
+      port: 80
+      targetPort: 10700
+      protocol: TCP
+  type: ClusterIP

@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: satellite
+  labels:
+    app: satellite
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: satellite
+  template:
+    metadata:
+      labels:
+        app: satellite
+    spec:
+      containers:
+        - name: satellite-server
+          image: grubertech/wyoming-satellite:latest
+          args:
+            - --name
+            - "microphone"
+            - --mic-uri
+            - "tcp://external-mic-internal.homeassistant.svc.cluster.local:80"
+            - --wake-uri
+            - "tcp://openwakeword-internal.homeassistant.svc.cluster.local:80"
+            - --wake-word-name
+            - ok_nabu
+            - --debug
+          ports:
+            - name: http
+              containerPort: 10700
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 400m
+              memory: 512Mi

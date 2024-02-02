@@ -1,0 +1,39 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: satellite
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: apps
+  source:
+    repoURL: "https://github.com/gruberdev/homelab.git"
+    path: apps/home/satellite
+    targetRevision: main
+    kustomize:
+      commonLabels:
+        app.kubernetes.io/app: satellite
+        app.kubernetes.io/category: home
+  destination:
+    namespace: homeassistant
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - Prune=true
+      - ServerSideApply=true
+    retry:
+      limit: 10
+      backoff:
+        duration: 20s
+        factor: 2
+        maxDuration: 15m
+  info:
+    - name: "Github Repository:"
+      value: >-
+        https://github.com/rhasspy/wyoming-satellite
+    - name: "Homelab documentation:"
+      value: >-
+        https://github.com/gruberdev/homelab/tree/main/apps/home/satellite
