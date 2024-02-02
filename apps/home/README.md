@@ -1,6 +1,12 @@
-## Smart home resources
+# Smart home resources
 
-### Diagram of home-related resources
+## Diagram of home-related resources
+
+<center>
+
+*Right-click on nodes and open in a new tab to see the project's implementation*
+
+</center>
 
 ```mermaid
 %%{init: {"flowchart": {"htmlLabels": false}} }%%
@@ -24,23 +30,24 @@ flowchart TD
     click Whisper "https://github.com/gruberdev/homelab/tree/main/apps/home/whisper" "Github app path"
     click Satellite "https://github.com/gruberdev/homelab/tree/main/apps/home/satellite" "Github app path"
     click LocalAI "https://github.com/gruberdev/homelab/tree/main/apps/services/mlops/local-ai" "Github app path"
-    Host_Computer{{"Host Node"}} -- Sending microphone audio --> External-mic
-    External-mic --> Satellite
+    Host_Computer{{"Host Interface (Node)"}} -- Sending microphone audio --> External-mic
+    Satellite -. Links indirectly through Wyoming protoocol .-> Whisper
+    External-mic -- Relaying audio over a containerized API --> Satellite
     Satellite --> HomeAssistant & openwakeword
     openwakeword --> HomeAssistant
-    LocalAI <--> HomeAssistant
+    LocalAI <-- OpenAI API replacement --> HomeAssistant
     HomeAssistant --> Piper
     Whisper <--> HomeAssistant
     Piper -- Transmitting generated assistant voice --> Host_Computer
-   
-    style Satellite fill:#ddf,stroke:#333,stroke-width:2px,stroke-dasharray: 0
-    style openwakeword fill:#fdfd96,stroke:#333,stroke-width:2px
-    style External-mic fill:#ddf,stroke:#333,stroke-width:2px
-    style HomeAssistant fill:#616161,stroke:#333,stroke-width:4px,stroke-dasharray: 0
-    style LocalAI fill:#fdd,stroke:#333,stroke-width:2px
-    style Piper fill:#fd9,stroke:#333,stroke-width:2px
-    style Whisper fill:#bbf,stroke:#333,stroke-width:2px
-    style Host_Computer  fill:#f9f,stroke:#333,stroke-width:2px
+
+  style Satellite fill:##0582ca,stroke:#333,stroke-width:2px,stroke-dasharray: 0
+  style openwakeword fill:#0582ca,stroke:#333,stroke-width:2px
+  style External-mic fill:#00a6fb,stroke:#333,stroke-width:2px
+  style HomeAssistant fill:#051923,stroke:#333,stroke-width:3px,stroke-dasharray: 0
+  style LocalAI fill:#0582ca,stroke:#333,stroke-width:2px
+  style Piper fill:#00a6fb,stroke:#333,stroke-width:2px
+  style Whisper fill:#0582ca,stroke:#333,stroke-width:2px
+  style Host_Computer  fill:#003554,stroke:#333,stroke-width:2px
 ```
 
 
