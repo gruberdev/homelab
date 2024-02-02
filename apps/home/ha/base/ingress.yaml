@@ -6,9 +6,9 @@ metadata:
     external-dns.alpha.kubernetes.io/hostname: home.gruber.dev.br
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
     external-dns.alpha.kubernetes.io/ttl: "120"
-    tailscale.com/funnel: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
-  ingressClassName: tailscale
+  ingressClassName: nginx
   rules:
     - host: home.gruber.dev.br
       http:
@@ -19,4 +19,8 @@ spec:
               service:
                 name: ha-tailscale
                 port:
-                  name: web
+                  name: ha
+  tls:
+    - hosts:
+        - home.gruber.dev.br
+      secretName: ha-tls

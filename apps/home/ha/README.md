@@ -59,6 +59,10 @@ kubectl apply -k github.com/gruberdev/homelab/apps/home/ha
 - [energy-entity-row][energy-entity-row]
 - [layout-card][layout-card]
 
+### General personal documentation
+
+- [How I fixed my Samsung TV (Tizen) asking for permission all whenever it was switched off when using the Home Assistant integration][ha-samsung-uri]
+- [Custom keys for an improved tv-card coupled with my IR controller (Broadlink RM4 Pro)][broadlink-custom-uri]
 
 [own-ha-uri]: https://github.com/gruberdev/homeassistant
 [website-uri]: https://www.home-assistant.io/
@@ -91,3 +95,6 @@ kubectl apply -k github.com/gruberdev/homelab/apps/home/ha
 [decluttering-card]: https://github.com/custom-cards/decluttering-card
 [energy-entity-row]: https://github.com/zeronounours/lovelace-energy-entity-row
 [layout-card]: https://github.com/thomasloven/lovelace-layout-card
+
+[ha-samsung-uri]: https://github.com/home-assistant/core/issues/70777
+[broadlink-custom-uri]: https://github.com/usernein/tv-card/blob/c8f0a76424844772934613d45691d9b3860ff36b/README.md?plain=1#L88-L130
