@@ -16,6 +16,26 @@ spec:
       labels:
         app: openwakeword
     spec:
+      initContainers:
+        - name: download-model
+          image: alpine:3.16.2
+          command:
+            [
+              "sh",
+              "-c",
+              "if [ ! -f /models/hey_nabu_v2.tflite ]; then apk add wget && wget -O /models/hey_nabu_v2.tflite https://github.com/fwartner/home-assistant-wakewords-collection/raw/main/en/hey_nabu/hey_nabu_v2.tflite; fi",
+            ]
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 0
+            seccompProfile:
+              type: RuntimeDefault
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - mountPath: /models
+              name: models
       containers:
         - name: wyoming-openwakeword
           image: docker.io/rhasspy/wyoming-openwakeword:1.9.0
