@@ -30,6 +30,7 @@ flowchart TD
     click Whisper "https://github.com/gruberdev/homelab/tree/main/apps/home/whisper" "Github app path"
     click Satellite "https://github.com/gruberdev/homelab/tree/main/apps/home/satellite" "Github app path"
     click LocalAI "https://github.com/gruberdev/homelab/tree/main/apps/services/mlops/local-ai" "Github app path"
+
     Host_Computer{{"Host Interface (Node)"}} -- Sending microphone audio --> External-mic
     Satellite -. Links indirectly through Wyoming protoocol .-> Whisper
     External-mic -- Relaying audio over a containerized API --> Satellite
@@ -40,14 +41,14 @@ flowchart TD
     Whisper <--> HomeAssistant
     Piper -- Transmitting generated assistant voice --> Host_Computer
 
-  style Satellite fill:##0582ca,stroke:#333,stroke-width:2px,stroke-dasharray: 0
-  style openwakeword fill:#0582ca,stroke:#333,stroke-width:2px
-  style External-mic fill:#00a6fb,stroke:#333,stroke-width:2px
-  style HomeAssistant fill:#051923,stroke:#333,stroke-width:3px,stroke-dasharray: 0
-  style LocalAI fill:#0582ca,stroke:#333,stroke-width:2px
-  style Piper fill:#00a6fb,stroke:#333,stroke-width:2px
-  style Whisper fill:#0582ca,stroke:#333,stroke-width:2px
-  style Host_Computer  fill:#003554,stroke:#333,stroke-width:2px
+    style Satellite fill:#c1d3fe,stroke:#858585,stroke-width:2px,stroke-dasharray: 0
+    style openwakeword fill:#c1d3fe stroke:#858585,stroke-width:1px
+    style External-mic fill:#c1d3fe,stroke:#858585,stroke-width:1px
+    style HomeAssistant fill:#b6ccfe,stroke:#858585,stroke-width:2px,stroke-dasharray: 0
+    style LocalAI fill:#d7e3fc,stroke:#858585,stroke-width:1px
+    style Piper fill:#d7e3fc,stroke:#858585,stroke-width:1px
+    style Whisper fill:#d7e3fc,stroke:#858585,stroke-width:1px
+    style Host_Computer fill:#abc4ff,stroke:#858585,stroke-width:1px
 ```
 
 
@@ -59,7 +60,7 @@ flowchart TD
 ### General personal resources
 
 - [My Samsung TV update page][samsung-update-tv]
-- [How to update a Samsung TV using Tizen][tizen-page-samsung]
+- [How to update a Samsung TV that runs Tizen][tizen-page-samsung]
 
 
 [tizen-page-samsung]: https://www.samsung.com/us/support/answer/ANS00062224/
