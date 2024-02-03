@@ -5,26 +5,28 @@ metadata:
 spec:
   description: Networking related Kubernetes resources
   sourceRepos:
-  - '*'
+    - "*"
   destinations:
-  - namespace: kube-system
-    server: https://kubernetes.default.svc
-  - namespace: argocd
-    server: https://kubernetes.default.svc
-  - namespace: cert-manager
-    server: https://kubernetes.default.svc
-  - namespace: istio-system
-    server: https://kubernetes.default.svc
-  - namespace: networking
-    server: https://kubernetes.default.svc
-  - namespace: external-dns
-    server: https://kubernetes.default.svc
-  - namespace: tailscale
-    server: https://kubernetes.default.svc
-  - namespace: monitoring
-    server: https://kubernetes.default.svc
+    - namespace: kube-system
+      server: https://kubernetes.default.svc
+    - namespace: argocd
+      server: https://kubernetes.default.svc
+    - namespace: cert-manager
+      server: https://kubernetes.default.svc
+    - namespace: istio-system
+      server: https://kubernetes.default.svc
+    - namespace: networking
+      server: https://kubernetes.default.svc
+    - namespace: external-dns
+      server: https://kubernetes.default.svc
+    - namespace: tailscale
+      server: https://kubernetes.default.svc
+    - namespace: monitoring
+      server: https://kubernetes.default.svc
+    - namespace: unifi
+      server: https://kubernetes.default.svc
   clusterResourceWhitelist:
-  - group: '*'
-    kind: '*'
+    - group: "*"
+      kind: "*"
   orphanedResources:
     warn: true
