@@ -38,7 +38,6 @@ spec:
           image: jacobalberty/unifi:v7.4.162
           securityContext:
             runAsUser: 0
-            fsGroupChangePolicy: Always
             allowPrivilegeEscalation: true
           envFrom:
             - configMapRef:
@@ -80,11 +79,11 @@ spec:
               name: config
           resources:
             limits:
-              cpu: 500m
-              memory: 1.3Gi
+              cpu: 450m
+              memory: 1500Mi
             requests:
-              cpu: 100m
-              memory: 900Mi
+              cpu: 200m
+              memory: 1024Mi
           livenessProbe:
             tcpSocket:
               port: 8443
