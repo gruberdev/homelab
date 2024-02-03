@@ -40,9 +40,6 @@ spec:
             runAsUser: 0
             fsGroupChangePolicy: Always
             allowPrivilegeEscalation: true
-            sysctls:
-              - name: net.ipv4.ip_unprivileged_port_start
-                value: "0"
           envFrom:
             - configMapRef:
                 name: unifi-controller-cm
@@ -83,11 +80,11 @@ spec:
               name: config
           resources:
             limits:
-              cpu: 400m
+              cpu: 500m
               memory: 1.3Gi
             requests:
-              cpu: 300m
-              memory: 1Gi
+              cpu: 100m
+              memory: 900Mi
           livenessProbe:
             tcpSocket:
               port: 8443
