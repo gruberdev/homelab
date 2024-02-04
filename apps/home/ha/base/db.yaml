@@ -16,12 +16,14 @@ spec:
       memory: 768Mi
       cpu: 700m
   postgresql:
+    pg_hba:
+      - host all all all md5
     parameters:
       shared_buffers: 256MB
       timezone: "America/Sao_Paulo"
-      pg_stat_statements.max: '10000'
+      pg_stat_statements.max: "10000"
       pg_stat_statements.track: all
-      auto_explain.log_min_duration: '10s'
+      auto_explain.log_min_duration: "10s"
   bootstrap:
     initdb:
       database: home
