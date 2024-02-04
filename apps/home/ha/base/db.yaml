@@ -17,7 +17,7 @@ spec:
       cpu: 700m
   postgresql:
     pg_hba:
-      - host all all all md5
+      - host all,replication all,replication 0.0.0.0/0 md5
     parameters:
       shared_buffers: 256MB
       timezone: "America/Sao_Paulo"
