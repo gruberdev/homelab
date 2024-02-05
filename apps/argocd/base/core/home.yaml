@@ -11,6 +11,9 @@ spec:
     repoURL: "https://github.com/gruberdev/homelab.git"
     path: apps/argocd/base/home
     targetRevision: main
+    kustomize:
+      commonLabels:
+        app.kubernetes.io/category: home
   destination:
     namespace: homeassistant
     name: in-cluster
@@ -18,19 +21,15 @@ spec:
     automated:
       prune: true
       selfHeal: true
-      allowEmpty: false
     managedNamespaceMetadata:
       labels:
         prometheus: enabled
     syncOptions:
-      - Validate=false
       - CreateNamespace=true
       - ServerSideApply=true
-      - PrunePropagationPolicy=foreground
-      - PruneLast=true
-      - ApplyOutOfSyncOnly=false
+      - Prune=true
     retry:
-      limit: 10
+      limit: 5
       backoff:
         duration: 20s
         factor: 2
