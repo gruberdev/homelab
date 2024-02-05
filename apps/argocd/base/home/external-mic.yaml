@@ -12,6 +12,7 @@ spec:
     targetRevision: main
     kustomize:
       commonLabels:
+        app.kubernetes.io/app: external-mic
         app.kubernetes.io/category: home
   destination:
     namespace: homeassistant

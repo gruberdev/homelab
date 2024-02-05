@@ -21,7 +21,12 @@ spec:
       initContainers:
         - name: hacs-install
           image: alpine:3.16.2
-          command: ["sh", "-c", "if [ ! -d /config ]; then mkdir -p /config; fi; if [ -f /config/configuration.yaml ]; then if [ ! -f /config/.hacs-installed ]; then apk add bash wget && wget -O - https://get.hacs.xyz | bash - && touch /config/.hacs-installed; fi; else echo 'No Home Assistant database found. Skipping HACS installation.'; fi"]
+          command:
+            [
+              "sh",
+              "-c",
+              "if [ ! -d /config ]; then mkdir -p /config; fi; if [ -f /config/configuration.yaml ]; then if [ ! -f /config/.hacs-installed ]; then apk add bash wget && wget -O - https://get.hacs.xyz | bash - && touch /config/.hacs-installed; fi; else echo 'No Home Assistant database found. Skipping HACS installation.'; fi",
+            ]
           securityContext:
             allowPrivilegeEscalation: false
             runAsUser: 0
@@ -40,18 +45,26 @@ spec:
             runAsUser: 65533
           env:
             - name: DB_USERNAME
-              valueFrom: { secretKeyRef: { name: home-database-app, key: username } }
+              valueFrom:
+                {
+                  secretKeyRef:
+                    { name: database-homeassistant-app, key: username },
+                }
             - name: DB_PASSWORD
-              valueFrom: { secretKeyRef: { name: home-database-app, key: password } }
+              valueFrom:
+                {
+                  secretKeyRef:
+                    { name: database-homeassistant-app, key: password },
+                }
             - name: DB_STRING
-              value: "postgresql://${DB_USERNAME}:${DB_PASSWORD}@home-database-rw.homeassistant.svc.cluster.local:5432/home?client_encoding=utf8&sslmode=require"
+              value: "postgresql://${DB_USERNAME}:${DB_PASSWORD}@database-homeassistant-rw.homeassistant.svc.cluster.local:5432/home?client_encoding=utf8&sslmode=require"
           volumeMounts:
-          - name: temp-config
-            mountPath: /tmp/git
-          - name: ssh-key
-            mountPath: /etc/git-secret/ssh
-          - name: known-hosts
-            mountPath: /etc/git-secret/known_hosts
+            - name: temp-config
+              mountPath: /tmp/git
+            - name: ssh-key
+              mountPath: /etc/git-secret/ssh
+            - name: known-hosts
+              mountPath: /etc/git-secret/known_hosts
           envFrom:
             - configMapRef:
                 name: git-ha-cm
@@ -60,10 +73,10 @@ spec:
                 optional: true
       containers:
         - env:
-          - name: TZ
-            value: America/Sao_Paulo
-          - name: PYTHONWARNINGS
-            value: ignore:Unverified HTTPS request
+            - name: TZ
+              value: America/Sao_Paulo
+            - name: PYTHONWARNINGS
+              value: ignore:Unverified HTTPS request
           image: homeassistant/home-assistant:2022.9
           imagePullPolicy: IfNotPresent
           name: home-assistant
@@ -71,7 +84,7 @@ spec:
             postStart:
               exec:
                 command:
-                  ['/bin/sh', '-c', 'cp -rf /src/homeassistant/* /config']
+                  ["/bin/sh", "-c", "cp -rf /src/homeassistant/* /config"]
           ports:
             - containerPort: 8123
               name: api
