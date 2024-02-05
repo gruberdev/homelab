@@ -9,7 +9,4 @@ resources:
   - external-mic.yaml
   - satellite.yaml
 
-commonLabels:
-  app.kubernetes.io/category: home
-
 namespace: argocd
