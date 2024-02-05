@@ -10,10 +10,6 @@ spec:
     repoURL: "https://github.com/gruberdev/homelab.git"
     path: apps/home/piper
     targetRevision: main
-    kustomize:
-      commonLabels:
-        app.kubernetes.io/app: piper
-        app.kubernetes.io/category: home
   destination:
     namespace: homeassistant
     name: in-cluster
