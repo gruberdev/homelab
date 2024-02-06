@@ -222,7 +222,7 @@
 [homelab-tailscale]: https://github.com/gruberdev/homelab/tree/main/apps/networking/tailscale
 [homelab-vault]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/apps/vault.yaml
 [homelab-matrix]: https://github.com/gruberdev/homelab/tree/main/apps/matrix
-[homelab-n8n]: https://github.com/gruberdev/homelab/tree/main/apps/services/n8n-service
+[homelab-n8n]: https://github.com/gruberdev/homelab/tree/main/apps/services/n8n
 [homelab-flame]: https://github.com/gruberdev/homelab/tree/main/apps/monitoring/flame
 [homelab-poller]: https://github.com/gruberdev/homelab/tree/main/apps/networking/unifi/poller
 [homelab-cloudflared]: https://github.com/gruberdev/homelab/tree/main/apps/networking/cloudflared
