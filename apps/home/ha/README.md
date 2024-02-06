@@ -59,6 +59,10 @@ kubectl apply -k github.com/gruberdev/homelab/apps/home/ha
 - [energy-entity-row][energy-entity-row]
 - [layout-card][layout-card]
 - [tailwindcss-template-card][tailwind-card]
+- [frigate-hass-card][frigate-card]
+- [search-card][search-card]
+- [custom-sidebar][custom-sidebar]
+- [navbar-position][navbar-position]
 
 ### General personal documentation
 
@@ -97,6 +101,10 @@ kubectl apply -k github.com/gruberdev/homelab/apps/home/ha
 [energy-entity-row]: https://github.com/zeronounours/lovelace-energy-entity-row
 [layout-card]: https://github.com/thomasloven/lovelace-layout-card
 [tailwind-card]: https://github.com/usernein/tailwindcss-template-card
+[frigate-card]: https://github.com/dermotduffy/frigate-hass-card
+[search-card]: https://github.com/postlund/search-card
+[custom-sidebar]: https://github.com/elchininet/custom-sidebar
+[navbar-position]: https://github.com/javawizard/ha-navbar-position
 
 [ha-samsung-uri]: https://github.com/home-assistant/core/issues/70777
 [broadlink-custom-uri]: https://github.com/usernein/tv-card/blob/c8f0a76424844772934613d45691d9b3860ff36b/README.md?plain=1#L88-L130
