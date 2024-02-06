@@ -1,11 +1,11 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: n8n
+  name: n8n-service
 spec:
   project: apps
   source:
-    repoURL: 'https://github.com/gruberdev/homelab.git'
+    repoURL: "https://github.com/gruberdev/homelab.git"
     path: apps/services/n8n
     targetRevision: main
   destination:
