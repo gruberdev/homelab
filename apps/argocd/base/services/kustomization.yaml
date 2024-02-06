@@ -12,7 +12,7 @@ resources:
   - homepage.yaml
 #- wger.yaml
 
-namespace: services
+namespace: argocd
 
 commonLabels:
   app.kubernetes.io/category: services
