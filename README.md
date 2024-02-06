@@ -222,7 +222,7 @@
 [homelab-tailscale]: https://github.com/gruberdev/homelab/tree/main/apps/networking/tailscale
 [homelab-vault]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/apps/vault.yaml
 [homelab-matrix]: https://github.com/gruberdev/homelab/tree/main/apps/matrix
-[homelab-n8n]: https://github.com/gruberdev/homelab/tree/main/apps/services/n8n
+[homelab-n8n]: https://github.com/gruberdev/homelab/tree/main/apps/services/n8n-service
 [homelab-flame]: https://github.com/gruberdev/homelab/tree/main/apps/monitoring/flame
 [homelab-poller]: https://github.com/gruberdev/homelab/tree/main/apps/networking/unifi/poller
 [homelab-cloudflared]: https://github.com/gruberdev/homelab/tree/main/apps/networking/cloudflared
@@ -258,10 +258,10 @@
 [argocd-adguard]:https://argo.gruber.dev.br/api/badge?name=adguard
 [argocd-unifi-controller]: https://argo.gruber.dev.br/api/badge?name=unifi-controller
 [argocd-core]: https://argo.gruber.dev.br/api/badge?name=argocd
-[argocd-n8n]: https://argo.gruber.dev.br/api/badge?name=n8n
+[argocd-n8n]: https://argo.gruber.dev.br/api/badge?name=n8n-service
 [argocd-vault]: https://argo.gruber.dev.br/api/badge?name=vault
 [argocd-ha]: https://argo.gruber.dev.br/api/badge?name=homeassistant
-[argocd-wyze]: https://argo.gruber.dev.br/api/badge?name=wyze-bridge
+[argocd-wyze]: https://argo.gruber.dev.br/api/badge?name=wyze
 [argocd-redis]: https://argo.gruber.dev.br/api/badge?name=redis
 [argocd-matrix]: https://argo.gruber.dev.br/api/badge?name=synapse
 [argocd-mysql]: https://argo.gruber.dev.br/api/badge?name=mysql-operator
