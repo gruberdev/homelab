@@ -1,45 +1,45 @@
 name: "orca"
 
 description: |
-    OpenOrca-Platypus2-13B is a merge of garage-bAInd/Platypus2-13B and Open-Orca/OpenOrcaxOpenChat-Preview2-13B.
+  This is the third version of OrcaMaid, a weighted gradient SLERP merge between Microsoft's Orca-2-13b and NeverSleep's Noromaid-13b-v0.3.
 
 license: "Other"
 urls:
-- https://huggingface.co/Open-Orca/OpenOrca-Platypus2-13B
+  - https://huggingface.co/TheBloke/OrcaMaid-v3-13B-32k-GGUF
 
 config_file: |
-  name: orca
   gpu_layers: 1000
   debug: true
+  threads: 4
   mmap: false
-  f16: true
-  embeddings: false
+  embeddings: true
   prompt_cache_all: true
   prompt_cache_ro: false
-  low_vram: true
+  f16: true
+  low_vram: false
   backend: llama
   parameters:
-    model: openorca-platypus2-13b.ggmlv3.q5_K_M.bin
+    model: orcamaid-v3-13b-32k.Q4_K_M.gguf
     top_k: 80
-    temperature: 1
+    temperature: 0.7
     top_p: 0.7
-  context_size: 1024
+  context_size: 2048
   template:
     completion: orca-completion
     chat: orca-chat
 
 files:
-- filename: "openorca-platypus2-13b.ggmlv3.q5_K_M.bin"
-  uri: "https://huggingface.co/TheBloke/OpenOrca-Platypus2-13B-GGML/resolve/main/openorca-platypus2-13b.ggmlv3.q5_K_M.bin"
+  - filename: "orcamaid-v3-13b-32k.Q4_K_M.gguf"
+    uri: "https://huggingface.co/TheBloke/OrcaMaid-v3-13B-32k-GGUF/resolve/main/orcamaid-v3-13b-32k.Q4_K_M.gguf?download=true"
 
 prompt_templates:
-- name: "orca-completion"
-  content: |
+  - name: "orca-completion"
+    content: |
       {{.Input}}
 
-- name: "orca-chat"
-  content: |
-    The prompt below is a question to answer, a task to complete, or a conversation to respond to; decide which and write an appropriate response.
-    ### Prompt:
-    {{.Input}}
-    ### Response:
+  - name: "orca-chat"
+    content: |
+      The prompt below is a question to answer, a task to complete, or a conversation to respond to; decide which and write an appropriate response.
+      ### Prompt:
+      {{.Input}}
+      ### Response:
