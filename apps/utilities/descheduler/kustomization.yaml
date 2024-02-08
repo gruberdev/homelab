@@ -1,0 +1,90 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - github.com/kubernetes-sigs/descheduler/kubernetes/deployment?ref=v0.29.0
+
+namespace: kube-system
+
+patches:
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: descheduler
+        namespace: kube-system
+        labels:
+          app: descheduler
+      spec:
+          spec:
+            containers:
+              - name: descheduler
+                resources:
+                  requests:
+                    cpu: 100m
+                    memory: 128Mi
+                  limits:
+                    cpu: 300m
+                    memory: 256Mi
+  - patch: |-
+      apiVersion: v1
+      data:
+        policy.yaml: |
+          apiVersion: "descheduler/v1alpha2"
+          kind: "DeschedulerPolicy"
+          profiles:
+            - name: ProfileName
+              pluginConfig:
+              - name: "DefaultEvictor"
+                args:
+                  nodeFit: true
+              - name: "RemovePodsViolatingInterPodAntiAffinity"
+              - name: "RemoveFailedPods"
+                args:
+                  reasons:
+                  - "NodeAffinity"
+                  includingInitContainers: true
+                  excludeOwnerKinds:
+                  - "Job"
+                  minPodLifetimeSeconds: 3600
+              - name: "RemovePodsHavingTooManyRestarts"
+                args:
+                  podRestartThreshold: 30
+                  includingInitContainers: true
+              - name: "RemovePodsViolatingNodeAffinity"
+                args:
+                  nodeAffinityType:
+                  - "requiredDuringSchedulingIgnoredDuringExecution"
+              - name: "RemoveDuplicates"
+              - name: "PodLifeTime"
+                args:
+                  maxPodLifeTimeSeconds: 86400
+                  states:
+                  - "Pending"
+                  - "PodInitializing"
+              - name: "LowNodeUtilization"
+                args:
+                  thresholds:
+                    "cpu" : 40
+                    "memory": 40
+                    "pods": 40
+                  targetThresholds:
+                    "cpu" : 60
+                    "memory": 60
+                    "pods": 60
+              plugins:
+                balance:
+                  enabled:
+                    - "LowNodeUtilization"
+                    - "RemoveDuplicates"
+                deschedule:
+                  enabled:
+                    - "PodLifeTime"
+                    - "RemovePodsHavingTooManyRestarts"
+                    - "RemovePodsViolatingNodeAffinity"
+                    - "RemovePodsViolatingInterPodAntiAffinity"
+                    - "RemoveFailedPods"
+      kind: ConfigMap
+      metadata:
+        name: descheduler-policy-configmap
+        namespace: kube-system
