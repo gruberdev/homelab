@@ -16,6 +16,7 @@ patches:
         labels:
           app: descheduler
       spec:
+        template:
           spec:
             containers:
               - name: descheduler
