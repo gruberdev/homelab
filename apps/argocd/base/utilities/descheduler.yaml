@@ -3,107 +3,13 @@ kind: Application
 metadata:
   name: descheduler
   finalizers:
-  - resources-finalizer.argocd.argoproj.io
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: cluster
   source:
-    repoURL: https://kubernetes-sigs.github.io/descheduler/
-    chart: descheduler
-    targetRevision: 0.29.0
-    helm:
-      releaseName: descheduler
-      values: |
-        cmdOptions:
-          v: 3
-        cronJobApiVersion: batch/v1
-        deschedulerPolicy:
-          strategies:
-            LowNodeUtilization:
-              enabled: true
-              params:
-                nodeResourceUtilizationThresholds:
-                  targetThresholds:
-                    cpu: 80
-                    memory: 80
-                    pods: 100
-                  thresholds:
-                    cpu: 50
-                    memory: 60
-                    pods: 50
-            RemoveDuplicates:
-              enabled: true
-            RemovePodsHavingTooManyRestarts:
-              enabled: true
-              params:
-                podsHavingTooManyRestarts:
-                  includingInitContainers: true
-                  podRestartThreshold: 100
-            RemovePodsViolatingInterPodAntiAffinity:
-              enabled: true
-            RemovePodsViolatingNodeAffinity:
-              enabled: true
-              params:
-                nodeAffinityType:
-                - requiredDuringSchedulingIgnoredDuringExecution
-            RemovePodsViolatingNodeTaints:
-              enabled: true
-            RemovePodsViolatingTopologySpreadConstraint:
-              enabled: true
-              params:
-                includeSoftConstraints: false
-        deschedulerPolicyAPIVersion: descheduler/v1alpha1
-        deschedulingInterval: 5m
-        image:
-          pullPolicy: IfNotPresent
-          repository: registry.k8s.io/descheduler/descheduler
-          tag: v0.26.1
-        kind: Deployment
-        leaderElection:
-          enabled: true
-          leaseDuration: 15s
-          renewDeadline: 10s
-          resourceLock: leases
-          resourceName: descheduler
-          resourceNamescape: kube-system
-          retryPeriod: 2s
-        livenessProbe:
-          failureThreshold: 3
-          httpGet:
-            path: /healthz
-            port: 10258
-            scheme: HTTPS
-          initialDelaySeconds: 15
-          periodSeconds: 10
-        priorityClassName: system-cluster-critical
-        rbac:
-          create: true
-        replicas: 1
-        resources:
-          limits:
-            cpu: 150m
-            memory: 300Mi
-          requests:
-            cpu: 60m
-            memory: 128Mi
-        schedule: '*/2 * * * *'
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-            - ALL
-          privileged: false
-          readOnlyRootFilesystem: true
-          runAsNonRoot: true
-          runAsUser: 1000
-        service:
-          enabled: false
-        serviceAccount:
-          create: true
-        serviceMonitor:
-          enabled: true
-          insecureSkipVerify: true
-          namespace: monitoring
-        suspend: false
+    repoURL: "https://github.com/gruberdev/homelab.git"
+    path: apps/utilities/descheduler
+    targetRevision: main
   destination:
     namespace: kube-system
     name: in-cluster
@@ -111,14 +17,9 @@ spec:
     automated:
       prune: true
       selfHeal: true
-      allowEmpty: false
     syncOptions:
-    - Validate=false
-    - CreateNamespace=false
-    - PrunePropagationPolicy=foreground
-    - ServerSideApply=true
-    - ApplyOutOfSyncOnly=false
-    - Prune=true
+      - Prune=true
+      - ServerSideApply=true
     retry:
       limit: 10
       backoff:
