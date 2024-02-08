@@ -5,8 +5,8 @@ metadata:
   namespace: mlops
 spec:
   accessModes:
-  - ReadWriteOnce
-  storageClassName: iscsi
+    - ReadWriteOnce
+  storageClassName: mayastor-single-replica
   resources:
     requests:
       storage: 100Gi
