@@ -16,7 +16,8 @@
         "apps/argocd/base/core/argocd.yaml",
         "apps/argocd/Dockerfile",
         "apps/argocd/base/services/gitea.yaml",
-        "apps/data/redis/kustomization.yaml"
+        "apps/data/redis/kustomization.yaml",
+        "apps/home/**"
       ],
       "enabled": false
     }
