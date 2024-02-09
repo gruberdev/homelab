@@ -27,6 +27,9 @@ config_file: |
   template:
     completion: orca-completion
     chat: orca-chat
+    roles:
+      user: "Input:"
+      system: "Response:"
 
 files:
   - filename: "orcamaid-v3-13b-32k.Q4_K_M.gguf"
@@ -39,7 +42,7 @@ prompt_templates:
 
   - name: "orca-chat"
     content: |
-      The prompt below is a question to answer, a task to complete, or a conversation to respond to; decide which and write an appropriate response.
-      ### Prompt:
-      {{.Input}}
+      Below is an instruction that describes a task. Write a response that appropriately completes the request
+
+      ### Instruction: {{.Input}}
       ### Response:
