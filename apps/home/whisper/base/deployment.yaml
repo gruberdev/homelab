@@ -21,10 +21,7 @@ spec:
         - name: wyoming-whisper
           image: docker.io/grubertech/wyoming-whisper:gpu
           imagePullPolicy: Always
-          command: ["python3"]
           args:
-            - "-m"
-            - "wyoming-faster-whisper"
             - "--uri"
             - "tcp://0.0.0.0:10300"
             - "--model"
@@ -58,3 +55,10 @@ spec:
             limits:
               cpu: 1500m
               memory: 2Gi
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: whisper-data
