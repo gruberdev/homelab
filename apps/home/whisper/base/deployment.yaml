@@ -25,7 +25,7 @@ spec:
             - "--uri"
             - "tcp://0.0.0.0:10300"
             - "--model"
-            - "large-v3"
+            - "medium"
             - "--language"
             - "auto"
             - "--data-dir"
