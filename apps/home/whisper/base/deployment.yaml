@@ -16,22 +16,37 @@ spec:
       labels:
         app: whisper
     spec:
+      runtimeClassName: nvidia
       containers:
         - name: wyoming-whisper
-          image: docker.io/rhasspy/wyoming-whisper:1.0.0
+          image: docker.io/grubertech/wyoming-whisper:gpu
+          imagePullPolicy: Always
+          command: ["python3"]
           args:
+            - "-m"
+            - "wyoming-faster-whisper"
             - "--uri"
             - "tcp://0.0.0.0:10300"
             - "--model"
-            - "small"
+            - "large-v3"
             - "--language"
-            - "en"
+            - "auto"
             - "--data-dir"
             - "/data"
             - "--download-dir"
             - "/data"
             - "--beam-size"
             - "1"
+            - "--compute-type"
+            - "float16"
+            - "--device"
+            - "cuda"
+            - "--debug"
+          env:
+            - name: NVIDIA_VISIBLE_DEVICES
+              value: "all"
+            - name: NVIDIA_DRIVER_CAPABILITIES
+              value: "all"
           ports:
             - name: http
               containerPort: 10300
@@ -43,10 +58,3 @@ spec:
             limits:
               cpu: 1500m
               memory: 2Gi
-          volumeMounts:
-            - name: data
-              mountPath: /data
-      volumes:
-        - name: data
-          persistentVolumeClaim:
-            claimName: whisper-data
