@@ -1,24 +1,24 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 bases:
-- ./base
+  - ./base
 
 namespace: homeassistant
 
 patches:
-- patch: |-
-    - op: add
-      path: "/spec/template/spec/nodeSelector"
-      value:
-        kubernetes.io/hostname: node-two
-        kubernetes.io/arch: amd64
-  target:
-    kind: Deployment
-    name: home-assistant
+  - patch: |-
+      - op: add
+        path: "/spec/template/spec/nodeSelector"
+        value:
+          kubernetes.io/hostname: node-two
+          kubernetes.io/arch: amd64
+    target:
+      kind: Deployment
+      name: home-assistant
 
 images:
-- name: homeassistant/home-assistant
-  newTag: "2024.2"
+  - name: homeassistant/home-assistant
+    newTag: "2024.1"
 
 commonAnnotations:
-  reloader.stakater.com/auto: 'true'
+  reloader.stakater.com/auto: "true"
