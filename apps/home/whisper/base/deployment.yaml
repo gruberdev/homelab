@@ -44,6 +44,22 @@ spec:
               value: "all"
             - name: NVIDIA_DRIVER_CAPABILITIES
               value: "all"
+          livenessProbe:
+            tcpSocket:
+              port: 10300
+            initialDelaySeconds: 35
+            periodSeconds: 10
+          readinessProbe:
+            tcpSocket:
+              port: 10300
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          startupProbe:
+            tcpSocket:
+              port: 10300
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            failureThreshold: 10
           ports:
             - name: http
               containerPort: 10300
