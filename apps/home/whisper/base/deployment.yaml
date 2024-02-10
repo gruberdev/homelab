@@ -27,7 +27,7 @@ spec:
             - "--model"
             - "medium-int8"
             - "--language"
-            - "pt"
+            - "en"
             - "--data-dir"
             - "/data"
             - "--download-dir"
@@ -70,7 +70,7 @@ spec:
               memory: 2Gi
             limits:
               cpu: 1500m
-              memory: 6Gi
+              memory: 3Gi
           volumeMounts:
             - name: data
               mountPath: /data
