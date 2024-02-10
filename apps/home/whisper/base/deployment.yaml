@@ -70,7 +70,7 @@ spec:
               memory: 2Gi
             limits:
               cpu: 1500m
-              memory: 3Gi
+              memory: 5Gi
           volumeMounts:
             - name: data
               mountPath: /data
