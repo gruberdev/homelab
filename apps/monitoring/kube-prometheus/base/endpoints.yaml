@@ -4,13 +4,10 @@ metadata:
   name: k3s-metrics-service
   namespace: kube-system
 subsets:
-- addresses:
-  - ip: 10.0.0.11
-  - ip: 10.0.0.12
-  - ip: 10.0.0.13
-  - ip: 10.0.0.14
-  - ip: 10.0.0.15
-  ports:
-  - name: https-metrics
-    port: 10250
-    protocol: TCP
+  - addresses:
+      - ip: 192.168.1.2
+      - ip: 192.168.1.10
+    ports:
+      - name: https-metrics
+        port: 10250
+        protocol: TCP

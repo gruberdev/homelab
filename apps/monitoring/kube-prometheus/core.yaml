@@ -6,7 +6,7 @@ spec:
   project: monitoring
   source:
     repoURL: "https://github.com/prometheus-community/helm-charts.git"
-    targetRevision: kube-prometheus-stack-55.5.1
+    targetRevision: kube-prometheus-stack-56.6.2
     path: charts/kube-prometheus-stack
     helm:
       releaseName: kube-prometheus
@@ -17,7 +17,7 @@ spec:
           create: true
           rules:
             alertmanager: true
-            etcd: true
+            etcd: false
             configReloaders: true
             general: true
             k8sContainerCpuUsageSecondsTotal: true
@@ -61,41 +61,17 @@ spec:
           enabled: false
         kubeScheduler:
           enabled: true
-          endpoints:
-            - 192.168.1.2
-            - 192.168.1.10
-          service:
-            enabled: true
-            port: 10259
-            targetPort: 10259
-          serviceMonitor:
-            enabled: true
-            https: true
-            insecureSkipVerify: true
+          endpoints: *cp
         kubeControllerManager:
           enabled: true
-          endpoints:
+          endpoints: &cp
             - 192.168.1.2
             - 192.168.1.10
-          service:
-            enabled: true
-            port: 10257
-            targetPort: 10257
-          serviceMonitor:
-            enabled: true
-            https: true
-            insecureSkipVerify: true
         kubeEtcd:
           enabled: true
-          endpoints:
-            - 192.168.1.2
-            - 192.168.1.10
-          service:
-            enabled: true
-            port: 2381
-            targetPort: 2381
-          serviceMonitor:
-            enabled: true
+          endpoints: *cp
+        kubeProxy:
+          enabled: false
         prometheus-windows-exporter:
           prometheus:
             monitor:
@@ -374,17 +350,43 @@ spec:
               uid: prometheus
         kubernetesServiceMonitors:
           enabled: true
-        kubeApiServer:
-          enabled: false
-        nodeExporter:
-          enabled: false
         kubelet:
           enabled: true
-          namespace: kube-system
           serviceMonitor:
-            cAdvisor: true
-            https: true
-            probes: true
+            metricRelabelings:
+              # Drop high cardinality labels
+              - action: labeldrop
+                regex: (uid)
+              - action: labeldrop
+                regex: (id|name)
+              - action: drop
+                sourceLabels: ["__name__"]
+                regex: (rest_client_request_duration_seconds_bucket|rest_client_request_duration_seconds_sum|rest_client_request_duration_seconds_count)
+        kubeApiServer:
+          enabled: true
+          serviceMonitor:
+            metricRelabelings:
+              # Drop high cardinality labels
+              - action: drop
+                sourceLabels: ["__name__"]
+                regex: (apiserver|etcd|rest_client)_request(|_sli|_slo)_duration_seconds_bucket
+              - action: drop
+                sourceLabels: ["__name__"]
+                regex: (apiserver_response_sizes_bucket|apiserver_watch_events_sizes_bucket)
+        nodeExporter:
+          enabled: true
+        prometheus-node-exporter:
+          fullnameOverride: node-exporter
+          prometheus:
+            monitor:
+              enabled: true
+              relabelings:
+                - action: replace
+                  regex: (.*)
+                  replacement: $1
+                  sourceLabels:
+                    - __meta_kubernetes_pod_node_name
+                  targetLabel: kubernetes_node
         coreDns:
           enabled: true
           service:
@@ -393,6 +395,7 @@ spec:
         kubeStateMetrics:
           enabled: true
         kube-state-metrics:
+          fullnameOverride: kube-state-metrics
           metricLabelsAllowlist:
             - 'pods=[*]'
             - 'deployments=[*]'
@@ -401,18 +404,18 @@ spec:
           prometheus:
             monitor:
               enabled: true
+              relabelings:
+                - action: replace
+                  regex: (.*)
+                  replacement: $1
+                  sourceLabels:
+                    - __meta_kubernetes_pod_node_name
+                  targetLabel: kubernetes_node
           rbac:
             create: true
           releaseLabel: true
           selfMonitor:
             enabled: true
-        nodeExporter:
-          enabled: false
-          operatingSystems:
-            linux:
-              enabled: true
-            darwin:
-              enabled: true
         prometheus-node-exporter:
           fullnameOverride: node-exporter
           extraArgs:
@@ -451,11 +454,6 @@ spec:
             readOnlyRootFilesystem: true
           enabled: true
           hostNetwork: false
-          image:
-            pullPolicy: IfNotPresent
-            registry: quay.io
-            repository: prometheus-operator/prometheus-operator
-            tag: v0.70.0
           kubeletService:
             enabled: false
           networkPolicy:
@@ -463,10 +461,6 @@ spec:
           nodeSelector:
             kubernetes.io/arch: amd64
           prometheusConfigReloader:
-            image:
-              registry: quay.io
-              repository: prometheus-operator/prometheus-config-reloader
-              tag: v0.70.0
             resources:
               limits:
                 cpu: 80m
@@ -509,6 +503,12 @@ spec:
             enabled: false
             minAvailable: 1
           prometheusSpec:
+            replicaExternalLabelName: __replica__
+            ruleSelectorNilUsesHelmValues: false
+            serviceMonitorSelectorNilUsesHelmValues: false
+            podMonitorSelectorNilUsesHelmValues: false
+            probeSelectorNilUsesHelmValues: false
+            scrapeConfigSelectorNilUsesHelmValues: false
             allowOverlappingBlocks: false
             arbitraryFSAccessThroughSMs: false
             disableCompaction: false
@@ -521,10 +521,6 @@ spec:
             enforcedTargetLimit: false
             hostNetwork: false
             ignoreNamespaceSelectors: false
-            image:
-              registry: quay.io
-              repository: prometheus/prometheus
-              tag: v2.48.1
             listenLocal: false
             logFormat: logfmt
             logLevel: info
@@ -535,17 +531,13 @@ spec:
             overrideHonorTimestamps: false
             paused: false
             podAntiAffinityTopologyKey: kubernetes.io/hostname
-            podMonitorSelectorNilUsesHelmValues: false
             portName: http-web
-            probeSelectorNilUsesHelmValues: false
             prometheusExternalLabelNameClear: false
             queryLogFile: false
             remoteWriteDashboards: false
-            replicaExternalLabelNameClear: false
             replicas: 1
             retention: 10d
             routePrefix: /
-            ruleSelectorNilUsesHelmValues: false
             securityContext:
               fsGroup: 2000
               runAsGroup: 2000
@@ -554,7 +546,6 @@ spec:
             serviceMonitorNamespaceSelector:
               matchLabels:
                 prometheus: enabled
-            serviceMonitorSelectorNilUsesHelmValues: false
             shards: 1
             storageSpec:
               volumeClaimTemplate:
@@ -564,7 +555,7 @@ spec:
                   resources:
                     requests:
                       storage: 100Gi
-                  storageClassName: iscsi
+                  storageClassName: mayastor-single-replica
             walCompression: true
           service:
             externalTrafficPolicy: Cluster
@@ -636,7 +627,7 @@ spec:
               seccompProfile:
                 type: RuntimeDefault
             portName: web
-        cleanPrometheusOperatorObjectNames: false
+        cleanPrometheusOperatorObjectNames: true
   destination:
     namespace: monitoring
     name: in-cluster
