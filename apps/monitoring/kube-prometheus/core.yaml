@@ -61,15 +61,19 @@ spec:
           enabled: false
         kubeScheduler:
           enabled: true
-          endpoints: *cp
+          endpoints:
+            - 192.168.1.2
+            - 192.168.1.10
         kubeControllerManager:
           enabled: true
-          endpoints: &cp
+          endpoints:
             - 192.168.1.2
             - 192.168.1.10
         kubeEtcd:
           enabled: true
-          endpoints: *cp
+          endpoints:
+            - 192.168.1.2
+            - 192.168.1.10
         kubeProxy:
           enabled: false
         prometheus-windows-exporter:
