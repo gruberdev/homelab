@@ -5,6 +5,7 @@ resources:
   - openwakeword.yaml
   - piper.yaml
   - whisper.yaml
+  - frigate.yaml
   - wyze.yaml
   - external-mic.yaml
   - satellite.yaml
