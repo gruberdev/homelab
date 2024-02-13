@@ -1,0 +1,97 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frigate
+  labels:
+    app: frigate
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: frigate
+  template:
+    metadata:
+      labels:
+        app: frigate
+    spec:
+      runtimeClassName: nvidia
+      containers:
+        - name: frigate
+          image: ghcr.io/blakeblackshear/frigate:master-77e7777-tensorrt
+          imagePullPolicy: Always
+          env:
+            - name: NVIDIA_VISIBLE_DEVICES
+              value: "all"
+            - name: NVIDIA_DRIVER_CAPABILITIES
+              value: "all"
+          envFrom:
+            - secretRef:
+                name: frigate-vars
+                optional: true
+          livenessProbe:
+            httpGet:
+              path: /
+              port: web
+              scheme: HTTP
+            initialDelaySeconds: 30
+            failureThreshold: 5
+            timeoutSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: web
+              scheme: HTTP
+            initialDelaySeconds: 15
+            failureThreshold: 5
+            timeoutSeconds: 10
+          ports:
+            - name: web
+              containerPort: 5000
+              protocol: TCP
+            - name: rtsp
+              containerPort: 8554
+              protocol: TCP
+            - name: webrtc-tcp
+              containerPort: 8555
+              protocol: TCP
+            - name: webrtc-udp
+              containerPort: 8555
+              protocol: UDP
+          resources:
+            requests:
+              cpu: 300m
+              memory: 512Mi
+            limits:
+              cpu: 800m
+              memory: 2Gi
+          volumeMounts:
+            - name: data
+              mountPath: /config
+            - name: configmap
+              mountPath: /config/config.yml
+              subPath: config.yml
+            - name: media
+              mountPath: /data
+            - name: cache
+              mountPath: /tmp/cache
+            - name: dshm
+              mountPath: /dev/shm
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: frigate-data
+        - name: media
+          persistentVolumeClaim:
+            claimName: frigate-media
+        - name: cache
+          persistentVolumeClaim:
+            claimName: frigate-cache
+        - name: dshm
+          emptyDir:
+            medium: Memory
+            sizeLimit: 1Gi
+        - name: configmap
+          configMap:
+            name: frigate-config
