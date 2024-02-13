@@ -8,17 +8,17 @@ data:
       streams:
         hall_cam: "ffmpeg:http://home-assistant.homeassistant.svc.cluster.local:8123/api/camera_proxy_stream/camera.acessoweb_scseg_com_br#video=h264#hardware#header='Authorization: Bearer {FRIGATE_HA_TOKEN}'#header='Content-Type: application/json'"
     cameras:
-      hall_cam:
+      dummy_camera: 
+        enabled: False
         ffmpeg:
-          input_args: preset-rtsp-generic
           inputs:
-            - path: rtsp://127.0.0.1:8554/hall_cam
+            - path: rtsp://127.0.0.1:554/rtsp
               roles:
                 - detect
-                - record
     mqtt:
       enabled: False
     ffmpeg:
+      input_args: preset-rtsp-generic
       hwaccel_args: preset-nvidia-h264
     detectors:
       tensorrt:
@@ -37,3 +37,26 @@ data:
         retain:
           default: 30
           mode: motion
+      export:
+        timelapse_args: "-vf setpts=0.04*PTS -r 30"
+    detect:
+      width: 1280
+      height: 720
+      fps: 3
+      enabled: True
+      min_initialized: 2
+      max_disappeared: 25
+      stationary:
+        interval: 50
+        threshold: 50
+        max_frames:
+          default: 3000
+          objects:
+            person: 1000
+    motion:
+      threshold: 30
+      lightning_threshold: 0.8
+      contour_area: 10
+      frame_alpha: 0.01
+      frame_height: 100
+      improve_contrast: True
