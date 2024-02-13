@@ -128,6 +128,8 @@ spec:
               subPath: secrets.yaml
             - name: config-volume
               mountPath: /config
+            - name: hacs-storage
+              mountPath: /hacsfiles
             - name: temp-config
               mountPath: /src
             - name: dev-usb-00
@@ -157,6 +159,9 @@ spec:
         - name: config-volume
           persistentVolumeClaim:
             claimName: ha-storage-new
+        - name: hacs-storage
+          persistentVolumeClaim:
+            claimName: hacs-storage
         - name: zigbee-00
           hostPath:
             path: /dev/serial/by-id/usb-Silicon_Labs_HubZ_Smart_Home_Controller_C130205F-if00-port0
