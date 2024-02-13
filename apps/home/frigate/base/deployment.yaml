@@ -51,9 +51,9 @@ spec:
               path: /
               port: web
               scheme: HTTP
-            initialDelaySeconds: 120
+            initialDelaySeconds: 560
             failureThreshold: 10
-            timeoutSeconds: 2
+            timeoutSeconds: 15
           ports:
             - name: web
               containerPort: 5000
