@@ -19,7 +19,7 @@ spec:
       runtimeClassName: nvidia
       containers:
         - name: frigate
-          image: ghcr.io/blakeblackshear/frigate:master-77e7777-tensorrt
+          image: ghcr.io/blakeblackshear/frigate:stable-tensorrt
           imagePullPolicy: Always
           env:
             - name: NVIDIA_VISIBLE_DEVICES
