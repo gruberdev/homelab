@@ -8,7 +8,7 @@ data:
       streams:
         hall_cam: "ffmpeg:http://home-assistant.homeassistant.svc.cluster.local:8123/api/camera_proxy_stream/camera.acessoweb_scseg_com_br#video=h264#hardware#header='Authorization: Bearer {FRIGATE_HA_TOKEN}'#header='Content-Type: application/json'"
     cameras:
-      dummy_camera: 
+      dummy_camera:
         enabled: False
         ffmpeg:
           inputs:
@@ -17,9 +17,19 @@ data:
                 - detect
     mqtt:
       enabled: False
+    model:
+      path: /trt-models/yolov7-tiny-416.trt
+      input_tensor: nchw
+      input_pixel_format: rgb
+      width: 416
+      height: 416
     ffmpeg:
-      input_args: preset-rtsp-generic
-      hwaccel_args: preset-nvidia-h264
+      global_args: -hide_banner
+      hwaccel_args: preset-nvidia-h264 #preset-vaapi
+      input_args: preset-rtsp-restream
+      output_args:
+        record: -f segment -segment_time 60 -segment_format mp4 -reset_timestamps 1 -strftime 1 -c copy -an
+        detect: -f rawvideo -pix_fmt yuv420p -andetectors:
     detectors:
       tensorrt:
         type: tensorrt
