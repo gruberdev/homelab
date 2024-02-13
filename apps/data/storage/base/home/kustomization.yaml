@@ -6,6 +6,7 @@ resources:
   - piper.yaml
   - whisper.yaml
   - wyze.yaml
+  - frigate.yaml
 
 commonAnnotations:
   argocd.argoproj.io/sync-options: Delete=false
