@@ -62,10 +62,10 @@ spec:
           resources:
             requests:
               cpu: 300m
-              memory: 512Mi
+              memory: 1Gi
             limits:
               cpu: 800m
-              memory: 2Gi
+              memory: 6Gi
           volumeMounts:
             - name: data
               mountPath: /config
