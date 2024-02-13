@@ -6,7 +6,9 @@ data:
   config.yml: |
     go2rtc:
       streams:
-        hall_cam: "exec:ffmpeg -hide_banner -hwaccel cuda -hwaccel_output_format cuda -re -headers 'Authorization: Bearer {FRIGATE_HA_TOKEN}' -headers 'Content-Type: application/json' -i 'http://home-assistant.homeassistant.svc.cluster.local:8123/api/camera_proxy_stream/camera.acessoweb_scseg_com_br' -c copy -rtsp_transport tcp -f rtsp {{output}}"
+        hall_cam:
+          - http://home-assistant.homeassistant.svc.cluster.local:8123/api/camera_proxy_stream/camera.acessoweb_scseg_com_br
+          - "ffmpeg:hall_cam#video=h264#hardware#header='Authorization: Bearer {FRIGATE_HA_TOKEN}'#header='Content-Type: application/json'"
     cameras:
       hall_cam:
         enabled: true
