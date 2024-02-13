@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frigate-config
+data:
+  config.yml: |
+    go2rtc:
+      streams:
+        hall_cam: "ffmpeg:http://home-assistant.homeassistant.svc.cluster.local:8123/api/camera_proxy_stream/camera.acessoweb_scseg_com_br#video=h264#hardware#header='Authorization: Bearer {FRIGATE_HA_TOKEN}'#header='Content-Type: application/json'"
+    cameras:
+      hall_cam:
+        ffmpeg:
+          input_args: preset-rtsp-generic
+          inputs:
+            - path: rtsp://127.0.0.1:8554/hall_cam
+              roles:
+                - detect
+                - record
+    mqtt:
+      enabled: False
+    ffmpeg:
+      hwaccel_args: preset-nvidia-h264
+    detectors:
+      tensorrt:
+        type: tensorrt
+        device: 0
+    database:
+      path: /config/frigate.db
+    audio:
+      enabled: False
+    record:
+      enabled: True
+      retain:
+        days: 3
+        mode: all
+      events:
+        retain:
+          default: 30
+          mode: motion
