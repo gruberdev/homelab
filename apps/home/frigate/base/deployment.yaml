@@ -46,6 +46,14 @@ spec:
             initialDelaySeconds: 15
             failureThreshold: 5
             timeoutSeconds: 10
+          startupProbe:
+            httpGet:
+              path: /
+              port: web
+              scheme: HTTP
+            initialDelaySeconds: 120
+            failureThreshold: 10
+            timeoutSeconds: 2
           ports:
             - name: web
               containerPort: 5000
