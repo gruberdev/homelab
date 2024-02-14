@@ -4,14 +4,29 @@ metadata:
   name: frigate-config
 data:
   config.yml: |
+    detect:
+      width: 1280
+      height: 720
+      fps: 3
+      enabled: True
+      min_initialized: 2
+      max_disappeared: 25
+      stationary:
+        interval: 50
+        threshold: 50
+        max_frames:
+          default: 3000
+          objects:
+            person: 1000
     cameras:
       hall_cam:
         enabled: false
-        inputs:
-          - path: rtsp://127.0.0.1:8554/hall_cam
-            roles:
-              - detect
-              - record
+        ffmpeg:
+          inputs:
+            - path: rtsp://127.0.0.1:8554/hall_cam
+              roles:
+                - detect
+                - record
         detect:
           width: 1280
           height: 720
