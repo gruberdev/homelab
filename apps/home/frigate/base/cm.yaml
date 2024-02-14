@@ -22,7 +22,7 @@ data:
       streams:
         hall_cam:
           - http://home-assistant.homeassistant.svc.cluster.local:8123/api/camera_proxy_stream/camera.acessoweb_scseg_com_br
-          - "ffmpeg:hall_cam#video=h264#hardware#header='Authorization: Bearer {FRIGATE_HA_TOKEN}'#header='Content-Type: application/json'"
+          - "ffmpeg:hall_cam#video=h264#hardware#header=Authorization:'Bearer {FRIGATE_HA_TOKEN}'"
     cameras:
       hall_cam:
         enabled: true
@@ -32,10 +32,6 @@ data:
               roles:
                 - detect
                 - record
-        detect:
-          width: 1280
-          height: 720
-          fps: 5
     mqtt:
       enabled: False
     snapshots:
