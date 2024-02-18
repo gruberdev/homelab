@@ -15,7 +15,7 @@ jobs:
           fetch-depth: 0
       - name: Check if Tailscale file has changed
         id: tailscale-changes
-        uses: tj-actions/changed-files@90a06d6ba9543371ab4df8eeca0be07ca6054959 # v42
+        uses: tj-actions/changed-files@3f54ebb830831fc121d3263c1857cfbdc310cdb9 # v42
         with:
           files: |
             policy.hujson
