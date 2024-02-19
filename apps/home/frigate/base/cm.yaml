@@ -21,7 +21,7 @@ data:
     go2rtc:
       streams:
         hall_cam:
-          - http://home-assistant.homeassistant.svc.cluster.local:8123/api/camera_proxy_stream/camera.acessoweb_scseg_com_br#header=Authorization: {{FRIGATE_HA_TOKEN}}
+          - http://home-assistant.homeassistant.svc.cluster.local:8123/api/camera_proxy_stream/camera.acessoweb_scseg_com_br#header=Authorization: {FRIGATE_HA_TOKEN}
           - "ffmpeg:hall_cam#video=h264#hardware"
     cameras:
       hall_cam:
