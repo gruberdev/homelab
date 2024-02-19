@@ -7,7 +7,7 @@ data:
     detect:
       width: 1280
       height: 720
-      fps: 3
+      fps: 1
       enabled: True
       min_initialized: 2
       max_disappeared: 25
@@ -24,12 +24,18 @@ data:
     cameras:
       hall_cam:
         enabled: True
+        rtmp:
+          enabled: False
         ffmpeg:
+          rtmp: -c:v copy -c:a aac -f flv
+          record: -f segment -segment_time 10 -segment_format mp4 -reset_timestamps 1 -strftime 1 -c:v copy -tag:v hvc1 -bsf:v hevc_mp4toannexb -c:a aac
           inputs:
             - path: rtsp://127.0.0.1:8554/hall_cam
+              input_args: preset-rtsp-restream
               roles:
                 - detect
                 - record
+                - rtmp
     mqtt:
       enabled: False
     snapshots:
