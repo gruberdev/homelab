@@ -5,7 +5,7 @@ metadata:
 spec:
   staticConfigs:
     - targets:
-        - home-assistant.homeassistant.svc.cluster.local
+        - home-assistant.homeassistant.svc.cluster.local:8123
   authorization:
     credentials:
       name: ha-long-token
