@@ -8,3 +8,4 @@ resources:
   - ingress.yaml
   - certificate.yaml
   - metrics.yaml
+  - secret.yaml
