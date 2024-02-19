@@ -20,7 +20,7 @@ data:
             person: 1000
     go2rtc:
       streams:
-        hall_cam: exec:ffmpeg -hide_banner -re -headers "Authorization: Bearer {{FRIGATE_HA_TOKEN}}" -i http://home-assistant.homeassistant.svc.cluster.local:8123/api/camera_proxy/camera.acessoweb_scseg_com_br -rtsp_transport -c copy -f rtsp {{output}}
+        hall_cam: exec:ffmpeg -hide_banner -re -headers 'Authorization: Bearer {FRIGATE_HA_TOKEN}' -i http://home-assistant.homeassistant.svc.cluster.local:8123/api/camera_proxy/camera.acessoweb_scseg_com_br -rtsp_transport -c copy -f rtsp {{output}}
     cameras:
       hall_cam:
         enabled: false
@@ -43,9 +43,7 @@ data:
       width: 416
       height: 416
     ffmpeg:
-      global_args: -hide_banner
       hwaccel_args: preset-nvidia-h264
-      input_args: preset-rtsp-generic
       output_args:
         record: -f segment -segment_time 60 -segment_format mp4 -reset_timestamps 1 -strftime 1 -c copy -an
         detect: -f rawvideo -pix_fmt yuv420p
