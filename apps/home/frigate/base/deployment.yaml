@@ -20,7 +20,7 @@ spec:
       containers:
         - name: frigate
           image: ghcr.io/blakeblackshear/frigate:stable-tensorrt
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           env:
             - name: NVIDIA_VISIBLE_DEVICES
               value: "all"
