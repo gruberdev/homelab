@@ -23,4 +23,4 @@ spec:
   tls:
     - hosts:
         - n8n.gruber.dev.br
-      secretName: nitter-tls
+      secretName: n8n-tls
