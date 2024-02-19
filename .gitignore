@@ -104,3 +104,4 @@ apps/services/changedetection/base/svc.yaml
 aggregated_output.json
 
 !apps/argocd/base/utilities/sealed.yaml
+docs/site/node_modules/**/*
