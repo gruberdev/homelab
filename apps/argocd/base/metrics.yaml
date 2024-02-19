@@ -1,0 +1,11 @@
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: ScrapeConfig
+metadata:
+  name: argocd
+spec:
+  staticConfigs:
+    - targets:
+        - argocd-metrics.argocd.svc.cluster.local:8082
+        - argocd-server-metrics.argocd.svc.cluster.local:8083
+        - argocd-repo-server.argocd.svc.cluster.local:8084
+  metricsPath: /metrics
