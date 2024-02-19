@@ -31,7 +31,6 @@ spec:
           envFrom:
             - secretRef:
                 name: frigate-vars
-                optional: true
           livenessProbe:
             httpGet:
               path: /
