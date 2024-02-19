@@ -1,0 +1,16 @@
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: ScrapeConfig
+metadata:
+  name: homeassistant-metrics
+spec:
+  staticConfigs:
+    - targets:
+        - homeassistant.homeassistant.svc.cluster.local:80
+  job_name: hass
+  bearer_token: <path:kv/data/home#auth-token>
+  metrics_path: /api/prometheus
+  scheme: HTTP
+  tls_config:
+    insecure_skip_verify: true
+  scrape_interval: 60s
+  metricsPath: /metrics
