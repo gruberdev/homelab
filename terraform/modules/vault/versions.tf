@@ -5,11 +5,11 @@ terraform {
   required_providers {
     vault = {
       source  = "hashicorp/vault"
-      version = "3.24.0"
+      version = "3.25.0"
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = "2.25.2"
+      version = "2.26.0"
     }
   }
 }
