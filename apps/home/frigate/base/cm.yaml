@@ -20,7 +20,7 @@ data:
             person: 1000
     go2rtc:
       streams:
-        hall_cam: exec:ffmpeg -hide_banner g -headers "Authorization: Bearer {FRIGATE_HA_TOKEN}" http://home-assistant.homeassistant.svc.cluster.local:8123/api/camera_proxy/camera.acessoweb_scseg_com_br -re -stream_loop -1 -rtsp_transport -c copy -f rtsp {{output}}
+        hall_cam: exec:ffmpeg -hide_banner g -headers "Authorization: Bearer {FRIGATE_HA_TOKEN}" -i http://home-assistant.homeassistant.svc.cluster.local:8123/api/camera_proxy/camera.acessoweb_scseg_com_br -re -stream_loop -1 -rtsp_transport -c copy -f rtsp {{output}}
     cameras:
       hall_cam:
         enabled: true
