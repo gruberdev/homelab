@@ -1,9 +1,10 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- endpoints.yaml
-- prom-rule.yaml
-- svc-monitor.yaml
-- svc.yaml
+  - endpoints.yaml
+  - prom-rule.yaml
+  - svc-monitor.yaml
+  - svc.yaml
+  - exporter.yaml
 
 namespace: monitoring
