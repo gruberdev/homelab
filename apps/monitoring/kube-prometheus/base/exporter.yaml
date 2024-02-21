@@ -1,0 +1,10 @@
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: ScrapeConfig
+metadata:
+  name: node-exporter
+spec:
+  staticConfigs:
+    - targets:
+        - 192.168.1.2:9100
+        - 192.168.1.10:9100
+  metricsPath: /metrics
