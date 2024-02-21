@@ -15,3 +15,9 @@ data:
   exec.enabled: "true"
   # https://argo-cd.readthedocs.io/en/stable/operator-manual/reconcile/#system-level-configuration
   resource.ignoreResourceUpdatesEnabled: "true"
+  extension.config: |-
+    extensions:
+      - name: metrics
+        backend:
+          services:
+          - url: http://argocd-metrics-server.argocd.svc.cluster.local:9003

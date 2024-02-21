@@ -35,6 +35,7 @@ resources:
   - base/cmp-plugin.yaml
   - base/repo-role.yaml
   - base/repo-rb.yaml
+  - github.com/argoproj-labs/argocd-extension-metrics/manifests?ref=v1.0.1
 
   - https://github.com/gruberdev/homelab/apps/networking/tailscale
   - https://github.com/gruberdev/homelab/apps/networking/cloudflared
@@ -98,6 +99,7 @@ patches:
   - path: overlay/argocd-deployment.yaml
   - path: overlay/argocd-repo-deployment.yaml
   - path: overlay/argocd-cm.yaml
+  - path: overlay/argocd-cmd-cm.yaml
   - path: overlay/cloudflared-cm.yaml
   - path: overlay/argocd-rbac.yaml
   - path: overlay/argocd-cr.yaml
