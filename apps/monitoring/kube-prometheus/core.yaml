@@ -655,21 +655,15 @@ spec:
     automated:
       prune: true
       selfHeal: true
-      allowEmpty: true
     syncOptions:
-      - Validate=false
-      - CreateNamespace=false
-      - ServerSideApply=true
-      - PrunePropagationPolicy=foreground
-      - PruneLast=true
-      - ApplyOutOfSyncOnly=false
       - Prune=true
+      - ServerSideApply=true
     retry:
-      limit: 15
+      limit: 10
       backoff:
-        duration: 15s
+        duration: 20s
         factor: 2
-        maxDuration: 20m
+        maxDuration: 15m
   # See: https://github.com/prometheus-community/helm-charts/issues/1041
   ignoreDifferences:
     - group: admissionregistration.k8s.io
