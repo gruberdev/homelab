@@ -16,6 +16,7 @@ data:
     p, role:image-updater, applications, update, */*, allow
     g, image-updater, role:image-updater
     p, role:admin, exec, create, */*, allow
+    p, role:admin, extensions, invoke, metrics, allow
     p, role:readonly, extensions, invoke, httpbin, allow
     g, ext, role:extension
     p, role:extension, applications, get, default/httpbin-app, allow
