@@ -5,5 +5,6 @@ metadata:
 spec:
   staticConfigs:
     - targets:
-        - k3s-metrics-service.kube-system.svc.cluster.local:10250
+        - 192.168.1.2:9100
+        - 192.168.1.10:9100
   metricsPath: /metrics
