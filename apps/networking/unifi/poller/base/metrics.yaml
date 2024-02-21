@@ -1,0 +1,11 @@
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: ScrapeConfig
+metadata:
+  name: unifi-poller-metrics
+spec:
+  staticConfigs:
+    - targets:
+        - unifi-poller-svc.unifi.svc.cluster.local:9130
+  scheme: HTTP
+  scrapeInterval: 30s
+  metricsPath: /metrics
