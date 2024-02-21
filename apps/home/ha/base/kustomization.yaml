@@ -7,5 +7,4 @@ resources:
   - svc.yaml
   - ingress.yaml
   - certificate.yaml
-  - metrics.yaml
   - secret.yaml
