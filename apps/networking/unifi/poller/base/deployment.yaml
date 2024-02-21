@@ -19,10 +19,6 @@ spec:
       labels:
         app: unifi-poller
         type: poller
-      annotations:
-        prometheus.io/path: /metrics
-        prometheus.io/port: "9130"
-        prometheus.io/scrape: "true"
     spec:
       containers:
         - name: unifi-poller
@@ -34,25 +30,25 @@ spec:
             - secretRef:
                 name: unifi-poller-vars
           ports:
-          - name: metrics
-            containerPort: 9130
-            protocol: TCP
-          - name: udp
-            containerPort: 9130
-            protocol: UDP
-          - name: web
-            containerPort: 32767
-            protocol: TCP
+            - name: metrics
+              containerPort: 9130
+              protocol: TCP
+            - name: udp
+              containerPort: 9130
+              protocol: UDP
+            - name: http
+              containerPort: 9131
+              protocol: TCP
           volumeMounts:
-          - name: poller-data
-            mountPath: /config
+            - name: poller-data
+              mountPath: /config
           resources:
             limits:
-              cpu: "100m"
-              memory: "256Mi"
+              cpu: 100m
+              memory: 256Mi
             requests:
-              cpu: "50m"
-              memory: "128Mi"
+              cpu: 50m
+              memory: 128Mi
           readinessProbe:
             httpGet:
               path: /metrics
