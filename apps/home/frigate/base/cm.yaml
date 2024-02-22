@@ -16,8 +16,6 @@ data:
           inputs:
             - path: rtsp://127.0.0.1:8554/rtsp_home
               input_args: preset-rtsp-restream
-              output_args:
-                record: preset-record-generic-audio-copy
               roles:
                 - detect
                 - record
