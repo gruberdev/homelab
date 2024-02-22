@@ -2,6 +2,8 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: kube-prometheus-core
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: monitoring
   source:
@@ -200,27 +202,27 @@ spec:
               apiServer:
                 datasource: Prometheus
                 gnetId: 15761
-                revision: 11
+                revision: 16
               coreDns:
                 datasource: Prometheus
                 gnetId: 15762
-                revision: 10
+                revision: 17
               globalView:
                 datasource: Prometheus
                 gnetId: 15757
-                revision: 22
+                revision: 37
               namespaces:
                 datasource: Prometheus
                 gnetId: 15758
-                revision: 15
+                revision: 34
               nodes:
                 datasource: Prometheus
                 gnetId: 15759
-                revision: 14
+                revision: 29
               pods:
                 datasource: Prometheus
                 gnetId: 15760
-                revision: 15
+                revision: 26
               pvcs:
                 datasource: Prometheus
                 gnetId: 13646
@@ -237,7 +239,7 @@ spec:
               nvidiaMonitoring:
                 datasource: Prometheus
                 gnetId: 14574
-                revision: 8
+                revision: 9
               vaultMonitoring:
                 datasource: Prometheus
                 gnetId: 15124
