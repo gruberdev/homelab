@@ -27,7 +27,9 @@ spec:
             - name: NVIDIA_DRIVER_CAPABILITIES
               value: "all"
             - name: "YOLO_MODELS"
-              value: yolov7-tiny-416
+              value: yolov7x-640,yolov7-tiny-416,yolov4-csp-512,yolov7-320
+            - name: "USE_FP16"
+              value: "true"
           envFrom:
             - secretRef:
                 name: frigate-vars
