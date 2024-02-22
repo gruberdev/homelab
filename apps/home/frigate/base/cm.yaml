@@ -13,8 +13,10 @@ data:
       home:
         enabled: True
         ffmpeg:
+          output_args:
+            record: preset-record-generic-audio-copy
           inputs:
-            - path: rtsp://127.0.0.1:8554/rtsp_home
+            - path: rtsp://127.0.0.1:8554/main
               input_args: preset-rtsp-restream
               roles:
                 - detect
@@ -39,9 +41,9 @@ data:
         default: 30
     go2rtc:
       streams:
-        rtsp_home:
+        main:
           - rtsp://wyze-bridge.homeassistant.svc.cluster.local:8554/studiocam
-          - "ffmpeg:rtsp_home#audio=opus#video=h264#hardware"
+          - "ffmpeg:main#audio=opus"
       webrtc:
         candidates:
           - 10.43.174.235:8555
