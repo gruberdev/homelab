@@ -16,5 +16,8 @@ patches:
       kind: Deployment
       name: frigate
 
+generatorOptions:
+  annotations:
+    argocd.argoproj.io/compare-options: IgnoreExtraneous
 commonAnnotations:
   reloader.stakater.com/auto: "true"
