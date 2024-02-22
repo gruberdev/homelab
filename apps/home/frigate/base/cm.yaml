@@ -7,17 +7,8 @@ data:
     detect:
       width: 1280
       height: 720
-      fps: 1
+      fps: 5
       enabled: True
-      min_initialized: 2
-      max_disappeared: 25
-      stationary:
-        interval: 50
-        threshold: 50
-        max_frames:
-          default: 3000
-          objects:
-            person: 1000
     cameras:
       home:
         enabled: True
@@ -30,6 +21,16 @@ data:
               roles:
                 - detect
                 - record
+        zones:
+          computer:
+            coordinates: 342,292,401,325,435,354,480,417,531,467,523,517,446,554,284,647,189,555,155,450,134,316
+          bed:
+            coordinates: 443,426,414,408,387,369,330,314,362,297,388,256,405,241,477,189,539,203,607,184,667,220,740,237,774,288,809,376,777,386,715,412,665,434,600,443,517,472,489,421
+          kitchen:
+            coordinates: 273,556,172,630,168,695,743,720,1280,720,1280,604,1280,480,1280,223,1022,254,530,470
+        ui:
+          order: 0
+          dashboard: True
     mqtt:
       enabled: False
     snapshots:
@@ -37,11 +38,11 @@ data:
       retain:
         default: 30
     model:
-      path: /config/model_cache/tensorrt/yolov7-tiny-416.trt
+      path: /config/model_cache/tensorrt/yolov7x-640.trt
       input_tensor: nchw
       input_pixel_format: rgb
-      width: 416
-      height: 416
+      width: 640
+      height: 640
     ffmpeg:
       hwaccel_args: preset-nvidia-h264
       output_args:
@@ -54,6 +55,11 @@ data:
       path: /config/frigate.db
     audio:
       enabled: False
+    ui:
+      live_mode: mse
+      timezone: America/Sao_Paulo
+      use_experimental: False
+      strftime_fmt: "%Y/%m/%d %H:%M"
     record:
       enabled: true
       retain:
@@ -72,3 +78,6 @@ data:
       frame_alpha: 0.01
       frame_height: 100
       improve_contrast: True
+      mask:
+        - 480,62,539,55,551,112,537,140,465,162,359,198,388,193,138,275,114,131,456,72,338,215,284,239,223,280,201,321,164,395,155,366,179,319,162,314,130,288
+        - 1280,120,1258,41,1253,65,1236,49,1133,32,1059,25,977,34,873,25,822,38,761,32,723,42,1280,604,538,109
