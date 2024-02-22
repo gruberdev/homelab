@@ -71,8 +71,10 @@ data:
         mode: all
       events:
         retain:
-          default: 30
+          default: 10
           mode: motion
+          objects:
+            person: 15
         pre_capture: 5
         post_capture: 5
         objects:
@@ -97,11 +99,7 @@ data:
           - chair
           - umbrella
           - backpack
-        retain:
-          default: 10
-          mode: motion
-          objects:
-            person: 15
+
     motion:
       threshold: 30
       lightning_threshold: 0.8
