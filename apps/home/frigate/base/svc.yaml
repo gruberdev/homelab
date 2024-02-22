@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: frigate-web
+  name: frigate
   labels:
     app: frigate
 spec:
@@ -9,37 +9,13 @@ spec:
     app: frigate
   ports:
     - name: web
-      port: 80
+      port: 5000
       targetPort: 5000
       protocol: TCP
-  type: ClusterIP
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: frigate-rtsp
-  labels:
-    app: frigate
-spec:
-  selector:
-    app: frigate
-  ports:
-    - name: rtsp
-      port: 8554
-      targetPort: 8554
+    - name: rtmp
+      port: 1935
+      targetPort: 1935
       protocol: TCP
-  type: ClusterIP
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: frigate-webrtc
-  labels:
-    app: frigate
-spec:
-  selector:
-    app: frigate
-  ports:
     - name: webrtc-tcp
       port: 8555
       targetPort: 8555
@@ -48,4 +24,8 @@ spec:
       port: 8555
       targetPort: 8555
       protocol: UDP
+    - name: rtsp
+      port: 8554
+      targetPort: 8554
+      protocol: TCP
   type: ClusterIP
