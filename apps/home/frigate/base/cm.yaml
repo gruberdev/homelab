@@ -14,11 +14,15 @@ data:
         enabled: True
         ffmpeg:
           inputs:
-            - path: rtsp://wyze-bridge.homeassistant.svc.cluster.local:8554/studiocam
-              input_args: preset-rtsp-generic
+            - path: rtsp://127.0.0.1:8554/rtsp_home
+              input_args: preset-rtsp-restream
+              output_args:
+                record: preset-record-generic-audio-copy
               roles:
                 - detect
                 - record
+        live:
+          stream_name: home_nvr
         zones:
           computer:
             coordinates: 342,292,401,325,435,354,480,417,531,467,523,517,446,554,284,647,189,555,155,450,134,316
@@ -35,6 +39,15 @@ data:
       enabled: True
       retain:
         default: 30
+    go2rtc:
+      streams:
+        rtsp_home:
+          - rtsp://wyze-bridge.homeassistant.svc.cluster.local:8554/studiocam
+          - "ffmpeg:rtsp_home#audio=opus#video=h264#hardware"
+      webrtc:
+        candidates:
+          - 10.43.174.235:8555
+          - stun:8555
     model:
       path: /config/model_cache/tensorrt/yolov7x-640.trt
       input_tensor: nchw
@@ -63,7 +76,7 @@ data:
       height: 720
       quality: 8
     rtmp:
-      enabled: True
+      enabled: False
     record:
       enabled: True
       retain:
