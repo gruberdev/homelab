@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: unifi-poller
-          image: golift/unifi-poller:2.1
+          image: golift/unifi-poller:2.9.5
           imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef:
@@ -53,14 +53,14 @@ spec:
             httpGet:
               path: /metrics
               port: metrics
-            periodSeconds: 20
+            periodSeconds: 5
             failureThreshold: 3
           livenessProbe:
             httpGet:
               path: /metrics
               port: metrics
-            initialDelaySeconds: 120
-            periodSeconds: 10
+            initialDelaySeconds: 30
+            periodSeconds: 15
             failureThreshold: 5
       volumes:
         - name: poller-data
