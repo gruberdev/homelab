@@ -60,7 +60,6 @@ data:
       timezone: America/Sao_Paulo
       use_experimental: False
       strftime_fmt: "%Y/%m/%d %H:%M"
-    go2rtc:
     live:
       stream_name: home
       height: 720
