@@ -22,7 +22,7 @@ data:
                 - detect
                 - record
         live:
-          stream_name: home_nvr
+          stream_name: main
         zones:
           computer:
             coordinates: 342,292,401,325,435,354,480,417,531,467,523,517,446,554,284,647,189,555,155,450,134,316
@@ -43,7 +43,7 @@ data:
       streams:
         main:
           - rtsp://wyze-bridge.homeassistant.svc.cluster.local:8554/studiocam
-          - "ffmpeg:main#audio=opus"
+          - "ffmpeg:main#video=h264"
       webrtc:
         candidates:
           - 10.43.174.235:8555
