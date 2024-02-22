@@ -12,8 +12,6 @@ data:
     cameras:
       home:
         enabled: True
-        rtmp:
-          enabled: False
         ffmpeg:
           inputs:
             - path: rtsp://wyze-bridge.homeassistant.svc.cluster.local:8554/studiocam
@@ -64,8 +62,10 @@ data:
       stream_name: home
       height: 720
       quality: 8
+    rtmp:
+      enabled: True
     record:
-      enabled: true
+      enabled: True
       retain:
         days: 3
         mode: all
@@ -73,8 +73,35 @@ data:
         retain:
           default: 30
           mode: motion
-      export:
-        timelapse_args: "-vf setpts=0.04*PTS -r 30"
+        pre_capture: 5
+        post_capture: 5
+        objects:
+          - person
+          - cat
+          - plate
+          - eye glasses
+          - shoe
+          - handbag
+          - bottle
+          - fork
+          - spoon
+          - banana
+          - apple
+          - pizza
+          - bed
+          - desk
+          - cell phone
+          - tv
+          - keyboard
+          - knife
+          - chair
+          - umbrella
+          - backpack
+        retain:
+          default: 10
+          mode: motion
+          objects:
+            person: 15
     motion:
       threshold: 30
       lightning_threshold: 0.8
