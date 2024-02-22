@@ -30,6 +30,8 @@ spec:
               value: yolov7x-640,yolov7-tiny-416,yolov4-csp-512,yolov7-320
             - name: "USE_FP16"
               value: "true"
+            - name: "CUDA_MODULE_LOADING"
+              value: "LAZY"
           envFrom:
             - secretRef:
                 name: frigate-vars
