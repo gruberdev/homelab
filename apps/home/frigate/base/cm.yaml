@@ -16,13 +16,13 @@ data:
           output_args:
             record: preset-record-generic-audio-copy
           inputs:
-            - path: rtsp://127.0.0.1:8554/main
-              input_args: preset-rtsp-restream
+            - path: rtsp://wyze-bridge.homeassistant.svc.cluster.local:8554/studiocam
+              input_args: preset-nvidia-h264
               roles:
                 - detect
                 - record
         live:
-          stream_name: main
+          stream_name: home
         zones:
           computer:
             coordinates: 342,292,401,325,435,354,480,417,531,467,523,517,446,554,284,647,189,555,155,450,134,316
@@ -39,15 +39,6 @@ data:
       enabled: True
       retain:
         default: 30
-    go2rtc:
-      streams:
-        main:
-          - rtsp://wyze-bridge.homeassistant.svc.cluster.local:8554/studiocam
-          - "ffmpeg:main#video=h264"
-      webrtc:
-        candidates:
-          - 10.43.174.235:8555
-          - stun:8555
     model:
       path: /config/model_cache/tensorrt/yolov7x-640.trt
       input_tensor: nchw
