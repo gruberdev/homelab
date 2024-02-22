@@ -274,10 +274,6 @@ spec:
                 gnetId: 15038
                 revision: 1
             data:
-              redisMonitoring:
-                datasource: Prometheus
-                gnetId: 763
-                revision: 5
               postgresMonitoring:
                 datasource: Prometheus
                 gnetId: 12485
@@ -493,10 +489,6 @@ spec:
             type: ClusterIP
           serviceAccount:
             create: true
-          thanosImage:
-            registry: quay.io
-            repository: thanos/thanos
-            tag: v0.30.1
           verticalPodAutoscaler:
             enabled: false
         prometheus:
@@ -618,11 +610,6 @@ spec:
             type: ClusterIP
           serviceMonitor:
             selfMonitor: true
-          thanosRulerSpec:
-            image:
-              registry: quay.io
-              repository: thanos/thanos
-              tag: v0.33.0
             replicas: 1
             retention: 24h
             securityContext:
