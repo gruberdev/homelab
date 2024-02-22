@@ -13,16 +13,12 @@ data:
       home:
         enabled: True
         ffmpeg:
-          output_args:
-            record: preset-record-generic-audio-copy
           inputs:
             - path: rtsp://wyze-bridge.homeassistant.svc.cluster.local:8554/studiocam
-              input_args: preset-nvidia-h264
               roles:
                 - detect
                 - record
-        live:
-          stream_name: home
+
         zones:
           computer:
             coordinates: 342,292,401,325,435,354,480,417,531,467,523,517,446,554,284,647,189,555,155,450,134,316
@@ -103,7 +99,6 @@ data:
           - chair
           - umbrella
           - backpack
-
     motion:
       threshold: 30
       lightning_threshold: 0.8
