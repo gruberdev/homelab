@@ -17,12 +17,7 @@ spec:
     automated:
       prune: true
       selfHeal: true
-      allowEmpty: true
     syncOptions:
-      - Validate=false
-      - CreateNamespace=false
-      - PrunePropagationPolicy=foreground
-      - ApplyOutOfSyncOnly=false
       - Prune=true
       - ServerSideApply=true
     retry:
