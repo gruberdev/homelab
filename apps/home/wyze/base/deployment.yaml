@@ -20,7 +20,7 @@ spec:
       runtimeClassName: nvidia
       containers:
         - name: wyze-bridge
-          image: mrlt8/wyze-bridge:1.9.0
+          image: mrlt8/wyze-bridge:latest-hw
           imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef:
@@ -28,6 +28,9 @@ spec:
             - secretRef:
                 name: wyze-vars
           ports:
+            - name: web
+              protocol: TCP
+              containerPort: 5000
             - name: rtmp
               protocol: TCP
               containerPort: 1935
@@ -37,33 +40,31 @@ spec:
             - name: hls
               protocol: TCP
               containerPort: 8888
-            - name: web
+            - name: webrtc-tcp
               protocol: TCP
-              containerPort: 5000
+              containerPort: 8889
+            - name: webrtc-udp
+              protocol: UDP
+              containerPort: 8889
+            - name: webrtc-alt-udp
+              protocol: UDP
+              containerPort: 8189
           startupProbe:
             tcpSocket:
               port: 5000
-            initialDelaySeconds: 35
-            timeoutSeconds: 1
-            periodSeconds: 5
-            successThreshold: 1
-            failureThreshold: 30
+            initialDelaySeconds: 30
           livenessProbe:
             tcpSocket:
               port: 5000
             initialDelaySeconds: 15
             timeoutSeconds: 1
-            periodSeconds: 10
-            successThreshold: 1
-            failureThreshold: 3
+            periodSeconds: 20
           readinessProbe:
             tcpSocket:
               port: 5000
             initialDelaySeconds: 15
             timeoutSeconds: 1
-            periodSeconds: 10
-            successThreshold: 1
-            failureThreshold: 3
+            periodSeconds: 5
           resources:
             requests:
               cpu: 200m

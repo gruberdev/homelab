@@ -16,8 +16,21 @@ spec:
       port: 8888
       targetPort: 8888
       protocol: TCP
+    - name: webrtc-tcp
+      port: 8889
+      targetPort: 8889
+      protocol: TCP
+    - name: webrtc-udp
+      port: 8889
+      targetPort: 8889
+      protocol: UDP
+    - name: webrtc-alt-udp
+      port: 8189
+      targetPort: 8189
+      protocol: UDP
     - name: rtsp
       protocol: TCP
       port: 8554
       targetPort: 8554
   type: ClusterIP
+  clusterIP: 10.43.214.110
