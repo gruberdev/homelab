@@ -11,146 +11,27 @@ spec:
     targetRevision: kube-prometheus-stack-56.6.2
     path: charts/kube-prometheus-stack
     helm:
-      releaseName: kube-prometheus
+      releaseName: kube-prometheus-stack
       values: |
         crds:
           enabled: false
         defaultRules:
           create: true
           rules:
-            alertmanager: true
             etcd: false
-            configReloaders: true
-            general: true
-            k8sContainerCpuUsageSecondsTotal: true
-            k8sContainerMemoryCache: true
-            k8sContainerMemoryRss: true
-            k8sContainerMemorySwap: true
-            k8sContainerResource: true
-            k8sContainerMemoryWorkingSetBytes: true
-            k8sPodOwner: true
-            kubeApiserverAvailability: true
-            kubeApiserverBurnrate: true
-            kubeApiserverHistogram: true
-            kubeApiserverSlos: true
-            kubeControllerManager: true
-            kubelet: true
-            kubeProxy: true
-            kubePrometheusGeneral: true
-            kubePrometheusNodeRecording: true
-            kubernetesApps: true
-            kubernetesResources: true
-            kubernetesStorage: true
-            kubernetesSystem: true
-            kubeSchedulerAlerting: true
-            kubeSchedulerRecording: true
-            kubeStateMetrics: true
-            network: true
-            node: true
-            nodeExporterAlerting: false
-            nodeExporterRecording: false
-            prometheus: true
-            prometheusOperator: true
-            windows: true
-          appNamespacesTarget: .*
-          runbookUrl: 'https://runbooks.prometheus-operator.dev/runbooks'
-        global:
-          rbac:
-            create: true
-            createAggregateClusterRoles: true
-            pspEnabled: false
-        windowsMonitoring:
-          enabled: false
-        kubeScheduler:
-          enabled: true
-          endpoints:
-            - 192.168.1.2
-            - 192.168.1.10
-        kubeControllerManager:
-          enabled: true
-          endpoints:
-            - 192.168.1.2
-            - 192.168.1.10
-        kubeEtcd:
-          enabled: true
-          endpoints:
-            - 192.168.1.2
-            - 192.168.1.10
-        kubeProxy:
-          enabled: false
-        prometheus-windows-exporter:
-          prometheus:
-            monitor:
-              enabled: true
-              jobLabel: jobLabel
-          podLabels:
-            jobLabel: windows-exporter
-          config: |-
-            collectors:
-              enabled: '[defaults],memory,container'
-        alertmanager:
-          enabled: true
-          apiVersion: v2
-          serviceAccount:
-            create: true
-            automountServiceAccountToken: true
-          podDisruptionBudget:
-            enabled: false
-            minAvailable: 1
-          config:
-            global:
-              resolve_timeout: 5m
-            inhibit_rules:
-              - source_matchers:
-                  - severity = critical
-                target_matchers:
-                  - severity =~ warning|info
-                equal:
-                  - namespace
-                  - alertname
-              - source_matchers:
-                  - severity = warning
-                target_matchers:
-                  - severity = info
-                equal:
-                  - namespace
-                  - alertname
-              - source_matchers:
-                  - alertname = InfoInhibitor
-                target_matchers:
-                  - severity = info
-                equal:
-                  - namespace
-              - target_matchers:
-                  - alertname = InfoInhibitor
-            route:
-              group_by:
-                - namespace
-              group_wait: 30s
-              group_interval: 5m
-              repeat_interval: 12h
-              receiver: 'null'
-              routes:
-                - receiver: 'null'
-                  matchers:
-                    - alertname = "Watchdog"
-            receivers:
-              - name: 'null'
-            templates:
-              - /etc/alertmanager/config/*.tmpl
-          ingress:
-            enabled: false
-          service:
-            enabled: true
-            port: 9093
-            targetPort: 9093
-            nodePort: 30903
-            externalTrafficPolicy: Cluster
-            sessionAffinity: None
-            type: ClusterIP
-          serviceMonitor:
-            selfMonitor: true
-            enableHttp2: true
+            k8s: false
+            kubeApiserverAvailability: false
+            kubeApiserverBurnrate: false
+            kubeApiserverHistogram: false
+            kubeApiserverSlos: false
+            kubeControllerManager: false
+            kubelet: false
+            kubeProxy: false
+            kubernetesApps: false
+            kubernetesResources: false
+            kubernetesStorage: false
+            kubernetesSystem: false
+            kubeScheduler: false
         grafana:
           adminPassword: <path:kv/data/kube-prometheus#grafana-admin-password>
           dashboardProviders:
@@ -331,8 +212,18 @@ spec:
             scheme: http
             scrapeTimeout: 60s
           sidecar:
+            datasources:
+              enabled: true
+              defaultDatasourceEnabled: true
+              uid: prometheus
+              annotations: {}
+              createPrometheusReplicasDatasources: false
+              label: grafana_datasource
+              labelValue: "1"
+              exemplarTraceIdDestinations: {}
             dashboards:
               enabled: true
+              searchNamespace: ALL
               label: grafana_dashboard
               labelValue: "1"
               multicluster:
@@ -342,227 +233,81 @@ spec:
                   enabled: false
               provider:
                 allowUiUpdates: false
-            datasources:
-              createPrometheusReplicasDatasources: false
-              defaultDatasourceEnabled: true
-              enabled: true
-              isDefaultDatasource: true
-              label: grafana_datasource
-              labelValue: "1"
-              uid: prometheus
         kubernetesServiceMonitors:
           enabled: true
         kubelet:
-          enabled: true
-          serviceMonitor:
-            metricRelabelings:
-              # Drop high cardinality labels
-              - action: labeldrop
-                regex: (uid)
-              - action: labeldrop
-                regex: (id|name)
-              - action: drop
-                sourceLabels: ["__name__"]
-                regex: (rest_client_request_duration_seconds_bucket|rest_client_request_duration_seconds_sum|rest_client_request_duration_seconds_count)
+          enabled: false
         kubeApiServer:
-          enabled: true
-          serviceMonitor:
-            metricRelabelings:
-              # Drop high cardinality labels
-              - action: drop
-                sourceLabels: ["__name__"]
-                regex: (apiserver|etcd|rest_client)_request(|_sli|_slo)_duration_seconds_bucket
-              - action: drop
-                sourceLabels: ["__name__"]
-                regex: (apiserver_response_sizes_bucket|apiserver_watch_events_sizes_bucket)
-        nodeExporter:
-          enabled: true
-        prometheus-node-exporter:
-          fullnameOverride: node-exporter
-          prometheus:
-            monitor:
-              enabled: true
-              relabelings:
-                - action: replace
-                  regex: (.*)
-                  replacement: $1
-                  sourceLabels:
-                    - __meta_kubernetes_pod_node_name
-                  targetLabel: kubernetes_node
-        coreDns:
-          enabled: true
-          service:
-            port: 9153
-            targetPort: 9153
-        kubeStateMetrics:
-          enabled: true
-        kube-state-metrics:
-          fullnameOverride: kube-state-metrics
-          metricLabelsAllowlist:
-            - 'pods=[*]'
-            - 'deployments=[*]'
-            - 'statefulsets=[*]'
-            - 'persistentvolumeclaims=[*]'
-          prometheus:
-            monitor:
-              enabled: true
-              relabelings:
-                - action: replace
-                  regex: (.*)
-                  replacement: $1
-                  sourceLabels:
-                    - __meta_kubernetes_pod_node_name
-                  targetLabel: kubernetes_node
-          rbac:
-            create: true
-          releaseLabel: true
-          selfMonitor:
-            enabled: true
-        prometheus-node-exporter:
-          fullnameOverride: node-exporter
-          extraArgs:
-            - --collector.filesystem.ignored-mount-points=^/(dev|proc|sys|var)($|/)
-            - --collector.filesystem.ignored-fs-types=^(autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|iso9660|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs|tmpfs)$
-          prometheus:
-            monitor:
-              enabled: true
-              # lens ide config
-              relabelings:
-                - action: replace
-                  regex: (.*)
-                  replacement: $1
-                  sourceLabels: [__meta_kubernetes_pod_node_name]
-                  targetLabel: kubernetes_node
-                # should be removed when https://github.com/lensapp/lens/issues/4851 is fixed
-                - sourceLabels: [__meta_kubernetes_namespace]
-                  action: replace
-                  regex: (.*)
-                  replacement: $1
-                  targetLabel: kubernetes_namespace
-                - sourceLabels: [__meta_kubernetes_service_name]
-                  action: replace
-                  regex: (.*)
-                  replacement: $1
-                  targetLabel: kubernetes_name
+          enabled: false
+        kubeControllerManager:
+          enabled: false
+        kubeScheduler:
+          enabled: false
+        kubeProxy:
+          enabled: false
+        kubeEtcd:
+          enabled: false
         prometheusOperator:
-          tlsProxy:
-            enabled: false
-          tls:
-            enabled: false
-          admissionWebhooks:
-            enabled: false
-          containerSecurityContext:
-            allowPrivilegeEscalation: false
-            readOnlyRootFilesystem: true
-          enabled: true
-          hostNetwork: false
+          serviceMonitor:
+            relabelings:
+            - sourceLabels:
+              - __address__
+              action: replace
+              targetLabel: job
+              replacement: prometheus-operator
           kubeletService:
             enabled: false
-          networkPolicy:
-            enabled: false
-          nodeSelector:
-            kubernetes.io/arch: amd64
-          prometheusConfigReloader:
+        prometheus:
+          prometheusSpec:
             resources:
               limits:
-                cpu: 80m
-                memory: 160Mi
+                cpu: 400m
+                memory: 1Gi
               requests:
-                cpu: 40m
-                memory: 80Mi
-          resources:
-            limits:
-              cpu: 400m
-              memory: 1Gi
-            requests:
-              cpu: 200m
-              memory: 512Mi
-          securityContext:
-            fsGroup: 65534
-            runAsGroup: 65534
-            runAsNonRoot: true
-            runAsUser: 65534
-          service:
-            externalTrafficPolicy: Cluster
-            nodePort: 30080
-            nodePortTls: 30443
-            type: ClusterIP
-          serviceAccount:
-            create: true
-          verticalPodAutoscaler:
-            enabled: false
-        prometheus:
-          enabled: true
-          ingress:
-            enabled: false
-          ingressPerReplica:
-            enabled: false
-          podDisruptionBudget:
-            enabled: false
-            minAvailable: 1
-          prometheusSpec:
+                cpu: 200m
+                memory: 512Mi
+            storageSpec:
+              volumeClaimTemplate:
+                spec:
+                  storageClassName: mayastor-single-replica
+                  accessModes: ["ReadWriteOnce"]
+                  resources:
+                    requests:
+                      storage: 100Gi
+            retention: 60d
             ruleSelectorNilUsesHelmValues: false
             serviceMonitorSelectorNilUsesHelmValues: false
             podMonitorSelectorNilUsesHelmValues: false
             probeSelectorNilUsesHelmValues: false
-            scrapeConfigSelectorNilUsesHelmValues: false
-            allowOverlappingBlocks: false
-            arbitraryFSAccessThroughSMs: false
-            disableCompaction: false
-            enableAdminAPI: false
-            enableRemoteWriteReceiver: false
-            enforcedLabelLimit: false
-            enforcedLabelNameLengthLimit: false
-            enforcedLabelValueLengthLimit: false
-            enforcedSampleLimit: false
-            enforcedTargetLimit: false
-            hostNetwork: false
-            ignoreNamespaceSelectors: false
-            listenLocal: false
-            logFormat: logfmt
-            logLevel: info
-            minReadySeconds: 0
-            nodeSelector:
-              kubernetes.io/arch: amd64
-            overrideHonorLabels: false
-            overrideHonorTimestamps: false
-            paused: false
-            podAntiAffinityTopologyKey: kubernetes.io/hostname
-            portName: http-web
-            prometheusExternalLabelNameClear: false
-            queryLogFile: false
-            remoteWriteDashboards: false
-            replicas: 1
-            retention: 10d
-            routePrefix: /
-            securityContext:
-              fsGroup: 2000
-              runAsGroup: 2000
-              runAsNonRoot: true
-              runAsUser: 1000
+          serviceMonitor:
+            relabelings:
+              - sourceLabels:
+                - __address__
+                action: replace
+                targetLabel: job
+                replacement: prometheus
             serviceMonitorNamespaceSelector:
               matchLabels:
                 prometheus: enabled
-            shards: 1
-            storageSpec:
-              volumeClaimTemplate:
-                spec:
-                  accessModes:
-                    - ReadWriteOnce
-                  resources:
-                    requests:
-                      storage: 100Gi
-                  storageClassName: mayastor-single-replica
-            walCompression: true
-          service:
-            externalTrafficPolicy: Cluster
-            nodePort: 30090
-            port: 9090
-            publishNotReadyAddresses: false
-            targetPort: 9090
-            type: ClusterIP
           serviceAccount:
             create: true
+          alertmanager:
+            alertmanagerSpec:
+              storage:
+                volumeClaimTemplate:
+                  spec:
+                    storageClassName: mayastor-single-replica
+                    accessModes: ["ReadWriteOnce"]
+                    resources:
+                      requests:
+                        storage: 20Gi
+            serviceMonitor:
+              relabelings:
+                - sourceLabels:
+                  - __address__
+                  action: replace
+                  targetLabel: job
+                  replacement: alertmanager
           thanosIngress:
             enabled: false
             nodePort: 30901
