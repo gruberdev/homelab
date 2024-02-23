@@ -18,7 +18,6 @@ data:
               roles:
                 - detect
                 - record
-
         zones:
           computer:
             coordinates: 342,292,401,325,435,354,480,417,531,467,523,517,446,554,284,647,189,555,155,450,134,316
@@ -38,12 +37,17 @@ data:
     model:
       path: /config/model_cache/tensorrt/yolov7x-640.trt
       input_tensor: nchw
-      input_pixel_format: rgb
+      input_pixel_format: bgr
       width: 640
       height: 640
     ffmpeg:
+      retry_interval: 10
+      global_args: -hide_banner -loglevel warning -threads 2
+      input_args: preset-rtsp-generic
       hwaccel_args: preset-nvidia-h264
       output_args:
+        detect: -threads 2 -f rawvideo -pix_fmt yuv420p
+        rtmp: preset-rtmp-generic
         record: preset-record-generic-audio-copy
     detectors:
       tensorrt:
@@ -61,19 +65,51 @@ data:
       stream_name: home
       height: 720
       quality: 8
+    objects:
+      track:
+        - person
+        - cat
+        - plate
+        - eye glasses
+        - shoe
+        - handbag
+        - bottle
+        - fork
+        - spoon
+        - banana
+        - apple
+        - pizza
+        - bed
+        - desk
+        - cell phone
+        - tv
+        - keyboard
+        - knife
+        - chair
+        - umbrella
+        - backpack
+      filters:
+        person:
+          min_area: 5000
+          max_area: 100000
+          min_ratio: 0.5
+          max_ratio: 2.0
+          min_score: 0.5
+          threshold: 0.7
     rtmp:
       enabled: False
     record:
       enabled: True
       retain:
-        days: 3
-        mode: all
+        days: 7
+        mode: active_objects
       events:
         retain:
           default: 10
           mode: motion
           objects:
-            person: 15
+            person: 1
+            cat: 12
         pre_capture: 5
         post_capture: 5
         objects:

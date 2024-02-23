@@ -32,6 +32,8 @@ spec:
               value: "true"
             - name: "CUDA_MODULE_LOADING"
               value: "LAZY"
+            - name: "NVIDIA_REQUIRE_CUDA"
+              value: "cuda>=12.0"
           envFrom:
             - secretRef:
                 name: frigate-vars
