@@ -11,7 +11,7 @@ spec:
     targetRevision: kube-prometheus-stack-56.6.2
     path: charts/kube-prometheus-stack
     helm:
-      releaseName: kube-prometheus-stack
+      releaseName: kube-prometheus
       values: |
         crds:
           enabled: false
