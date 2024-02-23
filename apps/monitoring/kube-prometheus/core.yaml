@@ -18,6 +18,7 @@ spec:
         defaultRules:
           create: true
           rules:
+            alertmanager: true
             etcd: false
             k8s: false
             kubeApiserverAvailability: false
@@ -210,7 +211,7 @@ spec:
             enabled: true
             path: /metrics
             scheme: http
-            scrapeTimeout: 60s
+            scrapeTimeout: 30s
           sidecar:
             datasources:
               enabled: true
@@ -248,6 +249,17 @@ spec:
         kubeEtcd:
           enabled: false
         prometheusOperator:
+          tlsProxy:
+            enabled: false
+          tls:
+            enabled: false
+          admissionWebhooks:
+            enabled: false
+          containerSecurityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+          enabled: true
+          hostNetwork: false
           serviceMonitor:
             relabelings:
             - sourceLabels:
@@ -258,11 +270,14 @@ spec:
           kubeletService:
             enabled: false
         prometheus:
+          nodeSelector:
+            kubernetes.io/arch: amd64
+          replicas: 1
           prometheusSpec:
             resources:
               limits:
-                cpu: 400m
-                memory: 1Gi
+                cpu: 600m
+                memory: 4Gi
               requests:
                 cpu: 200m
                 memory: 512Mi
@@ -310,61 +325,12 @@ spec:
                   replacement: alertmanager
           thanosIngress:
             enabled: false
-            nodePort: 30901
-            servicePort: 10901
           thanosService:
-            clusterIP: None
             enabled: false
-            externalTrafficPolicy: Cluster
-            httpNodePort: 30902
-            httpPort: 10902
-            httpPortName: http
-            nodePort: 30901
-            port: 10901
-            portName: grpc
-            targetHttpPort: http
-            targetPort: grpc
-            type: ClusterIP
           thanosServiceExternal:
             enabled: false
-            externalTrafficPolicy: Cluster
-            httpNodePort: 30902
-            httpPort: 10902
-            httpPortName: http
-            nodePort: 30901
-            port: 10901
-            portName: grpc
-            targetHttpPort: http
-            targetPort: grpc
-            type: LoadBalancer
         thanosRuler:
           enabled: false
-          serviceAccount:
-            create: true
-          podDisruptionBudget:
-            enabled: false
-            minAvailable: 1
-          ingress:
-            enabled: false
-          service:
-            port: 10902
-            targetPort: 10902
-            nodePort: 30905
-            externalTrafficPolicy: Cluster
-            type: ClusterIP
-          serviceMonitor:
-            selfMonitor: true
-            replicas: 1
-            retention: 24h
-            securityContext:
-              runAsGroup: 2000
-              runAsNonRoot: true
-              runAsUser: 1000
-              fsGroup: 2000
-              seccompProfile:
-                type: RuntimeDefault
-            portName: web
-        cleanPrometheusOperatorObjectNames: true
   destination:
     namespace: monitoring
     name: in-cluster
