@@ -3,7 +3,7 @@ kind: ServiceMonitor
 metadata:
   labels:
     app: nginx
-    release: kube-prometheus-stack
+    release: kube-prometheus
   name: nginx
   namespace: monitoring
 spec:
