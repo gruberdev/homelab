@@ -3,5 +3,6 @@ kind: Kustomization
 resources:
   - prom-rule.yaml
   - exporter.yaml
-
-namespace: monitoring
+  - endpoints.yaml
+  - nginx-svc-monitor.yaml
+  - svc.yaml
