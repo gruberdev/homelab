@@ -224,7 +224,6 @@ spec:
               exemplarTraceIdDestinations: {}
             dashboards:
               enabled: true
-              searchNamespace: ALL
               label: grafana_dashboard
               labelValue: "1"
               multicluster:
