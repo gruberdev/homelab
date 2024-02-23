@@ -3,9 +3,10 @@ kind: ConfigMap
 metadata:
   name: wyze-cm
 data:
-  NET_MODE: "LAN"
+  NET_MODE: "ANY"
   TZ: "America/Sao_Paulo"
   ENABLE_AUDIO: "True"
+  RTSP_FW: "force"
   SNAPSHOT: "RTSP30"
   IMG_DIR: "/img/"
   IMG_TYPE: "png"
@@ -25,3 +26,4 @@ data:
   NVIDIA_VISIBLE_DEVICES: "all"
   NVIDIA_DRIVER_CAPABILITIES: "all"
   NVIDIA_REQUIRE_CUDA: "cuda>=11.0"
+  WB_IP: "10.43.214.110"

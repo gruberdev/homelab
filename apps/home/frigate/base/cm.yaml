@@ -7,7 +7,7 @@ data:
     detect:
       width: 1280
       height: 720
-      fps: 5
+      fps: 10
       enabled: True
     cameras:
       home:
@@ -19,12 +19,12 @@ data:
                 - detect
                 - record
         zones:
-          computer:
-            coordinates: 342,292,401,325,435,354,480,417,531,467,523,517,446,554,284,647,189,555,155,450,134,316
+          liveroom:
+            coordinates: 477,435,791,316,884,260,967,220,1045,235,1045,391,692,566,284,608,45,560,108,406,208,213
           bed:
-            coordinates: 443,426,414,408,387,369,330,314,362,297,388,256,405,241,477,189,539,203,607,184,667,220,740,237,774,288,809,376,777,386,715,412,665,434,600,443,517,472,489,421
+            coordinates: 796,346,773,240,651,159,363,199,353,345,494,440
           kitchen:
-            coordinates: 273,556,172,630,168,695,743,720,1280,720,1280,604,1280,480,1280,223,1022,254,530,470
+            coordinates: 486,720,313,720,457,624,1280,184,1280,720,929,720
         ui:
           order: 0
           dashboard: True
@@ -57,7 +57,7 @@ data:
     audio:
       enabled: False
     ui:
-      live_mode: mse
+      live_mode: jsmpeg
       timezone: America/Sao_Paulo
       use_experimental: False
       strftime_fmt: "%Y/%m/%d %H:%M"
@@ -70,7 +70,6 @@ data:
         - person
         - cat
         - plate
-        - eye glasses
         - shoe
         - handbag
         - bottle
@@ -81,7 +80,6 @@ data:
         - pizza
         - bed
         - desk
-        - cell phone
         - tv
         - keyboard
         - knife
@@ -116,7 +114,6 @@ data:
           - person
           - cat
           - plate
-          - eye glasses
           - shoe
           - handbag
           - bottle
@@ -127,7 +124,6 @@ data:
           - pizza
           - bed
           - desk
-          - cell phone
           - tv
           - keyboard
           - knife
@@ -135,12 +131,11 @@ data:
           - umbrella
           - backpack
     motion:
-      threshold: 30
+      threshold: 20
       lightning_threshold: 0.8
       contour_area: 10
       frame_alpha: 0.01
       frame_height: 100
       improve_contrast: True
       mask:
-        - 480,62,539,55,551,112,537,140,465,162,359,198,388,193,138,275,114,131,456,72,338,215,284,239,223,280,201,321,164,395,155,366,179,319,162,314,130,288
-        - 1280,120,1258,41,1253,65,1236,49,1133,32,1059,25,977,34,873,25,822,38,761,32,723,42,1280,604,538,109
+        - 35,147,796,346,1280,0,292,0,0,24
