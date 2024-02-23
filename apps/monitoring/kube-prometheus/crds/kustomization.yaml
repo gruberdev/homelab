@@ -15,5 +15,3 @@ resources:
 
 commonAnnotations:
   argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true,ServerSideApply=true,Replace=true,Validate=false
-
-namespace: monitoring
