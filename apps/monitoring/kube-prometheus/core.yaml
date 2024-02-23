@@ -34,6 +34,11 @@ spec:
             kubernetesSystem: false
             kubeScheduler: false
         grafana:
+          grafana.ini:
+            server:
+              domain: grafana.gruber.dev.br
+              root_url: "%(protocol)s://%(domain)s:%(http_port)s/grafana/"
+              serve_from_sub_path: true
           adminPassword: <path:kv/data/kube-prometheus#grafana-admin-password>
           dashboardProviders:
             dashboardproviders.yaml:
@@ -211,7 +216,14 @@ spec:
             enabled: true
             path: /metrics
             scheme: http
-            scrapeTimeout: 30s
+            labels:
+              release: kube-prometheus
+            relabelings:
+              - sourceLabels:
+                - __address__
+                action: replace
+                targetLabel: job
+                replacement: grafana
           sidecar:
             datasources:
               enabled: true
