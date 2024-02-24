@@ -4,7 +4,7 @@ silent: true
 
 vars:
   CONTROLLER_IPV4: https://192.168.1.2:6443
-  CILIUM_VERSION: 1.14.6
+  CILIUM_VERSION: 1.15.1
   MAYASTOR_VERSION: 2.5.0
   BACKUP_TIME:
     sh: echo $(date +%s)
