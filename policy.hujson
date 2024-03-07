@@ -23,7 +23,7 @@
     {
       "action": "accept",
       "src": [
-        "node-two"
+        "worker-one"
       ],
       "dst": [
         "lan-internal:*",
@@ -157,7 +157,7 @@
   },
   "hosts": {
     "node-one": "192.168.1.2",
-    "node-two": "192.168.1.10",
+    "worker-one": "192.168.1.10",
     "node-three": "192.168.1.4",
     "steamdeck": "192.168.1.12",
     "lan-internal": "192.168.1.0/24",
@@ -278,11 +278,11 @@
     {
       "src": "node-one",
       "accept": [
-        "node-two:22"
+        "worker-one:22"
       ]
     },
     {
-      "src": "node-two",
+      "src": "worker-one",
       "accept": [
         "node-one:22"
       ]
@@ -296,7 +296,7 @@
     {
       "src": "tag:clients",
       "accept": [
-        "node-two:22"
+        "worker-one:22"
       ]
     },
     {
