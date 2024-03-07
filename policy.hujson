@@ -1,309 +1,322 @@
 {
-  "acls": [
-    {
-      "action": "accept",
-      "src": [
-        "group:admins"
-      ],
-      "dst": [
-        "*:*"
-      ]
-    },
-    {
-      "action": "accept",
-      "src": [
-        "node-one"
-      ],
-      "dst": [
-        "lan-internal:*",
-        "k8s-svc-ipv4:*",
-        "k8s-svc-ipv6:*"
-      ]
-    },
-    {
-      "action": "accept",
-      "src": [
-        "worker-one"
-      ],
-      "dst": [
-        "lan-internal:*",
-        "k8s-svc-ipv4:*",
-        "k8s-svc-ipv6:*"
-      ]
-    },
-    {
-      "action": "accept",
-      "src": [
-        "tag:clients"
-      ],
-      "dst": [
-        "lan-internal:*",
-        "lan-internal:*"
-      ]
-    },
-    {
-      "action": "accept",
-      "src": [
-        "tag:clients"
-      ],
-      "dst": [
-        "tag:cluster:*",
-        "tag:k8s:*",
-        "tag:k8s-operator:*",
-        "tag:nodes:*"
-      ]
-    },
-    {
-      "action": "accept",
-      "src": [
-        "tag:matrix",
-        "tag:database"
-      ],
-      "dst": [
-        "tag:database:*",
-        "tag:k8s:*",
-        "tag:matrix:*"
-      ]
-    },
-    {
-      "action": "accept",
-      "src": [
-        "tag:nodes"
-      ],
-      "dst": [
-        "*:*"
-      ]
-    },
-    { "action": "accept",
-      "src": ["autogroup:member"],
-      "dst": ["autogroup:internet:*"]
-    },
-    {
-      "action": "accept",
-      "src": [
-        "tag:k8s",
-        "tag:k8s-operator",
-        "tag:clients",
-        "tag:nodes"
-      ],
-      "dst": [
-        "tag:exit:*",
-        "tag:vultr:*",
-        "tag:vpn:*"
-      ]
-    },
-    {
-      "action": "accept",
-      "src": [
-        "tag:k8s"
-      ],
-      "dst": [
-        "tag:k8s:*",
-        "tag:k8s-operator:*",
-        "tag:database:*",
-        "tag:nodes:*"
-      ]
-    },
-    {
-      "action": "accept",
-      "src": [
-        "tag:k8s-operator"
-      ],
-      "dst": [
-        "*:*"
-      ]
-    }
-  ],
-  "groups": {
-    "group:admins": [
-      "rpg.gruber@gmail.com"
-    ]
-  },
-  "tagOwners": {
-    "tag:database": [
-      "group:admins"
-    ],
-    "tag:clients": [
-      "group:admins"
-    ],
-    "tag:vpn": [
-      "group:admins"
-    ],
-    "tag:nodes": [
-      "group:admins"
-    ],
-    "tag:matrix": [
-      "group:admins"
-    ],
-    "tag:cluster": [
-      "group:admins"
-    ],
-    "tag:internal": [
-      "group:admins"
-    ],
-    "tag:exit": [
-      "group:admins"
-    ],
-    "tag:links": [
-      "group:admins"
-    ],
-    "tag:vultr": [
-      "group:admins"
-    ],
-    "tag:k8s": [
-      "tag:k8s-operator"
-    ],
-    "tag:k8s-operator": []
-  },
-  "hosts": {
-    "node-one": "192.168.1.2",
-    "worker-one": "192.168.1.10",
-    "node-three": "192.168.1.4",
-    "steamdeck": "192.168.1.12",
-    "lan-internal": "192.168.1.0/24",
-    "k8s-svc-ipv4": "10.43.0.0/16",
-    "k8s-svc-ipv6": "2001:cafe:42:1::/112",
-    "k8s-pod-ipv4": "10.42.0.0/16",
-    "k8s-pod-ipv6": "2001:cafe:42:0::/56"
-  },
-  "autoApprovers": {
-    "routes": {
-      "192.168.1.0/24": [
-        "tag:internal",
-        "tag:nodes"
-      ],
-      "10.43.0.0/16": [
-        "tag:cluster",
-        "tag:k8s-operator"
-      ],
-      "10.42.0.0/16": [
-        "rpg.gruber@gmail.com",
-        "tag:k8s-operator",
-        "tag:cluster"
-      ],
-      "2001:cafe:42:0::/56": [
-        "rpg.gruber@gmail.com",
-        "tag:k8s-operator",
-        "tag:cluster"
-      ]
-    },
-    "exitNode": [
-      "tag:exit",
-      "tag:vultr",
-      "tag:vpn"
-    ]
-  },
-  "ssh": [
-    {
-      "action": "accept",
-      "src": [
-        "tag:internal",
-        "tag:clients"
-      ],
-      "dst": [
-        "tag:cluster",
-        "tag:nodes"
-      ],
-      "users": [
-        "autogroup:nonroot",
-        "root"
-      ]
-    },
-    {
-      "action": "accept",
-      "src": [
-        "autogroup:members"
-      ],
-      "dst": [
-        "autogroup:self"
-      ],
-      "users": [
-        "autogroup:nonroot",
-        "root"
-      ]
-    }
-  ],
-  "nodeAttrs": [
-    {
-      "target": [
-        "group:admins",
-        "autogroup:members",
-        "tag:nodes",
-        "tag:clients"
-      ],
-      "attr": [
-        "funnel"
-      ]
-    },
-    {
-      "target": [
-        "tag:vpn"
-      ],
-      "attr": [
-        "mullvad"
-      ]
-    }
-  ],
-  "tests": [
-    {
-      "src": "tag:internal",
-      "deny": [
-        "tag:k8s:5678",
-        "tag:nodes:5678",
-        "tag:clients:80"
-      ]
-    },
-    {
-      "src": "tag:database",
-      "accept": [
-        "tag:k8s:5432",
-        "tag:matrix:5432"
-      ],
-      "deny": [
-        "tag:nodes:5432"
-      ]
-    },
-    {
-      "src": "tag:k8s",
-      "deny": [
-        "tag:clients:22"
-      ]
-    },
-    {
-      "src": "tag:matrix",
-      "deny": [
-        "tag:clients:80"
-      ]
-    },
-    {
-      "src": "node-one",
-      "accept": [
-        "worker-one:22"
-      ]
-    },
-    {
-      "src": "worker-one",
-      "accept": [
-        "node-one:22"
-      ]
-    },
-    {
-      "src": "tag:clients",
-      "accept": [
-        "node-one:22"
-      ]
-    },
-    {
-      "src": "tag:clients",
-      "accept": [
-        "worker-one:22"
-      ]
-    },
-    {
-      "src": "tag:k8s",
-      "accept": [
-        "tag:vpn:53"
-      ]
-    }
-  ]
+	"acls": [
+		{
+			"action": "accept",
+			"src": [
+				"group:admins"
+			],
+			"dst": [
+				"*:*"
+			]
+		},
+		{
+			"action": "accept",
+			"src": [
+				"controller-one"
+			],
+			"dst": [
+				"lan-internal:*",
+				"k8s-svc-ipv4:*",
+				"k8s-svc-ipv6:*"
+			]
+		},
+		{
+			"action": "accept",
+			"src": [
+				"tag:egress"
+			],
+			"dst": [
+				"autogroup:internet:*"
+			]
+		},
+		{
+			"action": "accept",
+			"src": [
+				"worker-one"
+			],
+			"dst": [
+				"lan-internal:*",
+				"k8s-svc-ipv4:*",
+				"k8s-svc-ipv6:*"
+			]
+		},
+		{
+			"action": "accept",
+			"src": [
+				"tag:clients"
+			],
+			"dst": [
+				"lan-internal:*",
+				"lan-internal:*"
+			]
+		},
+		{
+			"action": "accept",
+			"src": [
+				"tag:clients"
+			],
+			"dst": [
+				"tag:cluster:*",
+				"tag:k8s:*",
+				"tag:k8s-operator:*",
+				"tag:nodes:*"
+			]
+		},
+
+		{
+			"action": "accept",
+			"src": [
+				"tag:matrix",
+				"tag:database"
+			],
+			"dst": [
+				"tag:database:*",
+				"tag:k8s:*",
+				"tag:matrix:*"
+			]
+		},
+		{
+			"action": "accept",
+			"src": [
+				"tag:nodes"
+			],
+			"dst": [
+				"*:*"
+			]
+		},
+		{
+			"action": "accept",
+			"src": [
+				"tag:k8s",
+				"tag:k8s-operator",
+				"tag:clients",
+				"tag:nodes"
+			],
+			"dst": [
+				"tag:exit:*",
+				"tag:vultr:*",
+				"tag:vpn:*"
+			]
+		},
+		{
+			"action": "accept",
+			"src": [
+				"tag:k8s"
+			],
+			"dst": [
+				"tag:k8s:*",
+				"tag:k8s-operator:*",
+				"tag:database:*",
+				"tag:nodes:*"
+			]
+		},
+		{
+			"action": "accept",
+			"src": [
+				"tag:k8s-operator"
+			],
+			"dst": [
+				"*:*"
+			]
+		}
+	],
+	"groups": {
+		"group:admins": [
+			"rpg.gruber@gmail.com"
+		]
+	},
+	"tagOwners": {
+		"tag:database": [
+			"group:admins"
+		],
+		"tag:clients": [
+			"group:admins"
+		],
+		"tag:vpn": [
+			"group:admins"
+		],
+		"tag:nodes": [
+			"group:admins"
+		],
+		"tag:matrix": [
+			"group:admins"
+		],
+		"tag:cluster": [
+			"group:admins"
+		],
+		"tag:egress": [
+			"group:admins"
+		],
+		"tag:internal": [
+			"group:admins"
+		],
+		"tag:exit": [
+			"group:admins"
+		],
+		"tag:links": [
+			"group:admins"
+		],
+		"tag:vultr": [
+			"group:admins"
+		],
+		"tag:k8s": [
+			"tag:k8s-operator"
+		],
+		"tag:k8s-operator": []
+	},
+	"hosts": {
+		"controller-one":     "192.168.1.2",
+		"worker-one":     "192.168.1.10",
+		"node-three":   "192.168.1.4",
+		"steamdeck":    "192.168.1.12",
+		"lan-internal": "192.168.1.0/24",
+		"k8s-svc-ipv4": "10.43.0.0/16",
+		"k8s-svc-ipv6": "2001:cafe:42:1::/112",
+		"k8s-pod-ipv4": "10.42.0.0/16",
+		"k8s-pod-ipv6": "2001:cafe:42:0::/56"
+	},
+	"autoApprovers": {
+		"routes": {
+			"192.168.1.0/24": [
+				"tag:internal",
+				"tag:nodes"
+			],
+			"10.43.0.0/16": [
+				"tag:cluster",
+				"tag:k8s-operator"
+			],
+			"10.42.0.0/16": [
+				"rpg.gruber@gmail.com",
+				"tag:k8s-operator",
+				"tag:cluster"
+			],
+			"2001:cafe:42:0::/56": [
+				"rpg.gruber@gmail.com",
+				"tag:k8s-operator",
+				"tag:cluster"
+			]
+		},
+		"exitNode": [
+			"tag:vpn"
+		]
+	},
+	"ssh": [
+		{
+			"action": "accept",
+			"src": [
+				"tag:internal",
+				"tag:clients"
+			],
+			"dst": [
+				"tag:cluster",
+				"tag:nodes"
+			],
+			"users": [
+				"autogroup:nonroot",
+				"root"
+			]
+		},
+		{
+			"action": "accept",
+			"src": [
+				"autogroup:members"
+			],
+			"dst": [
+				"autogroup:self"
+			],
+			"users": [
+				"autogroup:nonroot",
+				"root"
+			]
+		}
+	],
+	"nodeAttrs": [
+		{
+			"target": [
+				"group:admins",
+				"autogroup:members",
+				"tag:nodes",
+				"tag:k8s",
+				"tag:clients"
+			],
+			"attr": [
+				"funnel"
+			]
+		},
+		{
+			"target": [
+				"tag:vpn",
+				"tag:egress"
+			],
+			"attr": [
+				"mullvad"
+			]
+		},
+		{"target": ["100.68.49.126"], "attr": ["mullvad"]},
+		{"target": ["100.92.197.30"], "attr": ["mullvad"]},
+		{"target": ["100.125.246.35"], "attr": ["mullvad"]},
+		{"target": ["100.88.57.44"], "attr": ["mullvad"]}
+	],
+	"tests": [
+		{
+			"src": "tag:internal",
+			"deny": [
+				"tag:k8s:5678",
+				"tag:nodes:5678",
+				"tag:clients:80"
+			]
+		},
+		{
+			"src": "tag:database",
+			"accept": [
+				"tag:k8s:5432",
+				"tag:matrix:5432"
+			],
+			"deny": [
+				"tag:nodes:5432"
+			]
+		},
+		{
+			"src": "tag:k8s",
+			"deny": [
+				"tag:clients:22"
+			]
+		},
+		{
+			"src": "tag:matrix",
+			"deny": [
+				"tag:clients:80"
+			]
+		},
+		{
+			"src": "controller-one",
+			"accept": [
+				"worker-one:22"
+			]
+		},
+		{
+			"src": "worker-one",
+			"accept": [
+				"controller-one:22"
+			]
+		},
+		{
+			"src": "tag:clients",
+			"accept": [
+				"controller-one:22"
+			]
+		},
+		{
+			"src": "tag:clients",
+			"accept": [
+				"worker-one:22"
+			]
+		},
+		{
+			"src": "tag:k8s",
+			"accept": [
+				"tag:vpn:53"
+			]
+		}
+	]
 }
