@@ -15,7 +15,7 @@ resource "unifi_wlan" "main_wifi" {
   network_id    = unifi_network.main.id
   ap_group_ids  = [data.unifi_ap_group.default.id]
   user_group_id = unifi_user_group.unlimited.id
-  site          = "default"
+   site          = "default"
 }
 
 resource "unifi_wlan" "guest_wifi" {
