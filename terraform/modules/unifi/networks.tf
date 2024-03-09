@@ -4,7 +4,7 @@ resource "unifi_network" "main" {
   purpose                 = "corporate"
   subnet                  = "192.168.1.0/24"
   dhcp_start              = "192.168.1.2"
-  dhcp_stop               = "192.168.1.135"
+  dhcp_stop               = "192.168.1.128"
   dhcp_enabled            = true
   dhcp_relay_enabled      = false
   network_group           = "LAN"
@@ -17,4 +17,8 @@ resource "unifi_network" "main" {
   dhcp_v6_dns             = var.ipv6_dns
   ipv6_ra_enable          = var.ipv6_ra
   internet_access_enabled = var.internal_outgoing
+  ipv6_pd_stop            = var.ipva6_pd_stop
+  ipv6_pd_start           = var.ipva6_pd_start
+  ipv6_ra_priority        = var.ipva6_priority
 }
+
