@@ -128,3 +128,19 @@ variable "ipv6_ra" {
   default     = true
   description = "<sub>Specifies whether to enable router advertisements or not. [Reference](https://registry.terraform.io/providers/paultyng/unifi/latest/docs/resources/network#ipv6_ra_enable)</sub>"
 }
+
+variable "ipva6_priority" {
+  type        = string
+  default     = "high"
+}
+
+variable "ipv6_pd_start" {
+  type        = string
+  default     = "::2"
+}
+
+variable "ipv6_pd_stop" {
+  type        = string
+  default     = "::7d1"
+}
+
