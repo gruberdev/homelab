@@ -1,0 +1,110 @@
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+metadata:
+  name: lb-ingress
+resources:
+  - svc.yaml
+  - certificate.yaml
+  - ingress.yaml
+
+replacements:
+  - source:
+      kind: Deployment
+      fieldPath: spec.template.spec.containers.0.ports.0.name
+    targets:
+      - select:
+          kind: Service
+        fieldPaths:
+          - spec.ports.0.name
+  - source:
+      kind: Deployment
+      fieldPath: spec.template.spec.containers.0.ports.0.containerPort
+    targets:
+      - select:
+          kind: Service
+        fieldPaths:
+          - spec.ports.0.targetPort
+  - source:
+      kind: Deployment
+      fieldPath: metadata.name
+    targets:
+      - select:
+          kind: Ingress
+        options:
+          delimiter: "."
+          index: 0
+          create: true
+        fieldPaths:
+          - spec.rules.0.host
+  - source:
+      kind: Deployment
+      fieldPath: metadata.name
+    targets:
+      - select:
+          kind: Service
+        fieldPaths:
+          - metadata.name
+          - spec.ports.0.name
+      - select:
+          kind: Ingress
+        fieldPaths:
+          - metadata.name
+          - spec.rules.0.http.paths.0.backend.service.name
+  - source:
+      kind: Deployment
+      fieldPath: metadata.name
+    targets:
+      - select:
+          kind: Ingress
+        options:
+          delimiter: "."
+          index: 0
+        fieldPaths:
+          - spec.tls.0.hosts.0
+  - source:
+      kind: Deployment
+      fieldPath: metadata.name
+    targets:
+      - select:
+          kind: Ingress
+        options:
+          create: true
+        fieldPaths:
+          - spec.tls.0.secretName
+  - source:
+      kind: Deployment
+      fieldPath: metadata.name
+    targets:
+      - select:
+          kind: Certificate
+        options:
+          delimiter: "."
+          index: 0
+        fieldPaths:
+          - metadata.name
+          - spec.secretName
+          - spec.commonName
+          - spec.dnsNames.0
+  - source:
+      kind: Deployment
+      fieldPath: spec.template.spec.containers.0.ports.0.name
+    targets:
+      - select:
+          kind: Service
+        fieldPaths:
+          - spec.ports.0.name
+      - select:
+          kind: Ingress
+        fieldPaths:
+          - spec.rules.0.http.paths.0.backend.service.port.name
+  - source:
+      kind: Deployment
+      fieldPath: metadata.name
+    targets:
+      - select:
+          kind: Ingress
+        options:
+          delimiter: "."
+          index: 0
+        fieldPaths:
+          - metadata.annotations.[external-dns.alpha.kubernetes.io/hostname]
