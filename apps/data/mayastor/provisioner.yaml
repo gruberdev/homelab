@@ -1,0 +1,21 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: mayastor
+parameters:
+  ioTimeout: "30"
+  protocol: nvmf
+  repl: "1"
+provisioner: io.openebs.csi-mayastor
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: minio
+parameters:
+  ioTimeout: "30"
+  protocol: nvmf
+  repl: "1"
+provisioner: io.openebs.csi-mayastor
+volumeBindingMode: WaitForFirstConsumer
+reclaimPolicy: Retain
