@@ -3,6 +3,8 @@ kind: Kustomization
 
 resources:
   #- milvus.yaml
-  - localai.yaml
+  # - localai.yaml
+  # - discord-bot.yaml
+- sillytavern.yaml
 
 namespace: argocd

@@ -67,7 +67,7 @@ spec:
           serverHost: "0.0.0.0"
           serverHttpPort: 8000
           dataVolumeSize: "15Gi"
-          dataVolumeStorageClass: "iscsi"
+          dataVolumeStorageClass: "mayastor-single-replica"
   destination:
     namespace: mlops
     name: in-cluster
