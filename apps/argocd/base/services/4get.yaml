@@ -1,14 +1,12 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: grocy
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
+  name: 4get
 spec:
   project: apps
   source:
-    repoURL: 'https://github.com/gruberdev/homelab.git'
-    path: apps/services/grocy
+    repoURL: "https://github.com/gruberdev/private.git"
+    path: apps/services/4get
     targetRevision: main
   destination:
     namespace: services
@@ -17,17 +15,19 @@ spec:
     automated:
       prune: true
       selfHeal: true
-      allowEmpty: true
     syncOptions:
-    - Validate=false
-    - CreateNamespace=false
-    - PrunePropagationPolicy=foreground
-    - PruneLast=true
-    - ApplyOutOfSyncOnly=false
-    - Prune=true
+      - Prune=true
+      - ServerSideApply=true
     retry:
       limit: 10
       backoff:
         duration: 20s
         factor: 2
         maxDuration: 15m
+  info:
+    - name: 'Git Repository:'
+      value: >-
+        https://git.lolcat.ca/lolcat/4get
+    - name: 'Official Docs:'
+      value: >-
+        https://git.lolcat.ca/lolcat/4get/src/branch/master/docs/

@@ -1,28 +1,23 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: mlops
-  namespace: argocd
+  name: touito
 spec:
   project: apps
   source:
-    repoURL: 'https://github.com/gruberdev/homelab.git'
-    path: apps/argocd/base/mlops
+    repoURL: 'https://github.com/gruberdev/private.git'
+    path: apps/services/touito
     targetRevision: main
   destination:
-    namespace: mlops
+    namespace: services
     name: in-cluster
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
-      allowEmpty: true
     syncOptions:
-    - Validate=false
-    - CreateNamespace=false
-    - PrunePropagationPolicy=foreground
-    - PruneLast=true
-    - ApplyOutOfSyncOnly=false
+      - Prune=true
+      - ServerSideApply=true
     retry:
       limit: 10
       backoff:

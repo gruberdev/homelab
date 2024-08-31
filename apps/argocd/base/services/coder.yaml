@@ -1,12 +1,12 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: gitea
+  name: coder
 spec:
   project: apps
   source:
     repoURL: "https://github.com/gruberdev/private.git"
-    path: apps/services/gitea
+    path: apps/services/coder
     targetRevision: main
   destination:
     namespace: services
@@ -27,13 +27,16 @@ spec:
   info:
     - name: 'Github Repository:'
       value: >-
-        https://github.com/go-gitea/gitea
-    - name: 'Awesome Gitea:'
-      value: >-
-        https://gitea.com/gitea/awesome-gitea
+        https://github.com/coder/coder
     - name: 'Official Docs:'
       value: >-
-        https://docs.gitea.com/
+        https://coder.com/docs
     - name: 'Helm chart:'
       value: >-
-        https://gitea.com/gitea/helm-chart
+        https://github.com/coder/coder/tree/main/helm/coder
+    - name: 'Helm values example:'
+      value: >-
+        https://github.com/coder/coder/blob/main/helm/coder/values.yaml
+    - name: 'Helm documentation:'
+      value: >-
+        hhttps://coder.com/docs/install/kubernetes
