@@ -5,7 +5,7 @@ metadata:
 spec:
   project: apps
   source:
-    repoURL: "https://github.com/gruberdev/homelab.git"
+    repoURL: "https://github.com/gruberdev/private.git"
     path: apps/home/ha
     targetRevision: main
   destination:
@@ -15,17 +15,34 @@ spec:
     automated:
       prune: true
       selfHeal: true
-      allowEmpty: true
+    managedNamespaceMetadata:
+      labels:
+        prometheus: enabled
+        pod-security.kubernetes.io/enforce: privileged
+        pod-security.kubernetes.io/audit: privileged
+        pod-security.kubernetes.io/warn: privileged
     syncOptions:
-      - Validate=false
-      - CreateNamespace=false
-      - PrunePropagationPolicy=foreground
-      - ApplyOutOfSyncOnly=false
       - Prune=true
       - ServerSideApply=true
+      - CreateNamespace=true
     retry:
       limit: 5
       backoff:
         duration: 20s
         factor: 2
         maxDuration: 15m
+  ignoreDifferences:
+  - group: ""
+    kind: "Service"
+    jsonPointers:
+    - /spec/externalName
+  info:
+    - name: "Github Repository:"
+      value: >-
+        https://github.com/home-assistant/core
+    - name: "Docker registry:"
+      value: >-
+        https://hub.docker.com/r/homeassistant/home-assistant/tags
+    - name: "Official documentation:"
+      value: >-
+        https://www.home-assistant.io/docs/configuration

@@ -1,14 +1,12 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: wyze
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
+  name: go2rtc
 spec:
   project: apps
   source:
-    repoURL: "https://github.com/gruberdev/homelab.git"
-    path: apps/home/wyze
+    repoURL: "https://github.com/gruberdev/private.git"
+    path: apps/home/go2rtc
     targetRevision: main
   destination:
     namespace: homeassistant
@@ -21,8 +19,15 @@ spec:
       - Prune=true
       - ServerSideApply=true
     retry:
-      limit: 5
+      limit: 10
       backoff:
         duration: 20s
         factor: 2
         maxDuration: 15m
+  info:
+    - name: "Github Repository:"
+      value: >-
+        https://github.com/AlexxIT/go2rtc/
+    - name: "Official documentation:"
+      value: >-
+        https://github.com/AlexxIT/go2rtc/?tab=readme-ov-file#source-rtsp
