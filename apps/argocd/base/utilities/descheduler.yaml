@@ -2,12 +2,10 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: descheduler
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
 spec:
   project: cluster
   source:
-    repoURL: "https://github.com/gruberdev/homelab.git"
+    repoURL: "https://github.com/gruberdev/private.git"
     path: apps/utilities/descheduler
     targetRevision: main
   destination:
@@ -26,3 +24,16 @@ spec:
         duration: 30s
         factor: 2
         maxDuration: 60m
+  info:
+    - name: 'Github Repository:'
+      value: >-
+        https://github.com/kubernetes-sigs/descheduler
+    - name: 'Config examples:'
+      value: >-
+        https://github.com/kubernetes-sigs/descheduler/tree/master/examples
+    - name: 'Official Docs:'
+      value: >-
+        https://github.com/kubernetes-sigs/descheduler?tab=readme-ov-file#user-guide
+    - name: 'Base Kustomize directory:'
+      value: >-
+        https://github.com/kubernetes-sigs/descheduler/tree/master/kubernetes/deployment

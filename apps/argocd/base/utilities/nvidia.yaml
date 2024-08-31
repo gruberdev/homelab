@@ -1,15 +1,15 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: kube-fledged
+  name: nvidia-device-plugin
 spec:
   project: cluster
   source:
     repoURL: "https://github.com/gruberdev/private.git"
-    path: apps/utilities/kube-fledged
+    path: apps/utilities/nvidia
     targetRevision: main
   destination:
-    namespace: kube-system
+    namespace: utilities
     name: in-cluster
   syncPolicy:
     automated:
@@ -27,10 +27,13 @@ spec:
   info:
     - name: "Github Repository:"
       value: >-
-        https://github.com/senthilrch/kube-fledged
+        https://github.com/NVIDIA/k8s-device-plugin
     - name: "Helm chart values:"
       value: >-
-        https://github.com/senthilrch/kube-fledged/blob/master/deploy/kubefledged-operator/helm-charts/kubefledged/values.yaml
+        https://github.com/NVIDIA/k8s-device-plugin/blob/main/deployments/helm/nvidia-device-plugin/values.yaml
     - name: "Helm chart documentation:"
       value: >-
-        https://github.com/senthilrch/kube-fledged/blob/master/docs/helm-parameters.md
+        https://github.com/NVIDIA/k8s-device-plugin?tab=readme-ov-file#deployment-via-helm
+    - name: "Container image registry explorer:"
+      value: >-
+        https://explore.ggcr.dev/?repo=nvcr.io%2Fnvidia%2Fk8s-device-plugin
