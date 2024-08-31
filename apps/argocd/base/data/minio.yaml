@@ -1,15 +1,15 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: redis
+  name: minio-operator
 spec:
   project: cluster
   source:
     repoURL: 'https://github.com/gruberdev/homelab.git'
-    path: apps/data/redis
+    path: apps/data/minio
     targetRevision: main
   destination:
-    namespace: redis-operator
+    namespace: minio-operator
     name: in-cluster
   syncPolicy:
     automated:
@@ -22,11 +22,11 @@ spec:
         pod-security.kubernetes.io/audit: privileged
         pod-security.kubernetes.io/warn: privileged
     syncOptions:
-      - CreateNamespace=true
-      - ServerSideApply=true
       - Prune=true
+      - ServerSideApply=true
+      - CreateNamespace=true
     retry:
-      limit: 5
+      limit: 10
       backoff:
         duration: 20s
         factor: 2
@@ -34,10 +34,10 @@ spec:
   info:
     - name: 'Github Repository:'
       value: >-
-        https://github.com/OT-CONTAINER-KIT/redis-operator
-    - name: 'Helm chart Github repository:'
+        https://github.com/minio/operator
+    - name: 'Official Documentation:'
       value: >-
-        hhttps://github.com/OT-CONTAINER-KIT/helm-charts
-    - name: 'Helm chart example values:'
+        https://min.io/docs/minio/kubernetes/upstream/
+    - name: 'CRD Examples:'
       value: >-
-        https://github.com/OT-CONTAINER-KIT/helm-charts/tree/main/charts/redis-operator
+        https://github.com/minio/operator/tree/master/examples/kustomization

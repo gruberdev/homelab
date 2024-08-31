@@ -4,9 +4,11 @@ kind: Kustomization
 resources:
 - cloudnative.yaml
 - redis.yaml
+- minio.yaml
 - storage.yaml
+- mysql.yaml
 
 namespace: argocd
 
-commonLabels:
-  app.kubernetes.io/category: data
+commonAnnotations:
+  argocd.argoproj.io/sync-wave: "1"
