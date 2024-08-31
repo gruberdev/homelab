@@ -1,0 +1,97 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: external-dns-cloudflare
+spec:
+  project: networking
+  sources:
+    - repoURL: https://kubernetes-sigs.github.io/external-dns
+      chart: external-dns
+      targetRevision: 1.14.5
+      helm:
+        releaseName: external-dns-cloudflare
+        values: |
+          shareProcessNamespace: true
+          image:
+            pullPolicy: Always
+            repository: registry.k8s.io/external-dns/external-dns
+            tag: v0.14.0
+          deploymentStrategy:
+            type: Recreate
+          domainFilters:
+            - gruber.dev.br
+          policy: sync
+          registry: txt
+          txtOwnerId: e-dns
+          txtPrefix: auto.
+          interval: 6m
+          provider: cloudflare
+          env:
+            - name: CF_API_KEY
+              value: "<path:kv/data/cloudflare#api-key>"
+            - name: CF_API_EMAIL
+              value: "<path:kv/data/cloudflare#email>"
+          rbac:
+            create: true
+          namespaced: false
+          replicaCount: 1
+          resources:
+            limits:
+              cpu: 150m
+              memory: 512Mi
+            requests:
+              cpu: 70m
+              memory: 256Mi
+          service:
+            port: 7979
+          serviceMonitor:
+            enabled: true
+          args:
+            - --events
+            - --log-level=info
+            - --provider=cloudflare
+            - --source=ingress
+            - --source=service
+            - --registry=txt
+            - --txt-owner-id=e-dns
+            - --txt-prefix=auto.
+            - --cloudflare-dns-records-per-page=1000
+            - --interval=6m
+            - --txt-cache-interval=10m
+            - --ingress-class=nginx
+            - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
+            - --crd-source-kind=DNSEndpoint
+          sources: ["crd", "ingress", "service"]
+          triggerLoopOnEvent: false
+  destination:
+    namespace: networking
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - Prune=true
+      - ServerSideApply=true
+    retry:
+      limit: 10
+      backoff:
+        duration: 20s
+        factor: 2
+        maxDuration: 15m
+  info:
+    - name: "Github Repository:"
+      value: >-
+        https://github.com/kubernetes-sigs/external-dns
+    - name: "Helm chart:"
+      value: >-
+        https://github.com/kubernetes-sigs/external-dns/tree/master/charts/external-dns
+    - name: "Image registry explorer:"
+      value: >-
+        https://explore.ggcr.dev/?repo=registry.k8s.io%2Fexternal-dns%2Fexternal-dns
+    - name: "Official documentation:"
+      value: >-
+        https://kubernetes-sigs.github.io/external-dns
+    - name: "Prometheus metrics overview:"
+      value: >-
+        https://github.com/kubernetes-sigs/external-dns/blob/master/docs/faq.md#what-metrics-can-i-get-from-externaldns-and-what-do-they-mean

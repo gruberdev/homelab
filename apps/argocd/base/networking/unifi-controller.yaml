@@ -5,25 +5,39 @@ metadata:
 spec:
   project: networking
   source:
-    repoURL: "https://github.com/gruberdev/homelab.git"
+    repoURL: "https://github.com/gruberdev/private.git"
     path: apps/networking/unifi/controller
     targetRevision: main
     kustomize:
-      commonLabels:
-        app.kubernetes.io/category: networking
+      commonAnnotations:
+        reloader.stakater.com/auto: "true"
   destination:
-    namespace: unifi
+    namespace: networking
     name: in-cluster
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
+    managedNamespaceMetadata:
+      labels:
+        prometheus: enabled
+        pod-security.kubernetes.io/enforce: privileged
+        pod-security.kubernetes.io/audit: privileged
+        pod-security.kubernetes.io/warn: privileged
     syncOptions:
-      - Prune=true
+      - CreateNamespace=true
       - ServerSideApply=true
+      - Prune=true
     retry:
-      limit: 10
+      limit: 5
       backoff:
-        duration: 60s
+        duration: 20s
         factor: 2
         maxDuration: 15m
+  info:
+    - name: "Github Repository:"
+      value: >-
+        https://github.com/jacobalberty/unifi-docker
+    - name: "Image registry:"
+      value: >-
+        https://github.com/jacobalberty/unifi-docker/pkgs/container/unifi-docker
