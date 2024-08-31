@@ -35,11 +35,7 @@ spec:
     server: https://kubernetes.default.svc
   - namespace: milvus-system
     server: https://kubernetes.default.svc
-  - namespace: chatgpt
-    server: https://kubernetes.default.svc
   - namespace: mlops
-    server: https://kubernetes.default.svc
-  - namespace: gitea
     server: https://kubernetes.default.svc
   - namespace: crossplane
     server: https://kubernetes.default.svc
