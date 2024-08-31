@@ -4,6 +4,75 @@ metadata:
   name: argocd-styles-cm
 data:
   my-styles.css: |
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;700&display=swap');
+    body {
+      font-family: "Inter", sans-serif;
+    }
+    :root {
+      --sidebar-background: #32201b;
+      --page-and-panel-background: #f0ece8;
+      --button-primary: #7d7370;
+      --button-secondary: #7d7370;
+      --button-disabled: #968f8c;
+      --primary: #01894d;
+    }
+    .argo-button--base {
+        color: #f8fbfb;
+        background-color: #080909;
+    }
     .nav-bar {
       background: linear-gradient(to bottom, #999, #777, #333, #222, #111);
+    }
+    .nav-bar__logo img,
+    .sidebar__logo img,
+    .sidebar__logo__character img {
+      content: url(https://gist.githubusercontent.com/gruberdev/1c4aeaf4e44998ac0b23f69e388421a7/raw/18784fbca7282ddb58336a1d10aa83bf79bd4e6e/logo.svg.);
+    }
+    .theme-dark .argo-table-list__row{
+      background: #191a1e;
+      color: #7e7e89;
+    }
+    .applications-list__entry--health-Healthy {
+      border-left-color: #46b592;
+    }
+    .sidebar {
+      background-color: #161819;
+    }
+    .page__content-wrapper {
+      background: var(--page-and-panel-background) !important;
+    }
+
+    .sliding-panel__header,
+    .sliding-panel__body {
+      background: var(--page-and-panel-background) !important;
+    }
+
+    /* primary */
+    .argo-button--base,
+    .argo-button--base:hover {
+      background: var(--button-primary) !important;
+    }
+
+    .argo-button--base:hover {
+      background: var(--button-primary) !important;
+      opacity: 0.8 !important;
+    }
+
+    /* secondary */
+    .argo-button--base-o {
+      color: var(--button-primary) !important;
+      box-shadow: inset 0 0 0 1px var(--button-primary) !important;
+    }
+
+    .argo-button--base-o:hover,
+    .argo-button--base-o:focus {
+      background: var(--button-secondary) !important;
+      color: #fff !important;
+      box-shadow: inset 0 0 0 1px var(--button-secondary) !important;
+    }
+
+    /* disabled */
+    .argo-button.disabled,
+    .argo-button[disabled] {
+      background: var(--button-disabled) !important;
     }
