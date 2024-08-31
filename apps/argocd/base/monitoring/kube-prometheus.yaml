@@ -5,23 +5,19 @@ metadata:
 spec:
   project: monitoring
   source:
-    repoURL: 'https://github.com/gruberdev/homelab.git'
+    repoURL: 'https://github.com/gruberdev/private.git'
     path: apps/monitoring/kube-prometheus
     targetRevision: main
   destination:
-    namespace: argocd
+    namespace: monitoring
     name: in-cluster
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
-      allowEmpty: false
     syncOptions:
-    - Validate=false
-    - CreateNamespace=false
-    - PrunePropagationPolicy=foreground
-    - ApplyOutOfSyncOnly=false
-    - Prune=true
+      - ServerSideApply=true
+      - Prune=true
     retry:
       limit: 5
       backoff:

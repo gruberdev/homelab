@@ -7,7 +7,7 @@ metadata:
 spec:
   project: monitoring
   source:
-    repoURL: 'https://github.com/gruberdev/homelab.git'
+    repoURL: 'https://github.com/gruberdev/private.git'
     path: apps/monitoring/nextdns
     targetRevision: main
   destination:
@@ -17,15 +17,9 @@ spec:
     automated:
       prune: true
       selfHeal: true
-      allowEmpty: true
     syncOptions:
-    - Validate=false
-    - CreateNamespace=false
-    - PrunePropagationPolicy=foreground
-    - PruneLast=true
-    - Replace=true
-    - ApplyOutOfSyncOnly=false
-    - Prune=true
+      - ServerSideApply=true
+      - Prune=true
     retry:
       limit: 5
       backoff:
