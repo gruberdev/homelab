@@ -1,0 +1,20 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argocd-notifications-controller
+spec:
+  template:
+    spec:
+      containers:
+      - name: argocd-notifications-controller
+        envFrom:
+          - secretRef:
+              name: argocd-notifications-github
+              optional: true
+          - secretRef:
+              name: argocd-notifications-grafana
+              optional: true
+          - secretRef:
+              name: argocd-notifications-pushover
+              optional: true
