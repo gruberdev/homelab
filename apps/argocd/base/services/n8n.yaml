@@ -5,7 +5,7 @@ metadata:
 spec:
   project: apps
   source:
-    repoURL: "https://github.com/gruberdev/private.git"
+    repoURL: "https://github.com/gruberdev/homelab.git"
     path: apps/services/n8n
     targetRevision: main
   destination:

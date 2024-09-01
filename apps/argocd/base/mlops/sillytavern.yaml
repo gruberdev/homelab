@@ -5,7 +5,7 @@ metadata:
 spec:
   project: mlops
   source:
-    repoURL: "https://github.com/gruberdev/private.git"
+    repoURL: "https://github.com/gruberdev/homelab.git"
     path: apps/mlops/sillytavern
     targetRevision: main
   destination:

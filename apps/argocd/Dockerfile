@@ -27,6 +27,6 @@ COPY --from=helm /usr/bin/helm /usr/bin/helm
 COPY --from=temp /usr/local/bin/kustomize /usr/bin/kustomize
 COPY --from=temp /tmp/argocd-vault-plugin /usr/bin/argocd-vault-plugin
 
-LABEL org.opencontainers.image.source = "https://github.com/gruberdev/private.git"
+LABEL org.opencontainers.image.source = "https://github.com/gruberdev/homelab.git"
 
 USER 999
