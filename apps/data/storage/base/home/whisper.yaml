@@ -9,4 +9,4 @@ spec:
   resources:
     requests:
       storage: 10Gi
-  storageClassName: mayastor-single-replica
+  storageClassName: mayastor

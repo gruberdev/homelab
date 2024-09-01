@@ -6,7 +6,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: iscsi
+  storageClassName: mayastor
   resources:
     requests:
       storage: 300Gi
@@ -19,7 +19,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: iscsi
+  storageClassName: mayastor
   resources:
     requests:
       storage: 10Gi
@@ -32,7 +32,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: iscsi
+  storageClassName: mayastor
   resources:
     requests:
       storage: 3Gi
@@ -45,7 +45,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: iscsi
+  storageClassName: mayastor
   resources:
     requests:
       storage: 10Gi
@@ -58,7 +58,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: iscsi
+  storageClassName: mayastor
   resources:
     requests:
       storage: 5Gi
@@ -71,7 +71,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: iscsi
+  storageClassName: mayastor
   resources:
     requests:
       storage: 5Gi
@@ -84,7 +84,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: iscsi
+  storageClassName: mayastor
   resources:
     requests:
       storage: 30Gi
@@ -97,7 +97,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: iscsi
+  storageClassName: mayastor
   resources:
     requests:
       storage: 150Gi
@@ -110,7 +110,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: iscsi
+  storageClassName: mayastor
   resources:
     requests:
       storage: 100Gi

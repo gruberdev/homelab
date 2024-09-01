@@ -9,7 +9,7 @@ spec:
   resources:
     requests:
       storage: 15Gi
-  storageClassName: iscsi
+  storageClassName: mayastor
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -22,7 +22,7 @@ spec:
   resources:
     requests:
       storage: 5Gi
-  storageClassName: iscsi
+  storageClassName: mayastor
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -35,4 +35,4 @@ spec:
   resources:
     requests:
       storage: 100Gi
-  storageClassName: iscsi
+  storageClassName: mayastor

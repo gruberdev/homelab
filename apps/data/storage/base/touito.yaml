@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: ganymede-database
-  namespace: media
+  name: touito-storage
+  namespace: services
 spec:
   accessModes:
   - ReadWriteOnce
-  storageClassName: iscsi
+  storageClassName: mayastor
   resources:
     requests:
-      storage: 15Gi
+      storage: 1Gi

@@ -6,7 +6,20 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: iscsi
+  storageClassName: mayastor
   resources:
     requests:
       storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: playwright-storage
+  namespace: services
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: mayastor
+  resources:
+    requests:
+      storage: 3Gi
