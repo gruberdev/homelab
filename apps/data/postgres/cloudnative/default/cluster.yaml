@@ -1,0 +1,38 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: database
+spec:
+  imageName: ghcr.io/cloudnative-pg/postgresql:16.0
+  instances: 1
+  startDelay: 60
+  stopDelay: 60
+  resources:
+    requests:
+      memory: 512Mi
+      cpu: 300m
+    limits:
+      memory: 512Mi
+      cpu: 300m
+  primaryUpdateStrategy: unsupervised
+  postgresql:
+    parameters:
+      shared_buffers: 64MB
+      timezone: America/Sao_Paulo
+      pg_stat_statements.max: "1000"
+      pg_stat_statements.track: all
+      auto_explain.log_min_duration: 10s
+    pg_hba:
+      - host all all 10.244.0.0/16 md5
+  bootstrap:
+    initdb:
+      database: example
+      owner: example
+  storage:
+    storageClass: example-csi-class
+    size: 1Gi
+  monitoring:
+    enablePodMonitor: true
+  nodeMaintenanceWindow:
+    reusePVC: true
