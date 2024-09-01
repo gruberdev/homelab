@@ -8,9 +8,6 @@ spec:
     repoURL: 'https://github.com/gruberdev/homelab.git'
     path: apps/services/rss/hub
     targetRevision: main
-    kustomize:
-      components:
-        - ../../../components/notifications/pushover
   destination:
     namespace: rss
     name: in-cluster
