@@ -70,7 +70,7 @@ tasks:
           argocd.argoproj.io/secret-type: repository
       stringData:
         type: git
-        url: https://github.com/gruberdev/private.git
+        url: https://github.com/gruberdev/homelab.git
         password: $GH_PASS
         username: $GH_USER
       EOF
