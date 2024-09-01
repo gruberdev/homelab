@@ -1,54 +1,29 @@
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    app: home-assistant
-  name: home-assistant
-spec:
-  ports:
-    - name: ha
-      port: 8123
-      protocol: TCP
-      targetPort: 8123
-  selector:
-    app: home-assistant
-  type: ClusterIP
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: homeassistant
-  labels:
-    app: home-assistant
-  annotations:
-    kube-vip.io/vipHost: homeassistant
+  name: home-lb
 spec:
   ports:
-    - name: ha
-      port: 80
-      protocol: TCP
-      targetPort: 8123
-  selector:
-    app: home-assistant
+  - port: 80
+    targetPort: 8123
+    name: api
+    protocol: TCP
   type: LoadBalancer
-  loadBalancerIP: "192.168.1.137"
   loadBalancerClass: kube-vip.io/kube-vip-class
+  loadBalancerIP: 0.0.0.0
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: ha-tailscale
-  labels:
-    app: home-assistant
+  name: home-tailscale
   annotations:
-    tailscale.com/hostname: "home"
+    tailscale.com/hostname: ha
 spec:
-  selector:
-    app: home-assistant
   ports:
-    - name: web
-      port: 80
+    - port: 80
       targetPort: 8123
+      name: api
       protocol: TCP
-  loadBalancerClass: tailscale
   type: LoadBalancer
+  loadBalancerClass: tailscale
