@@ -2,25 +2,24 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: home-assistant
-  labels:
-    app: home-assistant
   annotations:
     link.argocd.argoproj.io/external-link: https://home.gruber.dev.br
 spec:
   replicas: 1
   strategy:
     type: Recreate
-  selector:
-    matchLabels:
-      app: home-assistant
   template:
-    metadata:
-      labels:
-        app: home-assistant
     spec:
       initContainers:
         - name: hacs-install
           image: alpine:3.16.2
+          resources:
+            limits:
+              cpu: 200m
+              memory: 256Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
           command:
             [
               "sh",
@@ -41,6 +40,13 @@ spec:
         - name: git-sync
           image: k8s.gcr.io/git-sync/git-sync:v3.6.1
           imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              cpu: 200m
+              memory: 256Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
           securityContext:
             runAsUser: 65533
           env:
@@ -91,10 +97,10 @@ spec:
               protocol: TCP
           resources:
             limits:
-              cpu: 750m
+              cpu: 550m
               memory: 2Gi
             requests:
-              cpu: 350m
+              cpu: 200m
               memory: 1Gi
           livenessProbe:
             httpGet:
@@ -158,7 +164,7 @@ spec:
             secretName: ha-secrets
         - name: config-volume
           persistentVolumeClaim:
-            claimName: ha-storage-new
+            claimName: ha-storage
         - name: hacs-storage
           persistentVolumeClaim:
             claimName: hacs-storage

@@ -1,0 +1,9 @@
+apiVersion: tailscale.com/v1alpha1
+kind: Connector
+metadata:
+  name: egress-conector
+spec:
+  tags:
+  - "tag:vpn"
+  hostname: "egress"
+  exitNode: true

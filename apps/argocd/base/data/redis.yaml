@@ -15,20 +15,29 @@ spec:
     automated:
       prune: true
       selfHeal: true
-      allowEmpty: false
     managedNamespaceMetadata:
       labels:
         prometheus: enabled
+        pod-security.kubernetes.io/enforce: privileged
+        pod-security.kubernetes.io/audit: privileged
+        pod-security.kubernetes.io/warn: privileged
     syncOptions:
-    - Validate=false
-    - CreateNamespace=true
-    - PrunePropagationPolicy=foreground
-    - ApplyOutOfSyncOnly=false
-    - Prune=true
-    - ServerSideApply=true
+      - CreateNamespace=true
+      - ServerSideApply=true
+      - Prune=true
     retry:
-      limit: 10
+      limit: 5
       backoff:
         duration: 20s
         factor: 2
         maxDuration: 15m
+  info:
+    - name: 'Github Repository:'
+      value: >-
+        https://github.com/OT-CONTAINER-KIT/redis-operator
+    - name: 'Helm chart Github repository:'
+      value: >-
+        hhttps://github.com/OT-CONTAINER-KIT/helm-charts
+    - name: 'Helm chart example values:'
+      value: >-
+        https://github.com/OT-CONTAINER-KIT/helm-charts/tree/main/charts/redis-operator

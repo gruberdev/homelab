@@ -1,26 +1,25 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: homeassistant
+  name: ha-internal
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: home.gruber.dev.br
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
+    external-dns.alpha.kubernetes.io/hostname: home.gruber.dev.br
     external-dns.alpha.kubernetes.io/ttl: "120"
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
   ingressClassName: nginx
   rules:
-    - host: home.gruber.dev.br
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: ha-tailscale
-                port:
-                  name: ha
+  - host: home.gruber.dev.br
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: home-tailscale
+            port:
+              name: api
   tls:
-    - hosts:
-        - home.gruber.dev.br
-      secretName: ha-tls
+  - hosts:
+    - home.gruber.dev.br
+    secretName: ha-tls

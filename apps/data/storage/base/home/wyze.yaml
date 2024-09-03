@@ -6,7 +6,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: mayastor-single-replica
+  storageClassName: mayastor
   resources:
     requests:
       storage: 2Gi
@@ -19,7 +19,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: mayastor-single-replica
+  storageClassName: mayastor
   resources:
     requests:
       storage: 35Gi
@@ -32,7 +32,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: mayastor-single-replica
+  storageClassName: mayastor
   resources:
     requests:
       storage: 20Gi

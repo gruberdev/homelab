@@ -1,0 +1,93 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: kube-system
+
+patches:
+  - patch: |
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: kube-fledged-webhook-server
+        namespace: utilities
+      spec:
+        template:
+          spec:
+            initContainers:
+              - name: init
+                resources:
+                  limits:
+                    cpu: 120m
+                    memory: 256Mi
+                  requests:
+                    cpu: 20m
+                    memory: 64Mi
+    target:
+      kind: Deployment
+      name: kube-fledged-webhook-server
+
+helmCharts:
+- includeCRDs: true
+  name: kube-fledged
+  version: v0.10.0
+  namespace: kube-system
+  releaseName: kube-fledged
+  repo: https://senthilrch.github.io/kubefledged-charts/
+  valuesInline:
+    args:
+      controllerImageCacheRefreshFrequency: 15m
+      controllerImageDeleteJobHostNetwork: false
+      controllerImagePullDeadlineDuration: 5m
+      controllerImagePullPolicy: IfNotPresent
+      controllerJobRetentionPolicy: delete
+      controllerLogLevel: INFO
+      webhookServerCertFile: /var/run/secrets/webhook-server/tls.crt
+      webhookServerKeyFile: /var/run/secrets/webhook-server/tls.key
+      webhookServerLogLevel: INFO
+      webhookServerPort: 443
+    clusterRole:
+      create: true
+    clusterRoleBinding:
+      create: true
+    command:
+      kubefledgedControllerCommand:
+      - /opt/bin/kubefledged-controller
+      kubefledgedWebhookServerCommand:
+      - /opt/bin/kubefledged-webhook-server
+    controller:
+      hostNetwork: false
+    controllerReplicaCount: 1
+    image:
+      busyboxImageRepository: senthilrch/busybox
+      busyboxImageVersion: 1.35.0
+      kubefledgedCRIClientRepository: docker.io/senthilrch/kubefledged-cri-client
+      kubefledgedControllerRepository: docker.io/senthilrch/kubefledged-controller
+      kubefledgedWebhookServerRepository: docker.io/senthilrch/kubefledged-webhook-server
+      pullPolicy: Always
+    ingress:
+      enabled: false
+    nodeSelector:
+      kubernetes.io/arch: amd64
+    resources:
+      limits:
+        cpu: 120m
+        memory: 256Mi
+      requests:
+        cpu: 20m
+        memory: 64Mi
+    service:
+      port: 80
+      type: ClusterIP
+    serviceAccount:
+      create: true
+    validatingWebhook:
+      create: true
+    webhookServer:
+      enable: true
+      hostNetwork: false
+    webhookServerReplicaCount: 1
+    webhookService:
+      create: true
+      port: 3443
+      targetPort: 443
+      type: ClusterIP

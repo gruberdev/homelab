@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: 4get
+spec:
+  project: apps
+  source:
+    repoURL: "https://github.com/gruberdev/homelab.git"
+    path: apps/services/4get
+    targetRevision: main
+  destination:
+    namespace: services
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - Prune=true
+      - ServerSideApply=true
+    retry:
+      limit: 10
+      backoff:
+        duration: 20s
+        factor: 2
+        maxDuration: 15m
+  info:
+    - name: 'Git Repository:'
+      value: >-
+        https://git.lolcat.ca/lolcat/4get
+    - name: 'Official Docs:'
+      value: >-
+        https://git.lolcat.ca/lolcat/4get/src/branch/master/docs/

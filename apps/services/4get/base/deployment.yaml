@@ -1,0 +1,23 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: search
+  annotations:
+    link.argocd.argoproj.io/external-link: https://search.gruber.dev.br
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    spec:
+      containers:
+        - name: 4get
+          image: luuul/4get:1.0.11@sha256:d9423d013bf02cf52e8b9ef75d5e9efbdf7256aca27bcae5ec78aa312af84d6e
+          envFrom:
+            - configMapRef:
+                name: 4get-config
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP

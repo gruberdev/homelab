@@ -70,7 +70,7 @@ tasks:
           argocd.argoproj.io/secret-type: repository
       stringData:
         type: git
-        url: https://github.com/gruberdev/private.git
+        url: https://github.com/gruberdev/homelab.git
         password: $GH_PASS
         username: $GH_USER
       EOF
@@ -168,7 +168,7 @@ tasks:
     - sh: 'which argocd'
       msg: 'argocd {{.PATH_ERROR}}'
     cmds:
-    - argocd login argo.gruber.dev.br --username $ARGOCD_USERNAME --password $ARGOCD_PASSWORD
+    - argocd login https://argo.raptor-beta.ts.net --username $ARGOCD_USERNAME --password $ARGOCD_PASSWORD
 
   refresh:
     preconditions:

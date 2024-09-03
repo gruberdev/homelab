@@ -1,0 +1,43 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: minio-operator
+spec:
+  project: cluster
+  source:
+    repoURL: 'https://github.com/gruberdev/homelab.git'
+    path: apps/data/minio
+    targetRevision: main
+  destination:
+    namespace: minio-operator
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    managedNamespaceMetadata:
+      labels:
+        prometheus: enabled
+        pod-security.kubernetes.io/enforce: privileged
+        pod-security.kubernetes.io/audit: privileged
+        pod-security.kubernetes.io/warn: privileged
+    syncOptions:
+      - Prune=true
+      - ServerSideApply=true
+      - CreateNamespace=true
+    retry:
+      limit: 10
+      backoff:
+        duration: 20s
+        factor: 2
+        maxDuration: 15m
+  info:
+    - name: 'Github Repository:'
+      value: >-
+        https://github.com/minio/operator
+    - name: 'Official Documentation:'
+      value: >-
+        https://min.io/docs/minio/kubernetes/upstream/
+    - name: 'CRD Examples:'
+      value: >-
+        https://github.com/minio/operator/tree/master/examples/kustomization

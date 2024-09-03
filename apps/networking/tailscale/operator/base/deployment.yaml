@@ -21,7 +21,7 @@ spec:
             secretName: operator-oauth
       containers:
         - name: operator
-          image: docker.io/tailscale/k8s-operator:unstable-v1.57.65
+          image: docker.io/tailscale/k8s-operator:unstable-v1.71.74
           imagePullPolicy: IfNotPresent
           resources:
             requests:
@@ -31,30 +31,32 @@ spec:
               cpu: 700m
               memory: 512Mi
           env:
+            - name: OPERATOR_INITIAL_TAGS
+              value: tag:k8s-operator
             - name: OPERATOR_HOSTNAME
-              value: k8s-operator
+              value: tailscale-operator
             - name: OPERATOR_SECRET
               value: operator
             - name: OPERATOR_LOGGING
-              value: debug
-            - name: TS_ACCEPT_DNS
-              value: "true"
+              value: info
             - name: TS_ROUTES
               value: "true"
             - name: OPERATOR_NAMESPACE
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.namespace
+            - name: PROXY_FIREWALL_MODE
+              value: auto
             - name: CLIENT_ID_FILE
               value: /oauth/client_id
             - name: CLIENT_SECRET_FILE
               value: /oauth/client_secret
             - name: PROXY_IMAGE
-              value: docker.io/tailscale/tailscale:unstable-v1.57.65
+              value: docker.io/tailscale/tailscale:unstable-v1.71.74
             - name: PROXY_TAGS
               value: tag:k8s
-            - name: AUTH_PROXY
-              value: "false"
+            - name: APISERVER_PROXY
+              value: "noauth"
           volumeMounts:
             - name: oauth
               mountPath: /oauth

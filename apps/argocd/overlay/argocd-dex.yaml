@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argocd-dex-server
+spec:
+  template:
+    spec:
+      containers:
+        - name: dex
+          resources:
+            limits:
+              cpu: 200m
+              memory: 256Mi
+            requests:
+              cpu: 150m
+              memory: 128Mi
+      initContainers:
+        - name: copyutil
+          resources:
+            limits:
+              cpu: 150m
+              memory: 128Mi
+            requests:
+              cpu: 150m
+              memory: 64Mi

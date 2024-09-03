@@ -2,159 +2,38 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: gitea
-  finalizers:
-  - resources-finalizer.argocd.argoproj.io
 spec:
   project: apps
   source:
-    repoURL: https://dl.gitea.io/charts/
-    chart: gitea
-    targetRevision: 9.2.0
-    helm:
-      releaseName: gitea
-      values: |
-        checkDeprecation: true
-        replicaCount: 1
-        clusterDomain: cluster.local
-        extraVolumes:
-          - name: gitea-themes
-            configMap:
-              name: gitea-themes
-              items:
-              - key: theme-catppuccin-mocha-blue.css
-                path: theme-catppuccin-mocha-blue.css
-        extraVolumeMounts:
-          - name: gitea-themes
-            readOnly: true
-            mountPath: "/data/gitea/public/css"
-        strategy:
-          type: "Recreate"
-        gitea:
-          additionalConfigFromEnvs:
-            - name: GITEA__DATABASE__HOST
-              value: db-gitea.gitea.svc.cluster.local
-            - name: GITEA__DATABASE__USER
-              valueFrom:
-                secretKeyRef:
-                  name: gitea.db-gitea.credentials.postgresql.acid.zalan.do
-                  key: username
-            - name: GITEA__DATABASE__PASSWD
-              valueFrom:
-                secretKeyRef:
-                  name: gitea.db-gitea.credentials.postgresql.acid.zalan.do
-                  key: password
-          additionalConfigSources:
-            - configMap:
-                name: gitea-app-ini
-          config:
-            APP_NAME: "Gitea"
-            server:
-              SSH_PORT: 22
-          admin:
-            email: <path:kv/data/gitea#email>
-            password: <path:kv/data/gitea#password>
-            username: <path:kv/data/gitea#username>
-          livenessProbe:
-            enabled: true
-            failureThreshold: 10
-            initialDelaySeconds: 200
-            periodSeconds: 10
-            successThreshold: 1
-            tcpSocket:
-              port: http
-            timeoutSeconds: 1
-          metrics:
-            enabled: true
-            serviceMonitor:
-              enabled: true
-          readinessProbe:
-            enabled: true
-            failureThreshold: 3
-            initialDelaySeconds: 5
-            periodSeconds: 10
-            successThreshold: 1
-            tcpSocket:
-              port: http
-            timeoutSeconds: 1
-          ssh:
-            logLevel: INFO
-          startupProbe:
-            enabled: true
-            failureThreshold: 10
-            initialDelaySeconds: 60
-            periodSeconds: 10
-            successThreshold: 1
-            tcpSocket:
-              port: http
-            timeoutSeconds: 1
-        image:
-          pullPolicy: Always
-          repository: gitea/gitea
-          rootless: false
-        ingress:
-          enabled: false
-        initContainers:
-          resources:
-            limits:
-              cpu: 350m
-              memory: 512Mi
-            requests:
-              cpu: 100m
-              memory: 256Mi
-        redis-cluster:
-          enabled: false
-          usePassword: false
-        persistence:
-          create: false
-          mount: true
-          enabled: true
-          claimName: gitea-shared-storage
-        podSecurityContext:
-          fsGroup: 1000
-        postgresql-ha:
-          enabled: false
-        postgresql:
-          enabled: false
-        replicaCount: 1
-        resources:
-          limits:
-            cpu: 750m
-            memory: 1024Mi
-          requests:
-            cpu: 100m
-            memory: 256Mi
-        service:
-          http:
-            port: 3000
-            type: ClusterIP
-          ssh:
-            port: 22
-            type: ClusterIP
-        signing:
-          enabled: false
-          gpgHome: /data/git/.gnupg
-        deployment:
-          terminationGracePeriodSeconds: 60
-          enabled: true
-
+    repoURL: "https://github.com/gruberdev/homelab.git"
+    path: apps/services/gitea
+    targetRevision: main
   destination:
-    namespace: gitea
+    namespace: services
     name: in-cluster
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
-      allowEmpty: false
     syncOptions:
-    - Validate=false
-    - CreateNamespace=true
-    - PrunePropagationPolicy=foreground
-    - PruneLast=true
-    - ApplyOutOfSyncOnly=false
-    - Prune=true
+      - Prune=true
+      - ServerSideApply=true
     retry:
       limit: 10
       backoff:
-        duration: 30s
+        duration: 20s
         factor: 2
-        maxDuration: 60m
+        maxDuration: 15m
+  info:
+    - name: 'Github Repository:'
+      value: >-
+        https://github.com/go-gitea/gitea
+    - name: 'Awesome Gitea:'
+      value: >-
+        https://gitea.com/gitea/awesome-gitea
+    - name: 'Official Docs:'
+      value: >-
+        https://docs.gitea.com/
+    - name: 'Helm chart:'
+      value: >-
+        https://gitea.com/gitea/helm-chart

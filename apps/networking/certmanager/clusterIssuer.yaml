@@ -59,7 +59,16 @@ spec:
         - gym.gruber.dev.br
         - dashboard.gruber.dev.br
         - dash.gruber.dev.br
+        - changedetection.gruber.dev.br
         - hajimari.gruber.dev.br
+        - home-assistant.gruber.dev.br
+        - actual.gruber.dev.br
+        - miniflux.gruber.dev.br
+        - discord.gruber.dev.br
+        - mixpost.gruber.dev.br
+        - code.gruber.dev.br
+        - search.gruber.dev.br
+        - sillytavern.gruber.dev.br
       dns01:
         cloudflare:
           email: rpg.gruber@gmail.com

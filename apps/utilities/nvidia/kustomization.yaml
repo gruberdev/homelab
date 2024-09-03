@@ -1,0 +1,61 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- runtimeclass.yaml
+
+namespace: kube-system
+
+patches:
+- path: patch.yaml
+
+helmCharts:
+- includeCRDs: true
+  name: nvidia-device-plugin
+  version: 0.14.5
+  namespace: kube-system
+  releaseName: nvidia-device-plugin
+  repo: https://nvidia.github.io/k8s-device-plugin
+  valuesInline:
+    config:
+      map:
+        default: |-
+          version: v1
+          flags:
+            migStrategy: none
+        mig-single: |-
+          version: v1
+          flags:
+            migStrategy: single
+        mig-mixed: |-
+          version: v1
+          flags:
+            migStrategy: mixed
+      default: ""
+      fallbackStrategies: ["named", "single"]
+    legacyDaemonsetAPI: null
+    compatWithCPUManager: null
+    migStrategy: "single"
+    failOnInitError: "true"
+    deviceListStrategy: "envvar"
+    deviceIDStrategy: "uuid"
+    nvidiaDriverRoot: ""
+    gdsEnabled: null
+    mofedEnabled: null
+    fullnameOverride: "nvidia-device-plugin"
+    namespaceOverride: kube-system
+    runtimeClassName: nvidia
+    nodeSelector:
+      kubernetes.io/hostname: controller-one
+    image:
+      repository: nvcr.io/nvidia/k8s-device-plugin
+      pullPolicy: IfNotPresent
+      tag: "v0.14.5-ubuntu20.04"
+    resources:
+      limits:
+        cpu: 150m
+        memory: 512Mi
+      requests:
+        cpu: 150m
+        memory: 256Mi
+    gfd:
+      enabled: false

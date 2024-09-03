@@ -1,0 +1,283 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: agones
+spec:
+  project: cluster
+  source:
+    repoURL: https://github.com/googleforgames/agones.git
+    targetRevision: v1.40.0
+    path: install/helm/agones
+    helm:
+      releaseName: agones
+      values: |
+        agones:
+          featureGates: PlayerTracking=true&CountsAndLists=true
+          metrics:
+            serviceMonitor:
+              enabled: true
+              interval: 30s
+          rbacEnabled: true
+          registerServiceAccounts: true
+          registerWebhooks: true
+          registerApiService: true
+          crds:
+            install: true
+            cleanupOnDelete: true
+            cleanupJobTTL: 60
+          controller:
+            resources:
+              requests:
+                cpu: 10m
+                memory: 256Mi
+              limits:
+                cpu: 40m
+                memory: 512Mi
+            tolerations:
+            - key: "agones.dev/agones-system"
+              operator: "Equal"
+              value: "true"
+              effect: "NoExecute"
+            generateTLS: false
+            disableSecret: false
+            allocationApiService:
+              annotations: {}
+              disableCaBundle: false
+            validatingWebhook:
+              annotations: {}
+              disableCaBundle: false
+            mutatingWebhook:
+              annotations: {}
+              disableCaBundle: false
+            http:
+              port: 8080
+            healthCheck:
+              initialDelaySeconds: 15
+              periodSeconds: 3
+              failureThreshold: 3
+              timeoutSeconds: 1
+            allocationBatchWaitTime: 500ms
+            replicas: 1
+            pdb:
+                minAvailable: 1
+          extensions:
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128Mi
+              limits:
+                cpu: 40m
+                memory: 256Mi
+            tolerations:
+            - key: "agones.dev/agones-system"
+              operator: "Equal"
+              value: "true"
+              effect: "NoExecute"
+            generateTLS: false
+            tlsCert: ""
+            tlsKey: ""
+            disableSecret: false
+            allocationApiService:
+              annotations: {}
+              disableCaBundle: false
+            validatingWebhook:
+              annotations: {}
+              disableCaBundle: false
+            mutatingWebhook:
+              annotations: {}
+              disableCaBundle: false
+            persistentLogs: true
+            persistentLogsSizeLimitMB: 10000
+            logLevel: info
+            numWorkers: 100
+            apiServerQPS: 400
+            apiServerQPSBurst: 500
+            http:
+              port: 8080
+            healthCheck:
+              initialDelaySeconds: 15
+              periodSeconds: 3
+              failureThreshold: 3
+              timeoutSeconds: 1
+            allocationBatchWaitTime: 500ms
+            pdb:
+                minAvailable: 1
+            replicas: 1
+            readiness:
+              initialDelaySeconds: 15
+              periodSeconds: 3
+              failureThreshold: 3
+            topologySpreadConstraints: {}
+          ping:
+            install: true
+            pdb:
+              enabled: false
+            updateStrategy: {}
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128Mi
+              limits:
+                cpu: 35m
+                memory: 256Mi
+            nodeSelector: {}
+            annotations: {}
+            tolerations:
+            - key: "agones.dev/agones-system"
+              operator: "Equal"
+              value: "true"
+              effect: "NoExecute"
+            replicas: 1
+            http:
+              expose: true
+              response: ok
+              port: 80
+              serviceType: ClusterIP
+            udp:
+              expose: true
+              rateLimit: 20
+              port: 50000
+              serviceType: ClusterIP
+            healthCheck:
+              initialDelaySeconds: 15
+              periodSeconds: 3
+              failureThreshold: 3
+              timeoutSeconds: 1
+          allocator:
+            install: true
+            pdb:
+              enabled: false
+              minAvailable: 1
+            updateStrategy: {}
+            apiServerQPS: 400
+            apiServerQPSBurst: 500
+            logLevel: info
+            annotations: {}
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                cpu: 200m
+                memory: 512Mi
+            healthCheck:
+              initialDelaySeconds: 3
+              periodSeconds: 3
+              failureThreshold: 3
+              timeoutSeconds: 1
+            readiness:
+              initialDelaySeconds: 3
+              periodSeconds: 3
+              failureThreshold: 3
+            tolerations:
+            - key: "agones.dev/agones-system"
+              operator: "Equal"
+              value: "true"
+              effect: "NoExecute"
+            replicas: 1
+            service:
+              annotations: {}
+              grpc:
+                enabled: true
+                nodePort: 30300
+                port: 443
+                portName: grpc
+              http:
+                enabled: true
+                nodePort: 30564
+                port: 443
+                portName: https
+              name: agones-allocator
+              serviceType: NodePort
+            serviceMetrics:
+              name: agones-allocator-metrics-service
+              annotations: {}
+              http:
+                enabled: true
+                port: 8080
+                portName: http
+            generateTLS: false
+            generateClientTLS: true
+            clientCAs: {}
+            disableMTLS: false
+            disableTLS: false
+            remoteAllocationTimeout: 10s
+            totalRemoteAllocationTimeout: 30s
+            allocationBatchWaitTime: 500ms
+            topologySpreadConstraints: {}
+          image:
+            registry: us-docker.pkg.dev/agones-images/release
+            tag: 1.40.0
+            controller:
+              name: agones-controller
+              pullPolicy: IfNotPresent
+            extensions:
+              name: agones-extensions
+              pullPolicy: IfNotPresent
+            sdk:
+              name: agones-sdk
+              cpuRequest: 30m
+              cpuLimit: 150m
+              memoryRequest: 128Mi
+              memoryLimit: 256Mi
+              alwaysPull: false
+            ping:
+              name: agones-ping
+              pullPolicy: IfNotPresent
+            allocator:
+              name: agones-allocator
+              pullPolicy: IfNotPresent
+        gameservers:
+          namespaces:
+          - default
+          - agones-system
+          - gaming
+          maxPort: 34000
+          minPort: 32767
+          podPreserveUnknownFields: false
+  destination:
+    namespace: agones-system
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    managedNamespaceMetadata:
+      labels:
+        prometheus: enabled
+        pod-security.kubernetes.io/enforce: privileged
+        pod-security.kubernetes.io/audit: privileged
+        pod-security.kubernetes.io/warn: privileged
+    syncOptions:
+      - Prune=true
+      - ServerSideApply=true
+      - CreateNamespace=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 20s
+        factor: 2
+        maxDuration: 15m
+  ignoreDifferences:
+  - group: "agones-sdk-access"
+    kind: "ClusterRoleBinding"
+  - group: "agones-sdk"
+    kind: "ClusterRole"
+  - group: "agones-sdk"
+    kind: "ServiceAccount"
+  info:
+    - name: "Github Repository:"
+      value: >-
+        https://github.com/googleforgames/agones
+    - name: "Official Website:"
+      value: >-
+        https://agones.dev
+    - name: "Official Documentation:"
+      value: >-
+        https://agones.dev/site/docs
+    - name: "Helm chart documentation:"
+      value: >-
+        https://agones.dev/site/docs/installation/install-agones/helm
+    - name: "Helm chart values:"
+      value: >-
+        https://github.com/googleforgames/agones/blob/main/install/helm/agones/values.yaml

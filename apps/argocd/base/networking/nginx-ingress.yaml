@@ -2,8 +2,6 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: ingress-nginx
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
 spec:
   project: networking
   source:
@@ -11,24 +9,28 @@ spec:
     path: apps/networking/ingress-nginx
     targetRevision: main
   destination:
-    namespace: networking
+    namespace: kube-system
     name: in-cluster
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
-      allowEmpty: true
     syncOptions:
-    - Validate=false
-    - CreateNamespace=false
-    - PrunePropagationPolicy=foreground
-    - ApplyOutOfSyncOnly=false
-    - Prune=true
-    - RespectIgnoreDifferences=true
-    - ServerSideApply=true
+      - ServerSideApply=true
+      - Prune=true
     retry:
-      limit: 10
+      limit: 5
       backoff:
         duration: 20s
         factor: 2
         maxDuration: 15m
+  info:
+    - name: "Github Repository:"
+      value: >-
+        https://github.com/kubernetes/ingress-nginx
+    - name: "Official documentation:"
+      value: >-
+        https://kubernetes.github.io/ingress-nginx/
+    - name: "Github Helm chart:"
+      value: >-
+        https://github.com/kubernetes/ingress-nginx/blob/main/charts/ingress-nginx/values.yaml

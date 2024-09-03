@@ -5,7 +5,7 @@ metadata:
 spec:
   project: core
   source:
-    repoURL: 'https://github.com/gruberdev/private.git'
+    repoURL: 'https://github.com/gruberdev/homelab.git'
     path: meta
     targetRevision: main
   destination:

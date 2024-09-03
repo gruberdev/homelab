@@ -1,8 +1,8 @@
 
-ARG HELM_VERSION=3.12.3
-ARG ALPINE_VERSION=3.18.3
-ARG ARGOCD_VERSION=2.8.3
-ARG VAULT_PLUGIN_VERSION=1.16.1
+ARG HELM_VERSION=3.15.2
+ARG ALPINE_VERSION=3.20.1
+ARG ARGOCD_VERSION=2.11.3
+ARG VAULT_PLUGIN_VERSION=1.18.1
 
 FROM alpine/helm:${HELM_VERSION} as helm
 FROM alpine:${ALPINE_VERSION} as temp
@@ -19,7 +19,7 @@ USER root
 
 RUN apt-get update && \
     apt-get install -y \
-            curl && \
+    curl && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 

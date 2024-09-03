@@ -4,3 +4,4 @@ resources:
 - clusterIssuer.yaml
 - postgres.yaml
 - secret.yaml
+- crds/

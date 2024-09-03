@@ -8,21 +8,8 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 5Gi
-  storageClassName: iscsi
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: ha-storage-new
-  namespace: homeassistant
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
       storage: 40Gi
-  storageClassName: iscsi
+  storageClassName: mayastor
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -35,4 +22,4 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  storageClassName: iscsi
+  storageClassName: mayastor

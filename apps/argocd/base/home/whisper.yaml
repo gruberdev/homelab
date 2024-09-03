@@ -2,8 +2,6 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: whisper
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
 spec:
   project: apps
   source:
@@ -17,17 +15,22 @@ spec:
     automated:
       prune: true
       selfHeal: true
-      allowEmpty: true
     syncOptions:
-      - Validate=false
-      - CreateNamespace=false
-      - PrunePropagationPolicy=foreground
-      - ApplyOutOfSyncOnly=false
       - Prune=true
       - ServerSideApply=true
     retry:
-      limit: 5
+      limit: 10
       backoff:
         duration: 20s
         factor: 2
         maxDuration: 15m
+  info:
+    - name: "Github Repository:"
+      value: >-
+        https://github.com/openai/whisper
+    - name: "Wyoming Github Repository:"
+      value: >-
+        https://github.com/rhasspy/wyoming-faster-whisper
+    - name: "Homelab documentation:"
+      value: >-
+        https://github.com/gruberdev/homelab/tree/main/apps/home/whisper

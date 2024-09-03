@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- https://raw.githubusercontent.com/tailscale/tailscale/v1.71.0-pre/cmd/k8s-operator/deploy/crds/tailscale.com_connectors.yaml
+- https://raw.githubusercontent.com/tailscale/tailscale/v1.71.0-pre/cmd/k8s-operator/deploy/crds/tailscale.com_proxyclasses.yaml
+- https://raw.githubusercontent.com/tailscale/tailscale/v1.71.0-pre/cmd/k8s-operator/deploy/crds/tailscale.com_dnsconfigs.yaml
+
+
+commonAnnotations:
+  argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true,ServerSideApply=true,Replace=true,Validate=false

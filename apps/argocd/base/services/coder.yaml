@@ -1,0 +1,42 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: coder
+spec:
+  project: apps
+  source:
+    repoURL: "https://github.com/gruberdev/homelab.git"
+    path: apps/services/coder
+    targetRevision: main
+  destination:
+    namespace: services
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - Prune=true
+      - ServerSideApply=true
+    retry:
+      limit: 10
+      backoff:
+        duration: 20s
+        factor: 2
+        maxDuration: 15m
+  info:
+    - name: 'Github Repository:'
+      value: >-
+        https://github.com/coder/coder
+    - name: 'Official Docs:'
+      value: >-
+        https://coder.com/docs
+    - name: 'Helm chart:'
+      value: >-
+        https://github.com/coder/coder/tree/main/helm/coder
+    - name: 'Helm values example:'
+      value: >-
+        https://github.com/coder/coder/blob/main/helm/coder/values.yaml
+    - name: 'Helm documentation:'
+      value: >-
+        hhttps://coder.com/docs/install/kubernetes

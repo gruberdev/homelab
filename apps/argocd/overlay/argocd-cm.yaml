@@ -7,17 +7,53 @@ metadata:
     app.kubernetes.io/part-of: argocd
 data:
   accounts.image-updater: apiKey
-  kustomize.buildOptions: --enable-helm
-  application.resourceTrackingMethod: annotation+label
-  url: https://argo.gruber.dev.br
+  kustomize.buildOptions: --enable-helm --load-restrictor LoadRestrictionsNone
+  application.resourceTrackingMethod: annotation
+  url: https://argo.raptor-beta.ts.net
   statusbadge.enabled: "true"
-  statusbadge.url: "https://argo.gruber.dev.br/"
+  statusbadge.url: "https://argo.raptor-beta.ts.net/"
   exec.enabled: "true"
   # https://argo-cd.readthedocs.io/en/stable/operator-manual/reconcile/#system-level-configuration
   resource.ignoreResourceUpdatesEnabled: "true"
-  extension.config: |-
+  extension.config: |
     extensions:
       - name: metrics
         backend:
           services:
-          - url: http://argocd-metrics-server.argocd.svc.cluster.local:9003
+            - url: http://argocd-metrics-server.argocd.svc.cluster.local:9003
+  resource.customizations.ignoreDifferences.Service: |
+    jsonPointers:
+      - /spec/ports/0/nodePort
+      - /spec/ports/1/nodePort
+  application.links: |
+    - url: https://github.com/gruberdev/homelab/tree/main/apps/{{.app.spec.destination.namespace}/{{.app.metadata.name}}
+      title: Github Source
+      if: application.spec.project != ""
+  resource.customizations.ignoreDifferences.admissionregistration.k8s.io_MutatingWebhookConfiguration: |
+    jsonPointers:
+    - /webhooks/0/clientConfig/caBundle
+    - /webhooks/1/clientConfig/caBundle
+    - /webhooks/2/clientConfig/caBundle
+    - /webhooks/3/clientConfig/caBundle
+    - /webhooks/4/clientConfig/caBundle
+    - /webhooks/5/clientConfig/caBundle
+    jqPathExpressions:
+    - .webhooks[0].clientConfig.caBundle
+    managedFieldsManagers:
+    - kube-controller-manager
+  resource.customizations.ignoreDifferences.admissionregistration.k8s.io_ValidatingWebhookConfiguration: |
+    jsonPointers:
+    - /webhooks/0/clientConfig/caBundle
+    - /webhooks/1/clientConfig/caBundle
+    - /webhooks/2/clientConfig/caBundle
+    - /webhooks/3/clientConfig/caBundle
+    - /webhooks/4/clientConfig/caBundle
+    - /webhooks/5/clientConfig/caBundle
+    - /webhooks/6/clientConfig/caBundle
+    - /webhooks/7/clientConfig/caBundle
+    - /webhooks/8/clientConfig/caBundle
+    - /webhooks/9/clientConfig/caBundle
+    jqPathExpressions:
+    - .webhooks[0].clientConfig.caBundle
+    managedFieldsManagers:
+    - kube-controller-manager

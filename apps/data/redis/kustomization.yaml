@@ -11,11 +11,11 @@ helmCharts:
       imagePullPolicy: IfNotPresent
     resources:
       limits:
-        cpu: 300m
-        memory: 600Mi
+        cpu: 200m
+        memory: 256Mi
       requests:
         cpu: 100m
-        memory: 200Mi
+        memory: 128Mi
     replicas: 1
     serviceAccountName: redis-operator
     tolerateAllTaints: false

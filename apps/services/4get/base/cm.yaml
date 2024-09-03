@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: 4get-config
+data:
+  TZ: "America/Sao_Paulo"
+  FOURGET_PROTO: "http"
+  FOURGET_SERVER_NAME: "Search.gruber.dev.br"
+  FOURGET_BOT_PROTECTION: "0"
+  FOURGET_VERSION: "8"
+  FOURGET_SERVER_SHORT_DESCRIPTION: "Just a search engine."
+  FOURGET_ALT_ADDRESSES: "https://search.gruber.dev.br"
+  FOURGET_INSTANCES: "https://search.gruber.dev.br"
+  FOURGET_HEADER_REGEX: "fake-value,fake-value2"
+  FOURGET_FILTERED_HEADER_KEYS: "fake-value,fake-value2"
