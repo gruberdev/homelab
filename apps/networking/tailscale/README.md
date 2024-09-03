@@ -2,6 +2,10 @@
   <img width="370" height="120" src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Tailscale-Logo-Black.svg" />
   <br />
   <img src="https://img.shields.io/github/v/release/tailscale/tailscale?label=Latest%20Version&logo=github&style=for-the-badge" />
+  <br>
+  <a href="https://argo.raptor-beta.ts.net/applications/tailscale-operator">
+  <img src="https://argo.raptor-beta.ts.net/api/badge?name=tailscale-operator&revision=true" alt="ArgoCD Status Badge" />
+</a>
 </p>
 
 ### Description
@@ -17,6 +21,8 @@
 > - Tailscale uses [Wireguard][awesome-uri], an industry-standard VPN protocol that is more lightweight than OpenVPN and at the same time allows for full encrypted communication between the network nodes.
 > - [It is cheaper than Inlets Pro (even for perosnal use)][inlets-uri], [has a similar speed to ZeroTier <sup>(Benchmark link)</sup>][zero-uri] and provides more SaaS experience than [Headscale][headscale-uri], for now.
 > - It is mostly open source, the only part that had proprietary code (the controller) was recently reverse-engineered through [the Headscale project][headscale-uri], which tags along Tailscale's evolving features.
+
+### Additional resources
 
 - [Website][website-uri]
 - [Official Documentation][docs-uri]
