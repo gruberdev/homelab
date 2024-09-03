@@ -4,6 +4,3 @@ bases:
 - ./base
 
 namespace: gitea
-
-commonAnnotations:
-  reloader.stakater.com/auto: "true"
