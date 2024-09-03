@@ -11,7 +11,7 @@ patches:
 helmCharts:
 - includeCRDs: true
   name: nvidia-device-plugin
-  version: 0.14.5
+  version: 0.16.2
   namespace: kube-system
   releaseName: nvidia-device-plugin
   repo: https://nvidia.github.io/k8s-device-plugin
