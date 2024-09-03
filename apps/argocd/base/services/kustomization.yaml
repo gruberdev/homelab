@@ -2,17 +2,16 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - actual.yaml
   - gitea.yaml
-  #  - mlops.yaml
-  - n8n.yaml
-  - ofx-exporter.yaml
   - onchange.yaml
-  - gitea-utils.yaml
-  - homepage.yaml
-#- wger.yaml
+  - actual.yaml
+  - n8n.yaml
+  - miniflux.yaml
+  - s3.yaml
+  - 4get.yaml
+  - coder.yaml
 
 namespace: argocd
 
-commonLabels:
-  app.kubernetes.io/category: services
+commonAnnotations:
+  argocd.argoproj.io/sync-wave: "3"

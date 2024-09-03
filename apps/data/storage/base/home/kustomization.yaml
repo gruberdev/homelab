@@ -7,6 +7,8 @@ resources:
   - whisper.yaml
   - wyze.yaml
   - frigate.yaml
+  - restreamer.yaml
+  - web2rtc.yaml
 
 commonAnnotations:
   argocd.argoproj.io/sync-options: Delete=false

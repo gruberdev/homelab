@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+metadata:
+  name: ignore-service-differences
+patches:
+  - target:
+      group: argoproj.io
+      version: v1alpha1
+      kind: Application
+    patch: |-
+      - op: add
+        path: /spec/ignoreDifferences
+        value:
+          - group: ""
+            kind: Service
+            jqPathExpressions:
+              - '.status.loadBalancer.ingress[].ipMode'
+      - op: add
+        path: /spec/syncPolicy/syncOptions/-
+        value: RespectIgnoreDifferences=true

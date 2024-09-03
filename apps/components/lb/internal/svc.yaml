@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: example-internal
+spec:
+  ports:
+  - name: example
+    protocol: TCP
+    port: 80
+    targetPort: 8080
+  type: LoadBalancer
+  loadBalancerClass: kube-vip.io/kube-vip-class
+  loadBalancerIP: 0.0.0.0

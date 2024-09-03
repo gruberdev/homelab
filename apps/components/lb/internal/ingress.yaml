@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: example
+  annotations:
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
+    external-dns.alpha.kubernetes.io/hostname: example.gruber.dev.br
+    external-dns.alpha.kubernetes.io/ttl: "120"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: example.gruber.dev.br
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: example-internal
+            port:
+              name: example-port
+  tls:
+  - hosts:
+    - example.gruber.dev.br
+    secretName: example

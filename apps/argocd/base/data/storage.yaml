@@ -12,18 +12,21 @@ spec:
     name: in-cluster
   syncPolicy:
     automated:
-      prune: false
-      selfHeal: false
-      allowEmpty: true
+      prune: true
+      selfHeal: true
     syncOptions:
-    - Validate=false
-    - PrunePropagationPolicy=foreground
-    - PruneLast=false
-    - ApplyOutOfSyncOnly=true
-    - Prune=false
+      - ServerSideApply=true
+      - Prune=true
     retry:
-      limit: 1
+      limit: 5
       backoff:
         duration: 20s
         factor: 2
         maxDuration: 15m
+  info:
+    - name: 'Mayastor Storage Class Github repository:'
+      value: >-
+        https://github.com/openebs/mayastor
+    - name: 'Mayastor OpenEBS Official Documentation:'
+      value: >-
+        https://openebs.io/docs/user-guides/replicated-storage-user-guide/replicated-pv-mayastor/rs-installation

@@ -2,166 +2,68 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: certmanager
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
 spec:
   project: networking
   source:
     repoURL: https://charts.jetstack.io
     chart: cert-manager
-    targetRevision: v1.13.3
+    targetRevision: v1.14.5
     helm:
       releaseName: cert-manager
       values: |
-        startupapicheck:
-          enabled: false
-        acmesolver:
-          image:
-            repository: quay.io/jetstack/cert-manager-acmesolver
-            tag: v1.12.4
-        cainjector:
-          containerSecurityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-              - ALL
-          enabled: true
-          image:
-            pullPolicy: IfNotPresent
-            repository: quay.io/jetstack/cert-manager-cainjector
-            tag: v1.12.4
-          nodeSelector:
-            kubernetes.io/arch: amd64
-            kubernetes.io/os: linux
-          replicaCount: 1
-          resources:
-            limits:
-              cpu: 350m
-              memory: 512Mi
-            requests:
-              cpu: 150m
-              memory: 256Mi
-          securityContext:
-            runAsNonRoot: true
-            seccompProfile:
-              type: RuntimeDefault
-          serviceAccount:
-            automountServiceAccountToken: true
-            create: true
-        containerSecurityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-            - ALL
-        global:
-          leaderElection:
-            namespace: kube-system
-          logLevel: 2
-          podSecurityPolicy:
-            enabled: false
-            useAppArmor: true
-          rbac:
-            aggregateClusterRoles: true
-            create: true
-        image:
-          pullPolicy: IfNotPresent
-          repository: quay.io/jetstack/cert-manager-controller
-          tag: v1.12.4
-        installCRDs: true
-        maxConcurrentChallenges: 60
-        nodeSelector:
-          kubernetes.io/arch: amd64
-          kubernetes.io/os: linux
-        prometheus:
-          enabled: true
-          servicemonitor:
-            enabled: true
-            honorLabels: false
-            interval: 60s
-            path: /metrics
-            prometheusInstance: default
-            scrapeTimeout: 30s
-            targetPort: 9402
-        replicaCount: 1
+        strategy:
+          type: Recreate
+        namespace: "cert-manager"
         resources:
-          limits:
-            cpu: 350m
-            memory: 512Mi
           requests:
-            cpu: 150m
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 250m
             memory: 256Mi
-        securityContext:
-          runAsNonRoot: true
-          seccompProfile:
-            type: RuntimeDefault
-        serviceAccount:
-          automountServiceAccountToken: true
-          create: true
-        webhook:
-          containerSecurityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-              - ALL
-          hostNetwork: false
-          image:
-            pullPolicy: IfNotPresent
-            repository: quay.io/jetstack/cert-manager-webhook
-            tag: v1.12.4
-          livenessProbe:
-            failureThreshold: 3
-            initialDelaySeconds: 35
-            periodSeconds: 10
-            successThreshold: 1
-            timeoutSeconds: 1
-          networkPolicy:
-            egress:
-            - ports:
-              - port: 80
-                protocol: TCP
-              - port: 443
-                protocol: TCP
-              - port: 53
-                protocol: TCP
-              - port: 53
-                protocol: UDP
-              to:
-              - ipBlock:
-                  cidr: 0.0.0.0/0
-            enabled: false
-            ingress:
-            - from:
-              - ipBlock:
-                  cidr: 0.0.0.0/0
-          nodeSelector:
-            kubernetes.io/os: linux
-          readinessProbe:
-            failureThreshold: 3
-            initialDelaySeconds: 5
-            periodSeconds: 5
-            successThreshold: 1
-            timeoutSeconds: 1
-          replicaCount: 1
+        cainjector:
+          strategy:
+            type: Recreate
           resources:
-            limits:
-              cpu: 350m
-              memory: 512Mi
             requests:
-              cpu: 150m
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 250m
               memory: 256Mi
-          securePort: 10250
-          securityContext:
-            runAsNonRoot: true
-            seccompProfile:
-              type: RuntimeDefault
-          serviceAccount:
-            automountServiceAccountToken: true
-            create: true
-          serviceType: ClusterIP
-          timeoutSeconds: 10
+        webhook:
+          strategy:
+            type: Recreate
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
   destination:
     namespace: cert-manager
     name: in-cluster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    managedNamespaceMetadata:
+      labels:
+        prometheus: enabled
+        pod-security.kubernetes.io/enforce: privileged
+        pod-security.kubernetes.io/audit: privileged
+        pod-security.kubernetes.io/warn: privileged
+    syncOptions:
+      - Prune=true
+      - ServerSideApply=true
+      - CreateNamespace=true
+    retry:
+      limit: 10
+      backoff:
+        duration: 20s
+        factor: 2
+        maxDuration: 15m
   info:
     - name: 'Github Repository:'
       value: >-
@@ -181,23 +83,3 @@ spec:
     - name: 'Issuing certificates documentation:'
       value: >-
         https://cert-manager.io/docs/usage/certificate/
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-      allowEmpty: false
-    managedNamespaceMetadata:
-      labels:
-        prometheus: enabled
-    syncOptions:
-    - Validate=false
-    - CreateNamespace=true
-    - Prune=true
-    - RespectIgnoreDifferences=true
-    - ServerSideApply=true
-    retry:
-      limit: 5
-      backoff:
-        duration: 60s
-        factor: 2
-        maxDuration: 15m

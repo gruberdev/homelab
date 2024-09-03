@@ -1,14 +1,11 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: proxies
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
   name: operator
+  namespace: tailscale
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: nameserver
+  name: proxies
+  namespace: tailscale

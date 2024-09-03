@@ -2,12 +2,10 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: openwakeword
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
 spec:
   project: apps
   source:
-    repoURL: "https://github.com/gruberdev/homelab.git"
+    repoURL: https://github.com/gruberdev/homelab.git
     path: apps/home/openwakeword
     targetRevision: main
   destination:
@@ -17,17 +15,22 @@ spec:
     automated:
       prune: true
       selfHeal: true
-      allowEmpty: true
     syncOptions:
-      - Validate=false
-      - CreateNamespace=false
-      - PrunePropagationPolicy=foreground
-      - ApplyOutOfSyncOnly=false
       - Prune=true
       - ServerSideApply=true
     retry:
-      limit: 5
+      limit: 10
       backoff:
         duration: 20s
         factor: 2
         maxDuration: 15m
+  info:
+    - name: "Github Repository:"
+      value: >-
+        https://github.com/dscripka/openWakeWord
+    - name: "Wyoming Github Repository:"
+      value: >-
+        https://github.com/rhasspy/wyoming-openwakeword
+    - name: "Homelab documentation:"
+      value: >-
+        https://github.com/gruberdev/homelab/tree/main/apps/home/openwakeword

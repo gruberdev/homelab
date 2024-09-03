@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: certmanager-clusterissuer
+  name: certmanager-resources
 spec:
   project: networking
   source:
@@ -15,15 +15,9 @@ spec:
     automated:
       prune: true
       selfHeal: true
-      allowEmpty: true
     syncOptions:
-    - Validate=true
-    - CreateNamespace=false
-    - PrunePropagationPolicy=foreground
-    - PruneLast=true
-    - ApplyOutOfSyncOnly=false
-    - Prune=true
-    - Replace=true
+      - Prune=true
+      - ServerSideApply=true
     retry:
       limit: 5
       backoff:

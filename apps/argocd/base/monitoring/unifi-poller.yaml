@@ -11,23 +11,17 @@ spec:
     path: apps/networking/unifi/poller
     targetRevision: main
   destination:
-    namespace: unifi
+    namespace: networking
     name: in-cluster
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
-      allowEmpty: true
     syncOptions:
-    - Validate=false
-    - CreateNamespace=false
-    - PrunePropagationPolicy=foreground
-    - PruneLast=true
-    - Replace=true
-    - ApplyOutOfSyncOnly=false
-    - Prune=true
+      - ServerSideApply=true
+      - Prune=true
     retry:
-      limit: -1
+      limit: 5
       backoff:
         duration: 20s
         factor: 2

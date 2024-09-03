@@ -1,7 +1,7 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: ha-cloudflare
+  name: homeassistant
 spec:
   secretName: ha-tls
   issuerRef:
@@ -9,4 +9,4 @@ spec:
     kind: ClusterIssuer
   commonName: home.gruber.dev.br
   dnsNames:
-  - home.gruber.dev.br
+    - home.gruber.dev.br

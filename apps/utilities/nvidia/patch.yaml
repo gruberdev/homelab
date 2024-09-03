@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: nvidia-device-plugin
+  namespace: kube-system
+spec:
+  template:
+    spec:
+      initContainers:
+        - name: nvidia-device-plugin-init
+          resources:
+            limits:
+              cpu: 150m
+              memory: 512Mi
+            requests:
+              cpu: 150m
+              memory: 256Mi
+      containers:
+        - name: nvidia-device-plugin-sidecar
+          resources:
+            limits:
+              cpu: 150m
+              memory: 512Mi
+            requests:
+              cpu: 150m
+              memory: 256Mi

@@ -2,9 +2,18 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - cm.yaml
-  - db.yaml
   - deployment.yaml
-  - svc.yaml
-  - ingress.yaml
-  - certificate.yaml
   - secret.yaml
+  - certificate.yaml
+  - ingress.yaml
+  - svc.yaml
+
+labels:
+- includeSelectors: true
+  includeTemplates: true
+  pairs:
+    app.kubernetes.io/part-of: home
+    cluster.app: homeassistant
+
+commonAnnotations:
+  reloader.stakater.com/auto: "true"

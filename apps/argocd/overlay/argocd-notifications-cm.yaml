@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-notifications-cm
+data:
+  service.pushover: |
+    token: $pushover-token
+  service.grafana: |
+    apiUrl: http://kube-prometheus-grafana.svc.cluster.local/api
+    apiKey: $grafana-api-key
+    insecureSkipVerify: true
+  service.telegram: |
+    token: $telegram-token
+  service.github: |
+    appID: 901531
+    installationID: 50904587
+    privateKey: $github-privateKey
+  trigger.on-deployed: |
+    - description: Application is synced and healthy. Triggered once per commit.
+      oncePer: app.status.operationState.syncResult.revision
+      send:
+        - app-deployed
+      when: app.status.operationState.phase in ['Succeeded'] and
+        app.status.health.status == 'Healthy'
+  template.app-deployed: |
+    message: |
+      Application {{.app.metadata.name}} is now running new version of deployments manifests.
+    github:
+      repoURLPath: "{{.app.spec.source.repoURL}}"
+      revisionPath: "{{.app.status.operationState.syncResult.revision}}"
+      status:
+        state: success
+        label: "continuous-delivery/{{.app.metadata.name}}"
+        targetURL: "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
+      deployment:
+        state: success
+        environment: production
+        logURL: "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
+        requiredContexts: []
+        autoMerge: true
+        transientEnvironment: false
+      pullRequestComment:
+        content: |
+          Application {{.app.metadata.name}} is now running new version of deployments manifests.
+          See more here: {{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true

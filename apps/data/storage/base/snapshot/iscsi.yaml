@@ -1,6 +1,6 @@
 apiVersion: snapshot.storage.k8s.io/v1
 kind: VolumeSnapshotClass
 metadata:
-  name: iscsi-snapshot
-driver: iscsi
+  name: mayastor-single-replica-snapshot
+driver: mayastor-single-replica
 deletionPolicy: Delete

@@ -1,0 +1,41 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: s3
+spec:
+  project: apps
+  source:
+    repoURL: 'https://github.com/gruberdev/homelab.git'
+    path: apps/data/minio/default
+    targetRevision: main
+    kustomize:
+      patches:
+        - target:
+            kind: Tenant
+            name: s3
+          patch: |
+            apiVersion: minio.min.io/v2
+            kind: Tenant
+            metadata:
+              name: s3
+            spec:
+              buckets:
+                - name: "metrics"
+                - name: "gitea"
+                - name: "n8n"
+  destination:
+    namespace: services
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - Prune=true
+      - ServerSideApply=true
+    retry:
+      limit: 10
+      backoff:
+        duration: 20s
+        factor: 2
+        maxDuration: 15m

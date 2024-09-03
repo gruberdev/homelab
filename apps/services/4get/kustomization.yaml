@@ -1,0 +1,27 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ./base
+
+namespace: services
+
+patches:
+- patch: |-
+    - op: add
+      path: "/spec/template/spec/nodeSelector"
+      value:
+        kubernetes.io/arch: amd64
+  target:
+    kind: Deployment
+    name: changedetection
+
+labels:
+- includeSelectors: true
+  includeTemplates: true
+  pairs:
+    cluster.app: 4get
+    app.kubernetes.io/part-of: services
+
+components:
+  - ../../components/lb
+  - ../../components/resources/small

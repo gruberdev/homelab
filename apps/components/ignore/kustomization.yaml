@@ -1,0 +1,14 @@
+kind: Component
+metadata:
+  name: ignore-resources
+patches:
+  - target:
+      group: argoproj.io
+      version: v1alpha1
+      kind: Application
+    patch: |-
+      - op: add
+        path: /spec/ignoreApplicationDifferences
+        value:
+          - jsonPointers:
+              - /spec/syncPolicy

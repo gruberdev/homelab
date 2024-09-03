@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cpu-booster
+spec:
+  project: cluster
+  source:
+    repoURL: "https://github.com/google/kube-startup-cpu-boost.git"
+    path: ./
+    targetRevision: v0.9.0
+    kustomize:
+      images:
+        - ghcr.io/google/kube-startup-cpu-boost:v0.9.0
+  destination:
+    namespace: utilities
+    name: in-cluster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - Prune=true
+      - ServerSideApply=true
+    retry:
+      limit: 10
+      backoff:
+        duration: 30s
+        factor: 2
+        maxDuration: 60m
+  info:
+    - name: "Github Repository:"
+      value: >-
+        https://github.com/google/kube-startup-cpu-boost
+    - name: "Documentation:"
+      value: >-
+        https://github.com/google/kube-startup-cpu-boost#usage

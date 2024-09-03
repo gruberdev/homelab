@@ -7,6 +7,3 @@ patchesStrategicMerge:
 - overlay/daemonset.yaml
 
 namespace: kube-system
-
-commonAnnotations:
-  reloader.stakater.com/auto: "true"

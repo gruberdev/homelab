@@ -6,9 +6,6 @@
 
 <h3 align="center">Homelab</h3>
 
-<p align="center">
-  <sub>Gitops managed k3s cluster</sub>
-</p>
 
 <p align="center">
   <img src="https://img.shields.io/github/last-commit/gruberdev/homelab?color=black&labelColor=black&label=last%20commit&logo=github&logoColor=cyan&style=flat-square">
@@ -28,7 +25,6 @@
 > |          [ArgoCD][argocd-uri]          |             `Git`    |      <sub>[More details][homelab-argocd]</sub>      |       ![][argocd-core]       | ![][argo-badge]        |
 > |   [CertManager][service-certmanager] |               `Networking`   |  <sub>[More details][homelab-certmanager]</sub>    |  ![][argocd-certmanager] | ![][certmanager-badge]    |
 > |   [Changedetection.io][change-uri]     |             `Services`   |       <sub>[More details][homelab-change]</sub>      |        ![][argocd-change]    |  ![][change-badge]   |
-> |    [Crossplane][crossplane-uri]        |    `GitOps`     |      <sub>[More details][homelab-crossplane]</sub>  |       ![][argocd-crossplane] | ![][crossplane-badge]  |
 > | [External-DNS][service-externaldns] |               `Networking`   |  <sub>[More details][homelab-externaldns]</sub>    |  ![][argocd-externaldns] | ![][externaldns-badge]    |
 > |     [Hashicorp's Vault][vault-uri]     |            `Security`   |       <sub>[Chart values][homelab-vault]</sub>      |       ![][argocd-vault]      |  ![][vault-badge]    |
 > |      [Home Assistant][service-ha]      |            `Smart Home`   |        <sub>[More details][homelab-ha]</sub>        |        ![][argocd-ha]        |    ![][ha-badge]     |
@@ -38,11 +34,8 @@
 > |            [n8n][n8n-uri]              |            `Services`   |        <sub>[More details][homelab-n8n]</sub>       |        ![][argocd-n8n]       |  ![][n8n-badge]      |
 > | [Redis Operator][redis-uri]            |            `Databases`   |       <sub>[More details][homelab-redis]</sub>      |       ![][argocd-redis]      |  ![][redis-badge]    |
 > |    [Unifi Controller][unifi-uri]      |            `Networking`  |      <sub>[More details][homelab-unifi]</sub>      |      ![][argocd-unifi]      | ![][unifi-badge]    |
-> |     [Unifi Poller][poller-uri]         |            `Monitoring`  |      <sub>[More details][homelab-poller]</sub>      |      ![][argocd-poller]      | ![][poller-badge]    |
 > | [Uptime Kuma][kuma-uri]            |            `Monitoring`  |      <sub>[More details][homelab-kuma]</sub>          |      ![][argocd-kuma]      | ![][kuma-badge]      |
-> |   [Wyze API Bridge][service-wyze]      |            `Smart Home`   |        <sub>[More details][homelab-wyze]</sub>      |        ![][argocd-wyze]      |  ![][wyze-badge]     |
 > |     [Tailscale-operator][tail-uri]        |         `Networking`  | <sub>[More details][homelab-tailscale]</sub>         |    ![][argocd-tailscale]     |![][tailscale-badge]  |
-> |   [Cloudflared <sub>(as proxies)</sub>][cf-uri]  | `Networking`  | <sub>[More details][homelab-cloudflared]</sub>      |                        |   ![][cfd-badge]     |
 
 <!-- >
 > | [<sub>Zalando PostgreSQL Operator</sub>][p-uri] |   `Databases`   |      <sub>[More details][homelab-zalando]</sub>     |      ![][argocd-zalando]     | ![][zalando-badge]  |
@@ -67,24 +60,6 @@
 > | <sub>[ChatGPT Retrieval Plugin][service-p-chatgpt]</sub> |  `Services`   |  <sub>[More details][homelab-p-chatgpt]</sub>    |  ![][argocd-p-chatgpt] | ![][chatgpt-p-badge]    |
 > | [<sub>MongoDB Community Operator</sub>][service-mongo] | `Databases` | <sub>[More details][homelab-mongo]</sub> |       ![][argocd-mongo]     | ![][mongo-badge]     |
 
-
-#### Matrix-related
-
-> |         **Name**        | **Info**           | **Kind** | **Deployment Status**| **Latest Semver**  |
-> |:-----------------------:|:------------------:|:--------:|:-----------------:|:---------------------:|
-> |         Elements        |                    | `Client` |                   |                       |
-> |      mautrix-slack      |                    | `Bridge` |                   |                       |
-> |  matrix-discord-bridge  |                    | `Bridge` |                   |                       |
-> |     mautrix-facebook    |                    | `Bridge` |                   |                       |
-> |     mautrix-whatsapp    |                    | `Bridge` |                   |                       |
-> |     mautrix-telegram    |                    | `Bridge` |                   |                       |
-> |      mautrix-signal     |                    | `Bridge` |                   |                       |
-> |    mautrix-instagram    |                    | `Bridge` |                   |                       |
-> | mautrix-puppet-hangouts |                    | `Bridge` |                   |                       |
-> |     mautrix-twitter     |                    | `Bridge` |                   |                       |
-> |     go-skype-bridge     |                    | `Bridge` |                   |                       |
-> |     mx-puppet-steam     |                    | `Bridge` |                   |                       |
-> |     linkedin-bridge     |                    | `Bridge` |                   |                       |
 <-->
 
 ---
@@ -229,8 +204,6 @@
 [homelab-kubevip]: https://github.com/gruberdev/homelab/tree/main/apps/networking/kube-vip
 [homelab-rssgen]: https://github.com/gruberdev/homelab/tree/main/apps/services/rss/gen
 [homelab-chatgpt]: https://github.com/gruberdev/homelab/tree/main/apps/services/chatgpt/discord-bot
-[homelab-p-chatgpt]: https://github.com/gruberdev/homelab/tree/main/apps/services/chatgpt/memory-plugin
-[homelab-milvus]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/mlops/milvus.yaml
 [homelab-sonarr]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/sonarr
 [homelab-prowlarr]: https://github.com/gruberdev/homelab/tree/main/apps/services/media/prowlarr
 [homelab-rsshub]: https://github.com/gruberdev/homelab/tree/main/apps/services/rss/hub
@@ -247,52 +220,51 @@
 
 <!-- ArgoCD Status Badges -->
 
-[argocd-kube]: https://argo.gruber.dev.br/api/badge?name=kube-prometheus
-[argocd-nvidia]: https://argo.gruber.dev.br/api/badge?name=nvidia
-[argocd-nfs]: https://argo.gruber.dev.br/api/badge?name=nfs-provisioner
-[argocd-crossplane]: https://argo.gruber.dev.br/api/badge?name=crossplane
-[argocd-ha]: https://argo.gruber.dev.br/api/badge?name=homeassistant
-[argocd-democratic-csi]: https://argo.gruber.dev.br/api/badge?name=longhorn
-[argocd-kuma]: https://argo.gruber.dev.br/api/badge?name=uptime-kuma
-[argocd-grocy]: https://argo.gruber.dev.br/api/badge?name=grocy
-[argocd-adguard]:https://argo.gruber.dev.br/api/badge?name=adguard
-[argocd-unifi-controller]: https://argo.gruber.dev.br/api/badge?name=unifi-controller
-[argocd-core]: https://argo.gruber.dev.br/api/badge?name=argocd
-[argocd-n8n]: https://argo.gruber.dev.br/api/badge?name=n8n-service
-[argocd-vault]: https://argo.gruber.dev.br/api/badge?name=vault
-[argocd-ha]: https://argo.gruber.dev.br/api/badge?name=homeassistant
-[argocd-wyze]: https://argo.gruber.dev.br/api/badge?name=wyze
-[argocd-redis]: https://argo.gruber.dev.br/api/badge?name=redis
-[argocd-matrix]: https://argo.gruber.dev.br/api/badge?name=synapse
-[argocd-mysql]: https://argo.gruber.dev.br/api/badge?name=mysql-operator
-[argocd-changedetection]: https://argo.gruber.dev.br/api/badge?name=changedetection
-[argocd-tailscale]: https://argo.gruber.dev.br/api/badge?name=tailscale
-[argocd-chatgpt]: https://argo.gruber.dev.br/api/badge?name=discord-bot-gpt
-[argocd-gitea]: https://argo.gruber.dev.br/api/badge?name=gitea
-[argocd-p-chatgpt]: https://argo.gruber.dev.br/api/badge?name=memory-plugin-gpt
-[argocd-milvus]: https://argo.gruber.dev.br/api/badge?name=milvus-operator
-[argocd-mongo]: https://argo.gruber.dev.br/api/badge?name=mongodb-operator
-[argocd-wavy]: https://argo.gruber.dev.br/api/badge?name=wavy
-[argocd-poller]: https://argo.gruber.dev.br/api/badge?name=unifi-poller
-[argocd-rss-gen]: https://argo.gruber.dev.br/api/badge?name=rss-gen
-[argocd-rss-hub]: https://argo.gruber.dev.br/api/badge?name=rss-hub
-[argocd-feedpushr]: https://argo.gruber.dev.br/api/badge?name=feedpushr
-[argocd-change]: https://argo.gruber.dev.br/api/badge?name=changedetection
-[argocd-beets]: https://argo.gruber.dev.br/api/badge?name=beets
-[argocd-lidarr]: https://argo.gruber.dev.br/api/badge?name=lidarr
-[argocd-metabase]: https://argo.gruber.dev.br/api/badge?name=metabase
-[argocd-kubevip]: https://argo.gruber.dev.br/api/badge?name=kube-vip
-[argocd-prowlarr]: https://argo.gruber.dev.br/api/badge?name=prowlarr
-[argocd-sonarr]: https://argo.gruber.dev.br/api/badge?name=sonarr
-[argocd-jellyfin]: https://argo.gruber.dev.br/api/badge?name=jellyfin
-[argocd-wallabag]: https://argo.gruber.dev.br/api/badge?name=wallabag
-[argocd-crossplane]: https://argo.gruber.dev.br/api/badge?name=crossplane
-[argocd-tailscale]: https://argo.gruber.dev.br/api/badge?name=tailscale-operator
-[argocd-agones]: https://argo.gruber.dev.br/api/badge?name=agones
-[argocd-gpu-exporter]: https://argo.gruber.dev.br/api/badge?name=nvidia-exporter
-[argocd-externaldns]: https://argo.gruber.dev.br/api/badge?name=external-dns-cloudflare
-[argocd-certmanager]: https://argo.gruber.dev.br/api/badge?name=certmanager
-[argocd-unifi]: https://argo.gruber.dev.br/api/badge?name=unifi-controller
+[argocd-kube]: https://argo.raptor-beta.ts.net/api/badge?name=kube-prometheus
+[argocd-nvidia]: https://argo.raptor-beta.ts.net/api/badge?name=nvidia
+[argocd-nfs]: https://argo.raptor-beta.ts.net/api/badge?name=nfs-provisioner
+[argocd-crossplane]: https://argo.raptor-beta.ts.net/api/badge?name=crossplane
+[argocd-ha]: https://argo.raptor-beta.ts.net/api/badge?name=homeassistant
+[argocd-kuma]: https://argo.raptor-beta.ts.net/api/badge?name=uptime-kuma
+[argocd-grocy]: https://argo.raptor-beta.ts.net/api/badge?name=grocy
+[argocd-adguard]:https://argo.raptor-beta.ts.net/api/badge?name=adguard
+[argocd-unifi-controller]: https://argo.raptor-beta.ts.net/api/badge?name=unifi-controller
+[argocd-core]: https://argo.raptor-beta.ts.net/api/badge?name=argocd
+[argocd-n8n]: https://argo.raptor-beta.ts.net/api/badge?name=n8n-service
+[argocd-vault]: https://argo.raptor-beta.ts.net/api/badge?name=vault
+[argocd-ha]: https://argo.raptor-beta.ts.net/api/badge?name=homeassistant
+[argocd-wyze]: https://argo.raptor-beta.ts.net/api/badge?name=wyze
+[argocd-redis]: https://argo.raptor-beta.ts.net/api/badge?name=redis
+[argocd-matrix]: https://argo.raptor-beta.ts.net/api/badge?name=synapse
+[argocd-mysql]: https://argo.raptor-beta.ts.net/api/badge?name=mysql-operator
+[argocd-changedetection]: https://argo.raptor-beta.ts.net/api/badge?name=changedetection
+[argocd-tailscale]: https://argo.raptor-beta.ts.net/api/badge?name=tailscale-operator
+[argocd-chatgpt]: https://argo.raptor-beta.ts.net/api/badge?name=discord-bot-gpt
+[argocd-gitea]: https://argo.raptor-beta.ts.net/api/badge?name=gitea
+[argocd-p-chatgpt]: https://argo.raptor-beta.ts.net/api/badge?name=memory-plugin-gpt
+[argocd-milvus]: https://argo.raptor-beta.ts.net/api/badge?name=milvus-operator
+[argocd-mongo]: https://argo.raptor-beta.ts.net/api/badge?name=mongodb-operator
+[argocd-wavy]: https://argo.raptor-beta.ts.net/api/badge?name=wavy
+[argocd-poller]: https://argo.raptor-beta.ts.net/api/badge?name=unifi-poller
+[argocd-rss-gen]: https://argo.raptor-beta.ts.net/api/badge?name=rss-gen
+[argocd-rss-hub]: https://argo.raptor-beta.ts.net/api/badge?name=rss-hub
+[argocd-feedpushr]: https://argo.raptor-beta.ts.net/api/badge?name=feedpushr
+[argocd-change]: https://argo.raptor-beta.ts.net/api/badge?name=changedetection
+[argocd-beets]: https://argo.raptor-beta.ts.net/api/badge?name=beets
+[argocd-lidarr]: https://argo.raptor-beta.ts.net/api/badge?name=lidarr
+[argocd-metabase]: https://argo.raptor-beta.ts.net/api/badge?name=metabase
+[argocd-kubevip]: https://argo.raptor-beta.ts.net/api/badge?name=kubevip
+[argocd-prowlarr]: https://argo.raptor-beta.ts.net/api/badge?name=prowlarr
+[argocd-sonarr]: https://argo.raptor-beta.ts.net/api/badge?name=sonarr
+[argocd-jellyfin]: https://argo.raptor-beta.ts.net/api/badge?name=jellyfin
+[argocd-wallabag]: https://argo.raptor-beta.ts.net/api/badge?name=wallabag
+[argocd-crossplane]: https://argo.raptor-beta.ts.net/api/badge?name=crossplane
+[argocd-tailscale]: https://argo.raptor-beta.ts.net/api/badge?name=tailscale-operator
+[argocd-agones]: https://argo.raptor-beta.ts.net/api/badge?name=agones
+[argocd-gpu-exporter]: https://argo.raptor-beta.ts.net/api/badge?name=nvidia-exporter
+[argocd-externaldns]: https://argo.raptor-beta.ts.net/api/badge?name=external-dns-cloudflare
+[argocd-certmanager]: https://argo.raptor-beta.ts.net/api/badge?name=certmanager
+[argocd-unifi]: https://argo.raptor-beta.ts.net/api/badge?name=unifi-controller
 
 <!-- Badge Images -->
 
