@@ -1,20 +1,20 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-resources:
-  - github.com/kubernetes-sigs/descheduler/kubernetes/deployment?ref=v0.29.0
-
-namespace: kube-system
+helmCharts:
+- includeCRDs: true
+  name: descheduler
+  version: 0.30.1
+  namespace: utilities
+  releaseName: descheduler
+  repo: https://kubernetes-sigs.github.io/descheduler/
 
 patches:
-  - patch: |-
+  - patch: |
       apiVersion: apps/v1
       kind: Deployment
       metadata:
         name: descheduler
-        namespace: kube-system
-        labels:
-          app: descheduler
       spec:
         template:
           spec:
@@ -25,10 +25,16 @@ patches:
                     cpu: 100m
                     memory: 128Mi
                   limits:
-                    cpu: 300m
+                    cpu: 100m
                     memory: 256Mi
-  - patch: |-
+    target:
+      kind: Deployment
+      name: descheduler
+  - patch: |
       apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: descheduler-policy-configmap
       data:
         policy.yaml: |
           apiVersion: "descheduler/v1alpha2"
@@ -85,7 +91,6 @@ patches:
                     - "RemovePodsViolatingNodeAffinity"
                     - "RemovePodsViolatingInterPodAntiAffinity"
                     - "RemoveFailedPods"
+    target:
       kind: ConfigMap
-      metadata:
-        name: descheduler-policy-configmap
-        namespace: kube-system
+      name: descheduler-policy-configmap
