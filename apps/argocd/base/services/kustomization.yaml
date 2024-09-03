@@ -4,11 +4,9 @@ kind: Kustomization
 resources:
   - gitea.yaml
   - onchange.yaml
-  - rss-hub.yaml
   - actual.yaml
   - n8n.yaml
   - miniflux.yaml
-  - touito.yaml
   - s3.yaml
   - 4get.yaml
   - coder.yaml
