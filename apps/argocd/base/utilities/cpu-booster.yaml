@@ -7,7 +7,7 @@ spec:
   source:
     repoURL: "https://github.com/google/kube-startup-cpu-boost.git"
     path: ./
-    targetRevision: v0.9.0
+    targetRevision: v0.10.0
     kustomize:
       images:
         - ghcr.io/google/kube-startup-cpu-boost:v0.9.0
