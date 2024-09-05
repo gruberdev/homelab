@@ -3,6 +3,9 @@
   <img width="236" height="236" src="https://raw.githubusercontent.com/gruberdev/homelab/main/docs/assets/logos/certmanager.svg" />
   <br />
   <img src="https://img.shields.io/github/v/release/kubernetes-sigs/external-dns?label=Latest%20Version&logo=github&style=for-the-badge" />
+  <br>
+  <a href="https://argo.raptor-beta.ts.net/applications/certmanager">
+  <img src="https://argo.raptor-beta.ts.net/api/badge?name=certmanager&revision=true" alt="ArgoCD Status Badge" />
 </p>
 
 ### Description
@@ -46,7 +49,7 @@ kubectl apply -f https://raw.githubusercontent.com/gruberdev/homelab/main/apps/a
 > - [Fixing Argo CD “Too long must have at most 262144 bytes” error (ArthurKoziel.com)][tracking-error-explain-2] <sub>[(Mirror)][mirror-explain-2]</sub>
 > - [How to Fix “Too long: must have at most 262144 bytes” in ArgoCD (FoxuTech.medium.com)][tracking-error-explain] <sub>[(Mirror)][mirror-explain-1]</sub>
 
-### Important notes regarding the chart deployment:
+
 
 [repo-uri]: https://github.com/cert-manager/cert-manager
 [website-uri]: https://cert-manager.io/

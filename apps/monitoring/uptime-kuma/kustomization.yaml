@@ -5,5 +5,16 @@ bases:
 
 namespace: monitoring
 
+components:
+  - ../../components/tailscale/ingress
+  - ../../components/resources/small
+
+labels:
+- includeSelectors: true
+  includeTemplates: true
+  pairs:
+    cluster.app: kuma
+    app.kubernetes.io/part-of: monitoring
+
 commonAnnotations:
   reloader.stakater.com/auto: "true"
