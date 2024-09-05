@@ -5,22 +5,17 @@ silent: true
 includes:
   cli: ./tasks/cli.yaml
   postgres: ./tasks/postgres.yaml
-  tailscale: ./tasks/tailscale.yaml
   argocd: ./tasks/argocd.yaml
   vault: ./tasks/vault.yaml
-  vultr: ./tasks/vultr.yaml
   tf: ./tasks/terraform.yaml
   secrets: ./tasks/secrets.yaml
   cluster: ./tasks/cluster.yaml
-  matrix: ./tasks/matrix.yaml
   test: ./tasks/test.yaml
   talos: ./tasks/talos.yaml
   commit: ./tasks/commit.yaml
-  milvus: ./tasks/milvus.yaml
 
 vars:
   PATH_ERROR: is not installed or correctly configured in PATH.
-  K8S_VERSION: 1.28.1
 
 dotenv: ['.env']
 
@@ -82,45 +77,6 @@ tasks:
       - find . -maxdepth 50 -name statefulset.yaml -exec cat {} \; | kuota-calc --detailed
       - find . -maxdepth 50 -name daemonset.yaml -exec cat {} \; | kuota-calc --detailed
 
-  test:k3d:
-    desc: Starts your local k3d cluster.
-    preconditions:
-      - sh: "which k3d"
-        msg: "k3d {{.PATH_ERROR}}"
-    summary: |
-      Creating a k3d cluster
-
-      This command ensures the cluster on k3d will
-      be created with all the correct parameters, allowing
-      for a declarative setup that requires minimal intervention
-      to work. k3d is configured to automatically create an entry
-      on your KUBECONFIG file and update it to point towards the cluster.
-
-      All commands that create resources also are specific to the cluster
-      name configured on the file ('k3d-demo'), as to avoid creating those
-      resoures on non-local clusters that may be on KUBECONFIG file as well.
-    cmds:
-      - task: cli:clear
-      - k3d cluster delete --config config/k3d.yaml
-      - k3d cluster create --config config/k3d.yaml
-      - task: cli:highlight_normal
-      - echo -e "\nYour cluster has been created. Type 'k3d cluster list' to confirm."
-      - task: cli:reset
-    ignore_error: true
-
-  test:k3d:destroy:
-    desc: Destroys your local k3d cluster.
-    preconditions:
-      - sh: "which k3d"
-        msg: "k3d {{.PATH_ERROR}}"
-    cmds:
-      - task: cli:clear
-      - k3d cluster delete --config config/k3d.yaml
-      - task: cli:highlight_normal
-      - echo -e "\nYour cluster has been destroyed."
-      - task: cli:reset
-    ignore_error: true
-
   repos:
     desc: Adds and updates all the required Helm repositories locally.
     preconditions:
@@ -158,27 +114,6 @@ tasks:
       - echo -e "Finished adding repositories. Updating them now.\n"
       - task: cli:reset
       - helm repo update
-    ignore_error: true
-
-  dns:
-    desc: Creates the DNS entry required for the local domain to work.
-    preconditions:
-      - sh: "which hostctl"
-        msg: "hostctl {{.PATH_ERROR}}"
-    summary: |
-      Configuring Local DNS configuration through hostctl
-      This command uses hostctl to manage entries on /etc/hosts on a
-      a cross operational system compatible way. This command should work
-      on all MacOS, Windows and Linux. It adds all the '*.k8s.localhost'
-      domains to your local DNS hosts file. It also makes it easy for the
-      user to reverse those changes, avoiding pollution on your hosts
-      (or equivalent) file.
-    cmds:
-      - task: cli:clear
-      - sleep 0.01 && {{if eq OS "windows"}}hostctl add k8s -q < config/.etchosts{{else}}sudo hostctl add k8s -q < config/.etchosts{{end}}
-      - task: cli:highlight_normal
-      - echo -e "Added 'k8s.localhost' and related domains to your hosts file!"
-      - task: cli:reset
     ignore_error: true
 
   run:
