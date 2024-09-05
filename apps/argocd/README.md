@@ -32,8 +32,6 @@
   ### Instructions for deployment
 
   ```bash
-  task argocd:install
-  # Or
   kubectl apply -k github.com/gruberdev/homelab/apps/argocd
   ```
 
