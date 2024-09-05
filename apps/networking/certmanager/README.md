@@ -26,10 +26,10 @@
 - [Helm chart][helm-uri]
 - [Plain manifests for deployment][manifests-uri]
 
-### Instructions for standalone deployment (**Requires ArgoCD**)
+### Instructions for deployment
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/gruberdev/homelab/main/apps/argocd/base/networking/cert-manager.yaml -n argocd
+kubectl apply -k github.com/gruberdev/homelab/apps/networking/certmanager
 ```
 
 &nbsp;
@@ -48,7 +48,6 @@ kubectl apply -f https://raw.githubusercontent.com/gruberdev/homelab/main/apps/a
 >
 > - [Fixing Argo CD “Too long must have at most 262144 bytes” error (ArthurKoziel.com)][tracking-error-explain-2] <sub>[(Mirror)][mirror-explain-2]</sub>
 > - [How to Fix “Too long: must have at most 262144 bytes” in ArgoCD (FoxuTech.medium.com)][tracking-error-explain] <sub>[(Mirror)][mirror-explain-1]</sub>
-
 
 
 [repo-uri]: https://github.com/cert-manager/cert-manager
