@@ -6,7 +6,7 @@
 
 <h3 align="center">Homelab</h3>
 
-s
+
 <p align="center">
   <img src="https://img.shields.io/github/last-commit/gruberdev/homelab?color=black&labelColor=black&label=last%20commit&logo=github&logoColor=cyan&style=flat-square">
 </p>
