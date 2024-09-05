@@ -1,29 +1,28 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: nvidia-extra
+  name: monitoring
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-options: Delete=false
 spec:
-  project: core
+  project: monitoring
   source:
     repoURL: 'https://github.com/gruberdev/homelab.git'
-    path: apps/monitoring/nvidia
+    path: apps/argocd/base/monitoring
     targetRevision: main
   destination:
-    namespace: kube-system
+    namespace: argocd
     name: in-cluster
   syncPolicy:
     automated:
-      prune: false
-      selfHeal: false
-      allowEmpty: true
+      prune: true
+      selfHeal: true
     syncOptions:
-    - Validate=false
-    - CreateNamespace=false
-    - PrunePropagationPolicy=foreground
-    - PruneLast=true
-    - ApplyOutOfSyncOnly=false
+      - Prune=true
+      - ServerSideApply=true
     retry:
-      limit: 5
+      limit: 10
       backoff:
         duration: 20s
         factor: 2

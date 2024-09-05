@@ -24,9 +24,6 @@
 ### Instructions for deployment
 
 ```bash
-# ArgoCD Application
-kubectl apply -f github.com/gruberdev/homelab/apps/argocd/base/networking/unifi-controller.yaml -n argocd
-# Yaml manifests
 kubectl apply -k github.com/gruberdev/homelab/apps/networking/unifi/controller
 ```
 
