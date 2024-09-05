@@ -6,7 +6,7 @@
 
 <h3 align="center">Homelab</h3>
 
-                                                                                                                                            
+s
 <p align="center">
   <img src="https://img.shields.io/github/last-commit/gruberdev/homelab?color=black&labelColor=black&label=last%20commit&logo=github&logoColor=cyan&style=flat-square">
 </p>
@@ -80,10 +80,8 @@
 > - [Kube-fledged][kube-fledged-uri] &nbsp; <sub>Allows for image caching on every node in the cluster, in order to speed up deployments of already existing applications.</sub>
 > - [Kured][kured-uri] &nbsp; <sub>All the cluster's nodes will be properly drained before rebooting cordoned back once they're online.</sub>
 > - [Reloader][reloader-uri] &nbsp; <sub>Everytime a `configMap` or a `Secret` resource is created or changed, the pods that use them will be reloaded.</sub>
-> - [Trivy operator][trivy-uri] &nbsp; <sub>Generates security reports automatically in response to workload and other changes to the cluster.</sub>
 > - [Democratic-CSI][democratic-uri] &nbsp; <sub>[A CSI implementation][csi-uri] for multiple ZFS-based storage systems.</sub>
 > - [node-problem-detector][node-problem-uri] &nbsp; <sub>Detects if a node has been affected by an issue such as faulty hardware or kernel deadlocks, preventing scheduling.</sub>
-> - [Chaos Mesh][chaos-mesh-uri] &nbsp; <sub>A Cloud-native, lightweight, no-dependencies required Chaos Engineering Platform for Kubernetes.</sub>
 > - [Wavy][wavy-uri] &nbsp; <sub>Patches Kubernetes resources with a VNC access using annotations to provide a GUI to any container.</sub>
 
 ---
@@ -182,7 +180,7 @@
 [homelab-wyze]: https://github.com/gruberdev/homelab/tree/main/apps/home/wyze
 [homelab-nvidia]: https://github.com/gruberdev/homelab/blob/main/docs/nvidia.md
 [homelab-nfs]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/core/nfs.yaml
-[homelab-kube]: https://github.com/gruberdev/homelab/blob/main/apps/argocd/base/monitoring/kube-prometheus.yaml
+[homelab-kube]: https://github.com/gruberdev/homelab/tree/main/apps/monitoring/kube-prometheus
 [homelab-kuma]: https://github.com/gruberdev/homelab/tree/main/apps/monitoring/uptime-kuma
 [homelab-crossplane]: https://github.com/gruberdev/homelab/tree/main/apps/utilities/crossplane
 [homelab-adguard]: https://github.com/gruberdev/homelab/tree/main/apps/networking/adguard

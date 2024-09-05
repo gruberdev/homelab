@@ -3,8 +3,8 @@ kind: Application
 metadata:
   name: utilities
   namespace: argocd
-  labels:
-    app.kubernetes.io/category: utilities
+  annotations:
+    argocd.argoproj.io/sync-options: Delete=false
 spec:
   project: cluster
   source:
@@ -18,13 +18,9 @@ spec:
     automated:
       prune: true
       selfHeal: true
-      allowEmpty: false
     syncOptions:
-    - Validate=false
-    - CreateNamespace=false
-    - PrunePropagationPolicy=foreground
-    - PruneLast=true
-    - ApplyOutOfSyncOnly=false
+      - Prune=true
+      - ServerSideApply=true
     retry:
       limit: 10
       backoff:

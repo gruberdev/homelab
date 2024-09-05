@@ -31,10 +31,4 @@ spec:
         duration: 20s
         factor: 2
         maxDuration: 15m
-  info:
-  - name: "Github Repository:"
-    value: >-
-      https://github.com/mudler/LocalAI
-  - name: "Official Documentation:"
-    value: >-
-      https://localai.io/
+
