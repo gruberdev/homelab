@@ -4,10 +4,9 @@ metadata:
   name: kuma-cm
 data:
   TZ: "America/Sao_Paulo"
-  PUID: "1000"
-  PGID: "1000"
   NODE_ENV: "production"
   UPTIME_KUMA_HOST: "0.0.0.0"
   UPTIME_KUMA_PORT: "3001"
   UPTIME_KUMA_DISABLE_FRAME_SAMEORIGIN: "true"
-  NODE_TLS_REJECT_UNAUTHORIZED: "1"
+  NODE_TLS_REJECT_UNAUTHORIZED: "0"
+  UPTIME_KUMA_WS_ORIGIN_CHECK: "bypss"
