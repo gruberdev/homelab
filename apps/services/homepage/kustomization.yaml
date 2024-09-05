@@ -7,7 +7,7 @@ resources:
 helmCharts:
 - name: homepage
   releaseName: homepage
-  version: 1.2.3
+  version: 2.0.1
   repo: https://jameswynn.github.io/helm-charts/
   valuesInline:
     image:
