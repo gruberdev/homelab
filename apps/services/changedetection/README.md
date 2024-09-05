@@ -2,6 +2,10 @@
   <img width="450" height="200" src="https://raw.githubusercontent.com/gruberdev/homelab/main/docs/assets/logos/onchange.svg" />
   <br />
   <img src="https://img.shields.io/docker/v/dgtlmoon/changedetection.io?label=Latest%20Semver&color=blue&logo=docker&sort=semver&style=for-the-badge" />
+  <br>
+  <a href="https://argo.raptor-beta.ts.net/applications/changedetection">
+  <img src="https://argo.raptor-beta.ts.net/api/badge?name=changedetection&revision=true" alt="ArgoCD Status Badge" />
+</a>
 </p>
 
 ### Description
