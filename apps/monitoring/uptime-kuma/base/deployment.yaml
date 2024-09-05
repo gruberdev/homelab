@@ -3,21 +3,13 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: kuma
-  labels:
-    app: kuma
   annotations:
-    link.argocd.argoproj.io/external-link: http://kuma
+    link.argocd.argoproj.io/external-link: https://kuma.raptor-beta.ts.net
 spec:
   replicas: 1
   strategy:
     type: Recreate
-  selector:
-    matchLabels:
-      app: kuma
   template:
-    metadata:
-      labels:
-        app: kuma
     spec:
       containers:
         - name: uptime-kuma
@@ -25,9 +17,6 @@ spec:
           envFrom:
             - configMapRef:
                 name: kuma-cm
-            - secretRef:
-                name: kuma-vars
-                optional: true
           ports:
             - name: web
               containerPort: 3001
@@ -40,21 +29,15 @@ spec:
               command:
                 - node
                 - extra/healthcheck.js
-            initialDelaySeconds: 180
-            periodSeconds: 60
+            initialDelaySeconds: 30
+            periodSeconds: 15
             timeoutSeconds: 30
           readinessProbe:
             httpGet:
               path: /
-              port: 3001
+              port: web
               scheme: HTTP
-          resources:
-            requests:
-              memory: "128Mi"
-              cpu: 100m
-            limits:
-              memory: "256Mi"
-              cpu: 200m
+            initialDelaySeconds: 20
       volumes:
         - name: kuma-data
           persistentVolumeClaim:
