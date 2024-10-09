@@ -6,7 +6,7 @@ spec:
   project: cluster
   source:
     repoURL: https://github.com/googleforgames/agones.git
-    targetRevision: v1.40.0
+    targetRevision: v1.44.0
     path: install/helm/agones
     helm:
       releaseName: agones
