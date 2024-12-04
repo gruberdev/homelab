@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="550" height="100" src="https://raw.githubusercontent.com/gruberdev/homelab/main/docs/assets/logos/cloudnative.png" />
+  <img width="550" height="100" src="https://raw.githubusercontent.com/gruberdev/homelab/main/docs/assets/logos/cloudnative-pg.svg" />
   <br />
   <img src="https://img.shields.io/github/v/release/cloudnative-pg/cloudnative-pg?label=Latest%20Version&logo=github&style=for-the-badge" />
 </p>

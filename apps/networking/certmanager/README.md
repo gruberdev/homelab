@@ -5,8 +5,18 @@
   <img src="https://img.shields.io/github/v/release/kubernetes-sigs/external-dns?label=Latest%20Version&logo=github&style=for-the-badge" />
   <br>
   <a href="https://argo.raptor-beta.ts.net/applications/certmanager">
-  <img src="https://argo.raptor-beta.ts.net/api/badge?name=certmanager&revision=true" alt="ArgoCD Status Badge" />
+    <img src="https://argo.raptor-beta.ts.net/api/badge?name=certmanager&revision=true" alt="ArgoCD Status Badge" />
+  </a>
 </p>
+
+### Description
+
+> Cert-manager is a native Kubernetes certificate management controller. It helps with issuing certificates from a variety of sources like Let's Encrypt, HashiCorp Vault, or self-signed, and ensures certificates are valid and up-to-date.
+>
+> - Automated certificate issuance, renewal, and management.
+> - Supports a variety of certificate sources including ACME, Vault, and self-signed.
+> - Webhook functionalities for extensibility.
+> - Mature ecosystem and community support.
 
 ### Description
 
