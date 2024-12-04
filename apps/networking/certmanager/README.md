@@ -3,7 +3,7 @@
   <img width="236" height="236" src="https://raw.githubusercontent.com/gruberdev/homelab/main/docs/assets/logos/certmanager.svg" />
   <br />
   <img src="https://img.shields.io/github/v/release/kubernetes-sigs/external-dns?label=Latest%20Version&logo=github&style=for-the-badge" />
-  <br>
+  <br />
   <a href="https://argo.raptor-beta.ts.net/applications/certmanager">
     <img src="https://argo.raptor-beta.ts.net/api/badge?name=certmanager&revision=true" alt="ArgoCD Status Badge" />
   </a>
