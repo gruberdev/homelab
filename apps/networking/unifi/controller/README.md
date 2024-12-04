@@ -2,12 +2,12 @@
   <img width="350" height="250" src="https://www.logo.wine/a/logo/Ubiquiti_Networks/Ubiquiti_Networks-Logo.wine.svg" />
   <br />
   <a href="https://hub.docker.com/r/jacobalberty/unifi/tags">
-  <img src="https://img.shields.io/github/v/release/jacobalberty/unifi-docker?label=Latest%20Version&logo=github&style=for-the-badge" />
+    <img src="https://img.shields.io/github/v/release/jacobalberty/unifi-docker?label=Latest%20Version&logo=github&style=for-the-badge" />
   </a>
-  <br>
+  <br />
   <a href="https://argo.raptor-beta.ts.net/applications/unifi-controller">
-  <img src="https://argo.raptor-beta.ts.net/api/badge?name=unifi-controller&revision=true" alt="ArgoCD Status Badge" />
-</a>
+    <img src="https://argo.raptor-beta.ts.net/api/badge?name=unifi-controller&revision=true" alt="ArgoCD Status Badge" />
+  </a>
 </p>
 
 ### Reasons I chose Unifi as my local network hardware provider
