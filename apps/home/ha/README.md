@@ -4,14 +4,13 @@
   <img width="250" height="250" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Home_Assistant_Logo.svg/1200px-Home_Assistant_Logo.svg.png" />
   <br />
   <a href="https://github.com/home-assistant/core/releases">
-  <img src="https://img.shields.io/github/v/release/home-assistant/core?label=Latest%20Version&logo=github&style=for-the-badge" />
+    <img src="https://img.shields.io/github/v/release/home-assistant/core?label=Latest%20Version&logo=github&style=for-the-badge" />
   </a>
-  <br>
+  <br />
   <a href="https://argo.raptor-beta.ts.net/applications/homeassistant">
-  <img src="https://argo.raptor-beta.ts.net/api/badge?name=homeassistant&revision=true" alt="ArgoCD Status Badge" />
-</a>
+    <img src="https://argo.raptor-beta.ts.net/api/badge?name=homeassistant&revision=true" alt="ArgoCD Status Badge" />
+  </a>
 </p>
-
 ### What is Home Assistant?
 
 > Home Assistant is an open-source home automation platform that allows you to automate and control various aspects of your home, such as lights, appliances, and security systems. It is designed to be easy to use and flexible, and it can be integrated with a wide range of devices and services, including smart home devices, smart speakers, and web services. With Home Assistant, you can create automations and rules to control your home automatically, and you can use it to monitor and track various aspects of your home, such as energy usage and temperature.
