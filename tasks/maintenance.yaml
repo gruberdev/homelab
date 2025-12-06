@@ -212,8 +212,10 @@ tasks:
       - sh: "test -d '{{.BACKUP_DIR}}'"
         msg: "Backup directory {{.BACKUP_DIR}} not found. Usage: task backup:restore -- /path/to/backup"
     cmds:
-      - echo "⚠️  WARNING: This will restore cluster state from backup!"
-      - echo "Backup directory: {{.BACKUP_DIR}}"
+      - 'echo "⚠️  WARNING: This will restore cluster state from backup!"'
+
+      - 'echo "Backup directory: {{.BACKUP_DIR}}"'
+
       - echo "Press Ctrl+C to cancel, or press Enter to continue..."
       - read
       - echo "🔄 Restoring from backup..."
@@ -282,7 +284,8 @@ tasks:
       - sh: "test -n '{{.APP_NAME}}'"
         msg: "Application name required. Usage: task app:enable -- <app-name>"
     cmds:
-      - echo "🚀 Enabling application: {{.APP_NAME}}"
+      - 'echo "🚀 Enabling application: {{.APP_NAME}}"'
+
       - echo "⚠️  This will uncomment the application in kustomization.yaml"
       - echo "Press Ctrl+C to cancel, or press Enter to continue..."
       - read
@@ -294,6 +297,7 @@ tasks:
       - echo "✅ Application {{.APP_NAME}} enabled"
       - echo "Run 'task validate:comprehensive' to verify"
 
+
   app:disable:
     desc: Safely disable an ArgoCD application
     vars:
@@ -302,7 +306,8 @@ tasks:
       - sh: "test -n '{{.APP_NAME}}'"
         msg: "Application name required. Usage: task app:disable -- <app-name>"
     cmds:
-      - echo "⏸️  Disabling application: {{.APP_NAME}}"
+      - 'echo "⏸️  Disabling application: {{.APP_NAME}}"'
+
       - echo "⚠️  This will comment out the application in kustomization.yaml"
       - echo "Press Ctrl+C to cancel, or press Enter to continue..."
       - read
@@ -367,7 +372,7 @@ tasks:
       - argocd app list || echo "ArgoCD CLI not available or not logged in"
       - echo ""
       - echo "=== Out of sync applications ==="
-      - kubectl get applications -n argocd -o json | jq -r '.items[] | select(.status.sync.status != "Synced") | "\(.metadata.name): \(.status.sync.status)"'
+      - 'kubectl get applications -n argocd -o json | jq -r ''.items[] | select(.status.sync.status != "Synced") | "\(.metadata.name): \(.status.sync.status)"'''
       - echo ""
       - echo "=== ArgoCD server logs ==="
       - kubectl logs -n argocd deployment/argocd-server --tail=50
@@ -406,7 +411,8 @@ tasks:
     cmds:
       - echo "🔄 Triggering GitHub Actions validation..."
       - gh workflow run validate.yml
-      - echo "⏳ Workflow triggered. Check status with: gh run list"
+      - 'echo "⏳ Workflow triggered. Check status with: gh run list"'
+
 
   ci:security:
     desc: Trigger GitHub Actions security scan workflow
@@ -416,7 +422,8 @@ tasks:
     cmds:
       - echo "🔒 Triggering GitHub Actions security scan..."
       - gh workflow run security-scan.yml
-      - echo "⏳ Workflow triggered. Check status with: gh run list"
+      - 'echo "⏳ Workflow triggered. Check status with: gh run list"'
+
 
   ci:status:
     desc: Check GitHub Actions workflow status
@@ -424,10 +431,12 @@ tasks:
       - sh: "which gh"
         msg: "GitHub CLI is required"
     cmds:
-      - echo "📊 GitHub Actions Status:"
+      - 'echo "📊 GitHub Actions Status:"'
+
       - gh run list --limit 10
       - echo ""
-      - echo "📈 Workflow Success Rate:"
+      - 'echo "📈 Workflow Success Rate:"'
+
       - |
         total=$(gh run list --limit 20 --json conclusion | jq length)
         success=$(gh run list --limit 20 --json conclusion | jq '[.[] | select(.conclusion == "success")] | length')
@@ -466,7 +475,8 @@ tasks:
       - task: ci:validate
       - task: ci:security
       - task: ci:wait
-      - echo "📋 Pre-maintenance checklist:"
+      - 'echo "📋 Pre-maintenance checklist:"'
+
       - echo "  ✅ Health check completed"
       - echo "  ✅ Backup created"
       - echo "  ✅ Inventory updated"
@@ -479,7 +489,8 @@ tasks:
     vars:
       COMPONENT: '{{.CLI_ARGS | default "all"}}'
     cmds:
-      - echo "⚡ Executing maintenance for: {{.COMPONENT}}"
+      - 'echo "⚡ Executing maintenance for: {{.COMPONENT}}"'
+
       - |
         case "{{.COMPONENT}}" in
           "cert-manager")
@@ -546,13 +557,16 @@ tasks:
       - echo "🏠 Homelab Status Overview"
       - echo "═══════════════════════════════════"
       - echo ""
-      - echo "🏥 Cluster Health:"
+      - 'echo "🏥 Cluster Health:"'
+
       - task: health:quick
       - echo ""
-      - echo "🔄 GitHub Actions:"
+      - 'echo "🔄 GitHub Actions:"'
+
       - task: ci:status
       - echo ""
-      - echo "📊 Application Status:"
+      - 'echo "📊 Application Status:"'
+
       - |
         if command -v argocd >/dev/null 2>&1; then
           argocd app list 2>/dev/null | head -10 || echo "ArgoCD not accessible"
@@ -560,7 +574,8 @@ tasks:
           echo "ArgoCD CLI not available"
         fi
       - echo ""
-      - echo "🔐 Security Status:"
+      - 'echo "🔐 Security Status:"'
+
       - |
         if [ -f "{{.LOGS_DIR}}/inventory-latest.json" ]; then
           security_score=$(jq -r '.security_assessment.security_score // "unknown"' {{.LOGS_DIR}}/inventory-latest.json)
@@ -656,7 +671,8 @@ tasks:
         EOF
         chmod +x {{.LOGS_DIR}}/monitoring/maintenance-monitor.sh
       - echo "✅ Monitoring setup completed"
-      - echo "📋 To start monitoring: nohup {{.LOGS_DIR}}/monitoring/maintenance-monitor.sh &"
+      - 'echo "📋 To start monitoring: nohup {{.LOGS_DIR}}/monitoring/maintenance-monitor.sh &"'
+
 
   # Help and documentation
   help:
@@ -664,62 +680,106 @@ tasks:
     cmds:
       - echo "🏠 Homelab Maintenance Tasks - Enhanced"
       - echo ""
-      - echo "📋 Inventory & Assessment:"
+      - 'echo "📋 Inventory & Assessment:"'
+
       - echo "  task inventory                    - Generate infrastructure inventory"
-      - echo "  task inventory:csv               - Generate CSV inventory"
+      - 'echo "  task inventory:csv               - Generate CSV inventory"'
+
       - echo ""
-      - echo "🏥 Health Checks:"
-      - echo "  task health:check                - Comprehensive health check"
-      - echo "  task health:enhanced             - Enhanced health check with CI/CD"
-      - echo "  task health:quick                - Quick cluster status"
-      - echo "  task health:report               - Generate health report"
+      - 'echo "🏥 Health Checks:"'
+
+      - 'echo "  task health:check                - Comprehensive health check"'
+
+      - 'echo "  task health:enhanced             - Enhanced health check with CI/CD"'
+
+      - 'echo "  task health:quick                - Quick cluster status"'
+
+      - 'echo "  task health:report               - Generate health report"'
+
       - echo ""
-      - echo "✅ Validation:"
-      - echo "  task validate:comprehensive       - All validation checks"
-      - echo "  task validate:kustomize          - Validate kustomize builds"
-      - echo "  task validate:argocd             - Validate ArgoCD apps"
-      - echo "  task validate:helm               - Validate Helm charts"
+      - 'echo "✅ Validation:"'
+
+      - 'echo "  task validate:comprehensive       - All validation checks"'
+
+      - 'echo "  task validate:kustomize          - Validate kustomize builds"'
+
+      - 'echo "  task validate:argocd             - Validate ArgoCD apps"'
+
+      - 'echo "  task validate:helm               - Validate Helm charts"'
+
       - echo ""
-      - echo "🔄 GitHub Actions:"
-      - echo "  task ci:validate                 - Trigger validation workflow"
-      - echo "  task ci:security                 - Trigger security scan workflow"
-      - echo "  task ci:status                   - Check workflow status"
-      - echo "  task ci:wait                     - Wait for workflows to complete"
+      - 'echo "🔄 GitHub Actions:"'
+
+      - 'echo "  task ci:validate                 - Trigger validation workflow"'
+
+      - 'echo "  task ci:security                 - Trigger security scan workflow"'
+
+      - 'echo "  task ci:status                   - Check workflow status"'
+
+      - 'echo "  task ci:wait                     - Wait for workflows to complete"'
+
       - echo ""
-      - echo "🚀 Upgrades:"
-      - echo "  task upgrade:cert-manager        - Upgrade cert-manager"
-      - echo "  task upgrade:argocd              - Upgrade ArgoCD"
-      - echo "  task upgrade:monitoring          - Upgrade monitoring stack"
+      - 'echo "🚀 Upgrades:"'
+
+      - 'echo "  task upgrade:cert-manager        - Upgrade cert-manager"'
+
+      - 'echo "  task upgrade:argocd              - Upgrade ArgoCD"'
+
+      - 'echo "  task upgrade:monitoring          - Upgrade monitoring stack"'
+
       - echo ""
-      - echo "⚡ Maintenance Automation:"
-      - echo "  task prepare:full                - Complete pre-maintenance prep"
-      - echo "  task execute:full -- <component> - Execute maintenance"
-      - echo "  task validate:full               - Post-maintenance validation"
-      - echo "  task status:overview             - Comprehensive status overview"
+      - 'echo "⚡ Maintenance Automation:"'
+
+      - 'echo "  task prepare:full                - Complete pre-maintenance prep"'
+
+      - 'echo "  task execute:full -- <component> - Execute maintenance"'
+
+      - 'echo "  task validate:full               - Post-maintenance validation"'
+
+      - 'echo "  task status:overview             - Comprehensive status overview"'
+
       - echo ""
-      - echo "🔧 Remediation:"
-      - echo "  task remediate:certificates      - Fix certificate issues"
-      - echo "  task remediate:pods              - Fix pod issues"
+      - 'echo "🔧 Remediation:"'
+
+      - 'echo "  task remediate:certificates      - Fix certificate issues"'
+
+      - 'echo "  task remediate:pods              - Fix pod issues"'
+
       - echo ""
-      - echo "💾 Backup & Restore:"
-      - echo "  task backup:create               - Create cluster backup"
-      - echo "  task backup:restore -- <path>    - Restore from backup"
+      - 'echo "💾 Backup & Restore:"'
+
+      - 'echo "  task backup:create               - Create cluster backup"'
+
+      - 'echo "  task backup:restore -- <path>    - Restore from backup"'
+
       - echo ""
-      - echo "🔒 Security:"
-      - echo "  task security:scan               - Security vulnerability scan"
-      - echo "  task security:report             - Generate security report"
+      - 'echo "🔒 Security:"'
+
+      - 'echo "  task security:scan               - Security vulnerability scan"'
+
+      - 'echo "  task security:report             - Generate security report"'
+
       - echo ""
-      - echo "🔧 Troubleshooting:"
-      - echo "  task troubleshoot:pods           - Debug pod issues"
-      - echo "  task troubleshoot:certificates   - Debug certificate issues"
-      - echo "  task troubleshoot:argocd         - Debug ArgoCD issues"
+      - 'echo "🔧 Troubleshooting:"'
+
+      - 'echo "  task troubleshoot:pods           - Debug pod issues"'
+
+      - 'echo "  task troubleshoot:certificates   - Debug certificate issues"'
+
+      - 'echo "  task troubleshoot:argocd         - Debug ArgoCD issues"'
+
       - echo ""
-      - echo "📅 Automation:"
-      - echo "  task maintenance:daily           - Daily maintenance tasks"
-      - echo "  task maintenance:weekly          - Weekly maintenance tasks"
-      - echo "  task monitoring:setup            - Setup maintenance monitoring"
+      - 'echo "📅 Automation:"'
+
+      - 'echo "  task maintenance:daily           - Daily maintenance tasks"'
+
+      - 'echo "  task maintenance:weekly          - Weekly maintenance tasks"'
+
+      - 'echo "  task monitoring:setup            - Setup maintenance monitoring"'
+
       - echo ""
-      - echo "For complete automation overview: task automation:overview"
+      - 'echo "For complete automation overview: task automation:overview"'
+
 
   # Automation overview
   automation:overview:
@@ -728,7 +788,8 @@ tasks:
       - echo "🚀 Homelab Automation & Integration Overview"
       - echo "════════════════════════════════════════════════════════════"
       - echo ""
-      - echo "🔄 GitHub Actions Integration:"
+      - 'echo "🔄 GitHub Actions Integration:"'
+
       - echo "  ✅ Validation Workflow (.github/workflows/validate.yml)"
       - echo "      - Kustomize validation, Helm chart linting"
       - echo "      - Kubernetes schema validation, YAML syntax checks"
@@ -740,46 +801,59 @@ tasks:
       - echo "      - Security vulnerability auto-fixes"
       - echo "      - Scheduled component updates"
       - echo ""
-      - echo "📈 Enhanced Monitoring & Health Checks:"
+      - 'echo "📈 Enhanced Monitoring & Health Checks:"'
+
       - echo "  ✅ Multi-format Health Reports (JSON, Markdown, Summary)"
       - echo "  ✅ Component-based Health Tracking"
       - echo "  ✅ GitHub Actions Status Integration"
       - echo "  ✅ Enhanced Security Assessment"
       - echo "  ✅ Automated Alert Generation"
       - echo ""
-      - echo "⚡ Automated Maintenance Workflows:"
-      - echo "  ✅ Pre-maintenance Preparation (prepare:full)"
+      - 'echo "⚡ Automated Maintenance Workflows:"'
+
+      - 'echo "  ✅ Pre-maintenance Preparation (prepare:full)"'
+
       - echo "      - Health checks, backups, inventory, security scans"
       - echo "      - GitHub Actions validation and status verification"
-      - echo "  ✅ Staged Maintenance Execution (execute:full)"
+      - 'echo "  ✅ Staged Maintenance Execution (execute:full)"'
+
       - echo "      - Component-specific upgrades with validation"
       - echo "      - Automated rollback on failures"
-      - echo "  ✅ Post-maintenance Validation (validate:full)"
+      - 'echo "  ✅ Post-maintenance Validation (validate:full)"'
+
       - echo "      - Comprehensive validation and reporting"
       - echo "      - GitHub Actions workflow verification"
       - echo ""
-      - echo "🔧 Automated Remediation:"
+      - 'echo "🔧 Automated Remediation:"'
+
       - echo "  ✅ Certificate Issue Resolution"
       - echo "  ✅ Pod Restart Automation"
       - echo "  ✅ Self-healing Infrastructure"
       - echo ""
-      - echo "📊 Status & Reporting:"
+      - 'echo "📊 Status & Reporting:"'
+
       - echo "  ✅ Real-time Cluster Health Overview"
       - echo "  ✅ GitHub Actions Success Rate Tracking"
       - echo "  ✅ Comprehensive Security Scoring"
       - echo "  ✅ Application Inventory and Risk Assessment"
       - echo ""
-      - echo "🗚 Integration Points:"
+      - 'echo "🗚 Integration Points:"'
+
       - echo "  • Enhanced health-check.sh with GitHub Actions integration"
       - echo "  • inventory-check.py with comprehensive security assessment"
       - echo "  • Taskfile.yml with automation workflow shortcuts"
       - echo "  • UPGRADE_PROCEDURES.md with CI/CD integration guide"
       - echo ""
-      - echo "Usage Examples:"
-      - echo "  task workflow:prepare           # Complete maintenance preparation"
-      - echo "  task workflow:execute -- argocd # Execute ArgoCD upgrade"
+      - 'echo "Usage Examples:"'
+
+      - 'echo "  task workflow:prepare           # Complete maintenance preparation"'
+
+      - 'echo "  task workflow:execute -- argocd # Execute ArgoCD upgrade"'
+
       - echo "  task status                     # Comprehensive status overview"
-      - echo "  task ci:status                  # GitHub Actions metrics"
-      - echo "  task health:enhanced            # Full health assessment"
+      - 'echo "  task ci:status                  # GitHub Actions metrics"'
+
+      - 'echo "  task health:enhanced            # Full health assessment"'
+
       - echo ""
-      - echo "For detailed help: task help or task help:automation"
+      - 'echo "For detailed help: task help or task help:automation"'

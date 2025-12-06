@@ -24,13 +24,21 @@
       "Bash(tree:*)",
       "Bash(python3 -m pytest tests/test_installer.py::TestStorageSetup::test_local_path_setup -v)",
       "Bash(python3:*)",
-      "Bash(pip3 install:*)"
+      "Bash(pip3 install:*)",
+      "Bash(cat:*)",
+      "Bash(docker run --rm -v $PWD:/workspace mikefarah/yq:latest eval '.tasks.\"\"workflow:execute\"\"' /workspace/Taskfile.yml)",
+      "Bash(xargs file:*)",
+      "Bash(xargs:*)",
+      "Bash(python:*)",
+      "Bash(docker run:*)",
+      "Bash(echo:*)",
+      "Bash(kubectl:*)"
     ],
     "deny": []
   },
+  "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
     "claude-flow",
     "ruv-swarm"
-  ],
-  "enableAllProjectMcpServers": true
+  ]
 }

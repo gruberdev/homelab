@@ -196,8 +196,8 @@ tasks:
       - echo "  task ci:security                - GitHub Actions security scan"
       - echo "  task ci:status                  - Workflow status and metrics"
       - echo ""
-      - echo "For complete command list: task --list"
-      - echo "For automation help: task help:automation"
+      - 'echo "For complete command list: task --list"'
+      - 'echo "For automation help: task help:automation"'
 
   dns:
     desc: Creates the DNS entry required for the local domain to work.
@@ -353,13 +353,9 @@ tasks:
 
   workflow:execute:
     desc: Execute maintenance with validation checkpoints
-    vars:
-      COMPONENT: '{{.CLI_ARGS | default "all"}}'
     cmds:
-      - echo "⚡ Executing maintenance workflow for: {{.COMPONENT}}"
+      - echo "⚡ Executing maintenance workflow for all components"
       - task: maintenance:execute:full
-        vars:
-          COMPONENT: "{{.COMPONENT}}"
       - echo "✅ Maintenance execution completed."
 
   workflow:validate:
@@ -421,5 +417,5 @@ tasks:
       - echo "  task upgrade:argocd             - Upgrade ArgoCD"
       - echo "  task upgrade:monitoring         - Upgrade monitoring stack"
       - echo ""
-      - echo "📁 For detailed maintenance help: task help:maintenance"
-      - echo "📆 For complete task list: task --list"
+      - 'echo "📁 For detailed maintenance help: task help:maintenance"'
+      - 'echo "📆 For complete task list: task --list"'

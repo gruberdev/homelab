@@ -3,4 +3,4 @@ kind: Service
 metadata:
   name: argocd-server
 spec:
-  type: ClusterIP
+  type: LoadBalancer

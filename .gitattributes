@@ -1,0 +1,41 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Force LF line endings for text files that need to work in Linux containers
+*.yml text eol=lf
+*.yaml text eol=lf
+*.sh text eol=lf
+*.bash text eol=lf
+Dockerfile text eol=lf
+Taskfile* text eol=lf
+
+# Scripts
+*.py text eol=lf
+*.js text eol=lf
+*.ts text eol=lf
+
+# Terraform
+*.tf text eol=lf
+*.tfvars text eol=lf
+
+# Kubernetes manifests
+*.json text eol=lf
+
+# Documentation
+*.md text eol=lf
+
+# Git config files
+.gitignore text eol=lf
+.gitattributes text eol=lf
+.dockerignore text eol=lf
+
+# Binaries
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.exe binary
+*.dll binary
+*.so binary
+*.dylib binary
